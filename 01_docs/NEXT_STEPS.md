@@ -2,13 +2,14 @@
 
 ## Aktueller Arbeitsblock
 
-Codex-Dry-Run der Governance-Regeln auswerten und per Pull Request nach `main` führen.
+Read-only-Analyse externer Quellen abschließen und per Pull Request nach `main` führen.
 
 ## Nächste Schritte
 
-1. Dry-Run-Ergebnis und Diff prüfen.
-2. Prüfen, ob Codex die erlaubten und verbotenen Bereiche korrekt eingehalten hat.
-3. Lokale Checks ausführen:
+1. `source-index.md` prüfen.
+2. `tool-manifest.md` prüfen.
+3. Sicherstellen, dass kein Clone/Fork/Download erfolgt ist.
+4. Lokale Checks ausführen:
 
 ```powershell
 pwsh -File .\07_scripts\bootstrap\check-remotes.ps1
@@ -17,15 +18,15 @@ git status --short
 git diff --stat
 ```
 
-4. Branch committen und pushen:
+5. Branch committen und pushen:
 
 ```powershell
-git add 01_docs/setup/codex-dry-run.md 01_docs/SESSION_STATE.md 01_docs/NEXT_STEPS.md 00_project-control/roadmap/roadmap-status.md
-git commit -m "docs: record codex dry run results"
-git push -u origin setup/codex-dry-run-results
+git add 01_docs/references/source-index.md 01_docs/references/tool-manifest.md 01_docs/SESSION_STATE.md 01_docs/NEXT_STEPS.md 00_project-control/roadmap/roadmap-status.md
+git commit -m "docs: record external source read-only analysis"
+git push -u origin analysis/external-sources-readonly
 ```
 
-5. Pull Request nach `main` erstellen.
+6. Pull Request nach `main` erstellen.
 
 ## Nicht tun
 
@@ -40,6 +41,6 @@ git push -u origin setup/codex-dry-run-results
 
 Nächster sinnvoller Arbeitsblock:
 
-- externe Quellen read-only analysieren
-- Source Index und Tool Manifest schrittweise präzisieren
-- erst danach entscheiden, ob Repos geklont oder geforkt werden
+- entscheiden, welche externe Quelle zuerst lokal geklont wird
+- bevorzugt: nur eine Quelle pro Branch
+- vor Clone Branch/Commit/Ort im Tool-Manifest festlegen

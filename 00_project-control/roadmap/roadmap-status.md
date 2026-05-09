@@ -26,7 +26,7 @@ GitHub und Codex sollen dieses Dokument bevorzugt nutzen, weil Änderungen hier 
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
 | Nächster Branch | `setup/codex-dry-run-results` |
-| Aktueller Fokus | Codex-Dry-Run der Governance-Regeln |
+| Aktueller Fokus | Read-only-Analyse externer Quellen |
 | ROM-/Build-Arbeit | noch nicht gestartet |
 | Externe Repos | noch nicht geklont |
 | Forks | noch nicht angelegt |
@@ -62,7 +62,7 @@ GitHub und Codex sollen dieses Dokument bevorzugt nutzen, weil Änderungen hier 
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 05 Externe Quellen | read-only Analyseblock vorbereiten | Quellen prüfen, ohne Repos zu klonen oder Forks anzulegen |
+| 05 Externe Quellen | read-only Analyseblock bearbeiten | Quellen prüfen, ohne Repos zu klonen oder Forks anzulegen |
 
 ## Noch offen
 
@@ -138,6 +138,14 @@ setup/codex-dry-run-results
 - Codex-Dry-Run-Dokument vorbereitet.
 - Session- und Next-Steps-Dokumente auf den Dry-Run-Arbeitsblock umgestellt.
 - Roadmap-Status auf Codex-Dry-Run fortgeschrieben.
+- Keine externen Repos geklont.
+- Keine Forks angelegt.
+- Keine ROMs, Saves, Builds, Tool-Binaries oder privaten Dateien angefasst.
+
+### 2026-05-10 – analysis/external-sources-readonly
+
+- Externe Quellen read-only geprüft und dokumentiert.
+- `source-index.md` und `tool-manifest.md` präzisiert.
 - Keine externen Repos geklont.
 - Keine Forks angelegt.
 - Keine ROMs, Saves, Builds, Tool-Binaries oder privaten Dateien angefasst.
