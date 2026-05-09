@@ -1,23 +1,30 @@
 # Tool Manifest
 
-Dieses Manifest dokumentiert Tools, Versionen, lokale Pfade und Status.
+Dieses Manifest dokumentiert Tools, Repos, Forks, Versionen, Pfade und Sicherheitsstatus.
 
-| Tool/Repo | Zweck | Quelle | Zielpfad lokal | Version/Branch/Commit | Status |
-|---|---|---|---|---|---|
-| Git | Versionierung | System | PATH | offen | vorhanden |
-| GitHub | Remote Source of Truth | Web | remote origin | offen | vorhanden |
-| PowerShell | Terminal | Windows | System | offen | vorhanden |
-| JetBrains IDE | Entwicklung | lokal | offen | offen | offen |
-| Codex | Coding Agent | OpenAI | lokal/IDE | offen | offen |
-| devkitPro/devkitARM | GBA Build Toolchain | devkitPro | offen | offen | offen |
-| UPR FVX | Randomizer | GitHub | `02_external/upr-fvx` | offen | offen |
-| Shiny-Miner CFRU-expansion | FireRed Gen9/CFRU-Basis | GitHub | `02_external/CFRU-expansion` | offen | offen |
-| Shiny-Miner DPE Gen9 | Pokémon Expansion | GitHub | `02_external/Dynamic-Pokemon-Expansion-Gen-9` | offen | offen |
-| Hex Maniac Advance | ROM-Analyse | Release lokal | `03_tools/releases` | offen | offen |
-| BizHawk | Emulator | Release lokal | `03_tools/releases` | offen | offen |
-| Ironmon Tracker | Tracker | GitHub/Release | `02_external/Ironmon-Tracker` | offen | offen |
+| Tool/Repo | Zweck | Upstream | Fork/Origin | Lokaler Pfad | Branch | Commit | Codex darf ändern | Status |
+|---|---|---|---|---|---|---|---|---|
+| Workspace Repo | Source of Truth | n/a | git@github.com:Planton361/firered-gen9-randomizer-workspace.git | `C:\Users\anton\romhacking\fr-rando-gen9` | main | offen | ja, nur Branches | aktiv |
+| Git | Versionierung | n/a | n/a | PATH | n/a | n/a | nein | vorhanden |
+| PowerShell | Terminal | n/a | n/a | Windows | n/a | n/a | nein | vorhanden |
+| Codex | Agent | OpenAI | n/a | offen | n/a | n/a | n/a | offen |
+| JetBrains IDE | IDE | JetBrains | n/a | offen | n/a | n/a | n/a | offen |
+| devkitPro/devkitARM | GBA Build Toolchain | devkitPro | n/a | offen | n/a | n/a | nein | offen |
+| UPR FVX | Randomizer | https://github.com/upr-fvx/universal-pokemon-randomizer-fvx | offen | `02_external\upr-fvx` | offen | offen | nur nach Freigabe | offen |
+| CFRU-expansion | FireRed Gen9/CFRU-Basis | https://github.com/Shiny-Miner/CFRU-expansion | offen | `02_external\CFRU-expansion` | offen | offen | nur nach Freigabe | offen |
+| DPE Gen9 | Pokémon Expansion | https://github.com/Shiny-Miner/Dynamic-Pokemon-Expansion-Gen-9 | offen | `02_external\Dynamic-Pokemon-Expansion-Gen-9` | offen | offen | nur nach Freigabe | offen |
+| Hex Maniac Advance | ROM-Analyse | offen | n/a | `03_tools\releases` | n/a | n/a | nein | offen |
+| BizHawk | Emulator | offen | n/a | `03_tools\releases` | n/a | n/a | nein | offen |
+| Ironmon Tracker | Tracker | offen | offen | `02_external\Ironmon-Tracker` | offen | offen | nur nach Freigabe | offen |
 
-## Regel
+## Sicherheitsregel
 
-Keine Tool-Binaries, ROMs oder Builds committen.
-Nur Manifest, Scripts, Patches und Dokumentation versionieren.
+Nicht committen:
+
+- ROMs
+- Saves
+- Emulator States
+- Builds
+- Tool-Binaries
+- private `.env`-Dateien
+- Secrets

@@ -2,24 +2,30 @@
 
 ## Nächster Arbeitsblock
 
-Paket: Dokumentationsfundament
+Projektkontext und Governance fertigstellen.
 
 ## Aufgaben
 
-1. Repo-Struktur mit `.gitkeep` sichtbar machen
-2. README.md füllen
-3. AGENTS.md füllen
-4. PROJECT_BRIEF.md füllen
-5. SESSION_STATE.md füllen
-6. NEXT_STEPS.md füllen
-7. DECISIONS_INDEX.md füllen
-8. source-index.md füllen
-9. tool-manifest.md füllen
-10. Bootstrap-Script vorbereiten
+1. README.md prüfen
+2. AGENTS.md prüfen
+3. PROJECT_BRIEF.md prüfen
+4. SESSION_STATE.md prüfen
+5. DECISIONS_INDEX.md füllen
+6. source-index.md füllen
+7. tool-manifest.md füllen
+8. Git-/Codex-Workflow-Dokumente ergänzen
+9. Branch als Pull Request nach `main` führen
+
+## Nicht tun
+
+- keine ROMs bewegen
+- keine Builds starten
+- keine externen Repos klonen
+- keine Forks verändern
+- keine Tool-Binaries committen
 
 ## Danach
 
-- Pull Request nach `main`
-- ChatGPT-Projektkontext aktualisieren
-- Codex-Dry-Run ausführen
-- erst danach externe Repos klonen
+Nächster Branch:
+
+`setup/repo-governance`

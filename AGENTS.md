@@ -2,63 +2,90 @@
 
 ## Projektkontext
 
-Dieses Repository ist ein dokumentierter Workspace für einen Pokémon FireRed Gen9 Randomizer-Hack.
+Dieses Repository steuert einen dokumentierten Workspace für einen Pokémon FireRed Gen9 Randomizer-Hack.
 
-Hauptziel:
+Ziel:
 - FireRed-basierter Custom Hack
-- Gen9-Pokémon über CFRU/DPE-nahe Basis
-- spätere Kompatibilität mit Universal Pokémon Randomizer FVX
+- Gen9-Pokémon über CFRU/DPE-nahe Basis prüfen
+- Universal Pokémon Randomizer FVX als Haupt-Randomizer-Kandidat
 - spätere Kompatibilität mit BizHawk und Ironmon Tracker
+- reproduzierbarer GitHub-/PowerShell-/Codex-Workflow
 
 ## Grundregeln
 
-- Keine ROMs lesen, ändern, kopieren oder committen.
-- Keine Saves, Emulator States oder Builds committen.
-- Keine privaten Dateien aus `04_private_roms/`, `05_builds/` oder `03_tools/releases/` anfassen, außer der Nutzer fordert es ausdrücklich.
-- Keine Pushes ohne ausdrückliche Freigabe.
-- Keine großen Refactors ohne vorherige Zusammenfassung und Zustimmung.
-- Kleine, reviewbare Änderungen bevorzugen.
-- Jede Änderung muss dokumentierbar sein.
+Codex darf:
 
-## Arbeitsmodus
+- Dokumentation lesen und verbessern
+- kleine, reviewbare Änderungen auf Arbeitsbranches machen
+- PowerShell-Scripts für Setup und Checks schreiben
+- Tool- und Quellenmanifest pflegen
+- Diffs erklären
+- PR-Beschreibungen vorbereiten
+- Build- oder Fehlerlogs analysieren, wenn der Nutzer sie bereitstellt
 
-Vor jeder Änderung:
+Codex darf nicht:
 
-1. relevanten Kontext lesen
-2. geplante Änderung kurz zusammenfassen
-3. betroffene Dateien nennen
-4. Risiken nennen
-5. danach erst ändern
+- direkt auf `main` arbeiten
+- direkt auf `main` pushen
+- ROMs lesen, kopieren, ändern oder committen
+- Saves, Emulator States oder Builds committen
+- Dateien in `04_private_roms/`, `05_builds/` oder `03_tools/releases/` bearbeiten
+- private Tokens, `.env`-Dateien oder lokale Secrets veröffentlichen
+- große Refactors ohne ausdrückliche Freigabe durchführen
+- mehrere externe Repos gleichzeitig ändern
 
-Nach jeder Änderung:
+## Vor jeder Änderung
 
-1. `git diff --stat`
-2. relevante Dateiänderungen zusammenfassen
-3. Tests oder Checks nennen
-4. nächsten sinnvollen Schritt vorschlagen
+1. README.md lesen
+2. PROJECT_BRIEF.md lesen
+3. SESSION_STATE.md lesen
+4. NEXT_STEPS.md lesen
+5. geplante Änderung kurz zusammenfassen
+6. betroffene Dateien nennen
+7. Risiken nennen
 
-## Wichtige Dokumente
+## Nach jeder Änderung
 
-Immer berücksichtigen:
-
-- `README.md`
-- `01_docs/PROJECT_BRIEF.md`
-- `01_docs/SESSION_STATE.md`
-- `01_docs/NEXT_STEPS.md`
-- `01_docs/DECISIONS_INDEX.md`
-- `01_docs/references/source-index.md`
-- `01_docs/references/tool-manifest.md`
+1. `git status --short`
+2. `git diff --stat`
+3. Änderung kurz zusammenfassen
+4. Checks oder Tests nennen
+5. nächsten sinnvollen Schritt nennen
 
 ## Terminal
 
-Dieses Projekt nutzt Windows PowerShell als primäre Shell.
+Primäre Shell: Windows PowerShell.
 
 Keine Bash-Brace-Expansion verwenden.
-Stattdessen PowerShell-native Befehle wie `New-Item`, `Set-Content`, `Test-Path`.
+
+Stattdessen PowerShell-native Befehle verwenden:
+
+- `New-Item`
+- `Set-Content`
+- `Test-Path`
+- `Get-ChildItem`
+- `Get-FileHash`
 
 ## Git-Regeln
 
-- Standardbranch: `main`
-- Arbeit erfolgt auf Feature-/Setup-Branches
-- Commitnachrichten kurz und konkret
-- Keine direkten Pushes auf `main`, außer der Nutzer fordert es ausdrücklich
+- `main` ist stabil.
+- Arbeit erfolgt auf Branches.
+- Branch-Namen sollen sprechend sein:
+  - `setup/...`
+  - `docs/...`
+  - `analysis/...`
+  - `compat/...`
+  - `randomizer/...`
+  - `build/...`
+  - `experiment/...`
+- Änderungen sollen per Pull Request nach `main`.
+- Keine Force Pushes auf `main`.
+
+## Multi-Repo-Regel
+
+Für Forks gilt:
+
+- `origin` zeigt auf den eigenen Fork.
+- `upstream` zeigt auf das Originalrepo.
+- Änderungen an Forks nur auf Arbeitsbranches.
+- Das Workspace-Repo dokumentiert Forks, Branches und Commit-Hashes im Tool-Manifest.
