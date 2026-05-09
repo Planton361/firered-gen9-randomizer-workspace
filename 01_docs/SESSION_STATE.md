@@ -6,31 +6,28 @@
 - GitHub-Repo `Planton361/firered-gen9-randomizer-workspace` existiert.
 - `main` ist Default Branch und bleibt stabil.
 - Branch Protection und PR-Pflicht sind laut dokumentiertem Projektstand eingerichtet.
-- Initialer Projektkontext wurde committed und gemerged.
-- Roadmap-Status wurde ergänzt und gemerged.
-- Repo-Governance-Dokumentation wurde vorbereitet und gemerged.
-- Bootstrap-/Safety-Scripts wurden vorbereitet und gemerged.
+- Projektkontext, Roadmap-Status, Repo-Governance und Codex-Dry-Run wurden gemerged.
 - ROMs, Saves, Builds, Tool-Binaries und private Dateien sind ausgeschlossen.
 
 ## Aktueller Branch
 
-`setup/codex-dry-run-results`
+`analysis/external-sources-readonly`
 
 ## Aktueller Arbeitsblock
 
-Codex-Dry-Run der Governance-Regeln auswerten.
+Externe Quellen read-only bewerten und Dokumentation präzisieren.
 
 ## Ziel
 
-Prüfen, ob die dokumentierten Governance-Regeln für Codex praktisch nutzbar sind, ohne externe Repos, ROMs, Saves, Builds oder Tool-Binaries anzufassen.
+Quellenlage für Randomizer, FireRed-Gen9-Basis, Upstream-Referenzen, Emulator und Tracker dokumentieren, ohne externe Repos zu klonen oder Forks anzulegen.
 
 ## In diesem Arbeitsblock vorbereitet
 
-- `01_docs/setup/codex-dry-run.md`
-- Aktualisierung von `SESSION_STATE.md`
-- Aktualisierung von `NEXT_STEPS.md`
-- Aktualisierung von `roadmap-status.md`
-- Ergebnisnotiz zum Dokumentations-Dry-Run
+- `01_docs/references/source-index.md` aktualisieren
+- `01_docs/references/tool-manifest.md` aktualisieren
+- `01_docs/SESSION_STATE.md` aktualisieren
+- `01_docs/NEXT_STEPS.md` aktualisieren
+- `00_project-control/roadmap/roadmap-status.md` aktualisieren
 
 ## Noch nicht gestartet
 
@@ -46,10 +43,14 @@ Prüfen, ob die dokumentierten Governance-Regeln für Codex praktisch nutzbar si
 
 Keine ROMs, Saves, Builds oder Tool-Binaries committed.
 
+Keine externen Repos geklont.
+
+Keine Forks angelegt.
+
 ## Nächste Prüfung
 
 - `pwsh -File .\07_scripts\bootstrap\check-remotes.ps1`
 - `pwsh -File .\07_scripts\bootstrap\check-git-safety.ps1`
 - `git status --short`
 - `git diff --stat`
-- Branch `setup/codex-dry-run-results` committen und als PR nach `main` führen
+- Branch committen und als PR nach `main` führen
