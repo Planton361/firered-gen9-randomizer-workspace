@@ -44,3 +44,7 @@ Nächster sinnvoller Arbeitsblock:
 - entscheiden, welche externe Quelle zuerst lokal geklont wird
 - bevorzugt: nur eine Quelle pro Branch
 - vor Clone Branch/Commit/Ort im Tool-Manifest festlegen
+
+## Quality
+
+- Quality-Dokumente prüfen und ersten echten Lesson-Learned-Eintrag erst nach dem nächsten konkreten Projektfehler oder Workflow-Reibungsverlust schreiben.
