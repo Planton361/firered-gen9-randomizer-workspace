@@ -26,7 +26,7 @@ GitHub und Codex sollen dieses Dokument bevorzugt nutzen, weil Änderungen hier 
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
 | Nächster Branch | `setup/repo-governance` |
-| Nächster Fokus | Git-/Fork-/Codex-Governance und Safety-Scripts |
+| Aktueller Fokus | Git-/Fork-/Codex-Governance und Safety-Scripts |
 | ROM-/Build-Arbeit | noch nicht gestartet |
 | Externe Repos | noch nicht geklont |
 | Forks | noch nicht angelegt |
@@ -127,3 +127,14 @@ Excel-Roadmap:
 ```text
 setup/repo-governance
 ```
+## Arbeitsblock-Log
+
+### 2026-05-10 – setup/repo-governance
+
+- Kontextdateien auf GitHub und im ChatGPT-Projektkontext geprüft.
+- `SESSION_STATE.md` wurde für `setup/repo-governance` aktualisiert.
+- Repo-Governance-Dokumente und Bootstrap-/Safety-Scripts wurden im Arbeitsbranch vorbereitet.
+- Keine externen Repos geklont.
+- Keine Forks angelegt.
+- Keine ROMs, Saves, Builds, Tool-Binaries oder privaten Dateien angefasst.
+
