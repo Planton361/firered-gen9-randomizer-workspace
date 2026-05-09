@@ -1,0 +1,31 @@
+# ROMs / Saves / Emulator states
+*.gba
+*.gb
+*.gbc
+*.sav
+*.srm
+*.state
+*.ss0
+*.ss1
+
+# Local/private folders
+04_private_roms/
+05_builds/
+03_tools/releases/
+
+# Local environment
+.env
+.env.local
+
+# Tool binaries / archives
+*.zip
+*.7z
+*.rar
+*.exe
+
+# OS / IDE noise
+.DS_Store
+Thumbs.db
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/shelf/
