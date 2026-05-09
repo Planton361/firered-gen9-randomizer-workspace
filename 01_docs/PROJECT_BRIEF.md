@@ -6,22 +6,30 @@ Dieses Projekt baut einen reproduzierbaren Workspace für einen FireRed Gen9 Ran
 
 ## Zielbild
 
-Ein FireRed-basierter Custom Hack soll später:
+Der spätere Hack soll:
 
+- auf Pokémon FireRed basieren
 - Gen9-Pokémon enthalten
-- mit Universal Pokémon Randomizer FVX nutzbar sein
-- mit BizHawk laufen
-- mit Ironmon Tracker kompatibel werden
-- sauber dokumentiert und reproduzierbar sein
+- mit Universal Pokémon Randomizer FVX kompatibel werden
+- mit BizHawk lauffähig sein
+- mit Ironmon Tracker nutzbar werden
+
+## Hauptkandidaten
+
+- Randomizer: Universal Pokémon Randomizer FVX
+- FireRed/Gen9-Basis: Shiny-Miner CFRU-expansion und Dynamic-Pokemon-Expansion-Gen-9
+- Referenz: CyanSMP64 NatDexExtension, CyanSMP64 UPR-ZX NatDex, CyanSMP64 pokefirered NatDex
+- Weitere Referenz: Skeli789 CFRU/DPE, pret/pokefirered
 
 ## Rechtliche Grenze
 
-Dieses Repo enthält keine ROMs, Saves, Builds oder urheberrechtlich relevanten Artefakte.
+Dieses Repository enthält keine ROMs, Saves, Emulator States, Builds oder Tool-Binaries.
+
 Private ROM-Dateien bleiben ausschließlich lokal in `04_private_roms/`.
 
 ## Arbeitsmodell
 
-- ChatGPT plant, strukturiert, dokumentiert und formuliert Codex-Aufgaben.
-- Codex arbeitet im lokalen Git-Workspace.
 - GitHub ist die Source of Truth.
-- Markdown-Dokumente sind wichtiger als Chatverlauf.
+- ChatGPT plant und strukturiert Arbeitsschritte.
+- Codex arbeitet nur auf freigegebenen Branches.
+- Jede Session aktualisiert `SESSION_STATE.md` und `NEXT_STEPS.md`.

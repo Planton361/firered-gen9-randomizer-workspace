@@ -1,22 +1,35 @@
 # Session State
 
-## Aktueller Stand
+## Stand
 
-- Lokales Git-Repo erstellt
-- GitHub-Repo erstellt
-- `main` existiert auf GitHub
-- initiale Dateien committed und gepusht
-- nächster Schritt: Dokumentationsfundament und reproduzierbare Struktur
+- Lokales Git-Repo erstellt.
+- GitHub-Repo erstellt.
+- `main` existiert auf GitHub.
+- Initiale Projektstruktur wurde gepusht.
+- Der nächste Schwerpunkt ist Projektkontext, Git-Governance und Codex-Vorbereitung.
 
 ## Aktueller Branch
 
-`setup/docs-foundation`
+`setup/project-context-foundation`
 
-## Offene Punkte
+## Erledigt
 
-- README füllen
-- AGENTS.md füllen
-- Tool-Manifest vorbereiten
-- Quellenindex vorbereiten
-- Bootstrap-Script erstellen
-- danach Codex-Dry-Run durchführen
+- Workspace-Grundstruktur angelegt
+- `.gitignore` erstellt
+- README.md, AGENTS.md und Handoff-Dateien angelegt
+- GitHub-Remote verbunden
+- `main` auf GitHub eingerichtet
+
+## Noch nicht gestartet
+
+- externe Repos klonen
+- Forks anlegen
+- devkitPro-Build testen
+- UPR FVX testen
+- Hex Maniac Advance prüfen
+- BizHawk/Ironmon testen
+- ROMs oder Builds bearbeiten
+
+## Sicherheitsstatus
+
+Keine ROMs, Saves, Builds oder Tool-Binaries committed.
