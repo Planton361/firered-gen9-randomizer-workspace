@@ -26,7 +26,7 @@ GitHub und Codex sollen dieses Dokument bevorzugt nutzen, weil Änderungen hier 
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
 | Nächster Branch | `setup/repo-governance` |
-| Aktueller Fokus | Git-/Fork-/Codex-Governance und Safety-Scripts |
+| Aktueller Fokus | Codex-Dry-Run der Governance-Regeln |
 | ROM-/Build-Arbeit | noch nicht gestartet |
 | Externe Repos | noch nicht geklont |
 | Forks | noch nicht angelegt |
@@ -73,7 +73,7 @@ GitHub und Codex sollen dieses Dokument bevorzugt nutzen, weil Änderungen hier 
 | 03 Repo Governance | `07_scripts/bootstrap/bootstrap-workspace.ps1` erstellen | lokale Ordner nach Clone neu anlegen |
 | 03 Repo Governance | `07_scripts/bootstrap/check-git-safety.ps1` erstellen | Branch, Status, verbotene Dateien prüfen |
 | 03 Repo Governance | `07_scripts/bootstrap/check-remotes.ps1` erstellen | `origin`, `upstream`, Branches und Remotes prüfen |
-| 04 Codex Start | Codex Dry Run vorbereiten | Codex soll nur Docs prüfen, keine ROM-/Build-Arbeit |
+| 04 Codex Start | Codex Dry Run vorbereiten | In Arbeit auf setup/codex-dry-run; Codex soll nur Docs prüfen, keine ROM-/Build-Arbeit |
 | 04 Codex Start | Codex Standardprompt dokumentieren | wiederverwendbarer Prompt für kleine Arbeitsbranches |
 | 05 Externe Quellen | Repos analysieren, aber noch nicht ändern | UPR FVX, Shiny-Miner, CyanSMP64, Skeli789, pret |
 | 05 Externe Quellen | Entscheidung: klonen oder forken | Nur forken, wenn Änderungen nötig sind |
@@ -134,6 +134,15 @@ setup/repo-governance
 - Kontextdateien auf GitHub und im ChatGPT-Projektkontext geprüft.
 - `SESSION_STATE.md` wurde für `setup/repo-governance` aktualisiert.
 - Repo-Governance-Dokumente und Bootstrap-/Safety-Scripts wurden im Arbeitsbranch vorbereitet.
+- Keine externen Repos geklont.
+- Keine Forks angelegt.
+- Keine ROMs, Saves, Builds, Tool-Binaries oder privaten Dateien angefasst.
+
+### 2026-05-10 – setup/codex-dry-run
+
+- Codex-Dry-Run-Dokument vorbereitet.
+- Session- und Next-Steps-Dokumente auf den Dry-Run-Arbeitsblock umgestellt.
+- Roadmap-Status auf Codex-Dry-Run fortgeschrieben.
 - Keine externen Repos geklont.
 - Keine Forks angelegt.
 - Keine ROMs, Saves, Builds, Tool-Binaries oder privaten Dateien angefasst.
