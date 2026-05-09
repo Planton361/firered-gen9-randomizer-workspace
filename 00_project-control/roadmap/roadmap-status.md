@@ -25,7 +25,7 @@ GitHub und Codex sollen dieses Dokument bevorzugt nutzen, weil Änderungen hier 
 | Standardterminal | Windows PowerShell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Nächster Branch | `setup/repo-governance` |
+| Nächster Branch | `setup/codex-dry-run-results` |
 | Aktueller Fokus | Codex-Dry-Run der Governance-Regeln |
 | ROM-/Build-Arbeit | noch nicht gestartet |
 | Externe Repos | noch nicht geklont |
@@ -47,6 +47,8 @@ GitHub und Codex sollen dieses Dokument bevorzugt nutzen, weil Änderungen hier 
 | 01 Initial Setup | Tool-Manifest angelegt | `01_docs/references/tool-manifest.md` |
 | 01 Initial Setup | alte Arbeitsbranches bereinigt | nicht mehr benötigte Setup-Branches lokal und remote gelöscht |
 | 01 Initial Setup | ChatGPT-Projekt vorbereitet | Projektdateien und Roadmap als Kontext vorgesehen |
+| 03 Repo Governance | Governance-Dokumente erstellt | Git-, Fork-, Codex-, Security- und Rebuild-Regeln dokumentiert |
+| 03 Repo Governance | Bootstrap-/Safety-Scripts erstellt | Workspace-Bootstrap, Remote-Check und Git-Safety-Check dokumentiert |
 
 ## In Review/Test
 
@@ -54,26 +56,19 @@ GitHub und Codex sollen dieses Dokument bevorzugt nutzen, weil Änderungen hier 
 |---|---|---|
 | 02 Projektkontext | README, AGENTS und Handoff-Dateien prüfen | Sind Ziel, Grenzen, Arbeitsmodell und Codex-Regeln vollständig? |
 | 02 Projektkontext | Tool-Manifest prüfen | Sind Pfade, Fork-/Upstream-Regeln und Codex-Freigaben ausreichend klar? |
+| 04 Codex Start | Codex Dry Run auswerten | Prüfen, ob Governance-Regeln konsistent und praktisch nutzbar sind |
 
 ## Als Nächstes
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 03 Repo Governance | `setup/repo-governance` erstellen | Git-, Branch-, Fork-, PR- und Codex-Workflow dokumentieren |
+| 05 Externe Quellen | read-only Analyseblock vorbereiten | Quellen prüfen, ohne Repos zu klonen oder Forks anzulegen |
 
 ## Noch offen
 
 | Paket | Aufgabe | Hinweise |
 |---|---|---|
-| 03 Repo Governance | `01_docs/setup/git-workflow.md` erstellen | Branches, Pull Requests, Merge-Regeln, Branch Protection |
-| 03 Repo Governance | `01_docs/setup/fork-strategy.md` erstellen | `origin` vs. `upstream`, Forks, Sync-Regeln, Commit-Pinning |
-| 03 Repo Governance | `01_docs/setup/codex-workflow.md` erstellen | Was Codex darf, was nicht, Standardprompt, Reviewprozess |
-| 03 Repo Governance | `01_docs/setup/security-rules.md` erstellen | ROMs, Builds, Saves, Tools, Secrets, private Pfade |
-| 03 Repo Governance | `01_docs/setup/workspace-rebuild.md` erstellen | Zweitrechner-/Neuaufbau-Anleitung |
-| 03 Repo Governance | `07_scripts/bootstrap/bootstrap-workspace.ps1` erstellen | lokale Ordner nach Clone neu anlegen |
-| 03 Repo Governance | `07_scripts/bootstrap/check-git-safety.ps1` erstellen | Branch, Status, verbotene Dateien prüfen |
-| 03 Repo Governance | `07_scripts/bootstrap/check-remotes.ps1` erstellen | `origin`, `upstream`, Branches und Remotes prüfen |
-| 04 Codex Start | Codex Dry Run vorbereiten | In Arbeit auf setup/codex-dry-run; Codex soll nur Docs prüfen, keine ROM-/Build-Arbeit |
+| 04 Codex Start | Codex Dry Run abschließen | In Arbeit auf `setup/codex-dry-run-results`; Codex soll nur Docs prüfen, keine ROM-/Build-Arbeit |
 | 04 Codex Start | Codex Standardprompt dokumentieren | wiederverwendbarer Prompt für kleine Arbeitsbranches |
 | 05 Externe Quellen | Repos analysieren, aber noch nicht ändern | UPR FVX, Shiny-Miner, CyanSMP64, Skeli789, pret |
 | 05 Externe Quellen | Entscheidung: klonen oder forken | Nur forken, wenn Änderungen nötig sind |
@@ -125,7 +120,7 @@ Excel-Roadmap:
 ## Nächster empfohlener Branch
 
 ```text
-setup/repo-governance
+setup/codex-dry-run-results
 ```
 ## Arbeitsblock-Log
 

@@ -20,6 +20,7 @@ Vorhandene Governance-Dateien:
 - `01_docs/setup/codex-workflow.md`
 - `01_docs/setup/security-rules.md`
 - `01_docs/setup/workspace-rebuild.md`
+- `01_docs/setup/codex-dry-run.md`
 
 Vorhandene Safety-Scripts:
 
@@ -52,7 +53,7 @@ Nicht erlaubt:
 ## Standardprompt für Codex
 
 ```text
-Lies zuerst README.md, AGENTS.md, 01_docs/PROJECT_BRIEF.md, 01_docs/SESSION_STATE.md und 01_docs/NEXT_STEPS.md.
+Lies zuerst README.md, AGENTS.md, 01_docs/PROJECT_BRIEF.md, 01_docs/SESSION_STATE.md, 01_docs/NEXT_STEPS.md und die Setup-Dokumente in 01_docs/setup/.
 
 Aufgabe: Prüfe, ob die Repo-Governance-Dokumentation konsistent, verständlich und praktisch nutzbar ist.
 
@@ -84,7 +85,19 @@ git diff --stat
 
 ## Ergebnis dieses Dry Runs
 
-Noch offen.
+Durchgeführt am 2026-05-10 auf Branch `setup/codex-dry-run-results`.
+
+Ergebnis:
+
+- Git-, Fork-, Codex- und Security-Regeln sind inhaltlich widerspruchsfrei.
+- `main` ist durchgängig als stabiler Branch beschrieben.
+- Arbeitsbranches sind für Änderungen durchgängig Pflicht.
+- ROMs, Saves, Builds, Tool-Binaries, private Dateien und Secrets sind klar ausgeschlossen.
+- Externe Repos werden erst nach dokumentierter Entscheidung und Manifest-Eintrag geklont oder geforkt.
+- Die dokumentierten Kommandos sind PowerShell-/Windows-tauglich und verwenden keine Bash-Brace-Expansion.
+- Bootstrap- und Safety-Scripts sind für einen neuen Workspace verständlich: Bootstrap legt lokale Ordner an, `check-remotes.ps1` prüft `origin`/`upstream`, `check-git-safety.ps1` prüft Branch und verbotene Dateien.
+
+Kleine Statuskorrekturen wurden in den freigegebenen Dokumenten vorgenommen. Bestehende `.idea`-Arbeitsbaumänderungen gehören nicht zum Dry Run und bleiben unangetastet.
 
 ## Nächster Schritt nach Dry Run
 

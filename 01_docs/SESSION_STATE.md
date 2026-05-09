@@ -14,11 +14,11 @@
 
 ## Aktueller Branch
 
-`setup/codex-dry-run`
+`setup/codex-dry-run-results`
 
 ## Aktueller Arbeitsblock
 
-Codex-Dry-Run vorbereiten.
+Codex-Dry-Run der Governance-Regeln auswerten.
 
 ## Ziel
 
@@ -30,6 +30,7 @@ Prüfen, ob die dokumentierten Governance-Regeln für Codex praktisch nutzbar si
 - Aktualisierung von `SESSION_STATE.md`
 - Aktualisierung von `NEXT_STEPS.md`
 - Aktualisierung von `roadmap-status.md`
+- Ergebnisnotiz zum Dokumentations-Dry-Run
 
 ## Noch nicht gestartet
 
@@ -51,4 +52,4 @@ Keine ROMs, Saves, Builds oder Tool-Binaries committed.
 - `pwsh -File .\07_scripts\bootstrap\check-git-safety.ps1`
 - `git status --short`
 - `git diff --stat`
-- Branch committen und als PR nach `main` führen
+- Branch `setup/codex-dry-run-results` committen und als PR nach `main` führen
