@@ -6,33 +6,55 @@
 - GitHub-Repo `Planton361/firered-gen9-randomizer-workspace` existiert.
 - `main` ist Default Branch und bleibt stabil.
 - Branch Protection und PR-Pflicht sind laut dokumentiertem Projektstand eingerichtet.
-- Projektkontext, Roadmap-Status, Repo-Governance und Codex-Dry-Run wurden gemerged.
+- Projektkontext, Roadmap-Status, Repo-Governance, Codex-Dry-Run, externe Quellenprüfung, Workflow-Automation und Post-Merge-Doku-Sync wurden gemerged.
+- PR #10 `docs: sync post-merge workflow state` ist gemerged.
 - ROMs, Saves, Builds, Tool-Binaries und private Dateien sind ausgeschlossen.
 
 ## Aktueller Branch
 
-`docs/sync-post-merge-workflow-state`
+`setup/toolchain-local-inventory`
 
 ## Aktueller Arbeitsblock
 
-Dokumentationsstand nach gemergtem PR #9 synchronisieren und den nächsten kleinen Arbeitsblock vorbereiten.
+Lokale Toolchain-/Workspace-Inventur dokumentieren, ohne ROM-, Build-, Clone- oder Fork-Arbeit.
 
 ## Ziel
 
-Workflow-Automation als abgeschlossen dokumentieren und die lokale Toolchain-/Workspace-Inventur als nächsten minimalen Schritt vorbereiten.
+Vorhandene und noch lokal zu prüfende Tools im Tool-Manifest nachvollziehbar erfassen:
 
-## Abgeschlossen
+- PowerShell
+- Git
+- GitHub CLI
+- Java
+- make
+- arm-none-eabi-gcc
+- agbcc, falls vorhanden
+- pwsh
 
-- PR #9 `docs: improve codex workflow automation` wurde gemerged.
-- Prompt-Templates, Work-Package-Lifecycle, PR-Automation und Abschlussdokumentation sind dokumentiert.
-- GitHub CLI ist installiert und authentifiziert.
+## In diesem Arbeitsblock vorbereitet
 
-## Nächster Fokus
+- `main` wurde gegen den Merge-Commit von PR #10 geprüft und ist remote aktuell.
+- Branch `setup/toolchain-local-inventory` wurde von `main` erstellt.
+- `01_docs/references/tool-manifest.md` wurde um eine lokale Toolchain-Inventur erweitert.
+- Bekannte Vorinformationen wurden nicht als frisch verifizierte lokale Checks ausgegeben, sondern getrennt dokumentiert.
+- Für offene lokale Toolprüfungen wurden PowerShell-Prüfbefehle dokumentiert.
 
-Nächstes kleines Arbeitspaket vorbereiten:
+## Inventurstatus
 
-- Toolchain-/Workspace-Inventur ohne ROM-/Build-Arbeit prüfen
-- vorgesehener Branch: `setup/toolchain-local-inventory`
+| Tool | Status |
+|---|---|
+| PowerShell | dokumentiert vorhanden |
+| Git | dokumentiert vorhanden; lokal frisch zu prüfen |
+| GitHub CLI (`gh`) | dokumentiert installiert/authentifiziert; bei PATH-Problemen neues Terminal nutzen |
+| Java | offen: lokal prüfen |
+| make | offen: lokal prüfen |
+| arm-none-eabi-gcc | offen: lokal prüfen |
+| agbcc | optional/offen: lokal prüfen, falls vorhanden |
+| pwsh | offen: lokal prüfen |
+
+## Einschränkung dieser Session
+
+Diese ChatGPT-/GitHub-Connector-Session konnte keine Befehle auf dem lokalen Windows-Workspace ausführen. Daher wurden keine lokalen Versionen erfunden und keine lokalen Toolpfade geraten. Die ausführbaren Prüfkommandos sind im Tool-Manifest dokumentiert.
 
 ## Noch nicht gestartet
 
@@ -57,7 +79,12 @@ Keine Änderungen direkt auf `main`.
 
 ## Nächste Prüfung
 
-- `pwsh -File .\07_scripts\bootstrap\check-git-safety.ps1`
-- `git status --short`
-- `git diff --stat`
-- aktuellen Dokumentationsabgleich committen, pushen und als PR nach `main` führen
+Lokal im Windows-Workspace ausführen:
+
+```powershell
+pwsh -File .\07_scripts\bootstrap\check-git-safety.ps1
+git status --short
+git diff --stat
+```
+
+Danach PR `setup/toolchain-local-inventory` prüfen, nicht durch Codex mergen.
