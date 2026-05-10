@@ -8,20 +8,20 @@ Dieser Stand ist read-only für ROM-/Build-/Toolchain-Arbeit. Es wurden keine ex
 
 Die bisherige lokale Toolchain-Inventur wurde auf Windows durchgeführt und ist ab dem OS-Wechsel nur noch historischer Referenzstand. Linux/CachyOS ist die neue primäre lokale Umgebung. Der Linux-Toolchain-Stand wurde auf Branch `setup/linux-toolchain-inventory` read-only geprüft; GitHub-CLI- und Git-Auth wurden auf Branch `setup/linux-gh-auth-refresh` erneut geprüft.
 
-Der Agent-Best-Practices-Refresh aus PR #17 ist gemerged/erledigt. Der aktuelle Arbeitsblock `docs/post-merge-agent-best-practices-sync` synchronisiert nur den Post-Merge-Dokumentationsstatus und führt keine neuen Workflow-Regeln ein.
+Der Agent-Best-Practices-Refresh aus PR #17 und der Post-Merge-Agent-Best-Practices-Sync aus PR #18 sind gemerged/erledigt. Der aktuelle Arbeitsblock `setup/linux-gba-toolchain-plan` plant nur das GBA-Toolchain-Vorgehen und fuehrt keine Installationen oder Builds aus.
 
 | Tool/Repo | Zweck | Upstream | Fork/Origin | Lokaler Pfad | Branch | Commit | Codex darf ändern | Status |
 |---|---|---|---|---|---|---|---|---|
-| Workspace Repo | Source of Truth | n/a | git@github.com:Planton361/firered-gen9-randomizer-workspace.git | `/home/anton/IdeaProjects/firered-gen9-randomizer-workspace` | `docs/post-merge-agent-best-practices-sync` | offen | ja, nur Branches | aktiv |
+| Workspace Repo | Source of Truth | n/a | git@github.com:Planton361/firered-gen9-randomizer-workspace.git | `/home/anton/IdeaProjects/firered-gen9-randomizer-workspace` | `setup/linux-gba-toolchain-plan` | offen | ja, nur Branches | aktiv |
 | Git | Versionierung | n/a | n/a | `/usr/bin/git` | n/a | n/a | nein | gefunden: 2.54.0 |
 | GitHub CLI (`gh`) | PRs und GitHub-Checks automatisieren | https://cli.github.com/ | n/a | `/usr/bin/gh` | n/a | n/a | nein | gefunden: 2.92.0; Auth via Keyring aktiv |
 | POSIX Shell | Terminal-Standard | n/a | n/a | `/bin/fish` laut `$SHELL` | n/a | n/a | nein | primär |
 | PowerShell 7 (`pwsh`) | optionale Script-Ausführung für bestehende Checks | https://github.com/PowerShell/PowerShell | n/a | nicht im PATH gefunden | n/a | n/a | nein | fehlt/optional |
 | Java | Laufzeit für UPR FVX | https://adoptium.net/ oder Distribution-Paket | n/a | `/usr/bin/java` | n/a | n/a | nein | gefunden: OpenJDK 26.0.1 |
 | `make` | Build-Orchestrierung für spätere Toolchain-Schritte | n/a | n/a | `/usr/bin/make` | n/a | n/a | nein | gefunden: GNU Make 4.4.1 |
-| devkitPro/devkitARM | GBA Build Toolchain | devkitPro | n/a | Linux-Pfad offen | n/a | n/a | nein | nicht nachgewiesen |
-| `arm-none-eabi-gcc` | GBA Cross-Compiler | ARM GNU Toolchain/devkitARM | n/a | nicht im PATH gefunden | n/a | n/a | nein | fehlt |
-| `agbcc` | optionale GBA/pret-kompatible Compiler-Komponente | pret/devkitARM-Kontext | n/a | nicht im PATH gefunden | n/a | n/a | nein | fehlt/optional |
+| devkitPro/devkitARM | GBA Build Toolchain | devkitPro | n/a | Linux-Pfad offen | n/a | n/a | nein | nicht nachgewiesen; Plan dokumentiert |
+| `arm-none-eabi-gcc` | GBA Cross-Compiler | ARM GNU Toolchain/devkitARM | n/a | nicht im PATH gefunden | n/a | n/a | nein | fehlt; ueber devkitPro/devkitARM priorisiert klaeren |
+| `agbcc` | optionale GBA/pret-kompatible Compiler-Komponente | pret/devkitARM-Kontext | n/a | nicht im PATH gefunden | n/a | n/a | nein | fehlt/optional; nur bei Buildpfad-Bedarf klaeren |
 | Codex CLI | primärer Coding Agent | OpenAI | n/a | offen | n/a | n/a | nur nach Branch-Freigabe | primärer Worker für erlaubte Arbeitsbranches |
 | ChatGPT QA | Analyse, Review und Handoff | OpenAI | n/a | n/a | n/a | n/a | nein | Steuerungs-/QA-Ebene |
 | `.aiignore` | Agent-Kontextschutz | n/a | n/a | `.aiignore` | n/a | n/a | ja | ergänzt für ROM-/Build-/Tool-Binary-/Secret-Pfade |
@@ -82,7 +82,7 @@ Zweck: Nur lokale Tool-Verfügbarkeit, Versionen und PATH-Erreichbarkeit auf Lin
 | Prüfpunkt | Status | Nachweisstand | Nächster Schritt |
 |---|---|---|---|
 | Git | gefunden | `/usr/bin/git`; Git 2.54.0 | keine Aktion |
-| GitHub CLI (`gh`) | gefunden, Auth offen | `/usr/bin/gh`; gh 2.92.0; `gh auth status` meldet ungueltigen gespeicherten Token fuer `Planton361` | auf Folgebranch neu authentifizieren |
+| GitHub CLI (`gh`) | gefunden, Auth aktiv | `/usr/bin/gh`; gh 2.92.0; Auth-Refresh auf `setup/linux-gh-auth-refresh` erfolgreich | keine Aktion |
 | Shell | gefunden | `$SHELL` ist `/bin/fish` | POSIX-kompatible Projektbefehle weiter bevorzugen |
 | Java | gefunden | `/usr/bin/java`; OpenJDK 26.0.1 | spaeter UPR-FVX-Anforderung gegen konkrete Version pruefen |
 | `make` | gefunden | `/usr/bin/make`; GNU Make 4.4.1 | keine Aktion |
@@ -95,7 +95,7 @@ Zweck: Nur lokale Tool-Verfügbarkeit, Versionen und PATH-Erreichbarkeit auf Lin
 
 - Gefunden: Git 2.54.0, GitHub CLI 2.92.0, fish als Login-/Standardshell, OpenJDK 26.0.1, GNU Make 4.4.1.
 - Fehlend im PATH: `arm-none-eabi-gcc`, `agbcc`, `pwsh`.
-- Offen: GitHub CLI ist installiert, aber der gespeicherte GitHub-Token ist ungueltig; devkitPro/devkitARM wurde nicht als installierte Toolchain nachgewiesen.
+- Offen: devkitPro/devkitARM wurde nicht als installierte Toolchain nachgewiesen.
 - Historisch: Windows-Toolchain-Befunde bleiben dokumentiert, gelten aber nicht als Linux/CachyOS-Ist-Stand.
 
 ## Linux/CachyOS GitHub-Auth-Refresh
@@ -117,6 +117,22 @@ Zweck: Prüfen, ob GitHub CLI und Git-Remote-Zugriff auf Linux/CachyOS wieder f�
 - `gh` ist für Account `Planton361` authentifiziert; der Token-Wert wurde nicht übernommen.
 - `git fetch origin` ist erfolgreich und bestätigt Remote-Zugriff auf `origin`.
 - GitHub CLI und Git können für Push und PR-Erstellung genutzt werden.
+
+## Linux/CachyOS GBA-Toolchain-Plan
+
+Arbeitsblock: `setup/linux-gba-toolchain-plan`.
+
+Planungsdokument: `01_docs/setup/linux-gba-toolchain-plan.md`.
+
+| Thema | Stand | Naechster Schritt |
+|---|---|---|
+| devkitPro/devkitARM | primaere Richtung vorbereiten, aber nicht installieren | offizielle Dokumentation read-only pruefen |
+| `arm-none-eabi-gcc` | fehlt im PATH; soll im Kontext der Ziel-Toolchain geloest werden | pruefen, ob devkitARM oder Fallback-Paket genutzt werden soll |
+| `agbcc` | fehlt/optional | erst bei konkretem pret-/Build-Bedarf bewerten |
+| Build-Schritte | weiterhin gesperrt | erst nach Repo-Pinning, Toolchain-Freigabe und ROM-/Build-Freigabe |
+| Externe Repos | weiterhin nicht geklont | erst nach separater Clone-/Fork-Entscheidung |
+
+Naechster Branch: `setup/linux-gba-toolchain-source-review`.
 
 ### Nicht-mutierende Linux-Prüfbefehle
 
@@ -159,9 +175,9 @@ Die folgenden Befunde stammen aus der Windows-Inventur vor dem OS-Wechsel und d�
 
 ## Nächste Manifest-Aufgabe
 
-Naechster empfohlener Branch nach Review/Merge von `docs/post-merge-agent-best-practices-sync`: `setup/linux-gba-toolchain-plan`.
+Naechster empfohlener Branch nach Review/Merge von `setup/linux-gba-toolchain-plan`: `setup/linux-gba-toolchain-source-review`.
 
-Ziel: devkitPro/devkitARM- und `arm-none-eabi-gcc`-Vorgehen für Linux/CachyOS planen, ohne Installation oder Build-Schritte.
+Ziel: offizielle devkitPro/devkitARM-Dokumentation und dokumentierte Ziel-Repos read-only auf Toolchain-Anforderungen pruefen, ohne Installation, Build-Schritte, Clone oder Fork.
 
 Vor dem ersten Clone pro externer Quelle weiterhin festlegen:
 
