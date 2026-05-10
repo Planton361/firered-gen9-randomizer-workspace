@@ -32,3 +32,20 @@ Welche konkrete Regel oder Checkliste wird ergänzt?
 
 **Minimaler nächster Schritt:**  
 Kleinste sinnvolle Änderung.
+
+### WI-2026-05-10-001 – Work-Package-Lifecycle mit Handoff-Prompt
+
+**Problem:**  
+Codex-Arbeitsblöcke können schnell umgesetzt werden, aber der nächste Chat muss den Stand oft aus mehreren Dateien rekonstruieren.
+
+**Verbesserung:**  
+Ein kurzer Lifecycle definiert Kontextlesen, Branch-Check, Abschlussdokumentation, Checks, Commit/PR und Handoff-Prompt als Standard.
+
+**Betroffene Dateien:**  
+- `01_docs/setup/work-package-lifecycle.md`
+- `01_docs/quality/prompt-templates.md`
+- `01_docs/quality/prompt-guidelines.md`
+- `01_docs/setup/codex-workflow.md`
+
+**Minimaler nächster Schritt:**  
+Die Vorlage aus `prompt-templates.md` für den nächsten kleinen Arbeitsbranch verwenden.

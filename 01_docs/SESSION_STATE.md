@@ -11,19 +11,26 @@
 
 ## Aktueller Branch
 
-`analysis/external-sources-readonly`
+`docs/codex-workflow-automation`
 
 ## Aktueller Arbeitsblock
 
-Externe Quellen read-only bewerten und Dokumentation präzisieren.
+Codex-/ChatGPT-/GitHub-Workflow effizienter und stärker automatisierbar dokumentieren.
 
 ## Ziel
 
-Quellenlage für Randomizer, FireRed-Gen9-Basis, Upstream-Referenzen, Emulator und Tracker dokumentieren, ohne externe Repos zu klonen oder Forks anzulegen.
+Kurze Prompt-Vorlagen, Work-Package-Lifecycle, PR-Automation und Abschlussdokumentation als Definition of Done festhalten.
 
 ## In diesem Arbeitsblock vorbereitet
 
-- `01_docs/references/source-index.md` aktualisieren
+- `01_docs/quality/prompt-templates.md` neu anlegen
+- `01_docs/setup/work-package-lifecycle.md` neu anlegen
+- `01_docs/quality/prompt-guidelines.md` aktualisieren
+- `01_docs/setup/codex-workflow.md` aktualisieren
+- `01_docs/setup/git-workflow.md` aktualisieren
+- `01_docs/setup/fork-strategy.md` aktualisieren
+- `01_docs/quality/workflow-improvements.md` aktualisieren
+- `01_docs/quality/lessons-learned.md` aktualisieren
 - `01_docs/references/tool-manifest.md` aktualisieren
 - `01_docs/SESSION_STATE.md` aktualisieren
 - `01_docs/NEXT_STEPS.md` aktualisieren
@@ -38,6 +45,7 @@ Quellenlage für Randomizer, FireRed-Gen9-Basis, Upstream-Referenzen, Emulator u
 - Hex Maniac Advance prüfen
 - BizHawk/Ironmon testen
 - ROMs oder Builds bearbeiten
+- PR mergen
 
 ## Sicherheitsstatus
 
@@ -47,10 +55,11 @@ Keine externen Repos geklont.
 
 Keine Forks angelegt.
 
+Keine Änderungen direkt auf `main`.
+
 ## Nächste Prüfung
 
-- `pwsh -File .\07_scripts\bootstrap\check-remotes.ps1`
 - `pwsh -File .\07_scripts\bootstrap\check-git-safety.ps1`
 - `git status --short`
 - `git diff --stat`
-- Branch committen und als PR nach `main` führen
+- Branch committen, pushen und als PR nach `main` führen

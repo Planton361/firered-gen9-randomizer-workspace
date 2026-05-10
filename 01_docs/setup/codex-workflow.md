@@ -8,6 +8,12 @@ Dieses Dokument beschreibt, wie Codex im Projekt eingesetzt wird.
 
 Codex arbeitet nur auf freigegebenen Arbeitsbranches und nur an klar abgegrenzten Aufgaben.
 
+Auf freigegebenen Branches darf Codex die Arbeit vollständig durchführen: Branches erstellen, erlaubte Dateien ändern, Checks ausführen, committen, pushen und Pull Requests erstellen.
+
+Codex darf niemals direkt auf `main` arbeiten, direkt auf `main` pushen oder PRs mergen.
+
+Bei unerwarteten Änderungen im Arbeitsbaum muss Codex stoppen und den Fund melden, bevor weitere Änderungen erfolgen.
+
 ## Vor Codex-Aufgaben
 
 Vor jeder Codex-Änderung müssen gelesen werden:
@@ -24,6 +30,11 @@ Codex darf:
 
 - Dokumentation verbessern
 - kleine PowerShell-Scripts schreiben
+- freigegebene Arbeitsbranches erstellen
+- erlaubte Dateien auf freigegebenen Branches ändern
+- lokale Checks ausführen
+- Änderungen committen und pushen
+- Pull Requests nach `main` erstellen
 - Diffs erklären
 - PR-Beschreibungen vorbereiten
 - Tool-Manifest und Quellenindex pflegen
@@ -41,6 +52,7 @@ Codex darf nicht:
 - Secrets, Tokens, `.env` oder private Keys veröffentlichen
 - große Refactors ohne ausdrückliche Freigabe durchführen
 - externe Repos ohne Freigabe klonen oder ändern
+- PRs mergen
 
 ## Standardprompt
 
@@ -56,7 +68,7 @@ Verboten:
 ROMs, Saves, Builds, Tool-Binaries, externe Downloads, private Pfade, Secrets, Änderungen direkt auf main.
 
 Abgabeformat:
-Summary, geänderte Dateien, Checks/Tests, Risiken/Annahmen, nächster minimaler Schritt.
+Summary, geänderte Dateien, Checks/Tests, Risiken/Annahmen, PR-Link oder PR-Befehl, Handoff-Prompt.
 ```
 
 ## Erwartete Codex-Abgabe
@@ -67,7 +79,8 @@ Codex soll immer liefern:
 - geänderte Dateien
 - ausgeführte Checks
 - Risiken/Annahmen
-- nächsten minimalen Schritt
+- PR-Link oder PR-Befehl, wenn ein PR erwartet wird
+- Handoff-Prompt für den nächsten Chat
 
 ## Nach Codex-Änderungen
 
@@ -80,4 +93,8 @@ git diff
 pwsh -File .\07_scripts\bootstrap\check-git-safety.ps1
 ```
 
-Erst danach committen.
+Erst danach committen, pushen und PR erstellen. Nicht selbst mergen.
+
+## Arbeitspaket-Lifecycle
+
+Siehe `01_docs/setup/work-package-lifecycle.md`.
