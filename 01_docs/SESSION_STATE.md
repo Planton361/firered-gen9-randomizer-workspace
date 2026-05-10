@@ -38,23 +38,21 @@ Vorhandene und noch lokal zu prüfende Tools im Tool-Manifest nachvollziehbar er
 - `01_docs/references/tool-manifest.md` wurde um eine lokale Toolchain-Inventur erweitert.
 - Bekannte Vorinformationen wurden nicht als frisch verifizierte lokale Checks ausgegeben, sondern getrennt dokumentiert.
 - Für offene lokale Toolprüfungen wurden PowerShell-Prüfbefehle dokumentiert.
+- Lokale Windows-Checks und Inventurbefehle wurden anschließend auf dem Branch ausgeführt.
+- Lokal bestätigte Versionen und Pfade wurden im Tool-Manifest nachgetragen.
 
 ## Inventurstatus
 
 | Tool | Status |
 |---|---|
-| PowerShell | dokumentiert vorhanden |
-| Git | dokumentiert vorhanden; lokal frisch zu prüfen |
-| GitHub CLI (`gh`) | dokumentiert installiert/authentifiziert; bei PATH-Problemen neues Terminal nutzen |
-| Java | offen: lokal prüfen |
-| make | offen: lokal prüfen |
-| arm-none-eabi-gcc | offen: lokal prüfen |
-| agbcc | optional/offen: lokal prüfen, falls vorhanden |
-| pwsh | offen: lokal prüfen |
-
-## Einschränkung dieser Session
-
-Diese ChatGPT-/GitHub-Connector-Session konnte keine Befehle auf dem lokalen Windows-Workspace ausführen. Daher wurden keine lokalen Versionen erfunden und keine lokalen Toolpfade geraten. Die ausführbaren Prüfkommandos sind im Tool-Manifest dokumentiert.
+| PowerShell | lokal bestätigt: 5.1.26100.8328 |
+| Git | lokal bestätigt: 2.54.0 unter `c:\devkitPro\msys2\usr\bin\git.exe` |
+| GitHub CLI (`gh`) | lokal bestätigt: 2.92.0 und authentifiziert, aber nicht im aktuellen PATH |
+| Java | lokal bestätigt: Temurin OpenJDK 25.0.3+9 LTS |
+| make | lokal bestätigt: GNU Make 4.4.1 |
+| arm-none-eabi-gcc | nicht im aktuellen PATH gefunden |
+| agbcc | optional; nicht im aktuellen PATH gefunden |
+| pwsh | lokal bestätigt: 7.6.1 |
 
 ## Noch nicht gestartet
 
@@ -79,7 +77,7 @@ Keine Änderungen direkt auf `main`.
 
 ## Nächste Prüfung
 
-Lokal im Windows-Workspace ausführen:
+Vor PR-Abschluss erneut prüfen:
 
 ```powershell
 pwsh -File .\07_scripts\bootstrap\check-git-safety.ps1

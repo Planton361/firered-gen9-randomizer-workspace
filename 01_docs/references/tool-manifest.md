@@ -6,19 +6,19 @@ Dieses Manifest dokumentiert Tools, Repos, Forks, Versionen, Pfade und Sicherhei
 
 Dieser Stand ist read-only. Es wurden keine externen Repos geklont, keine Forks angelegt und keine Tool-Binaries heruntergeladen.
 
-Die lokale Toolchain-Inventur wurde im Arbeitsblock `setup/toolchain-local-inventory` dokumentiert. Diese ChatGPT-/GitHub-Connector-Session konnte keine Befehle auf dem lokalen Windows-Workspace ausführen; daher sind frisch zu prüfende lokale Versionen und Pfade ausdrücklich als offen markiert.
+Die lokale Toolchain-Inventur wurde im Arbeitsblock `setup/toolchain-local-inventory` dokumentiert. Lokale Windows-Checks wurden auf dem Branch ausgeführt; bestätigte Versionen und Pfade sind unten dokumentiert. Fehlende PATH-Einträge bleiben ausdrücklich offen.
 
 | Tool/Repo | Zweck | Upstream | Fork/Origin | Lokaler Pfad | Branch | Commit | Codex darf ändern | Status |
 |---|---|---|---|---|---|---|---|---|
 | Workspace Repo | Source of Truth | n/a | git@github.com:Planton361/firered-gen9-randomizer-workspace.git | `C:\Users\anton\romhacking\fr-rando-gen9` | main | offen | ja, nur Branches | aktiv |
-| Git | Versionierung | n/a | n/a | PATH | n/a | n/a | nein | dokumentiert vorhanden; lokal frisch zu prüfen |
-| GitHub CLI (`gh`) | PRs und GitHub-Checks automatisieren | https://cli.github.com/ | n/a | PATH | n/a | n/a | nein | dokumentiert installiert und authentifiziert; PATH-Hinweis beachten |
-| PowerShell | Terminal | n/a | n/a | Windows | n/a | n/a | nein | dokumentiert vorhanden |
-| PowerShell 7 (`pwsh`) | Script-Ausführung und Checks | https://github.com/PowerShell/PowerShell | n/a | PATH | n/a | n/a | nein | offen: lokal prüfen |
-| Java | Laufzeit für UPR FVX | https://adoptium.net/ oder lokale Distribution | n/a | PATH | n/a | n/a | nein | offen: lokal prüfen |
-| `make` | Build-Orchestrierung für spätere Toolchain-Schritte | n/a | n/a | PATH | n/a | n/a | nein | offen: lokal prüfen |
-| `arm-none-eabi-gcc` | GBA Cross-Compiler | ARM GNU Toolchain/devkitARM | n/a | PATH | n/a | n/a | nein | offen: lokal prüfen |
-| `agbcc` | optionale GBA/pret-kompatible Compiler-Komponente | pret/devkitARM-Kontext | n/a | PATH oder lokaler Toolchain-Pfad | n/a | n/a | nein | optional; lokal prüfen, falls vorhanden |
+| Git | Versionierung | n/a | n/a | `c:\devkitPro\msys2\usr\bin\git.exe` | n/a | n/a | nein | lokal bestätigt: Git 2.54.0 |
+| GitHub CLI (`gh`) | PRs und GitHub-Checks automatisieren | https://cli.github.com/ | n/a | `C:\Program Files\GitHub CLI\gh.exe`; nicht im aktuellen PATH | n/a | n/a | nein | lokal bestätigt: gh 2.92.0, authentifiziert |
+| PowerShell | Terminal | n/a | n/a | `C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe` | n/a | n/a | nein | lokal bestätigt: Windows PowerShell 5.1.26100.8328 |
+| PowerShell 7 (`pwsh`) | Script-Ausführung und Checks | https://github.com/PowerShell/PowerShell | n/a | `C:\Program Files\WindowsApps\Microsoft.PowerShell_7.6.1.0_x64__8wekyb3d8bbwe\pwsh.exe` | n/a | n/a | nein | lokal bestätigt: pwsh 7.6.1 |
+| Java | Laufzeit für UPR FVX | https://adoptium.net/ oder lokale Distribution | n/a | `C:\Program Files\Eclipse Adoptium\jdk-25.0.3.9-hotspot\bin\java.exe` | n/a | n/a | nein | lokal bestätigt: Temurin OpenJDK 25.0.3+9 LTS |
+| `make` | Build-Orchestrierung für spätere Toolchain-Schritte | n/a | n/a | `c:\devkitPro\msys2\usr\bin\make.exe` | n/a | n/a | nein | lokal bestätigt: GNU Make 4.4.1 |
+| `arm-none-eabi-gcc` | GBA Cross-Compiler | ARM GNU Toolchain/devkitARM | n/a | PATH | n/a | n/a | nein | nicht im aktuellen PATH gefunden |
+| `agbcc` | optionale GBA/pret-kompatible Compiler-Komponente | pret/devkitARM-Kontext | n/a | PATH oder lokaler Toolchain-Pfad | n/a | n/a | nein | optional; nicht im aktuellen PATH gefunden |
 | Codex | Agent | OpenAI | n/a | offen | n/a | n/a | nur nach Branch-Freigabe | geprüft für Docs-Dry-Run |
 | JetBrains IDE | IDE | JetBrains | n/a | lokal | n/a | n/a | nein | vorhanden |
 | devkitPro/devkitARM | GBA Build Toolchain | devkitPro | n/a | offen | n/a | n/a | nein | offen |
@@ -41,14 +41,14 @@ Zweck: Nur lokale Tool-Verfügbarkeit, Versionen und PATH-Erreichbarkeit dokumen
 
 | Prüfpukt | Status | Nachweisstand | Nächster Schritt |
 |---|---|---|---|
-| PowerShell | dokumentiert vorhanden | Standardterminal im Projekt | bei lokaler Prüfung `$PSVersionTable.PSVersion` notieren |
-| Git | dokumentiert vorhanden | Projekt nutzt Git/GitHub-Workflow | `git --version` lokal ausführen |
-| GitHub CLI (`gh`) | dokumentiert installiert/authentifiziert | PR #10 Handoff und Manifest-Hinweis | `gh --version` und `gh auth status` lokal ausführen; bei PATH-Problem neues Terminal nutzen |
-| Java | offen | keine lokale Version dokumentiert | `java -version` lokal ausführen |
-| `make` | offen | keine lokale Version dokumentiert | `make --version` lokal ausführen |
-| `arm-none-eabi-gcc` | offen | keine lokale Version dokumentiert | `arm-none-eabi-gcc --version` lokal ausführen |
-| `agbcc` | optional/offen | keine lokale Verfügbarkeit dokumentiert | `Get-Command agbcc -ErrorAction SilentlyContinue` lokal ausführen |
-| `pwsh` | offen | Check-Script nutzt `pwsh`, lokale Verfügbarkeit nicht frisch dokumentiert | `pwsh -NoProfile -Command '$PSVersionTable.PSVersion'` lokal ausführen |
+| PowerShell | lokal bestätigt | `C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe`; 5.1.26100.8328 | keine |
+| Git | lokal bestätigt | `c:\devkitPro\msys2\usr\bin\git.exe`; Git 2.54.0 | keine |
+| GitHub CLI (`gh`) | lokal bestätigt, aber nicht im aktuellen PATH | `gh` im PATH fehlt; `C:\Program Files\GitHub CLI\gh.exe` meldet 2.92.0 und ist authentifiziert | Windows Terminal neu öffnen oder PATH in PowerShell neu laden |
+| Java | lokal bestätigt | `C:\Program Files\Eclipse Adoptium\jdk-25.0.3.9-hotspot\bin\java.exe`; Temurin OpenJDK 25.0.3+9 LTS | keine |
+| `make` | lokal bestätigt | `c:\devkitPro\msys2\usr\bin\make.exe`; GNU Make 4.4.1 | keine |
+| `arm-none-eabi-gcc` | nicht im aktuellen PATH gefunden | `Get-Command arm-none-eabi-gcc` und Inventurscript ohne Treffer | devkitARM PATH später gezielt klären, ohne Build zu starten |
+| `agbcc` | optional; nicht im aktuellen PATH gefunden | Inventurscript ohne Treffer | nur bei Bedarf später klären |
+| `pwsh` | lokal bestätigt | `C:\Program Files\WindowsApps\Microsoft.PowerShell_7.6.1.0_x64__8wekyb3d8bbwe\pwsh.exe`; 7.6.1 | keine |
 
 ### PowerShell-Prüfbefehle für lokale Inventur
 

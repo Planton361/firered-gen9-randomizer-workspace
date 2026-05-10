@@ -7,9 +7,9 @@ Lokale Toolchain-/Workspace-Inventur auf `setup/toolchain-local-inventory` dokum
 ## Nächste Schritte
 
 1. PR `setup/toolchain-local-inventory` reviewen.
-2. Im lokalen Windows-Workspace die dokumentierten Inventurbefehle aus `01_docs/references/tool-manifest.md` ausführen.
-3. Ergebnisse zu Versionen und Pfaden nur als Dokumentation nachtragen, falls sie lokal bestätigt wurden.
-4. Safety-Checks lokal ausführen:
+2. Dokumentierte Inventurergebnisse im Tool-Manifest prüfen.
+3. Entscheiden, ob `gh` PATH und devkitARM PATH separat nachgezogen werden sollen.
+4. Safety-Checks vor PR-Abschluss erneut ausführen:
 
 ```powershell
 pwsh -File .\07_scripts\bootstrap\check-git-safety.ps1
@@ -34,7 +34,7 @@ git diff --stat
 Nächster sinnvoller Arbeitsblock nach gemergtem Inventur-PR:
 
 - lokalen Inventur-Output auswerten
-- fehlende Toolchain-Bestandteile als Installationsentscheidung dokumentieren
+- fehlende PATH-Einträge für `gh` und `arm-none-eabi-gcc` als Setup-Entscheidung dokumentieren
 - weiterhin keine ROMs lesen, kopieren oder bearbeiten
 - weiterhin keine Builds starten, bis Toolchain-Status freigegeben ist
 
