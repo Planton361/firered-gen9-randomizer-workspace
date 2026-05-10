@@ -4,13 +4,15 @@ Dieses Manifest dokumentiert Tools, Repos, Forks, Versionen, Pfade und Sicherhei
 
 ## Sicherheitsstatus
 
-Dieser Stand ist read-only. Es wurden keine externen Repos geklont, keine Forks angelegt, keine Installationen durchgeführt und keine Tool-Binaries heruntergeladen.
+Dieser Stand ist read-only für ROM-/Build-/Toolchain-Arbeit. Es wurden keine externen Repos geklont, keine Forks angelegt, keine Installationen durchgeführt und keine Tool-Binaries heruntergeladen.
 
 Die bisherige lokale Toolchain-Inventur wurde auf Windows durchgeführt und ist ab dem OS-Wechsel nur noch historischer Referenzstand. Linux/CachyOS ist die neue primäre lokale Umgebung. Der Linux-Toolchain-Stand wurde auf Branch `setup/linux-toolchain-inventory` read-only geprüft; GitHub-CLI- und Git-Auth wurden auf Branch `setup/linux-gh-auth-refresh` erneut geprüft.
 
+Der aktuelle Arbeitsblock `docs/agent-best-practices-refresh` dokumentiert Agent-/MCP-/Usage-Regeln und ergänzt `.aiignore` sowie ein PR-Template. Er ändert keine Toolchain, keine externen Repos und keine ROM-/Build-Pfade.
+
 | Tool/Repo | Zweck | Upstream | Fork/Origin | Lokaler Pfad | Branch | Commit | Codex darf ändern | Status |
 |---|---|---|---|---|---|---|---|---|
-| Workspace Repo | Source of Truth | n/a | git@github.com:Planton361/firered-gen9-randomizer-workspace.git | `/home/anton/IdeaProjects/firered-gen9-randomizer-workspace` | `setup/linux-gh-auth-refresh` | offen | ja, nur Branches | aktiv |
+| Workspace Repo | Source of Truth | n/a | git@github.com:Planton361/firered-gen9-randomizer-workspace.git | `/home/anton/IdeaProjects/firered-gen9-randomizer-workspace` | `docs/agent-best-practices-refresh` | offen | ja, nur Branches | aktiv |
 | Git | Versionierung | n/a | n/a | `/usr/bin/git` | n/a | n/a | nein | gefunden: 2.54.0 |
 | GitHub CLI (`gh`) | PRs und GitHub-Checks automatisieren | https://cli.github.com/ | n/a | `/usr/bin/gh` | n/a | n/a | nein | gefunden: 2.92.0; Auth via Keyring aktiv |
 | POSIX Shell | Terminal-Standard | n/a | n/a | `/bin/fish` laut `$SHELL` | n/a | n/a | nein | primär |
@@ -20,8 +22,17 @@ Die bisherige lokale Toolchain-Inventur wurde auf Windows durchgeführt und ist 
 | devkitPro/devkitARM | GBA Build Toolchain | devkitPro | n/a | Linux-Pfad offen | n/a | n/a | nein | nicht nachgewiesen |
 | `arm-none-eabi-gcc` | GBA Cross-Compiler | ARM GNU Toolchain/devkitARM | n/a | nicht im PATH gefunden | n/a | n/a | nein | fehlt |
 | `agbcc` | optionale GBA/pret-kompatible Compiler-Komponente | pret/devkitARM-Kontext | n/a | nicht im PATH gefunden | n/a | n/a | nein | fehlt/optional |
-| Codex | Agent | OpenAI | n/a | offen | n/a | n/a | nur nach Branch-Freigabe | geprüft für Docs-Dry-Run |
+| Codex CLI | primärer Coding Agent | OpenAI | n/a | offen | n/a | n/a | nur nach Branch-Freigabe | primärer Worker für erlaubte Arbeitsbranches |
+| ChatGPT QA | Analyse, Review und Handoff | OpenAI | n/a | n/a | n/a | n/a | nein | Steuerungs-/QA-Ebene |
+| `.aiignore` | Agent-Kontextschutz | n/a | n/a | `.aiignore` | n/a | n/a | ja | ergänzt für ROM-/Build-/Tool-Binary-/Secret-Pfade |
+| GitHub PR Template | PR-Checkliste | GitHub | n/a | `.github/pull_request_template.md` | n/a | n/a | ja | ergänzt |
+| MCP allgemein | optionale Tool-Integration | abhängig vom Server | n/a | keine aktive Config committed | n/a | n/a | nur nach Manifest-Eintrag | optional, nicht Default |
+| JetBrains MCP | mögliche IDE-Integration | JetBrains/Serverquelle offen | n/a | nicht geprüft | n/a | n/a | nein | erst nach Toolchain-Inventur evaluieren |
 | JetBrains IDE | IDE | JetBrains | n/a | lokal | n/a | n/a | nein | auf Linux neu zu prüfen |
+| JetBrains AI / Junie | optionaler IDE-Agent | JetBrains | n/a | nicht geprüft | n/a | n/a | nein | optional; nicht parallel zu Codex auf gleichem Branch |
+| Continue | optionaler Assistenz-Client | Continue | n/a | nicht geprüft | n/a | n/a | nein | optional; nicht parallel zu Codex auf gleichem Branch |
+| Cursor | optionaler Editor-Agent | Cursor | n/a | nicht geprüft | n/a | n/a | nein | optional; nicht parallel zu Codex auf gleichem Branch |
+| Windsurf | optionaler Editor-Agent | Codeium/Windsurf | n/a | nicht geprüft | n/a | n/a | nein | optional; nicht parallel zu Codex auf gleichem Branch |
 | UPR FVX | Randomizer | https://github.com/upr-fvx/universal-pokemon-randomizer-fvx | offen | `02_external/upr-fvx` | offen | offen | nur nach Freigabe | read-only geprüft, nicht geklont |
 | CFRU-expansion | FireRed Gen9/CFRU-Basis | https://github.com/Shiny-Miner/CFRU-expansion | offen | `02_external/CFRU-expansion` | offen | offen | nur nach Freigabe | read-only geprüft, nicht geklont |
 | DPE Gen9 | Pokémon Expansion | https://github.com/Shiny-Miner/Dynamic-Pokemon-Expansion-Gen-9 | offen | `02_external/Dynamic-Pokemon-Expansion-Gen-9` | offen | offen | nur nach Freigabe | read-only geprüft, nicht geklont |
@@ -32,6 +43,35 @@ Die bisherige lokale Toolchain-Inventur wurde auf Windows durchgeführt und ist 
 | Hex Maniac Advance | ROM-Analyse | offen | n/a | `03_tools/releases` | n/a | n/a | nein | Quelle offen; Tool-Binary nicht committen |
 | BizHawk | Emulator | https://github.com/TASEmulators/BizHawk | n/a | `03_tools/releases` | n/a | n/a | nein | read-only geprüft; Tool-Binary nicht committen |
 | Ironmon Tracker | Tracker | https://github.com/besteon/Ironmon-Tracker | offen | `02_external/Ironmon-Tracker` | offen | offen | nur nach Freigabe | read-only geprüft, nicht geklont |
+
+## Agent-Tooling-Stand
+
+Arbeitsblock: `docs/agent-best-practices-refresh`.
+
+| Thema | Status | Regel |
+|---|---|---|
+| ChatGPT QA | aktiv | Analyse, Review, Handoff; keine privaten Artefakte hochladen |
+| Codex CLI | primärer Worker | nur auf freigegebenen Branches und erlaubten Dateien |
+| Suggest | erlaubt | Analyse und Vorschläge ohne automatische Dateiänderung |
+| Auto Edit | erlaubt bei kleinen Änderungen | nur mit erlaubter Dateiliste und Review |
+| Full Auto | stark begrenzt | nicht für ROM-, Build-, Toolchain-, externe Repo- oder Refactor-Arbeit |
+| IDE-Agenten | optional | nicht parallel auf demselben Branch |
+| MCP | optional | nur dokumentierte, vertrauenswürdige Server; keine Secrets in Configs |
+| JetBrains MCP | offen | erst nach Toolchain-Inventur evaluieren |
+
+## MCP-Manifest-Regel
+
+Jeder künftig aktiv genutzte MCP-Server muss vor Nutzung in diesem Manifest ergänzt werden:
+
+- Name
+- Zweck
+- Quelle/Upstream
+- lokaler Status
+- benötigte Berechtigungen
+- Codex-/Agent-Freigabe
+- Sicherheitsnotiz
+
+Nicht dokumentierte MCP-Server gelten als nicht freigegeben.
 
 ## Linux/CachyOS-Inventur
 
@@ -119,7 +159,7 @@ Die folgenden Befunde stammen aus der Windows-Inventur vor dem OS-Wechsel und d�
 
 ## Nächste Manifest-Aufgabe
 
-Naechster empfohlener Branch: `setup/linux-gba-toolchain-plan`.
+Naechster empfohlener Branch nach Review/Merge von `docs/agent-best-practices-refresh`: `setup/linux-gba-toolchain-plan`.
 
 Ziel: devkitPro/devkitARM- und `arm-none-eabi-gcc`-Vorgehen für Linux/CachyOS planen, ohne Installation oder Build-Schritte.
 
