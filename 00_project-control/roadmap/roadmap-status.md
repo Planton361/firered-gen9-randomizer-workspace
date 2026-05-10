@@ -22,11 +22,11 @@ GitHub und Codex sollen dieses Dokument bevorzugt nutzen, weil Änderungen hier 
 | GitHub-Repo | `Planton361/firered-gen9-randomizer-workspace` |
 | Source of Truth | GitHub + Markdown-Dokumente |
 | Excel-Roadmap | visuelles Dashboard |
-| Standardterminal | Windows PowerShell |
+| Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Nächster Branch | `setup/path-toolchain-followup` |
-| Aktueller Fokus | PATH-Folgeklärung für lokale Toolchain vorbereiten |
+| Nächster Branch | `setup/linux-toolchain-inventory` |
+| Aktueller Fokus | Linux/CachyOS-Workspace-Migration dokumentieren |
 | ROM-/Build-Arbeit | noch nicht gestartet |
 | Externe Repos | noch nicht geklont |
 | Forks | noch nicht angelegt |
@@ -35,7 +35,7 @@ GitHub und Codex sollen dieses Dokument bevorzugt nutzen, weil Änderungen hier 
 
 | Paket | Aufgabe | Ergebnis |
 |---|---|---|
-| 01 Initial Setup | lokalen Workspace erstellt | `C:\Users\anton\romhacking\fr-rando-gen9` existiert |
+| 01 Initial Setup | lokalen Workspace erstellt | historisch auf Windows; Linux-Pfad neu zu prüfen |
 | 01 Initial Setup | Git initialisiert | lokales Git-Repo erstellt |
 | 01 Initial Setup | GitHub-Repo erstellt | `Planton361/firered-gen9-randomizer-workspace` existiert |
 | 01 Initial Setup | `main` eingerichtet | `main` ist Default Branch |
@@ -52,7 +52,8 @@ GitHub und Codex sollen dieses Dokument bevorzugt nutzen, weil Änderungen hier 
 | 05 Externe Quellen | read-only Analyseblock dokumentiert | Quellen und Tool-Manifest ohne Clone/Fork präzisiert |
 | 04 Codex Start | Workflow-Automation abgeschlossen | PR #9 `docs: improve codex workflow automation` gemerged |
 | 04 Codex Start | Post-Merge-Doku-Sync abgeschlossen | PR #10 `docs: sync post-merge workflow state` gemerged |
-| 06 Toolchain | lokale Toolchain-/Workspace-Inventur abgeschlossen | PR #11 `docs: record local toolchain inventory` gemerged |
+| 06 Toolchain | lokale Windows-Toolchain-/Workspace-Inventur abgeschlossen | PR #11 `docs: record local toolchain inventory` gemerged; historischer Stand |
+| 06 Toolchain | Windows-PATH-Folgeklärung vorbereitet | PR #12 `docs: prepare path toolchain followup` gemerged; durch OS-Wechsel historisch |
 
 ## In Review/Test
 
@@ -61,23 +62,25 @@ GitHub und Codex sollen dieses Dokument bevorzugt nutzen, weil Änderungen hier 
 | 02 Projektkontext | README, AGENTS und Handoff-Dateien prüfen | Sind Ziel, Grenzen, Arbeitsmodell und Codex-Regeln vollständig? |
 | 02 Projektkontext | Tool-Manifest prüfen | Sind Pfade, Fork-/Upstream-Regeln und Codex-Freigaben ausreichend klar? |
 | 04 Codex Start | Codex Dry Run auswerten | Prüfen, ob Governance-Regeln konsistent und praktisch nutzbar sind |
+| 06 Toolchain | Linux/CachyOS-Migration reviewen | Sind Windows-Annahmen aus neuen Arbeitsblöcken entfernt? |
 
 ## Als Nächstes
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 06 Toolchain | PATH-Folgeklärung vorbereiten | `gh`, `arm-none-eabi-gcc` und optional `agbcc` PATH klären, ohne Installation, ROM- oder Build-Arbeit |
+| 06 Toolchain | Linux-Toolchain-/Workspace-Inventur prüfen | Git, gh, Java, make, devkitPro/devkitARM, arm-none-eabi-gcc und optional pwsh auf Linux dokumentieren, ohne Installation, ROM- oder Build-Arbeit |
 
 ## Noch offen
 
 | Paket | Aufgabe | Hinweise |
 |---|---|---|
-| 04 Codex Start | Codex Dry Run abschließen | In Arbeit auf `setup/codex-dry-run-results`; Codex soll nur Docs prüfen, keine ROM-/Build-Arbeit |
+| 04 Codex Start | Codex Dry Run abschließen | Codex soll nur Docs prüfen, keine ROM-/Build-Arbeit |
 | 04 Codex Start | Codex Standardprompt anwenden | Vorlage für kleine Arbeitsbranches testen |
 | 05 Externe Quellen | Repos analysieren, aber noch nicht ändern | UPR FVX, Shiny-Miner, CyanSMP64, Skeli789, pret |
 | 05 Externe Quellen | Entscheidung: klonen oder forken | Nur forken, wenn Änderungen nötig sind |
-| 06 Toolchain | devkitPro/devkitARM prüfen | Installation und Version dokumentieren |
-| 06 Toolchain | Java prüfen | notwendig für UPR FVX |
+| 06 Toolchain | Linux-Toolchain-Inventur durchführen | Keine Installationen erzwingen, nur vorhandene Tools dokumentieren |
+| 06 Toolchain | devkitPro/devkitARM auf Linux prüfen | Installation und Version dokumentieren, kein Build |
+| 06 Toolchain | Java auf Linux prüfen | notwendig für UPR FVX |
 | 06 Toolchain | Hex Maniac Advance prüfen | Tool lokal dokumentieren, nicht committen |
 | 06 Toolchain | BizHawk prüfen | Tool lokal dokumentieren, nicht committen |
 | 06 Toolchain | Ironmon Tracker prüfen | Repo/Release dokumentieren |
@@ -124,7 +127,7 @@ Excel-Roadmap:
 ## Nächster empfohlener Branch
 
 ```text
-setup/path-toolchain-followup
+setup/linux-toolchain-inventory
 ```
 ## Arbeitsblock-Log
 
@@ -180,8 +183,8 @@ setup/path-toolchain-followup
 - Lokale Toolchain-/Workspace-Inventur im Tool-Manifest dokumentiert.
 - PowerShell-Prüfbefehle für PowerShell, Git, GitHub CLI, Java, make, arm-none-eabi-gcc, optional agbcc und pwsh ergänzt.
 - Lokale Windows-Checks ausgeführt und bestätigte Versionen/Pfade für PowerShell, Git, GitHub CLI, Java, make und pwsh nachgetragen.
-- `gh` ist installiert/authentifiziert, aber im aktuellen PATH nicht als `gh` erreichbar.
-- `arm-none-eabi-gcc` und optional `agbcc` wurden im aktuellen PATH nicht gefunden.
+- `gh` ist installiert/authentifiziert, aber im damaligen PATH nicht als `gh` erreichbar.
+- `arm-none-eabi-gcc` und optional `agbcc` wurden im damaligen PATH nicht gefunden.
 - Keine externen Repos geklont.
 - Keine Forks angelegt.
 - Keine ROMs, Saves, Builds, Tool-Binaries oder privaten Dateien angefasst.
@@ -194,4 +197,13 @@ setup/path-toolchain-followup
 - Keine PATH-Änderungen, Installationen oder Build-Schritte durchgeführt.
 - Keine externen Repos geklont.
 - Keine Forks angelegt.
+- Keine ROMs, Saves, Builds, Tool-Binaries oder privaten Dateien angefasst.
+
+### 2026-05-10 – setup/linux-workspace-migration
+
+- OS-Wechsel von Windows auf Linux/CachyOS als Governance-Änderung dokumentiert.
+- README, AGENTS, Tool-Manifest, Session State, Next Steps und Roadmap auf Linux-first umgestellt.
+- Windows-Toolchain- und PATH-Befunde als historischer Stand gekennzeichnet.
+- Nächster Branch `setup/linux-toolchain-inventory` vorbereitet.
+- Keine Installationen, Build-Schritte, externen Clones oder Forks durchgeführt.
 - Keine ROMs, Saves, Builds, Tool-Binaries oder privaten Dateien angefasst.
