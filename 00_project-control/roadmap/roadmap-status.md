@@ -25,8 +25,8 @@ GitHub und Codex sollen dieses Dokument bevorzugt nutzen, weil Änderungen hier 
 | Standardterminal | Windows PowerShell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Nächster Branch | `docs/codex-workflow-automation` |
-| Aktueller Fokus | Codex-/ChatGPT-/GitHub-Workflow-Automation |
+| Nächster Branch | `setup/toolchain-local-inventory` |
+| Aktueller Fokus | lokale Toolchain-/Workspace-Inventur |
 | ROM-/Build-Arbeit | noch nicht gestartet |
 | Externe Repos | noch nicht geklont |
 | Forks | noch nicht angelegt |
@@ -50,6 +50,7 @@ GitHub und Codex sollen dieses Dokument bevorzugt nutzen, weil Änderungen hier 
 | 03 Repo Governance | Governance-Dokumente erstellt | Git-, Fork-, Codex-, Security- und Rebuild-Regeln dokumentiert |
 | 03 Repo Governance | Bootstrap-/Safety-Scripts erstellt | Workspace-Bootstrap, Remote-Check und Git-Safety-Check dokumentiert |
 | 05 Externe Quellen | read-only Analyseblock dokumentiert | Quellen und Tool-Manifest ohne Clone/Fork präzisiert |
+| 04 Codex Start | Workflow-Automation abgeschlossen | PR #9 `docs: improve codex workflow automation` gemerged |
 
 ## In Review/Test
 
@@ -58,13 +59,12 @@ GitHub und Codex sollen dieses Dokument bevorzugt nutzen, weil Änderungen hier 
 | 02 Projektkontext | README, AGENTS und Handoff-Dateien prüfen | Sind Ziel, Grenzen, Arbeitsmodell und Codex-Regeln vollständig? |
 | 02 Projektkontext | Tool-Manifest prüfen | Sind Pfade, Fork-/Upstream-Regeln und Codex-Freigaben ausreichend klar? |
 | 04 Codex Start | Codex Dry Run auswerten | Prüfen, ob Governance-Regeln konsistent und praktisch nutzbar sind |
-| 04 Codex Start | Codex Workflow-Automation prüfen | Prompt-Templates, Lifecycle, PR-Erstellung und Handoff nutzen |
 
 ## Als Nächstes
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 04 Codex Start | Workflow-Automation-PR reviewen | Kurze Arbeitspakete schneller starten, abschließen und übergeben |
+| 06 Toolchain | lokale Toolchain-/Workspace-Inventur prüfen | Vorhandene Tools, Pfade und offene Installationspunkte dokumentieren, ohne ROM-/Build-Arbeit |
 
 ## Noch offen
 
@@ -122,7 +122,7 @@ Excel-Roadmap:
 ## Nächster empfohlener Branch
 
 ```text
-docs/codex-workflow-automation
+setup/toolchain-local-inventory
 ```
 ## Arbeitsblock-Log
 
@@ -162,3 +162,12 @@ docs/codex-workflow-automation
 - Keine Forks angelegt.
 - Keine ROMs, Saves, Builds, Tool-Binaries oder privaten Dateien angefasst.
 
+### 2026-05-10 – docs/sync-post-merge-workflow-state
+
+- Dokumentationsstand nach gemergtem PR #9 synchronisiert.
+- Workflow-Automation in den erledigten Status verschoben.
+- Nächsten Branch `setup/toolchain-local-inventory` vorbereitet.
+- Nächster Fokus ist lokale Toolchain-/Workspace-Inventur ohne ROM-/Build-Arbeit.
+- Keine externen Repos geklont.
+- Keine Forks angelegt.
+- Keine ROMs, Saves, Builds, Tool-Binaries oder privaten Dateien angefasst.
