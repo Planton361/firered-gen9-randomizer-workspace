@@ -2,15 +2,14 @@
 
 ## Aktueller Arbeitsblock
 
-Dokumentationsstand nach gemergtem PR #9 synchronisieren und den nächsten kleinen Arbeitsblock vorbereiten.
+Lokale Toolchain-/Workspace-Inventur auf `setup/toolchain-local-inventory` dokumentieren und als PR nach `main` führen.
 
 ## Nächste Schritte
 
-1. Toolchain-/Workspace-Inventur ohne ROM-/Build-Arbeit prüfen.
-2. Dafür den nächsten Branch `setup/toolchain-local-inventory` vorbereiten.
-3. GitHub CLI ist installiert und authentifiziert; PR-Erstellung kann mit `gh pr create` erfolgen.
-4. Sicherstellen, dass kein Clone/Fork/Download und keine ROM-/Build-Arbeit erfolgt.
-5. Lokale Checks ausführen:
+1. PR `setup/toolchain-local-inventory` reviewen.
+2. Dokumentierte Inventurergebnisse im Tool-Manifest prüfen.
+3. Entscheiden, ob `gh` PATH und devkitARM PATH separat nachgezogen werden sollen.
+4. Safety-Checks vor PR-Abschluss erneut ausführen:
 
 ```powershell
 pwsh -File .\07_scripts\bootstrap\check-git-safety.ps1
@@ -18,11 +17,7 @@ git status --short
 git diff --stat
 ```
 
-6. Für das nächste Arbeitspaket nur Inventur dokumentieren:
-
-```powershell
-git switch -c setup/toolchain-local-inventory
-```
+5. PR nach Review mergen, nicht durch Codex.
 
 ## Nicht tun
 
@@ -32,15 +27,16 @@ git switch -c setup/toolchain-local-inventory
 - keine Forks verändern
 - keine Tool-Binaries committen
 - keine Änderungen direkt auf `main`
+- keine Installationen erzwingen
 
 ## Danach
 
-Nächster sinnvoller Arbeitsblock:
+Nächster sinnvoller Arbeitsblock nach gemergtem Inventur-PR:
 
-- lokale Toolchain-/Workspace-Inventur prüfen
-- vorhandene Tools und Pfade dokumentieren
-- keine ROMs lesen, kopieren oder bearbeiten
-- keine Builds starten
+- lokalen Inventur-Output auswerten
+- fehlende PATH-Einträge für `gh` und `arm-none-eabi-gcc` als Setup-Entscheidung dokumentieren
+- weiterhin keine ROMs lesen, kopieren oder bearbeiten
+- weiterhin keine Builds starten, bis Toolchain-Status freigegeben ist
 
 ## Quality
 

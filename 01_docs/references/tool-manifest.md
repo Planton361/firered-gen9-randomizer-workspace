@@ -6,12 +6,19 @@ Dieses Manifest dokumentiert Tools, Repos, Forks, Versionen, Pfade und Sicherhei
 
 Dieser Stand ist read-only. Es wurden keine externen Repos geklont, keine Forks angelegt und keine Tool-Binaries heruntergeladen.
 
+Die lokale Toolchain-Inventur wurde im Arbeitsblock `setup/toolchain-local-inventory` dokumentiert. Lokale Windows-Checks wurden auf dem Branch ausgeführt; bestätigte Versionen und Pfade sind unten dokumentiert. Fehlende PATH-Einträge bleiben ausdrücklich offen.
+
 | Tool/Repo | Zweck | Upstream | Fork/Origin | Lokaler Pfad | Branch | Commit | Codex darf ändern | Status |
 |---|---|---|---|---|---|---|---|---|
 | Workspace Repo | Source of Truth | n/a | git@github.com:Planton361/firered-gen9-randomizer-workspace.git | `C:\Users\anton\romhacking\fr-rando-gen9` | main | offen | ja, nur Branches | aktiv |
-| Git | Versionierung | n/a | n/a | PATH | n/a | n/a | nein | vorhanden |
-| GitHub CLI (`gh`) | PRs und GitHub-Checks automatisieren | https://cli.github.com/ | n/a | PATH | n/a | n/a | nein | installiert und authentifiziert |
-| PowerShell | Terminal | n/a | n/a | Windows | n/a | n/a | nein | vorhanden |
+| Git | Versionierung | n/a | n/a | `c:\devkitPro\msys2\usr\bin\git.exe` | n/a | n/a | nein | lokal bestätigt: Git 2.54.0 |
+| GitHub CLI (`gh`) | PRs und GitHub-Checks automatisieren | https://cli.github.com/ | n/a | `C:\Program Files\GitHub CLI\gh.exe`; nicht im aktuellen PATH | n/a | n/a | nein | lokal bestätigt: gh 2.92.0, authentifiziert |
+| PowerShell | Terminal | n/a | n/a | `C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe` | n/a | n/a | nein | lokal bestätigt: Windows PowerShell 5.1.26100.8328 |
+| PowerShell 7 (`pwsh`) | Script-Ausführung und Checks | https://github.com/PowerShell/PowerShell | n/a | `C:\Program Files\WindowsApps\Microsoft.PowerShell_7.6.1.0_x64__8wekyb3d8bbwe\pwsh.exe` | n/a | n/a | nein | lokal bestätigt: pwsh 7.6.1 |
+| Java | Laufzeit für UPR FVX | https://adoptium.net/ oder lokale Distribution | n/a | `C:\Program Files\Eclipse Adoptium\jdk-25.0.3.9-hotspot\bin\java.exe` | n/a | n/a | nein | lokal bestätigt: Temurin OpenJDK 25.0.3+9 LTS |
+| `make` | Build-Orchestrierung für spätere Toolchain-Schritte | n/a | n/a | `c:\devkitPro\msys2\usr\bin\make.exe` | n/a | n/a | nein | lokal bestätigt: GNU Make 4.4.1 |
+| `arm-none-eabi-gcc` | GBA Cross-Compiler | ARM GNU Toolchain/devkitARM | n/a | PATH | n/a | n/a | nein | nicht im aktuellen PATH gefunden |
+| `agbcc` | optionale GBA/pret-kompatible Compiler-Komponente | pret/devkitARM-Kontext | n/a | PATH oder lokaler Toolchain-Pfad | n/a | n/a | nein | optional; nicht im aktuellen PATH gefunden |
 | Codex | Agent | OpenAI | n/a | offen | n/a | n/a | nur nach Branch-Freigabe | geprüft für Docs-Dry-Run |
 | JetBrains IDE | IDE | JetBrains | n/a | lokal | n/a | n/a | nein | vorhanden |
 | devkitPro/devkitARM | GBA Build Toolchain | devkitPro | n/a | offen | n/a | n/a | nein | offen |
@@ -25,6 +32,50 @@ Dieser Stand ist read-only. Es wurden keine externen Repos geklont, keine Forks 
 | Hex Maniac Advance | ROM-Analyse | offen | n/a | `03_tools\releases` | n/a | n/a | nein | Quelle offen |
 | BizHawk | Emulator | https://github.com/TASEmulators/BizHawk | n/a | `03_tools\releases` | n/a | n/a | nein | read-only geprüft |
 | Ironmon Tracker | Tracker | https://github.com/besteon/Ironmon-Tracker | offen | `02_external\Ironmon-Tracker` | offen | offen | nur nach Freigabe | read-only geprüft |
+
+## Lokale Toolchain-Inventur
+
+Arbeitsblock: `setup/toolchain-local-inventory`
+
+Zweck: Nur lokale Tool-Verfügbarkeit, Versionen und PATH-Erreichbarkeit dokumentieren. Keine ROMs, Saves, Builds, Tool-Binaries, externen Clones oder Forks anfassen.
+
+| Prüfpukt | Status | Nachweisstand | Nächster Schritt |
+|---|---|---|---|
+| PowerShell | lokal bestätigt | `C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe`; 5.1.26100.8328 | keine |
+| Git | lokal bestätigt | `c:\devkitPro\msys2\usr\bin\git.exe`; Git 2.54.0 | keine |
+| GitHub CLI (`gh`) | lokal bestätigt, aber nicht im aktuellen PATH | `gh` im PATH fehlt; `C:\Program Files\GitHub CLI\gh.exe` meldet 2.92.0 und ist authentifiziert | Windows Terminal neu öffnen oder PATH in PowerShell neu laden |
+| Java | lokal bestätigt | `C:\Program Files\Eclipse Adoptium\jdk-25.0.3.9-hotspot\bin\java.exe`; Temurin OpenJDK 25.0.3+9 LTS | keine |
+| `make` | lokal bestätigt | `c:\devkitPro\msys2\usr\bin\make.exe`; GNU Make 4.4.1 | keine |
+| `arm-none-eabi-gcc` | nicht im aktuellen PATH gefunden | `Get-Command arm-none-eabi-gcc` und Inventurscript ohne Treffer | devkitARM PATH später gezielt klären, ohne Build zu starten |
+| `agbcc` | optional; nicht im aktuellen PATH gefunden | Inventurscript ohne Treffer | nur bei Bedarf später klären |
+| `pwsh` | lokal bestätigt | `C:\Program Files\WindowsApps\Microsoft.PowerShell_7.6.1.0_x64__8wekyb3d8bbwe\pwsh.exe`; 7.6.1 | keine |
+
+### PowerShell-Prüfbefehle für lokale Inventur
+
+```powershell
+$ToolChecks = @(
+  @{ Name = 'PowerShell'; Command = 'powershell.exe'; Args = @('-NoProfile', '-Command', '$PSVersionTable.PSVersion.ToString()') },
+  @{ Name = 'Git'; Command = 'git'; Args = @('--version') },
+  @{ Name = 'GitHub CLI'; Command = 'gh'; Args = @('--version') },
+  @{ Name = 'Java'; Command = 'java'; Args = @('-version') },
+  @{ Name = 'make'; Command = 'make'; Args = @('--version') },
+  @{ Name = 'arm-none-eabi-gcc'; Command = 'arm-none-eabi-gcc'; Args = @('--version') },
+  @{ Name = 'agbcc'; Command = 'agbcc'; Args = @('--version') },
+  @{ Name = 'pwsh'; Command = 'pwsh'; Args = @('-NoProfile', '-Command', '$PSVersionTable.PSVersion.ToString()') }
+)
+
+foreach ($Tool in $ToolChecks) {
+  $Resolved = Get-Command $Tool.Command -ErrorAction SilentlyContinue
+  if ($Resolved) {
+    Write-Host "FOUND: $($Tool.Name) -> $($Resolved.Source)"
+    & $Tool.Command @($Tool.Args) 2>&1 | Select-Object -First 3
+  }
+  else {
+    Write-Host "MISSING: $($Tool.Name)"
+  }
+  Write-Host ''
+}
+```
 
 ## Nicht committen
 
