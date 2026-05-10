@@ -6,43 +6,37 @@
 - GitHub-Repo `Planton361/firered-gen9-randomizer-workspace` existiert.
 - `main` ist Default Branch und bleibt stabil.
 - Branch Protection und PR-Pflicht sind laut dokumentiertem Projektstand eingerichtet.
-- Projektkontext, Roadmap-Status, Repo-Governance, Codex-Dry-Run, externe Quellenprüfung, Workflow-Automation, Post-Merge-Doku-Sync, lokale Windows-Toolchain-Inventur, PATH-Follow-up, Linux/CachyOS-Workspace-Migration, Linux-Toolchain-Inventur und Linux-GitHub-Auth-Refresh wurden gemerged bzw. lokal übernommen.
+- Projektkontext, Roadmap-Status, Repo-Governance, Codex-Dry-Run, externe Quellenprüfung, Workflow-Automation, Post-Merge-Doku-Sync, lokale Windows-Toolchain-Inventur, PATH-Follow-up, Linux/CachyOS-Workspace-Migration, Linux-Toolchain-Inventur, Linux-GitHub-Auth-Refresh und Agent-Best-Practices-Refresh wurden gemerged bzw. lokal übernommen.
 - PR #10 `docs: sync post-merge workflow state` ist gemerged.
 - PR #11 `docs: record local toolchain inventory` ist gemerged.
 - PR #12 `docs: prepare path toolchain followup` ist gemerged.
+- PR #17 Agent-Best-Practices-Refresh ist gemerged.
 - Nutzer hat die lokale Arbeitsumgebung von Windows auf Linux/CachyOS gewechselt.
 - ROMs, Saves, Builds, Tool-Binaries und private Dateien sind ausgeschlossen.
 
 ## Aktueller Branch
 
-`docs/agent-best-practices-refresh`
+`docs/post-merge-agent-best-practices-sync`
 
 ## Aktueller Arbeitsblock
 
-Agent-Best-Practices, Usage-Optimierung, Agent-Tooling, MCP-Regeln, `.aiignore` und PR-Template repo-tauglich dokumentieren, ohne neue Bürokratie einzuführen.
+Post-Merge-Dokumentationsstatus nach gemergtem PR #17 synchronisieren. Keine neuen Workflow-Regeln einführen.
 
 ## Ziel
 
-Den aktuellen Dokumentationsstand für ChatGPT/Codex-/Agent-Workflow aktualisieren:
+Den aktuellen Stand auf main/post-merge-synchronisiert setzen:
 
-- kompaktere Codex-Prompts ohne Overprompting dokumentieren
-- Usage-Optimierung über Dateipfade, Handoff und stabile `AGENTS.md`-Regeln dokumentieren
-- ChatGPT QA, Codex CLI und optionale IDE-Agenten sauber abgrenzen
-- MCP als optional und sicherheitsbegrenzt dokumentieren
-- `.aiignore` für ROM-/Build-/Tool-Binary-/Secret-Pfade ergänzen
-- PR-Template mit Sicherheits- und Checkliste ergänzen
-- Tool-Manifest und Roadmap auf diesen Arbeitsblock synchronisieren
+- Agent-Best-Practices-Refresh als gemerged/erledigt markieren
+- aktuellen Arbeitsblock auf Post-Merge-Sync setzen
+- nächsten Arbeitsbranch `setup/linux-gba-toolchain-plan` bestätigen
+- keine neuen Workflow-Regeln ergänzen
 
 ## In diesem Arbeitsblock geprüft / geändert
 
-- Branch `docs/agent-best-practices-refresh` ist der Arbeitsbranch.
-- `01_docs/quality/prompt-templates.md` wurde auf einen kompakteren Codex-Arbeitspaket-Prompt aktualisiert.
-- `01_docs/quality/usage-optimization.md` wurde erstellt.
-- `01_docs/setup/agent-tooling-policy.md` wurde erstellt.
-- `01_docs/setup/mcp-policy.md` wurde erstellt.
-- `.aiignore` wurde erstellt.
-- `.github/pull_request_template.md` wurde erstellt.
-- `01_docs/references/tool-manifest.md` wurde um Agent-/MCP-/PR-Template-/`.aiignore`-Status ergänzt.
+- Branch `docs/post-merge-agent-best-practices-sync` ist der Arbeitsbranch.
+- Stand nach gemergtem PR #17 wurde auf main/post-merge-synchronisiert gesetzt.
+- Agent-Best-Practices-Refresh wurde als erledigt dokumentiert.
+- Nächster empfohlener Arbeitsbranch bleibt `setup/linux-gba-toolchain-plan`.
 - Keine ROMs, Saves, Emulator States, Builds, Tool-Binaries oder Secrets wurden angefasst.
 - Keine externen Repos wurden geklont.
 - Keine Forks wurden angelegt.
@@ -84,7 +78,7 @@ git diff --stat
 07_scripts/bootstrap/check-git-safety.ps1 oder vorhandenes Safety-Check-Fallback
 ```
 
-Danach Branch `docs/agent-best-practices-refresh` reviewbar committen, pushen und als PR nach `main` führen. Nicht durch Codex mergen.
+Danach Branch `docs/post-merge-agent-best-practices-sync` reviewbar committen, pushen und als PR nach `main` führen. Nicht durch Codex mergen.
 
 ## Nächster empfohlener Branch
 

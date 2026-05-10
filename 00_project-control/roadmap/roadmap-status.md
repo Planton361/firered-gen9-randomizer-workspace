@@ -26,7 +26,7 @@ GitHub und Codex sollen dieses Dokument bevorzugt nutzen, weil Änderungen hier 
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
 | Nächster Branch | `setup/linux-gba-toolchain-plan` |
-| Aktueller Fokus | Agent-Best-Practices-Refresh dokumentieren |
+| Aktueller Fokus | Post-Merge-Dokumentationsstatus nach PR #17 synchronisieren |
 | ROM-/Build-Arbeit | noch nicht gestartet |
 | Externe Repos | noch nicht geklont |
 | Forks | noch nicht angelegt |
@@ -57,6 +57,7 @@ GitHub und Codex sollen dieses Dokument bevorzugt nutzen, weil Änderungen hier 
 | 06 Toolchain | Linux/CachyOS-Migration dokumentiert | Linux/CachyOS ist primaere lokale Umgebung; Windows-Befunde sind historisch |
 | 06 Toolchain | Linux/CachyOS-Toolchain-Inventur dokumentiert | Git, gh, Shell, Java und make gefunden; GBA-Toolchain-Komponenten bleiben offen |
 | 06 Toolchain | GitHub-CLI-/Git-Auth-Refresh dokumentiert | `gh auth status` und `git fetch origin` erfolgreich; Push und PR-Erstellung nutzbar |
+| 04 Codex Start | Agent-Best-Practices-Refresh abgeschlossen | PR #17 gemerged; kompakte Prompts, Usage-Optimierung, Agent-/MCP-Regeln, `.aiignore` und PR-Template dokumentiert |
 
 ## In Review/Test
 
@@ -65,7 +66,7 @@ GitHub und Codex sollen dieses Dokument bevorzugt nutzen, weil Änderungen hier 
 | 02 Projektkontext | README, AGENTS und Handoff-Dateien prüfen | Sind Ziel, Grenzen, Arbeitsmodell und Codex-Regeln vollständig? |
 | 02 Projektkontext | Tool-Manifest prüfen | Sind Pfade, Fork-/Upstream-Regeln und Codex-Freigaben ausreichend klar? |
 | 04 Codex Start | Codex Dry Run auswerten | Prüfen, ob Governance-Regeln konsistent und praktisch nutzbar sind |
-| 04 Codex Start | Agent-Best-Practices-Refresh reviewen | Sind Prompting, Usage, Agent-Tooling, MCP, `.aiignore` und PR-Template praxistauglich und nicht überbürokratisch? |
+| 04 Codex Start | Agent-Best-Practices-Post-Merge-Sync reviewen | Ist PR #17 als gemerged/erledigt dokumentiert und der nächste Branch korrekt gesetzt? |
 | 06 Toolchain | Linux/CachyOS-Migration reviewen | Sind Windows-Annahmen aus neuen Arbeitsblöcken entfernt? |
 
 ## Als Nächstes
@@ -244,5 +245,15 @@ setup/linux-gba-toolchain-plan
 - Agent-Tooling-Policy dokumentiert: ChatGPT QA als Analyse/Handoff, Codex CLI als primärer Worker, IDE-Agenten optional und nicht parallel auf demselben Branch.
 - MCP-Policy dokumentiert: optional, nur vertrauenswürdige Server, kein Brave Mode als Default, keine Secrets in Configs, Manifest-Pflicht.
 - `.aiignore` und `.github/pull_request_template.md` erstellt.
+- Keine Installationen, Build-Schritte, externen Clones oder Forks durchgeführt.
+- Keine ROMs, Saves, Builds, Tool-Binaries oder privaten Dateien angefasst.
+
+### 2026-05-11 – docs/post-merge-agent-best-practices-sync
+
+- Dokumentationsstatus nach gemergtem PR #17 synchronisiert.
+- Agent-Best-Practices-Refresh als gemerged/erledigt markiert.
+- Aktueller Stand auf main/post-merge-synchronisiert gesetzt.
+- Nächster Arbeitsbranch `setup/linux-gba-toolchain-plan` bestätigt.
+- Keine neuen Workflow-Regeln eingeführt.
 - Keine Installationen, Build-Schritte, externen Clones oder Forks durchgeführt.
 - Keine ROMs, Saves, Builds, Tool-Binaries oder privaten Dateien angefasst.
