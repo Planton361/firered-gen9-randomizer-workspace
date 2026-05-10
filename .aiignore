@@ -1,0 +1,67 @@
+# Private ROMs, saves and emulator state
+04_private_roms/
+**/04_private_roms/**
+*.gba
+*.gb
+*.gbc
+*.ips
+*.ups
+*.bps
+*.sav
+*.srm
+*.state
+*.ss0
+*.ss1
+*.sgm
+*.rtc
+*.ram
+
+# Builds and generated outputs
+05_builds/
+**/05_builds/**
+build/
+dist/
+out/
+target/
+*.o
+*.elf
+*.map
+*.sym
+*.log
+
+# Tool binaries and downloaded releases
+03_tools/releases/
+**/03_tools/releases/**
+*.exe
+*.dll
+*.so
+*.dylib
+*.zip
+*.7z
+*.rar
+*.tar
+*.tar.gz
+*.tgz
+*.jar
+*.AppImage
+
+# Secrets and local configuration
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+*_token*
+*secret*
+
+# IDE and OS noise
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/shelf/
+.vscode/settings.json
+.DS_Store
+Thumbs.db
+
+# External repos remain opt-in for agent context
+02_external/**/.git/
