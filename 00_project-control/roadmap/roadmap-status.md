@@ -25,8 +25,8 @@ GitHub und Codex sollen dieses Dokument bevorzugt nutzen, weil Änderungen hier 
 | Standardterminal | Windows PowerShell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Nächster Branch | `setup/toolchain-local-inventory` |
-| Aktueller Fokus | lokale Toolchain-/Workspace-Inventur |
+| Nächster Branch | offen nach Review von `setup/toolchain-local-inventory` |
+| Aktueller Fokus | lokale Toolchain-/Workspace-Inventur reviewen und lokal verifizieren |
 | ROM-/Build-Arbeit | noch nicht gestartet |
 | Externe Repos | noch nicht geklont |
 | Forks | noch nicht angelegt |
@@ -51,6 +51,7 @@ GitHub und Codex sollen dieses Dokument bevorzugt nutzen, weil Änderungen hier 
 | 03 Repo Governance | Bootstrap-/Safety-Scripts erstellt | Workspace-Bootstrap, Remote-Check und Git-Safety-Check dokumentiert |
 | 05 Externe Quellen | read-only Analyseblock dokumentiert | Quellen und Tool-Manifest ohne Clone/Fork präzisiert |
 | 04 Codex Start | Workflow-Automation abgeschlossen | PR #9 `docs: improve codex workflow automation` gemerged |
+| 04 Codex Start | Post-Merge-Doku-Sync abgeschlossen | PR #10 `docs: sync post-merge workflow state` gemerged |
 
 ## In Review/Test
 
@@ -59,12 +60,13 @@ GitHub und Codex sollen dieses Dokument bevorzugt nutzen, weil Änderungen hier 
 | 02 Projektkontext | README, AGENTS und Handoff-Dateien prüfen | Sind Ziel, Grenzen, Arbeitsmodell und Codex-Regeln vollständig? |
 | 02 Projektkontext | Tool-Manifest prüfen | Sind Pfade, Fork-/Upstream-Regeln und Codex-Freigaben ausreichend klar? |
 | 04 Codex Start | Codex Dry Run auswerten | Prüfen, ob Governance-Regeln konsistent und praktisch nutzbar sind |
+| 06 Toolchain | lokale Toolchain-/Workspace-Inventur reviewen | Prüfen, ob Manifest, Session State und Next Steps die lokale Toolprüfung ohne ROM-/Build-Arbeit sauber abbilden |
 
 ## Als Nächstes
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 06 Toolchain | lokale Toolchain-/Workspace-Inventur prüfen | Vorhandene Tools, Pfade und offene Installationspunkte dokumentieren, ohne ROM-/Build-Arbeit |
+| 06 Toolchain | lokale Inventurbefehle ausführen | Versionen und Pfade für PowerShell, Git, GitHub CLI, Java, make, arm-none-eabi-gcc, optional agbcc und pwsh lokal bestätigen |
 
 ## Noch offen
 
@@ -122,7 +124,7 @@ Excel-Roadmap:
 ## Nächster empfohlener Branch
 
 ```text
-setup/toolchain-local-inventory
+offen nach Review von setup/toolchain-local-inventory
 ```
 ## Arbeitsblock-Log
 
@@ -168,6 +170,16 @@ setup/toolchain-local-inventory
 - Workflow-Automation in den erledigten Status verschoben.
 - Nächsten Branch `setup/toolchain-local-inventory` vorbereitet.
 - Nächster Fokus ist lokale Toolchain-/Workspace-Inventur ohne ROM-/Build-Arbeit.
+- Keine externen Repos geklont.
+- Keine Forks angelegt.
+- Keine ROMs, Saves, Builds, Tool-Binaries oder privaten Dateien angefasst.
+
+### 2026-05-10 – setup/toolchain-local-inventory
+
+- Branch `setup/toolchain-local-inventory` von aktuellem `main` erstellt.
+- Lokale Toolchain-/Workspace-Inventur im Tool-Manifest dokumentiert.
+- PowerShell-Prüfbefehle für PowerShell, Git, GitHub CLI, Java, make, arm-none-eabi-gcc, optional agbcc und pwsh ergänzt.
+- Lokale Toolversionen wurden nicht geraten, weil diese GitHub-Connector-Session keine Befehle auf dem Windows-Workspace ausführen konnte.
 - Keine externen Repos geklont.
 - Keine Forks angelegt.
 - Keine ROMs, Saves, Builds, Tool-Binaries oder privaten Dateien angefasst.
