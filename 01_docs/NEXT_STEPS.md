@@ -2,20 +2,21 @@
 
 ## Aktueller Arbeitsblock
 
-PATH-Folgeklärung für lokale Toolchain auf `setup/path-toolchain-followup` vorbereiten.
+Linux/CachyOS-Workspace-Migration auf `setup/linux-workspace-migration` dokumentieren.
 
 ## Nächste Schritte
 
-1. Dokumentierte PATH-Folgeklärung im Tool-Manifest reviewen.
-2. Für `gh` klären, ob Windows Terminal neu geöffnet oder PATH in PowerShell neu geladen werden soll.
-3. Für `arm-none-eabi-gcc` klären, ob devkitARM installiert ist und nur PATH/Umgebungsvariablen fehlen.
-4. Optional `agbcc` nur dokumentieren, falls es später für eine konkrete Build-Basis nötig wird.
+1. README und AGENTS-Regeln auf Linux/CachyOS-first reviewen.
+2. Windows-PowerShell- und Windows-PATH-Angaben als historischen Stand einordnen.
+3. Tool-Manifest auf Linux-Inventur vorbereiten.
+4. Roadmap-Status auf OS-Migration und danach Linux-Toolchain-Inventur umstellen.
 5. Safety-Checks ausführen:
 
-```powershell
-pwsh -File .\07_scripts\bootstrap\check-git-safety.ps1
+```sh
 git status --short
 git diff --stat
+# optional, falls pwsh installiert ist:
+pwsh -File ./07_scripts/bootstrap/check-git-safety.ps1
 ```
 
 6. Branch committen, pushen und als PR nach `main` führen. PR nicht durch Codex mergen.
@@ -29,16 +30,16 @@ git diff --stat
 - keine Tool-Binaries committen
 - keine Änderungen direkt auf `main`
 - keine Installationen erzwingen
-- keine PATH- oder Umgebungsvariablen in dieser Dokumentationssession ändern
+- keine lokalen Pfade als bestätigt dokumentieren, bevor sie auf Linux geprüft wurden
 
 ## Danach
 
-Nächster sinnvoller Arbeitsblock nach gemergtem PATH-Follow-up-PR:
+Nächster sinnvoller Arbeitsblock nach gemergtem Linux-Migrations-PR:
 
-- konkrete Entscheidung treffen, ob PATH lokal angepasst werden soll
-- falls ja, Änderung außerhalb des Repos durchführen und danach nur das Ergebnis dokumentieren
+- Linux-Toolchain-/Workspace-Inventur durchführen
+- Git, GitHub CLI, Java, make, devkitPro/devkitARM und optional pwsh auf Linux prüfen
+- Ergebnisse nur dokumentieren, keine Builds starten
 - weiterhin keine ROMs lesen, kopieren oder bearbeiten
-- weiterhin keine Builds starten, bis Toolchain-Status freigegeben ist
 
 ## Quality
 

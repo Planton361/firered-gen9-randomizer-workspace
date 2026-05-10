@@ -47,7 +47,9 @@ Dieses Repository enthält nicht:
 
 ## Arbeitsweise
 
-- Windows PowerShell ist das Standardterminal.
+- Linux/CachyOS ist die primäre lokale Entwicklungsumgebung.
+- POSIX-Shell-kompatible Kommandos sind der neue Standard für lokale Arbeitsschritte.
+- Windows PowerShell bleibt nur historischer/Legacy-Kontext für bereits dokumentierte frühere Arbeitsblöcke.
 - GitHub ist die Source of Truth.
 - Änderungen laufen über Branches und Pull Requests.
 - `main` ist der stabile Branch.
