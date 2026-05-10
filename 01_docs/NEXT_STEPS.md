@@ -2,14 +2,15 @@
 
 ## Aktueller Arbeitsblock
 
-Lokale Toolchain-/Workspace-Inventur auf `setup/toolchain-local-inventory` dokumentieren und als PR nach `main` führen.
+PATH-Folgeklärung für lokale Toolchain auf `setup/path-toolchain-followup` vorbereiten.
 
 ## Nächste Schritte
 
-1. PR `setup/toolchain-local-inventory` reviewen.
-2. Dokumentierte Inventurergebnisse im Tool-Manifest prüfen.
-3. Entscheiden, ob `gh` PATH und devkitARM PATH separat nachgezogen werden sollen.
-4. Safety-Checks vor PR-Abschluss erneut ausführen:
+1. Dokumentierte PATH-Folgeklärung im Tool-Manifest reviewen.
+2. Für `gh` klären, ob Windows Terminal neu geöffnet oder PATH in PowerShell neu geladen werden soll.
+3. Für `arm-none-eabi-gcc` klären, ob devkitARM installiert ist und nur PATH/Umgebungsvariablen fehlen.
+4. Optional `agbcc` nur dokumentieren, falls es später für eine konkrete Build-Basis nötig wird.
+5. Safety-Checks ausführen:
 
 ```powershell
 pwsh -File .\07_scripts\bootstrap\check-git-safety.ps1
@@ -17,7 +18,7 @@ git status --short
 git diff --stat
 ```
 
-5. PR nach Review mergen, nicht durch Codex.
+6. Branch committen, pushen und als PR nach `main` führen. PR nicht durch Codex mergen.
 
 ## Nicht tun
 
@@ -28,13 +29,14 @@ git diff --stat
 - keine Tool-Binaries committen
 - keine Änderungen direkt auf `main`
 - keine Installationen erzwingen
+- keine PATH- oder Umgebungsvariablen in dieser Dokumentationssession ändern
 
 ## Danach
 
-Nächster sinnvoller Arbeitsblock nach gemergtem Inventur-PR:
+Nächster sinnvoller Arbeitsblock nach gemergtem PATH-Follow-up-PR:
 
-- lokalen Inventur-Output auswerten
-- fehlende PATH-Einträge für `gh` und `arm-none-eabi-gcc` als Setup-Entscheidung dokumentieren
+- konkrete Entscheidung treffen, ob PATH lokal angepasst werden soll
+- falls ja, Änderung außerhalb des Repos durchführen und danach nur das Ergebnis dokumentieren
 - weiterhin keine ROMs lesen, kopieren oder bearbeiten
 - weiterhin keine Builds starten, bis Toolchain-Status freigegeben ist
 

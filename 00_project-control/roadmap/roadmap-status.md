@@ -25,8 +25,8 @@ GitHub und Codex sollen dieses Dokument bevorzugt nutzen, weil Änderungen hier 
 | Standardterminal | Windows PowerShell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Nächster Branch | offen nach Review von `setup/toolchain-local-inventory` |
-| Aktueller Fokus | lokale Toolchain-/Workspace-Inventur reviewen |
+| Nächster Branch | `setup/path-toolchain-followup` |
+| Aktueller Fokus | PATH-Folgeklärung für lokale Toolchain vorbereiten |
 | ROM-/Build-Arbeit | noch nicht gestartet |
 | Externe Repos | noch nicht geklont |
 | Forks | noch nicht angelegt |
@@ -52,6 +52,7 @@ GitHub und Codex sollen dieses Dokument bevorzugt nutzen, weil Änderungen hier 
 | 05 Externe Quellen | read-only Analyseblock dokumentiert | Quellen und Tool-Manifest ohne Clone/Fork präzisiert |
 | 04 Codex Start | Workflow-Automation abgeschlossen | PR #9 `docs: improve codex workflow automation` gemerged |
 | 04 Codex Start | Post-Merge-Doku-Sync abgeschlossen | PR #10 `docs: sync post-merge workflow state` gemerged |
+| 06 Toolchain | lokale Toolchain-/Workspace-Inventur abgeschlossen | PR #11 `docs: record local toolchain inventory` gemerged |
 
 ## In Review/Test
 
@@ -60,13 +61,12 @@ GitHub und Codex sollen dieses Dokument bevorzugt nutzen, weil Änderungen hier 
 | 02 Projektkontext | README, AGENTS und Handoff-Dateien prüfen | Sind Ziel, Grenzen, Arbeitsmodell und Codex-Regeln vollständig? |
 | 02 Projektkontext | Tool-Manifest prüfen | Sind Pfade, Fork-/Upstream-Regeln und Codex-Freigaben ausreichend klar? |
 | 04 Codex Start | Codex Dry Run auswerten | Prüfen, ob Governance-Regeln konsistent und praktisch nutzbar sind |
-| 06 Toolchain | lokale Toolchain-/Workspace-Inventur reviewen | Lokale Inventurergebnisse prüfen; `gh` PATH und devkitARM PATH bleiben als Folgeklärung offen |
 
 ## Als Nächstes
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 06 Toolchain | PATH-Folgeklärung vorbereiten | `gh` und `arm-none-eabi-gcc` PATH klären, ohne Installation, ROM- oder Build-Arbeit |
+| 06 Toolchain | PATH-Folgeklärung vorbereiten | `gh`, `arm-none-eabi-gcc` und optional `agbcc` PATH klären, ohne Installation, ROM- oder Build-Arbeit |
 
 ## Noch offen
 
@@ -124,7 +124,7 @@ Excel-Roadmap:
 ## Nächster empfohlener Branch
 
 ```text
-offen nach Review von setup/toolchain-local-inventory
+setup/path-toolchain-followup
 ```
 ## Arbeitsblock-Log
 
@@ -182,6 +182,16 @@ offen nach Review von setup/toolchain-local-inventory
 - Lokale Windows-Checks ausgeführt und bestätigte Versionen/Pfade für PowerShell, Git, GitHub CLI, Java, make und pwsh nachgetragen.
 - `gh` ist installiert/authentifiziert, aber im aktuellen PATH nicht als `gh` erreichbar.
 - `arm-none-eabi-gcc` und optional `agbcc` wurden im aktuellen PATH nicht gefunden.
+- Keine externen Repos geklont.
+- Keine Forks angelegt.
+- Keine ROMs, Saves, Builds, Tool-Binaries oder privaten Dateien angefasst.
+
+### 2026-05-10 – setup/path-toolchain-followup
+
+- `main` nach gemergtem PR #11 auf Merge-Commit `e83b1325b71c1e10799ed036a9a7d98718c9a0aa` geprüft.
+- Lokale Inventur als erledigt dokumentiert.
+- PATH-Folgeklärung für `gh`, `arm-none-eabi-gcc` und optional `agbcc` vorbereitet.
+- Keine PATH-Änderungen, Installationen oder Build-Schritte durchgeführt.
 - Keine externen Repos geklont.
 - Keine Forks angelegt.
 - Keine ROMs, Saves, Builds, Tool-Binaries oder privaten Dateien angefasst.
