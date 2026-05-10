@@ -2,16 +2,15 @@
 
 ## Aktueller Arbeitsblock
 
-Agent-Best-Practices-Refresh auf `docs/agent-best-practices-refresh` dokumentieren.
+Post-Merge-Dokumentationsstatus nach PR #17 auf `docs/post-merge-agent-best-practices-sync` synchronisieren.
 
 ## Nächste Schritte
 
-1. Kompakte Codex-Prompt-Vorlagen in `01_docs/quality/prompt-templates.md` reviewen.
-2. Usage-Optimierung in `01_docs/quality/usage-optimization.md` reviewen.
-3. Agent-Tooling-Policy in `01_docs/setup/agent-tooling-policy.md` reviewen.
-4. MCP-Policy in `01_docs/setup/mcp-policy.md` reviewen.
-5. `.aiignore` und `.github/pull_request_template.md` prüfen.
-6. Abschluss-Checks ausführen:
+1. Agent-Best-Practices-Refresh als gemerged/erledigt markieren.
+2. Aktuellen Stand auf main/post-merge-synchronisiert setzen.
+3. Nächsten Arbeitsbranch `setup/linux-gba-toolchain-plan` bestätigen.
+4. Keine neuen Workflow-Regeln ergänzen.
+5. Abschluss-Checks ausführen:
 
 ```sh
 git status --short
@@ -20,7 +19,7 @@ git diff --stat
 07_scripts/bootstrap/check-git-safety.ps1 oder vorhandenes Safety-Check-Fallback
 ```
 
-7. Branch committen, pushen und als PR nach `main` führen. PR nicht mergen.
+6. Branch committen, pushen und als PR nach `main` führen. PR nicht mergen.
 
 ## Nicht tun
 
@@ -39,7 +38,7 @@ git diff --stat
 
 ## Danach
 
-Nächster sinnvoller Arbeitsblock nach gemergtem Agent-Best-Practices-PR:
+Nächster sinnvoller Arbeitsblock nach gemergtem Post-Merge-Sync-PR:
 
 - Branch `setup/linux-gba-toolchain-plan`
 - devkitPro/devkitARM- und `arm-none-eabi-gcc`-Vorgehen für Linux/CachyOS planen

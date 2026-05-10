@@ -8,11 +8,11 @@ Dieser Stand ist read-only für ROM-/Build-/Toolchain-Arbeit. Es wurden keine ex
 
 Die bisherige lokale Toolchain-Inventur wurde auf Windows durchgeführt und ist ab dem OS-Wechsel nur noch historischer Referenzstand. Linux/CachyOS ist die neue primäre lokale Umgebung. Der Linux-Toolchain-Stand wurde auf Branch `setup/linux-toolchain-inventory` read-only geprüft; GitHub-CLI- und Git-Auth wurden auf Branch `setup/linux-gh-auth-refresh` erneut geprüft.
 
-Der aktuelle Arbeitsblock `docs/agent-best-practices-refresh` dokumentiert Agent-/MCP-/Usage-Regeln und ergänzt `.aiignore` sowie ein PR-Template. Er ändert keine Toolchain, keine externen Repos und keine ROM-/Build-Pfade.
+Der Agent-Best-Practices-Refresh aus PR #17 ist gemerged/erledigt. Der aktuelle Arbeitsblock `docs/post-merge-agent-best-practices-sync` synchronisiert nur den Post-Merge-Dokumentationsstatus und führt keine neuen Workflow-Regeln ein.
 
 | Tool/Repo | Zweck | Upstream | Fork/Origin | Lokaler Pfad | Branch | Commit | Codex darf ändern | Status |
 |---|---|---|---|---|---|---|---|---|
-| Workspace Repo | Source of Truth | n/a | git@github.com:Planton361/firered-gen9-randomizer-workspace.git | `/home/anton/IdeaProjects/firered-gen9-randomizer-workspace` | `docs/agent-best-practices-refresh` | offen | ja, nur Branches | aktiv |
+| Workspace Repo | Source of Truth | n/a | git@github.com:Planton361/firered-gen9-randomizer-workspace.git | `/home/anton/IdeaProjects/firered-gen9-randomizer-workspace` | `docs/post-merge-agent-best-practices-sync` | offen | ja, nur Branches | aktiv |
 | Git | Versionierung | n/a | n/a | `/usr/bin/git` | n/a | n/a | nein | gefunden: 2.54.0 |
 | GitHub CLI (`gh`) | PRs und GitHub-Checks automatisieren | https://cli.github.com/ | n/a | `/usr/bin/gh` | n/a | n/a | nein | gefunden: 2.92.0; Auth via Keyring aktiv |
 | POSIX Shell | Terminal-Standard | n/a | n/a | `/bin/fish` laut `$SHELL` | n/a | n/a | nein | primär |
@@ -46,7 +46,7 @@ Der aktuelle Arbeitsblock `docs/agent-best-practices-refresh` dokumentiert Agent
 
 ## Agent-Tooling-Stand
 
-Arbeitsblock: `docs/agent-best-practices-refresh`.
+Arbeitsblock: `docs/agent-best-practices-refresh` / PR #17, gemerged.
 
 | Thema | Status | Regel |
 |---|---|---|
@@ -159,7 +159,7 @@ Die folgenden Befunde stammen aus der Windows-Inventur vor dem OS-Wechsel und d�
 
 ## Nächste Manifest-Aufgabe
 
-Naechster empfohlener Branch nach Review/Merge von `docs/agent-best-practices-refresh`: `setup/linux-gba-toolchain-plan`.
+Naechster empfohlener Branch nach Review/Merge von `docs/post-merge-agent-best-practices-sync`: `setup/linux-gba-toolchain-plan`.
 
 Ziel: devkitPro/devkitARM- und `arm-none-eabi-gcc`-Vorgehen für Linux/CachyOS planen, ohne Installation oder Build-Schritte.
 
