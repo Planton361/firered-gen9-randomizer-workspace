@@ -6,7 +6,7 @@
 - GitHub-Repo `Planton361/firered-gen9-randomizer-workspace` existiert.
 - `main` ist Default Branch und bleibt stabil.
 - Branch Protection und PR-Pflicht sind laut dokumentiertem Projektstand eingerichtet.
-- Projektkontext, Roadmap-Status, Repo-Governance, Codex-Dry-Run, externe Quellenprüfung, Workflow-Automation, Post-Merge-Doku-Sync, lokale Windows-Toolchain-Inventur, PATH-Follow-up, Linux/CachyOS-Workspace-Migration und Linux-Toolchain-Inventur wurden gemerged bzw. lokal übernommen.
+- Projektkontext, Roadmap-Status, Repo-Governance, Codex-Dry-Run, externe Quellenprüfung, Workflow-Automation, Post-Merge-Doku-Sync, lokale Windows-Toolchain-Inventur, PATH-Follow-up, Linux/CachyOS-Workspace-Migration, Linux-Toolchain-Inventur und Linux-GitHub-Auth-Refresh wurden gemerged bzw. lokal übernommen.
 - PR #10 `docs: sync post-merge workflow state` ist gemerged.
 - PR #11 `docs: record local toolchain inventory` ist gemerged.
 - PR #12 `docs: prepare path toolchain followup` ist gemerged.
@@ -15,33 +15,38 @@
 
 ## Aktueller Branch
 
-`setup/linux-gh-auth-refresh`
+`docs/agent-best-practices-refresh`
 
 ## Aktueller Arbeitsblock
 
-Linux/CachyOS-GitHub-CLI- und Git-Auth-Refresh dokumentieren, ohne Installation, ROM-, Build-, Clone- oder Fork-Arbeit.
+Agent-Best-Practices, Usage-Optimierung, Agent-Tooling, MCP-Regeln, `.aiignore` und PR-Template repo-tauglich dokumentieren, ohne neue Bürokratie einzuführen.
 
 ## Ziel
 
-Den aktuellen Linux/CachyOS-Ist-Stand von GitHub CLI und Git-Remote-Zugriff dokumentieren:
+Den aktuellen Dokumentationsstand für ChatGPT/Codex-/Agent-Workflow aktualisieren:
 
-- `gh auth status` prüfen
-- `git fetch origin` prüfen
-- festhalten, dass GitHub CLI und Git für Push und PR-Erstellung nutzbar sind
-- keine Tokens oder Secrets dokumentieren
-- Windows-Toolchain-Befunde weiterhin als historischen Referenzstand kennzeichnen
-- nächsten Arbeitsblock aus den verbleibenden Linux-Toolchain-Befunden ableiten
+- kompaktere Codex-Prompts ohne Overprompting dokumentieren
+- Usage-Optimierung über Dateipfade, Handoff und stabile `AGENTS.md`-Regeln dokumentieren
+- ChatGPT QA, Codex CLI und optionale IDE-Agenten sauber abgrenzen
+- MCP als optional und sicherheitsbegrenzt dokumentieren
+- `.aiignore` für ROM-/Build-/Tool-Binary-/Secret-Pfade ergänzen
+- PR-Template mit Sicherheits- und Checkliste ergänzen
+- Tool-Manifest und Roadmap auf diesen Arbeitsblock synchronisieren
 
-## In diesem Arbeitsblock geprüft
+## In diesem Arbeitsblock geprüft / geändert
 
-- Branch `setup/linux-gh-auth-refresh` ist aktiv.
-- `gh auth status` ist erfolgreich.
-- GitHub CLI ist für `github.com` mit Account `Planton361` über den lokalen Keyring angemeldet.
-- Git-Operationen über GitHub CLI sind auf HTTPS konfiguriert.
-- `git fetch origin` ist erfolgreich.
-- GitHub CLI und Git sind auf Linux/CachyOS für Push und PR-Erstellung nutzbar.
-- Token-Wert und Secrets wurden nicht dokumentiert.
-- Windows-Toolchain-Befunde bleiben historisch und gelten nicht als Linux-Ist-Stand.
+- Branch `docs/agent-best-practices-refresh` ist der Arbeitsbranch.
+- `01_docs/quality/prompt-templates.md` wurde auf einen kompakteren Codex-Arbeitspaket-Prompt aktualisiert.
+- `01_docs/quality/usage-optimization.md` wurde erstellt.
+- `01_docs/setup/agent-tooling-policy.md` wurde erstellt.
+- `01_docs/setup/mcp-policy.md` wurde erstellt.
+- `.aiignore` wurde erstellt.
+- `.github/pull_request_template.md` wurde erstellt.
+- `01_docs/references/tool-manifest.md` wurde um Agent-/MCP-/PR-Template-/`.aiignore`-Status ergänzt.
+- Keine ROMs, Saves, Emulator States, Builds, Tool-Binaries oder Secrets wurden angefasst.
+- Keine externen Repos wurden geklont.
+- Keine Forks wurden angelegt.
+- Keine Installationen oder Build-Schritte wurden durchgeführt.
 
 ## Noch nicht gestartet
 
@@ -54,6 +59,7 @@ Den aktuellen Linux/CachyOS-Ist-Stand von GitHub CLI und Git-Remote-Zugriff doku
 - BizHawk/Ironmon testen
 - ROMs oder Builds bearbeiten
 - PR mergen
+- JetBrains MCP evaluieren
 
 ## Sicherheitsstatus
 
@@ -65,6 +71,8 @@ Keine Forks angelegt.
 
 Keine Änderungen direkt auf `main`.
 
+Keine MCP-Configs mit Secrets angelegt.
+
 ## Nächste Prüfung
 
 Für diesen Dokumentationsblock nach den Änderungen prüfen:
@@ -72,10 +80,11 @@ Für diesen Dokumentationsblock nach den Änderungen prüfen:
 ```sh
 git status --short
 git diff --stat
-git diff
+# falls im aktuellen Linux-Setup verfügbar:
+07_scripts/bootstrap/check-git-safety.ps1 oder vorhandenes Safety-Check-Fallback
 ```
 
-Danach Branch `setup/linux-gh-auth-refresh` reviewbar committen, pushen und als PR nach `main` führen. Nicht durch Codex mergen.
+Danach Branch `docs/agent-best-practices-refresh` reviewbar committen, pushen und als PR nach `main` führen. Nicht durch Codex mergen.
 
 ## Nächster empfohlener Branch
 
