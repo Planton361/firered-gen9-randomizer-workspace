@@ -2,14 +2,14 @@
 
 ## Aktueller Arbeitsblock
 
-Post-Merge-Dokumentationsstatus nach PR #17 auf `docs/post-merge-agent-best-practices-sync` synchronisieren.
+GBA-Toolchain-Vorgehen fuer Linux/CachyOS auf `setup/linux-gba-toolchain-plan` planen.
 
 ## Nächste Schritte
 
-1. Agent-Best-Practices-Refresh als gemerged/erledigt markieren.
-2. Aktuellen Stand auf main/post-merge-synchronisiert setzen.
-3. Nächsten Arbeitsbranch `setup/linux-gba-toolchain-plan` bestätigen.
-4. Keine neuen Workflow-Regeln ergänzen.
+1. `01_docs/setup/linux-gba-toolchain-plan.md` reviewen.
+2. Entscheidungspunkte fuer devkitPro/devkitARM, `arm-none-eabi-gcc` und optional `agbcc` pruefen.
+3. Bestaetigen, dass keine Installation, kein Build und keine ROM-/Repo-Arbeit stattgefunden hat.
+4. Naechsten Branch `setup/linux-gba-toolchain-source-review` vorbereiten.
 5. Abschluss-Checks ausführen:
 
 ```sh
@@ -38,13 +38,13 @@ git diff --stat
 
 ## Danach
 
-Nächster sinnvoller Arbeitsblock nach gemergtem Post-Merge-Sync-PR:
+Nächster sinnvoller Arbeitsblock nach gemergtem GBA-Toolchain-Plan-PR:
 
-- Branch `setup/linux-gba-toolchain-plan`
-- devkitPro/devkitARM- und `arm-none-eabi-gcc`-Vorgehen für Linux/CachyOS planen
+- Branch `setup/linux-gba-toolchain-source-review`
+- offizielle devkitPro/devkitARM-Dokumentation und dokumentierte Ziel-Repos read-only auf Toolchain-Anforderungen pruefen
 - weiterhin keine ROMs lesen, kopieren oder bearbeiten
-- keine Installationen oder Build-Schritte ohne separaten Arbeitsblock durchführen
-- JetBrains MCP erst nach Toolchain-Inventur separat evaluieren
+- keine Installationen oder Build-Schritte ohne separaten Arbeitsblock durchfuehren
+- keine externen Repos klonen oder Forks anlegen
 
 ## Quality
 

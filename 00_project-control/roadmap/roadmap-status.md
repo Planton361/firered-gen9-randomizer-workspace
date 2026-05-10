@@ -25,8 +25,8 @@ GitHub und Codex sollen dieses Dokument bevorzugt nutzen, weil Änderungen hier 
 | Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Nächster Branch | `setup/linux-gba-toolchain-plan` |
-| Aktueller Fokus | Post-Merge-Dokumentationsstatus nach PR #17 synchronisieren |
+| Nächster Branch | `setup/linux-gba-toolchain-source-review` |
+| Aktueller Fokus | GBA-Toolchain-Vorgehen fuer Linux/CachyOS planen |
 | ROM-/Build-Arbeit | noch nicht gestartet |
 | Externe Repos | noch nicht geklont |
 | Forks | noch nicht angelegt |
@@ -58,6 +58,7 @@ GitHub und Codex sollen dieses Dokument bevorzugt nutzen, weil Änderungen hier 
 | 06 Toolchain | Linux/CachyOS-Toolchain-Inventur dokumentiert | Git, gh, Shell, Java und make gefunden; GBA-Toolchain-Komponenten bleiben offen |
 | 06 Toolchain | GitHub-CLI-/Git-Auth-Refresh dokumentiert | `gh auth status` und `git fetch origin` erfolgreich; Push und PR-Erstellung nutzbar |
 | 04 Codex Start | Agent-Best-Practices-Refresh abgeschlossen | PR #17 gemerged; kompakte Prompts, Usage-Optimierung, Agent-/MCP-Regeln, `.aiignore` und PR-Template dokumentiert |
+| 04 Codex Start | Post-Merge-Agent-Best-Practices-Sync abgeschlossen | PR #18 gemerged; main/post-merge-Stand synchronisiert |
 
 ## In Review/Test
 
@@ -66,14 +67,14 @@ GitHub und Codex sollen dieses Dokument bevorzugt nutzen, weil Änderungen hier 
 | 02 Projektkontext | README, AGENTS und Handoff-Dateien prüfen | Sind Ziel, Grenzen, Arbeitsmodell und Codex-Regeln vollständig? |
 | 02 Projektkontext | Tool-Manifest prüfen | Sind Pfade, Fork-/Upstream-Regeln und Codex-Freigaben ausreichend klar? |
 | 04 Codex Start | Codex Dry Run auswerten | Prüfen, ob Governance-Regeln konsistent und praktisch nutzbar sind |
-| 04 Codex Start | Agent-Best-Practices-Post-Merge-Sync reviewen | Ist PR #17 als gemerged/erledigt dokumentiert und der nächste Branch korrekt gesetzt? |
+| 06 Toolchain | Linux-GBA-Toolchain-Plan reviewen | Sind Optionen, Entscheidungspunkte und naechster read-only Pruefschritt klar dokumentiert? |
 | 06 Toolchain | Linux/CachyOS-Migration reviewen | Sind Windows-Annahmen aus neuen Arbeitsblöcken entfernt? |
 
 ## Als Nächstes
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 06 Toolchain | GBA-Toolchain-Vorgehen auf Linux planen | devkitPro/devkitARM- und `arm-none-eabi-gcc`-Vorgehen klaeren, ohne Installation oder Build |
+| 06 Toolchain | GBA-Toolchain-Quellen read-only pruefen | offizielle devkitPro/devkitARM-Dokumentation und dokumentierte Ziel-Repos auf konkrete Toolchain-Anforderungen pruefen |
 
 ## Noch offen
 
@@ -86,7 +87,7 @@ GitHub und Codex sollen dieses Dokument bevorzugt nutzen, weil Änderungen hier 
 | 05 Externe Quellen | Entscheidung: klonen oder forken | Nur forken, wenn Änderungen nötig sind |
 | 06 Toolchain | Linux-Toolchain-Inventur durchführen | auf `setup/linux-toolchain-inventory` dokumentiert |
 | 06 Toolchain | GitHub-CLI-Auth auf Linux klaeren | auf `setup/linux-gh-auth-refresh` dokumentiert |
-| 06 Toolchain | devkitPro/devkitARM auf Linux prüfen | Installation und Version dokumentieren, kein Build |
+| 06 Toolchain | devkitPro/devkitARM auf Linux prüfen | Plan auf `setup/linux-gba-toolchain-plan` dokumentiert; Installation und Version erst nach separater Freigabe dokumentieren |
 | 06 Toolchain | Java-Anforderung für UPR FVX prüfen | OpenJDK 26.0.1 ist lokal vorhanden; spaeter gegen UPR-FVX-Anforderung testen |
 | 06 Toolchain | Hex Maniac Advance prüfen | Tool lokal dokumentieren, nicht committen |
 | 06 Toolchain | BizHawk prüfen | Tool lokal dokumentieren, nicht committen |
@@ -136,7 +137,7 @@ Excel-Roadmap:
 ## Nächster empfohlener Branch
 
 ```text
-setup/linux-gba-toolchain-plan
+setup/linux-gba-toolchain-source-review
 ```
 ## Arbeitsblock-Log
 
@@ -255,5 +256,15 @@ setup/linux-gba-toolchain-plan
 - Aktueller Stand auf main/post-merge-synchronisiert gesetzt.
 - Nächster Arbeitsbranch `setup/linux-gba-toolchain-plan` bestätigt.
 - Keine neuen Workflow-Regeln eingeführt.
+- Keine Installationen, Build-Schritte, externen Clones oder Forks durchgeführt.
+- Keine ROMs, Saves, Builds, Tool-Binaries oder privaten Dateien angefasst.
+
+### 2026-05-11 – setup/linux-gba-toolchain-plan
+
+- GBA-Toolchain-Vorgehen fuer Linux/CachyOS geplant.
+- `01_docs/setup/linux-gba-toolchain-plan.md` erstellt.
+- Optionen dokumentiert: devkitPro/devkitARM als primaere Richtung vorbereiten, System-`arm-none-eabi-gcc` als Fallback bewerten, Build-Details bis nach Repo-Pinning verschieben.
+- Entscheidungspunkte vor Installation dokumentiert: Installationsquelle, benoetigte Komponenten, `DEVKITPRO`/`DEVKITARM`/PATH, `arm-none-eabi-gcc --version`, optionales `agbcc`, Git-Ausschluesse und weiterhin gesperrte Build-Schritte.
+- Naechster Branch `setup/linux-gba-toolchain-source-review` abgeleitet.
 - Keine Installationen, Build-Schritte, externen Clones oder Forks durchgeführt.
 - Keine ROMs, Saves, Builds, Tool-Binaries oder privaten Dateien angefasst.
