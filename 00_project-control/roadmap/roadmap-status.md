@@ -25,8 +25,8 @@ GitHub und Codex sollen dieses Dokument bevorzugt nutzen, weil Änderungen hier 
 | Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Nächster Branch | `setup/linux-gh-auth-refresh` |
-| Aktueller Fokus | Linux/CachyOS-Toolchain-Inventur dokumentieren |
+| Nächster Branch | `setup/linux-gba-toolchain-plan` |
+| Aktueller Fokus | Linux/CachyOS-GitHub-CLI- und Git-Auth-Refresh dokumentieren |
 | ROM-/Build-Arbeit | noch nicht gestartet |
 | Externe Repos | noch nicht geklont |
 | Forks | noch nicht angelegt |
@@ -55,6 +55,7 @@ GitHub und Codex sollen dieses Dokument bevorzugt nutzen, weil Änderungen hier 
 | 06 Toolchain | lokale Windows-Toolchain-/Workspace-Inventur abgeschlossen | PR #11 `docs: record local toolchain inventory` gemerged; historischer Stand |
 | 06 Toolchain | Windows-PATH-Folgeklärung vorbereitet | PR #12 `docs: prepare path toolchain followup` gemerged; durch OS-Wechsel historisch |
 | 06 Toolchain | Linux/CachyOS-Migration dokumentiert | Linux/CachyOS ist primaere lokale Umgebung; Windows-Befunde sind historisch |
+| 06 Toolchain | Linux/CachyOS-Toolchain-Inventur dokumentiert | Git, gh, Shell, Java und make gefunden; GBA-Toolchain-Komponenten bleiben offen |
 
 ## In Review/Test
 
@@ -64,13 +65,13 @@ GitHub und Codex sollen dieses Dokument bevorzugt nutzen, weil Änderungen hier 
 | 02 Projektkontext | Tool-Manifest prüfen | Sind Pfade, Fork-/Upstream-Regeln und Codex-Freigaben ausreichend klar? |
 | 04 Codex Start | Codex Dry Run auswerten | Prüfen, ob Governance-Regeln konsistent und praktisch nutzbar sind |
 | 06 Toolchain | Linux/CachyOS-Migration reviewen | Sind Windows-Annahmen aus neuen Arbeitsblöcken entfernt? |
-| 06 Toolchain | Linux/CachyOS-Toolchain-Inventur reviewen | Git, gh, Shell, Java und make gefunden; gh Auth, devkitPro/devkitARM und Cross-Compiler bleiben offen |
+| 06 Toolchain | GitHub-CLI-/Git-Auth-Refresh reviewen | `gh auth status` und `git fetch origin` erfolgreich; Push und PR-Erstellung nutzbar |
 
 ## Als Nächstes
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 06 Toolchain | GitHub-CLI-Auth auf Linux klaeren | Ungueltigen gespeicherten `gh`-Token bereinigen oder neu authentifizieren, ohne Secrets zu dokumentieren |
+| 06 Toolchain | GBA-Toolchain-Vorgehen auf Linux planen | devkitPro/devkitARM- und `arm-none-eabi-gcc`-Vorgehen klaeren, ohne Installation oder Build |
 
 ## Noch offen
 
@@ -80,7 +81,8 @@ GitHub und Codex sollen dieses Dokument bevorzugt nutzen, weil Änderungen hier 
 | 04 Codex Start | Codex Standardprompt anwenden | Vorlage für kleine Arbeitsbranches testen |
 | 05 Externe Quellen | Repos analysieren, aber noch nicht ändern | UPR FVX, Shiny-Miner, CyanSMP64, Skeli789, pret |
 | 05 Externe Quellen | Entscheidung: klonen oder forken | Nur forken, wenn Änderungen nötig sind |
-| 06 Toolchain | Linux-Toolchain-Inventur durchführen | auf `setup/linux-toolchain-inventory` dokumentiert; Review/PR offen |
+| 06 Toolchain | Linux-Toolchain-Inventur durchführen | auf `setup/linux-toolchain-inventory` dokumentiert |
+| 06 Toolchain | GitHub-CLI-Auth auf Linux klaeren | auf `setup/linux-gh-auth-refresh` dokumentiert; Review/PR offen |
 | 06 Toolchain | devkitPro/devkitARM auf Linux prüfen | Installation und Version dokumentieren, kein Build |
 | 06 Toolchain | Java-Anforderung für UPR FVX prüfen | OpenJDK 26.0.1 ist lokal vorhanden; spaeter gegen UPR-FVX-Anforderung testen |
 | 06 Toolchain | Hex Maniac Advance prüfen | Tool lokal dokumentieren, nicht committen |
@@ -129,7 +131,7 @@ Excel-Roadmap:
 ## Nächster empfohlener Branch
 
 ```text
-setup/linux-gh-auth-refresh
+setup/linux-gba-toolchain-plan
 ```
 ## Arbeitsblock-Log
 
@@ -217,5 +219,15 @@ setup/linux-gh-auth-refresh
 - Gefunden: Git 2.54.0 unter `/usr/bin/git`, GitHub CLI 2.92.0 unter `/usr/bin/gh`, Shell `/bin/fish`, OpenJDK 26.0.1 unter `/usr/bin/java`, GNU Make 4.4.1 unter `/usr/bin/make`.
 - Offen: `gh auth status` meldet einen ungueltigen gespeicherten Token fuer `Planton361`; `arm-none-eabi-gcc`, `agbcc` und `pwsh` sind nicht im PATH; devkitPro/devkitARM ist nicht nachgewiesen.
 - Windows-Toolchain-Befunde bleiben historisch und duerfen nicht als Linux-Ist-Stand verwendet werden.
+- Keine Installationen, Build-Schritte, externen Clones oder Forks durchgeführt.
+- Keine ROMs, Saves, Builds, Tool-Binaries oder privaten Dateien angefasst.
+
+### 2026-05-10 – setup/linux-gh-auth-refresh
+
+- Branch `setup/linux-gh-auth-refresh` für GitHub-CLI- und Git-Auth-Refresh genutzt.
+- `gh auth status` erfolgreich geprüft: Account `Planton361` ist über den lokalen Keyring angemeldet; Git-Protokoll ist HTTPS.
+- `git fetch origin` erfolgreich geprüft.
+- GitHub CLI und Git sind auf Linux/CachyOS wieder für Push und PR-Erstellung nutzbar.
+- Token-Werte, Secrets, `.env`-Dateien und private Keys wurden nicht dokumentiert.
 - Keine Installationen, Build-Schritte, externen Clones oder Forks durchgeführt.
 - Keine ROMs, Saves, Builds, Tool-Binaries oder privaten Dateien angefasst.

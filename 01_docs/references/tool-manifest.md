@@ -6,13 +6,13 @@ Dieses Manifest dokumentiert Tools, Repos, Forks, Versionen, Pfade und Sicherhei
 
 Dieser Stand ist read-only. Es wurden keine externen Repos geklont, keine Forks angelegt, keine Installationen durchgeführt und keine Tool-Binaries heruntergeladen.
 
-Die bisherige lokale Toolchain-Inventur wurde auf Windows durchgeführt und ist ab dem OS-Wechsel nur noch historischer Referenzstand. Linux/CachyOS ist die neue primäre lokale Umgebung. Der folgende Linux-Stand wurde auf Branch `setup/linux-toolchain-inventory` read-only geprüft.
+Die bisherige lokale Toolchain-Inventur wurde auf Windows durchgeführt und ist ab dem OS-Wechsel nur noch historischer Referenzstand. Linux/CachyOS ist die neue primäre lokale Umgebung. Der Linux-Toolchain-Stand wurde auf Branch `setup/linux-toolchain-inventory` read-only geprüft; GitHub-CLI- und Git-Auth wurden auf Branch `setup/linux-gh-auth-refresh` erneut geprüft.
 
 | Tool/Repo | Zweck | Upstream | Fork/Origin | Lokaler Pfad | Branch | Commit | Codex darf ändern | Status |
 |---|---|---|---|---|---|---|---|---|
-| Workspace Repo | Source of Truth | n/a | git@github.com:Planton361/firered-gen9-randomizer-workspace.git | `/home/anton/IdeaProjects/firered-gen9-randomizer-workspace` | `setup/linux-toolchain-inventory` | offen | ja, nur Branches | aktiv |
+| Workspace Repo | Source of Truth | n/a | git@github.com:Planton361/firered-gen9-randomizer-workspace.git | `/home/anton/IdeaProjects/firered-gen9-randomizer-workspace` | `setup/linux-gh-auth-refresh` | offen | ja, nur Branches | aktiv |
 | Git | Versionierung | n/a | n/a | `/usr/bin/git` | n/a | n/a | nein | gefunden: 2.54.0 |
-| GitHub CLI (`gh`) | PRs und GitHub-Checks automatisieren | https://cli.github.com/ | n/a | `/usr/bin/gh` | n/a | n/a | nein | gefunden: 2.92.0; Auth-Token ungueltig |
+| GitHub CLI (`gh`) | PRs und GitHub-Checks automatisieren | https://cli.github.com/ | n/a | `/usr/bin/gh` | n/a | n/a | nein | gefunden: 2.92.0; Auth via Keyring aktiv |
 | POSIX Shell | Terminal-Standard | n/a | n/a | `/bin/fish` laut `$SHELL` | n/a | n/a | nein | primär |
 | PowerShell 7 (`pwsh`) | optionale Script-Ausführung für bestehende Checks | https://github.com/PowerShell/PowerShell | n/a | nicht im PATH gefunden | n/a | n/a | nein | fehlt/optional |
 | Java | Laufzeit für UPR FVX | https://adoptium.net/ oder Distribution-Paket | n/a | `/usr/bin/java` | n/a | n/a | nein | gefunden: OpenJDK 26.0.1 |
@@ -58,6 +58,26 @@ Zweck: Nur lokale Tool-Verfügbarkeit, Versionen und PATH-Erreichbarkeit auf Lin
 - Offen: GitHub CLI ist installiert, aber der gespeicherte GitHub-Token ist ungueltig; devkitPro/devkitARM wurde nicht als installierte Toolchain nachgewiesen.
 - Historisch: Windows-Toolchain-Befunde bleiben dokumentiert, gelten aber nicht als Linux/CachyOS-Ist-Stand.
 
+## Linux/CachyOS GitHub-Auth-Refresh
+
+Arbeitsblock: `setup/linux-gh-auth-refresh`.
+
+Zweck: Prüfen, ob GitHub CLI und Git-Remote-Zugriff auf Linux/CachyOS wieder für Push und PR-Erstellung nutzbar sind. Keine Tokens, Secrets oder privaten Keys dokumentieren.
+
+| Prüfpunkt | Status | Nachweisstand | Nächster Schritt |
+|---|---|---|---|
+| `gh auth status` | erfolgreich | Account `Planton361` ist für `github.com` über den lokalen Keyring angemeldet; Git-Protokoll ist HTTPS | keine Aktion |
+| `git fetch origin` | erfolgreich | `origin` ist erreichbar; Fetch lief ohne Fehler | Push und PR-Erstellung im Arbeitsbranch nutzen |
+| Push-Fähigkeit | nutzbar | aus erfolgreichem `gh auth status` und `git fetch origin` abgeleitet; tatsächlicher Push erfolgt mit diesem Branch | Branch pushen |
+| PR-Erstellung | nutzbar | GitHub CLI ist authentifiziert; PR-Erstellung erfolgt per `gh pr create` | PR nach `main` erstellen |
+
+### Ergebnis 2026-05-10
+
+- GitHub CLI und Git-Auth sind auf Linux/CachyOS wieder funktionsfähig.
+- `gh` ist für Account `Planton361` authentifiziert; der Token-Wert wurde nicht übernommen.
+- `git fetch origin` ist erfolgreich und bestätigt Remote-Zugriff auf `origin`.
+- GitHub CLI und Git können für Push und PR-Erstellung genutzt werden.
+
 ### Nicht-mutierende Linux-Prüfbefehle
 
 ```sh
@@ -99,9 +119,9 @@ Die folgenden Befunde stammen aus der Windows-Inventur vor dem OS-Wechsel und d�
 
 ## Nächste Manifest-Aufgabe
 
-Naechster empfohlener Branch: `setup/linux-gh-auth-refresh`.
+Naechster empfohlener Branch: `setup/linux-gba-toolchain-plan`.
 
-Ziel: GitHub CLI auf Linux neu authentifizieren bzw. den ungueltigen gespeicherten Token bereinigen, ohne Tokens oder Secrets zu dokumentieren.
+Ziel: devkitPro/devkitARM- und `arm-none-eabi-gcc`-Vorgehen für Linux/CachyOS planen, ohne Installation oder Build-Schritte.
 
 Vor dem ersten Clone pro externer Quelle weiterhin festlegen:
 
