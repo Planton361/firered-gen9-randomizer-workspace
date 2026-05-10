@@ -11,30 +11,28 @@
 
 ## Aktueller Branch
 
-`docs/codex-workflow-automation`
+`docs/sync-post-merge-workflow-state`
 
 ## Aktueller Arbeitsblock
 
-Codex-/ChatGPT-/GitHub-Workflow effizienter und stärker automatisierbar dokumentieren.
+Dokumentationsstand nach gemergtem PR #9 synchronisieren und den nächsten kleinen Arbeitsblock vorbereiten.
 
 ## Ziel
 
-Kurze Prompt-Vorlagen, Work-Package-Lifecycle, PR-Automation und Abschlussdokumentation als Definition of Done festhalten.
+Workflow-Automation als abgeschlossen dokumentieren und die lokale Toolchain-/Workspace-Inventur als nächsten minimalen Schritt vorbereiten.
 
-## In diesem Arbeitsblock vorbereitet
+## Abgeschlossen
 
-- `01_docs/quality/prompt-templates.md` neu anlegen
-- `01_docs/setup/work-package-lifecycle.md` neu anlegen
-- `01_docs/quality/prompt-guidelines.md` aktualisieren
-- `01_docs/setup/codex-workflow.md` aktualisieren
-- `01_docs/setup/git-workflow.md` aktualisieren
-- `01_docs/setup/fork-strategy.md` aktualisieren
-- `01_docs/quality/workflow-improvements.md` aktualisieren
-- `01_docs/quality/lessons-learned.md` aktualisieren
-- `01_docs/references/tool-manifest.md` aktualisieren
-- `01_docs/SESSION_STATE.md` aktualisieren
-- `01_docs/NEXT_STEPS.md` aktualisieren
-- `00_project-control/roadmap/roadmap-status.md` aktualisieren
+- PR #9 `docs: improve codex workflow automation` wurde gemerged.
+- Prompt-Templates, Work-Package-Lifecycle, PR-Automation und Abschlussdokumentation sind dokumentiert.
+- GitHub CLI ist installiert und authentifiziert.
+
+## Nächster Fokus
+
+Nächstes kleines Arbeitspaket vorbereiten:
+
+- Toolchain-/Workspace-Inventur ohne ROM-/Build-Arbeit prüfen
+- vorgesehener Branch: `setup/toolchain-local-inventory`
 
 ## Noch nicht gestartet
 
@@ -62,4 +60,4 @@ Keine Änderungen direkt auf `main`.
 - `pwsh -File .\07_scripts\bootstrap\check-git-safety.ps1`
 - `git status --short`
 - `git diff --stat`
-- Branch committen, pushen und als PR nach `main` führen
+- aktuellen Dokumentationsabgleich committen, pushen und als PR nach `main` führen
