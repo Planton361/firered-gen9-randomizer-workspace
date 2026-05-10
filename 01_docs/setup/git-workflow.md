@@ -55,6 +55,12 @@ git push -u origin setup/<thema>
 
 ## Pull Request
 
+Mit GitHub CLI:
+
+```powershell
+gh pr create --base main --head setup/<thema> --title "<kurzer Titel>" --body "<Summary, Dateien, Checks, Risiken, nächster Schritt>"
+```
+
 Der PR soll enthalten:
 
 - Ziel des Branches
@@ -70,6 +76,9 @@ git switch main
 git pull --ff-only origin main
 git branch -d setup/<thema>
 git push origin --delete setup/<thema>
+git status --short
 ```
 
 Remote-Branch nur löschen, wenn der PR gemerged ist und keine Folgearbeit auf diesem Branch offen ist.
+
+Wenn mehrere Arbeitsbranches offen sind, nur den gerade gemergten Branch bereinigen.

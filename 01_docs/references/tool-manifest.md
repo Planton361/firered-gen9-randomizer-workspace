@@ -10,6 +10,7 @@ Dieser Stand ist read-only. Es wurden keine externen Repos geklont, keine Forks 
 |---|---|---|---|---|---|---|---|---|
 | Workspace Repo | Source of Truth | n/a | git@github.com:Planton361/firered-gen9-randomizer-workspace.git | `C:\Users\anton\romhacking\fr-rando-gen9` | main | offen | ja, nur Branches | aktiv |
 | Git | Versionierung | n/a | n/a | PATH | n/a | n/a | nein | vorhanden |
+| GitHub CLI (`gh`) | PRs und GitHub-Checks automatisieren | https://cli.github.com/ | n/a | PATH | n/a | n/a | nein | optional, Verfügbarkeit prüfen |
 | PowerShell | Terminal | n/a | n/a | Windows | n/a | n/a | nein | vorhanden |
 | Codex | Agent | OpenAI | n/a | offen | n/a | n/a | nur nach Branch-Freigabe | geprüft für Docs-Dry-Run |
 | JetBrains IDE | IDE | JetBrains | n/a | lokal | n/a | n/a | nein | vorhanden |

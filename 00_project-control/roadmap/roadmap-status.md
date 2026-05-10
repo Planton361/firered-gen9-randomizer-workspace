@@ -25,8 +25,8 @@ GitHub und Codex sollen dieses Dokument bevorzugt nutzen, weil Änderungen hier 
 | Standardterminal | Windows PowerShell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Nächster Branch | `setup/codex-dry-run-results` |
-| Aktueller Fokus | Read-only-Analyse externer Quellen |
+| Nächster Branch | `docs/codex-workflow-automation` |
+| Aktueller Fokus | Codex-/ChatGPT-/GitHub-Workflow-Automation |
 | ROM-/Build-Arbeit | noch nicht gestartet |
 | Externe Repos | noch nicht geklont |
 | Forks | noch nicht angelegt |
@@ -49,6 +49,7 @@ GitHub und Codex sollen dieses Dokument bevorzugt nutzen, weil Änderungen hier 
 | 01 Initial Setup | ChatGPT-Projekt vorbereitet | Projektdateien und Roadmap als Kontext vorgesehen |
 | 03 Repo Governance | Governance-Dokumente erstellt | Git-, Fork-, Codex-, Security- und Rebuild-Regeln dokumentiert |
 | 03 Repo Governance | Bootstrap-/Safety-Scripts erstellt | Workspace-Bootstrap, Remote-Check und Git-Safety-Check dokumentiert |
+| 05 Externe Quellen | read-only Analyseblock dokumentiert | Quellen und Tool-Manifest ohne Clone/Fork präzisiert |
 
 ## In Review/Test
 
@@ -57,19 +58,20 @@ GitHub und Codex sollen dieses Dokument bevorzugt nutzen, weil Änderungen hier 
 | 02 Projektkontext | README, AGENTS und Handoff-Dateien prüfen | Sind Ziel, Grenzen, Arbeitsmodell und Codex-Regeln vollständig? |
 | 02 Projektkontext | Tool-Manifest prüfen | Sind Pfade, Fork-/Upstream-Regeln und Codex-Freigaben ausreichend klar? |
 | 04 Codex Start | Codex Dry Run auswerten | Prüfen, ob Governance-Regeln konsistent und praktisch nutzbar sind |
+| 04 Codex Start | Codex Workflow-Automation prüfen | Prompt-Templates, Lifecycle, PR-Erstellung und Handoff nutzen |
 
 ## Als Nächstes
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 05 Externe Quellen | read-only Analyseblock bearbeiten | Quellen prüfen, ohne Repos zu klonen oder Forks anzulegen |
+| 04 Codex Start | Workflow-Automation-PR reviewen | Kurze Arbeitspakete schneller starten, abschließen und übergeben |
 
 ## Noch offen
 
 | Paket | Aufgabe | Hinweise |
 |---|---|---|
 | 04 Codex Start | Codex Dry Run abschließen | In Arbeit auf `setup/codex-dry-run-results`; Codex soll nur Docs prüfen, keine ROM-/Build-Arbeit |
-| 04 Codex Start | Codex Standardprompt dokumentieren | wiederverwendbarer Prompt für kleine Arbeitsbranches |
+| 04 Codex Start | Codex Standardprompt anwenden | Vorlage für kleine Arbeitsbranches testen |
 | 05 Externe Quellen | Repos analysieren, aber noch nicht ändern | UPR FVX, Shiny-Miner, CyanSMP64, Skeli789, pret |
 | 05 Externe Quellen | Entscheidung: klonen oder forken | Nur forken, wenn Änderungen nötig sind |
 | 06 Toolchain | devkitPro/devkitARM prüfen | Installation und Version dokumentieren |
@@ -120,7 +122,7 @@ Excel-Roadmap:
 ## Nächster empfohlener Branch
 
 ```text
-setup/codex-dry-run-results
+docs/codex-workflow-automation
 ```
 ## Arbeitsblock-Log
 
@@ -146,6 +148,16 @@ setup/codex-dry-run-results
 
 - Externe Quellen read-only geprüft und dokumentiert.
 - `source-index.md` und `tool-manifest.md` präzisiert.
+- Keine externen Repos geklont.
+- Keine Forks angelegt.
+- Keine ROMs, Saves, Builds, Tool-Binaries oder privaten Dateien angefasst.
+
+### 2026-05-10 – docs/codex-workflow-automation
+
+- Prompt-Templates und Work-Package-Lifecycle vorbereitet.
+- Codex-, Git- und Fork-Workflow um PR-Automation, Stop-Regeln und Handoff ergänzt.
+- Abschlussdokumentation als Definition of Done dokumentiert.
+- GitHub CLI als optionales Tool im Manifest ergänzt.
 - Keine externen Repos geklont.
 - Keine Forks angelegt.
 - Keine ROMs, Saves, Builds, Tool-Binaries oder privaten Dateien angefasst.

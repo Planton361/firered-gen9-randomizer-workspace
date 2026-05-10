@@ -25,6 +25,8 @@ Wenn ein externes Projekt geändert werden muss:
 - Commit-Hashes, Branches und lokale Pfade werden im Tool-Manifest dokumentiert.
 - Das Workspace-Repo dokumentiert die Entscheidung, enthält aber keine fremde Repo-Historie als Kopie.
 
+Keine Forks ohne dokumentierte Entscheidung und Tool-Manifest-Eintrag.
+
 ## Wann nur lesen?
 
 Nur lesen reicht, wenn:
@@ -49,6 +51,7 @@ Nicht erlaubt:
 - blind externe Repos klonen
 - mehrere externe Repos gleichzeitig ändern
 - Forks ohne Eintrag im Tool-Manifest produktiv nutzen
+- Forks ohne dokumentierte Entscheidung anlegen
 - ROMs, Saves, Builds oder Tool-Binaries in externe Repos kopieren
 - private lokale Pfade oder Secrets veröffentlichen
 
