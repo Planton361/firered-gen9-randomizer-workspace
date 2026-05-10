@@ -9,7 +9,7 @@ Ziel:
 - Gen9-Pokémon über CFRU/DPE-nahe Basis prüfen
 - Universal Pokémon Randomizer FVX als Haupt-Randomizer-Kandidat
 - spätere Kompatibilität mit BizHawk und Ironmon Tracker
-- reproduzierbarer GitHub-/PowerShell-/Codex-Workflow
+- reproduzierbarer GitHub-/Linux-/Codex-Workflow
 
 ## Grundregeln
 
@@ -17,7 +17,7 @@ Codex darf:
 
 - Dokumentation lesen und verbessern
 - kleine, reviewbare Änderungen auf Arbeitsbranches machen
-- PowerShell-Scripts für Setup und Checks schreiben
+- kleine Shell-Scripts für Setup und Checks schreiben
 - Tool- und Quellenmanifest pflegen
 - Diffs erklären
 - PR-Beschreibungen vorbereiten
@@ -30,7 +30,7 @@ Codex darf nicht:
 - ROMs lesen, kopieren, ändern oder committen
 - Saves, Emulator States oder Builds committen
 - Dateien in `04_private_roms/`, `05_builds/` oder `03_tools/releases/` bearbeiten
-- private Tokens, `.env`-Dateien oder lokale Secrets veröffentlichen
+- private Zugangsdaten oder lokale Geheimnisse veröffentlichen
 - große Refactors ohne ausdrückliche Freigabe durchführen
 - mehrere externe Repos gleichzeitig ändern
 
@@ -54,17 +54,17 @@ Codex darf nicht:
 
 ## Terminal
 
-Primäre Shell: Windows PowerShell.
+Primäre Shell: Linux/CachyOS Standard-Shell.
 
-Keine Bash-Brace-Expansion verwenden.
+POSIX-Shell-kompatible Kommandos bevorzugen:
 
-Stattdessen PowerShell-native Befehle verwenden:
+- `mkdir -p`
+- `cat`
+- `test`
+- `find`
+- `sha256sum`
 
-- `New-Item`
-- `Set-Content`
-- `Test-Path`
-- `Get-ChildItem`
-- `Get-FileHash`
+PowerShell-Kommandos bleiben nur für historische Windows-Arbeitsblöcke oder wenn ein Script ausdrücklich PowerShell verlangt. In neuen Arbeitsblöcken keine Windows-Pfade als bestätigten Ist-Stand übernehmen.
 
 ## Git-Regeln
 
