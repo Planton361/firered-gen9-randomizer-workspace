@@ -6,7 +6,7 @@ Dieses Manifest dokumentiert Tools, Repos, Forks, Versionen, Pfade und Sicherhei
 
 Dieser Stand ist read-only. Es wurden keine externen Repos geklont, keine Forks angelegt und keine Tool-Binaries heruntergeladen.
 
-Die lokale Toolchain-Inventur wurde im Arbeitsblock `setup/toolchain-local-inventory` dokumentiert. Lokale Windows-Checks wurden auf dem Branch ausgeführt; bestätigte Versionen und Pfade sind unten dokumentiert. Fehlende PATH-Einträge bleiben ausdrücklich offen.
+Die lokale Toolchain-Inventur wurde im Arbeitsblock `setup/toolchain-local-inventory` dokumentiert und mit PR #11 gemerged. Lokale Windows-Checks wurden auf dem Branch ausgeführt; bestätigte Versionen und Pfade sind unten dokumentiert. Fehlende PATH-Einträge bleiben ausdrücklich offen.
 
 | Tool/Repo | Zweck | Upstream | Fork/Origin | Lokaler Pfad | Branch | Commit | Codex darf ändern | Status |
 |---|---|---|---|---|---|---|---|---|
@@ -99,3 +99,30 @@ Vor dem ersten Clone pro externer Quelle festlegen:
 ## Windows-Hinweis
 
 Nach Installation von GitHub CLI muss Windows Terminal neu geöffnet werden. Alternativ muss der PATH in der laufenden PowerShell neu geladen werden, bevor `gh` verfügbar ist.
+
+## PATH-Folgeklärung
+
+Arbeitsblock: `setup/path-toolchain-followup`
+
+Zweck: Nur dokumentieren, welche PATH- oder Umgebungsvariablen-Fragen nach der lokalen Inventur offen sind. Keine PATH-Änderungen, Installationen, Builds, ROM-Zugriffe, Tool-Binary-Downloads, externen Clones oder Forks durchführen.
+
+| Punkt | Aktueller Nachweis | Folgeklärung |
+|---|---|---|
+| GitHub CLI (`gh`) | `C:\Program Files\GitHub CLI\gh.exe` ist vorhanden, Version 2.92.0, authentifiziert; `gh` war im aktuellen PATH nicht auflösbar | Windows Terminal neu öffnen oder PATH in PowerShell neu laden; danach `gh --version` und `gh auth status` erneut dokumentieren |
+| `arm-none-eabi-gcc` | `Get-Command arm-none-eabi-gcc` und Inventurscript ohne Treffer | Prüfen, ob devkitARM installiert ist und ob `C:\devkitPro\devkitARM\bin` oder ein äquivalenter Toolchain-Pfad im PATH fehlt |
+| `agbcc` | optional; Inventurscript ohne Treffer | Erst klären, falls eine konkrete Build-Basis agbcc verlangt; vorher keine Installation oder Tool-Binary-Arbeit |
+
+### Nicht-mutierende Prüfbefehle
+
+Diese Befehle dürfen in einem späteren lokalen Prüfblock verwendet werden, weil sie nur lesen:
+
+```powershell
+Get-Command gh -ErrorAction SilentlyContinue
+& 'C:\Program Files\GitHub CLI\gh.exe' --version
+& 'C:\Program Files\GitHub CLI\gh.exe' auth status
+Get-ChildItem Env:DEVKITARM,Env:DEVKITPRO -ErrorAction SilentlyContinue
+Get-Command arm-none-eabi-gcc -ErrorAction SilentlyContinue
+Test-Path 'C:\devkitPro\devkitARM\bin\arm-none-eabi-gcc.exe'
+Get-Command agbcc -ErrorAction SilentlyContinue
+$env:Path -split ';' | Where-Object { $_ -match 'GitHub CLI|devkitPro|devkitARM|msys2' }
+```

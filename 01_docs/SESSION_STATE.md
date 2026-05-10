@@ -6,53 +6,42 @@
 - GitHub-Repo `Planton361/firered-gen9-randomizer-workspace` existiert.
 - `main` ist Default Branch und bleibt stabil.
 - Branch Protection und PR-Pflicht sind laut dokumentiertem Projektstand eingerichtet.
-- Projektkontext, Roadmap-Status, Repo-Governance, Codex-Dry-Run, externe Quellenprüfung, Workflow-Automation und Post-Merge-Doku-Sync wurden gemerged.
+- Projektkontext, Roadmap-Status, Repo-Governance, Codex-Dry-Run, externe Quellenprüfung, Workflow-Automation, Post-Merge-Doku-Sync und lokale Toolchain-Inventur wurden gemerged.
 - PR #10 `docs: sync post-merge workflow state` ist gemerged.
+- PR #11 `docs: record local toolchain inventory` ist gemerged.
 - ROMs, Saves, Builds, Tool-Binaries und private Dateien sind ausgeschlossen.
 
 ## Aktueller Branch
 
-`setup/toolchain-local-inventory`
+`setup/path-toolchain-followup`
 
 ## Aktueller Arbeitsblock
 
-Lokale Toolchain-/Workspace-Inventur dokumentieren, ohne ROM-, Build-, Clone- oder Fork-Arbeit.
+PATH-Folgeklärung für lokale Toolchain vorbereiten, ohne Installations-, ROM-, Build-, Clone- oder Fork-Arbeit.
 
 ## Ziel
 
-Vorhandene und noch lokal zu prüfende Tools im Tool-Manifest nachvollziehbar erfassen:
+Nach der gemergten lokalen Inventur die offenen PATH-Punkte nachvollziehbar vorbereiten:
 
-- PowerShell
-- Git
-- GitHub CLI
-- Java
-- make
 - arm-none-eabi-gcc
-- agbcc, falls vorhanden
-- pwsh
+- GitHub CLI (`gh`) im aktuellen PowerShell-PATH
+- optional agbcc
 
 ## In diesem Arbeitsblock vorbereitet
 
-- `main` wurde gegen den Merge-Commit von PR #10 geprüft und ist remote aktuell.
-- Branch `setup/toolchain-local-inventory` wurde von `main` erstellt.
-- `01_docs/references/tool-manifest.md` wurde um eine lokale Toolchain-Inventur erweitert.
-- Bekannte Vorinformationen wurden nicht als frisch verifizierte lokale Checks ausgegeben, sondern getrennt dokumentiert.
-- Für offene lokale Toolprüfungen wurden PowerShell-Prüfbefehle dokumentiert.
-- Lokale Windows-Checks und Inventurbefehle wurden anschließend auf dem Branch ausgeführt.
-- Lokal bestätigte Versionen und Pfade wurden im Tool-Manifest nachgetragen.
+- `main` wurde auf Merge-Commit `e83b1325b71c1e10799ed036a9a7d98718c9a0aa` geprüft.
+- PR #11 ist gemerged und die lokale Toolchain-Inventur ist dokumentiert.
+- Lokaler Branch `setup/toolchain-local-inventory` war bereits bereinigt.
+- Remote-Tracking-Branches wurden mit `git fetch --prune` bereinigt.
+- Branch `setup/path-toolchain-followup` basiert auf aktuellem `main`.
 
-## Inventurstatus
+## Offene PATH-Punkte
 
 | Tool | Status |
 |---|---|
-| PowerShell | lokal bestätigt: 5.1.26100.8328 |
-| Git | lokal bestätigt: 2.54.0 unter `c:\devkitPro\msys2\usr\bin\git.exe` |
-| GitHub CLI (`gh`) | lokal bestätigt: 2.92.0 und authentifiziert, aber nicht im aktuellen PATH |
-| Java | lokal bestätigt: Temurin OpenJDK 25.0.3+9 LTS |
-| make | lokal bestätigt: GNU Make 4.4.1 |
+| GitHub CLI (`gh`) | installiert und authentifiziert unter `C:\Program Files\GitHub CLI\gh.exe`, aber nicht als `gh` im aktuellen PATH erreichbar |
 | arm-none-eabi-gcc | nicht im aktuellen PATH gefunden |
 | agbcc | optional; nicht im aktuellen PATH gefunden |
-| pwsh | lokal bestätigt: 7.6.1 |
 
 ## Noch nicht gestartet
 
@@ -77,7 +66,7 @@ Keine Änderungen direkt auf `main`.
 
 ## Nächste Prüfung
 
-Vor PR-Abschluss erneut prüfen:
+Für diesen Dokumentationsblock prüfen:
 
 ```powershell
 pwsh -File .\07_scripts\bootstrap\check-git-safety.ps1
@@ -85,4 +74,4 @@ git status --short
 git diff --stat
 ```
 
-Danach PR `setup/toolchain-local-inventory` prüfen, nicht durch Codex mergen.
+Danach Branch `setup/path-toolchain-followup` reviewbar committen und als PR nach `main` führen. Nicht durch Codex mergen.
