@@ -4,22 +4,22 @@ Dieses Manifest dokumentiert Tools, Repos, Forks, Versionen, Pfade und Sicherhei
 
 ## Sicherheitsstatus
 
-Dieser Stand ist read-only. Es wurden keine externen Repos geklont, keine Forks angelegt und keine Tool-Binaries heruntergeladen.
+Dieser Stand ist read-only. Es wurden keine externen Repos geklont, keine Forks angelegt, keine Installationen durchgeführt und keine Tool-Binaries heruntergeladen.
 
-Die bisherige lokale Toolchain-Inventur wurde auf Windows durchgeführt und ist ab dem OS-Wechsel nur noch historischer Referenzstand. Linux/CachyOS ist die neue primäre lokale Umgebung. Linux-Pfade, Versionen und PATH-Erreichbarkeit müssen in einem eigenen Folgeblock neu geprüft werden.
+Die bisherige lokale Toolchain-Inventur wurde auf Windows durchgeführt und ist ab dem OS-Wechsel nur noch historischer Referenzstand. Linux/CachyOS ist die neue primäre lokale Umgebung. Der folgende Linux-Stand wurde auf Branch `setup/linux-toolchain-inventory` read-only geprüft.
 
 | Tool/Repo | Zweck | Upstream | Fork/Origin | Lokaler Pfad | Branch | Commit | Codex darf ändern | Status |
 |---|---|---|---|---|---|---|---|---|
-| Workspace Repo | Source of Truth | n/a | git@github.com:Planton361/firered-gen9-randomizer-workspace.git | Linux-Pfad offen, neu zu prüfen | main | offen | ja, nur Branches | aktiv |
-| Git | Versionierung | n/a | n/a | Linux PATH, neu zu prüfen | n/a | n/a | nein | offen für Linux-Inventur |
-| GitHub CLI (`gh`) | PRs und GitHub-Checks automatisieren | https://cli.github.com/ | n/a | Linux PATH, neu zu prüfen | n/a | n/a | nein | offen für Linux-Inventur |
-| POSIX Shell | Terminal-Standard | n/a | n/a | Linux/CachyOS | n/a | n/a | nein | primär |
-| PowerShell 7 (`pwsh`) | optionale Script-Ausführung für bestehende Checks | https://github.com/PowerShell/PowerShell | n/a | Linux PATH, optional neu zu prüfen | n/a | n/a | nein | optional |
-| Java | Laufzeit für UPR FVX | https://adoptium.net/ oder Distribution-Paket | n/a | Linux PATH, neu zu prüfen | n/a | n/a | nein | offen für Linux-Inventur |
-| `make` | Build-Orchestrierung für spätere Toolchain-Schritte | n/a | n/a | Linux PATH, neu zu prüfen | n/a | n/a | nein | offen für Linux-Inventur |
-| devkitPro/devkitARM | GBA Build Toolchain | devkitPro | n/a | Linux-Pfad offen | n/a | n/a | nein | offen für Linux-Inventur |
-| `arm-none-eabi-gcc` | GBA Cross-Compiler | ARM GNU Toolchain/devkitARM | n/a | Linux PATH, neu zu prüfen | n/a | n/a | nein | offen für Linux-Inventur |
-| `agbcc` | optionale GBA/pret-kompatible Compiler-Komponente | pret/devkitARM-Kontext | n/a | Linux PATH oder lokaler Toolchain-Pfad, neu zu prüfen | n/a | n/a | nein | optional |
+| Workspace Repo | Source of Truth | n/a | git@github.com:Planton361/firered-gen9-randomizer-workspace.git | `/home/anton/IdeaProjects/firered-gen9-randomizer-workspace` | `setup/linux-toolchain-inventory` | offen | ja, nur Branches | aktiv |
+| Git | Versionierung | n/a | n/a | `/usr/bin/git` | n/a | n/a | nein | gefunden: 2.54.0 |
+| GitHub CLI (`gh`) | PRs und GitHub-Checks automatisieren | https://cli.github.com/ | n/a | `/usr/bin/gh` | n/a | n/a | nein | gefunden: 2.92.0; Auth-Token ungueltig |
+| POSIX Shell | Terminal-Standard | n/a | n/a | `/bin/fish` laut `$SHELL` | n/a | n/a | nein | primär |
+| PowerShell 7 (`pwsh`) | optionale Script-Ausführung für bestehende Checks | https://github.com/PowerShell/PowerShell | n/a | nicht im PATH gefunden | n/a | n/a | nein | fehlt/optional |
+| Java | Laufzeit für UPR FVX | https://adoptium.net/ oder Distribution-Paket | n/a | `/usr/bin/java` | n/a | n/a | nein | gefunden: OpenJDK 26.0.1 |
+| `make` | Build-Orchestrierung für spätere Toolchain-Schritte | n/a | n/a | `/usr/bin/make` | n/a | n/a | nein | gefunden: GNU Make 4.4.1 |
+| devkitPro/devkitARM | GBA Build Toolchain | devkitPro | n/a | Linux-Pfad offen | n/a | n/a | nein | nicht nachgewiesen |
+| `arm-none-eabi-gcc` | GBA Cross-Compiler | ARM GNU Toolchain/devkitARM | n/a | nicht im PATH gefunden | n/a | n/a | nein | fehlt |
+| `agbcc` | optionale GBA/pret-kompatible Compiler-Komponente | pret/devkitARM-Kontext | n/a | nicht im PATH gefunden | n/a | n/a | nein | fehlt/optional |
 | Codex | Agent | OpenAI | n/a | offen | n/a | n/a | nur nach Branch-Freigabe | geprüft für Docs-Dry-Run |
 | JetBrains IDE | IDE | JetBrains | n/a | lokal | n/a | n/a | nein | auf Linux neu zu prüfen |
 | UPR FVX | Randomizer | https://github.com/upr-fvx/universal-pokemon-randomizer-fvx | offen | `02_external/upr-fvx` | offen | offen | nur nach Freigabe | read-only geprüft, nicht geklont |
@@ -35,21 +35,28 @@ Die bisherige lokale Toolchain-Inventur wurde auf Windows durchgeführt und ist 
 
 ## Linux/CachyOS-Inventur
 
-Arbeitsblock: nächster Branch nach `setup/linux-workspace-migration`.
+Arbeitsblock: `setup/linux-toolchain-inventory`.
 
 Zweck: Nur lokale Tool-Verfügbarkeit, Versionen und PATH-Erreichbarkeit auf Linux dokumentieren. Keine ROMs, Saves, Builds, Tool-Binaries, externen Clones oder Forks anfassen.
 
 | Prüfpunkt | Status | Nachweisstand | Nächster Schritt |
 |---|---|---|---|
-| Git | offen | noch nicht auf Linux geprüft | `git --version` dokumentieren |
-| GitHub CLI (`gh`) | offen | noch nicht auf Linux geprüft | `gh --version` und `gh auth status` dokumentieren |
-| Shell | offen | Linux/CachyOS als primäre Umgebung gesetzt | verwendete Shell dokumentieren |
-| Java | offen | noch nicht auf Linux geprüft | `java -version` dokumentieren |
-| `make` | offen | noch nicht auf Linux geprüft | `make --version` dokumentieren |
-| devkitPro/devkitARM | offen | noch nicht auf Linux geprüft | Installations-/PATH-Status nur dokumentieren |
-| `arm-none-eabi-gcc` | offen | noch nicht auf Linux geprüft | `command -v arm-none-eabi-gcc` und Version prüfen |
-| `agbcc` | optional | noch nicht auf Linux geprüft | nur bei konkretem Bedarf prüfen |
-| `pwsh` | optional | noch nicht auf Linux geprüft | nur prüfen, falls bestehende PowerShell-Checks weiter genutzt werden sollen |
+| Git | gefunden | `/usr/bin/git`; Git 2.54.0 | keine Aktion |
+| GitHub CLI (`gh`) | gefunden, Auth offen | `/usr/bin/gh`; gh 2.92.0; `gh auth status` meldet ungueltigen gespeicherten Token fuer `Planton361` | auf Folgebranch neu authentifizieren |
+| Shell | gefunden | `$SHELL` ist `/bin/fish` | POSIX-kompatible Projektbefehle weiter bevorzugen |
+| Java | gefunden | `/usr/bin/java`; OpenJDK 26.0.1 | spaeter UPR-FVX-Anforderung gegen konkrete Version pruefen |
+| `make` | gefunden | `/usr/bin/make`; GNU Make 4.4.1 | keine Aktion |
+| devkitPro/devkitARM | offen | nicht installiert oder nicht nachgewiesen; keine Installation durchgefuehrt | separaten Toolchain-Setup-Block planen |
+| `arm-none-eabi-gcc` | fehlt | nicht im PATH gefunden | spaeter devkitPro/devkitARM oder ARM-Toolchain klaeren |
+| `agbcc` | fehlt/optional | nicht im PATH gefunden | nur bei konkretem pret-/Build-Bedarf klaeren |
+| `pwsh` | fehlt/optional | nicht im PATH gefunden | PowerShell-Checks unter Linux nur nutzen, wenn `pwsh` separat bereitgestellt wird |
+
+### Ergebnis 2026-05-10
+
+- Gefunden: Git 2.54.0, GitHub CLI 2.92.0, fish als Login-/Standardshell, OpenJDK 26.0.1, GNU Make 4.4.1.
+- Fehlend im PATH: `arm-none-eabi-gcc`, `agbcc`, `pwsh`.
+- Offen: GitHub CLI ist installiert, aber der gespeicherte GitHub-Token ist ungueltig; devkitPro/devkitARM wurde nicht als installierte Toolchain nachgewiesen.
+- Historisch: Windows-Toolchain-Befunde bleiben dokumentiert, gelten aber nicht als Linux/CachyOS-Ist-Stand.
 
 ### Nicht-mutierende Linux-Prüfbefehle
 
@@ -92,7 +99,11 @@ Die folgenden Befunde stammen aus der Windows-Inventur vor dem OS-Wechsel und d�
 
 ## Nächste Manifest-Aufgabe
 
-Vor dem ersten Clone pro externer Quelle festlegen:
+Naechster empfohlener Branch: `setup/linux-gh-auth-refresh`.
+
+Ziel: GitHub CLI auf Linux neu authentifizieren bzw. den ungueltigen gespeicherten Token bereinigen, ohne Tokens oder Secrets zu dokumentieren.
+
+Vor dem ersten Clone pro externer Quelle weiterhin festlegen:
 
 - ob nur gelesen, geklont oder geforkt wird
 - welcher Branch relevant ist
