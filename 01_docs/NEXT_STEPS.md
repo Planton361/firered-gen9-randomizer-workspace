@@ -2,21 +2,19 @@
 
 ## Aktueller Arbeitsblock
 
-Linux/CachyOS-Workspace-Migration auf `setup/linux-workspace-migration` dokumentieren.
+Linux/CachyOS-Toolchain-Inventur auf `setup/linux-toolchain-inventory` dokumentieren.
 
 ## Nächste Schritte
 
-1. README und AGENTS-Regeln auf Linux/CachyOS-first reviewen.
-2. Windows-PowerShell- und Windows-PATH-Angaben als historischen Stand einordnen.
-3. Tool-Manifest auf Linux-Inventur vorbereiten.
-4. Roadmap-Status auf OS-Migration und danach Linux-Toolchain-Inventur umstellen.
-5. Safety-Checks ausführen:
+1. Tool-Manifest und Roadmap-Status für Linux/CachyOS-Inventur reviewen.
+2. GitHub-CLI-Auth-Fund als offenen Punkt einordnen, ohne Secrets zu dokumentieren.
+3. Fehlende GBA-Toolchain-Komponenten als offen dokumentieren.
+4. Windows-Toolchain-Befunde weiterhin als historischen Stand markieren.
+5. Abschluss-Checks ausführen:
 
 ```sh
 git status --short
 git diff --stat
-# optional, falls pwsh installiert ist:
-pwsh -File ./07_scripts/bootstrap/check-git-safety.ps1
 ```
 
 6. Branch committen, pushen und als PR nach `main` führen. PR nicht durch Codex mergen.
@@ -30,16 +28,17 @@ pwsh -File ./07_scripts/bootstrap/check-git-safety.ps1
 - keine Tool-Binaries committen
 - keine Änderungen direkt auf `main`
 - keine Installationen erzwingen
-- keine lokalen Pfade als bestätigt dokumentieren, bevor sie auf Linux geprüft wurden
+- keine GitHub-Tokens oder lokale Secrets dokumentieren
 
 ## Danach
 
-Nächster sinnvoller Arbeitsblock nach gemergtem Linux-Migrations-PR:
+Nächster sinnvoller Arbeitsblock nach gemergtem Linux-Toolchain-Inventur-PR:
 
-- Linux-Toolchain-/Workspace-Inventur durchführen
-- Git, GitHub CLI, Java, make, devkitPro/devkitARM und optional pwsh auf Linux prüfen
-- Ergebnisse nur dokumentieren, keine Builds starten
+- Branch `setup/linux-gh-auth-refresh`
+- GitHub CLI auf Linux neu authentifizieren bzw. ungültigen Token bereinigen
+- danach `gh auth status` erneut prüfen
 - weiterhin keine ROMs lesen, kopieren oder bearbeiten
+- keine Installationen oder Build-Schritte ohne separaten Arbeitsblock durchführen
 
 ## Quality
 
