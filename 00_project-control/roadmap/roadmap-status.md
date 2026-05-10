@@ -26,7 +26,7 @@ GitHub und Codex sollen dieses Dokument bevorzugt nutzen, weil Änderungen hier 
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
 | Nächster Branch | `setup/linux-gba-toolchain-plan` |
-| Aktueller Fokus | Linux/CachyOS-GitHub-CLI- und Git-Auth-Refresh dokumentieren |
+| Aktueller Fokus | Agent-Best-Practices-Refresh dokumentieren |
 | ROM-/Build-Arbeit | noch nicht gestartet |
 | Externe Repos | noch nicht geklont |
 | Forks | noch nicht angelegt |
@@ -56,6 +56,7 @@ GitHub und Codex sollen dieses Dokument bevorzugt nutzen, weil Änderungen hier 
 | 06 Toolchain | Windows-PATH-Folgeklärung vorbereitet | PR #12 `docs: prepare path toolchain followup` gemerged; durch OS-Wechsel historisch |
 | 06 Toolchain | Linux/CachyOS-Migration dokumentiert | Linux/CachyOS ist primaere lokale Umgebung; Windows-Befunde sind historisch |
 | 06 Toolchain | Linux/CachyOS-Toolchain-Inventur dokumentiert | Git, gh, Shell, Java und make gefunden; GBA-Toolchain-Komponenten bleiben offen |
+| 06 Toolchain | GitHub-CLI-/Git-Auth-Refresh dokumentiert | `gh auth status` und `git fetch origin` erfolgreich; Push und PR-Erstellung nutzbar |
 
 ## In Review/Test
 
@@ -64,8 +65,8 @@ GitHub und Codex sollen dieses Dokument bevorzugt nutzen, weil Änderungen hier 
 | 02 Projektkontext | README, AGENTS und Handoff-Dateien prüfen | Sind Ziel, Grenzen, Arbeitsmodell und Codex-Regeln vollständig? |
 | 02 Projektkontext | Tool-Manifest prüfen | Sind Pfade, Fork-/Upstream-Regeln und Codex-Freigaben ausreichend klar? |
 | 04 Codex Start | Codex Dry Run auswerten | Prüfen, ob Governance-Regeln konsistent und praktisch nutzbar sind |
+| 04 Codex Start | Agent-Best-Practices-Refresh reviewen | Sind Prompting, Usage, Agent-Tooling, MCP, `.aiignore` und PR-Template praxistauglich und nicht überbürokratisch? |
 | 06 Toolchain | Linux/CachyOS-Migration reviewen | Sind Windows-Annahmen aus neuen Arbeitsblöcken entfernt? |
-| 06 Toolchain | GitHub-CLI-/Git-Auth-Refresh reviewen | `gh auth status` und `git fetch origin` erfolgreich; Push und PR-Erstellung nutzbar |
 
 ## Als Nächstes
 
@@ -78,11 +79,12 @@ GitHub und Codex sollen dieses Dokument bevorzugt nutzen, weil Änderungen hier 
 | Paket | Aufgabe | Hinweise |
 |---|---|---|
 | 04 Codex Start | Codex Dry Run abschließen | Codex soll nur Docs prüfen, keine ROM-/Build-Arbeit |
-| 04 Codex Start | Codex Standardprompt anwenden | Vorlage für kleine Arbeitsbranches testen |
+| 04 Codex Start | Codex Standardprompt anwenden | neue kompakte Vorlage aus `01_docs/quality/prompt-templates.md` nutzen |
+| 04 Codex Start | JetBrains MCP evaluieren | erst nach Toolchain-Inventur und nur mit Manifest-Eintrag |
 | 05 Externe Quellen | Repos analysieren, aber noch nicht ändern | UPR FVX, Shiny-Miner, CyanSMP64, Skeli789, pret |
 | 05 Externe Quellen | Entscheidung: klonen oder forken | Nur forken, wenn Änderungen nötig sind |
 | 06 Toolchain | Linux-Toolchain-Inventur durchführen | auf `setup/linux-toolchain-inventory` dokumentiert |
-| 06 Toolchain | GitHub-CLI-Auth auf Linux klaeren | auf `setup/linux-gh-auth-refresh` dokumentiert; Review/PR offen |
+| 06 Toolchain | GitHub-CLI-Auth auf Linux klaeren | auf `setup/linux-gh-auth-refresh` dokumentiert |
 | 06 Toolchain | devkitPro/devkitARM auf Linux prüfen | Installation und Version dokumentieren, kein Build |
 | 06 Toolchain | Java-Anforderung für UPR FVX prüfen | OpenJDK 26.0.1 ist lokal vorhanden; spaeter gegen UPR-FVX-Anforderung testen |
 | 06 Toolchain | Hex Maniac Advance prüfen | Tool lokal dokumentieren, nicht committen |
@@ -110,6 +112,8 @@ GitHub und Codex sollen dieses Dokument bevorzugt nutzen, weil Änderungen hier 
 - Codex arbeitet nur auf freigegebenen Arbeitsbranches.
 - Codex darf nicht direkt auf `main` pushen.
 - Externe Repos werden erst im Manifest dokumentiert, dann gezielt geklont oder geforkt.
+- MCP-Server sind optional und erst nach Manifest-Eintrag freigegeben.
+- Nicht parallel mehrere schreibende Agenten auf demselben Branch nutzen.
 
 ## Update-Regeln
 
@@ -229,5 +233,16 @@ setup/linux-gba-toolchain-plan
 - `git fetch origin` erfolgreich geprüft.
 - GitHub CLI und Git sind auf Linux/CachyOS wieder für Push und PR-Erstellung nutzbar.
 - Token-Werte, Secrets, `.env`-Dateien und private Keys wurden nicht dokumentiert.
+- Keine Installationen, Build-Schritte, externen Clones oder Forks durchgeführt.
+- Keine ROMs, Saves, Builds, Tool-Binaries oder privaten Dateien angefasst.
+
+### 2026-05-11 – docs/agent-best-practices-refresh
+
+- Branch `docs/agent-best-practices-refresh` für Agent-Best-Practices-Refresh genutzt.
+- Kompakte Codex-Prompt-Vorlagen mit `rg`/`rg --files`, Stop-Regeln, erlaubten Dateien, Checks und PR/Handoff ergänzt.
+- Usage-Optimierung dokumentiert: ein Arbeitspaket pro Chat, Dateipfade statt kopierter Inhalte, stabile Regeln in `AGENTS.md`, Handoff statt langer Chat-Verlauf.
+- Agent-Tooling-Policy dokumentiert: ChatGPT QA als Analyse/Handoff, Codex CLI als primärer Worker, IDE-Agenten optional und nicht parallel auf demselben Branch.
+- MCP-Policy dokumentiert: optional, nur vertrauenswürdige Server, kein Brave Mode als Default, keine Secrets in Configs, Manifest-Pflicht.
+- `.aiignore` und `.github/pull_request_template.md` erstellt.
 - Keine Installationen, Build-Schritte, externen Clones oder Forks durchgeführt.
 - Keine ROMs, Saves, Builds, Tool-Binaries oder privaten Dateien angefasst.
