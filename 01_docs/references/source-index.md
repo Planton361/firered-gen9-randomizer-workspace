@@ -54,6 +54,48 @@ Arbeitsblock: `planning/workspace-build-randomizer-integration`.
 - Vor jedem Clone/Fork muessen Branch, Commit-Hash, lokaler Pfad und Zweck im Tool-Manifest festgehalten werden.
 - ROMs bleiben ausschliesslich lokal in `04_private_roms/`; Builds bleiben ausschliesslich lokal in `05_builds/`; Tool-Binaries bleiben ausschliesslich lokal in `03_tools/releases/`.
 
+## Kompatibilitaetsmodell 2026-05-11
+
+Arbeitsblock: `analysis/cfru-dpe-upr-fvx-compatibility-model`.
+
+Neue Workspace-Referenz:
+
+- `01_docs/compat/cfru-dpe-upr-fvx-compatibility-model.md`
+
+Primaere lokale CFRU/DPE-Quellen fuer das Modell:
+
+| Bereich | Quelle | Zweck |
+|---|---|---|
+| DPE Zielumfang | `02_external/Dynamic-Pokemon-Expansion-Gen-9/README.md` | dynamisches FireRed-Pokemon-Insertionsmodell, Pokedex-/Forme-Zielumfang |
+| DPE Species-ID | `02_external/Dynamic-Pokemon-Expansion-Gen-9/include/species.h` | interne `SPECIES_*`-IDs und `NUM_SPECIES` |
+| DPE Dex-ID | `02_external/Dynamic-Pokemon-Expansion-Gen-9/include/pokedex.h` | National-Dex-Konstanten und Dex-Datenstrukturen |
+| DPE Mapping | `02_external/Dynamic-Pokemon-Expansion-Gen-9/src/Species_To_Pokdex_Table.c` | interne Species-ID zu National-Dex-ID |
+| DPE Reihenfolge | `02_external/Dynamic-Pokemon-Expansion-Gen-9/src/Pokedex_Orders.c` | regionale und sortierte Dex-Ordnungen |
+| DPE Daten | `02_external/Dynamic-Pokemon-Expansion-Gen-9/src/Base_Stats.c`, `src/Evolution Table.c`, `src/Learnsets.c` | BaseStats, Evolutions und Learnsets indiziert nach interner Species-ID |
+| DPE Offsets | `02_external/Dynamic-Pokemon-Expansion-Gen-9/offsets.ini`, `scripts/make.py` | generierte Adressen und Insertionslogik fuer konkret gebaute Teststaende |
+| CFRU Zielumfang | `02_external/CFRU-expansion/README.md` | Engine-/Gen9-Zielumfang und DPE-Bezug |
+| CFRU Species-ID | `02_external/CFRU-expansion/include/constants/species.h` | CFRU-interner Species-ID-Raum |
+| CFRU Wild | `02_external/CFRU-expansion/include/wild_encounter.h`, `include/new/wild_encounter.h`, `src/wild_encounter.c`, `src/Tables/wild_encounter_tables.c` | Vanilla/Fallback-Wild, CFRU-Day/Night-Header und Laufzeit-Fallback |
+| CFRU Trainer/Daten | `02_external/CFRU-expansion/src/Tables/trainer_data.c`, `src/Tables/trainer_parties.h`, `src/Tables/pokemon_tables.c`, `src/Tables/level_up_learnsets.c` | spaetere Trainer-/Pokemon-/Learnset-Kompatibilitaetsanalyse |
+
+Primaere lokale UPR-FVX-Quellen fuer das Modell:
+
+| Bereich | Quelle | Zweck |
+|---|---|---|
+| Struktur | `02_external/upr-fvx/README.md`, `02_external/upr-fvx/docs/src/_wikipages/structure.md` | Modulgrenzen `romio`/`random` |
+| ROM-Erkennung | `02_external/upr-fvx/romio/src/main/java/com/uprfvx/romio/romio/RomOpener.java`, `romio/src/main/resources/com/uprfvx/romio/romentries/gen3_offsets.ini` | Handler-Auswahl und Gen3-Offsets |
+| Gen3-ROM-Modell | `02_external/upr-fvx/romio/src/main/java/com/uprfvx/romio/romhandlers/Gen3RomHandler.java` | BPRE-Hack-Heuristik, Species-Loading, Wild/Trainer/Starter/Evolution/Learnset-Lese- und Schreibpfade |
+| Species-Modell | `02_external/upr-fvx/romio/src/main/java/com/uprfvx/romio/gamedata/Species.java`, `SpeciesSet.java`, `SpeciesIDs.java`, `Gen3Constants.java` | Dex-ID, SpeciesSet-Identitaet, Generation-Mapping und Gen3-Konstanten |
+| Restrictions | `02_external/upr-fvx/random/src/main/java/com/uprfvx/random/Settings.java`, `GameRandomizer.java`, `romio/src/main/java/com/uprfvx/romio/gamedata/GenRestrictions.java`, `romio/src/main/java/com/uprfvx/romio/services/RestrictedSpeciesService.java` | finaler Allowed-Pool und Gen-Filter |
+| Randomizer | `02_external/upr-fvx/random/src/main/java/com/uprfvx/random/randomizers/WildEncounterRandomizer.java`, `TrainerPokemonRandomizer.java`, `StarterRandomizer.java`, `EvolutionRandomizer.java`, `SpeciesMovesetRandomizer.java`, `ItemRandomizer.java` | Randomizer-Pool-Nutzung und spaetere Kompatibilitaetsrisiken |
+| Logging/CLI | `02_external/upr-fvx/random/src/main/java/com/uprfvx/random/cli/CliRandomizer.java`, `random/src/main/java/com/uprfvx/random/log/RandomizationLogger.java` | CLI-/Settings-Flow und Log-Auswertung |
+
+Ergebnis:
+
+- RAM-Mapping ist kein aktueller Blocker; zuerst muessen ROM-Datenmodell und finaler Randomizer-Pool stabil sein.
+- P0 ist ein separater UPR-FVX-Fix fuer GenRestrictions/finalen Gen4+-Wild-Pool.
+- P1 bis P4 bleiben Trainer/Starters/Evolutions/Learnsets, CFRU Day/Night Wild, Nullslot-`<unknown>` und Ironmon/BizHawk/RAM-Mapping.
+
 ## Regel
 
 Vor produktiver Nutzung müssen Branch, Commit-Hash, lokaler Pfad und Zweck im Tool-Manifest festgehalten werden.

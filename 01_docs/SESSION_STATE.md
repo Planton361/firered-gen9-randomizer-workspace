@@ -6,74 +6,69 @@
 - GitHub-Repo `Planton361/firered-gen9-randomizer-workspace` existiert und bleibt Source of Truth.
 - `main` ist Default Branch und bleibt stabil.
 - Branch Protection und PR-Pflicht sind laut dokumentiertem Projektstand eingerichtet.
-- Workspace-Build-/Randomizer-Smoke-Test ist auf `main` dokumentiert; letzter gepruefter Merge-Commit fuer diesen Arbeitsblock ist `5c2cc1eda7e600db461e56eac2eba2c31a575fcc`.
+- Workspace PR #28 ist gemerged; der Gen4+-Wild-Pool-Diagnosebefund ist in `main` verfuegbar.
+- UPR-FVX PR #3 ist gemerged; der lokale Submodule-Stand bleibt in diesem Workspace auf `223ee9ef compat: preserve CFRU DPE species identity`.
 - devkitPro/devkitARM wurde lokal installiert und geprueft.
-- DPE Gen9 baut erfolgreich.
-- CFRU auf DPE baut erfolgreich.
+- DPE Gen9 baut lokal erfolgreich.
+- CFRU auf DPE baut lokal erfolgreich.
 - UPR-FVX wurde aus Source gebaut und startet.
 - UPR-FVX kann die CFRU/DPE-ROM laden, minimal randomisieren und speichern.
 - BizHawk bootet die randomisierte ROM; neues Spiel, Starterwahl und Rivalenkampf funktionieren.
 - Wild-Encounter-Randomization funktioniert fuer Vanilla-/Fallback-Encounter-Tabellen.
 - Route 1 wurde fuer den Randomizer-Kompatibilitaetsbuild per `FIRERED_GEN9_ENABLE_ROUTE1_CUSTOM_WILD 0` auf Vanilla/Fallback-Wilddaten zurueckgefuehrt.
-- Offener technischer Fokus ist jetzt die UPR-FVX-Korrektur der Species-Generation-Zuordnung fuer Gen4-Gen9 und die getrennte Bewertung von Wild-Log-`<unknown>`-Nullslots.
+- PR #3 behebt den SpeciesSet-Kollaps: `speciesList.size` steigt im Diagnosebefund von `412` auf `799`, `maxSpeciesIdentityNumber=823`, Skrelp bis Hawlucha werden Gen6 statt Gen3.
+- Der finale Wild-Randomizer-Pool bleibt im dokumentierten Gen4+-Diagnoselauf auf Gen1-3 begrenzt, weil `Settings.tweakForRom()` Gen3-ROMs auf `generationOfPokemon() == 3` kappt und `GameRandomizer.setupSpeciesRestrictions()` diese Restrictions auch bei `limitPokemon=false` setzt.
 - ROMs, Saves, Builds, Tool-Binaries und private Dateien sind ausgeschlossen.
 
 ## Aktueller Branch
 
-`analysis/upr-fvx-gen4plus-wild-pool-diagnostics`
+`analysis/cfru-dpe-upr-fvx-compatibility-model`
 
 ## Aktueller Arbeitsblock
 
-Gen4+-Wild-Pool nach PR #3 mit gezielten All-Gens-Settings diagnostisch pruefen.
+Read-only Gesamtanalyse des CFRU/DPE-UPR-FVX-Kompatibilitaetsmodells vor weiteren funktionalen Fixes.
 
 ## Ziel
 
 Konkret klaeren:
 
-- ob PR #2 im UPR-FVX-Fork nur Diagnoseausgaben enthaelt
-- ob UPR-FVX mit Diagnose-Branch lokal baut
-- welche Count-/Generation-/Mapping-Werte der lokale CFRU/DPE-Teststand ausgibt
-- welche Rohwerte fuer Wild-Log-`<unknown>` erscheinen
-- welcher minimale Fixbranch als naechstes sinnvoll ist
+- welche CFRU/DPE-Datenquellen Source-of-Truth fuer Species, Dex, Wild, Trainer, Evolutions und Learnsets sind
+- welche UPR-FVX-Codepfade Source-of-Truth fuer ROM-Erkennung, Species-Loading, Restrictions, Wild, Trainer, Starters, Evolutions und Learnsets sind
+- wie interne Species-ID, Dex-ID, SpeciesSet-Identitaet und Formes zusammenhaengen
+- warum Gen4+ trotz erweitertem RomHandler-Pool noch nicht im finalen Wild-Pool landet
+- ob RAM-Mapping jetzt noetig ist
+- welche Fix-Reihenfolge minimal sinnvoll ist
 
 ## In diesem Arbeitsblock geprueft / geaendert
 
-- UPR-FVX-Fork-PR #2 `chore: add CFRU DPE species diagnostics` lokal auf Branch `analysis/log-cfru-dpe-species-diagnostics` geprueft.
-- PR #2 enthaelt nur Diagnoseausgaben in `Gen3RomHandler.java` und `RandomizationLogger.java`.
-- UPR-FVX wurde lokal per `./gradlew clean :random:jar` erfolgreich gebaut; Build-Artefakte blieben lokal/ignored.
-- Der vorhandene lokale CFRU/DPE-Route-1-Fallback-Teststand wurde mit dem Diagnose-JAR per CLI geladen/randomisiert.
-- Neues Diagnoseprotokoll erstellt: `08_tests/randomizer/upr-fvx-cfru-dpe-species-diagnostics-run.md`.
-- Keine funktionalen Randomizer-Fixes vorgenommen.
-- Keine ROMs, Saves, Emulator States, Builds, Tool-Binaries oder Secrets committed.
+- Workspace `main` per `git pull --ff-only origin main` aktualisiert.
+- Workspace PR #28 per `gh pr view --repo Planton361/firered-gen9-randomizer-workspace` als `MERGED` geprueft.
+- UPR-FVX PR #3 per `gh pr view --repo Planton361/universal-pokemon-randomizer-fvx` als `MERGED` geprueft.
+- Branch `analysis/cfru-dpe-upr-fvx-compatibility-model` von aktuellem `main` erstellt.
+- Pflichtdokumente und bisherige Randomizer-Protokolle gelesen.
+- UPR-FVX, CFRU-expansion und DPE Gen9 read-only analysiert.
+- Neues Modell erstellt: `01_docs/compat/cfru-dpe-upr-fvx-compatibility-model.md`.
+- Keine Codeaenderungen vorgenommen.
+- Keine Builds gestartet.
+- Keine ROMs, Saves, Emulator States, Tool-Binaries oder privaten Pfade gelesen, kopiert, geaendert oder committed.
 
 ## Ergebnis
 
-- Diagnosewerte: `PokemonCount=823`, `pokedexCount=386`, `speciesList.size=412`, `maxInternalSpeciesId=823`, `maxSpeciesNumber=411`, `generationCounts={1=328, 2=200, 3=295}`.
-- Beispiel-Species ueber 386 werden geladen, aber als Generation 3 klassifiziert.
-- Wild-Log-`<unknown>`-Rohwerte waren in den eindeutigen stderr-Befunden `rawInternalSpeciesId=0`.
-- Der naechste sinnvolle Fix ist Generation-Mapping fuer Gen4-Gen9; `PokemonCount`-/ID-Mapping und Nullslots getrennt weiter pruefen.
-
-## In diesem Arbeitsblock geprueft / geaendert
-
-- Workspace-Branch `analysis/upr-fvx-gen4plus-wild-pool-diagnostics` angelegt.
-- UPR-FVX lokal auf `223ee9ef compat: preserve CFRU DPE species identity` geprueft.
-- UPR-FVX per `./gradlew clean :random:jar` erfolgreich gebaut.
-- Lokaler CFRU/DPE-Teststand mit All-Gens-Settings per CLI randomisiert.
-- Neues Protokoll erstellt: `08_tests/randomizer/upr-fvx-gen4plus-wild-pool-diagnostics.md`.
-- Keine UPR-FVX-Codeaenderungen vorgenommen.
-
-## Ergebnis
-
-- RomHandler-Pool bleibt nach PR #3 erweitert: `speciesList.size=799`, `maxSpeciesIdentityNumber=823`.
-- Beispiel-Species Skrelp bis Hawlucha bleiben korrekt Gen6.
-- Finaler Wild-Log enthaelt weiterhin keine sichtbaren Gen4+-Species.
-- Wild-Log-Auswertung: Gen1 `841`, Gen2 `527`, Gen3 `791`, Gen4+ `0`, `<unknown>` `17`.
-- Read-only-Ursache: `Settings.tweakForRom()` kappt `currentRestrictions` fuer Gen3-ROMs auf `generationOfPokemon() == 3`; `GameRandomizer.setupSpeciesRestrictions()` setzt diese Restrictions auch bei `limitPokemon=false`.
+- RAM-Mapping ist jetzt nicht noetig; zuerst muessen ROM-Datenmodell und Randomizer-Pool stabil sein.
+- DPE/CFRU Source-of-Truth fuer Species ist der interne `SPECIES_*`-ID-Raum, nicht der kompakte Dex-/Pokedex-Raum.
+- FVX muss `Species.number` fuer bestehende Gen3-Schreibpfade weiter als Dex-/Pokedex-ID behandeln, waehrend SpeciesSet-Identitaet fuer erweiterte BPRE-Hacks intern bleiben muss.
+- Der naechste technische Fix ist P0: GenRestrictions/finaler Gen4+-Wild-Pool.
+- Trainer, Starters, Evolutions, Learnsets und TM/Tutor-Kompatibilitaet sind P1, weil viele Pfade weiterhin `pokedexToInternal[species.getNumber()]` verwenden.
+- CFRU-Day/Night-Custom-Wild-Tabellen sind P2 und bleiben getrennt vom Vanilla/Fallback-Wild-Pool.
+- `rawInternalSpeciesId=0`-`<unknown>` ist P3 und bleibt ein eigenes Nullslot-Thema.
+- BizHawk/Ironmon/RAM-Mapping ist P4.
 
 ## Noch nicht gestartet
 
 - UPR-FVX-Fix fuer CFRU/DPE-Generation-Restrictions
+- Trainer-/Starter-/Evolution-/Learnset-Diagnosen nach PR #3
 - CFRU-Day/Night-Custom-Wild-Tabellen-Support
+- Nullslot-`<unknown>`-Analyse
 - Ironmon-Tracker-Tests
 
 ## Sicherheitsstatus
@@ -86,7 +81,7 @@ Keine externen Original-Upstreams kontaktiert.
 
 Keine Aenderungen direkt auf `main`.
 
-UPR-FVX-JAR wurde lokal neu gebaut; Build-Artefakt blieb ignored und wurde nicht committed.
+Keine Codeaenderungen in `02_external/**`.
 
 Keine MCP-Configs mit Secrets angelegt.
 
@@ -99,6 +94,7 @@ git status --short
 git submodule status --recursive
 git diff --stat
 git diff --submodule
+git diff --check
 ```
 
 ## Naechster empfohlener Branch
