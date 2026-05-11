@@ -25,8 +25,8 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
 | Aktueller Branch | `analysis/upr-fvx-cfru-dpe-species-pool` |
-| Nächster Branch | `analysis/upr-fvx-cfru-dpe-generation-mapping-diagnostics` |
-| Aktueller Fokus | UPR-FVX/CFRU/DPE-Species-Identity-/Generation-Mapping fixen |
+| Nächster Branch | `analysis/upr-fvx-cfru-dpe-wild-pool-gen4-settings` |
+| Aktueller Fokus | UPR-FVX PR #3 Diagnosebefund reviewen |
 | ROM-/Build-Arbeit | Smoke-Test lokal dokumentiert; keine Artefakte committed |
 | Externe Repos | als Submodule auf Planton361-Forks eingebunden |
 | Forks | Planton361-Forks fuer UPR-FVX, DPE Gen9 und CFRU dokumentiert |
@@ -55,24 +55,25 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | 08 Randomizer-Kompatibilität | Route-1-Fallback-Wilddaten dokumentiert | CFRU Route-1-Custom-Day/Night-Wilddaten per Macro deaktiviert; Route 1 wieder als FVX-Fallback-Area sichtbar |
 | 08 Randomizer-Kompatibilität | CFRU/DPE-Species-Diagnose dokumentiert | UPR-FVX PR #2 lokal gebaut/ausgefuehrt; Count-, Generation- und `<unknown>`-Rohwerte protokolliert |
 | 08 Randomizer-Kompatibilität | CFRU/DPE-Species-Identity-Fix vorbereitet | UPR-FVX-Fixbranch trennt Dex-ID von SpeciesSet-Identitaet fuer erweiterte BPRE-Hacks |
+| 08 Randomizer-Kompatibilität | CFRU/DPE-Species-Identity-Fix diagnostiziert | PR #3 hebt `speciesList.size` von 412 auf 799 und `maxSpeciesIdentityNumber` auf 823 |
 
 ## In Review/Test
 
 | Paket | Aufgabe | Prüfpunkte |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | UPR-FVX/CFRU/DPE Species-Identity-Fix reviewen | Bleibt Dex-ID-Semantik erhalten, waehrend SpeciesSet-Identitaet und Gen4-Gen9-Generation-Mapping korrigiert werden? |
+| 08 Randomizer-Kompatibilität | UPR-FVX PR #3 reviewen/mergen | SpeciesSet-Kollaps behoben; finaler Wild-Pool mit Gen4+-Settings separat pruefen |
 
 ## In Arbeit
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Generation-Mapping-Fix dokumentieren | UPR-FVX-Fix und erwartete Diagnosewerte protokollieren |
+| 08 Randomizer-Kompatibilität | PR-#3-Diagnose dokumentieren | Vorher/Nachher-Werte und Merge-Empfehlung protokollieren |
 
 ## Als Nächstes
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Generation-Mapping-Fix erneut diagnostizieren | Lokalen CFRU/DPE-Teststand erneut laden und `speciesList.size`/`maxSpeciesIdentityNumber`/Generationen vergleichen |
+| 08 Randomizer-Kompatibilität | Gen4+-Wild-Pool gezielt testen | Settings so waehlen, dass Gen4+-Species in der finalen Wild-Auswahl nachweisbar sind |
 
 ## Noch offen
 

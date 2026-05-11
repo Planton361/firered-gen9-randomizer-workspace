@@ -24,7 +24,7 @@
 
 ## Aktueller Arbeitsblock
 
-UPR-FVX/CFRU/DPE Generation-Mapping-/Species-Identity-Fix im UPR-FVX-Fork vorbereiten.
+UPR-FVX PR #3 lokal diagnostisch ausfuehren und gegen den vorherigen CFRU/DPE-Befund vergleichen.
 
 ## Ziel
 
@@ -55,8 +55,8 @@ Konkret klaeren:
 
 ## Noch nicht gestartet
 
-- UPR-FVX-Fixbranch `compat/upr-fvx-gen9-generation-mapping` mit minimalem Species-Identity-/Generation-Mapping-Patch vorbereiten
-- erneuter Diagnose-Lauf nach Generation-Mapping-Fix
+- PR #3 mergen
+- gezielter Wild-Randomizer-Pool-Test mit Gen4+-Settings
 - CFRU-Day/Night-Custom-Wild-Tabellen-Support
 - Ironmon-Tracker-Tests
 
@@ -87,6 +87,6 @@ git diff --submodule
 
 ## Naechster empfohlener Branch
 
-`compat/upr-fvx-gen9-generation-mapping`
+`analysis/upr-fvx-cfru-dpe-wild-pool-gen4-settings`
 
-Zweck: Im UPR-FVX-Fork die SpeciesSet-Identitaet fuer erweiterte CFRU/DPE-BPRE-Hacks auf interne IDs stuetzen und Gen4-Gen9 generationstreu klassifizieren, ohne `rawInternalSpeciesId=0`-Nullslots oder Day/Night-Wild-Tabellen in diesem Branch zu behandeln.
+Zweck: Nach PR #3 gezielt pruefen, ob der Wild-Randomizer mit passenden Generation-Restrictions Gen4+-Species aus dem erweiterten RomHandler-Pool auswaehlt.
