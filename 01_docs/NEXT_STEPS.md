@@ -2,24 +2,24 @@
 
 ## Aktueller Arbeitsblock
 
-Starter-Write-Fix und Nachher-Diagnose abschliessen.
+Static-/Gift-Write-Diagnose abschliessen.
 
 Aktueller Branch:
 
 ```text
-analysis/upr-fvx-cfru-dpe-starter-internal-species-write
+analysis/upr-fvx-cfru-dpe-p1-static-gift-write-diagnostics
 ```
 
 Zieldokumente:
 
 ```text
-08_tests/randomizer/upr-fvx-cfru-dpe-starter-internal-species-write-diagnostics.md
+08_tests/randomizer/upr-fvx-cfru-dpe-p1-static-gift-write-diagnostics.md
 ```
 
 ## Naechste Schritte in diesem Block
 
 1. Dokumentation reviewen:
-   - `08_tests/randomizer/upr-fvx-cfru-dpe-starter-internal-species-write-diagnostics.md`
+   - `08_tests/randomizer/upr-fvx-cfru-dpe-p1-static-gift-write-diagnostics.md`
    - `01_docs/SESSION_STATE.md`
    - `01_docs/NEXT_STEPS.md`
    - `00_project-control/roadmap/roadmap-status.md`
@@ -36,7 +36,7 @@ git diff --check
 3. Commit erstellen:
 
 ```text
-docs: record CFRU DPE starter internal species write diagnostics
+docs: diagnose CFRU DPE static gift write path
 ```
 
 4. Branch pushen und Workspace-PR nach `main` vorbereiten.
@@ -46,14 +46,15 @@ docs: record CFRU DPE starter internal species write diagnostics
 Naechster minimaler Diagnosebranch:
 
 ```text
-analysis/upr-fvx-cfru-dpe-p1-static-gift-write-diagnostics
+compat/upr-fvx-cfru-dpe-static-gift-scope-and-write
 ```
 
 Ziel:
 
-- Static-/Gift-Species-only Diagnose fuer erweiterte CFRU/DPE-BPRE-Hacks.
-- Pruefen, ob Gen4+-Static-/Gift-Species nach Write und Reload erhalten bleiben.
-- Roamer-Scope ausklammern.
+- UPR-FVX-Fixbranch fuer Static/Gift-Scope und echten Static/Gift-Write-Pfad.
+- Null-/Roamer-/hardcoded-FRLG-Eintraege zuerst klassifizieren.
+- Echte Static/Gift-Species fuer erweiterte CFRU/DPE-BPRE-Hacks per interner SpeciesSet-Identitaet schreiben.
+- Roamer-Fixes weiter separat halten, falls sie ein eigenes Datenmodell brauchen.
 - Der Folgeblock darf keine Trainer-, Evolution-, Learnset-, TM-, Tutor-, Ability-, CFRU-Day/Night-Wildtable-, Swarm-, DexNav-, Raid- oder Nullslot-Logik vermischen.
 
 ## Fix-Reihenfolge
@@ -62,7 +63,7 @@ P0: GenRestrictions / finaler Gen4+ Allowed-Pool. Erledigt und post-merge bestae
 
 P0b: Gen3/CFRU-DPE-Wild-Write-Mapping fuer interne Species-Identitaet. Erledigt und post-merge bestaetigt.
 
-P1: Species-Schreibpfade. Analyse erledigt; Starter-Write-Fix ist als UPR-FVX PR #6 offen und diagnostisch bestaetigt, danach Static/Gifts und Trainer-Species separat testen.
+P1: Species-Schreibpfade. Analyse erledigt; Starter-Write-Fix ist als UPR-FVX PR #6 gemerged und diagnostisch bestaetigt. Static/Gift-Diagnose zeigt Gen4+-Pool/Picks, aber der echte Lauf ist durch Null-Static-/Roamer-Scope blockiert.
 
 P2: CFRU Day/Night Custom Wild Tables. Separat nach P1-Schreibpfad-Diagnose.
 

@@ -23,50 +23,53 @@
 - UPR-FVX PR #4 ist gemerged; der P0-GenRestrictions-Fix entfernt die Gen1-3-Kappung fuer erweiterte CFRU/DPE-BPRE-Hacks und setzt bei `limitPokemon=false` den unrestricted Pool.
 - UPR-FVX PR #5 ist gemerged; der Gen3/CFRU-DPE-Wild-Write-Fix schreibt Vanilla/Fallback-Wild-Encounters fuer erweiterte BPRE-Hacks ueber interne SpeciesSet-Identitaet statt `pokedexToInternal[Species.number]`.
 - Der Post-Merge-P0-Smoke auf UPR-FVX Merge-Commit `843b75a8` bestaetigt die Fixkette PR #3/#4/#5: sichtbarer Wild-Log Gen1 `354`, Gen2 `388`, Gen3 `404`, Gen4 `398`, Gen5 `528`, Gen6 `104`, `<unknown>` `0`.
-- UPR-FVX PR #6 ist offen; der Starter-Write-Fix schreibt Starter fuer erweiterte BPRE-Hacks ueber interne SpeciesSet-Identitaet und erhaelt Pawniard/Scraggy im Reload.
+- UPR-FVX PR #6 ist gemerged; der Starter-Write-Fix schreibt Starter fuer erweiterte BPRE-Hacks ueber interne SpeciesSet-Identitaet und erhaelt Pawniard/Scraggy im Reload.
+- Static/Gift-only Diagnose ist dokumentiert: Gen4+ ist im Pool und Pick-Pfad vorhanden, aber der echte Randomizer-Lauf bricht vor Save/Log an Null-Static-/Roamer-Eintraegen ab.
 - ROMs, Saves, Builds, Tool-Binaries und private Dateien sind ausgeschlossen.
 
 ## Aktueller Branch
 
-`analysis/upr-fvx-cfru-dpe-starter-internal-species-write`
+`analysis/upr-fvx-cfru-dpe-p1-static-gift-write-diagnostics`
 
 ## Aktueller Arbeitsblock
 
-Starter-Write-Fix und Nachher-Diagnose fuer erweiterte CFRU/DPE-BPRE-Hacks.
+Static-/Gift-Write-Diagnose fuer erweiterte CFRU/DPE-BPRE-Hacks nach P1a Starter-Fix.
 
 ## Ziel
 
 Konkret klaeren:
 
-- ob `Gen3RomHandler.writeStarterBytes()` fuer erweiterte CFRU/DPE-BPRE-Hacks interne SpeciesSet-Identitaet schreiben kann
-- ob Vanilla/normale Gen3-ROMs weiter den bisherigen `pokedexToInternal[Species.number]`-Pfad behalten
-- ob Seed `274269061345323` Pawniard/Scraggy nach Write und Reload erhaelt
+- ob UPR-FVX Static/Gift-Species mit Gen4+ aus dem unrestricted Pool auswaehlen kann
+- ob der aktuelle Gen3-Static/Gift-Schreibpfad einen Write/Reload-Vergleich zulaesst
+- ob der naechste P1-Fix ein reiner Identity-Write-Fix sein kann oder zuerst Static/Roamer-/Null-Scope trennen muss
 
 ## In diesem Arbeitsblock geprueft / geaendert
 
-- Workspace PR #39 als gemerged geprueft und Branch `analysis/upr-fvx-cfru-dpe-starter-internal-species-write` von aktuellem `main` erstellt.
-- UPR-FVX-Branch `compat/upr-fvx-cfru-dpe-starter-internal-species-write` von `compat/firered-gen9-cfru-dpe` erstellt.
-- UPR-FVX-Commit `39c57880` erstellt: `compat: write CFRU DPE starters by internal identity`.
-- UPR-FVX PR #6 erstellt: `https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/6`.
+- Workspace PR #40 und UPR-FVX PR #6 als gemerged geprueft.
+- Branch `analysis/upr-fvx-cfru-dpe-p1-static-gift-write-diagnostics` von aktuellem `main` erstellt.
+- UPR-FVX Submodule steht lokal sauber auf Commit `39c57880`, der in PR #6 gemerged wurde.
 - UPR-FVX lokal mit `./gradlew clean :random:jar` gebaut.
-- UPR-FVX `./gradlew test` ausgefuehrt; Build erfolgreich, bekannte bestehende Testfehler bleiben sichtbar.
-- Lokaler CFRU/DPE-Teststand mit Starters-only Randomization, `limitPokemon=false`, Seed `274269061345323` und ohne Gen1-3-Einschraenkung ausgefuehrt.
-- Neues Diagnoseprotokoll erstellt: `08_tests/randomizer/upr-fvx-cfru-dpe-starter-internal-species-write-diagnostics.md`.
-- Workspace-Submodule-Pointer auf UPR-FVX `39c57880` vorbereitet.
-- Keine Static-, Trainer-, Evolution-, Learnset-, TM-, Tutor-, Ability-, Day/Night-Wild-, Swarm-, Roamer-, DexNav-, Raid- oder Nullslot-Fixes umgesetzt.
+- Static/Gift-only Settings erzeugt: Static `COMPLETELY_RANDOM`, Wild/Starters/Trainer/Evolutions/Movesets/TM/Tutor/Abilities aus, `limitPokemon=false`, `currentRestrictions=null`.
+- Lokaler CFRU/DPE-Teststand mit Seed `274269061345323` ausgefuehrt.
+- Direkter `GameRandomizer`-Check zeigt `saveSuccessful=false` durch NPE in `StaticPokemonRandomizer.randomizeStaticPokemon()` bei Null-Static-Eintraegen.
+- Read-only Pick-Diagnose zeigt fuer denselben Seed `14/29` Gen4+-Kandidaten im Static/Gift-Pick-Pfad.
+- Neues Diagnoseprotokoll erstellt: `08_tests/randomizer/upr-fvx-cfru-dpe-p1-static-gift-write-diagnostics.md`.
+- Keine Codeaenderungen und keine UPR-FVX-Fixes umgesetzt.
 - Keine ROMs, Saves, Emulator States, Tool-Binaries oder privaten Pfade committed.
 
 ## Ergebnis
 
-- Vor dem Fix schrieb/reloadete Seed `274269061345323` Pawniard/Scraggy als Drowzee/Jirachi.
-- Nach dem Fix loggt und reloadet derselbe Seed `Butterfree`, `Pawniard`, `Scraggy`.
-- Reload-Werte nach dem Fix: Pawniard Gen5 identity `677`, Scraggy Gen5 identity `612`.
-- Der Fix ist auf `Gen3RomHandler.writeStarterBytes()` beschraenkt und verwendet denselben erweiterten-BPRE-Guard wie der Wild-Write-Fix.
-- Ein weiterer praktischer P1-Block sollte Static/Gift-Species getrennt diagnostizieren.
+- Static/Gift ist noch nicht P1-supported.
+- `canChangeStaticPokemon=true` und `staticPokemonMod=COMPLETELY_RANDOM` bleiben nach `Settings.tweakForRom()` aktiv.
+- Der unrestricted Static/Gift-Pool enthaelt `798` Species, davon `381` Gen4+.
+- Der Pick-Pfad kann Gen4+ waehlen, unter anderem Pawniard, Scraggy, Klang, Meloetta, Delphox, Arceus, Goomy, Phantump, Meowstic, Kricketot und Tornadus.
+- Der echte CLI-/GameRandomizer-Lauf bricht vor Save/Log an Null-Static-/Roamer-Eintraegen ab; kein Write/Reload-Beweis moeglich.
+- Der naechste Fix muss zuerst Static/Gift-, hardcoded- und Roamer-/Null-Scope abgrenzen und danach echte Static/Gift-Eintraege per interner SpeciesSet-Identitaet schreiben.
 
 ## Noch nicht gestartet
 
-- Praktische P1-Diagnoselaeufe fuer Starters, Static/Gifts und Trainer-Species
+- Praktische P1-Diagnoselaeufe fuer Trainer-Species
+- Static/Gift-Scope-/Write-Fix nach separater Freigabe
 - Evolution-/Learnset-/TM-/Tutor-/Ability-Datenmodellierung nach der Schreibpfadmatrix
 - CFRU-Day/Night-Custom-Wild-Tabellen-Support
 - Nullslot-`<unknown>`-Analyse
@@ -100,6 +103,6 @@ git diff --check
 
 ## Naechster empfohlener Branch
 
-`analysis/upr-fvx-cfru-dpe-p1-static-gift-write-diagnostics`
+`compat/upr-fvx-cfru-dpe-static-gift-scope-and-write`
 
-Zweck: Static-/Gift-Species-Write-/Reload-Diagnose fuer erweiterte CFRU/DPE-BPRE-Hacks. Keine Trainer-, Evolution-, Learnset-, TM-, Tutor-, Ability-, Day/Night-Wild- oder Nullslot-Fixes in diesem Folgeblock.
+Zweck: Static/Gift-Scope sauber von Roamer-/hardcoded-/Null-Eintraegen trennen und echte Static/Gift-Species fuer erweiterte CFRU/DPE-BPRE-Hacks per interner SpeciesSet-Identitaet schreiben. Keine Trainer-, Evolution-, Learnset-, TM-, Tutor-, Ability-, Day/Night-Wild- oder allgemeine Roamer-Fixes vermischen.
