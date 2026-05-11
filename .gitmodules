@@ -1,0 +1,3 @@
+[submodule "02_external/upr-fvx"]
+	path = 02_external/upr-fvx
+	url = https://github.com/Planton361/universal-pokemon-randomizer-fvx.git
