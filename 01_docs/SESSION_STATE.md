@@ -20,51 +20,55 @@
 - Wild-Encounter-Randomization funktioniert fuer Vanilla-/Fallback-Encounter-Tabellen.
 - Route 1 wurde fuer den Randomizer-Kompatibilitaetsbuild per `FIRERED_GEN9_ENABLE_ROUTE1_CUSTOM_WILD 0` auf Vanilla/Fallback-Wilddaten zurueckgefuehrt.
 - PR #3 behebt den SpeciesSet-Kollaps: `speciesList.size` steigt im Diagnosebefund von `412` auf `799`, `maxSpeciesIdentityNumber=823`, Skrelp bis Hawlucha werden Gen6 statt Gen3.
-- UPR-FVX PR #4 ist offen; der P0-GenRestrictions-Fix entfernt die Gen1-3-Kappung fuer erweiterte CFRU/DPE-BPRE-Hacks und setzt bei `limitPokemon=false` den unrestricted Pool.
-- Der finale `RestrictedSpeciesService`-Pool enthaelt nach PR #4 Gen4+-Species (`gen4plus=381`), aber der sichtbare Wild-Log bleibt Gen1-3. Der naechste Engpass liegt wahrscheinlich im Gen3/CFRU-DPE-Wild-Write-/Reload-Pfad, der weiterhin ueber `pokedexToInternal[Species.number]` arbeitet.
+- UPR-FVX PR #4 ist gemerged; der P0-GenRestrictions-Fix entfernt die Gen1-3-Kappung fuer erweiterte CFRU/DPE-BPRE-Hacks und setzt bei `limitPokemon=false` den unrestricted Pool.
+- UPR-FVX PR #5 ist offen; der Gen3/CFRU-DPE-Wild-Write-Fix schreibt Vanilla/Fallback-Wild-Encounters fuer erweiterte BPRE-Hacks ueber interne SpeciesSet-Identitaet statt `pokedexToInternal[Species.number]`.
+- Nach PR #5-Diagnose enthaelt der sichtbare Wild-Log Gen4+-Species: Gen1 `354`, Gen2 `388`, Gen3 `404`, Gen4 `398`, Gen5 `528`, Gen6 `104`, `<unknown>` `0`.
 - ROMs, Saves, Builds, Tool-Binaries und private Dateien sind ausgeschlossen.
 
 ## Aktueller Branch
 
-`analysis/upr-fvx-cfru-dpe-gen-restrictions`
+`analysis/upr-fvx-cfru-dpe-wild-internal-species-write`
 
 ## Aktueller Arbeitsblock
 
-P0-GenRestrictions-Fix im UPR-FVX-Fork umgesetzt und lokaler CFRU/DPE-Diagnoselauf dokumentiert.
+Gen3/CFRU-DPE-Wild-Write-Fix im UPR-FVX-Fork umgesetzt und lokaler CFRU/DPE-Diagnoselauf dokumentiert.
 
 ## Ziel
 
 Konkret klaeren:
 
-- ob erweiterte CFRU/DPE-BPRE-Hacks nicht mehr durch `Settings.tweakForRom()` blind auf Gen1-3 gekappt werden
-- ob `limitPokemon=false` im finalen `RestrictedSpeciesService` den unrestricted Pool nutzt
-- ob Gen4+-Species danach im finalen Pool sichtbar sind
-- welcher naechste Engpass verbleibt, falls Wild-Logs weiter Gen1-3 bleiben
+- ob `Gen3RomHandler.writeEncounterArea()` fuer erweiterte CFRU/DPE-BPRE-Hacks interne Species-Identitaet schreibt
+- ob Vanilla und normale Gen3-Hacks den bisherigen Dex-/Pokedex-Schreibpfad behalten
+- ob Gen4+-Species danach im sichtbaren Wild-Log auftauchen
+- ob Route 1, Route 22 und Viridian Forest weiterhin sichtbar randomisiert wirken
 
 ## In diesem Arbeitsblock geprueft / geaendert
 
 - Workspace `main` per `git pull --ff-only origin main` aktualisiert.
-- Branch `analysis/upr-fvx-cfru-dpe-gen-restrictions` von aktuellem `main` erstellt.
-- UPR-FVX-Branch `compat/upr-fvx-cfru-dpe-gen-restrictions` von `compat/firered-gen9-cfru-dpe` erstellt.
-- UPR-FVX P0-Fix in `Settings.java`, `GameRandomizer.java` und `Gen3RomHandler.java` umgesetzt.
-- UPR-FVX Commit erstellt: `61a15e521811c5181025e216b3acc27340a495de`.
-- UPR-FVX PR #4 erstellt: `https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/4`.
+- Branch `analysis/upr-fvx-cfru-dpe-wild-internal-species-write` von aktuellem `main` erstellt.
+- UPR-FVX-Branch `compat/upr-fvx-cfru-dpe-wild-internal-species-write` von `compat/firered-gen9-cfru-dpe` erstellt.
+- UPR-FVX-Basis enthaelt PR #4 als Merge-Commit `03b42a1216f5a087d42a3e94a7e81a15db2e977b`.
+- UPR-FVX Wild-Write-Fix in `Gen3RomHandler.java` umgesetzt.
+- UPR-FVX Commit erstellt: `5f68ec0fc8e1592079486f6d22cf5a122eb08d01`.
+- UPR-FVX PR #5 erstellt: `https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/5`.
 - UPR-FVX lokal gebaut und mit demselben CFRU/DPE-Route-1-Fallback-Teststand diagnostisch ausgefuehrt.
-- Neues Diagnoseprotokoll erstellt: `08_tests/randomizer/upr-fvx-cfru-dpe-gen-restrictions-diagnostics-run.md`.
+- Neues Diagnoseprotokoll erstellt: `08_tests/randomizer/upr-fvx-cfru-dpe-wild-internal-species-write-diagnostics.md`.
+- Keine Settings-/GenRestrictions-Aenderungen vorgenommen.
 - Keine Day/Night-Wildtable-, Nullslot-, SpeciesSet-Identity-, Trainer-, Starter-, Evolution-, Learnset-, TM- oder Tutor-Fixes umgesetzt.
 - Keine ROMs, Saves, Emulator States, Tool-Binaries oder privaten Pfade committed.
 
 ## Ergebnis
 
-- P0-GenRestrictions-Fix wirkt im finalen Pool: `limitPokemon=false`, `currentRestrictions=null`, `RestrictedSpeciesService`-Pool `size=798`, `gen4plus=381`.
 - RomHandler-Diagnose bleibt stabil: `PokemonCount=823`, `speciesList.size=799`, `maxSpeciesIdentityNumber=823`, `generationCounts={1=177, 2=104, 3=161, 4=139, 5=178, 6=64}`.
-- Sichtbarer Wild-Log bleibt Gen1-3: Gen1 `841`, Gen2 `527`, Gen3 `791`, Gen4+ `0`, `<unknown>` `17`.
-- `<unknown>` bleibt unveraendert nur `rawInternalSpeciesId=0`.
-- Der naechste Engpass ist wahrscheinlich nicht mehr GenRestrictions, sondern der Gen3/CFRU-DPE-Wild-Write-/Reload-Pfad mit `pokedexToInternal[Species.number]`.
+- Sichtbarer Wild-Log enthaelt nach PR #5 Gen4+-Species: Gen4 `398`, Gen5 `528`, Gen6 `104`.
+- Sichtbare Beispiele: `Floatzel`, `Gothorita`, `Quilladin`, `Minccino`, `Keldeo`, `Arceus`, `Garchomp`, `Bergmite`, `Braixen`.
+- `<unknown>` faellt im finalen Wild-Log von `17` auf `0`, weil Gen4+-Auswahlen nicht mehr als interne ID `0` zurueckgeschrieben werden.
+- Route 1, Route 22 und Viridian Forest wirken weiterhin sichtbar randomisiert.
 
 ## Noch nicht gestartet
 
-- UPR-FVX-Fix fuer Gen3/CFRU-DPE-Wild-Write-Mapping
+- UPR-FVX PR #5 Review/Merge
+- P1-Diagnose fuer Trainer-/Starter-/Static-/Evolution-/Learnset-Schreibpfade
 - Trainer-/Starter-/Evolution-/Learnset-Diagnosen nach PR #3
 - CFRU-Day/Night-Custom-Wild-Tabellen-Support
 - Nullslot-`<unknown>`-Analyse
@@ -98,6 +102,6 @@ git diff --check
 
 ## Naechster empfohlener Branch
 
-`compat/upr-fvx-cfru-dpe-wild-internal-species-write`
+`analysis/upr-fvx-cfru-dpe-p1-encounter-systems`
 
-Zweck: Im UPR-FVX-Fork read-only analysieren und danach minimal korrigieren, dass Gen3/CFRU-DPE-Wild-Encounter-Schreibpfade die interne Species-Identitaet statt `pokedexToInternal[Species.number]` nutzen.
+Zweck: Weitere Gen3-Schreibpfade fuer erweiterte CFRU/DPE-BPRE-Hacks getrennt diagnostizieren, insbesondere Trainer, Starters, Static Pokemon, Evolutions und Learnsets. Keine Day/Night-Wildtable- oder Nullslot-Fixes in diesem Folgeblock.

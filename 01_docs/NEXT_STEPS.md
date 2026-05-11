@@ -2,24 +2,24 @@
 
 ## Aktueller Arbeitsblock
 
-P0-GenRestrictions-Fix fuer erweiterte CFRU/DPE-BPRE-Hacks abschliessen und diagnostisch dokumentieren.
+Gen3/CFRU-DPE-Wild-Write-Fix fuer erweiterte BPRE-Hacks abschliessen und diagnostisch dokumentieren.
 
 Aktueller Branch:
 
 ```text
-analysis/upr-fvx-cfru-dpe-gen-restrictions
+analysis/upr-fvx-cfru-dpe-wild-internal-species-write
 ```
 
 Zieldokumente:
 
 ```text
-08_tests/randomizer/upr-fvx-cfru-dpe-gen-restrictions-diagnostics-run.md
+08_tests/randomizer/upr-fvx-cfru-dpe-wild-internal-species-write-diagnostics.md
 ```
 
 ## Naechste Schritte in diesem Block
 
 1. Dokumentation reviewen:
-   - `08_tests/randomizer/upr-fvx-cfru-dpe-gen-restrictions-diagnostics-run.md`
+   - `08_tests/randomizer/upr-fvx-cfru-dpe-wild-internal-species-write-diagnostics.md`
    - `01_docs/SESSION_STATE.md`
    - `01_docs/NEXT_STEPS.md`
    - `00_project-control/roadmap/roadmap-status.md`
@@ -36,25 +36,25 @@ git diff --check
 3. Commit erstellen:
 
 ```text
-docs: record CFRU DPE gen restrictions diagnostics
+docs: record CFRU DPE wild internal species write diagnostics
 ```
 
 4. Branch pushen und Workspace-PR nach `main` vorbereiten.
 
 ## Danach
 
-Naechster minimaler UPR-FVX-Fixbranch:
+Naechster minimaler Diagnosebranch:
 
 ```text
-compat/upr-fvx-cfru-dpe-wild-internal-species-write
+analysis/upr-fvx-cfru-dpe-p1-encounter-systems
 ```
 
 Ziel:
 
-- Gen3/CFRU-DPE-Wild-Encounter-Schreibpfade pruefen, die aktuell `pokedexToInternal[enc.getSpecies().getNumber()]` nutzen.
-- Fuer erweiterte BPRE-Hacks soll die interne Species-Identitaet beim Schreiben/Reload erhalten bleiben.
-- Der Fix darf keine CFRU-Day/Night-Wildtables, Nullslot-Logik oder Trainer-/Starter-/Evolution-/Learnset-/TM-/Tutor-Themen vermischen.
-- Danach denselben Wild-Diagnoselauf wiederholen und sichtbare Gen4+-Wild-Encounter pruefen.
+- Weitere Gen3-Schreibpfade fuer erweiterte CFRU/DPE-BPRE-Hacks getrennt diagnostizieren.
+- Fokus: Trainer, Starters, Static Pokemon, Evolutions, Learnsets und verwandte `pokedexToInternal[Species.number]`-Pfade.
+- Der Folgeblock darf keine CFRU-Day/Night-Wildtables und keine Nullslot-Logik vermischen.
+- Erst nach Diagnose entscheiden, welche P1-Fixbranches wirklich klein und sicher sind.
 
 ## Fix-Reihenfolge
 
@@ -78,7 +78,7 @@ P4: BizHawk/Ironmon Tracker/RAM-Mapping.
 - keine Builds committen
 - keine Randomizer-JARs oder Tool-Binaries anfassen oder committen
 - keine weiteren Codeaenderungen in `02_external/**` in diesem Workspace-Dokumentationscommit
-- keinen weiteren GenRestrictions-Fix in diesem Branch
+- keine weiteren Wild-Write-Fixes in diesem Branch
 - keine Day/Night-Wild-Fixes
 - keine Nullslot-Fixes
 - keine Trainer-/Starter-/Evolution-/Learnset-/TM-/Tutor-Fixes
