@@ -2,24 +2,27 @@
 
 ## Aktueller Arbeitsblock
 
-Workspace-Build- und Randomizer-Integration auf `planning/workspace-build-randomizer-integration` planen.
+UPR-FVX/CFRU/DPE-Species-Pool auf `analysis/upr-fvx-cfru-dpe-species-pool` read-only analysieren und dokumentieren.
 
 ## Nächste Schritte
 
-1. `01_docs/setup/workspace-build-randomizer-integration-plan.md` reviewen.
-2. Zielstruktur fuer `02_external/`, `03_tools/releases/`, `04_private_roms/`, `05_builds/` und `08_tests/` pruefen.
-3. Pruefen, ob die Clone-/Fork-Strategie fuer UPR FVX, CFRU/DPE-Gen9 und Referenz-Repos passt.
-4. Pruefen, ob der geplante ROM-Hash-Workflow ausreichend ist, ohne ROM-Inhalte oder ROM-Dateien in Git/ChatGPT zu bringen.
-5. Abschluss-Checks ausführen:
+1. `08_tests/randomizer/upr-fvx-cfru-dpe-species-pool-analysis.md` reviewen.
+2. Lokal im echten Workspace die Git-/Submodule-Pruefung nachziehen:
 
 ```sh
 git status --short
+git submodule status --recursive
 git diff --stat
-# falls verfügbar:
-07_scripts/bootstrap/check-git-safety.ps1 oder vorhandenes Safety-Check-Fallback
+git diff --submodule
 ```
 
-6. Branch committen, pushen und als PR nach `main` führen. PR nicht mergen.
+3. Analysebefund fachlich pruefen:
+   - `Gen3RomHandler` nutzt fuer BPRE-Hacks Heuristiken statt DPE-spezifischer Species-Metadaten.
+   - `PokemonCount` kann durch Namen-, Moveset- oder `PokedexOrder`-Plausibilitaetschecks abgeschnitten werden.
+   - `generationOf()` im Gen3-Handler ist auf Gen1-3 hardcoded.
+   - Der Wild-Randomizer-Pool kommt ueber `RestrictedSpeciesService` und `romHandler.getSpeciesSetInclFormes()`.
+   - `<unknown>` im Wild-Log spricht fuer ein Species-ID-/Count-/Mapping-Problem.
+4. Branch reviewen, committen/pushen bzw. PR nach `main` fuehren. PR nicht mergen.
 
 ## Nicht tun
 
@@ -27,10 +30,10 @@ git diff --stat
 - keine ROMs lesen, kopieren oder ändern
 - keine Saves oder Emulator States anfassen
 - keine Builds starten oder committen
-- keine externen Repos klonen
-- keine Forks verändern oder anlegen
-- keine Tool-Binaries herunterladen, anfassen oder committen
-- keine UPR-FVX-JARs herunterladen oder bauen
+- keine Randomizer-JARs oder Tool-Binaries anfassen oder committen
+- keine Codeaenderungen in `02_external/**` in diesem Analysebranch
+- keine externen Original-Upstreams kontaktieren
+- keine PRs ohne explizites `--repo Planton361/<repo>` bzw. eindeutig ausgewaehltes Planton361-Repository
 - keine Änderungen direkt auf `main`
 - keine Installationen erzwingen
 - keine GitHub-Tokens oder lokale Secrets dokumentieren
@@ -39,41 +42,24 @@ git diff --stat
 
 ## Danach
 
-Geplante Folge-Arbeitspakete nach gemergtem Integrationsplan-PR:
+Nächster empfohlener Arbeitsblock:
 
-1. `setup/devkitpro-toolchain-install-check`
-   - devkitPro/devkitARM installieren oder freigegebenen Installationsweg ausführen
-   - `arm-none-eabi-gcc`, `DEVKITPRO`, `DEVKITARM`, Python und `make` pruefen
-   - keine Builds, keine ROMs
+`analysis/log-cfru-dpe-species-diagnostics`
 
-2. `analysis/external-source-pinning`
-   - externe Quellen read-only klonen oder ueber GitHub pruefen, falls freigegeben
-   - Branches und Commit-Hashes fuer UPR FVX, CFRU/DPE-Gen9 und Referenzen pinnen
-   - entscheiden, ob Forks noetig sind
+Ziel:
 
-3. `randomizer/upr-fvx-start-smoke-test`
-   - UPR-FVX-JAR lokal beschaffen oder aus gepinntem Source-Stand bauen, je nach Freigabe
-   - Java-Anforderung und Startbefehl dokumentieren
-   - ohne ROM laden, sofern nicht separat freigegeben
-
-4. `build/cfru-dpe-source-readiness`
-   - CFRU/DPE-Gen9 strukturell pruefen
-   - Build-Anforderungen und Konfigurationsdateien dokumentieren
-   - keine ROM, kein Build
-
-5. `rom/fire-red-private-hash-check`
-   - private FeuerRot-Basis lokal in `04_private_roms/` pruefen
-   - Dateiname und SHA-256-Pruefergebnis dokumentieren
-   - keine ROM hochladen, keine ROM committen
-
-6. `build/cfru-dpe-first-smoke-build`
-   - erst nach Toolchain-, Quellen- und ROM-Freigabe
-   - Build-Ergebnis in `05_builds/`, nicht in Git
-
-7. `randomizer/custom-build-compatibility-smoke-test`
-   - gebaute GBA lokal mit UPR FVX testen
-   - Randomizer-Bereiche getrennt testen
-   - Ergebnisse in `08_tests/` dokumentieren
+- Im UPR-FVX-Fork `Planton361/universal-pokemon-randomizer-fvx` nur Diagnose-Logging/Analyseausgabe ergänzen.
+- Noch keine funktionale Randomizer-Aenderung vornehmen.
+- Zu protokollieren:
+  - erkannter `PokemonCount`
+  - `pokedexCount`
+  - maximale interne Species-ID
+  - maximale Pokedex-/Species-Nummer
+  - `speciesList.size()`
+  - Counts pro `Species.generation`
+  - Beispiele fuer Species `> 386`
+  - Roh-Species-ID fuer Wild-Log-`<unknown>` inklusive Area/Encounter-Type
+- Danach denselben lokalen CFRU/DPE-Teststand erneut laden und Logauszug in `08_tests/randomizer/` dokumentieren, ohne ROMs, Builds oder Tool-Binaries zu committen.
 
 ## Quality
 

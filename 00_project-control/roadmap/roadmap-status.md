@@ -1,7 +1,6 @@
 # Roadmap Status
 
-Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap.  
-GitHub und Codex sollen dieses Dokument bevorzugt nutzen, weil Änderungen hier sauber per Git-Diff nachvollziehbar sind.
+Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Codex sollen dieses Dokument bevorzugt nutzen, weil Aenderungen hier sauber per Git-Diff nachvollziehbar sind.
 
 ## Statuslegende
 
@@ -25,94 +24,77 @@ GitHub und Codex sollen dieses Dokument bevorzugt nutzen, weil Änderungen hier 
 | Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Aktueller Branch | `planning/workspace-build-randomizer-integration` |
-| Nächster Branch | `setup/devkitpro-toolchain-install-check` |
-| Aktueller Fokus | Workspace-Build- und Randomizer-Integration planen |
-| ROM-/Build-Arbeit | noch nicht gestartet |
-| Externe Repos | noch nicht geklont |
-| Forks | noch nicht angelegt |
-| Installationen | noch nicht gestartet |
+| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-species-pool` |
+| Nächster Branch | `analysis/log-cfru-dpe-species-diagnostics` |
+| Aktueller Fokus | UPR-FVX/CFRU/DPE-Species-Pool analysieren |
+| ROM-/Build-Arbeit | Smoke-Test lokal dokumentiert; keine Artefakte committed |
+| Externe Repos | als Submodule auf Planton361-Forks eingebunden |
+| Forks | Planton361-Forks fuer UPR-FVX, DPE Gen9 und CFRU dokumentiert |
+| Installationen | devkitPro/devkitARM lokal dokumentiert; keine Installation in diesem Analyseblock |
 
 ## Erledigt
 
 | Paket | Aufgabe | Ergebnis |
 |---|---|---|
-| 01 Initial Setup | lokalen Workspace erstellt | historisch auf Windows; Linux-Pfad neu zu prüfen |
 | 01 Initial Setup | GitHub-Repo erstellt | `Planton361/firered-gen9-randomizer-workspace` existiert |
-| 01 Initial Setup | `main` eingerichtet | `main` ist Default Branch |
+| 01 Initial Setup | `main` eingerichtet | `main` ist Default Branch und stabil |
 | 01 Initial Setup | Branch Protection eingerichtet | `main` ist geschützt |
 | 01 Initial Setup | Grundstruktur angelegt | `00_project-control`, `01_docs`, `02_external`, `03_tools`, `04_private_roms`, `05_builds`, `06_patches`, `07_scripts`, `08_tests` |
 | 01 Initial Setup | `.gitignore` angelegt | ROMs, Saves, Builds, Tool-Binaries und private Dateien werden ausgeschlossen |
 | 02 Projektkontext | Projektkontext angelegt | README, AGENTS, PROJECT_BRIEF, SESSION_STATE, NEXT_STEPS, DECISIONS_INDEX |
 | 03 Repo Governance | Governance-Dokumente erstellt | Git-, Fork-, Codex-, Security- und Rebuild-Regeln dokumentiert |
-| 04 Codex Start | Workflow-Automation abgeschlossen | PR #9 gemerged |
-| 04 Codex Start | Post-Merge-Doku-Sync abgeschlossen | PR #10 gemerged |
-| 04 Codex Start | Agent-Best-Practices-Refresh abgeschlossen | PR #17 gemerged; kompakte Prompts, Usage-Optimierung, Agent-/MCP-Regeln, `.aiignore` und PR-Template dokumentiert |
-| 04 Codex Start | Post-Merge-Agent-Best-Practices-Sync abgeschlossen | PR #18 gemerged; main/post-merge-Stand synchronisiert |
+| 04 Codex Start | Workflow-/Agent-Regeln dokumentiert | PRs #9, #10, #17, #18 gemerged |
 | 05 Externe Quellen | read-only Analyseblock dokumentiert | Quellen und Tool-Manifest ohne Clone/Fork präzisiert |
-| 06 Toolchain | lokale Windows-Toolchain-/Workspace-Inventur abgeschlossen | PR #11 gemerged; historischer Stand |
-| 06 Toolchain | Windows-PATH-Folgeklärung vorbereitet | PR #12 gemerged; durch OS-Wechsel historisch |
 | 06 Toolchain | Linux/CachyOS-Migration dokumentiert | Linux/CachyOS ist primaere lokale Umgebung; Windows-Befunde sind historisch |
-| 06 Toolchain | Linux/CachyOS-Toolchain-Inventur dokumentiert | Git, gh, Shell, Java und make gefunden; GBA-Toolchain-Komponenten bleiben offen |
-| 06 Toolchain | GitHub-CLI-/Git-Auth-Refresh dokumentiert | `gh auth status` und `git fetch origin` erfolgreich; Push und PR-Erstellung nutzbar |
-| 06 Toolchain | Linux-GBA-Toolchain-Plan dokumentiert | PR #19 gemerged; devkitPro/devkitARM-Vorgehen geplant, keine Installation/Builds |
+| 06 Toolchain | Linux-GitHub-Auth dokumentiert | `gh` und `git fetch origin` nutzbar dokumentiert |
+| 06 Toolchain | devkitPro/devkitARM lokal dokumentiert | `/opt/devkitpro`, `DEVKITARM`, `arm-none-eabi-gcc` und `grit` im Smoke-Test dokumentiert |
+| 07 Build-Basis | DPE Gen9 Smoke-Build dokumentiert | Build erfolgreich; Output blieb lokal unter `05_builds/` |
+| 07 Build-Basis | CFRU auf DPE Smoke-Build dokumentiert | Build erfolgreich; Output blieb lokal unter `05_builds/` |
+| 08 Randomizer-Kompatibilität | UPR-FVX Source-Build dokumentiert | `compat/firered-gen9-cfru-dpe` baut/startet lokal |
+| 08 Randomizer-Kompatibilität | erster Randomizer-/BizHawk-Smoke-Test dokumentiert | CFRU/DPE-ROM konnte geladen, minimal randomisiert, gespeichert und in BizHawk gebootet werden |
+| 08 Randomizer-Kompatibilität | Route-1-Fallback-Wilddaten dokumentiert | CFRU Route-1-Custom-Day/Night-Wilddaten per Macro deaktiviert; Route 1 wieder als FVX-Fallback-Area sichtbar |
 
 ## In Review/Test
 
 | Paket | Aufgabe | Prüfpunkte |
 |---|---|---|
-| 02 Projektkontext | README, AGENTS und Handoff-Dateien prüfen | Sind Ziel, Grenzen, Arbeitsmodell und Codex-Regeln vollständig? |
-| 02 Projektkontext | Tool-Manifest prüfen | Sind Pfade, Fork-/Upstream-Regeln und Codex-Freigaben ausreichend klar? |
-| 04 Codex Start | Codex Dry Run auswerten | Prüfen, ob Governance-Regeln konsistent und praktisch nutzbar sind |
-| 06 Toolchain | Linux/CachyOS-Migration reviewen | Sind Windows-Annahmen aus neuen Arbeitsblöcken entfernt? |
-| 07 Build-Basis | Workspace-Build-/Randomizer-Integrationsplan reviewen | Sind Zielstruktur, ROM-Grenzen, Toolchain-Plan, externe Quellen, UPR-FVX-Pfad und Folgepakete ausreichend konkret? |
+| 08 Randomizer-Kompatibilität | UPR-FVX/CFRU/DPE Species-Pool-Analyse reviewen | Sind `PokemonCount`, Generation-Mapping, `RestrictedSpeciesService`, Wild-Pool und `<unknown>`-Hypothese korrekt eingeordnet? |
 
 ## In Arbeit
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 07 Build-Basis | Workspace-Build- und Randomizer-Integration planen | praktischen Integrationsplan erstellen, ohne Installation, Clone, Fork, Build oder ROM-Zugriff |
+| 08 Randomizer-Kompatibilität | Species-Pool-Analyse dokumentieren | Analyseprotokoll, Session State, Next Steps und Roadmap auf `analysis/upr-fvx-cfru-dpe-species-pool` synchronisieren |
 
 ## Als Nächstes
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 06 Toolchain | devkitPro/devkitARM installieren/pruefen | Toolchain nur nach Freigabe installieren oder pruefen; keine Builds und keine ROM-Zugriffe |
+| 08 Randomizer-Kompatibilität | CFRU/DPE Species-Diagnose im UPR-FVX-Fork ergänzen | Nur Diagnose-Logging fuer Count-/ID-/Generation-/`<unknown>`-Befunde; noch keine funktionale Randomizer-Aenderung |
 
 ## Noch offen
 
 | Paket | Aufgabe | Hinweise |
 |---|---|---|
-| 05 Externe Quellen | Entscheidung: klonen oder forken | Nur forken, wenn Änderungen nötig sind; vorher Branch/Commit pinnen |
-| 06 Toolchain | Java-Anforderung für UPR FVX prüfen | OpenJDK 26.0.1 ist lokal vorhanden; spaeter gegen UPR-FVX-Anforderung testen |
-| 06 Toolchain | devkitPro/devkitARM auf Linux installieren/pruefen | erst nach separater Freigabe; Tool-Manifest aktualisieren |
-| 06 Toolchain | Hex Maniac Advance prüfen | Tool lokal dokumentieren, nicht committen |
-| 06 Toolchain | BizHawk prüfen | Tool lokal dokumentieren, nicht committen |
-| 06 Toolchain | Ironmon Tracker prüfen | Repo/Release dokumentieren |
-| 07 Build-Basis | FireRed-Basis vorbereiten | keine ROMs ins Repo; nur lokale Hash-Pruefung dokumentieren |
-| 07 Build-Basis | CFRU/DPE-Gen9 Quellen pinnen | Shiny-Miner-Forks und Skeli789-Referenzen auf Branch/Commit festlegen |
-| 07 Build-Basis | erster Build-Smoke-Test | erst nach Toolchain-Setup, Quellen-Pinning und ROM-Freigabe |
-| 08 Randomizer-Kompatibilität | UPR FVX lokal startbar machen | JAR beschaffen oder reproduzierbar bauen; keine Tool-Binaries committen |
-| 08 Randomizer-Kompatibilität | UPR FVX Smoke-Test | Vanilla/Custom-Kompatibilität getrennt testen |
-| 08 Randomizer-Kompatibilität | Wild Encounters testen | späterer Einzeltest |
-| 08 Randomizer-Kompatibilität | Trainer testen | späterer Einzeltest |
+| 08 Randomizer-Kompatibilität | `generationOf()` fuer Gen4-Gen9 korrigieren | erst nach Diagnose; zentralen SpeciesID->Generation-Ansatz bevorzugen |
+| 08 Randomizer-Kompatibilität | `PokemonCount`/Pokedex-/interne ID-Aufloesung pruefen | klären, ob DPE-Species fehlen, falsch gemappt oder nur falsch klassifiziert sind |
+| 08 Randomizer-Kompatibilität | Wild-Log-`<unknown>` aufloesen | Roh-Species-ID, Area und Encounter-Type loggen; danach Mapping korrigieren |
+| 08 Randomizer-Kompatibilität | CFRU-Day/Night-Custom-Wild-Tabellen analysieren | getrennt vom Vanilla/Fallback-Wild-Pool behandeln |
+| 08 Randomizer-Kompatibilität | Trainer-Pokémon testen | späterer Einzeltest |
+| 08 Randomizer-Kompatibilität | Starters testen | späterer Einzeltest |
 | 08 Randomizer-Kompatibilität | Learnsets testen | späterer Einzeltest |
 | 08 Randomizer-Kompatibilität | Evolutions testen | späterer Einzeltest |
 | 08 Randomizer-Kompatibilität | Items/Moves/Abilities testen | späterer Einzeltest |
-| 09 Ironmon | BizHawk-Start prüfen | erst nach lauffähigem ROM/Build |
-| 09 Ironmon | Ironmon Tracker anbinden | erst nach Randomizer-/Emulator-Smoke-Test |
+| 09 Ironmon | BizHawk-/Ironmon-Tracker-Anbindung prüfen | erst nach stabiler Randomizer-Kompatibilität |
 
-## Geplante Folge-Arbeitspakete aus dem Integrationsplan
+## Geplante Folge-Arbeitspakete
 
 | Reihenfolge | Branch | Ziel | Grenzen |
 |---|---|---|---|
-| 1 | `setup/devkitpro-toolchain-install-check` | devkitPro/devkitARM installieren oder freigegebenen Installationsweg ausführen und read-only pruefen | keine Builds, keine ROMs |
-| 2 | `analysis/external-source-pinning` | externe Quellen read-only klonen oder ueber GitHub pruefen; Branches/Commits pinnen | keine Forks ohne Entscheidung, keine Repo-Aenderungen |
-| 3 | `randomizer/upr-fvx-start-smoke-test` | UPR-FVX-JAR lokal beschaffen oder aus gepinntem Source-Stand bauen und starten | keine Tool-Binaries committen, keine ROM laden ohne Freigabe |
-| 4 | `build/cfru-dpe-source-readiness` | CFRU/DPE-Gen9 Build-Anforderungen und Configs dokumentieren | keine ROM, kein Build |
-| 5 | `rom/fire-red-private-hash-check` | private FeuerRot-ROM lokal in `04_private_roms/` hashen | keine ROM hochladen oder committen |
-| 6 | `build/cfru-dpe-first-smoke-build` | erster lokaler Build aus CFRU/DPE-Gen9 | erst nach Toolchain-, Quellen- und ROM-Freigabe; Builds in `05_builds/` |
-| 7 | `randomizer/custom-build-compatibility-smoke-test` | UPR-FVX-Kompatibilität gegen lokalen Custom-Build testen | keine randomized Builds committen |
+| 1 | `analysis/log-cfru-dpe-species-diagnostics` | UPR-FVX-Diagnose fuer Species-Count, interne IDs, Pokedex-IDs, Generation-Verteilung und `<unknown>`-Rohwerte | nur Planton361-UPR-FVX-Fork; keine ROMs/Builds committen |
+| 2 | `compat/upr-fvx-gen9-generation-mapping` | `generationOf()`/Species-Generation fuer Gen4-Gen9 sauber korrigieren | erst nach Diagnosebefund |
+| 3 | `compat/upr-fvx-cfru-dpe-species-id-map` | interne Species-ID vs. National-Dex-ID sauber fuer DPE/CFRU trennen | nur falls Diagnose Mapping-Problem bestaetigt |
+| 4 | `randomizer/cfru-day-night-wild-table-analysis` | CFRU-Custom-Day/Night-Wild-Tabellen separat untersuchen | Route-1-Fallback bleibt stabil |
 
 ## Aktuelle Sicherheitsregeln
 
@@ -122,13 +104,13 @@ GitHub und Codex sollen dieses Dokument bevorzugt nutzen, weil Änderungen hier 
 - Keine Builds committen.
 - Keine Tool-Binaries committen.
 - Keine `.env`, Tokens, privaten Keys oder lokalen Secrets committen.
-- Codex arbeitet nur auf freigegebenen Arbeitsbranches.
-- Codex darf nicht direkt auf `main` pushen.
-- Externe Repos werden erst im Manifest dokumentiert, dann gezielt geklont oder geforkt.
+- Keine Änderungen direkt auf `main`.
+- Externe Original-Upstreams nicht kontaktieren.
+- Submodules sollen nur `origin` auf Planton361-Forks nutzen.
+- PRs nur mit explizitem `--repo Planton361/<repo>` beziehungsweise eindeutig ausgewaehltem Planton361-Repository erstellen.
 - Tool-Binaries bleiben in `03_tools/releases/` und damit lokal/ignored.
 - ROMs bleiben in `04_private_roms/` und damit lokal/ignored.
 - Build-Ergebnisse bleiben in `05_builds/` und damit lokal/ignored.
-- MCP-Server sind optional und erst nach Manifest-Eintrag freigegeben.
 - Nicht parallel mehrere schreibende Agenten auf demselben Branch nutzen.
 
 ## Update-Regeln
@@ -152,27 +134,33 @@ Excel-Roadmap:
 ## Nächster empfohlener Branch
 
 ```text
-setup/devkitpro-toolchain-install-check
+analysis/log-cfru-dpe-species-diagnostics
 ```
 
 ## Arbeitsblock-Log
 
-### 2026-05-10 bis 2026-05-11 – bisherige Setup-/Governance-/Toolchain-Blöcke
+### 2026-05-11 – setup/workspace-build-randomizer-smoke
 
-- Repo-Governance, Codex-Workflow, Post-Merge-Doku-Sync, lokale Toolchain-Inventuren, Linux/CachyOS-Migration, GitHub-Auth-Refresh, Agent-Best-Practices und Linux-GBA-Toolchain-Plan wurden dokumentiert.
+- UPR-FVX, DPE Gen9 und CFRU-expansion als Submodule auf Planton361-Forks dokumentiert.
+- DPE Gen9 und CFRU auf DPE bauten lokal erfolgreich.
+- UPR-FVX konnte die CFRU/DPE-ROM laden, minimal randomisieren und speichern.
+- BizHawk bootete die randomisierte ROM.
+- Vanilla-/Fallback-Wild-Encounter-Randomization funktionierte; Route 22 und Viridian Forest zeigten randomisierte Encounters.
+- Der Wild-Log zeigte weiterhin nur Gen1-3 bzw. `<unknown>`; Species-Pool-Analyse wurde als naechster Fokus identifiziert.
+- Keine ROMs, Saves, Builds, Tool-Binaries oder privaten Dateien wurden committed.
+
+### 2026-05-11 – randomizer/route-1-fallback-wild-randomizer-check
+
+- CFRU Route-1-Custom-Day/Night-Wild-Tabelle fuer den Randomizer-Kompatibilitaetsbuild per `FIRERED_GEN9_ENABLE_ROUTE1_CUSTOM_WILD 0` deaktiviert.
+- FVX-Log erkannte Route 1 wieder als `Area #3 - ROUTE 1 Grass/Cave`.
+- Route 1 zeigte im Log randomisierte Encounters wie Geodude und Abra.
+- Gen4-Gen9-Species-Pool und `<unknown>` blieben separat offen.
+
+### 2026-05-11 – analysis/upr-fvx-cfru-dpe-species-pool
+
+- Branch `analysis/upr-fvx-cfru-dpe-species-pool` von `main`-Merge-Commit `5c2cc1eda7e600db461e56eac2eba2c31a575fcc` erstellt.
+- UPR-FVX-Codepfade read-only analysiert: `Gen3RomHandler`, `RestrictedSpeciesService`, `SpeciesSet`, `Species`, `SpeciesIDs`, `Gen3Constants`, `WildEncounterRandomizer`, `Randomizer`.
+- Ergebnis: `Gen3RomHandler` erkennt DPE-Species nicht ueber DPE-Metadaten, sondern ueber BPRE-Hack-Heuristiken; `generationOf()` ist auf Gen1-3 hardcoded; der Wild-Pool kommt ueber `RestrictedSpeciesService` und `romHandler.getSpeciesSetInclFormes()`.
+- `<unknown>` im Wild-Log ist wahrscheinlich ein Null-/Fallback fuer nicht aufgeloeste Encounter-Species, verursacht durch Count-/ID-/Mapping-Probleme.
+- Analyseprotokoll erstellt: `08_tests/randomizer/upr-fvx-cfru-dpe-species-pool-analysis.md`.
 - Keine ROMs, Saves, Builds, Tool-Binaries oder privaten Dateien wurden angefasst.
-- Keine externen Repos wurden geklont.
-- Keine Forks wurden angelegt.
-
-### 2026-05-11 – planning/workspace-build-randomizer-integration
-
-- Branch `planning/workspace-build-randomizer-integration` fuer den Integrationsplan erstellt.
-- `01_docs/setup/workspace-build-randomizer-integration-plan.md` erstellt.
-- Zielstruktur dokumentiert: `02_external/`, `03_tools/releases/`, `04_private_roms/`, `05_builds/`, `08_tests/`.
-- ROM-Umgang geplant: private FireRed-ROM nur lokal, Hash-Pruefung nur als Metadaten/Testprotokoll, keine ROM-Inhalte in Git/ChatGPT.
-- devkitPro/devkitARM-Plan konkretisiert: spaetere Installation/Checks, `DEVKITPRO`, `DEVKITARM`, PATH und `arm-none-eabi-gcc` dokumentieren.
-- CFRU/DPE-Gen9-Plan konkretisiert: Shiny-Miner-Forks als Hauptkandidaten, Skeli789/pret als Referenzen, Branch/Commit-Pinning vor Clone/Fork/Build.
-- UPR-FVX-Plan konkretisiert: Release/JAR oder Source-Clone, Java-Anforderung klaeren, Start-Smoke-Test ohne ROM laden.
-- Folge-Arbeitspakete bis Toolchain, Source-Pinning, UPR-FVX-Smoke-Test, CFRU/DPE-Readiness, privatem ROM-Hash, erstem Build-Smoke-Test und Randomizer-Kompatibilitaet definiert.
-- Keine Installationen, Build-Schritte, externen Clones oder Forks durchgeführt.
-- Keine ROMs, Saves, Builds, Tool-Binaries oder privaten Dateien angefasst.
