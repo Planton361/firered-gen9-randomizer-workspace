@@ -12,6 +12,7 @@ Dieses Dokument legt fest, welche Agent- und IDE-Werkzeuge im Projekt welche Rol
 | Codex CLI | primärer Worker für erlaubte Repo-Änderungen auf Arbeitsbranches | aktiv, wenn Branch freigegeben |
 | GitHub CLI (`gh`) | Branch-/PR-Unterstützung, wenn lokal verfügbar | optional |
 | JetBrains IDE | lokale Navigation und manuelle Bearbeitung | optional |
+| JetBrains MCP | optionale read-only IDE-Kontextanalyse für Codex | optional, geprüft |
 | JetBrains AI / Junie | optionaler IDE-Agent nach separater Freigabe | optional |
 | Continue | optionaler lokaler Assistenz-Client | optional |
 | Cursor | optionaler Editor-Agent | optional |
@@ -114,6 +115,20 @@ Regeln:
 - Keine eigenen Tool-/MCP-Konfigurationen mit Secrets committen.
 - Keine privaten IDE-Dateien committen.
 - Änderungen weiterhin über Branch, Checks, Commit und PR führen.
+
+## JetBrains MCP
+
+Arbeitsblock `setup/intellij-mcp-readonly-check` hat lokal IntelliJ IDEA 2026.2 EAP mit gebündeltem JetBrains-MCP-Server gefunden. Die Mindestanforderung 2025.2 ist erfüllt; Codex-Auto-Configuration ist in der lokalen MCP-Server-Distribution als unterstützter Client erkennbar.
+
+Projektregel:
+
+- JetBrains MCP ist optional und nicht blockierend.
+- Git, `rg`, Submodule-Pins und Markdown-Dokumente bleiben der Default für Codex.
+- MCP darf nur read-only für Code-Navigation, Symbolsuche und IDE-Kontextanalyse genutzt werden.
+- Schreibende MCP-Tools, Terminalausführung, Run Configurations, Builds, Formatierung, Patch-Anwendung und Refactorings bleiben für dieses Projekt gesperrt.
+- ROM-, Save-, Emulator-State-, Build-, Tool-Binary- und Secret-Pfade dürfen nicht über MCP zugänglich gemacht werden.
+- MCP-Auto-Configuration für Codex darf keine Secrets oder privaten absoluten Pfade in Git bringen.
+- Auf einem Branch darf nicht gleichzeitig ein MCP-gestützter Agent und ein anderer schreibender Agent arbeiten.
 
 ## Parallelitätsregel
 

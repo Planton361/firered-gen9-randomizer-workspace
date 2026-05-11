@@ -84,17 +84,31 @@ Nicht dokumentierte MCP-Server gelten als nicht freigegeben.
 
 ## JetBrains MCP
 
-JetBrains MCP wird erst nach einer Toolchain-Inventur evaluiert.
+JetBrains MCP wurde im Arbeitsblock `setup/intellij-mcp-readonly-check` lokal read-only inventarisiert.
 
-Vorher klären:
+Lokaler Befund:
 
-- welche JetBrains-Version lokal genutzt wird
-- ob ein offizieller oder nachvollziehbarer MCP-Server verwendet wird
-- welche Projektpfade sichtbar wären
-- ob Schreibzugriff nötig ist
-- ob parallele Agent-Arbeit auf demselben Branch ausgeschlossen ist
+- IntelliJ IDEA ist über einen JetBrains-Toolbox-Launcher im PATH auffindbar.
+- Die gefundene Version ist IntelliJ IDEA 2026.2 EAP, Build `IU-262.4852.50`.
+- Damit ist die Mindestanforderung 2025.2 erfüllt.
+- In der IDE-Distribution ist der gebündelte JetBrains-MCP-Server als Plugin `com.intellij.mcpServer` vorhanden.
+- Die IDE-Konfiguration ist über `Settings | Tools | MCP Server` auffindbar.
+- Die lokale Distribution enthält Hinweise auf Client-Auto-Configuration, einschließlich Codex-Unterstützung.
 
-Bis dahin bleibt JetBrains MCP optional und nicht freigegeben für automatische Änderungen.
+JetBrains MCP bleibt optional und nicht blockierend. Codex nutzt weiter Git/`rg` als Default.
+
+Freigegebener Nutzungsrahmen:
+
+- nur read-only für Code-Navigation, Symbolsuche, Dateisuche und IDE-Kontextanalyse
+- keine automatischen Schreibaktionen über MCP
+- keine Terminal-, Build-, Run-Configuration- oder Patch-Ausführung über MCP
+- kein Brave Mode / keine Bestätigung-Bypasses
+- keine Zugriffe auf ROM-, Save-, Emulator-State-, Build-, Tool-Binary- oder Secret-Pfade
+- keine MCP-Konfigurationen mit Secrets committen
+- keine privaten absoluten Nutzerpfade dokumentieren
+- nicht parallel mit einem anderen schreibenden Agent auf demselben Branch nutzen
+
+Vor einer tatsächlichen Nutzung muss die IDE-Seite manuell so eingeschränkt werden, dass nur erlaubte Workspace-Pfade sichtbar sind und schreibende MCP-Tools nicht exponiert werden.
 
 ## Minimaler Prüfablauf vor MCP-Nutzung
 
