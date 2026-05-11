@@ -27,37 +27,39 @@
 
 ## Aktueller Branch
 
-`analysis/upr-fvx-cfru-dpe-p1-species-write-paths`
+`analysis/upr-fvx-cfru-dpe-p1-starter-write-diagnostics`
 
 ## Aktueller Arbeitsblock
 
-Read-only Diagnose der Species-Schreibpfade ausserhalb von Standard-Wild nach abgeschlossenem P0.
+Starters-only Diagnose nach abgeschlossenem P0.
 
 ## Ziel
 
 Konkret klaeren:
 
-- welche P1-Pfade weiterhin `pokedexToInternal[Species.number]` oder Dex-ID-Keying verwenden
-- welche Pfade wahrscheinlich denselben internen-ID-Ansatz wie der Wild-Write-Fix nutzen koennen
-- welche Pfade erst ein eigenes CFRU/DPE-Datenmodell brauchen
-- welcher praktische P1-Diagnoselauf als naechstes minimal sinnvoll ist
+- ob der unrestricted Starter-Pool bei CFRU/DPE-BPRE-Hacks Gen4+-Species enthaelt
+- ob Starters-only Randomization Gen4+ auswaehlen kann
+- ob `Gen3RomHandler.writeStarterBytes()` Gen4+-Starter nach Write und Reload als interne Species-Identitaet erhaelt
+- ob ein separater Starter-Write-Fix noetig ist
 
 ## In diesem Arbeitsblock geprueft / geaendert
 
-- Workspace PR #37 als gemerged geprueft und Branch `analysis/upr-fvx-cfru-dpe-p1-species-write-paths` von aktuellem `main` erstellt.
+- Workspace PR #38 als gemerged geprueft und Branch `analysis/upr-fvx-cfru-dpe-p1-starter-write-diagnostics` von aktuellem `main` erstellt.
 - UPR-FVX-Submodule steht weiter auf `compat/firered-gen9-cfru-dpe` bei `843b75a8f1016fa41a1879408fbeca45de7e030a`.
-- UPR-FVX-, CFRU-, DPE- und Referenzpfade read-only analysiert.
-- Neues Species-Schreibpfadmodell erstellt: `01_docs/compat/upr-fvx-cfru-dpe-species-write-paths.md`.
-- Keine Codeaenderungen, keine Builds, keine ROM-Zugriffe und keine funktionalen Fixes vorgenommen.
-- Keine Starter-, Static-, Trainer-, Evolution-, Learnset-, TM-, Tutor-, Ability-, Day/Night-Wild-, Swarm-, Roamer-, DexNav-, Raid- oder Nullslot-Fixes umgesetzt.
+- UPR-FVX lokal mit `./gradlew clean :random:jar` gebaut.
+- Lokaler CFRU/DPE-Teststand mit Starters-only Randomization, `limitPokemon=false` und ohne Gen1-3-Einschraenkung ausgefuehrt.
+- Neues Diagnoseprotokoll erstellt: `08_tests/randomizer/upr-fvx-cfru-dpe-p1-starter-write-diagnostics.md`.
+- Keine Codeaenderungen und keine funktionalen Fixes vorgenommen.
+- Keine Static-, Trainer-, Evolution-, Learnset-, TM-, Tutor-, Ability-, Day/Night-Wild-, Swarm-, Roamer-, DexNav-, Raid- oder Nullslot-Fixes umgesetzt.
 - Keine ROMs, Saves, Emulator States, Tool-Binaries oder privaten Pfade committed.
 
 ## Ergebnis
 
-- Starters, Static Pokemon/Gifts und Trainer Pokemon lesen Species als interne IDs, schreiben aber weiterhin ueber `pokedexToInternal[Species.number]`.
-- Diese drei Pfade sind die kleinsten Kandidaten fuer praktische P1-Diagnoselaeufe und spaetere kleine interne-ID-Fixes.
-- Evolutions, Learnsets, TM/HM, Tutor und Ability-Pfade brauchen vor einem Fix mehr Datenmodellierung, weil Quelle, Tabellenbreite, Map-Keys, Hidden Ability und DPE/CFRU-Konfiguration eine groessere Rolle spielen.
-- Empfehlung: erster praktischer P1-Diagnoselauf ist Starters-only.
+- Der unrestricted Starter-Pool enthaelt `798` Species, davon `381` Gen4+.
+- Starters-only kann Gen4+ aus dem Pool erreichen; Beispiel Seed `274269061345323` waehlt vor dem Write Pawniard und Scraggy.
+- Nach `setStarters()` und Reload erscheinen diese Gen5-Starter als Drowzee beziehungsweise Jirachi.
+- Ursache ist der bekannte Dex-basierte Starter-Schreibpfad `pokedexToInternal[starter.getNumber()]` in `Gen3RomHandler.writeStarterBytes()`.
+- Ein separater Starters-only Fix ist noetig, analog zum P0-Wild-Write-Fix: interne SpeciesSet-Identitaet fuer erweiterte CFRU/DPE-BPRE-Hacks schreiben, Vanilla unveraendert lassen.
 
 ## Noch nicht gestartet
 
@@ -95,6 +97,6 @@ git diff --check
 
 ## Naechster empfohlener Branch
 
-`analysis/upr-fvx-cfru-dpe-p1-starter-write-diagnostics`
+`compat/upr-fvx-cfru-dpe-starter-internal-species-write`
 
-Zweck: Starters-only Diagnose fuer erweiterte CFRU/DPE-BPRE-Hacks. Pruefen, ob Gen4+-Starter nach Randomizer-Write und Reload als interne Species-ID erhalten bleiben. Keine Static-, Trainer-, Evolution-, Learnset-, TM-, Tutor-, Ability-, Day/Night-Wild- oder Nullslot-Fixes in diesem Folgeblock.
+Zweck: Nur `Gen3RomHandler.writeStarterBytes()` fuer erweiterte CFRU/DPE-BPRE-Hacks auf interne SpeciesSet-Identitaet umstellen. Keine Static-, Trainer-, Evolution-, Learnset-, TM-, Tutor-, Ability-, Day/Night-Wild- oder Nullslot-Fixes in diesem Folgeblock.
