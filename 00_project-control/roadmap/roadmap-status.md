@@ -24,9 +24,9 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-gen-restrictions` |
-| Nächster Branch | `compat/upr-fvx-cfru-dpe-wild-internal-species-write` |
-| Aktueller Fokus | P0-GenRestrictions-Fix diagnostisch abschliessen |
+| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-wild-internal-species-write` |
+| Nächster Branch | `analysis/upr-fvx-cfru-dpe-p1-encounter-systems` |
+| Aktueller Fokus | Gen3/CFRU-DPE-Wild-Write-Fix diagnostisch abschliessen |
 | ROM-/Build-Arbeit | Smoke-Test lokal dokumentiert; keine Artefakte committed |
 | Externe Repos | als Submodule auf Planton361-Forks eingebunden |
 | Forks | Planton361-Forks fuer UPR-FVX, DPE Gen9 und CFRU dokumentiert |
@@ -60,30 +60,31 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | 08 Randomizer-Kompatibilität | CFRU/DPE-UPR-FVX-Kompatibilitaetsmodell dokumentiert | RAM-Mapping zurueckgestellt; P0 bis P4 Fix-Reihenfolge dokumentiert |
 | 08 Randomizer-Kompatibilität | Randomizer-/NatDex-Referenzen dokumentiert | Quelleninventar, Workflowmodell und Implementierungsnotizen fuer P0/P1 festgehalten |
 | 08 Randomizer-Kompatibilität | CFRU-Documentation-Randomizer-Relevanz dokumentiert | PDF-Befunde zu Defines, Randomizer-Flags, Day/Night-Wild, Trainer-EVs, Save/RAM und Roadmap-Folgen festgehalten |
+| 08 Randomizer-Kompatibilität | UPR-FVX Gen-Restrictions-Folgefix | PR #4 gemerged; finaler `RestrictedSpeciesService`-Pool enthaelt Gen4+-Species bei `limitPokemon=false` |
 
 ## In Review/Test
 
 | Paket | Aufgabe | Prüfpunkte |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | UPR-FVX Gen-Restrictions-Folgefix | PR #4 offen; finaler `RestrictedSpeciesService`-Pool enthaelt nach Fix Gen4+-Species bei `limitPokemon=false` |
+| 08 Randomizer-Kompatibilität | UPR-FVX Wild-Write-Folgefix | PR #5 offen; sichtbarer Wild-Log enthaelt nach Fix Gen4+-Species |
 
 ## In Arbeit
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | GenRestrictions-Diagnoselauf dokumentieren | P0-Fixwerte, Wild-Log-Auswertung und naechsten Write-Path-Engpass festhalten |
+| 08 Randomizer-Kompatibilität | Wild-Write-Diagnoselauf dokumentieren | Gen4+-Wild-Log-Auswertung und naechste P1-Schreibpfad-Diagnose festhalten |
 
 ## Als Nächstes
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Gen3/CFRU-DPE-Wild-Write-Mapping analysieren | Sichtbare Gen4+-Wild-Encounters erfordern interne Species-ID beim Schreiben/Reload |
+| 08 Randomizer-Kompatibilität | P1-Schreibpfade diagnostizieren | Trainer, Starters, Static Pokemon, Evolutions und Learnsets getrennt pruefen |
 
 ## Noch offen
 
 | Paket | Aufgabe | Hinweise |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Gen3/CFRU-DPE-Wild-Write-Mapping umsetzen | PR #4 erweitert den finalen Allowed-Pool; sichtbarer Wild-Log bleibt wegen Write-/Reload-Mapping Gen1-3 |
+| 08 Randomizer-Kompatibilität | P1-Schreibpfad-Fixes vorbereiten | Weitere Gen3-Pfade mit `pokedexToInternal[Species.number]` duerfen nicht nebenbei refactored werden |
 | 08 Randomizer-Kompatibilität | DPE-Gesamtumfang/PokemonCount bewerten | lokaler Teststand meldet `PokemonCount=823`, waehrend CFRU/DPE-Quellen bis Gen9 reichen |
 | 08 Randomizer-Kompatibilität | Wild-Log-`<unknown>` aufloesen | eindeutige Rohwerte sind `rawInternalSpeciesId=0`; Nullslots separat klassifizieren |
 | 08 Randomizer-Kompatibilität | CFRU-Day/Night-Custom-Wild-Tabellen analysieren | getrennt vom Vanilla/Fallback-Wild-Pool behandeln |
@@ -98,8 +99,8 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 
 | Reihenfolge | Branch | Ziel | Grenzen |
 |---|---|---|---|
-| P0 | `compat/upr-fvx-cfru-dpe-gen-restrictions` | finalen Gen4+-Allowed-Pool fuer erweiterte CFRU/DPE-BPRE-Hacks freigeben | PR #4 offen; keine Trainer-, Day/Night- oder Nullslot-Fixes im selben Schritt |
-| P0b | `compat/upr-fvx-cfru-dpe-wild-internal-species-write` | Wild-Encounter-Schreibpfade auf interne Species-Identitaet fuer erweiterte BPRE-Hacks pruefen | keine Day/Night-Wildtables, Nullslot- oder Trainer-Fixes |
+| P0 | `compat/upr-fvx-cfru-dpe-gen-restrictions` | finalen Gen4+-Allowed-Pool fuer erweiterte CFRU/DPE-BPRE-Hacks freigeben | PR #4 gemerged; keine Trainer-, Day/Night- oder Nullslot-Fixes im selben Schritt |
+| P0b | `compat/upr-fvx-cfru-dpe-wild-internal-species-write` | Wild-Encounter-Schreibpfade auf interne Species-Identitaet fuer erweiterte BPRE-Hacks pruefen | PR #5 offen; keine Day/Night-Wildtables, Nullslot- oder Trainer-Fixes |
 | P1 | noch festlegen | Trainer, Starters, Evolutions, Learnsets und TM/Tutor-Kompatibilitaet diagnostizieren | besonders `pokedexToInternal[species.getNumber()]`-Schreibpfade pruefen |
 | P2 | `randomizer/cfru-day-night-wild-table-analysis` | CFRU-Custom-Day/Night-Wild-Tabellen separat untersuchen | Route-1-Fallback bleibt stabil |
 | P3 | noch festlegen | Nullslot-`<unknown>` mit `rawInternalSpeciesId=0` klassifizieren | nicht mit GenRestrictions vermischen |
@@ -220,3 +221,13 @@ compat/upr-fvx-cfru-dpe-gen-restrictions
 - Sichtbarer Wild-Log bleibt Gen1-3: Gen1 `841`, Gen2 `527`, Gen3 `791`, Gen4+ `0`, `<unknown>` `17`.
 - Interpretation: P0-GenRestrictions ist geloest; naechster Engpass ist wahrscheinlich der Gen3/CFRU-DPE-Wild-Write-/Reload-Pfad ueber `pokedexToInternal[Species.number]`.
 - Keine Day/Night-Wildtable-, Nullslot-, SpeciesSet-Identity-, Trainer-, Starter-, Evolution-, Learnset-, TM- oder Tutor-Fixes umgesetzt.
+
+### 2026-05-11 – analysis/upr-fvx-cfru-dpe-wild-internal-species-write
+
+- UPR-FVX Branch `compat/upr-fvx-cfru-dpe-wild-internal-species-write` von `compat/firered-gen9-cfru-dpe` erstellt.
+- Basis enthaelt PR #4 als Merge-Commit `03b42a1216f5a087d42a3e94a7e81a15db2e977b`.
+- Minimaler Wild-Write-Fix umgesetzt: erweiterte CFRU/DPE-BPRE-Hacks schreiben Vanilla/Fallback-Wild-Species ueber `speciesSetIdentityNumber`; Vanilla und normale Gen3-Hacks bleiben auf `pokedexToInternal[Species.number]`.
+- UPR-FVX Commit `5f68ec0fc8e1592079486f6d22cf5a122eb08d01` erstellt und PR #5 geoeffnet.
+- Diagnose: sichtbarer Wild-Log enthaelt jetzt Gen4+-Species: Gen1 `354`, Gen2 `388`, Gen3 `404`, Gen4 `398`, Gen5 `528`, Gen6 `104`, `<unknown>` `0`.
+- Route 1, Route 22 und Viridian Forest wirken weiterhin sichtbar randomisiert.
+- Keine Settings-/GenRestrictions-, Day/Night-Wildtable-, Nullslot-, SpeciesSet-Identity-, Trainer-, Starter-, Evolution-, Learnset-, TM- oder Tutor-Fixes umgesetzt.
