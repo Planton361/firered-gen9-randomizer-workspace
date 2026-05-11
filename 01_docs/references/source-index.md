@@ -155,6 +155,36 @@ Ergebnis:
 - Hidden Ability BaseStats-Byte `0x1A`, `TRAINERS_WITH_EVS`, TM/HM/Tutor-Erweiterung und `EXPAND_MOVESETS` vs. DPE-Learnsets sind P1-Risiken.
 - Save Expansion/Roamer-Speicher bestaetigt P4 fuer BizHawk/Ironmon/RAM-Mapping.
 
+## CFRU/DPE Encounter-Systemmodell 2026-05-12
+
+Arbeitsblock: `analysis/upr-fvx-cfru-dpe-p1-encounter-systems`.
+
+Neue Workspace-Referenz:
+
+- `01_docs/compat/cfru-dpe-encounter-systems-model.md`
+
+Zusaetzlich relevant eingeordnete lokale Quellen:
+
+| Bereich | Lokaler Pfad | Zweck |
+|---|---|---|
+| UPR-FVX Standard-Wild | `02_external/upr-fvx/romio/src/main/java/com/uprfvx/romio/romhandlers/Gen3RomHandler.java` | `getEncounters()`/`setEncounters()` fuer Walking, Surfing, Rock Smash und Fishing |
+| UPR-FVX Wild-Randomizer | `02_external/upr-fvx/random/src/main/java/com/uprfvx/random/randomizers/WildEncounterRandomizer.java` | finaler Randomizer-Workflow ueber `EncounterArea` |
+| UPR-FVX Encounter-Modell | `02_external/upr-fvx/romio/src/main/java/com/uprfvx/romio/gamedata/EncounterArea.java`, `EncounterType.java` | Gruppierung und Typisierung von Encounter-Areas |
+| CFRU Runtime-Wild | `02_external/CFRU-expansion/src/wild_encounter.c` | Time-of-Day-Fallback, Standard-Wild, Swarms, Roamers, Wild Double und Spezialfaelle |
+| CFRU Wild-Header | `02_external/CFRU-expansion/include/wild_encounter.h`, `include/new/wild_encounter.h` | WildPokemon-/WildPokemonHeader-Strukturen und Runtime-API |
+| CFRU Time/Swarms | `02_external/CFRU-expansion/src/Tables/wild_encounter_tables.c` | Morning/Day/Evening/Night-Header und `gSwarmTable` |
+| CFRU Roamers | `02_external/CFRU-expansion/src/roamer.c`, `include/new/roamer.h` | Roamer-State, Script-Initialisierung und Encounter-Abfang |
+| CFRU DexNav | `02_external/CFRU-expansion/src/dexnav.c` | DexNav liest lokale Wild-/Swarm-Daten und erzeugt eigene Encounters |
+| CFRU Raids | `02_external/CFRU-expansion/src/dynamax.c`, `include/new/dynamax.h`, `src/Tables/raid_encounters.h` | Raid-Species, Items, Abilities, Drops und Battle-Erzeugung |
+| Vanilla Referenz | `02_external/references/pret-pokefirered/src/wild_encounter.c`, `include/wild_encounter.h`, `src/wild_pokemon_area.c` | FireRed-Baseline fuer `gWildMonHeaders` |
+| NatDex Referenz | `02_external/references/cyansmp64-pokefirered-natdex/include/wild_encounter.h`, `tools/inigen/inigen.c` | NatDex-FireRed-Wildstruktur und Symbol-/INI-Erzeugung |
+
+Ergebnis:
+
+- P0-supported sind nur `gWildMonHeaders`-kompatible Standard-Wildsysteme: Walking/Grass-Cave, Surfing, Fishing und Rock Smash.
+- CFRU-Time-of-Day-Wild kann Fallback-Daten uebersteuern und bleibt P2.
+- Swarms, Roamers, DexNav, Wild Double Battles, Raids, Altering Cave und Tanoby/Unown sind partial oder unsupported und muessen getrennt behandelt werden.
+
 ## Regel
 
 Vor produktiver Nutzung müssen Branch, Commit-Hash, lokaler Pfad und Zweck im Tool-Manifest festgehalten werden.
