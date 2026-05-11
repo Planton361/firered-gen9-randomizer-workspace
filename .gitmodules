@@ -1,3 +1,9 @@
 [submodule "02_external/upr-fvx"]
 	path = 02_external/upr-fvx
 	url = https://github.com/Planton361/universal-pokemon-randomizer-fvx.git
+[submodule "02_external/Dynamic-Pokemon-Expansion-Gen-9"]
+	path = 02_external/Dynamic-Pokemon-Expansion-Gen-9
+	url = https://github.com/Planton361/Dynamic-Pokemon-Expansion-Gen-9.git
+[submodule "02_external/CFRU-expansion"]
+	path = 02_external/CFRU-expansion
+	url = https://github.com/Planton361/CFRU-expansion.git
