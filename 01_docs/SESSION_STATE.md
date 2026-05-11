@@ -20,11 +20,11 @@
 
 ## Aktueller Branch
 
-`analysis/upr-fvx-cfru-dpe-species-pool`
+`analysis/upr-fvx-gen4plus-wild-pool-diagnostics`
 
 ## Aktueller Arbeitsblock
 
-UPR-FVX PR #3 lokal diagnostisch ausfuehren und gegen den vorherigen CFRU/DPE-Befund vergleichen.
+Gen4+-Wild-Pool nach PR #3 mit gezielten All-Gens-Settings diagnostisch pruefen.
 
 ## Ziel
 
@@ -53,10 +53,26 @@ Konkret klaeren:
 - Wild-Log-`<unknown>`-Rohwerte waren in den eindeutigen stderr-Befunden `rawInternalSpeciesId=0`.
 - Der naechste sinnvolle Fix ist Generation-Mapping fuer Gen4-Gen9; `PokemonCount`-/ID-Mapping und Nullslots getrennt weiter pruefen.
 
+## In diesem Arbeitsblock geprueft / geaendert
+
+- Workspace-Branch `analysis/upr-fvx-gen4plus-wild-pool-diagnostics` angelegt.
+- UPR-FVX lokal auf `223ee9ef compat: preserve CFRU DPE species identity` geprueft.
+- UPR-FVX per `./gradlew clean :random:jar` erfolgreich gebaut.
+- Lokaler CFRU/DPE-Teststand mit All-Gens-Settings per CLI randomisiert.
+- Neues Protokoll erstellt: `08_tests/randomizer/upr-fvx-gen4plus-wild-pool-diagnostics.md`.
+- Keine UPR-FVX-Codeaenderungen vorgenommen.
+
+## Ergebnis
+
+- RomHandler-Pool bleibt nach PR #3 erweitert: `speciesList.size=799`, `maxSpeciesIdentityNumber=823`.
+- Beispiel-Species Skrelp bis Hawlucha bleiben korrekt Gen6.
+- Finaler Wild-Log enthaelt weiterhin keine sichtbaren Gen4+-Species.
+- Wild-Log-Auswertung: Gen1 `841`, Gen2 `527`, Gen3 `791`, Gen4+ `0`, `<unknown>` `17`.
+- Read-only-Ursache: `Settings.tweakForRom()` kappt `currentRestrictions` fuer Gen3-ROMs auf `generationOfPokemon() == 3`; `GameRandomizer.setupSpeciesRestrictions()` setzt diese Restrictions auch bei `limitPokemon=false`.
+
 ## Noch nicht gestartet
 
-- PR #3 mergen
-- gezielter Wild-Randomizer-Pool-Test mit Gen4+-Settings
+- UPR-FVX-Fix fuer CFRU/DPE-Generation-Restrictions
 - CFRU-Day/Night-Custom-Wild-Tabellen-Support
 - Ironmon-Tracker-Tests
 
@@ -87,6 +103,6 @@ git diff --submodule
 
 ## Naechster empfohlener Branch
 
-`analysis/upr-fvx-cfru-dpe-wild-pool-gen4-settings`
+`compat/upr-fvx-cfru-dpe-gen-restrictions`
 
-Zweck: Nach PR #3 gezielt pruefen, ob der Wild-Randomizer mit passenden Generation-Restrictions Gen4+-Species aus dem erweiterten RomHandler-Pool auswaehlt.
+Zweck: Im UPR-FVX-Fork verhindern, dass erweiterte CFRU/DPE-BPRE-Hacks trotz erweitertem Species-Pool durch `Settings.tweakForRom()` und `RestrictedSpeciesService` auf Gen1-3 begrenzt werden.

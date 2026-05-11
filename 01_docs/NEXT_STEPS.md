@@ -2,12 +2,13 @@
 
 ## Aktueller Arbeitsblock
 
-UPR-FVX PR #3 lokal diagnostisch gegen denselben CFRU/DPE-Teststand pruefen.
+Gen4+-Wild-Pool nach UPR-FVX PR #3 mit All-Gens-Settings diagnostisch pruefen.
 
 ## Nächste Schritte
 
-1. Diagnoseprotokoll `08_tests/randomizer/upr-fvx-cfru-dpe-generation-mapping-diagnostics-run.md` reviewen.
-2. UPR-FVX PR #3 mergen, falls der Befund akzeptiert wird.
+1. Diagnoseprotokoll `08_tests/randomizer/upr-fvx-gen4plus-wild-pool-diagnostics.md` reviewen.
+2. UPR-FVX-Folgefix fuer Generation-Restrictions vorbereiten:
+   - `compat/upr-fvx-cfru-dpe-gen-restrictions`
 3. Lokal die Git-/Submodule-Pruefung nachziehen:
 
 ```sh
@@ -17,9 +18,7 @@ git diff --stat
 git diff --submodule
 ```
 
-4. Danach gezielten Wild-Pool-Test mit Gen4+-Settings planen:
-   - Bestaetigen, dass Gen4+-Species in der finalen Wild-Auswahl landen.
-   - `<unknown>`-Nullslots weiterhin separat halten.
+4. Danach denselben Gen4+-Wild-Pool-Diagnoselauf wiederholen.
 
 ## Nicht tun
 
@@ -41,13 +40,13 @@ git diff --submodule
 
 Nächster empfohlener Arbeitsblock nach dem Fix-PR:
 
-`analysis/upr-fvx-cfru-dpe-wild-pool-gen4-settings`
+`compat/upr-fvx-cfru-dpe-gen-restrictions`
 
 Ziel:
 
-- Den lokalen CFRU/DPE-Teststand mit gezielten Generation-Restrictions erneut randomisieren.
-- Pruefen, ob der Wild-Randomizer Gen4+-Species aus dem erweiterten RomHandler-Pool auswaehlt.
-- `<unknown>`-Nullslots weiterhin separat behandeln; keine Day/Night-Wild-Tabellen-Fixes.
+- Im UPR-FVX-Fork die Settings-/Restriction-Begrenzung fuer erweiterte CFRU/DPE-BPRE-Hacks korrigieren.
+- Keine Species-Identity-, Nullslot- oder Day/Night-Wild-Tabellen-Fixes vermischen.
+- Danach erneut pruefen, ob Gen4+-Species in der finalen Wild-Auswahl landen.
 
 ## Quality
 
