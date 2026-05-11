@@ -24,9 +24,9 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-p1-encounter-systems` |
-| Nächster Branch | `analysis/upr-fvx-cfru-dpe-p1-species-write-paths` |
-| Aktueller Fokus | CFRU/DPE Encounter-Systeme nach P0 read-only abgrenzen |
+| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-p1-species-write-paths` |
+| Nächster Branch | `analysis/upr-fvx-cfru-dpe-p1-starter-write-diagnostics` |
+| Aktueller Fokus | Species-Schreibpfade ausserhalb von Standard-Wild read-only priorisieren |
 | ROM-/Build-Arbeit | Smoke-Test lokal dokumentiert; keine Artefakte committed |
 | Externe Repos | als Submodule auf Planton361-Forks eingebunden |
 | Forks | Planton361-Forks fuer UPR-FVX, DPE Gen9 und CFRU dokumentiert |
@@ -63,24 +63,25 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | 08 Randomizer-Kompatibilität | UPR-FVX Gen-Restrictions-Folgefix | PR #4 gemerged; finaler `RestrictedSpeciesService`-Pool enthaelt Gen4+-Species bei `limitPokemon=false` |
 | 08 Randomizer-Kompatibilität | UPR-FVX Wild-Write-Folgefix | PR #5 gemerged; Vanilla/Fallback-Wild-Species werden fuer erweiterte BPRE-Hacks per interner Identitaet geschrieben |
 | 08 Randomizer-Kompatibilität | P0-Post-Merge-Smoke | PR #3/#4/#5-Fixkette auf UPR-FVX Merge-Commit `843b75a8` bestaetigt; sichtbarer Wild-Log enthaelt Gen4+ `1030`, `<unknown>` `0` |
+| 08 Randomizer-Kompatibilität | CFRU/DPE Encounter-Systemmodell | P0-supported sind Standard-Wild/Grass-Cave, Surfing, Fishing und Rock Smash; Day/Night, Swarms, Roamers, DexNav und Raids bleiben separat |
 
 ## In Arbeit
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Encounter-Systemmodell dokumentieren | supported/partial/unsupported Encounter-Systeme nach P0 abgrenzen |
+| 08 Randomizer-Kompatibilität | P1-Species-Schreibpfade diagnostizieren | Starters, Static Pokemon, Trainer, Evolutions, Learnsets, TM/Tutor, Abilities und Items priorisieren |
 
 ## Als Nächstes
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | P1-Species-Schreibpfade diagnostizieren | Trainer, Starters, Static Pokemon, Evolutions und Learnsets getrennt pruefen |
+| 08 Randomizer-Kompatibilität | Starters-only P1-Diagnose | pruefen, ob Gen4+-Starter nach Write und Reload als interne Species-ID erhalten bleiben |
 
 ## Noch offen
 
 | Paket | Aufgabe | Hinweise |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | P1-Schreibpfad-Fixes vorbereiten | Weitere Gen3-Pfade mit `pokedexToInternal[Species.number]` duerfen nicht nebenbei refactored werden |
+| 08 Randomizer-Kompatibilität | P1-Schreibpfad-Fixes vorbereiten | Starters, Static/Gifts und Trainer-Species sind kleinste Kandidaten; weitere Gen3-Pfade mit `pokedexToInternal[Species.number]` duerfen nicht nebenbei refactored werden |
 | 08 Randomizer-Kompatibilität | DPE-Gesamtumfang/PokemonCount bewerten | lokaler Teststand meldet `PokemonCount=823`, waehrend CFRU/DPE-Quellen bis Gen9 reichen |
 | 08 Randomizer-Kompatibilität | Wild-Log-`<unknown>` aufloesen | eindeutige Rohwerte sind `rawInternalSpeciesId=0`; Nullslots separat klassifizieren |
 | 08 Randomizer-Kompatibilität | CFRU-Day/Night-Custom-Wild-Tabellen analysieren | getrennt vom Vanilla/Fallback-Wild-Pool behandeln |
@@ -97,7 +98,8 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 |---|---|---|---|
 | P0 | `compat/upr-fvx-cfru-dpe-gen-restrictions` | finalen Gen4+-Allowed-Pool fuer erweiterte CFRU/DPE-BPRE-Hacks freigeben | PR #4 gemerged und post-merge bestaetigt |
 | P0b | `compat/upr-fvx-cfru-dpe-wild-internal-species-write` | Wild-Encounter-Schreibpfade auf interne Species-Identitaet fuer erweiterte BPRE-Hacks pruefen | PR #5 gemerged und post-merge bestaetigt |
-| P1 | `analysis/upr-fvx-cfru-dpe-p1-species-write-paths` | Trainer, Starters, Static Pokemon, Evolutions, Learnsets und TM/Tutor-Kompatibilitaet diagnostizieren | besonders `pokedexToInternal[species.getNumber()]`-Schreibpfade pruefen |
+| P1 | `analysis/upr-fvx-cfru-dpe-p1-species-write-paths` | Trainer, Starters, Static Pokemon, Evolutions, Learnsets und TM/Tutor-Kompatibilitaet diagnostizieren | Analysebranch; Ergebnis priorisiert Starters, Static/Gifts und Trainer-Species als erste praktische Tests |
+| P1a | `analysis/upr-fvx-cfru-dpe-p1-starter-write-diagnostics` | Starters-only Write-/Reload-Diagnose | keine Static-, Trainer-, Evolution-, Learnset-, TM-, Tutor-, Ability- oder Day/Night-Scope |
 | P2 | `randomizer/cfru-day-night-wild-table-analysis` | CFRU-Custom-Day/Night-Wild-Tabellen separat untersuchen | erst nach P1-Schreibpfad-Diagnose; Route-1-Fallback bleibt stabil |
 | P3 | noch festlegen | Nullslot-`<unknown>` mit `rawInternalSpeciesId=0` klassifizieren | nicht mit GenRestrictions vermischen |
 | P4 | noch festlegen | BizHawk-/Ironmon-Tracker-/RAM-Mapping pruefen | erst nach stabiler ROM-Randomizer-Kompatibilitaet |
@@ -140,7 +142,7 @@ Excel-Roadmap:
 ## Nächster empfohlener Branch
 
 ```text
-analysis/upr-fvx-cfru-dpe-p1-species-write-paths
+analysis/upr-fvx-cfru-dpe-p1-starter-write-diagnostics
 ```
 
 ## Arbeitsblock-Log
