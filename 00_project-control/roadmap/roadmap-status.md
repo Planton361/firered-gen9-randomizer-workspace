@@ -25,8 +25,8 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
 | Aktueller Branch | `analysis/upr-fvx-cfru-dpe-species-pool` |
-| Nächster Branch | `analysis/log-cfru-dpe-species-diagnostics` |
-| Aktueller Fokus | UPR-FVX/CFRU/DPE-Species-Pool analysieren |
+| Nächster Branch | `compat/upr-fvx-gen9-generation-mapping` |
+| Aktueller Fokus | UPR-FVX/CFRU/DPE-Species-Diagnose auswerten |
 | ROM-/Build-Arbeit | Smoke-Test lokal dokumentiert; keine Artefakte committed |
 | Externe Repos | als Submodule auf Planton361-Forks eingebunden |
 | Forks | Planton361-Forks fuer UPR-FVX, DPE Gen9 und CFRU dokumentiert |
@@ -53,24 +53,25 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | 08 Randomizer-Kompatibilität | UPR-FVX Source-Build dokumentiert | `compat/firered-gen9-cfru-dpe` baut/startet lokal |
 | 08 Randomizer-Kompatibilität | erster Randomizer-/BizHawk-Smoke-Test dokumentiert | CFRU/DPE-ROM konnte geladen, minimal randomisiert, gespeichert und in BizHawk gebootet werden |
 | 08 Randomizer-Kompatibilität | Route-1-Fallback-Wilddaten dokumentiert | CFRU Route-1-Custom-Day/Night-Wilddaten per Macro deaktiviert; Route 1 wieder als FVX-Fallback-Area sichtbar |
+| 08 Randomizer-Kompatibilität | CFRU/DPE-Species-Diagnose dokumentiert | UPR-FVX PR #2 lokal gebaut/ausgefuehrt; Count-, Generation- und `<unknown>`-Rohwerte protokolliert |
 
 ## In Review/Test
 
 | Paket | Aufgabe | Prüfpunkte |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | UPR-FVX/CFRU/DPE Species-Pool-Analyse reviewen | Sind `PokemonCount`, Generation-Mapping, `RestrictedSpeciesService`, Wild-Pool und `<unknown>`-Hypothese korrekt eingeordnet? |
+| 08 Randomizer-Kompatibilität | UPR-FVX/CFRU/DPE Species-Diagnose reviewen | Sind `PokemonCount=823`, `pokedexCount=386`, `speciesList.size=412`, Gen4+-als-Gen3 und `<unknown>`-Nullslots korrekt interpretiert? |
 
 ## In Arbeit
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Species-Pool-Analyse dokumentieren | Analyseprotokoll, Session State, Next Steps und Roadmap auf `analysis/upr-fvx-cfru-dpe-species-pool` synchronisieren |
+| 08 Randomizer-Kompatibilität | Species-Diagnose dokumentieren | Diagnoseprotokoll, Session State, Next Steps und Roadmap synchronisieren |
 
 ## Als Nächstes
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | CFRU/DPE Species-Diagnose im UPR-FVX-Fork ergänzen | Nur Diagnose-Logging fuer Count-/ID-/Generation-/`<unknown>`-Befunde; noch keine funktionale Randomizer-Aenderung |
+| 08 Randomizer-Kompatibilität | Gen4-Gen9 Generation-Mapping im UPR-FVX-Fork korrigieren | Nur Species-Generation-Zuordnung; keine `PokemonCount`-/Wild-Pool-Refactors im selben Schritt |
 
 ## Noch offen
 
@@ -91,10 +92,9 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 
 | Reihenfolge | Branch | Ziel | Grenzen |
 |---|---|---|---|
-| 1 | `analysis/log-cfru-dpe-species-diagnostics` | UPR-FVX-Diagnose fuer Species-Count, interne IDs, Pokedex-IDs, Generation-Verteilung und `<unknown>`-Rohwerte | nur Planton361-UPR-FVX-Fork; keine ROMs/Builds committen |
-| 2 | `compat/upr-fvx-gen9-generation-mapping` | `generationOf()`/Species-Generation fuer Gen4-Gen9 sauber korrigieren | erst nach Diagnosebefund |
-| 3 | `compat/upr-fvx-cfru-dpe-species-id-map` | interne Species-ID vs. National-Dex-ID sauber fuer DPE/CFRU trennen | nur falls Diagnose Mapping-Problem bestaetigt |
-| 4 | `randomizer/cfru-day-night-wild-table-analysis` | CFRU-Custom-Day/Night-Wild-Tabellen separat untersuchen | Route-1-Fallback bleibt stabil |
+| 1 | `compat/upr-fvx-gen9-generation-mapping` | `generationOf()`/Species-Generation fuer Gen4-Gen9 sauber korrigieren | keine `PokemonCount`-/Wild-Pool-Refactors im selben Schritt |
+| 2 | `compat/upr-fvx-cfru-dpe-species-id-map` | interne Species-ID vs. National-Dex-ID sauber fuer DPE/CFRU trennen | nur falls weitere Diagnose Mapping-Problem bestaetigt |
+| 3 | `randomizer/cfru-day-night-wild-table-analysis` | CFRU-Custom-Day/Night-Wild-Tabellen separat untersuchen | Route-1-Fallback bleibt stabil |
 
 ## Aktuelle Sicherheitsregeln
 
@@ -134,7 +134,7 @@ Excel-Roadmap:
 ## Nächster empfohlener Branch
 
 ```text
-analysis/log-cfru-dpe-species-diagnostics
+compat/upr-fvx-gen9-generation-mapping
 ```
 
 ## Arbeitsblock-Log
@@ -164,3 +164,13 @@ analysis/log-cfru-dpe-species-diagnostics
 - `<unknown>` im Wild-Log ist wahrscheinlich ein Null-/Fallback fuer nicht aufgeloeste Encounter-Species, verursacht durch Count-/ID-/Mapping-Probleme.
 - Analyseprotokoll erstellt: `08_tests/randomizer/upr-fvx-cfru-dpe-species-pool-analysis.md`.
 - Keine ROMs, Saves, Builds, Tool-Binaries oder privaten Dateien wurden angefasst.
+
+### 2026-05-11 – analysis/log-cfru-dpe-species-diagnostics
+
+- UPR-FVX PR #2 auf Branch `analysis/log-cfru-dpe-species-diagnostics` lokal reviewt.
+- PR #2 enthaelt nur temporaere Diagnoseausgaben in `Gen3RomHandler.java` und `RandomizationLogger.java`.
+- UPR-FVX per Clean-Build neu gebaut und lokalen CFRU/DPE-Route-1-Fallback-Teststand per CLI geladen/randomisiert.
+- Diagnosebefund dokumentiert: `PokemonCount=823`, `pokedexCount=386`, `speciesList.size=412`, `maxInternalSpeciesId=823`, `maxSpeciesNumber=411`, `generationCounts={1=328, 2=200, 3=295}`.
+- Beispiel-Species ueber 386 werden als Gen3 klassifiziert; eindeutige Wild-Log-`<unknown>`-Rohwerte sind `rawInternalSpeciesId=0`.
+- Neues Protokoll erstellt: `08_tests/randomizer/upr-fvx-cfru-dpe-species-diagnostics-run.md`.
+- Keine ROMs, Builds, Randomizer-JARs, Saves oder Tool-Binaries wurden committed.

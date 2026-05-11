@@ -2,12 +2,12 @@
 
 ## Aktueller Arbeitsblock
 
-UPR-FVX/CFRU/DPE-Species-Pool auf `analysis/upr-fvx-cfru-dpe-species-pool` read-only analysieren und dokumentieren.
+UPR-FVX/CFRU/DPE-Species-Diagnose auf Basis von UPR-FVX PR #2 lokal auswerten und dokumentieren.
 
 ## Nächste Schritte
 
-1. `08_tests/randomizer/upr-fvx-cfru-dpe-species-pool-analysis.md` reviewen.
-2. Lokal im echten Workspace die Git-/Submodule-Pruefung nachziehen:
+1. `08_tests/randomizer/upr-fvx-cfru-dpe-species-diagnostics-run.md` reviewen.
+2. Lokal die Git-/Submodule-Pruefung nachziehen:
 
 ```sh
 git status --short
@@ -16,13 +16,11 @@ git diff --stat
 git diff --submodule
 ```
 
-3. Analysebefund fachlich pruefen:
-   - `Gen3RomHandler` nutzt fuer BPRE-Hacks Heuristiken statt DPE-spezifischer Species-Metadaten.
-   - `PokemonCount` kann durch Namen-, Moveset- oder `PokedexOrder`-Plausibilitaetschecks abgeschnitten werden.
-   - `generationOf()` im Gen3-Handler ist auf Gen1-3 hardcoded.
-   - Der Wild-Randomizer-Pool kommt ueber `RestrictedSpeciesService` und `romHandler.getSpeciesSetInclFormes()`.
-   - `<unknown>` im Wild-Log spricht fuer ein Species-ID-/Count-/Mapping-Problem.
-4. Branch reviewen, committen/pushen bzw. PR nach `main` fuehren. PR nicht mergen.
+3. Diagnosebefund fachlich pruefen:
+   - `PokemonCount=823`, aber `pokedexCount=386` und `speciesList.size=412`.
+   - Beispiel-Species `> 386` werden geladen, aber als Gen3 klassifiziert.
+   - Eindeutige `<unknown>`-Rohwerte aus dem Gen3-Wild-Leser sind `rawInternalSpeciesId=0`.
+4. Workspace-Dokumentationsbranch reviewen, committen/pushen und als PR nach `main` fuehren. PR nicht mergen.
 
 ## Nicht tun
 
@@ -44,22 +42,14 @@ git diff --submodule
 
 Nächster empfohlener Arbeitsblock:
 
-`analysis/log-cfru-dpe-species-diagnostics`
+`compat/upr-fvx-gen9-generation-mapping`
 
 Ziel:
 
-- Im UPR-FVX-Fork `Planton361/universal-pokemon-randomizer-fvx` nur Diagnose-Logging/Analyseausgabe ergänzen.
-- Noch keine funktionale Randomizer-Aenderung vornehmen.
-- Zu protokollieren:
-  - erkannter `PokemonCount`
-  - `pokedexCount`
-  - maximale interne Species-ID
-  - maximale Pokedex-/Species-Nummer
-  - `speciesList.size()`
-  - Counts pro `Species.generation`
-  - Beispiele fuer Species `> 386`
-  - Roh-Species-ID fuer Wild-Log-`<unknown>` inklusive Area/Encounter-Type
-- Danach denselben lokalen CFRU/DPE-Teststand erneut laden und Logauszug in `08_tests/randomizer/` dokumentieren, ohne ROMs, Builds oder Tool-Binaries zu committen.
+- Im UPR-FVX-Fork `Planton361/universal-pokemon-randomizer-fvx` die Generation-Zuordnung fuer Gen4-Gen9-Species korrigieren.
+- Keine gleichzeitige Aenderung an `PokemonCount`-Heuristik oder Wild-Pool-ID-Mapping.
+- Danach denselben lokalen CFRU/DPE-Teststand erneut mit Diagnoseausgabe laden und vergleichen.
+- `<unknown>`-Nullslots separat untersuchen; zuerst klaeren, ob sie legitime leere/sonderfallartige Wild-Slots oder ein Lesefehler sind.
 
 ## Quality
 
