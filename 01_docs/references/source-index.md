@@ -102,6 +102,36 @@ Ergebnis:
 - P0 ist ein separater UPR-FVX-Fix fuer GenRestrictions/finalen Gen4+-Wild-Pool.
 - P1 bis P4 bleiben Trainer/Starters/Evolutions/Learnsets, CFRU Day/Night Wild, Nullslot-`<unknown>` und Ironmon/BizHawk/RAM-Mapping.
 
+## Randomizer-/NatDex-Referenzen 2026-05-11
+
+Arbeitsblock: `analysis/randomizer-natdex-reference-sources`.
+
+Neue Workspace-Referenzen:
+
+- `01_docs/compat/randomizer-natdex-reference-sources.md`
+- `01_docs/compat/randomizer-workflow-model.md`
+- `01_docs/compat/natdex-reference-implementation-notes.md`
+
+Read-only analysierte Submodules:
+
+| Bereich | Lokaler Pfad | Branch/Stand | Zweck |
+|---|---|---|---|
+| UPR-FVX Fork | `02_external/upr-fvx` | `223ee9ef` | Planton361-Kompatibilitaetsstand mit PR #3 |
+| UPR-FVX Upstream | `02_external/references/upr-fvx-upstream` | `e0788edc` | Upstream-Vergleich vor Planton361-Fixes |
+| UPR-ZX Ajarmar | `02_external/references/upr-zx-ajarmar` | `7f00eb86` | klassische UPR-ZX-Basis bis Gen7 |
+| CyanSMP64 UPR-ZX NatDex | `02_external/references/cyansmp64-upr-zx-natdex` | `9b63eb28` | Gen8/Gen9-/Mega-/Regional-Forms-Restriction-Referenz |
+| pret FireRed | `02_external/references/pret-pokefirered` | `e060ab95` | Vanilla-BPRE-Decomp-Baseline |
+| CyanSMP64 FireRed NatDex | `02_external/references/cyansmp64-pokefirered-natdex` | `16b8b9ff` | NatDex-FireRed-Datenmodell |
+| CFRU-expansion | `02_external/CFRU-expansion` | `b885d7a9` | CFRU-Laufzeit- und Tabellenmodell |
+| DPE Gen9 | `02_external/Dynamic-Pokemon-Expansion-Gen-9` | `5906aa4d` | DPE-Species-/Dex-/Datenmodell |
+
+Ergebnis:
+
+- CyanSMP64 UPR-ZX NatDex zeigt ein NatDex-Randomizer-Modell, in dem `limitToGen()` keine hoeheren Generationen kappt und Gen8/Gen9, Mega, Eternamax sowie Regional Forms eigene Restriction-Bits haben.
+- Ajarmar UPR-ZX und FVX begrenzen Settings normal auf `rh.generationOfPokemon()`.
+- Fuer den lokalen CFRU/DPE-Teststand bleibt das DPE/CFRU-ID-Modell massgeblich; CyanSMP64 NatDex ist Vergleichs- und Fixplanungsreferenz, aber kein direktes Drop-in-Modell.
+- P0 bleibt ein kleiner UPR-FVX-Fix fuer Settings/GenRestrictions, nicht fuer Day/Night-Wild, Nullslots oder Trainer-/Move-Tabellen.
+
 ## Regel
 
 Vor produktiver Nutzung müssen Branch, Commit-Hash, lokaler Pfad und Zweck im Tool-Manifest festgehalten werden.

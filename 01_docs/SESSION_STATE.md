@@ -7,7 +7,9 @@
 - `main` ist Default Branch und bleibt stabil.
 - Branch Protection und PR-Pflicht sind laut dokumentiertem Projektstand eingerichtet.
 - Workspace PR #28 ist gemerged; der Gen4+-Wild-Pool-Diagnosebefund ist in `main` verfuegbar.
+- Workspace PR #29 ist gemerged; das CFRU/DPE-UPR-FVX-Kompatibilitaetsmodell ist in `main` verfuegbar.
 - UPR-FVX PR #3 ist gemerged; der lokale Submodule-Stand bleibt in diesem Workspace auf `223ee9ef compat: preserve CFRU DPE species identity`.
+- Die neu eingebundenen NatDex-/Randomizer-/FireRed-Referenz-Submodules sind in `main` verfuegbar und wurden read-only inventarisiert.
 - devkitPro/devkitARM wurde lokal installiert und geprueft.
 - DPE Gen9 baut lokal erfolgreich.
 - CFRU auf DPE baut lokal erfolgreich.
@@ -22,46 +24,42 @@
 
 ## Aktueller Branch
 
-`analysis/cfru-dpe-upr-fvx-compatibility-model`
+`analysis/randomizer-natdex-reference-sources`
 
 ## Aktueller Arbeitsblock
 
-Read-only Gesamtanalyse des CFRU/DPE-UPR-FVX-Kompatibilitaetsmodells vor weiteren funktionalen Fixes.
+Read-only Analyse der neu eingebundenen NatDex-/Randomizer-/FireRed-Referenz-Submodules.
 
 ## Ziel
 
 Konkret klaeren:
 
-- welche CFRU/DPE-Datenquellen Source-of-Truth fuer Species, Dex, Wild, Trainer, Evolutions und Learnsets sind
-- welche UPR-FVX-Codepfade Source-of-Truth fuer ROM-Erkennung, Species-Loading, Restrictions, Wild, Trainer, Starters, Evolutions und Learnsets sind
-- wie interne Species-ID, Dex-ID, SpeciesSet-Identitaet und Formes zusammenhaengen
-- warum Gen4+ trotz erweitertem RomHandler-Pool noch nicht im finalen Wild-Pool landet
-- ob RAM-Mapping jetzt noetig ist
-- welche Fix-Reihenfolge minimal sinnvoll ist
+- welche Branches/Commits die Referenz-Submodules aktuell liefern
+- welche UPR-FVX-/UPR-ZX-/CyanSMP64-NatDex-Codepfade fuer Settings, GenRestrictions, SpeciesSet und Wild-Pool relevant sind
+- welches FireRed-/NatDex-/CFRU-/DPE-Datenmodell fuer Species, Wild, Trainer, Evolutions, Learnsets und TM/Tutor gilt
+- welche P0-Fixrichtung fuer GenRestrictions minimal sinnvoll ist
 
 ## In diesem Arbeitsblock geprueft / geaendert
 
 - Workspace `main` per `git pull --ff-only origin main` aktualisiert.
-- Workspace PR #28 per `gh pr view --repo Planton361/firered-gen9-randomizer-workspace` als `MERGED` geprueft.
-- UPR-FVX PR #3 per `gh pr view --repo Planton361/universal-pokemon-randomizer-fvx` als `MERGED` geprueft.
-- Branch `analysis/cfru-dpe-upr-fvx-compatibility-model` von aktuellem `main` erstellt.
-- Pflichtdokumente und bisherige Randomizer-Protokolle gelesen.
-- UPR-FVX, CFRU-expansion und DPE Gen9 read-only analysiert.
-- Neues Modell erstellt: `01_docs/compat/cfru-dpe-upr-fvx-compatibility-model.md`.
+- Branch `analysis/randomizer-natdex-reference-sources` von aktuellem `main` erstellt.
+- Pflichtdokumente und bisherige Kompatibilitaets-/Diagnoseprotokolle gelesen.
+- UPR-FVX, UPR-FVX upstream, Ajarmar UPR-ZX, CyanSMP64 UPR-ZX NatDex, pret FireRed, CyanSMP64 FireRed NatDex, CFRU-expansion und DPE Gen9 read-only analysiert.
+- Neues Quelleninventar erstellt: `01_docs/compat/randomizer-natdex-reference-sources.md`.
+- Neues Workflowmodell erstellt: `01_docs/compat/randomizer-workflow-model.md`.
+- Neue Implementierungsnotizen erstellt: `01_docs/compat/natdex-reference-implementation-notes.md`.
 - Keine Codeaenderungen vorgenommen.
 - Keine Builds gestartet.
 - Keine ROMs, Saves, Emulator States, Tool-Binaries oder privaten Pfade gelesen, kopiert, geaendert oder committed.
 
 ## Ergebnis
 
-- RAM-Mapping ist jetzt nicht noetig; zuerst muessen ROM-Datenmodell und Randomizer-Pool stabil sein.
-- DPE/CFRU Source-of-Truth fuer Species ist der interne `SPECIES_*`-ID-Raum, nicht der kompakte Dex-/Pokedex-Raum.
-- FVX muss `Species.number` fuer bestehende Gen3-Schreibpfade weiter als Dex-/Pokedex-ID behandeln, waehrend SpeciesSet-Identitaet fuer erweiterte BPRE-Hacks intern bleiben muss.
-- Der naechste technische Fix ist P0: GenRestrictions/finaler Gen4+-Wild-Pool.
-- Trainer, Starters, Evolutions, Learnsets und TM/Tutor-Kompatibilitaet sind P1, weil viele Pfade weiterhin `pokedexToInternal[species.getNumber()]` verwenden.
-- CFRU-Day/Night-Custom-Wild-Tabellen sind P2 und bleiben getrennt vom Vanilla/Fallback-Wild-Pool.
-- `rawInternalSpeciesId=0`-`<unknown>` ist P3 und bleibt ein eigenes Nullslot-Thema.
-- BizHawk/Ironmon/RAM-Mapping ist P4.
+- CyanSMP64 UPR-ZX NatDex erweitert Restrictions auf Gen8/Gen9, Mega, Eternamax und Regional Forms; `limitToGen()` ist dort auskommentiert.
+- Ajarmar UPR-ZX und FVX kappen Restrictions dagegen ueber `generationOfPokemon()`.
+- CyanSMP64 FireRed NatDex ist eine zusammen entwickelte ROM-/Randomizer-Referenz, aber kein direkt uebertragbares Modell fuer externe CFRU/DPE-Hacks.
+- DPE/CFRU bleiben Source-of-Truth fuer den lokalen Species-ID-Raum; CyanSMP64 NatDex ist vor allem als Restriction- und Workflow-Referenz hilfreich.
+- P0 bleibt: erweiterte CFRU/DPE-BPRE-Hacks duerfen im finalen `RestrictedSpeciesService` nicht mehr blind auf Gen1-3 gekappt werden.
+- Nicht in P0 vermischen: Species-Identity, Day/Night-Wild, Nullslots, Trainer, Starters, Evolutions, Learnsets, TM/Tutor und RAM/Tracker.
 
 ## Noch nicht gestartet
 
