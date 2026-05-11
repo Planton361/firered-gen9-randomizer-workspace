@@ -2,28 +2,27 @@
 
 ## Aktueller Arbeitsblock
 
-Starters-only Diagnose nach abgeschlossenem P0 abschliessen.
+Starter-Write-Fix und Nachher-Diagnose abschliessen.
 
 Aktueller Branch:
 
 ```text
-analysis/upr-fvx-cfru-dpe-p1-starter-write-diagnostics
+analysis/upr-fvx-cfru-dpe-starter-internal-species-write
 ```
 
 Zieldokumente:
 
 ```text
-08_tests/randomizer/upr-fvx-cfru-dpe-p1-starter-write-diagnostics.md
+08_tests/randomizer/upr-fvx-cfru-dpe-starter-internal-species-write-diagnostics.md
 ```
 
 ## Naechste Schritte in diesem Block
 
 1. Dokumentation reviewen:
-   - `08_tests/randomizer/upr-fvx-cfru-dpe-p1-starter-write-diagnostics.md`
+   - `08_tests/randomizer/upr-fvx-cfru-dpe-starter-internal-species-write-diagnostics.md`
    - `01_docs/SESSION_STATE.md`
    - `01_docs/NEXT_STEPS.md`
    - `00_project-control/roadmap/roadmap-status.md`
-   - `01_docs/references/source-index.md`
 2. Workspace-Checks ausfuehren:
 
 ```sh
@@ -37,25 +36,25 @@ git diff --check
 3. Commit erstellen:
 
 ```text
-docs: diagnose CFRU DPE starter write path
+docs: record CFRU DPE starter internal species write diagnostics
 ```
 
 4. Branch pushen und Workspace-PR nach `main` vorbereiten.
 
 ## Danach
 
-Naechster minimaler Fixbranch:
+Naechster minimaler Diagnosebranch:
 
 ```text
-compat/upr-fvx-cfru-dpe-starter-internal-species-write
+analysis/upr-fvx-cfru-dpe-p1-static-gift-write-diagnostics
 ```
 
 Ziel:
 
-- Nur `Gen3RomHandler.writeStarterBytes()` fuer erweiterte CFRU/DPE-BPRE-Hacks auf interne SpeciesSet-Identitaet umstellen.
-- Vanilla-Gen3-ROMs unveraendert lassen.
-- Den Seed `274269061345323` erneut pruefen: Pawniard/Scraggy duerfen nach Write und Reload nicht mehr zu Drowzee/Jirachi zurueckfallen.
-- Der Folgeblock darf keine Static-, Trainer-, Evolution-, Learnset-, TM-, Tutor-, Ability-, CFRU-Day/Night-Wildtable-, Swarm-, DexNav-, Raid- oder Nullslot-Logik vermischen.
+- Static-/Gift-Species-only Diagnose fuer erweiterte CFRU/DPE-BPRE-Hacks.
+- Pruefen, ob Gen4+-Static-/Gift-Species nach Write und Reload erhalten bleiben.
+- Roamer-Scope ausklammern.
+- Der Folgeblock darf keine Trainer-, Evolution-, Learnset-, TM-, Tutor-, Ability-, CFRU-Day/Night-Wildtable-, Swarm-, DexNav-, Raid- oder Nullslot-Logik vermischen.
 
 ## Fix-Reihenfolge
 
@@ -63,7 +62,7 @@ P0: GenRestrictions / finaler Gen4+ Allowed-Pool. Erledigt und post-merge bestae
 
 P0b: Gen3/CFRU-DPE-Wild-Write-Mapping fuer interne Species-Identitaet. Erledigt und post-merge bestaetigt.
 
-P1: Species-Schreibpfade. Analyse erledigt; Starters-only Diagnose zeigt einen noetigen Starter-Write-Fix, danach Static/Gifts und Trainer-Species separat testen.
+P1: Species-Schreibpfade. Analyse erledigt; Starter-Write-Fix ist als UPR-FVX PR #6 offen und diagnostisch bestaetigt, danach Static/Gifts und Trainer-Species separat testen.
 
 P2: CFRU Day/Night Custom Wild Tables. Separat nach P1-Schreibpfad-Diagnose.
 
@@ -78,7 +77,7 @@ P4: BizHawk/Ironmon Tracker/RAM-Mapping.
 - keine Saves oder Emulator States anfassen
 - keine Builds committen
 - keine Randomizer-JARs oder Tool-Binaries anfassen oder committen
-- keine Codeaenderungen in `02_external/**` in diesem Workspace-Dokumentationscommit
+- keine weiteren Codeaenderungen in `02_external/**` in diesem Workspace-Dokumentationscommit ausser dem bewusst gepinnten UPR-FVX-Submodule-Pointer
 - keine weiteren Wild-Write- oder Encounter-Fixes in diesem Branch
 - keine Day/Night-Wild-Fixes
 - keine Swarm-, Roamer-, DexNav- oder Raid-Fixes

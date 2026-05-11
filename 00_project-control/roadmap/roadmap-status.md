@@ -24,9 +24,9 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-p1-starter-write-diagnostics` |
-| Nächster Branch | `compat/upr-fvx-cfru-dpe-starter-internal-species-write` |
-| Aktueller Fokus | Starters-only Write-/Reload-Diagnose nach P0 abschliessen |
+| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-starter-internal-species-write` |
+| Nächster Branch | `analysis/upr-fvx-cfru-dpe-p1-static-gift-write-diagnostics` |
+| Aktueller Fokus | Starter-Write-Fix diagnostisch abschliessen |
 | ROM-/Build-Arbeit | Smoke-Test lokal dokumentiert; keine Artefakte committed |
 | Externe Repos | als Submodule auf Planton361-Forks eingebunden |
 | Forks | Planton361-Forks fuer UPR-FVX, DPE Gen9 und CFRU dokumentiert |
@@ -65,24 +65,25 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | 08 Randomizer-Kompatibilität | P0-Post-Merge-Smoke | PR #3/#4/#5-Fixkette auf UPR-FVX Merge-Commit `843b75a8` bestaetigt; sichtbarer Wild-Log enthaelt Gen4+ `1030`, `<unknown>` `0` |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Encounter-Systemmodell | P0-supported sind Standard-Wild/Grass-Cave, Surfing, Fishing und Rock Smash; Day/Night, Swarms, Roamers, DexNav und Raids bleiben separat |
 | 08 Randomizer-Kompatibilität | P1-Species-Schreibpfadmodell | Starters, Static/Gifts und Trainer-Species als kleinste praktische P1-Pfade priorisiert |
+| 08 Randomizer-Kompatibilität | P1-Starters-only Diagnose | Seed `274269061345323` zeigte vor Fix Pawniard/Scraggy -> Drowzee/Jirachi durch Dex-ID-Schreibpfad |
 
 ## In Arbeit
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | P1-Starters-only Diagnose abschliessen | belegen, dass der Starter-Pool Gen4+ enthaelt, der Starter-Write aber per Dex-ID auf Gen1-3 zurueckfaellt |
+| 08 Randomizer-Kompatibilität | P1-Starter-Write-Fix diagnostisch abschliessen | UPR-FVX PR #6 und Workspace-Diagnose fuer interne SpeciesSet-Identitaet bei Startern abschliessen |
 
 ## Als Nächstes
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Starters-only Write-Fix | `Gen3RomHandler.writeStarterBytes()` fuer erweiterte CFRU/DPE-BPRE-Hacks auf interne SpeciesSet-Identitaet umstellen |
+| 08 Randomizer-Kompatibilität | Static/Gift-Schreibpfade testen | naechster separater P1-Diagnoseblock ohne Trainer-/Roamer-Scope |
 
 ## Noch offen
 
 | Paket | Aufgabe | Hinweise |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Static/Gift-Schreibpfade testen | nach Starter-Fix separat pruefen; keine Trainer-/Evolution-/Learnset-Pfade vermischen |
+| 08 Randomizer-Kompatibilität | Static/Gift-Schreibpfade fixen | erst nach separater Diagnose; keine Trainer-/Evolution-/Learnset-Pfade vermischen |
 | 08 Randomizer-Kompatibilität | Trainer-Pokémon testen | nach Static/Gift oder separat; aktueller Verdacht ebenfalls `pokedexToInternal[Species.number]` |
 | 08 Randomizer-Kompatibilität | DPE-Gesamtumfang/PokemonCount bewerten | lokaler Teststand meldet `PokemonCount=823`, waehrend CFRU/DPE-Quellen bis Gen9 reichen |
 | 08 Randomizer-Kompatibilität | Wild-Log-`<unknown>` aufloesen | eindeutige Rohwerte sind `rawInternalSpeciesId=0`; Nullslots separat klassifizieren |
@@ -100,7 +101,8 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | P0b | `compat/upr-fvx-cfru-dpe-wild-internal-species-write` | Wild-Encounter-Schreibpfade auf interne Species-Identitaet fuer erweiterte BPRE-Hacks pruefen | PR #5 gemerged und post-merge bestaetigt |
 | P1 | `analysis/upr-fvx-cfru-dpe-p1-species-write-paths` | Trainer, Starters, Static Pokemon, Evolutions, Learnsets und TM/Tutor-Kompatibilitaet diagnostizieren | Analysebranch; Ergebnis priorisiert Starters, Static/Gifts und Trainer-Species als erste praktische Tests |
 | P1a | `analysis/upr-fvx-cfru-dpe-p1-starter-write-diagnostics` | Starters-only Write-/Reload-Diagnose | Diagnose zeigt: Pool enthaelt Gen4+, Write/Reload faellt ueber Dex-ID auf Gen1-3 zurueck |
-| P1b | `compat/upr-fvx-cfru-dpe-starter-internal-species-write` | Starter-Schreibpfad auf interne SpeciesSet-Identitaet fuer erweiterte BPRE-Hacks umstellen | naechster minimaler Fix; Vanilla unveraendert lassen |
+| P1b | `compat/upr-fvx-cfru-dpe-starter-internal-species-write` | Starter-Schreibpfad auf interne SpeciesSet-Identitaet fuer erweiterte BPRE-Hacks umstellen | UPR-FVX PR #6 offen; Seed `274269061345323` reloadet Pawniard/Scraggy korrekt |
+| P1c | `analysis/upr-fvx-cfru-dpe-p1-static-gift-write-diagnostics` | Static-/Gift-Species-only Diagnose | naechster minimaler P1-Diagnoseblock; Roamer ausklammern |
 | P2 | `randomizer/cfru-day-night-wild-table-analysis` | CFRU-Custom-Day/Night-Wild-Tabellen separat untersuchen | erst nach P1-Schreibpfad-Diagnose; Route-1-Fallback bleibt stabil |
 | P3 | noch festlegen | Nullslot-`<unknown>` mit `rawInternalSpeciesId=0` klassifizieren | nicht mit GenRestrictions vermischen |
 | P4 | noch festlegen | BizHawk-/Ironmon-Tracker-/RAM-Mapping pruefen | erst nach stabiler ROM-Randomizer-Kompatibilitaet |
@@ -143,7 +145,7 @@ Excel-Roadmap:
 ## Nächster empfohlener Branch
 
 ```text
-compat/upr-fvx-cfru-dpe-starter-internal-species-write
+analysis/upr-fvx-cfru-dpe-p1-static-gift-write-diagnostics
 ```
 
 ## Arbeitsblock-Log

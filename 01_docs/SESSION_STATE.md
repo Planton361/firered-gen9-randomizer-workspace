@@ -23,43 +23,46 @@
 - UPR-FVX PR #4 ist gemerged; der P0-GenRestrictions-Fix entfernt die Gen1-3-Kappung fuer erweiterte CFRU/DPE-BPRE-Hacks und setzt bei `limitPokemon=false` den unrestricted Pool.
 - UPR-FVX PR #5 ist gemerged; der Gen3/CFRU-DPE-Wild-Write-Fix schreibt Vanilla/Fallback-Wild-Encounters fuer erweiterte BPRE-Hacks ueber interne SpeciesSet-Identitaet statt `pokedexToInternal[Species.number]`.
 - Der Post-Merge-P0-Smoke auf UPR-FVX Merge-Commit `843b75a8` bestaetigt die Fixkette PR #3/#4/#5: sichtbarer Wild-Log Gen1 `354`, Gen2 `388`, Gen3 `404`, Gen4 `398`, Gen5 `528`, Gen6 `104`, `<unknown>` `0`.
+- UPR-FVX PR #6 ist offen; der Starter-Write-Fix schreibt Starter fuer erweiterte BPRE-Hacks ueber interne SpeciesSet-Identitaet und erhaelt Pawniard/Scraggy im Reload.
 - ROMs, Saves, Builds, Tool-Binaries und private Dateien sind ausgeschlossen.
 
 ## Aktueller Branch
 
-`analysis/upr-fvx-cfru-dpe-p1-starter-write-diagnostics`
+`analysis/upr-fvx-cfru-dpe-starter-internal-species-write`
 
 ## Aktueller Arbeitsblock
 
-Starters-only Diagnose nach abgeschlossenem P0.
+Starter-Write-Fix und Nachher-Diagnose fuer erweiterte CFRU/DPE-BPRE-Hacks.
 
 ## Ziel
 
 Konkret klaeren:
 
-- ob der unrestricted Starter-Pool bei CFRU/DPE-BPRE-Hacks Gen4+-Species enthaelt
-- ob Starters-only Randomization Gen4+ auswaehlen kann
-- ob `Gen3RomHandler.writeStarterBytes()` Gen4+-Starter nach Write und Reload als interne Species-Identitaet erhaelt
-- ob ein separater Starter-Write-Fix noetig ist
+- ob `Gen3RomHandler.writeStarterBytes()` fuer erweiterte CFRU/DPE-BPRE-Hacks interne SpeciesSet-Identitaet schreiben kann
+- ob Vanilla/normale Gen3-ROMs weiter den bisherigen `pokedexToInternal[Species.number]`-Pfad behalten
+- ob Seed `274269061345323` Pawniard/Scraggy nach Write und Reload erhaelt
 
 ## In diesem Arbeitsblock geprueft / geaendert
 
-- Workspace PR #38 als gemerged geprueft und Branch `analysis/upr-fvx-cfru-dpe-p1-starter-write-diagnostics` von aktuellem `main` erstellt.
-- UPR-FVX-Submodule steht weiter auf `compat/firered-gen9-cfru-dpe` bei `843b75a8f1016fa41a1879408fbeca45de7e030a`.
+- Workspace PR #39 als gemerged geprueft und Branch `analysis/upr-fvx-cfru-dpe-starter-internal-species-write` von aktuellem `main` erstellt.
+- UPR-FVX-Branch `compat/upr-fvx-cfru-dpe-starter-internal-species-write` von `compat/firered-gen9-cfru-dpe` erstellt.
+- UPR-FVX-Commit `39c57880` erstellt: `compat: write CFRU DPE starters by internal identity`.
+- UPR-FVX PR #6 erstellt: `https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/6`.
 - UPR-FVX lokal mit `./gradlew clean :random:jar` gebaut.
-- Lokaler CFRU/DPE-Teststand mit Starters-only Randomization, `limitPokemon=false` und ohne Gen1-3-Einschraenkung ausgefuehrt.
-- Neues Diagnoseprotokoll erstellt: `08_tests/randomizer/upr-fvx-cfru-dpe-p1-starter-write-diagnostics.md`.
-- Keine Codeaenderungen und keine funktionalen Fixes vorgenommen.
+- UPR-FVX `./gradlew test` ausgefuehrt; Build erfolgreich, bekannte bestehende Testfehler bleiben sichtbar.
+- Lokaler CFRU/DPE-Teststand mit Starters-only Randomization, `limitPokemon=false`, Seed `274269061345323` und ohne Gen1-3-Einschraenkung ausgefuehrt.
+- Neues Diagnoseprotokoll erstellt: `08_tests/randomizer/upr-fvx-cfru-dpe-starter-internal-species-write-diagnostics.md`.
+- Workspace-Submodule-Pointer auf UPR-FVX `39c57880` vorbereitet.
 - Keine Static-, Trainer-, Evolution-, Learnset-, TM-, Tutor-, Ability-, Day/Night-Wild-, Swarm-, Roamer-, DexNav-, Raid- oder Nullslot-Fixes umgesetzt.
 - Keine ROMs, Saves, Emulator States, Tool-Binaries oder privaten Pfade committed.
 
 ## Ergebnis
 
-- Der unrestricted Starter-Pool enthaelt `798` Species, davon `381` Gen4+.
-- Starters-only kann Gen4+ aus dem Pool erreichen; Beispiel Seed `274269061345323` waehlt vor dem Write Pawniard und Scraggy.
-- Nach `setStarters()` und Reload erscheinen diese Gen5-Starter als Drowzee beziehungsweise Jirachi.
-- Ursache ist der bekannte Dex-basierte Starter-Schreibpfad `pokedexToInternal[starter.getNumber()]` in `Gen3RomHandler.writeStarterBytes()`.
-- Ein separater Starters-only Fix ist noetig, analog zum P0-Wild-Write-Fix: interne SpeciesSet-Identitaet fuer erweiterte CFRU/DPE-BPRE-Hacks schreiben, Vanilla unveraendert lassen.
+- Vor dem Fix schrieb/reloadete Seed `274269061345323` Pawniard/Scraggy als Drowzee/Jirachi.
+- Nach dem Fix loggt und reloadet derselbe Seed `Butterfree`, `Pawniard`, `Scraggy`.
+- Reload-Werte nach dem Fix: Pawniard Gen5 identity `677`, Scraggy Gen5 identity `612`.
+- Der Fix ist auf `Gen3RomHandler.writeStarterBytes()` beschraenkt und verwendet denselben erweiterten-BPRE-Guard wie der Wild-Write-Fix.
+- Ein weiterer praktischer P1-Block sollte Static/Gift-Species getrennt diagnostizieren.
 
 ## Noch nicht gestartet
 
@@ -97,6 +100,6 @@ git diff --check
 
 ## Naechster empfohlener Branch
 
-`compat/upr-fvx-cfru-dpe-starter-internal-species-write`
+`analysis/upr-fvx-cfru-dpe-p1-static-gift-write-diagnostics`
 
-Zweck: Nur `Gen3RomHandler.writeStarterBytes()` fuer erweiterte CFRU/DPE-BPRE-Hacks auf interne SpeciesSet-Identitaet umstellen. Keine Static-, Trainer-, Evolution-, Learnset-, TM-, Tutor-, Ability-, Day/Night-Wild- oder Nullslot-Fixes in diesem Folgeblock.
+Zweck: Static-/Gift-Species-Write-/Reload-Diagnose fuer erweiterte CFRU/DPE-BPRE-Hacks. Keine Trainer-, Evolution-, Learnset-, TM-, Tutor-, Ability-, Day/Night-Wild- oder Nullslot-Fixes in diesem Folgeblock.
