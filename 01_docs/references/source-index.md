@@ -132,6 +132,29 @@ Ergebnis:
 - Fuer den lokalen CFRU/DPE-Teststand bleibt das DPE/CFRU-ID-Modell massgeblich; CyanSMP64 NatDex ist Vergleichs- und Fixplanungsreferenz, aber kein direktes Drop-in-Modell.
 - P0 bleibt ein kleiner UPR-FVX-Fix fuer Settings/GenRestrictions, nicht fuer Day/Night-Wild, Nullslots oder Trainer-/Move-Tabellen.
 
+## CFRU Documentation Relevanz 2026-05-11
+
+Arbeitsblock: `analysis/cfru-documentation-randomizer-relevance`.
+
+Neue Workspace-Referenz:
+
+- `01_docs/compat/cfru-documentation-randomizer-relevance.md`
+
+Primaere lokale Quelle:
+
+| Bereich | Lokaler Pfad | Zweck |
+|---|---|---|
+| CFRU Documentation PDF | `02_external/CFRU-expansion/CFRU Documentation.pdf` | Source-of-Truth fuer CFRU-Setup-Reihenfolge, Runtime-Features, Randomizer-Flags, Day/Night-Wild, Swarms, Roamers, Trainer-EVs, Save Expansion und Table Compendium |
+
+Ergebnis:
+
+- DPE-before-CFRU-Reihenfolge bestaetigt: DPE liefert Datenmodell, CFRU liefert Engine-/Runtime-Modell.
+- `SPECIES_NONE=0`, Species-/Pokedex-Defines und `asm_defines.s` sind fuer interne ID vs. Dex-ID und Nullslot-Bewertung relevant.
+- CFRU-Runtime-Randomizer-Flags (`FLAG_POKEMON_RANDOMIZER`, Learnset-/Ability-Randomizer, `NUM_SPECIES_RANDOMIZER`, Banlisten) sind getrennt von UPR-FVX-Offline-Randomisierung zu behandeln.
+- CFRU-Time-of-Day-Wild-Header, Swarms und Roamers bleiben separate Wild-Systeme nach P0.
+- Hidden Ability BaseStats-Byte `0x1A`, `TRAINERS_WITH_EVS`, TM/HM/Tutor-Erweiterung und `EXPAND_MOVESETS` vs. DPE-Learnsets sind P1-Risiken.
+- Save Expansion/Roamer-Speicher bestaetigt P4 fuer BizHawk/Ironmon/RAM-Mapping.
+
 ## Regel
 
 Vor produktiver Nutzung müssen Branch, Commit-Hash, lokaler Pfad und Zweck im Tool-Manifest festgehalten werden.
