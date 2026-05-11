@@ -24,9 +24,9 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Aktueller Branch | `analysis/upr-fvx-gen4plus-wild-pool-diagnostics` |
+| Aktueller Branch | `analysis/cfru-dpe-upr-fvx-compatibility-model` |
 | Nächster Branch | `compat/upr-fvx-cfru-dpe-gen-restrictions` |
-| Aktueller Fokus | Gen4+-Wild-Pool-Restrictions analysieren |
+| Aktueller Fokus | CFRU/DPE-UPR-FVX-Kompatibilitaetsmodell read-only dokumentieren |
 | ROM-/Build-Arbeit | Smoke-Test lokal dokumentiert; keine Artefakte committed |
 | Externe Repos | als Submodule auf Planton361-Forks eingebunden |
 | Forks | Planton361-Forks fuer UPR-FVX, DPE Gen9 und CFRU dokumentiert |
@@ -68,7 +68,7 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Gen4+-Wild-Pool-Diagnose dokumentieren | Settings, Wild-Log-Auswertung und Restriction-Ursache protokollieren |
+| 08 Randomizer-Kompatibilität | CFRU/DPE-UPR-FVX-Kompatibilitaetsmodell dokumentieren | Source-of-Truth-Pfade, ID-Modell, Wild-Modell und Fix-Reihenfolge festhalten |
 
 ## Als Nächstes
 
@@ -80,9 +80,9 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 
 | Paket | Aufgabe | Hinweise |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | `generationOf()` fuer Gen4-Gen9 korrigieren | erst nach Diagnose; zentralen SpeciesID->Generation-Ansatz bevorzugen |
-| 08 Randomizer-Kompatibilität | `PokemonCount`/Pokedex-/interne ID-Aufloesung pruefen | klären, ob DPE-Species fehlen, falsch gemappt oder nur falsch klassifiziert sind |
-| 08 Randomizer-Kompatibilität | Wild-Log-`<unknown>` aufloesen | Roh-Species-ID, Area und Encounter-Type loggen; danach Mapping korrigieren |
+| 08 Randomizer-Kompatibilität | GenRestrictions-/finalen Wild-Pool-Fix umsetzen | PR #3 erweitert den RomHandler-Pool; Settings/Restrictions begrenzen final noch auf Gen1-3 |
+| 08 Randomizer-Kompatibilität | DPE-Gesamtumfang/PokemonCount bewerten | lokaler Teststand meldet `PokemonCount=823`, waehrend CFRU/DPE-Quellen bis Gen9 reichen |
+| 08 Randomizer-Kompatibilität | Wild-Log-`<unknown>` aufloesen | eindeutige Rohwerte sind `rawInternalSpeciesId=0`; Nullslots separat klassifizieren |
 | 08 Randomizer-Kompatibilität | CFRU-Day/Night-Custom-Wild-Tabellen analysieren | getrennt vom Vanilla/Fallback-Wild-Pool behandeln |
 | 08 Randomizer-Kompatibilität | Trainer-Pokémon testen | späterer Einzeltest |
 | 08 Randomizer-Kompatibilität | Starters testen | späterer Einzeltest |
@@ -95,9 +95,11 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 
 | Reihenfolge | Branch | Ziel | Grenzen |
 |---|---|---|---|
-| 1 | `compat/upr-fvx-gen9-generation-mapping` | `generationOf()`/Species-Generation fuer Gen4-Gen9 sauber korrigieren | keine `PokemonCount`-/Wild-Pool-Refactors im selben Schritt |
-| 2 | `compat/upr-fvx-cfru-dpe-species-id-map` | interne Species-ID vs. National-Dex-ID sauber fuer DPE/CFRU trennen | nur falls weitere Diagnose Mapping-Problem bestaetigt |
-| 3 | `randomizer/cfru-day-night-wild-table-analysis` | CFRU-Custom-Day/Night-Wild-Tabellen separat untersuchen | Route-1-Fallback bleibt stabil |
+| P0 | `compat/upr-fvx-cfru-dpe-gen-restrictions` | finalen Gen4+-Wild-Pool fuer erweiterte CFRU/DPE-BPRE-Hacks freigeben | keine Trainer-, Day/Night- oder Nullslot-Fixes im selben Schritt |
+| P1 | noch festlegen | Trainer, Starters, Evolutions, Learnsets und TM/Tutor-Kompatibilitaet diagnostizieren | besonders `pokedexToInternal[species.getNumber()]`-Schreibpfade pruefen |
+| P2 | `randomizer/cfru-day-night-wild-table-analysis` | CFRU-Custom-Day/Night-Wild-Tabellen separat untersuchen | Route-1-Fallback bleibt stabil |
+| P3 | noch festlegen | Nullslot-`<unknown>` mit `rawInternalSpeciesId=0` klassifizieren | nicht mit GenRestrictions vermischen |
+| P4 | noch festlegen | BizHawk-/Ironmon-Tracker-/RAM-Mapping pruefen | erst nach stabiler ROM-Randomizer-Kompatibilitaet |
 
 ## Aktuelle Sicherheitsregeln
 
@@ -137,7 +139,7 @@ Excel-Roadmap:
 ## Nächster empfohlener Branch
 
 ```text
-compat/upr-fvx-gen9-generation-mapping
+compat/upr-fvx-cfru-dpe-gen-restrictions
 ```
 
 ## Arbeitsblock-Log
@@ -177,3 +179,11 @@ compat/upr-fvx-gen9-generation-mapping
 - Beispiel-Species ueber 386 werden als Gen3 klassifiziert; eindeutige Wild-Log-`<unknown>`-Rohwerte sind `rawInternalSpeciesId=0`.
 - Neues Protokoll erstellt: `08_tests/randomizer/upr-fvx-cfru-dpe-species-diagnostics-run.md`.
 - Keine ROMs, Builds, Randomizer-JARs, Saves oder Tool-Binaries wurden committed.
+
+### 2026-05-11 – analysis/cfru-dpe-upr-fvx-compatibility-model
+
+- Workspace PR #28 und UPR-FVX PR #3 als gemerged geprueft.
+- CFRU/DPE- und UPR-FVX-Codepfade read-only als Kompatibilitaetsmodell zusammengefuehrt.
+- Neues Modell erstellt: `01_docs/compat/cfru-dpe-upr-fvx-compatibility-model.md`.
+- Ergebnis: RAM-Mapping ist noch nicht noetig; zuerst P0 GenRestrictions/finaler Gen4+-Wild-Pool, danach P1 Trainer/Starters/Evolutions/Learnsets, P2 CFRU Day/Night Wild, P3 Nullslot-`<unknown>`, P4 Ironmon/BizHawk/RAM-Mapping.
+- Keine Codeaenderungen, keine Builds und keine ROM-Zugriffe.
