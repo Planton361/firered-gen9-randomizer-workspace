@@ -24,9 +24,9 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Aktueller Branch | `analysis/randomizer-natdex-reference-sources` |
+| Aktueller Branch | `analysis/cfru-documentation-randomizer-relevance` |
 | Nächster Branch | `compat/upr-fvx-cfru-dpe-gen-restrictions` |
-| Aktueller Fokus | Randomizer-/NatDex-/FireRed-Referenz-Submodules read-only dokumentieren |
+| Aktueller Fokus | CFRU-Documentation-PDF-Relevanz fuer Randomizer-Kompatibilitaet dokumentieren |
 | ROM-/Build-Arbeit | Smoke-Test lokal dokumentiert; keine Artefakte committed |
 | Externe Repos | als Submodule auf Planton361-Forks eingebunden |
 | Forks | Planton361-Forks fuer UPR-FVX, DPE Gen9 und CFRU dokumentiert |
@@ -58,6 +58,7 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | 08 Randomizer-Kompatibilität | CFRU/DPE-Species-Identity-Fix diagnostiziert | PR #3 hebt `speciesList.size` von 412 auf 799 und `maxSpeciesIdentityNumber` auf 823 |
 | 08 Randomizer-Kompatibilität | Gen4+-Wild-Pool-Diagnose dokumentiert | All-Gens-Settings werden fuer Gen3-ROMs auf Gen1-3 gekappt; finaler Wild-Log enthaelt Gen4+ `0` |
 | 08 Randomizer-Kompatibilität | CFRU/DPE-UPR-FVX-Kompatibilitaetsmodell dokumentiert | RAM-Mapping zurueckgestellt; P0 bis P4 Fix-Reihenfolge dokumentiert |
+| 08 Randomizer-Kompatibilität | Randomizer-/NatDex-Referenzen dokumentiert | Quelleninventar, Workflowmodell und Implementierungsnotizen fuer P0/P1 festgehalten |
 
 ## In Review/Test
 
@@ -69,7 +70,7 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Randomizer-/NatDex-Referenzen dokumentieren | Quelleninventar, Workflowmodell und Implementierungsnotizen fuer P0/P1 festhalten |
+| 08 Randomizer-Kompatibilität | CFRU Documentation Randomizer-Relevanz dokumentieren | PDF-Befunde zu Defines, Randomizer-Flags, Day/Night-Wild, Trainer-EVs, Save/RAM und Roadmap-Folgen festhalten |
 
 ## Als Nächstes
 
@@ -197,4 +198,13 @@ compat/upr-fvx-cfru-dpe-gen-restrictions
 - Neues Workflowmodell erstellt: `01_docs/compat/randomizer-workflow-model.md`.
 - Neue Implementierungsnotizen erstellt: `01_docs/compat/natdex-reference-implementation-notes.md`.
 - Ergebnis: CyanSMP64 UPR-ZX NatDex ist eine wichtige Gen8/Gen9-Restriction-Referenz; fuer den lokalen CFRU/DPE-Teststand bleibt DPE/CFRU Source-of-Truth fuer interne Species-IDs.
+- Keine Codeaenderungen, keine Builds, keine ROM-Zugriffe und keine Aenderungen in `02_external/**`.
+
+### 2026-05-11 – analysis/cfru-documentation-randomizer-relevance
+
+- Workspace `main` aktualisiert und Branch `analysis/cfru-documentation-randomizer-relevance` erstellt.
+- `02_external/CFRU-expansion/CFRU Documentation.pdf` read-only ausgewertet.
+- Neues Referenzdokument erstellt: `01_docs/compat/cfru-documentation-randomizer-relevance.md`.
+- Bestehendes Kompatibilitaetsmodell um den CFRU-Doku-Querverweis ergaenzt.
+- Ergebnis: CFRU-Runtime-Randomizer-Flags, Day/Night-Wild, Swarms, Roamers, Hidden Ability, Trainer-EV-Spreads, TM/Tutor/Learnsets und Save/RAM bleiben getrennte P1/P2/P4-Themen; P0 bleibt nur GenRestrictions/finaler Gen4+-Wild-Pool.
 - Keine Codeaenderungen, keine Builds, keine ROM-Zugriffe und keine Aenderungen in `02_external/**`.

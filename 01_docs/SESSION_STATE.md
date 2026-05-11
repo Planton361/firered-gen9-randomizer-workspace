@@ -10,6 +10,7 @@
 - Workspace PR #29 ist gemerged; das CFRU/DPE-UPR-FVX-Kompatibilitaetsmodell ist in `main` verfuegbar.
 - UPR-FVX PR #3 ist gemerged; der lokale Submodule-Stand bleibt in diesem Workspace auf `223ee9ef compat: preserve CFRU DPE species identity`.
 - Die neu eingebundenen NatDex-/Randomizer-/FireRed-Referenz-Submodules sind in `main` verfuegbar und wurden read-only inventarisiert.
+- Die projektrelevanten Befunde aus `02_external/CFRU-expansion/CFRU Documentation.pdf` sind als dauerhaftes Referenzdokument extrahiert.
 - devkitPro/devkitARM wurde lokal installiert und geprueft.
 - DPE Gen9 baut lokal erfolgreich.
 - CFRU auf DPE baut lokal erfolgreich.
@@ -24,42 +25,42 @@
 
 ## Aktueller Branch
 
-`analysis/randomizer-natdex-reference-sources`
+`analysis/cfru-documentation-randomizer-relevance`
 
 ## Aktueller Arbeitsblock
 
-Read-only Analyse der neu eingebundenen NatDex-/Randomizer-/FireRed-Referenz-Submodules.
+Read-only Extraktion der projektrelevanten CFRU-Documentation-PDF-Befunde fuer UPR-FVX/CFRU/DPE-Kompatibilitaet.
 
 ## Ziel
 
 Konkret klaeren:
 
-- welche Branches/Commits die Referenz-Submodules aktuell liefern
-- welche UPR-FVX-/UPR-ZX-/CyanSMP64-NatDex-Codepfade fuer Settings, GenRestrictions, SpeciesSet und Wild-Pool relevant sind
-- welches FireRed-/NatDex-/CFRU-/DPE-Datenmodell fuer Species, Wild, Trainer, Evolutions, Learnsets und TM/Tutor gilt
-- welche P0-Fixrichtung fuer GenRestrictions minimal sinnvoll ist
+- welche CFRU-Dokumentationspunkte fuer Randomizer-Kompatibilitaet dauerhaft relevant sind
+- welche CFRU-Runtime-Systeme nicht mit dem P0-GenRestrictions-Fix vermischt werden duerfen
+- welche Folgen sich fuer P0/P1/P2/P3/P4 ergeben
+- welche Source-of-Truth-Pfade aus der CFRU-Dokumentation spaeter wichtig werden
 
 ## In diesem Arbeitsblock geprueft / geaendert
 
 - Workspace `main` per `git pull --ff-only origin main` aktualisiert.
-- Branch `analysis/randomizer-natdex-reference-sources` von aktuellem `main` erstellt.
-- Pflichtdokumente und bisherige Kompatibilitaets-/Diagnoseprotokolle gelesen.
-- UPR-FVX, UPR-FVX upstream, Ajarmar UPR-ZX, CyanSMP64 UPR-ZX NatDex, pret FireRed, CyanSMP64 FireRed NatDex, CFRU-expansion und DPE Gen9 read-only analysiert.
-- Neues Quelleninventar erstellt: `01_docs/compat/randomizer-natdex-reference-sources.md`.
-- Neues Workflowmodell erstellt: `01_docs/compat/randomizer-workflow-model.md`.
-- Neue Implementierungsnotizen erstellt: `01_docs/compat/natdex-reference-implementation-notes.md`.
+- Branch `analysis/cfru-documentation-randomizer-relevance` von aktuellem `main` erstellt.
+- Pflichtdokumente und bestehende Kompatibilitaetsmodelle gelesen.
+- `02_external/CFRU-expansion/CFRU Documentation.pdf` read-only ausgewertet.
+- Neues Referenzdokument erstellt: `01_docs/compat/cfru-documentation-randomizer-relevance.md`.
+- Bestehendes Kompatibilitaetsmodell um einen Querverweis auf das neue CFRU-Doku-Relevanzdokument ergaenzt.
 - Keine Codeaenderungen vorgenommen.
 - Keine Builds gestartet.
 - Keine ROMs, Saves, Emulator States, Tool-Binaries oder privaten Pfade gelesen, kopiert, geaendert oder committed.
 
 ## Ergebnis
 
-- CyanSMP64 UPR-ZX NatDex erweitert Restrictions auf Gen8/Gen9, Mega, Eternamax und Regional Forms; `limitToGen()` ist dort auskommentiert.
-- Ajarmar UPR-ZX und FVX kappen Restrictions dagegen ueber `generationOfPokemon()`.
-- CyanSMP64 FireRed NatDex ist eine zusammen entwickelte ROM-/Randomizer-Referenz, aber kein direkt uebertragbares Modell fuer externe CFRU/DPE-Hacks.
-- DPE/CFRU bleiben Source-of-Truth fuer den lokalen Species-ID-Raum; CyanSMP64 NatDex ist vor allem als Restriction- und Workflow-Referenz hilfreich.
+- CFRU Documentation bestaetigt die DPE-before-CFRU-Reihenfolge und die Trennung zwischen DPE-Datenmodell und CFRU-Laufzeitmodell.
+- `SPECIES_NONE=0` bestaetigt die Nullslot-Interpretation fuer `<unknown>` mit `rawInternalSpeciesId=0`.
+- CFRU hat eigene Runtime-Randomizer-Flags und Banlisten; diese sind nicht identisch mit UPR-FVX-Offline-Randomisierung.
+- CFRU-Time-of-Day-Wild-Header, Swarms und Roamers sind separate Wild-Systeme und bleiben ausserhalb von P0.
+- Hidden Ability im BaseStats-Byte `0x1A`, `TRAINERS_WITH_EVS`, TM/HM/Tutor-Erweiterung und `EXPAND_MOVESETS` vs. DPE-Learnsets sind P1-Risiken.
+- Save Expansion und Roamer-Speicher machen RAM-/Ironmon-Mapping relevant, aber erst als P4.
 - P0 bleibt: erweiterte CFRU/DPE-BPRE-Hacks duerfen im finalen `RestrictedSpeciesService` nicht mehr blind auf Gen1-3 gekappt werden.
-- Nicht in P0 vermischen: Species-Identity, Day/Night-Wild, Nullslots, Trainer, Starters, Evolutions, Learnsets, TM/Tutor und RAM/Tracker.
 
 ## Noch nicht gestartet
 

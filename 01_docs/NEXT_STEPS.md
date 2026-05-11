@@ -2,32 +2,29 @@
 
 ## Aktueller Arbeitsblock
 
-Read-only Analyse der neu eingebundenen Randomizer-/NatDex-/FireRed-Referenz-Submodules dokumentieren.
+Read-only Extraktion der CFRU-Documentation-PDF-Befunde fuer UPR-FVX/CFRU/DPE-Kompatibilitaet dokumentieren.
 
 Aktueller Branch:
 
 ```text
-analysis/randomizer-natdex-reference-sources
+analysis/cfru-documentation-randomizer-relevance
 ```
 
 Zieldokumente:
 
 ```text
-01_docs/compat/randomizer-natdex-reference-sources.md
-01_docs/compat/randomizer-workflow-model.md
-01_docs/compat/natdex-reference-implementation-notes.md
+01_docs/compat/cfru-documentation-randomizer-relevance.md
 ```
 
 ## Naechste Schritte in diesem Block
 
 1. Dokumentation reviewen:
-   - `01_docs/compat/randomizer-natdex-reference-sources.md`
-   - `01_docs/compat/randomizer-workflow-model.md`
-   - `01_docs/compat/natdex-reference-implementation-notes.md`
+   - `01_docs/compat/cfru-documentation-randomizer-relevance.md`
+   - `01_docs/compat/cfru-dpe-upr-fvx-compatibility-model.md`
    - `01_docs/SESSION_STATE.md`
+   - `01_docs/NEXT_STEPS.md`
    - `00_project-control/roadmap/roadmap-status.md`
    - `01_docs/references/source-index.md`
-   - `01_docs/references/tool-manifest.md`
 2. Workspace-Checks ausfuehren:
 
 ```sh
@@ -41,7 +38,7 @@ git diff --check
 3. Commit erstellen:
 
 ```text
-docs: analyze randomizer NatDex reference sources
+docs: extract CFRU documentation relevance for randomizer
 ```
 
 4. Branch pushen und Workspace-PR nach `main` vorbereiten.
