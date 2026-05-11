@@ -35,3 +35,37 @@ Commit: e0788edc6529c2605f201996e4807ff30165354c
 - Keine Tool-Binaries im Workspace-Repo.
 - Gebaute JARs bleiben lokal in `03_tools/releases/` oder in ignored Build-Ausgaben.
 - Randomizer-Code-Aenderungen erfolgen im UPR-FVX-Fork, nicht direkt im Upstream.
+
+## IntelliJ-/Gradle-Integration
+
+Das UPR-FVX-Submodule wurde in IntelliJ als Gradle-Projekt verlinkt.
+
+Gradle erkennt die Module:
+
+- root project `universal-pokemon-randomizer-fvx`
+- `devtools`
+- `docs`
+- `random`
+- `romio`
+- `utils`
+
+Wichtige Gradle-Task-Gruppen:
+
+- `build`
+- `launch`
+- `release`
+- `release setup`
+- `verification`
+
+Wichtige Tasks fuer dieses Projekt:
+
+- `:random:launch` startet den Randomizer aus Source.
+- `:random:relaunch` startet die bereits gebaute Ausgabe erneut.
+- `:random:jar` baut `random/build/libs/UPR-FVX.jar`.
+- `test` fuehrt ROM-unabhaengige Tests aus.
+- `:romio:testROMs` und `:random:testROMs` sind ROM-abhaengig und duerfen nur in einem separat freigegebenen ROM-Testblock laufen.
+
+Build-Voraussetzung:
+
+- JDK 25 als Gradle JVM / Java Toolchain.
+- IntelliJ soll `02_external/upr-fvx` als Gradle-Projekt verlinken, nicht nur das Workspace-Root.

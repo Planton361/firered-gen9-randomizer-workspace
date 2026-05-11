@@ -49,6 +49,22 @@ Der aktuelle Arbeitsblock `planning/workspace-build-randomizer-integration` erst
 | `05_builds/` | CFRU/DPE-Build-Ausgaben, gepatchte GBA, lokale Logs | lokal/ignored, nicht committen |
 | `08_tests/` | Smoke-Test-Protokolle ohne ROM-Inhalte | committen |
 
+## UPR-FVX Source Build
+
+| Thema | Stand |
+|---|---|
+| Lokaler Pfad | `02_external/upr-fvx` |
+| Einbindung | Git-Submodule auf `Planton361/universal-pokemon-randomizer-fvx` |
+| Upstream | `upr-fvx/universal-pokemon-randomizer-fvx` |
+| Arbeitsbranch | `compat/firered-gen9-cfru-dpe` |
+| Buildsystem | Gradle Wrapper |
+| Java | JDK 25 |
+| JAR-Build | `./gradlew :random:jar` |
+| GUI-Start | `./gradlew :random:launch` oder `java -jar random/build/libs/UPR-FVX.jar` |
+| ROM-freie Tests | `./gradlew test` |
+| ROM-Tests | `./gradlew :romio:testROMs`, `./gradlew :random:testROMs`; nur separat freigegeben |
+
+
 ## Linux/CachyOS-Inventur
 
 Arbeitsblock: `setup/linux-toolchain-inventory`.
