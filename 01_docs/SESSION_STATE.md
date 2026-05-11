@@ -27,39 +27,37 @@
 
 ## Aktueller Branch
 
-`analysis/upr-fvx-cfru-dpe-p0-post-merge-smoke`
+`analysis/upr-fvx-cfru-dpe-p1-encounter-systems`
 
 ## Aktueller Arbeitsblock
 
-Post-Merge-Bestaetigungslauf fuer die P0-UPR-FVX/CFRU-DPE-Kompatibilitaetskette dokumentieren.
+Read-only Diagnose und Abgrenzung der CFRU/DPE Encounter-Systeme nach abgeschlossenem P0.
 
 ## Ziel
 
 Konkret klaeren:
 
-- ob UPR-FVX `compat/firered-gen9-cfru-dpe` den gemergten PR-#5-Stand `843b75a8` enthaelt
-- ob die P0-Fixkette PR #3/#4/#5 nach Merge reproduzierbar baut und randomisiert
-- ob Gen4+-Species im sichtbaren Wild-Log bleiben
-- ob Route 1, Route 22 und Viridian Forest weiterhin sichtbar randomisiert wirken
+- welche CFRU/DPE-Encounter-Systeme existieren
+- welche FVX aktuell randomisiert
+- welche Systeme nach P0 supported, partial, unsupported oder separat zu fixen sind
+- ob der naechste Fix Day/Night Custom Wildtables oder zuerst weitere P1-Species-Schreibpfade sein sollte
 
 ## In diesem Arbeitsblock geprueft / geaendert
 
-- Workspace-Branch `analysis/upr-fvx-cfru-dpe-p0-post-merge-smoke` genutzt.
-- UPR-FVX-Submodule steht auf `compat/firered-gen9-cfru-dpe` bei `843b75a8f1016fa41a1879408fbeca45de7e030a`.
-- UPR-FVX lokal mit `./gradlew clean :random:jar` gebaut.
-- Derselbe CFRU/DPE-Route-1-Fallback-Teststand wie im letzten Diagnoselauf wurde per CLI randomisiert.
-- Neues Post-Merge-Protokoll erstellt: `08_tests/randomizer/upr-fvx-cfru-dpe-p0-post-merge-smoke.md`.
-- Keine Codeaenderungen und keine funktionalen Fixes vorgenommen.
-- Keine Day/Night-Wildtable-, Nullslot-, Trainer-, Starter-, Evolution-, Learnset-, TM- oder Tutor-Fixes umgesetzt.
+- Workspace PR #36 als gemerged geprueft und Branch `analysis/upr-fvx-cfru-dpe-p1-encounter-systems` von aktuellem `main` erstellt.
+- UPR-FVX-Submodule steht weiter auf `compat/firered-gen9-cfru-dpe` bei `843b75a8f1016fa41a1879408fbeca45de7e030a`.
+- UPR-FVX-, CFRU-, DPE- und Referenzpfade read-only analysiert.
+- Neues Encounter-Systemmodell erstellt: `01_docs/compat/cfru-dpe-encounter-systems-model.md`.
+- Keine Codeaenderungen, keine Builds, keine ROM-Zugriffe und keine funktionalen Fixes vorgenommen.
+- Keine Day/Night-Wildtable-, Swarm-, Roamer-, DexNav-, Raid-, Nullslot-, Trainer-, Starter-, Evolution-, Learnset-, TM- oder Tutor-Fixes umgesetzt.
 - Keine ROMs, Saves, Emulator States, Tool-Binaries oder privaten Pfade committed.
 
 ## Ergebnis
 
-- RomHandler-Diagnose bleibt stabil: `PokemonCount=823`, `speciesList.size=799`, `maxSpeciesIdentityNumber=823`, `generationCounts={1=177, 2=104, 3=161, 4=139, 5=178, 6=64}`.
-- Sichtbarer Wild-Log enthaelt nach Merge von PR #5 Gen4+-Species: Gen4 `398`, Gen5 `528`, Gen6 `104`.
-- Sichtbare Beispiele: `Floatzel`, `Gothorita`, `Quilladin`, `Minccino`, `Keldeo`, `Arceus`, `Garchomp`, `Bergmite`, `Braixen`.
-- `<unknown>` bleibt im finalen Wild-Log bei `0`, weil Gen4+-Auswahlen nicht mehr als interne ID `0` zurueckgeschrieben werden.
-- Route 1, Route 22 und Viridian Forest wirken weiterhin sichtbar randomisiert.
+- P0-supported sind Standard-Wild/Grass-Cave, Surfing, Fishing und Rock Smash aus `gWildMonHeaders`.
+- CFRU Morning/Day/Evening/Night-Header koennen Fallback-Wilddaten zur Laufzeit uebersteuern und bleiben P2.
+- Swarms, Roamers, DexNav, Wild Double Battles, Raids, Altering Cave und Tanoby/Unown sind partial oder unsupported und brauchen getrennte Behandlung.
+- Empfehlung: naechsten echten Fix nicht Day/Night starten, sondern zuerst P1-Species-Schreibpfade fuer Trainer, Starters, Static Pokemon, Evolutions und Learnsets read-only diagnostizieren.
 
 ## Noch nicht gestartet
 

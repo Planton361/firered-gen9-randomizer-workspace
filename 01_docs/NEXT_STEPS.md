@@ -2,27 +2,28 @@
 
 ## Aktueller Arbeitsblock
 
-Post-Merge-Bestaetigungslauf fuer die P0-UPR-FVX/CFRU-DPE-Kompatibilitaetskette abschliessen.
+Read-only Diagnose der CFRU/DPE Encounter-Systeme nach abgeschlossenem P0 abschliessen.
 
 Aktueller Branch:
 
 ```text
-analysis/upr-fvx-cfru-dpe-p0-post-merge-smoke
+analysis/upr-fvx-cfru-dpe-p1-encounter-systems
 ```
 
 Zieldokumente:
 
 ```text
-08_tests/randomizer/upr-fvx-cfru-dpe-p0-post-merge-smoke.md
+01_docs/compat/cfru-dpe-encounter-systems-model.md
 ```
 
 ## Naechste Schritte in diesem Block
 
 1. Dokumentation reviewen:
-   - `08_tests/randomizer/upr-fvx-cfru-dpe-p0-post-merge-smoke.md`
+   - `01_docs/compat/cfru-dpe-encounter-systems-model.md`
    - `01_docs/SESSION_STATE.md`
    - `01_docs/NEXT_STEPS.md`
    - `00_project-control/roadmap/roadmap-status.md`
+   - `01_docs/references/source-index.md`
 2. Workspace-Checks ausfuehren:
 
 ```sh
@@ -36,7 +37,7 @@ git diff --check
 3. Commit erstellen:
 
 ```text
-docs: confirm P0 CFRU DPE randomizer compatibility smoke
+docs: model CFRU DPE encounter systems
 ```
 
 4. Branch pushen und Workspace-PR nach `main` vorbereiten.
@@ -46,15 +47,15 @@ docs: confirm P0 CFRU DPE randomizer compatibility smoke
 Naechster minimaler Diagnosebranch:
 
 ```text
-analysis/upr-fvx-cfru-dpe-p1-encounter-systems
+analysis/upr-fvx-cfru-dpe-p1-species-write-paths
 ```
 
 Ziel:
 
-- Weitere Gen3-Schreibpfade fuer erweiterte CFRU/DPE-BPRE-Hacks getrennt diagnostizieren.
-- Fokus: Trainer, Starters, Static Pokemon, Evolutions, Learnsets und verwandte `pokedexToInternal[Species.number]`-Pfade.
-- Der Folgeblock darf keine CFRU-Day/Night-Wildtables und keine Nullslot-Logik vermischen.
-- Erst nach Diagnose entscheiden, welche P1-Fixbranches wirklich klein und sicher sind.
+- Trainer, Starters, Static Pokemon, Evolutions, Learnsets und verwandte Species-Schreibpfade fuer erweiterte CFRU/DPE-BPRE-Hacks getrennt diagnostizieren.
+- Fokus: interne Species-ID vs. Dex-/Pokedex-ID und `pokedexToInternal[Species.number()]`-Risiken.
+- Der Folgeblock darf keine CFRU-Day/Night-Wildtables, Swarms, DexNav, Raids oder Nullslot-Logik vermischen.
+- Erst nach Diagnose entscheiden, welche P1-Fixbranches klein und sicher sind.
 
 ## Fix-Reihenfolge
 
@@ -64,7 +65,7 @@ P0b: Gen3/CFRU-DPE-Wild-Write-Mapping fuer interne Species-Identitaet. Erledigt 
 
 P1: Trainer, Starters, Evolutions, Learnsets und TM/Tutor-Kompatibilitaet.
 
-P2: CFRU Day/Night Custom Wild Tables.
+P2: CFRU Day/Night Custom Wild Tables. Separat nach P1-Schreibpfad-Diagnose.
 
 P3: Nullslot-`<unknown>` mit `rawInternalSpeciesId=0`.
 
@@ -78,8 +79,9 @@ P4: BizHawk/Ironmon Tracker/RAM-Mapping.
 - keine Builds committen
 - keine Randomizer-JARs oder Tool-Binaries anfassen oder committen
 - keine Codeaenderungen in `02_external/**` in diesem Workspace-Dokumentationscommit
-- keine weiteren Wild-Write-Fixes in diesem Branch
+- keine weiteren Wild-Write- oder Encounter-Fixes in diesem Branch
 - keine Day/Night-Wild-Fixes
+- keine Swarm-, Roamer-, DexNav- oder Raid-Fixes
 - keine Nullslot-Fixes
 - keine Trainer-/Starter-/Evolution-/Learnset-/TM-/Tutor-Fixes
 - keine externen Original-Upstreams kontaktieren

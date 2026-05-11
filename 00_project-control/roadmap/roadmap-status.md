@@ -24,9 +24,9 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-p0-post-merge-smoke` |
-| Nächster Branch | `analysis/upr-fvx-cfru-dpe-p1-encounter-systems` |
-| Aktueller Fokus | P0-UPR-FVX/CFRU-DPE-Kompatibilitaetskette post-merge bestaetigen |
+| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-p1-encounter-systems` |
+| Nächster Branch | `analysis/upr-fvx-cfru-dpe-p1-species-write-paths` |
+| Aktueller Fokus | CFRU/DPE Encounter-Systeme nach P0 read-only abgrenzen |
 | ROM-/Build-Arbeit | Smoke-Test lokal dokumentiert; keine Artefakte committed |
 | Externe Repos | als Submodule auf Planton361-Forks eingebunden |
 | Forks | Planton361-Forks fuer UPR-FVX, DPE Gen9 und CFRU dokumentiert |
@@ -68,13 +68,13 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | P0-Post-Merge-Smoke dokumentieren | Bestätigungslauf und naechste P1-Schreibpfad-Diagnose festhalten |
+| 08 Randomizer-Kompatibilität | Encounter-Systemmodell dokumentieren | supported/partial/unsupported Encounter-Systeme nach P0 abgrenzen |
 
 ## Als Nächstes
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | P1-Schreibpfade diagnostizieren | Trainer, Starters, Static Pokemon, Evolutions und Learnsets getrennt pruefen |
+| 08 Randomizer-Kompatibilität | P1-Species-Schreibpfade diagnostizieren | Trainer, Starters, Static Pokemon, Evolutions und Learnsets getrennt pruefen |
 
 ## Noch offen
 
@@ -97,8 +97,8 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 |---|---|---|---|
 | P0 | `compat/upr-fvx-cfru-dpe-gen-restrictions` | finalen Gen4+-Allowed-Pool fuer erweiterte CFRU/DPE-BPRE-Hacks freigeben | PR #4 gemerged und post-merge bestaetigt |
 | P0b | `compat/upr-fvx-cfru-dpe-wild-internal-species-write` | Wild-Encounter-Schreibpfade auf interne Species-Identitaet fuer erweiterte BPRE-Hacks pruefen | PR #5 gemerged und post-merge bestaetigt |
-| P1 | noch festlegen | Trainer, Starters, Evolutions, Learnsets und TM/Tutor-Kompatibilitaet diagnostizieren | besonders `pokedexToInternal[species.getNumber()]`-Schreibpfade pruefen |
-| P2 | `randomizer/cfru-day-night-wild-table-analysis` | CFRU-Custom-Day/Night-Wild-Tabellen separat untersuchen | Route-1-Fallback bleibt stabil |
+| P1 | `analysis/upr-fvx-cfru-dpe-p1-species-write-paths` | Trainer, Starters, Static Pokemon, Evolutions, Learnsets und TM/Tutor-Kompatibilitaet diagnostizieren | besonders `pokedexToInternal[species.getNumber()]`-Schreibpfade pruefen |
+| P2 | `randomizer/cfru-day-night-wild-table-analysis` | CFRU-Custom-Day/Night-Wild-Tabellen separat untersuchen | erst nach P1-Schreibpfad-Diagnose; Route-1-Fallback bleibt stabil |
 | P3 | noch festlegen | Nullslot-`<unknown>` mit `rawInternalSpeciesId=0` klassifizieren | nicht mit GenRestrictions vermischen |
 | P4 | noch festlegen | BizHawk-/Ironmon-Tracker-/RAM-Mapping pruefen | erst nach stabiler ROM-Randomizer-Kompatibilitaet |
 
@@ -140,7 +140,7 @@ Excel-Roadmap:
 ## Nächster empfohlener Branch
 
 ```text
-analysis/upr-fvx-cfru-dpe-p1-encounter-systems
+analysis/upr-fvx-cfru-dpe-p1-species-write-paths
 ```
 
 ## Arbeitsblock-Log
@@ -236,3 +236,13 @@ analysis/upr-fvx-cfru-dpe-p1-encounter-systems
 - Diagnose bleibt stabil: `PokemonCount=823`, `speciesList.size=799`, `maxSpeciesIdentityNumber=823`.
 - Sichtbarer Wild-Log bestaetigt die P0-Kette: Gen1 `354`, Gen2 `388`, Gen3 `404`, Gen4 `398`, Gen5 `528`, Gen6 `104`, `<unknown>` `0`.
 - Keine Codeaenderungen, keine neuen Fixes, keine ROMs/Builds/Tool-Binaries committed.
+
+### 2026-05-12 – analysis/upr-fvx-cfru-dpe-p1-encounter-systems
+
+- Workspace PR #36 als gemerged geprueft; UPR-FVX-Submodule steht weiter auf `843b75a8`.
+- UPR-FVX-, CFRU/DPE- und Referenzpfade read-only analysiert.
+- Neues Modell erstellt: `01_docs/compat/cfru-dpe-encounter-systems-model.md`.
+- Ergebnis: P0-supported sind Standard-Wild/Grass-Cave, Surfing, Fishing und Rock Smash aus `gWildMonHeaders`.
+- CFRU Time-of-Day-Wild, Swarms, Roamers, DexNav, Wild Double Battles, Raids, Altering Cave und Tanoby/Unown sind partial oder unsupported und bleiben getrennte Folgearbeit.
+- Empfehlung: naechster Diagnoseblock zuerst P1-Species-Schreibpfade, nicht Day/Night-Fix.
+- Keine Codeaenderungen, keine Builds und keine ROM-Zugriffe.
