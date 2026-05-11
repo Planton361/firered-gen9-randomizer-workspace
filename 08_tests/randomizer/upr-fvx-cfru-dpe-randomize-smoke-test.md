@@ -12,7 +12,7 @@ Pruefen, ob der UPR-FVX-Fork die lokal gebaute CFRU/DPE-Gen9-ROM laden und minim
 
 - Fork: Planton361/universal-pokemon-randomizer-fvx
 - Branch: `compat/firered-gen9-cfru-dpe`
-- Commit: e0ee07da879ca4c4cc5f89e7c9123040cbe55361
+- Commit: 6af5ba3972fd7d8c98844596fb88c367daf5be8d
 - JAR: `02_external/upr-fvx/random/build/libs/UPR-FVX.jar`
 - JAR SHA-256: 03c93c5e3f65e9215973b34333d25ced393aa0d24616df5d1a8591f07fe09606
 
@@ -41,7 +41,7 @@ Pruefen, ob der UPR-FVX-Fork die lokal gebaute CFRU/DPE-Gen9-ROM laden und minim
 - Invalid-ROM-Warnung angezeigt: ja
 - Minimal randomisierte ROM gespeichert: ja
 
-## UPR-FVX-Fixes in diesem Stand
+## UPR-FVX-Kompatibilitaetsfixes in diesem Stand
 
 - ROM-Load-Exceptions werden auf stderr ausgegeben.
 - Gen3 held item IDs ausserhalb der bekannten FVX-Itemliste werden beim Laden toleriert.
