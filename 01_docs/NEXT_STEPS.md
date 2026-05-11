@@ -2,12 +2,13 @@
 
 ## Aktueller Arbeitsblock
 
-UPR-FVX/CFRU/DPE-Species-Diagnose auf Basis von UPR-FVX PR #2 lokal auswerten und dokumentieren.
+UPR-FVX/CFRU/DPE Species-Identity- und Generation-Mapping-Fix im UPR-FVX-Fork vorbereiten.
 
 ## Nächste Schritte
 
-1. `08_tests/randomizer/upr-fvx-cfru-dpe-species-diagnostics-run.md` reviewen.
-2. Lokal die Git-/Submodule-Pruefung nachziehen:
+1. UPR-FVX-Branch `compat/upr-fvx-gen9-generation-mapping` reviewen.
+2. Protokoll `08_tests/randomizer/upr-fvx-cfru-dpe-generation-mapping-fix.md` reviewen.
+3. Lokal die Git-/Submodule-Pruefung nachziehen:
 
 ```sh
 git status --short
@@ -16,11 +17,10 @@ git diff --stat
 git diff --submodule
 ```
 
-3. Diagnosebefund fachlich pruefen:
-   - `PokemonCount=823`, aber `pokedexCount=386` und `speciesList.size=412`.
-   - Beispiel-Species `> 386` werden geladen, aber als Gen3 klassifiziert.
-   - Eindeutige `<unknown>`-Rohwerte aus dem Gen3-Wild-Leser sind `rawInternalSpeciesId=0`.
-4. Workspace-Dokumentationsbranch reviewen, committen/pushen und als PR nach `main` fuehren. PR nicht mergen.
+4. Nach Merge/Pin des UPR-FVX-Fixbranches denselben lokalen Diagnose-Lauf erneut ausfuehren und Werte vergleichen:
+   - `speciesList.size` soll deutlich ueber `412` liegen.
+   - `maxSpeciesIdentityNumber` soll `823` erreichen.
+   - Gen4+-Beispiele sollen nicht mehr pauschal Gen3 sein.
 
 ## Nicht tun
 
@@ -40,16 +40,15 @@ git diff --submodule
 
 ## Danach
 
-Nächster empfohlener Arbeitsblock:
+Nächster empfohlener Arbeitsblock nach dem Fix-PR:
 
-`compat/upr-fvx-gen9-generation-mapping`
+`analysis/upr-fvx-cfru-dpe-generation-mapping-diagnostics`
 
 Ziel:
 
-- Im UPR-FVX-Fork `Planton361/universal-pokemon-randomizer-fvx` die Generation-Zuordnung fuer Gen4-Gen9-Species korrigieren.
-- Keine gleichzeitige Aenderung an `PokemonCount`-Heuristik oder Wild-Pool-ID-Mapping.
-- Danach denselben lokalen CFRU/DPE-Teststand erneut mit Diagnoseausgabe laden und vergleichen.
-- `<unknown>`-Nullslots separat untersuchen; zuerst klaeren, ob sie legitime leere/sonderfallartige Wild-Slots oder ein Lesefehler sind.
+- Den lokalen CFRU/DPE-Teststand mit dem Generation-Mapping-Fix erneut laden.
+- Diagnosewerte vor/nach dem Fix vergleichen.
+- `<unknown>`-Nullslots weiterhin separat behandeln; keine Vermischung mit dem Generation-Mapping-Fix.
 
 ## Quality
 

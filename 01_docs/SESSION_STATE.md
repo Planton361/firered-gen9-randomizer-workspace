@@ -24,7 +24,7 @@
 
 ## Aktueller Arbeitsblock
 
-UPR-FVX/CFRU/DPE Species-Diagnose-Logging lokal ausfuehren und Befund dokumentieren.
+UPR-FVX/CFRU/DPE Generation-Mapping-/Species-Identity-Fix im UPR-FVX-Fork vorbereiten.
 
 ## Ziel
 
@@ -55,7 +55,7 @@ Konkret klaeren:
 
 ## Noch nicht gestartet
 
-- funktionaler UPR-FVX-Fix fuer Gen4-Gen9-Generation-Mapping
+- UPR-FVX-Fixbranch `compat/upr-fvx-gen9-generation-mapping` mit minimalem Species-Identity-/Generation-Mapping-Patch vorbereiten
 - erneuter Diagnose-Lauf nach Generation-Mapping-Fix
 - CFRU-Day/Night-Custom-Wild-Tabellen-Support
 - Ironmon-Tracker-Tests
@@ -89,4 +89,4 @@ git diff --submodule
 
 `compat/upr-fvx-gen9-generation-mapping`
 
-Zweck: Im UPR-FVX-Fork die Species-Generation-Zuordnung fuer Gen4-Gen9 korrigieren, ohne gleichzeitig `PokemonCount`-Heuristik oder Wild-Pool-Mapping umzubauen.
+Zweck: Im UPR-FVX-Fork die SpeciesSet-Identitaet fuer erweiterte CFRU/DPE-BPRE-Hacks auf interne IDs stuetzen und Gen4-Gen9 generationstreu klassifizieren, ohne `rawInternalSpeciesId=0`-Nullslots oder Day/Night-Wild-Tabellen in diesem Branch zu behandeln.
