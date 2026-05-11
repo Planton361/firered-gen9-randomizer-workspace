@@ -2,24 +2,24 @@
 
 ## Aktueller Arbeitsblock
 
-Gen3/CFRU-DPE-Wild-Write-Fix fuer erweiterte BPRE-Hacks abschliessen und diagnostisch dokumentieren.
+Post-Merge-Bestaetigungslauf fuer die P0-UPR-FVX/CFRU-DPE-Kompatibilitaetskette abschliessen.
 
 Aktueller Branch:
 
 ```text
-analysis/upr-fvx-cfru-dpe-wild-internal-species-write
+analysis/upr-fvx-cfru-dpe-p0-post-merge-smoke
 ```
 
 Zieldokumente:
 
 ```text
-08_tests/randomizer/upr-fvx-cfru-dpe-wild-internal-species-write-diagnostics.md
+08_tests/randomizer/upr-fvx-cfru-dpe-p0-post-merge-smoke.md
 ```
 
 ## Naechste Schritte in diesem Block
 
 1. Dokumentation reviewen:
-   - `08_tests/randomizer/upr-fvx-cfru-dpe-wild-internal-species-write-diagnostics.md`
+   - `08_tests/randomizer/upr-fvx-cfru-dpe-p0-post-merge-smoke.md`
    - `01_docs/SESSION_STATE.md`
    - `01_docs/NEXT_STEPS.md`
    - `00_project-control/roadmap/roadmap-status.md`
@@ -36,7 +36,7 @@ git diff --check
 3. Commit erstellen:
 
 ```text
-docs: record CFRU DPE wild internal species write diagnostics
+docs: confirm P0 CFRU DPE randomizer compatibility smoke
 ```
 
 4. Branch pushen und Workspace-PR nach `main` vorbereiten.
@@ -58,9 +58,9 @@ Ziel:
 
 ## Fix-Reihenfolge
 
-P0: GenRestrictions / finaler Gen4+ Allowed-Pool.
+P0: GenRestrictions / finaler Gen4+ Allowed-Pool. Erledigt und post-merge bestaetigt.
 
-P0b: Gen3/CFRU-DPE-Wild-Write-Mapping fuer interne Species-Identitaet.
+P0b: Gen3/CFRU-DPE-Wild-Write-Mapping fuer interne Species-Identitaet. Erledigt und post-merge bestaetigt.
 
 P1: Trainer, Starters, Evolutions, Learnsets und TM/Tutor-Kompatibilitaet.
 
@@ -77,7 +77,7 @@ P4: BizHawk/Ironmon Tracker/RAM-Mapping.
 - keine Saves oder Emulator States anfassen
 - keine Builds committen
 - keine Randomizer-JARs oder Tool-Binaries anfassen oder committen
-- keine weiteren Codeaenderungen in `02_external/**` in diesem Workspace-Dokumentationscommit
+- keine Codeaenderungen in `02_external/**` in diesem Workspace-Dokumentationscommit
 - keine weiteren Wild-Write-Fixes in diesem Branch
 - keine Day/Night-Wild-Fixes
 - keine Nullslot-Fixes

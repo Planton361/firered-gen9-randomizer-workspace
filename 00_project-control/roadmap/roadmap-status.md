@@ -24,9 +24,9 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-wild-internal-species-write` |
+| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-p0-post-merge-smoke` |
 | Nächster Branch | `analysis/upr-fvx-cfru-dpe-p1-encounter-systems` |
-| Aktueller Fokus | Gen3/CFRU-DPE-Wild-Write-Fix diagnostisch abschliessen |
+| Aktueller Fokus | P0-UPR-FVX/CFRU-DPE-Kompatibilitaetskette post-merge bestaetigen |
 | ROM-/Build-Arbeit | Smoke-Test lokal dokumentiert; keine Artefakte committed |
 | Externe Repos | als Submodule auf Planton361-Forks eingebunden |
 | Forks | Planton361-Forks fuer UPR-FVX, DPE Gen9 und CFRU dokumentiert |
@@ -61,18 +61,14 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | 08 Randomizer-Kompatibilität | Randomizer-/NatDex-Referenzen dokumentiert | Quelleninventar, Workflowmodell und Implementierungsnotizen fuer P0/P1 festgehalten |
 | 08 Randomizer-Kompatibilität | CFRU-Documentation-Randomizer-Relevanz dokumentiert | PDF-Befunde zu Defines, Randomizer-Flags, Day/Night-Wild, Trainer-EVs, Save/RAM und Roadmap-Folgen festgehalten |
 | 08 Randomizer-Kompatibilität | UPR-FVX Gen-Restrictions-Folgefix | PR #4 gemerged; finaler `RestrictedSpeciesService`-Pool enthaelt Gen4+-Species bei `limitPokemon=false` |
-
-## In Review/Test
-
-| Paket | Aufgabe | Prüfpunkte |
-|---|---|---|
-| 08 Randomizer-Kompatibilität | UPR-FVX Wild-Write-Folgefix | PR #5 offen; sichtbarer Wild-Log enthaelt nach Fix Gen4+-Species |
+| 08 Randomizer-Kompatibilität | UPR-FVX Wild-Write-Folgefix | PR #5 gemerged; Vanilla/Fallback-Wild-Species werden fuer erweiterte BPRE-Hacks per interner Identitaet geschrieben |
+| 08 Randomizer-Kompatibilität | P0-Post-Merge-Smoke | PR #3/#4/#5-Fixkette auf UPR-FVX Merge-Commit `843b75a8` bestaetigt; sichtbarer Wild-Log enthaelt Gen4+ `1030`, `<unknown>` `0` |
 
 ## In Arbeit
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Wild-Write-Diagnoselauf dokumentieren | Gen4+-Wild-Log-Auswertung und naechste P1-Schreibpfad-Diagnose festhalten |
+| 08 Randomizer-Kompatibilität | P0-Post-Merge-Smoke dokumentieren | Bestätigungslauf und naechste P1-Schreibpfad-Diagnose festhalten |
 
 ## Als Nächstes
 
@@ -99,8 +95,8 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 
 | Reihenfolge | Branch | Ziel | Grenzen |
 |---|---|---|---|
-| P0 | `compat/upr-fvx-cfru-dpe-gen-restrictions` | finalen Gen4+-Allowed-Pool fuer erweiterte CFRU/DPE-BPRE-Hacks freigeben | PR #4 gemerged; keine Trainer-, Day/Night- oder Nullslot-Fixes im selben Schritt |
-| P0b | `compat/upr-fvx-cfru-dpe-wild-internal-species-write` | Wild-Encounter-Schreibpfade auf interne Species-Identitaet fuer erweiterte BPRE-Hacks pruefen | PR #5 offen; keine Day/Night-Wildtables, Nullslot- oder Trainer-Fixes |
+| P0 | `compat/upr-fvx-cfru-dpe-gen-restrictions` | finalen Gen4+-Allowed-Pool fuer erweiterte CFRU/DPE-BPRE-Hacks freigeben | PR #4 gemerged und post-merge bestaetigt |
+| P0b | `compat/upr-fvx-cfru-dpe-wild-internal-species-write` | Wild-Encounter-Schreibpfade auf interne Species-Identitaet fuer erweiterte BPRE-Hacks pruefen | PR #5 gemerged und post-merge bestaetigt |
 | P1 | noch festlegen | Trainer, Starters, Evolutions, Learnsets und TM/Tutor-Kompatibilitaet diagnostizieren | besonders `pokedexToInternal[species.getNumber()]`-Schreibpfade pruefen |
 | P2 | `randomizer/cfru-day-night-wild-table-analysis` | CFRU-Custom-Day/Night-Wild-Tabellen separat untersuchen | Route-1-Fallback bleibt stabil |
 | P3 | noch festlegen | Nullslot-`<unknown>` mit `rawInternalSpeciesId=0` klassifizieren | nicht mit GenRestrictions vermischen |
@@ -144,7 +140,7 @@ Excel-Roadmap:
 ## Nächster empfohlener Branch
 
 ```text
-compat/upr-fvx-cfru-dpe-gen-restrictions
+analysis/upr-fvx-cfru-dpe-p1-encounter-systems
 ```
 
 ## Arbeitsblock-Log
@@ -231,3 +227,12 @@ compat/upr-fvx-cfru-dpe-gen-restrictions
 - Diagnose: sichtbarer Wild-Log enthaelt jetzt Gen4+-Species: Gen1 `354`, Gen2 `388`, Gen3 `404`, Gen4 `398`, Gen5 `528`, Gen6 `104`, `<unknown>` `0`.
 - Route 1, Route 22 und Viridian Forest wirken weiterhin sichtbar randomisiert.
 - Keine Settings-/GenRestrictions-, Day/Night-Wildtable-, Nullslot-, SpeciesSet-Identity-, Trainer-, Starter-, Evolution-, Learnset-, TM- oder Tutor-Fixes umgesetzt.
+
+### 2026-05-11 – analysis/upr-fvx-cfru-dpe-p0-post-merge-smoke
+
+- UPR-FVX PR #5 ist gemerged; Submodule steht auf `compat/firered-gen9-cfru-dpe` bei Merge-Commit `843b75a8f1016fa41a1879408fbeca45de7e030a`.
+- UPR-FVX per `./gradlew clean :random:jar` erfolgreich gebaut.
+- Derselbe lokale CFRU/DPE-Route-1-Fallback-Teststand wurde mit Wild-Randomization, `limitPokemon=false` und ohne Gen1-3-Einschraenkung randomisiert.
+- Diagnose bleibt stabil: `PokemonCount=823`, `speciesList.size=799`, `maxSpeciesIdentityNumber=823`.
+- Sichtbarer Wild-Log bestaetigt die P0-Kette: Gen1 `354`, Gen2 `388`, Gen3 `404`, Gen4 `398`, Gen5 `528`, Gen6 `104`, `<unknown>` `0`.
+- Keine Codeaenderungen, keine neuen Fixes, keine ROMs/Builds/Tool-Binaries committed.
