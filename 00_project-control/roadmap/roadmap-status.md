@@ -24,9 +24,9 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Aktueller Branch | `analysis/randomizer-natdex-reference-sources` |
+| Aktueller Branch | `setup/intellij-mcp-readonly-check` |
 | Nächster Branch | `compat/upr-fvx-cfru-dpe-gen-restrictions` |
-| Aktueller Fokus | Randomizer-/NatDex-/FireRed-Referenz-Submodules read-only dokumentieren |
+| Aktueller Fokus | IntelliJ-/JetBrains-MCP-Readiness read-only dokumentieren |
 | ROM-/Build-Arbeit | Smoke-Test lokal dokumentiert; keine Artefakte committed |
 | Externe Repos | als Submodule auf Planton361-Forks eingebunden |
 | Forks | Planton361-Forks fuer UPR-FVX, DPE Gen9 und CFRU dokumentiert |
@@ -69,7 +69,7 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Randomizer-/NatDex-Referenzen dokumentieren | Quelleninventar, Workflowmodell und Implementierungsnotizen fuer P0/P1 festhalten |
+| 06 Toolchain | IntelliJ MCP Readiness dokumentieren | Klaeren, ob JetBrains MCP kuenftig optional fuer read-only Codex-Codebase-Analyse nutzbar ist |
 
 ## Als Nächstes
 
@@ -118,6 +118,8 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 - ROMs bleiben in `04_private_roms/` und damit lokal/ignored.
 - Build-Ergebnisse bleiben in `05_builds/` und damit lokal/ignored.
 - Nicht parallel mehrere schreibende Agenten auf demselben Branch nutzen.
+- JetBrains MCP bleibt optional, read-only und nicht blockierend; Codex nutzt weiter Git/`rg`-first.
+- Keine Schreibaktionen, Terminalausfuehrung, Builds, Run Configurations, Patch-Anwendung oder Refactorings ueber JetBrains MCP.
 
 ## Update-Regeln
 
@@ -198,3 +200,14 @@ compat/upr-fvx-cfru-dpe-gen-restrictions
 - Neue Implementierungsnotizen erstellt: `01_docs/compat/natdex-reference-implementation-notes.md`.
 - Ergebnis: CyanSMP64 UPR-ZX NatDex ist eine wichtige Gen8/Gen9-Restriction-Referenz; fuer den lokalen CFRU/DPE-Teststand bleibt DPE/CFRU Source-of-Truth fuer interne Species-IDs.
 - Keine Codeaenderungen, keine Builds, keine ROM-Zugriffe und keine Aenderungen in `02_external/**`.
+
+### 2026-05-11 – setup/intellij-mcp-readonly-check
+
+- Workspace `main` aktualisiert und Branch `setup/intellij-mcp-readonly-check` erstellt.
+- IntelliJ IDEA lokal read-only ueber PATH/JetBrains Toolbox geprueft.
+- Gefundene Version: IntelliJ IDEA 2026.2 EAP, Build `IU-262.4852.50`; Mindestanforderung 2025.2 erfuellt.
+- JetBrains MCP Server als gebuendeltes IDE-Plugin `com.intellij.mcpServer` gefunden.
+- Settings-Pfad `Settings | Tools | MCP Server` und Codex-Auto-Configuration lokal in der IDE-Distribution erkennbar.
+- Ergebnis: JetBrains MCP ist kuenftig optional fuer read-only Code-Navigation/Symbolsuche nutzbar, bleibt aber nicht blockierend; Codex bleibt Git/`rg`-first.
+- Keine MCP-Konfiguration aktiviert, geaendert oder committed.
+- Keine Codeaenderungen, keine Builds, keine ROM-Zugriffe und keine Tool-Binaries angefasst.

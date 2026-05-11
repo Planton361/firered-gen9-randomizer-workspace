@@ -2,32 +2,34 @@
 
 ## Aktueller Arbeitsblock
 
-Read-only Analyse der neu eingebundenen Randomizer-/NatDex-/FireRed-Referenz-Submodules dokumentieren.
+Read-only Inventur der lokalen IntelliJ-/JetBrains-MCP-Verfuegbarkeit dokumentieren.
 
 Aktueller Branch:
 
 ```text
-analysis/randomizer-natdex-reference-sources
+setup/intellij-mcp-readonly-check
 ```
 
 Zieldokumente:
 
 ```text
-01_docs/compat/randomizer-natdex-reference-sources.md
-01_docs/compat/randomizer-workflow-model.md
-01_docs/compat/natdex-reference-implementation-notes.md
+01_docs/setup/mcp-policy.md
+01_docs/setup/agent-tooling-policy.md
+01_docs/references/tool-manifest.md
+01_docs/SESSION_STATE.md
+01_docs/NEXT_STEPS.md
+00_project-control/roadmap/roadmap-status.md
 ```
 
 ## Naechste Schritte in diesem Block
 
 1. Dokumentation reviewen:
-   - `01_docs/compat/randomizer-natdex-reference-sources.md`
-   - `01_docs/compat/randomizer-workflow-model.md`
-   - `01_docs/compat/natdex-reference-implementation-notes.md`
-   - `01_docs/SESSION_STATE.md`
-   - `00_project-control/roadmap/roadmap-status.md`
-   - `01_docs/references/source-index.md`
+   - `01_docs/setup/mcp-policy.md`
+   - `01_docs/setup/agent-tooling-policy.md`
    - `01_docs/references/tool-manifest.md`
+   - `01_docs/SESSION_STATE.md`
+   - `01_docs/NEXT_STEPS.md`
+   - `00_project-control/roadmap/roadmap-status.md`
 2. Workspace-Checks ausfuehren:
 
 ```sh
@@ -41,10 +43,21 @@ git diff --check
 3. Commit erstellen:
 
 ```text
-docs: analyze randomizer NatDex reference sources
+docs: document IntelliJ MCP readiness
 ```
 
 4. Branch pushen und Workspace-PR nach `main` vorbereiten.
+
+## Ergebnis dieses Blocks
+
+- IntelliJ IDEA ist lokal ueber JetBrains Toolbox auffindbar.
+- Gefundene Version: IntelliJ IDEA 2026.2 EAP, Build `IU-262.4852.50`.
+- Die Mindestanforderung 2025.2 ist erfuellt.
+- JetBrains MCP Server ist als gebuendeltes IDE-Plugin vorhanden.
+- `Settings | Tools | MCP Server` ist in der lokalen IDE-Distribution als Settings-Pfad erkennbar.
+- Codex-Auto-Configuration ist in der lokalen MCP-Server-Distribution erkennbar.
+- Es wurde keine MCP-Konfiguration aktiviert, geaendert oder committed.
+- Kuenftige Nutzung bleibt optional, read-only und nicht blockierend; Codex bleibt Git/`rg`-first.
 
 ## Danach
 
@@ -91,6 +104,8 @@ P4: BizHawk/Ironmon Tracker/RAM-Mapping.
 - keine Installationen erzwingen
 - keine GitHub-Tokens oder lokale Secrets dokumentieren
 - keine MCP-Configs mit Secrets committen
+- keine MCP-Config ohne separaten Freigabe-Block aktivieren oder committen
+- JetBrains MCP nicht fuer Schreibaktionen, Terminalbefehle, Builds, Run Configurations, Patch-Anwendung oder Refactorings nutzen
 - keine parallelen Agenten auf demselben Branch einsetzen
 
 ## Quality

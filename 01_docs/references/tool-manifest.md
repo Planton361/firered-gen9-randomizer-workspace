@@ -4,15 +4,15 @@ Dieses Manifest dokumentiert Tools, Repos, Forks, Versionen, Pfade und Sicherhei
 
 ## Sicherheitsstatus
 
-Dieser Stand dokumentiert den read-only Analyseblock `analysis/randomizer-natdex-reference-sources`. Es wurden keine Codeaenderungen in `02_external/**` vorgenommen, keine Builds gestartet, keine ROMs gelesen oder kopiert und keine Tool-Binaries oder Release-Assets angefasst.
+Dieser Stand dokumentiert den read-only Setupblock `setup/intellij-mcp-readonly-check`. Es wurden keine Codeaenderungen vorgenommen, keine Builds gestartet, keine ROMs gelesen oder kopiert und keine Tool-Binaries oder Release-Assets angefasst.
 
 Linux/CachyOS ist die primaere lokale Umgebung. Windows-Toolchain-Befunde bleiben historischer Referenzstand und duerfen nicht als Linux-Ist-Stand verwendet werden.
 
-Der aktuelle Arbeitsblock erstellt die Referenzdokumente `01_docs/compat/randomizer-natdex-reference-sources.md`, `01_docs/compat/randomizer-workflow-model.md` und `01_docs/compat/natdex-reference-implementation-notes.md`.
+Der aktuelle Arbeitsblock dokumentiert, ob JetBrains MCP lokal optional fuer read-only Codex-Codebase-Analyse nutzbar waere.
 
 | Tool/Repo | Zweck | Upstream | Fork/Origin | Lokaler Pfad | Branch | Commit | Codex darf ändern | Status |
 |---|---|---|---|---|---|---|---|---|
-| Workspace Repo | Source of Truth | n/a | git@github.com:Planton361/firered-gen9-randomizer-workspace.git | Workspace-Root | `analysis/randomizer-natdex-reference-sources` | offen | ja, nur Branches | aktiv |
+| Workspace Repo | Source of Truth | n/a | git@github.com:Planton361/firered-gen9-randomizer-workspace.git | Workspace-Root | `setup/intellij-mcp-readonly-check` | offen | ja, nur Branches | aktiv |
 | Git | Versionierung | n/a | n/a | `/usr/bin/git` | n/a | n/a | nein | gefunden: 2.54.0 |
 | GitHub CLI (`gh`) | PRs und GitHub-Checks automatisieren | https://cli.github.com/ | n/a | `/usr/bin/gh` | n/a | n/a | nein | gefunden: 2.92.0; Auth via Keyring aktiv |
 | POSIX Shell | Terminal-Standard | n/a | n/a | `/bin/fish` laut `$SHELL` | n/a | n/a | nein | primär |
@@ -24,6 +24,9 @@ Der aktuelle Arbeitsblock erstellt die Referenzdokumente `01_docs/compat/randomi
 | `agbcc` | optionale GBA/pret-kompatible Compiler-Komponente | pret/devkitARM-Kontext | n/a | nicht im PATH gefunden | n/a | n/a | nein | fehlt/optional; nur bei Buildpfad-Bedarf klaeren |
 | Codex CLI | primärer Coding Agent | OpenAI | n/a | offen | n/a | n/a | nur nach Branch-Freigabe | primärer Worker fuer erlaubte Arbeitsbranches |
 | ChatGPT QA | Analyse, Review und Handoff | OpenAI | n/a | n/a | n/a | n/a | nein | Steuerungs-/QA-Ebene |
+| JetBrains Toolbox | JetBrains IDE-Verwaltung | JetBrains | n/a | User-Installation; privater Pfad nicht dokumentiert | n/a | n/a | nein | gefunden: Toolbox 3.4.3.81140 |
+| IntelliJ IDEA | optionale lokale IDE-Navigation | JetBrains | n/a | Toolbox-verwaltete User-Installation; privater Pfad nicht dokumentiert | n/a | Build `IU-262.4852.50` | nein | gefunden: IntelliJ IDEA 2026.2 EAP; Mindestversion 2025.2 erfuellt |
+| JetBrains MCP Server | optionale IDE-MCP-Integration fuer read-only Codebase-Analyse | JetBrains, gebuendelt in IntelliJ-basierten IDEs | n/a | gebuendeltes IntelliJ-Plugin `com.intellij.mcpServer`; Installationspfad nicht dokumentiert | n/a | Plugin-Version `262.4852.50` | nein | verfuegbar; fuer Codex nur read-only und optional freigegeben |
 | `.aiignore` | Agent-Kontextschutz | n/a | n/a | `.aiignore` | n/a | n/a | ja | ergänzt fuer ROM-/Build-/Tool-Binary-/Secret-Pfade |
 | GitHub PR Template | PR-Checkliste | GitHub | n/a | `.github/pull_request_template.md` | n/a | n/a | ja | ergänzt |
 | MCP allgemein | optionale Tool-Integration | abhängig vom Server | n/a | keine aktive Config committed | n/a | n/a | nur nach Manifest-Eintrag | optional, nicht Default |

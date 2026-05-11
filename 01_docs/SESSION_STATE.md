@@ -8,6 +8,7 @@
 - Branch Protection und PR-Pflicht sind laut dokumentiertem Projektstand eingerichtet.
 - Workspace PR #28 ist gemerged; der Gen4+-Wild-Pool-Diagnosebefund ist in `main` verfuegbar.
 - Workspace PR #29 ist gemerged; das CFRU/DPE-UPR-FVX-Kompatibilitaetsmodell ist in `main` verfuegbar.
+- IntelliJ IDEA 2026.2 EAP ist lokal ueber JetBrains Toolbox auffindbar; JetBrains MCP ist als gebuendeltes IDE-Plugin vorhanden und bleibt nur optional fuer read-only Analyse.
 - UPR-FVX PR #3 ist gemerged; der lokale Submodule-Stand bleibt in diesem Workspace auf `223ee9ef compat: preserve CFRU DPE species identity`.
 - Die neu eingebundenen NatDex-/Randomizer-/FireRed-Referenz-Submodules sind in `main` verfuegbar und wurden read-only inventarisiert.
 - devkitPro/devkitARM wurde lokal installiert und geprueft.
@@ -24,45 +25,48 @@
 
 ## Aktueller Branch
 
-`analysis/randomizer-natdex-reference-sources`
+`setup/intellij-mcp-readonly-check`
 
 ## Aktueller Arbeitsblock
 
-Read-only Analyse der neu eingebundenen NatDex-/Randomizer-/FireRed-Referenz-Submodules.
+Read-only Inventur der lokalen JetBrains-/IntelliJ-MCP-Verfuegbarkeit fuer kuenftige optionale Codex-Codebase-Analyse.
 
 ## Ziel
 
 Konkret klaeren:
 
-- welche Branches/Commits die Referenz-Submodules aktuell liefern
-- welche UPR-FVX-/UPR-ZX-/CyanSMP64-NatDex-Codepfade fuer Settings, GenRestrictions, SpeciesSet und Wild-Pool relevant sind
-- welches FireRed-/NatDex-/CFRU-/DPE-Datenmodell fuer Species, Wild, Trainer, Evolutions, Learnsets und TM/Tutor gilt
-- welche P0-Fixrichtung fuer GenRestrictions minimal sinnvoll ist
+- ob IntelliJ IDEA lokal auffindbar ist
+- ob die IDE-Version mindestens 2025.2 ist
+- ob JetBrains MCP Server in der IDE-Distribution vorhanden ist
+- ob Codex-Auto-Configuration erkennbar ist
+- welche Projektregeln fuer eine spaetere read-only Nutzung gelten
 
 ## In diesem Arbeitsblock geprueft / geaendert
 
 - Workspace `main` per `git pull --ff-only origin main` aktualisiert.
-- Branch `analysis/randomizer-natdex-reference-sources` von aktuellem `main` erstellt.
-- Pflichtdokumente und bisherige Kompatibilitaets-/Diagnoseprotokolle gelesen.
-- UPR-FVX, UPR-FVX upstream, Ajarmar UPR-ZX, CyanSMP64 UPR-ZX NatDex, pret FireRed, CyanSMP64 FireRed NatDex, CFRU-expansion und DPE Gen9 read-only analysiert.
-- Neues Quelleninventar erstellt: `01_docs/compat/randomizer-natdex-reference-sources.md`.
-- Neues Workflowmodell erstellt: `01_docs/compat/randomizer-workflow-model.md`.
-- Neue Implementierungsnotizen erstellt: `01_docs/compat/natdex-reference-implementation-notes.md`.
+- Branch `setup/intellij-mcp-readonly-check` von aktuellem `main` erstellt.
+- Pflichtdokumente sowie MCP-/Agent-/Tooling-Policies gelesen.
+- IntelliJ IDEA read-only ueber PATH/Toolbox geprueft.
+- Gefundene IDE-Version: IntelliJ IDEA 2026.2 EAP, Build `IU-262.4852.50`.
+- JetBrains MCP Server als gebuendeltes Plugin `com.intellij.mcpServer` gefunden.
+- Lokale Distribution enthaelt MCP-Settings-Hinweise fuer `Settings | Tools | MCP Server`.
+- Lokale Distribution enthaelt Codex-Client-/Auto-Configuration-Hinweise.
 - Keine Codeaenderungen vorgenommen.
 - Keine Builds gestartet.
 - Keine ROMs, Saves, Emulator States, Tool-Binaries oder privaten Pfade gelesen, kopiert, geaendert oder committed.
 
 ## Ergebnis
 
-- CyanSMP64 UPR-ZX NatDex erweitert Restrictions auf Gen8/Gen9, Mega, Eternamax und Regional Forms; `limitToGen()` ist dort auskommentiert.
-- Ajarmar UPR-ZX und FVX kappen Restrictions dagegen ueber `generationOfPokemon()`.
-- CyanSMP64 FireRed NatDex ist eine zusammen entwickelte ROM-/Randomizer-Referenz, aber kein direkt uebertragbares Modell fuer externe CFRU/DPE-Hacks.
-- DPE/CFRU bleiben Source-of-Truth fuer den lokalen Species-ID-Raum; CyanSMP64 NatDex ist vor allem als Restriction- und Workflow-Referenz hilfreich.
-- P0 bleibt: erweiterte CFRU/DPE-BPRE-Hacks duerfen im finalen `RestrictedSpeciesService` nicht mehr blind auf Gen1-3 gekappt werden.
-- Nicht in P0 vermischen: Species-Identity, Day/Night-Wild, Nullslots, Trainer, Starters, Evolutions, Learnsets, TM/Tutor und RAM/Tracker.
+- IntelliJ MCP ist lokal verfuegbar und erfuellt die Mindestversion.
+- Codex-Auto-Configuration ist in der lokalen IDE-Distribution erkennbar, wurde aber nicht aktiviert oder getestet.
+- JetBrains MCP bleibt fuer dieses Projekt optional, nicht blockierend und nur read-only fuer Code-Navigation/Symbolsuche.
+- Codex nutzt weiter Git/`rg`-first.
+- Schreibende MCP-Tools, Terminalausfuehrung, Builds, Run Configurations, Patch-Anwendung und Refactorings bleiben gesperrt.
+- ROM-/Build-/Tool-Binary-/Secret-Pfade duerfen nicht ueber MCP exponiert werden.
 
 ## Noch nicht gestartet
 
+- Aktivierung oder echter Verbindungstest von JetBrains MCP mit Codex
 - UPR-FVX-Fix fuer CFRU/DPE-Generation-Restrictions
 - Trainer-/Starter-/Evolution-/Learnset-Diagnosen nach PR #3
 - CFRU-Day/Night-Custom-Wild-Tabellen-Support
@@ -82,6 +86,8 @@ Keine Aenderungen direkt auf `main`.
 Keine Codeaenderungen in `02_external/**`.
 
 Keine MCP-Configs mit Secrets angelegt.
+
+Keine MCP-Configs geaendert oder committed.
 
 ## Naechste Pruefung
 
