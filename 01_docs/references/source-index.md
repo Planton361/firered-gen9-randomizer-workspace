@@ -32,6 +32,12 @@ Dieser Arbeitsblock ist read-only/planend:
 | Toolchain | devkitPro/devkitARM | https://devkitpro.org/ | GBA-Build-Toolchain | erst später lokal prüfen; keine Installation in diesem Block | Plan dokumentiert; Installations-/Versionscheck spaeter |
 | Agent Workflow | OpenAI Codex AGENTS.md | https://github.com/openai/codex | Agent-Regeln | nur für Workflow-Regeln relevant | offen |
 | Git Workflow | GitHub Docs | https://docs.github.com/ | Branches, PRs, Forks, Schutzregeln | nur Doku-Referenz | offen |
+| Referenz | CyanSMP64 UPR-ZX NatDex | https://github.com/CyanSMP64/universal-pokemon-randomizer-zx/tree/natdex | Randomizer-Referenz für NatDexExtension; Vergleich für Species-Pool, GenRestrictions, Settings und Wild-Workflow | read-only Submodule | aktiv |
+| Referenz | CyanSMP64 FireRed NatDex | https://github.com/CyanSMP64/pokefirered/tree/natdex | FireRed-Decomp-Referenz mit NatDex-Erweiterung; Vergleich gegen pret/pokefirered und CFRU/DPE-Modell | read-only Submodule | aktiv |
+| Referenz | UPR-FVX Upstream | https://github.com/upr-fvx/universal-pokemon-randomizer-fvx | Upstream-Vergleich gegen Planton361-Fork; keine Änderungen | read-only Submodule | aktiv |
+| Referenz | Ajarmar UPR-ZX | https://github.com/Ajarmar/universal-pokemon-randomizer-zx | historische Randomizer-Basis; Vergleich zu FVX und CyanSMP64-NatDex-Fork | read-only Submodule | aktiv |
+| Referenz | pret FireRed | https://github.com/pret/pokefirered | Vanilla-FireRed-Decomp-Baseline für BPRE-Datenstrukturen | read-only Submodule | aktiv |
+
 
 ## Read-only-Ergebnis 2026-05-10
 
