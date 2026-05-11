@@ -2,29 +2,27 @@
 
 ## Aktueller Arbeitsblock
 
-Read-only Extraktion der CFRU-Documentation-PDF-Befunde fuer UPR-FVX/CFRU/DPE-Kompatibilitaet dokumentieren.
+P0-GenRestrictions-Fix fuer erweiterte CFRU/DPE-BPRE-Hacks abschliessen und diagnostisch dokumentieren.
 
 Aktueller Branch:
 
 ```text
-analysis/cfru-documentation-randomizer-relevance
+analysis/upr-fvx-cfru-dpe-gen-restrictions
 ```
 
 Zieldokumente:
 
 ```text
-01_docs/compat/cfru-documentation-randomizer-relevance.md
+08_tests/randomizer/upr-fvx-cfru-dpe-gen-restrictions-diagnostics-run.md
 ```
 
 ## Naechste Schritte in diesem Block
 
 1. Dokumentation reviewen:
-   - `01_docs/compat/cfru-documentation-randomizer-relevance.md`
-   - `01_docs/compat/cfru-dpe-upr-fvx-compatibility-model.md`
+   - `08_tests/randomizer/upr-fvx-cfru-dpe-gen-restrictions-diagnostics-run.md`
    - `01_docs/SESSION_STATE.md`
    - `01_docs/NEXT_STEPS.md`
    - `00_project-control/roadmap/roadmap-status.md`
-   - `01_docs/references/source-index.md`
 2. Workspace-Checks ausfuehren:
 
 ```sh
@@ -38,7 +36,7 @@ git diff --check
 3. Commit erstellen:
 
 ```text
-docs: extract CFRU documentation relevance for randomizer
+docs: record CFRU DPE gen restrictions diagnostics
 ```
 
 4. Branch pushen und Workspace-PR nach `main` vorbereiten.
@@ -48,19 +46,21 @@ docs: extract CFRU documentation relevance for randomizer
 Naechster minimaler UPR-FVX-Fixbranch:
 
 ```text
-compat/upr-fvx-cfru-dpe-gen-restrictions
+compat/upr-fvx-cfru-dpe-wild-internal-species-write
 ```
 
 Ziel:
 
-- Fuer erweiterte CFRU/DPE-aehnliche BPRE-Hacks die Gen3-Kappung im finalen Randomizer-Pool verhindern.
-- Der RomHandler-Pool aus PR #3 soll im finalen Wild-Randomizer-Pool Gen4+-Species zulassen.
-- Der Fix soll nur Settings/Restrictions betreffen.
-- Danach denselben Gen4+-Wild-Pool-Diagnoselauf wiederholen.
+- Gen3/CFRU-DPE-Wild-Encounter-Schreibpfade pruefen, die aktuell `pokedexToInternal[enc.getSpecies().getNumber()]` nutzen.
+- Fuer erweiterte BPRE-Hacks soll die interne Species-Identitaet beim Schreiben/Reload erhalten bleiben.
+- Der Fix darf keine CFRU-Day/Night-Wildtables, Nullslot-Logik oder Trainer-/Starter-/Evolution-/Learnset-/TM-/Tutor-Themen vermischen.
+- Danach denselben Wild-Diagnoselauf wiederholen und sichtbare Gen4+-Wild-Encounter pruefen.
 
 ## Fix-Reihenfolge
 
-P0: GenRestrictions / finaler Gen4+ Wild-Pool.
+P0: GenRestrictions / finaler Gen4+ Allowed-Pool.
+
+P0b: Gen3/CFRU-DPE-Wild-Write-Mapping fuer interne Species-Identitaet.
 
 P1: Trainer, Starters, Evolutions, Learnsets und TM/Tutor-Kompatibilitaet.
 
@@ -75,10 +75,10 @@ P4: BizHawk/Ironmon Tracker/RAM-Mapping.
 - keine ROMs bewegen
 - keine ROMs lesen, kopieren oder aendern
 - keine Saves oder Emulator States anfassen
-- keine Builds starten oder committen
+- keine Builds committen
 - keine Randomizer-JARs oder Tool-Binaries anfassen oder committen
-- keine Codeaenderungen in `02_external/**` in diesem Analysebranch
-- keinen GenRestrictions-Fix in diesem Branch
+- keine weiteren Codeaenderungen in `02_external/**` in diesem Workspace-Dokumentationscommit
+- keinen weiteren GenRestrictions-Fix in diesem Branch
 - keine Day/Night-Wild-Fixes
 - keine Nullslot-Fixes
 - keine Trainer-/Starter-/Evolution-/Learnset-/TM-/Tutor-Fixes
