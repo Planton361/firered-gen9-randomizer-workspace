@@ -8,7 +8,7 @@
 - Branch Protection und PR-Pflicht sind laut dokumentiertem Projektstand eingerichtet.
 - Workspace PR #28 ist gemerged; der Gen4+-Wild-Pool-Diagnosebefund ist in `main` verfuegbar.
 - Workspace PR #29 ist gemerged; das CFRU/DPE-UPR-FVX-Kompatibilitaetsmodell ist in `main` verfuegbar.
-- UPR-FVX PR #3 ist gemerged; der lokale Submodule-Stand wurde fuer den P0-Folgefix auf `61a15e52 compat: allow CFRU DPE extended generation restrictions` fortgeschrieben.
+- UPR-FVX PR #3 ist gemerged; der SpeciesSet-Identity-Fix ist in `compat/firered-gen9-cfru-dpe` enthalten.
 - Die neu eingebundenen NatDex-/Randomizer-/FireRed-Referenz-Submodules sind in `main` verfuegbar und wurden read-only inventarisiert.
 - Die projektrelevanten Befunde aus `02_external/CFRU-expansion/CFRU Documentation.pdf` sind als dauerhaftes Referenzdokument extrahiert.
 - devkitPro/devkitARM wurde lokal installiert und geprueft.
@@ -21,53 +21,48 @@
 - Route 1 wurde fuer den Randomizer-Kompatibilitaetsbuild per `FIRERED_GEN9_ENABLE_ROUTE1_CUSTOM_WILD 0` auf Vanilla/Fallback-Wilddaten zurueckgefuehrt.
 - PR #3 behebt den SpeciesSet-Kollaps: `speciesList.size` steigt im Diagnosebefund von `412` auf `799`, `maxSpeciesIdentityNumber=823`, Skrelp bis Hawlucha werden Gen6 statt Gen3.
 - UPR-FVX PR #4 ist gemerged; der P0-GenRestrictions-Fix entfernt die Gen1-3-Kappung fuer erweiterte CFRU/DPE-BPRE-Hacks und setzt bei `limitPokemon=false` den unrestricted Pool.
-- UPR-FVX PR #5 ist offen; der Gen3/CFRU-DPE-Wild-Write-Fix schreibt Vanilla/Fallback-Wild-Encounters fuer erweiterte BPRE-Hacks ueber interne SpeciesSet-Identitaet statt `pokedexToInternal[Species.number]`.
-- Nach PR #5-Diagnose enthaelt der sichtbare Wild-Log Gen4+-Species: Gen1 `354`, Gen2 `388`, Gen3 `404`, Gen4 `398`, Gen5 `528`, Gen6 `104`, `<unknown>` `0`.
+- UPR-FVX PR #5 ist gemerged; der Gen3/CFRU-DPE-Wild-Write-Fix schreibt Vanilla/Fallback-Wild-Encounters fuer erweiterte BPRE-Hacks ueber interne SpeciesSet-Identitaet statt `pokedexToInternal[Species.number]`.
+- Der Post-Merge-P0-Smoke auf UPR-FVX Merge-Commit `843b75a8` bestaetigt die Fixkette PR #3/#4/#5: sichtbarer Wild-Log Gen1 `354`, Gen2 `388`, Gen3 `404`, Gen4 `398`, Gen5 `528`, Gen6 `104`, `<unknown>` `0`.
 - ROMs, Saves, Builds, Tool-Binaries und private Dateien sind ausgeschlossen.
 
 ## Aktueller Branch
 
-`analysis/upr-fvx-cfru-dpe-wild-internal-species-write`
+`analysis/upr-fvx-cfru-dpe-p0-post-merge-smoke`
 
 ## Aktueller Arbeitsblock
 
-Gen3/CFRU-DPE-Wild-Write-Fix im UPR-FVX-Fork umgesetzt und lokaler CFRU/DPE-Diagnoselauf dokumentiert.
+Post-Merge-Bestaetigungslauf fuer die P0-UPR-FVX/CFRU-DPE-Kompatibilitaetskette dokumentieren.
 
 ## Ziel
 
 Konkret klaeren:
 
-- ob `Gen3RomHandler.writeEncounterArea()` fuer erweiterte CFRU/DPE-BPRE-Hacks interne Species-Identitaet schreibt
-- ob Vanilla und normale Gen3-Hacks den bisherigen Dex-/Pokedex-Schreibpfad behalten
-- ob Gen4+-Species danach im sichtbaren Wild-Log auftauchen
+- ob UPR-FVX `compat/firered-gen9-cfru-dpe` den gemergten PR-#5-Stand `843b75a8` enthaelt
+- ob die P0-Fixkette PR #3/#4/#5 nach Merge reproduzierbar baut und randomisiert
+- ob Gen4+-Species im sichtbaren Wild-Log bleiben
 - ob Route 1, Route 22 und Viridian Forest weiterhin sichtbar randomisiert wirken
 
 ## In diesem Arbeitsblock geprueft / geaendert
 
-- Workspace `main` per `git pull --ff-only origin main` aktualisiert.
-- Branch `analysis/upr-fvx-cfru-dpe-wild-internal-species-write` von aktuellem `main` erstellt.
-- UPR-FVX-Branch `compat/upr-fvx-cfru-dpe-wild-internal-species-write` von `compat/firered-gen9-cfru-dpe` erstellt.
-- UPR-FVX-Basis enthaelt PR #4 als Merge-Commit `03b42a1216f5a087d42a3e94a7e81a15db2e977b`.
-- UPR-FVX Wild-Write-Fix in `Gen3RomHandler.java` umgesetzt.
-- UPR-FVX Commit erstellt: `5f68ec0fc8e1592079486f6d22cf5a122eb08d01`.
-- UPR-FVX PR #5 erstellt: `https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/5`.
-- UPR-FVX lokal gebaut und mit demselben CFRU/DPE-Route-1-Fallback-Teststand diagnostisch ausgefuehrt.
-- Neues Diagnoseprotokoll erstellt: `08_tests/randomizer/upr-fvx-cfru-dpe-wild-internal-species-write-diagnostics.md`.
-- Keine Settings-/GenRestrictions-Aenderungen vorgenommen.
-- Keine Day/Night-Wildtable-, Nullslot-, SpeciesSet-Identity-, Trainer-, Starter-, Evolution-, Learnset-, TM- oder Tutor-Fixes umgesetzt.
+- Workspace-Branch `analysis/upr-fvx-cfru-dpe-p0-post-merge-smoke` genutzt.
+- UPR-FVX-Submodule steht auf `compat/firered-gen9-cfru-dpe` bei `843b75a8f1016fa41a1879408fbeca45de7e030a`.
+- UPR-FVX lokal mit `./gradlew clean :random:jar` gebaut.
+- Derselbe CFRU/DPE-Route-1-Fallback-Teststand wie im letzten Diagnoselauf wurde per CLI randomisiert.
+- Neues Post-Merge-Protokoll erstellt: `08_tests/randomizer/upr-fvx-cfru-dpe-p0-post-merge-smoke.md`.
+- Keine Codeaenderungen und keine funktionalen Fixes vorgenommen.
+- Keine Day/Night-Wildtable-, Nullslot-, Trainer-, Starter-, Evolution-, Learnset-, TM- oder Tutor-Fixes umgesetzt.
 - Keine ROMs, Saves, Emulator States, Tool-Binaries oder privaten Pfade committed.
 
 ## Ergebnis
 
 - RomHandler-Diagnose bleibt stabil: `PokemonCount=823`, `speciesList.size=799`, `maxSpeciesIdentityNumber=823`, `generationCounts={1=177, 2=104, 3=161, 4=139, 5=178, 6=64}`.
-- Sichtbarer Wild-Log enthaelt nach PR #5 Gen4+-Species: Gen4 `398`, Gen5 `528`, Gen6 `104`.
+- Sichtbarer Wild-Log enthaelt nach Merge von PR #5 Gen4+-Species: Gen4 `398`, Gen5 `528`, Gen6 `104`.
 - Sichtbare Beispiele: `Floatzel`, `Gothorita`, `Quilladin`, `Minccino`, `Keldeo`, `Arceus`, `Garchomp`, `Bergmite`, `Braixen`.
-- `<unknown>` faellt im finalen Wild-Log von `17` auf `0`, weil Gen4+-Auswahlen nicht mehr als interne ID `0` zurueckgeschrieben werden.
+- `<unknown>` bleibt im finalen Wild-Log bei `0`, weil Gen4+-Auswahlen nicht mehr als interne ID `0` zurueckgeschrieben werden.
 - Route 1, Route 22 und Viridian Forest wirken weiterhin sichtbar randomisiert.
 
 ## Noch nicht gestartet
 
-- UPR-FVX PR #5 Review/Merge
 - P1-Diagnose fuer Trainer-/Starter-/Static-/Evolution-/Learnset-Schreibpfade
 - Trainer-/Starter-/Evolution-/Learnset-Diagnosen nach PR #3
 - CFRU-Day/Night-Custom-Wild-Tabellen-Support
