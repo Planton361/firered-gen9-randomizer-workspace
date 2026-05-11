@@ -185,6 +185,34 @@ Ergebnis:
 - CFRU-Time-of-Day-Wild kann Fallback-Daten uebersteuern und bleibt P2.
 - Swarms, Roamers, DexNav, Wild Double Battles, Raids, Altering Cave und Tanoby/Unown sind partial oder unsupported und muessen getrennt behandelt werden.
 
+## CFRU/DPE Species-Schreibpfade 2026-05-12
+
+Arbeitsblock: `analysis/upr-fvx-cfru-dpe-p1-species-write-paths`.
+
+Neue Workspace-Referenz:
+
+- `01_docs/compat/upr-fvx-cfru-dpe-species-write-paths.md`
+
+Zusaetzlich relevant eingeordnete lokale Quellen:
+
+| Bereich | Lokaler Pfad | Zweck |
+|---|---|---|
+| UPR-FVX Gen3-Schreibpfade | `02_external/upr-fvx/romio/src/main/java/com/uprfvx/romio/romhandlers/Gen3RomHandler.java` | Starters, Static Pokemon, Trainer, Evolutions, Learnsets, TM/HM, Tutor, BaseStats/Abilities und Catching Tutorial |
+| UPR-FVX Randomizer-Pfade | `02_external/upr-fvx/random/src/main/java/com/uprfvx/random/randomizers/StarterRandomizer.java`, `StaticPokemonRandomizer.java`, `TrainerPokemonRandomizer.java`, `EvolutionRandomizer.java`, `SpeciesMovesetRandomizer.java`, `TMHMTutorCompatibilityRandomizer.java`, `SpeciesAbilityRandomizer.java`, `ItemRandomizer.java` | Settings- und Randomizer-Nutzung der RomHandler-Daten |
+| DPE Species-/BaseStats | `02_external/Dynamic-Pokemon-Expansion-Gen-9/include/species.h`, `include/base_stats.h`, `src/Base_Stats.c` | interne Species-IDs, BaseStats-Struktur und Hidden Ability bei Byte `0x1A` |
+| DPE Evolutions/Learnsets | `02_external/Dynamic-Pokemon-Expansion-Gen-9/include/evolution.h`, `src/Evolution Table.c`, `src/Learnsets.c` | interne Species-ID als Tabellenindex fuer Evolutions und Level-up-Learnsets |
+| DPE TM/Tutor | `02_external/Dynamic-Pokemon-Expansion-Gen-9/scripts/tm_tutor.py`, `src/tm_compatibility/`, `src/tutor_compatibility/`, `src/TM_Tutor_Tables.c`, `include/tutors.h` | 128 TM/HM, 152 Move Tutors und by-move organisierte Kompatibilitaetsdaten |
+| CFRU Trainer | `02_external/CFRU-expansion/src/Tables/trainer_data.c`, `src/Tables/trainer_parties.h`, `src/Tables/trainers_with_evs_table.h`, `src/build_pokemon.c` | Trainerdaten, Parties, EV-/IV-/Ability-Spreads und Runtime-Erzeugung |
+| CFRU Pokemon/Abilities | `02_external/CFRU-expansion/src/Tables/pokemon_tables.c`, `src/Tables/level_up_learnsets.c`, `src/ability_util.c`, `include/new/ability_util.h` | CFRU-Tabellen und Runtime-Ability-Kontext |
+| CFRU TM/Tutor | `02_external/CFRU-expansion/include/constants/tmshms.h`, `include/constants/tutors.h`, `src/tm_case.c` | erweiterter TM-/Tutor-Kontext |
+
+Ergebnis:
+
+- Starters, Static Pokemon/Gifts und Trainer Pokemon lesen Species aus internen ROM-Werten, schreiben aber weiterhin ueber `pokedexToInternal[Species.number]`.
+- Diese drei Pfade sind die kleinsten Kandidaten fuer praktische P1-Diagnosen und spaetere interne-ID-Fixes.
+- Evolutions, Learnsets, TM/HM, Tutor und Abilities brauchen zuerst mehr Datenmodellierung, weil Quelle, Tabellenbreite, Hidden Ability und Map-Key-Semantik ueber einen kleinen Wild-Write-aehnlichen Patch hinausgehen.
+- Empfohlener naechster Diagnosebranch ist `analysis/upr-fvx-cfru-dpe-p1-starter-write-diagnostics`.
+
 ## Regel
 
 Vor produktiver Nutzung müssen Branch, Commit-Hash, lokaler Pfad und Zweck im Tool-Manifest festgehalten werden.

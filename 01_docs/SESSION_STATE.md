@@ -27,42 +27,42 @@
 
 ## Aktueller Branch
 
-`analysis/upr-fvx-cfru-dpe-p1-encounter-systems`
+`analysis/upr-fvx-cfru-dpe-p1-species-write-paths`
 
 ## Aktueller Arbeitsblock
 
-Read-only Diagnose und Abgrenzung der CFRU/DPE Encounter-Systeme nach abgeschlossenem P0.
+Read-only Diagnose der Species-Schreibpfade ausserhalb von Standard-Wild nach abgeschlossenem P0.
 
 ## Ziel
 
 Konkret klaeren:
 
-- welche CFRU/DPE-Encounter-Systeme existieren
-- welche FVX aktuell randomisiert
-- welche Systeme nach P0 supported, partial, unsupported oder separat zu fixen sind
-- ob der naechste Fix Day/Night Custom Wildtables oder zuerst weitere P1-Species-Schreibpfade sein sollte
+- welche P1-Pfade weiterhin `pokedexToInternal[Species.number]` oder Dex-ID-Keying verwenden
+- welche Pfade wahrscheinlich denselben internen-ID-Ansatz wie der Wild-Write-Fix nutzen koennen
+- welche Pfade erst ein eigenes CFRU/DPE-Datenmodell brauchen
+- welcher praktische P1-Diagnoselauf als naechstes minimal sinnvoll ist
 
 ## In diesem Arbeitsblock geprueft / geaendert
 
-- Workspace PR #36 als gemerged geprueft und Branch `analysis/upr-fvx-cfru-dpe-p1-encounter-systems` von aktuellem `main` erstellt.
+- Workspace PR #37 als gemerged geprueft und Branch `analysis/upr-fvx-cfru-dpe-p1-species-write-paths` von aktuellem `main` erstellt.
 - UPR-FVX-Submodule steht weiter auf `compat/firered-gen9-cfru-dpe` bei `843b75a8f1016fa41a1879408fbeca45de7e030a`.
 - UPR-FVX-, CFRU-, DPE- und Referenzpfade read-only analysiert.
-- Neues Encounter-Systemmodell erstellt: `01_docs/compat/cfru-dpe-encounter-systems-model.md`.
+- Neues Species-Schreibpfadmodell erstellt: `01_docs/compat/upr-fvx-cfru-dpe-species-write-paths.md`.
 - Keine Codeaenderungen, keine Builds, keine ROM-Zugriffe und keine funktionalen Fixes vorgenommen.
-- Keine Day/Night-Wildtable-, Swarm-, Roamer-, DexNav-, Raid-, Nullslot-, Trainer-, Starter-, Evolution-, Learnset-, TM- oder Tutor-Fixes umgesetzt.
+- Keine Starter-, Static-, Trainer-, Evolution-, Learnset-, TM-, Tutor-, Ability-, Day/Night-Wild-, Swarm-, Roamer-, DexNav-, Raid- oder Nullslot-Fixes umgesetzt.
 - Keine ROMs, Saves, Emulator States, Tool-Binaries oder privaten Pfade committed.
 
 ## Ergebnis
 
-- P0-supported sind Standard-Wild/Grass-Cave, Surfing, Fishing und Rock Smash aus `gWildMonHeaders`.
-- CFRU Morning/Day/Evening/Night-Header koennen Fallback-Wilddaten zur Laufzeit uebersteuern und bleiben P2.
-- Swarms, Roamers, DexNav, Wild Double Battles, Raids, Altering Cave und Tanoby/Unown sind partial oder unsupported und brauchen getrennte Behandlung.
-- Empfehlung: naechsten echten Fix nicht Day/Night starten, sondern zuerst P1-Species-Schreibpfade fuer Trainer, Starters, Static Pokemon, Evolutions und Learnsets read-only diagnostizieren.
+- Starters, Static Pokemon/Gifts und Trainer Pokemon lesen Species als interne IDs, schreiben aber weiterhin ueber `pokedexToInternal[Species.number]`.
+- Diese drei Pfade sind die kleinsten Kandidaten fuer praktische P1-Diagnoselaeufe und spaetere kleine interne-ID-Fixes.
+- Evolutions, Learnsets, TM/HM, Tutor und Ability-Pfade brauchen vor einem Fix mehr Datenmodellierung, weil Quelle, Tabellenbreite, Map-Keys, Hidden Ability und DPE/CFRU-Konfiguration eine groessere Rolle spielen.
+- Empfehlung: erster praktischer P1-Diagnoselauf ist Starters-only.
 
 ## Noch nicht gestartet
 
-- P1-Diagnose fuer Trainer-/Starter-/Static-/Evolution-/Learnset-Schreibpfade
-- Trainer-/Starter-/Evolution-/Learnset-Diagnosen nach PR #3
+- Praktische P1-Diagnoselaeufe fuer Starters, Static/Gifts und Trainer-Species
+- Evolution-/Learnset-/TM-/Tutor-/Ability-Datenmodellierung nach der Schreibpfadmatrix
 - CFRU-Day/Night-Custom-Wild-Tabellen-Support
 - Nullslot-`<unknown>`-Analyse
 - Ironmon-Tracker-Tests
@@ -95,6 +95,6 @@ git diff --check
 
 ## Naechster empfohlener Branch
 
-`analysis/upr-fvx-cfru-dpe-p1-encounter-systems`
+`analysis/upr-fvx-cfru-dpe-p1-starter-write-diagnostics`
 
-Zweck: Weitere Gen3-Schreibpfade fuer erweiterte CFRU/DPE-BPRE-Hacks getrennt diagnostizieren, insbesondere Trainer, Starters, Static Pokemon, Evolutions und Learnsets. Keine Day/Night-Wildtable- oder Nullslot-Fixes in diesem Folgeblock.
+Zweck: Starters-only Diagnose fuer erweiterte CFRU/DPE-BPRE-Hacks. Pruefen, ob Gen4+-Starter nach Randomizer-Write und Reload als interne Species-ID erhalten bleiben. Keine Static-, Trainer-, Evolution-, Learnset-, TM-, Tutor-, Ability-, Day/Night-Wild- oder Nullslot-Fixes in diesem Folgeblock.
