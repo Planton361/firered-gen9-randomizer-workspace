@@ -2,31 +2,24 @@
 
 ## Aktueller Arbeitsblock
 
-Read-only Inventur der lokalen IntelliJ-/JetBrains-MCP-Verfuegbarkeit dokumentieren.
+P0-GenRestrictions-Fix fuer erweiterte CFRU/DPE-BPRE-Hacks abschliessen und diagnostisch dokumentieren.
 
 Aktueller Branch:
 
 ```text
-setup/intellij-mcp-readonly-check
+analysis/upr-fvx-cfru-dpe-gen-restrictions
 ```
 
 Zieldokumente:
 
 ```text
-01_docs/setup/mcp-policy.md
-01_docs/setup/agent-tooling-policy.md
-01_docs/references/tool-manifest.md
-01_docs/SESSION_STATE.md
-01_docs/NEXT_STEPS.md
-00_project-control/roadmap/roadmap-status.md
+08_tests/randomizer/upr-fvx-cfru-dpe-gen-restrictions-diagnostics-run.md
 ```
 
 ## Naechste Schritte in diesem Block
 
 1. Dokumentation reviewen:
-   - `01_docs/setup/mcp-policy.md`
-   - `01_docs/setup/agent-tooling-policy.md`
-   - `01_docs/references/tool-manifest.md`
+   - `08_tests/randomizer/upr-fvx-cfru-dpe-gen-restrictions-diagnostics-run.md`
    - `01_docs/SESSION_STATE.md`
    - `01_docs/NEXT_STEPS.md`
    - `00_project-control/roadmap/roadmap-status.md`
@@ -43,40 +36,31 @@ git diff --check
 3. Commit erstellen:
 
 ```text
-docs: document IntelliJ MCP readiness
+docs: record CFRU DPE gen restrictions diagnostics
 ```
 
 4. Branch pushen und Workspace-PR nach `main` vorbereiten.
-
-## Ergebnis dieses Blocks
-
-- IntelliJ IDEA ist lokal ueber JetBrains Toolbox auffindbar.
-- Gefundene Version: IntelliJ IDEA 2026.2 EAP, Build `IU-262.4852.50`.
-- Die Mindestanforderung 2025.2 ist erfuellt.
-- JetBrains MCP Server ist als gebuendeltes IDE-Plugin vorhanden.
-- `Settings | Tools | MCP Server` ist in der lokalen IDE-Distribution als Settings-Pfad erkennbar.
-- Codex-Auto-Configuration ist in der lokalen MCP-Server-Distribution erkennbar.
-- Es wurde keine MCP-Konfiguration aktiviert, geaendert oder committed.
-- Kuenftige Nutzung bleibt optional, read-only und nicht blockierend; Codex bleibt Git/`rg`-first.
 
 ## Danach
 
 Naechster minimaler UPR-FVX-Fixbranch:
 
 ```text
-compat/upr-fvx-cfru-dpe-gen-restrictions
+compat/upr-fvx-cfru-dpe-wild-internal-species-write
 ```
 
 Ziel:
 
-- Fuer erweiterte CFRU/DPE-aehnliche BPRE-Hacks die Gen3-Kappung im finalen Randomizer-Pool verhindern.
-- Der RomHandler-Pool aus PR #3 soll im finalen Wild-Randomizer-Pool Gen4+-Species zulassen.
-- Der Fix soll nur Settings/Restrictions betreffen.
-- Danach denselben Gen4+-Wild-Pool-Diagnoselauf wiederholen.
+- Gen3/CFRU-DPE-Wild-Encounter-Schreibpfade pruefen, die aktuell `pokedexToInternal[enc.getSpecies().getNumber()]` nutzen.
+- Fuer erweiterte BPRE-Hacks soll die interne Species-Identitaet beim Schreiben/Reload erhalten bleiben.
+- Der Fix darf keine CFRU-Day/Night-Wildtables, Nullslot-Logik oder Trainer-/Starter-/Evolution-/Learnset-/TM-/Tutor-Themen vermischen.
+- Danach denselben Wild-Diagnoselauf wiederholen und sichtbare Gen4+-Wild-Encounter pruefen.
 
 ## Fix-Reihenfolge
 
-P0: GenRestrictions / finaler Gen4+ Wild-Pool.
+P0: GenRestrictions / finaler Gen4+ Allowed-Pool.
+
+P0b: Gen3/CFRU-DPE-Wild-Write-Mapping fuer interne Species-Identitaet.
 
 P1: Trainer, Starters, Evolutions, Learnsets und TM/Tutor-Kompatibilitaet.
 
@@ -91,10 +75,10 @@ P4: BizHawk/Ironmon Tracker/RAM-Mapping.
 - keine ROMs bewegen
 - keine ROMs lesen, kopieren oder aendern
 - keine Saves oder Emulator States anfassen
-- keine Builds starten oder committen
+- keine Builds committen
 - keine Randomizer-JARs oder Tool-Binaries anfassen oder committen
-- keine Codeaenderungen in `02_external/**` in diesem Analysebranch
-- keinen GenRestrictions-Fix in diesem Branch
+- keine weiteren Codeaenderungen in `02_external/**` in diesem Workspace-Dokumentationscommit
+- keinen weiteren GenRestrictions-Fix in diesem Branch
 - keine Day/Night-Wild-Fixes
 - keine Nullslot-Fixes
 - keine Trainer-/Starter-/Evolution-/Learnset-/TM-/Tutor-Fixes
@@ -104,8 +88,6 @@ P4: BizHawk/Ironmon Tracker/RAM-Mapping.
 - keine Installationen erzwingen
 - keine GitHub-Tokens oder lokale Secrets dokumentieren
 - keine MCP-Configs mit Secrets committen
-- keine MCP-Config ohne separaten Freigabe-Block aktivieren oder committen
-- JetBrains MCP nicht fuer Schreibaktionen, Terminalbefehle, Builds, Run Configurations, Patch-Anwendung oder Refactorings nutzen
 - keine parallelen Agenten auf demselben Branch einsetzen
 
 ## Quality

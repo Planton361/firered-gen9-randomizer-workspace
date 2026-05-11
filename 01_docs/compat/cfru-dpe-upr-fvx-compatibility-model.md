@@ -30,9 +30,11 @@ Workspace-Protokolle:
 - `08_tests/randomizer/upr-fvx-cfru-dpe-generation-mapping-fix.md`
 - `08_tests/randomizer/upr-fvx-cfru-dpe-generation-mapping-diagnostics-run.md`
 - `08_tests/randomizer/upr-fvx-gen4plus-wild-pool-diagnostics.md`
+- `01_docs/compat/cfru-documentation-randomizer-relevance.md`
 
 CFRU/DPE Source-of-Truth-Pfade:
 
+- `02_external/CFRU-expansion/CFRU Documentation.pdf`
 - `02_external/Dynamic-Pokemon-Expansion-Gen-9/README.md`
 - `02_external/Dynamic-Pokemon-Expansion-Gen-9/include/species.h`
 - `02_external/Dynamic-Pokemon-Expansion-Gen-9/include/pokedex.h`

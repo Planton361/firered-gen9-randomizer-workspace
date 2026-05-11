@@ -24,9 +24,9 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Aktueller Branch | `setup/intellij-mcp-readonly-check` |
-| Nächster Branch | `compat/upr-fvx-cfru-dpe-gen-restrictions` |
-| Aktueller Fokus | IntelliJ-/JetBrains-MCP-Readiness read-only dokumentieren |
+| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-gen-restrictions` |
+| Nächster Branch | `compat/upr-fvx-cfru-dpe-wild-internal-species-write` |
+| Aktueller Fokus | P0-GenRestrictions-Fix diagnostisch abschliessen |
 | ROM-/Build-Arbeit | Smoke-Test lokal dokumentiert; keine Artefakte committed |
 | Externe Repos | als Submodule auf Planton361-Forks eingebunden |
 | Forks | Planton361-Forks fuer UPR-FVX, DPE Gen9 und CFRU dokumentiert |
@@ -58,30 +58,32 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | 08 Randomizer-Kompatibilität | CFRU/DPE-Species-Identity-Fix diagnostiziert | PR #3 hebt `speciesList.size` von 412 auf 799 und `maxSpeciesIdentityNumber` auf 823 |
 | 08 Randomizer-Kompatibilität | Gen4+-Wild-Pool-Diagnose dokumentiert | All-Gens-Settings werden fuer Gen3-ROMs auf Gen1-3 gekappt; finaler Wild-Log enthaelt Gen4+ `0` |
 | 08 Randomizer-Kompatibilität | CFRU/DPE-UPR-FVX-Kompatibilitaetsmodell dokumentiert | RAM-Mapping zurueckgestellt; P0 bis P4 Fix-Reihenfolge dokumentiert |
+| 08 Randomizer-Kompatibilität | Randomizer-/NatDex-Referenzen dokumentiert | Quelleninventar, Workflowmodell und Implementierungsnotizen fuer P0/P1 festgehalten |
+| 08 Randomizer-Kompatibilität | CFRU-Documentation-Randomizer-Relevanz dokumentiert | PDF-Befunde zu Defines, Randomizer-Flags, Day/Night-Wild, Trainer-EVs, Save/RAM und Roadmap-Folgen festgehalten |
 
 ## In Review/Test
 
 | Paket | Aufgabe | Prüfpunkte |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | UPR-FVX Gen-Restrictions-Folgefix planen | `Settings.tweakForRom()`/`RestrictedSpeciesService` begrenzen erweiterte BPRE-Hacks noch auf Gen1-3 |
+| 08 Randomizer-Kompatibilität | UPR-FVX Gen-Restrictions-Folgefix | PR #4 offen; finaler `RestrictedSpeciesService`-Pool enthaelt nach Fix Gen4+-Species bei `limitPokemon=false` |
 
 ## In Arbeit
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 06 Toolchain | IntelliJ MCP Readiness dokumentieren | Klaeren, ob JetBrains MCP kuenftig optional fuer read-only Codex-Codebase-Analyse nutzbar ist |
+| 08 Randomizer-Kompatibilität | GenRestrictions-Diagnoselauf dokumentieren | P0-Fixwerte, Wild-Log-Auswertung und naechsten Write-Path-Engpass festhalten |
 
 ## Als Nächstes
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Gen-Restrictions-Fix im UPR-FVX-Fork | Erweiterte CFRU/DPE-BPRE-Hacks duerfen nicht blind auf Gen3-Restrictions gekappt werden |
+| 08 Randomizer-Kompatibilität | Gen3/CFRU-DPE-Wild-Write-Mapping analysieren | Sichtbare Gen4+-Wild-Encounters erfordern interne Species-ID beim Schreiben/Reload |
 
 ## Noch offen
 
 | Paket | Aufgabe | Hinweise |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | GenRestrictions-/finalen Wild-Pool-Fix umsetzen | PR #3 erweitert den RomHandler-Pool; Settings/Restrictions begrenzen final noch auf Gen1-3 |
+| 08 Randomizer-Kompatibilität | Gen3/CFRU-DPE-Wild-Write-Mapping umsetzen | PR #4 erweitert den finalen Allowed-Pool; sichtbarer Wild-Log bleibt wegen Write-/Reload-Mapping Gen1-3 |
 | 08 Randomizer-Kompatibilität | DPE-Gesamtumfang/PokemonCount bewerten | lokaler Teststand meldet `PokemonCount=823`, waehrend CFRU/DPE-Quellen bis Gen9 reichen |
 | 08 Randomizer-Kompatibilität | Wild-Log-`<unknown>` aufloesen | eindeutige Rohwerte sind `rawInternalSpeciesId=0`; Nullslots separat klassifizieren |
 | 08 Randomizer-Kompatibilität | CFRU-Day/Night-Custom-Wild-Tabellen analysieren | getrennt vom Vanilla/Fallback-Wild-Pool behandeln |
@@ -96,7 +98,8 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 
 | Reihenfolge | Branch | Ziel | Grenzen |
 |---|---|---|---|
-| P0 | `compat/upr-fvx-cfru-dpe-gen-restrictions` | finalen Gen4+-Wild-Pool fuer erweiterte CFRU/DPE-BPRE-Hacks freigeben | keine Trainer-, Day/Night- oder Nullslot-Fixes im selben Schritt |
+| P0 | `compat/upr-fvx-cfru-dpe-gen-restrictions` | finalen Gen4+-Allowed-Pool fuer erweiterte CFRU/DPE-BPRE-Hacks freigeben | PR #4 offen; keine Trainer-, Day/Night- oder Nullslot-Fixes im selben Schritt |
+| P0b | `compat/upr-fvx-cfru-dpe-wild-internal-species-write` | Wild-Encounter-Schreibpfade auf interne Species-Identitaet fuer erweiterte BPRE-Hacks pruefen | keine Day/Night-Wildtables, Nullslot- oder Trainer-Fixes |
 | P1 | noch festlegen | Trainer, Starters, Evolutions, Learnsets und TM/Tutor-Kompatibilitaet diagnostizieren | besonders `pokedexToInternal[species.getNumber()]`-Schreibpfade pruefen |
 | P2 | `randomizer/cfru-day-night-wild-table-analysis` | CFRU-Custom-Day/Night-Wild-Tabellen separat untersuchen | Route-1-Fallback bleibt stabil |
 | P3 | noch festlegen | Nullslot-`<unknown>` mit `rawInternalSpeciesId=0` klassifizieren | nicht mit GenRestrictions vermischen |
@@ -118,8 +121,6 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 - ROMs bleiben in `04_private_roms/` und damit lokal/ignored.
 - Build-Ergebnisse bleiben in `05_builds/` und damit lokal/ignored.
 - Nicht parallel mehrere schreibende Agenten auf demselben Branch nutzen.
-- JetBrains MCP bleibt optional, read-only und nicht blockierend; Codex nutzt weiter Git/`rg`-first.
-- Keine Schreibaktionen, Terminalausfuehrung, Builds, Run Configurations, Patch-Anwendung oder Refactorings ueber JetBrains MCP.
 
 ## Update-Regeln
 
@@ -201,13 +202,21 @@ compat/upr-fvx-cfru-dpe-gen-restrictions
 - Ergebnis: CyanSMP64 UPR-ZX NatDex ist eine wichtige Gen8/Gen9-Restriction-Referenz; fuer den lokalen CFRU/DPE-Teststand bleibt DPE/CFRU Source-of-Truth fuer interne Species-IDs.
 - Keine Codeaenderungen, keine Builds, keine ROM-Zugriffe und keine Aenderungen in `02_external/**`.
 
-### 2026-05-11 – setup/intellij-mcp-readonly-check
+### 2026-05-11 – analysis/cfru-documentation-randomizer-relevance
 
-- Workspace `main` aktualisiert und Branch `setup/intellij-mcp-readonly-check` erstellt.
-- IntelliJ IDEA lokal read-only ueber PATH/JetBrains Toolbox geprueft.
-- Gefundene Version: IntelliJ IDEA 2026.2 EAP, Build `IU-262.4852.50`; Mindestanforderung 2025.2 erfuellt.
-- JetBrains MCP Server als gebuendeltes IDE-Plugin `com.intellij.mcpServer` gefunden.
-- Settings-Pfad `Settings | Tools | MCP Server` und Codex-Auto-Configuration lokal in der IDE-Distribution erkennbar.
-- Ergebnis: JetBrains MCP ist kuenftig optional fuer read-only Code-Navigation/Symbolsuche nutzbar, bleibt aber nicht blockierend; Codex bleibt Git/`rg`-first.
-- Keine MCP-Konfiguration aktiviert, geaendert oder committed.
-- Keine Codeaenderungen, keine Builds, keine ROM-Zugriffe und keine Tool-Binaries angefasst.
+- Workspace `main` aktualisiert und Branch `analysis/cfru-documentation-randomizer-relevance` erstellt.
+- `02_external/CFRU-expansion/CFRU Documentation.pdf` read-only ausgewertet.
+- Neues Referenzdokument erstellt: `01_docs/compat/cfru-documentation-randomizer-relevance.md`.
+- Bestehendes Kompatibilitaetsmodell um den CFRU-Doku-Querverweis ergaenzt.
+- Ergebnis: CFRU-Runtime-Randomizer-Flags, Day/Night-Wild, Swarms, Roamers, Hidden Ability, Trainer-EV-Spreads, TM/Tutor/Learnsets und Save/RAM bleiben getrennte P1/P2/P4-Themen; P0 bleibt nur GenRestrictions/finaler Gen4+-Wild-Pool.
+- Keine Codeaenderungen, keine Builds, keine ROM-Zugriffe und keine Aenderungen in `02_external/**`.
+
+### 2026-05-11 – analysis/upr-fvx-cfru-dpe-gen-restrictions
+
+- UPR-FVX Branch `compat/upr-fvx-cfru-dpe-gen-restrictions` von `compat/firered-gen9-cfru-dpe` erstellt.
+- P0-Fix umgesetzt: erweiterte CFRU/DPE-BPRE-Hacks werden in `Settings.tweakForRom()` nicht mehr blind auf Gen3 gekappt; `GameRandomizer.setupSpeciesRestrictions()` nutzt bei `limitPokemon=false` `setRestrictions(null)`.
+- UPR-FVX Commit `61a15e521811c5181025e216b3acc27340a495de` erstellt und PR #4 geoeffnet.
+- Diagnose: finaler `RestrictedSpeciesService`-Pool enthaelt bei `limitPokemon=false` Gen4+-Species (`gen4plus=381`).
+- Sichtbarer Wild-Log bleibt Gen1-3: Gen1 `841`, Gen2 `527`, Gen3 `791`, Gen4+ `0`, `<unknown>` `17`.
+- Interpretation: P0-GenRestrictions ist geloest; naechster Engpass ist wahrscheinlich der Gen3/CFRU-DPE-Wild-Write-/Reload-Pfad ueber `pokedexToInternal[Species.number]`.
+- Keine Day/Night-Wildtable-, Nullslot-, SpeciesSet-Identity-, Trainer-, Starter-, Evolution-, Learnset-, TM- oder Tutor-Fixes umgesetzt.
