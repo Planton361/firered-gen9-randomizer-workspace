@@ -3,66 +3,82 @@
 ## Stand
 
 - Lokales Git-Repo ist eingerichtet.
-- GitHub-Repo `Planton361/firered-gen9-randomizer-workspace` existiert.
+- GitHub-Repo `Planton361/firered-gen9-randomizer-workspace` existiert und bleibt Source of Truth.
 - `main` ist Default Branch und bleibt stabil.
 - Branch Protection und PR-Pflicht sind laut dokumentiertem Projektstand eingerichtet.
-- Projektkontext, Roadmap-Status, Repo-Governance, Codex-Dry-Run, externe Quellenprüfung, Workflow-Automation, Post-Merge-Doku-Sync, lokale Windows-Toolchain-Inventur, PATH-Follow-up, Linux/CachyOS-Workspace-Migration, Linux-Toolchain-Inventur, Linux-GitHub-Auth-Refresh, Agent-Best-Practices-Refresh, Post-Merge-Agent-Best-Practices-Sync und Linux-GBA-Toolchain-Plan wurden gemerged bzw. lokal übernommen.
-- PR #10 `docs: sync post-merge workflow state` ist gemerged.
-- PR #11 `docs: record local toolchain inventory` ist gemerged.
-- PR #12 `docs: prepare path toolchain followup` ist gemerged.
-- PR #17 Agent-Best-Practices-Refresh ist gemerged.
-- PR #18 Post-Merge-Agent-Best-Practices-Sync ist gemerged.
-- PR #19 Linux-GBA-Toolchain-Plan ist gemerged.
-- Nutzer hat die lokale Arbeitsumgebung von Windows auf Linux/CachyOS gewechselt.
+- Workspace-Build-/Randomizer-Smoke-Test ist auf `main` dokumentiert; letzter gepruefter Merge-Commit fuer diesen Arbeitsblock ist `5c2cc1eda7e600db461e56eac2eba2c31a575fcc`.
+- devkitPro/devkitARM wurde lokal installiert und geprueft.
+- DPE Gen9 baut erfolgreich.
+- CFRU auf DPE baut erfolgreich.
+- UPR-FVX wurde aus Source gebaut und startet.
+- UPR-FVX kann die CFRU/DPE-ROM laden, minimal randomisieren und speichern.
+- BizHawk bootet die randomisierte ROM; neues Spiel, Starterwahl und Rivalenkampf funktionieren.
+- Wild-Encounter-Randomization funktioniert fuer Vanilla-/Fallback-Encounter-Tabellen.
+- Route 1 wurde fuer den Randomizer-Kompatibilitaetsbuild per `FIRERED_GEN9_ENABLE_ROUTE1_CUSTOM_WILD 0` auf Vanilla/Fallback-Wilddaten zurueckgefuehrt.
+- Offener technischer Fokus ist jetzt der CFRU/DPE-Gen4-Gen9-Species-Pool in UPR-FVX und die `<unknown>`-Eintraege im Wild-Log.
 - ROMs, Saves, Builds, Tool-Binaries und private Dateien sind ausgeschlossen.
 
 ## Aktueller Branch
 
-`planning/workspace-build-randomizer-integration`
+`analysis/upr-fvx-cfru-dpe-species-pool`
 
 ## Aktueller Arbeitsblock
 
-Workspace-Build- und Randomizer-Integration planen, ohne Installationen, Builds, ROM-Zugriffe, externe Clones oder Forks auszuführen.
+UPR-FVX/CFRU/DPE Species-Pool read-only analysieren und als Test-/Analyseprotokoll dokumentieren.
 
 ## Ziel
 
-Konkreten Integrationsplan erstellen für:
+Konkret klaeren:
 
-- lokale private FireRed-ROM-Basis
-- devkitPro/devkitARM als spätere GBA-Build-Toolchain
-- Complete FireRed Upgrade und Dynamic Pokemon Expansion Gen9 als spaetere Build-Basis
-- Universal Pokemon Randomizer FVX als Randomizer-Kandidat
-- Zielstruktur fuer `02_external/`, `03_tools/`, `04_private_roms/`, `05_builds/` und `08_tests/`
-- Folge-Arbeitspakete bis zum ersten Build-/Randomizer-Smoke-Test
+- ob `Gen3RomHandler` die echte DPE-Species-Anzahl erkennt
+- ob `PokemonCount` korrekt erkannt oder abgeschnitten wird
+- ob Gen4-Gen9-Species geladen, aber falsch klassifiziert werden
+- ob `generationOf()` im Gen3-Handler auf Gen1-3 hardcoded ist
+- ob der Wild-Randomizer-Pool aus `RestrictedSpeciesService` und `romHandler.getSpeciesSetInclFormes()` kommt
+- warum `<unknown>`-Eintraege im Wild-Log entstehen koennen
+- welche minimale Folgeaenderung fuer saubere CFRU/DPE-Species-Pool-Diagnostik sinnvoll ist
 
-## In diesem Arbeitsblock geprüft / geändert
+## In diesem Arbeitsblock geprueft / geaendert
 
-- Branch `planning/workspace-build-randomizer-integration` wurde von aktuellem `main` erstellt.
-- `01_docs/setup/workspace-build-randomizer-integration-plan.md` wurde erstellt.
-- Workspace-Zielstruktur, Git-/Lokalgrenzen, ROM-Hash-Vorgehen, devkitPro/devkitARM-Pruefpunkte, CFRU/DPE-Gen9-Strategie und UPR-FVX-Strategie wurden geplant.
-- `01_docs/references/tool-manifest.md` wurde auf den Integrationsplan synchronisiert.
-- `01_docs/references/source-index.md` wurde um die Integrationsentscheidung und Nutzung der bestehenden Quellen ergänzt.
-- `00_project-control/roadmap/roadmap-status.md` wurde auf den aktuellen Planungsblock fortgeschrieben.
-- `01_docs/NEXT_STEPS.md` wurde auf die Folge-Arbeitspakete aktualisiert.
+- Branch `analysis/upr-fvx-cfru-dpe-species-pool` wurde von `main`-Commit `5c2cc1eda7e600db461e56eac2eba2c31a575fcc` erstellt.
+- Lokale Git-Kommandos konnten in der ChatGPT/GitHub-Connector-Umgebung nicht direkt ausgefuehrt werden, weil kein vollstaendiger Arbeitsbaum mit `.git` gemountet war.
+- Ersatzpruefung ueber GitHub: `.gitmodules` zeigt nur Planton361-Forks fuer `upr-fvx`, `Dynamic-Pokemon-Expansion-Gen-9` und `CFRU-expansion`.
+- `08_tests/session/workspace-build-randomizer-smoke-summary.md` wurde als Vorbefund gelesen.
+- `08_tests/randomizer/route-1-fallback-wild-randomizer-check.md` wurde als Route-1-Vorbefund gelesen.
+- UPR-FVX read-only analysiert:
+  - `Gen3RomHandler.java`
+  - `RestrictedSpeciesService.java`
+  - `SpeciesSet.java`
+  - `Species.java`
+  - `SpeciesIDs.java`
+  - `Gen3Constants.java`
+  - `WildEncounterRandomizer.java`
+  - `Randomizer.java`
+- DPE Gen9 read-only ueber README und dokumentierten Fork-/Branch-Kontext geprueft.
+- Neues Analyseprotokoll erstellt: `08_tests/randomizer/upr-fvx-cfru-dpe-species-pool-analysis.md`.
 - Keine ROMs, Saves, Emulator States, Builds, Tool-Binaries oder Secrets wurden angefasst.
-- Keine externen Repos wurden geklont.
-- Keine Forks wurden angelegt.
-- Keine Installationen oder Build-Schritte wurden durchgeführt.
+- Keine Builds oder Randomizer-Laeufe wurden gestartet.
+- Keine Codeaenderungen an `02_external/**` wurden vorgenommen.
+
+## Ergebnis
+
+- `Gen3RomHandler` erkennt keine echte DPE-Species-Anzahl ueber eine DPE-spezifische Metadatenquelle, sondern nutzt BPRE-Hack-Heuristiken aus Namenstabelle, Moveset-Pointern und `PokedexOrder`.
+- `PokemonCount` kann durch ungueltig wirkende Namen, Moveset-Pointer oder `PokedexOrder`-Eintraege `> 1023` abgeschnitten werden; ohne lokalen ROM-Diagnoselog ist der konkrete Ist-Wert nicht beweisbar.
+- `generationOf()` im `Gen3RomHandler` ist auf Gen1-3 hardcoded; alle National-Dex-Nummern ab `SpeciesIDs.treecko` werden als Gen3 klassifiziert.
+- `SpeciesIDs` enthaelt Gen4+-IDs; das Problem ist daher nicht fehlende ID-Konstanten, sondern Handler-/Mapping-/Generation-Logik.
+- Der Wild-Randomizer-Pool kommt ueber `WildEncounterRandomizer` -> `RestrictedSpeciesService` -> `romHandler.getSpeciesSetInclFormes()`.
+- `<unknown>` im Wild-Log ist sehr wahrscheinlich ein Null-/Fallback fuer Encounter-Species, die nicht zu einem geladenen `Species`-Objekt aufgeloest werden konnte.
+- Naechster sinnvoller Schritt ist Diagnose-Logging im UPR-FVX-Fork, bevor funktionale Randomizer-Aenderungen erfolgen.
 
 ## Noch nicht gestartet
 
-- devkitPro/devkitARM installieren
-- externe Repos klonen
-- Forks anlegen
-- UPR-FVX-JAR beschaffen oder bauen
-- UPR FVX testen
-- CFRU/DPE lokal bauen
-- private FireRed-ROM hashen
-- erste Patch-/Build-Smoke-Tests ausführen
-- Randomizer-Kompatibilität testen
-- Hex Maniac Advance prüfen
-- BizHawk/Ironmon testen
-- PR mergen
+- UPR-FVX-Codeaenderungen
+- Diagnose-Logging im UPR-FVX-Fork
+- erneuter UPR-FVX-Build
+- erneuter ROM-/Randomizer-Testlauf
+- PR im UPR-FVX-Fork
+- CFRU-Day/Night-Custom-Wild-Tabellen-Support
+- Ironmon-Tracker-Tests
 
 ## Sicherheitsstatus
 
@@ -70,33 +86,31 @@ Keine ROMs, Saves, Builds oder Tool-Binaries committed.
 
 Keine ROMs in ChatGPT hochgeladen oder gelesen.
 
-Keine externen Repos geklont.
+Keine externen Original-Upstreams kontaktiert.
 
-Keine Forks angelegt.
+Keine Aenderungen direkt auf `main`.
 
-Keine Änderungen direkt auf `main`.
-
-Keine Installationen oder Builds durchgeführt.
+Keine Installationen oder Builds durchgefuehrt.
 
 Keine MCP-Configs mit Secrets angelegt.
 
-## Nächste Prüfung
+## Naechste Pruefung
 
-Für diesen Dokumentationsblock nach den Änderungen prüfen:
+Lokal im Workspace nachziehen:
 
 ```sh
 git status --short
+git submodule status --recursive
 git diff --stat
-# falls im aktuellen Linux-Setup verfügbar:
+git diff --submodule
+# falls im aktuellen Linux-Setup verfuegbar:
 07_scripts/bootstrap/check-git-safety.ps1 oder vorhandenes Safety-Check-Fallback
 ```
 
-Hinweis: `pwsh` war im dokumentierten Linux/CachyOS-Stand nicht im PATH. Falls `pwsh` weiterhin fehlt, Safety-Check-Einschraenkung dokumentieren und lokale Fallback-Pruefung der verbotenen Pfade nutzen.
+Hinweis: In der ChatGPT/GitHub-Connector-Umgebung war kein vollstaendiger lokaler Arbeitsbaum gemountet; die lokalen Git-Checks muessen im echten Workspace verifiziert werden.
 
-Danach Branch `planning/workspace-build-randomizer-integration` reviewbar committen, pushen und als PR nach `main` führen. Nicht durch Codex mergen.
+## Naechster empfohlener Branch
 
-## Nächster empfohlener Branch
+`analysis/log-cfru-dpe-species-diagnostics`
 
-`setup/devkitpro-toolchain-install-check`
-
-Zweck: devkitPro/devkitARM installieren oder den freigegebenen Installationsweg ausführen und rein read-only pruefen. Keine Builds und keine ROM-Zugriffe.
+Zweck: Im UPR-FVX-Fork nur Diagnose-Logging fuer CFRU/DPE-Species-Count, Pokedex-/interne IDs, Generation-Verteilung und Wild-Log-`<unknown>`-Rohwerte ergaenzen. Keine funktionale Randomizer-Aenderung am Anfang.
