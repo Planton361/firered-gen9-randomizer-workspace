@@ -61,46 +61,49 @@
 - Workspace PR #60 ist gemerged; `main` pinnt `02_external/upr-fvx` auf `56ec749eca12a8637c20f943b520a9bb6a9d469a`.
 - Evolution-Species-only Diagnose auf UPR-FVX `56ec749e`: Evolution-Pool erreicht Gen1-Gen9 (`evolutionPool.size=1414`), der Pick-Pfad erreicht Gen7/8/9 (`pickedGen7plus=43`), und der Save erzeugt eine Output-ROM.
 - Evolution-Species-only bleibt fuer den getesteten CFRU/DPE-Gen9-BPRE-Stand blockiert: Direct Results meldet `logSuccessful=false` in `RandomizationLogger.evolutionMethodToString()`, Reload verliert Evolution-Eintraege und Gen8/9-Ziele, und der interne SpeciesSet-Vergleich meldet `writeReloadMismatches=146`.
+- UPR-FVX-Commit `18766c49` behebt den Evolution-Species-Write-/Reload-Pfad fuer CFRU/DPE: Evolution-Source- und Ziel-Species nutzen interne SpeciesSet-Identitaet, und der Evolution-Logger faellt bei nicht aufloesbaren ExtraInfos defensiv auf numerische Marker zurueck.
+- Lokaler Diagnosebefund nach `18766c49`: `saveSuccessful=true`, `logSuccessful=true`, Output-ROM erzeugt, Gen7/8/9-Picks sichtbar, Gen8/9-Ziele bleiben nach Reload erhalten und `writeReloadMismatches=0`.
 - ROMs, Saves, Builds, Tool-Binaries und private Dateien sind ausgeschlossen.
 
 ## Aktueller Branch
 
-`analysis/upr-fvx-cfru-dpe-p1-evolutions-species-only`
+`compat/upr-fvx-cfru-dpe-evolutions-scope-and-write`
 
 ## Aktueller Arbeitsblock
 
-P1 Evolution-Species-only Diagnose fuer CFRU/DPE.
+P1 Evolution-Scope und Species-Write fuer CFRU/DPE.
 
 ## Ziel
 
-Evolution-Species-only mit vollstaendigem Gen1-Gen9-Species-Pool diagnostizieren, ohne Codeaenderung und ohne funktionalen Fix. Wild, Starter, Static/Gift, Trainer, Learnsets, TM-/Tutor, Ability, Palette und Day/Night bleiben ausserhalb dieses Blocks.
+Evolution-Species-only fuer CFRU/DPE gezielt entblocken: Evolution-Source-/Target-Write und Reload ueber interne SpeciesSet-Identitaet absichern und den Evolution-Logger defensiv gegen nicht aufloesbare ExtraInfos machen. Wild, Starter, Static/Gift, Trainer, Learnsets, TM-/Tutor, Ability, Palette und Day/Night bleiben ausserhalb dieses Blocks.
 
 ## In diesem Arbeitsblock geprueft / geaendert
 
-- UPR-FVX PR #14 und Workspace PR #60 als gemerged geprueft.
-- `main` per Fast-Forward aktualisiert und Branch `analysis/upr-fvx-cfru-dpe-p1-evolutions-species-only` erstellt.
-- UPR-FVX-Submodule read-only geprueft: Planton361-Fork, gepinnter Commit `56ec749eca12a8637c20f943b520a9bb6a9d469a`.
-- UPR-FVX read-only gebaut: `./gradlew clean :random:jar` erfolgreich.
-- Evolution-Species-only Settings mit Seed `274269061345323` lokal ausgefuehrt.
-- Pool-, Evolution-Log- und Write/Reload-Diagnosen mit temporaerem Helper ausserhalb des Repos erstellt.
-- Neues Protokoll erstellt: `08_tests/randomizer/025_p1_evolutions_species_only.md`.
-- `08_tests/randomizer/README.md` auf Latest Nr. 025 aktualisiert.
+- Workspace PR #61 als gemerged ueber `main` per Fast-Forward uebernommen.
+- Branch `compat/upr-fvx-cfru-dpe-evolutions-scope-and-write` erstellt.
+- UPR-FVX-Submodule geprueft: Planton361-Fork, Basis-Commit `56ec749eca12a8637c20f943b520a9bb6a9d469a`.
+- UPR-FVX-Branch `compat/upr-fvx-cfru-dpe-evolutions-scope-and-write` erstellt.
+- Minimaler UPR-FVX-Fix umgesetzt: Evolution-Source- und Ziel-Species im erweiterten CFRU/DPE-BPRE-Modus ueber interne SpeciesSet-Identitaet; defensiver Evolution-Logger fuer nicht aufloesbare Item-/Move-/Species-/Location-ExtraInfos.
+- UPR-FVX-Commit erstellt: `18766c4986db091d1e669c71302aa295195b039b`.
+- Evolution-Species-only Settings mit Seed `274269061345323` lokal erneut ausgefuehrt.
+- Neues Protokoll erstellt: `08_tests/randomizer/026_evolutions_scope_write_diagnostics.md`.
+- `08_tests/randomizer/README.md` auf Latest Nr. 026 aktualisiert.
 
 ## Ergebnis
 
 - Species-Coverage bleibt stabil: `PokemonCount=1439`, `speciesList.size=1415`, `maxSpeciesIdentityNumber=1439`, Gen7/8/9 sichtbar.
 - Evolution-Pool enthaelt Gen1-Gen9: `evolutionPool.size=1414`.
-- Evolution-Randomization pickt Gen7/8/9-Ziele: `after.pickedGen7plus=43`, `after.toGenerationCounts={1=35, 2=16, 3=24, 4=30, 5=20, 6=22, 7=18, 8=13, 9=12}`.
-- Save gelingt: `saveSuccessful=true`, Output-ROM erzeugt.
-- CLI-Log ist nicht leer und enthaelt Evolution-Beispiele wie `Silvally`, `Tapu Fini`, `Meltan`, `Eldegoss`, `Klawf` und `Maushold`.
-- Direct Results meldet `logSuccessful=false` wegen `IndexOutOfBoundsException` in `RandomizationLogger.evolutionMethodToString()`.
-- Write/Reload ist nicht stabil: Reload faellt auf `129` Evolution-Eintraege, Gen8/9-Ziele fehlen, `writeReloadMismatches=146`.
-- Evolution-Species-only ist damit fuer den getesteten CFRU/DPE-Gen9-BPRE-Stand noch nicht P1-supported.
+- Interner Evolution-Source-Index liest `218` Evolution-Eintraege ueber `190` Quell-Species.
+- Evolution-Randomization pickt Gen7/8/9-Ziele: `after.pickedGen7plus=51`, `after.toGenerationCounts={1=44, 2=19, 3=26, 4=26, 5=25, 6=27, 7=22, 8=15, 9=14}`.
+- Save und Log gelingen: `saveSuccessful=true`, `logSuccessful=true`, Output-ROM erzeugt und Log nicht leer.
+- CLI-Log enthaelt Evolution-Beispiele wie `Silvally`, `Tapu Fini`, `Meltan`, `Eldegoss`, `Klawf` und `Maushold`.
+- Evolution-Logger nutzt zwei Fallbacks fuer `unknown item #1732` statt zu crashen.
+- Write/Reload ist stabil: Reload enthaelt Gen7/8/9-Ziele und `writeReloadMismatches=0`.
+- Evolution-Species-only ist damit fuer den getesteten CFRU/DPE-Gen9-BPRE-Stand P1-supported.
 
 ## Noch nicht gestartet
 
 - Separates DPE/CFRU-Learnset-Profil fuer `gLevelUpLearnsets`
-- Evolution-Scope-/Write-Fix fuer interne SpeciesSet-Identitaet und defensives Evolution-Logging
 - Praktische P1-Diagnoselaeufe fuer Trainer-Species-Movesets, Held Items und Folgepfade
 - Learnset-/TM-/Tutor-/Ability-Datenmodellierung nach der Schreibpfadmatrix
 - CFRU-Day/Night-Custom-Wild-Tabellen-Support
@@ -119,13 +122,13 @@ Keine externen Original-Upstreams kontaktiert.
 
 Keine Aenderungen direkt auf `main`.
 
-Keine Workspace-Codeaenderungen ausser Dokumentation. Keine Aenderungen in `02_external/**`.
+UPR-FVX wurde im Planton361-Fork-Submodule gezielt geaendert. Workspace-Aenderungen ausser dem Submodule-Gitlink sind Dokumentation.
 
 Keine MCP-Configs mit Secrets angelegt.
 
 ## Naechste Pruefung
 
-Lokal im Workspace nach den Dokumentationsaenderungen pruefen:
+Lokal im Workspace nach den Submodule- und Dokumentationsaenderungen pruefen:
 
 ```sh
 git status --short
@@ -137,6 +140,6 @@ git diff --check
 
 ## Naechster empfohlener Branch
 
-`compat/upr-fvx-cfru-dpe-evolutions-scope-and-write`
+`analysis/upr-fvx-cfru-dpe-p1-trainer-movesets-or-held-items`
 
-Zweck: Evolution-Species-Scope, Evolution-Species-Write/Reload und Evolution-Log defensiv fuer CFRU/DPE absichern, ohne Wild-, Starter-, Static/Gift-, Trainer-, Learnset-, TM-/Tutor-, Ability- oder Palette-Pfade zu veraendern.
+Zweck: Nach Review/Merge des Evolution-Fixblocks den naechsten kleinsten P1-Trainer-Folgepfad diagnostizieren, ohne Learnset-, TM-/Tutor-, Ability-, Palette-, Wild-, Starter-, Static/Gift- oder Evolution-Fixes im selben Block.

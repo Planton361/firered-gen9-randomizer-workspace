@@ -52,20 +52,21 @@ Der neueste bestaetigte Stand wird in Markdown ueber die Spalte `Latest` markier
 | 022 | `022_static_gift_scope_write_diagnostics.md` | Static/Gift-Scope und interner Species-Write fuer CFRU/DPE | bestaetigt: `saveSuccessful=true`, nichtleerer Static/Gift-Log, Gen7/8/9-Picks, `writeReloadMismatches=0` | `05_builds/randomizer-smoke/022_static_gift_scope_write/` lokal/ignored | nein |
 | 023 | `023_p1_trainer_species_only.md` | Trainer-Species-only Diagnose mit Gen1-Gen9-Pool | blockiert: Trainer-Pool Gen1-Gen9 vorhanden, aber `randomizeTrainerPokes()` haengt in `getRandomAbilitySlot()` auf Zero-Ability-Sonder-Species | `05_builds/randomizer-smoke/023_p1_trainer_species_only/` lokal/ignored | nein |
 | 024 | `024_trainer_scope_write_diagnostics.md` | Trainer-Scope und interner Species-Write fuer CFRU/DPE | bestaetigt: `saveSuccessful=true`, nichtleerer Trainer-Log, Gen7/8/9-Picks, `writeReloadMismatches=0` | `05_builds/randomizer-smoke/024_trainer_scope_write/` lokal/ignored | nein |
-| 025 | `025_p1_evolutions_species_only.md` | Evolution-Species-only Diagnose mit Gen1-Gen9-Pool | blockiert: Evolution-Pool Gen1-Gen9 vorhanden, Save erzeugt Output-ROM, aber Log-Fehler und `writeReloadMismatches=146` | `05_builds/randomizer-smoke/025_p1_evolutions_species_only/` lokal/ignored | ja |
+| 025 | `025_p1_evolutions_species_only.md` | Evolution-Species-only Diagnose mit Gen1-Gen9-Pool | blockiert: Evolution-Pool Gen1-Gen9 vorhanden, Save erzeugt Output-ROM, aber Log-Fehler und `writeReloadMismatches=146` | `05_builds/randomizer-smoke/025_p1_evolutions_species_only/` lokal/ignored | nein |
+| 026 | `026_evolutions_scope_write_diagnostics.md` | Evolution-Scope und interner Species-Write fuer CFRU/DPE | bestaetigt: `saveSuccessful=true`, `logSuccessful=true`, Gen7/8/9-Picks, `writeReloadMismatches=0` | `05_builds/randomizer-smoke/026_evolutions_scope_write/` lokal/ignored | ja |
 
 ## Aktuell bestaetigter Stand
 
-Latest ist Nr. 025: Evolution-Species-only Diagnose mit Gen1-Gen9-Pool.
+Latest ist Nr. 026: Evolution-Scope und interner Species-Write fuer CFRU/DPE.
 
 Kernaussagen:
 
 - `PokemonCount=1439`
 - Evolution-Pool: `evolutionPool.size=1414`, Gen1-Gen9 enthalten
-- Evolution-Picks erreichen Gen7/8/9: `pickedGen7plus=43`
-- `saveSuccessful=true`, Output-ROM erzeugt, CLI-Log nicht leer
-- Direct Results meldet `logSuccessful=false` durch `IndexOutOfBoundsException` in `RandomizationLogger.evolutionMethodToString()`
-- Write/Reload ist nicht stabil: `writeReloadMismatches=146`, Gen8/9-Ziele verschwinden im Reload
+- Evolution-Picks erreichen Gen7/8/9: `after.pickedGen7plus=51`
+- `saveSuccessful=true`, `logSuccessful=true`, Output-ROM erzeugt, CLI-Log nicht leer
+- Logger-Fallbacks fuer nicht aufloesbare Evolution-ExtraInfos blockieren den Log nicht mehr
+- Write/Reload ist stabil: `writeReloadMismatches=0`, Gen8/9-Ziele bleiben nach Reload erhalten
 
 ## Lokale Artefaktpflege
 
