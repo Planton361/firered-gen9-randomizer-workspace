@@ -67,6 +67,18 @@ Arbeitsblock: `analysis/randomizer-natdex-reference-sources`.
 | `05_builds/` | CFRU/DPE-Build-Ausgaben, gepatchte GBA, lokale Logs | lokal/ignored, nicht committen |
 | `08_tests/` | Smoke-Test-Protokolle ohne ROM-Inhalte | committen |
 
+## Randomizer-Smoke-Artefaktkonvention
+
+Arbeitsblock: `maintenance/randomizer-smoke-artifact-cleanup`.
+
+| Pfad | Zweck | Git-Regel |
+|---|---|---|
+| `08_tests/randomizer/README.md` | Index, Nummerierung und Latest-Markierung fuer Randomizer-Smoke-Protokolle | committen |
+| `08_tests/randomizer/NNN_<kurzer-zweck>.md` | neue dauerhafte Randomizer-Smoke-Protokolle | committen |
+| `05_builds/randomizer-smoke/NNN_<kurzer-zweck>/` | lokale ROM-/Log-/Output-Artefakte passend zum Protokoll | lokal/ignored, nicht committen |
+
+Bestehende unnummerierte Protokolle unter `08_tests/randomizer/` bleiben vorerst unveraendert und werden ueber die README-Tabelle eingeordnet. Der neueste bestaetigte Stand wird in Markdown als `Latest` markiert; ein lokaler `latest`-Symlink ist nicht erforderlich.
+
 ## UPR-FVX Source Build
 
 | Thema | Stand |
