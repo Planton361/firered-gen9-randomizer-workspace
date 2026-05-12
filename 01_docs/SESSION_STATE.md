@@ -25,49 +25,50 @@
 - Der Post-Merge-P0-Smoke auf UPR-FVX Merge-Commit `843b75a8` bestaetigt die Fixkette PR #3/#4/#5: sichtbarer Wild-Log Gen1 `354`, Gen2 `388`, Gen3 `404`, Gen4 `398`, Gen5 `528`, Gen6 `104`, `<unknown>` `0`.
 - UPR-FVX PR #6 ist gemerged; der Starter-Write-Fix schreibt Starter fuer erweiterte BPRE-Hacks ueber interne SpeciesSet-Identitaet und erhaelt Pawniard/Scraggy im Reload.
 - Gen9-Species-Coverage ist read-only analysiert: DPE/CFRU-Source reicht bis `SPECIES_PECHARUNT = 0x59F` / `NUM_SPECIES = 1440`, der aktuelle FVX-Load bleibt aber bei `PokemonCount=823` und erreicht damit keine Gen7-Gen9-Species.
+- UPR-FVX PR #7 ist offen; temporaere `[CFRU-DPE-COUNT-DIAG]`-Ausgaben belegen im lokalen CFRU/DPE-Teststand die konkrete `PokemonCount=823`-Kappung.
+- Lokale Count-Diagnose: `PokemonNames` erreicht ID `1439` / Pecharunt, der Moveset-Check kappt `1439 -> 930`, und der `PokedexOrder`-Check kappt wegen `pdEntry=1808` bei interner ID `824` final auf `823`.
 - ROMs, Saves, Builds, Tool-Binaries und private Dateien sind ausgeschlossen.
 
 ## Aktueller Branch
 
-`analysis/upr-fvx-cfru-dpe-gen9-species-coverage`
+`analysis/upr-fvx-cfru-dpe-pokemon-count-cutoff-diagnostics`
 
 ## Aktueller Arbeitsblock
 
-Read-only Gen9-Species-Coverage-Diagnose fuer den aktuellen CFRU/DPE-Teststand.
+Dokumentation der lokalen UPR-FVX-Count-Abbruchdiagnose fuer den aktuellen CFRU/DPE-Teststand.
 
 ## Ziel
 
-Konkret klaeren:
+Konkret dokumentieren:
 
-- welchen Species-Umfang DPE Gen9 und CFRU-expansion im Source definieren
-- warum UPR-FVX im aktuellen Diagnosebefund nur `PokemonCount=823` laedt
-- welche Rolle `PokemonNames`, `PokemonMovesets`, `PokedexOrder`, `PokemonStats`, `SpeciesIDs.java` und `GenRestrictions` spielen
-- welche naechste lokale ROM-Diagnose die konkrete Count-Abbruchursache klaeren muss
+- welche temporaeren UPR-FVX-Diagnoseausgaben fuer `basicBPRE10HackSupport()` ergaenzt wurden
+- welcher Tabellencheck den finalen `PokemonCount=823` verursacht
+- welche Diagnosewerte fuer interne IDs `800..900` und `1000..1050` sichtbar sind
+- welche Folgeanalyse vor einem Gen9-Fix noetig ist
 
 ## In diesem Arbeitsblock geprueft / geaendert
 
-- Workspace `main` per Fast-Forward geprueft und Branch `analysis/upr-fvx-cfru-dpe-gen9-species-coverage` erstellt.
-- DPE/CFRU-Header und Tabellen read-only geprueft: `SPECIES_ROWLET = 0x3AB`, `SPECIES_GROOKEY = 0x44E`, `SPECIES_SPRIGATITO = 0x50E`, `SPECIES_PECHARUNT = 0x59F`, `NUM_SPECIES = SPECIES_PECHARUNT + 1`.
-- DPE/CFRU-Pokedex-Konstanten read-only geprueft: National-Dex bis Terapagos `1024` und Pecharunt `1025`.
-- DPE/CFRU-Tabellen-Coverage read-only geprueft: BaseStats, Learnsets, Species-to-Dex und Pokedex-Orders enthalten Gen7-Gen9-Belege.
-- UPR-FVX `Gen3RomHandler.basicBPRE10HackSupport()` read-only analysiert: `PokemonCount` entsteht aus Name-Scan, Moveset-Pointer-Kappung und PokedexOrder-Sanity.
-- UPR-FVX `SpeciesIDs.java`, `generationOf()` und `GenRestrictions` read-only geprueft.
-- CyanSMP64 NatDex-Strategie read-only verglichen.
-- Neues Analysemodell erstellt: `01_docs/compat/upr-fvx-cfru-dpe-gen9-species-coverage.md`.
-- Keine Codeaenderungen, keine Builds, keine ROM-Zugriffe und keine Aenderungen in `02_external/**` umgesetzt.
+- Workspace `main` per Fast-Forward geprueft und Branch `analysis/upr-fvx-cfru-dpe-pokemon-count-cutoff-diagnostics` erstellt.
+- UPR-FVX-Submodule `origin` als `Planton361/universal-pokemon-randomizer-fvx` geprueft.
+- UPR-FVX-Basisbranch `compat/firered-gen9-cfru-dpe` aktualisiert und Branch `analysis/upr-fvx-cfru-dpe-pokemon-count-cutoff-diagnostics` erstellt.
+- In UPR-FVX nur `romio/src/main/java/com/uprfvx/romio/romhandlers/Gen3RomHandler.java` geaendert.
+- Temporaere stderr-Diagnose `[CFRU-DPE-COUNT-DIAG]` in `basicBPRE10HackSupport()` ergaenzt; keine funktionale Count-Logik geaendert.
+- UPR-FVX mit `./gradlew clean :random:jar` erfolgreich gebaut.
+- Lokalen CFRU/DPE-Teststand nur bis ROM-Load/Randomizer-CLI-Diagnose ausgefuehrt; lokale Artefakte blieben unter `05_builds/**` und wurden nicht committed.
+- Ergebnisdokument erstellt: `08_tests/randomizer/upr-fvx-cfru-dpe-pokemon-count-cutoff-diagnostics.md`.
 
 ## Ergebnis
 
-- Erwarteter Source-Umfang: DPE/CFRU bis `SPECIES_PECHARUNT = 0x59F` und `NUM_SPECIES = 1440` interne Slots.
-- Tatsaechlicher FVX-Load-Umfang: `PokemonCount=823`, `speciesList.size=799`, sichtbarer Pool Gen1-Gen6, Gen7+ `0`.
-- `PokemonCount=823` liegt bei interner ID `0x337`; `SPECIES_XERNEAS = 0x338` waere bereits ausserhalb des Loads, Gen7 startet erst bei `SPECIES_ROWLET = 0x3AB`.
-- Wahrscheinlichster Engpass ist die FVX-BPRE-Hack-Heuristik vor dem eigentlichen Species-Load: `PokemonNames`, `PokemonMovesets` oder `PokedexOrder` kappt den Count.
-- `SpeciesIDs.java` kennt Gen8/Gen9 und `generationOf()` kann Gen9 klassifizieren, sobald Species geladen sind; `GenRestrictions.MAX_GENERATION=7` bleibt aber ein spaeteres Gen9-Settings-Risiko.
-- Naechste Diagnose muss lokal mit ROM den konkreten Count-Abbruchgrund loggen.
+- Direkte Cutoff-Ursache: `PokedexOrder` liefert bei interner ID `824` den Wert `1808`; die aktuelle FVX-Heuristik `pdEntry > 1023` setzt deshalb `iPokemonCount = 823`.
+- `PokemonNames` ist nicht die Ursache: der Name-Scan erreicht `nameScanStopIndex=1440`, ID `1439` ist `Pecharunt`, Dummy-Abzug `false`.
+- `PokemonStats` ist nicht die unmittelbare Ursache: Stats sind in den Probe-Ranges ueber ID `823` hinaus plausibel lesbar.
+- `PokemonMovesets` ist ein zweiter Tabellenkompatibilitaetsbefund: der Rueckwaertscheck kappt `1439 -> 930`, erklaert aber nicht den finalen Wert `823`.
+- Tatsaechlicher FVX-Load bleibt `PokemonCount=823`, `speciesList.size=799`, `maxInternalSpeciesId=823`, `maxSpeciesNumber=411`, sichtbarer Pool Gen1-Gen6.
+- UPR-FVX PR #7 ist erstellt: `https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/7`.
 
 ## Noch nicht gestartet
 
-- Lokale Count-Abbruchdiagnose um interne IDs `820..900`
+- Fix-/Analysemodell fuer DPE/CFRU-`PokedexOrder` vs. FVX-Count-Heuristik
 - Praktische P1-Diagnoselaeufe fuer Static/Gifts und Trainer-Species
 - Evolution-/Learnset-/TM-/Tutor-/Ability-Datenmodellierung nach der Schreibpfadmatrix
 - CFRU-Day/Night-Custom-Wild-Tabellen-Support
@@ -78,13 +79,13 @@ Konkret klaeren:
 
 Keine ROMs, Saves, Builds oder Tool-Binaries committed.
 
-Keine ROMs in ChatGPT hochgeladen. In diesem Arbeitsblock wurde kein ROM gelesen.
+Keine ROMs in ChatGPT hochgeladen. In diesem Arbeitsblock wurde ein lokaler CFRU/DPE-Teststand nur fuer die Count-Diagnose gelesen; keine ROMs oder Build-Artefakte wurden committed.
 
 Keine externen Original-Upstreams kontaktiert.
 
 Keine Aenderungen direkt auf `main`.
 
-Keine Codeaenderungen in `02_external/**`.
+UPR-FVX-Codeaenderung nur im Submodule-Branch und nur temporaere Diagnoseausgabe; Workspace committed nur Dokumentation und den Submodule-Pointer.
 
 Keine MCP-Configs mit Secrets angelegt.
 
@@ -102,6 +103,6 @@ git diff --check
 
 ## Naechster empfohlener Branch
 
-`analysis/upr-fvx-cfru-dpe-pokemon-count-cutoff-diagnostics`
+Noch festzulegen.
 
-Zweck: lokale ROM-Diagnose fuer den konkreten `PokemonCount=823`-Abbruchgrund in `basicBPRE10HackSupport()`. Keine Gen9-Fixes, keine Static/Gift-Fixes und keine ROM-/Build-Artefakte committen.
+Zweck: DPE/CFRU-`PokedexOrder`-Offset und eine saubere Count-Quelle fuer Gen9-Coverage modellieren. Keine Static-/Gift-Fixes starten, bis die Count-Heuristik entschieden ist.
