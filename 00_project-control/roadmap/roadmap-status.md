@@ -24,9 +24,9 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-p1-learnsets-model` |
-| Nächster Branch | `compat/upr-fvx-cfru-dpe-trainer-movesets-learnsets` |
-| Aktueller Fokus | P1 CFRU/DPE-Learnset-Modell fuer Trainer Movesets-only |
+| Aktueller Branch | `compat/upr-fvx-cfru-dpe-trainer-movesets-learnsets` |
+| Nächster Branch | `analysis/upr-fvx-cfru-dpe-p1-trainer-movesets-combinations` |
+| Aktueller Fokus | P1 Trainer Movesets Learnsets-Fix |
 | ROM-/Build-Arbeit | lokaler Diagnose-Lauf nur unter `05_builds/**`; keine Artefakte committen |
 | Externe Repos | als Submodule auf Planton361-Forks eingebunden |
 | Forks | Planton361-Forks fuer UPR-FVX, DPE Gen9 und CFRU dokumentiert |
@@ -96,13 +96,13 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | CFRU/DPE-Learnset-Modell dokumentieren | `gLevelUpLearnsets` und FVX-`getMovesLearnt()`-Annahmen read-only klaeren |
+| 08 Randomizer-Kompatibilität | Trainer Movesets Learnsets-Fix dokumentieren | UPR-FVX- und Workspace-PR reviewen und mergen |
 
 ## Als Nächstes
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Trainer Movesets Learnset-Reader-Fix | CFRU/DPE-`gLevelUpLearnsets` minimal lesen und Trainer Movesets-only entblocken |
+| 08 Randomizer-Kompatibilität | Trainer Movesets Kombinationsdiagnosen | Gen8/9-Move-, TM/Tutor/Egg- und Held-Item-Folgerisiken pruefen |
 
 ## Noch offen
 
@@ -416,3 +416,11 @@ Zweck: Nach Review/Merge dieses Diagnoseblocks das CFRU/DPE-Level-Up-Learnset- u
 - Wild-Log enthaelt Gen7 `85`, Gen8 `126`, Gen9 `289`; `<unknown>` bleibt `0`.
 - `Bad Egg` erscheint `12` Mal und bleibt als separate Folgeauffaelligkeit offen.
 - Keine Codeaenderungen, keine neuen Fixes, keine ROMs/Builds/Tool-Binaries committed.
+
+### 2026-05-13 – compat/upr-fvx-cfru-dpe-trainer-movesets-learnsets
+
+- Branch `compat/upr-fvx-cfru-dpe-trainer-movesets-learnsets` fuer Workspace und UPR-FVX verwendet.
+- Minimaler UPR-FVX-Fix erstellt: CFRU/DPE-Level-Up-Learnsets fuer Trainer Movesets-only defensiv lesen; Learnset-Write bleibt unveraendert.
+- UPR-FVX-Commit erstellt: `655764816f9fefedb9433f33e4da0bc9d44bcda7`.
+- Diagnose 031 bestaetigt `saveSuccessful=true`, `logSuccessful=true`, Output-ROM, nichtleeren Trainer-Log und `writeReloadMismatches=0`.
+- Keine ROMs, Saves, Emulator States, Builds, Tool-Binaries, privaten Pfade, Secrets oder `.env` committed oder dokumentiert.
