@@ -4,15 +4,15 @@ Dieses Manifest dokumentiert Tools, Repos, Forks, Versionen, Pfade und Sicherhei
 
 ## Sicherheitsstatus
 
-Dieser Stand dokumentiert den Arbeitsblock `compat/upr-fvx-cfru-dpe-trainer-scope-and-write`. UPR-FVX wurde im Planton361-Fork-Submodule gezielt geaendert und gebaut; lokale ROM-/Log-/Output-Artefakte blieben ignored unter `05_builds/**` und wurden nicht committed. Tool-Binaries, Release-Assets, Secrets und private Pfade wurden nicht dokumentiert.
+Dieser Stand dokumentiert den Arbeitsblock `compat/upr-fvx-cfru-dpe-evolutions-scope-and-write`. UPR-FVX wurde im Planton361-Fork-Submodule gezielt geaendert und gebaut; lokale ROM-/Log-/Output-Artefakte blieben ignored unter `05_builds/**` und wurden nicht committed. Tool-Binaries, Release-Assets, Secrets und private Pfade wurden nicht dokumentiert.
 
 Linux/CachyOS ist die primaere lokale Umgebung. Windows-Toolchain-Befunde bleiben historischer Referenzstand und duerfen nicht als Linux-Ist-Stand verwendet werden.
 
-Der aktuelle Arbeitsblock pinnt den Workspace auf den UPR-FVX-Trainer-Scope- und Species-Write-Fix-Commit fuer CFRU/DPE.
+Der aktuelle Arbeitsblock pinnt den Workspace auf den UPR-FVX-Evolution-Scope- und Species-Write-Fix-Commit fuer CFRU/DPE.
 
 | Tool/Repo | Zweck | Upstream | Fork/Origin | Lokaler Pfad | Branch | Commit | Codex darf ändern | Status |
 |---|---|---|---|---|---|---|---|---|
-| Workspace Repo | Source of Truth | n/a | git@github.com:Planton361/firered-gen9-randomizer-workspace.git | Workspace-Root | `compat/upr-fvx-cfru-dpe-trainer-scope-and-write` | offen | ja, nur Branches | aktiv |
+| Workspace Repo | Source of Truth | n/a | git@github.com:Planton361/firered-gen9-randomizer-workspace.git | Workspace-Root | `compat/upr-fvx-cfru-dpe-evolutions-scope-and-write` | offen | ja, nur Branches | aktiv |
 | Git | Versionierung | n/a | n/a | `/usr/bin/git` | n/a | n/a | nein | gefunden: 2.54.0 |
 | GitHub CLI (`gh`) | PRs und GitHub-Checks automatisieren | https://cli.github.com/ | n/a | `/usr/bin/gh` | n/a | n/a | nein | gefunden: 2.92.0; Auth via Keyring aktiv |
 | POSIX Shell | Terminal-Standard | n/a | n/a | `/bin/fish` laut `$SHELL` | n/a | n/a | nein | primär |
@@ -43,11 +43,11 @@ Der aktuelle Arbeitsblock pinnt den Workspace auf den UPR-FVX-Trainer-Scope- und
 
 ## Lokale Submodule-Pins 2026-05-12
 
-Arbeitsblock: `compat/upr-fvx-cfru-dpe-trainer-scope-and-write`.
+Arbeitsblock: `compat/upr-fvx-cfru-dpe-evolutions-scope-and-write`.
 
 | Repo | Zweck | Origin | Lokaler Pfad | Branch | Commit | Codex darf aendern | Status |
 |---|---|---|---|---|---|---|---|
-| UPR-FVX Fork | Haupt-Randomizer-Fork | `https://github.com/Planton361/universal-pokemon-randomizer-fvx.git` | `02_external/upr-fvx` | `compat/upr-fvx-cfru-dpe-trainer-scope-and-write` | `56ec749eca12a8637c20f943b520a9bb6a9d469a` | ja, nur in diesem Branch | Trainer-Scope- und Species-Write-Fix fuer CFRU/DPE; basiert auf `009178e8` |
+| UPR-FVX Fork | Haupt-Randomizer-Fork | `https://github.com/Planton361/universal-pokemon-randomizer-fvx.git` | `02_external/upr-fvx` | `compat/upr-fvx-cfru-dpe-evolutions-scope-and-write` | `18766c4986db091d1e669c71302aa295195b039b` | ja, nur in diesem Branch | Evolution-Scope- und Species-Write-Fix fuer CFRU/DPE; basiert auf `56ec749e` |
 | CFRU-expansion Fork | CFRU/Gen9-Basis | `https://github.com/Planton361/CFRU-expansion.git` | `02_external/CFRU-expansion` | `compat/firered-gen9-randomizer` | `b885d7a974375c6c722e5698914963b82e8cdad6` | nein in diesem Block | read-only analysiert |
 | DPE Gen9 Fork | DPE/Gen9-Basis | `https://github.com/Planton361/Dynamic-Pokemon-Expansion-Gen-9.git` | `02_external/Dynamic-Pokemon-Expansion-Gen-9` | `compat/firered-gen9-randomizer` | `5906aa4d4904e41393fd9184a16951c961e96263` | nein in diesem Block | read-only analysiert |
 | CyanSMP64 UPR-ZX NatDex | NatDex-Randomizer-Referenz | `https://github.com/CyanSMP64/universal-pokemon-randomizer-zx.git` | `02_external/references/cyansmp64-upr-zx-natdex` | `natdex` | `9b63eb2876d901dc2e5af49855ae41ac255e1a72` | nein | read-only Referenz |
@@ -86,8 +86,8 @@ Bestehende unnummerierte Protokolle unter `08_tests/randomizer/` bleiben vorerst
 | Lokaler Pfad | `02_external/upr-fvx` |
 | Einbindung | Git-Submodule auf `Planton361/universal-pokemon-randomizer-fvx` |
 | Upstream | `upr-fvx/universal-pokemon-randomizer-fvx` |
-| Arbeitsbranch | `compat/upr-fvx-cfru-dpe-trainer-scope-and-write` |
-| Gepinnter Workspace-Stand | `56ec749eca12a8637c20f943b520a9bb6a9d469a` auf `compat/upr-fvx-cfru-dpe-trainer-scope-and-write`; enthaelt den CFRU/DPE-Trainer-Scope- und Species-Write-Fix auf Basis des Static/Gift-Fix `009178e8` |
+| Arbeitsbranch | `compat/upr-fvx-cfru-dpe-evolutions-scope-and-write` |
+| Gepinnter Workspace-Stand | `18766c4986db091d1e669c71302aa295195b039b` auf `compat/upr-fvx-cfru-dpe-evolutions-scope-and-write`; enthaelt den CFRU/DPE-Evolution-Scope- und Species-Write-Fix auf Basis des Trainer-Fix `56ec749e` |
 | Buildsystem | Gradle Wrapper |
 | Java | JDK 25 |
 | JAR-Build | `./gradlew :random:jar` |
