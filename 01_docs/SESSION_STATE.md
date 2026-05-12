@@ -6,50 +6,46 @@
 - GitHub-Repo `Planton361/firered-gen9-randomizer-workspace` existiert und bleibt Source of Truth.
 - `main` ist Default Branch und bleibt stabil.
 - Branch Protection und PR-Pflicht sind laut dokumentiertem Projektstand eingerichtet.
-- UPR-FVX PR #16 ist gemerged; der Trainer-Held-Items-lazy-Moveset-Fix `3864ad0e7efda4ed8a329fb22edb3a28db1040e8` ist im Planton361-Fork verfuegbar.
-- Workspace PR #65 ist gemerged; `main` enthaelt den Trainer-Held-Items-Fixdiagnosestand.
-- Trainer Movesets-only wurde auf UPR-FVX `3864ad0e7efda4ed8a329fb22edb3a28db1040e8` diagnostiziert.
+- UPR-FVX PR #17 ist gemerged; der CFRU/DPE-Trainer-Movesets-Learnset-Fix `655764816f9fefedb9433f33e4da0bc9d44bcda7` ist im Planton361-Fork verfuegbar.
+- Workspace PR #68 ist gemerged; `main` enthaelt den Trainer-Movesets-Learnset-Fixdiagnosestand.
+- Trainer Movesets-Kombinationen wurden auf UPR-FVX `655764816f9fefedb9433f33e4da0bc9d44bcda7` diagnostiziert.
 - ROMs, Saves, Builds, Tool-Binaries und private Dateien sind ausgeschlossen.
 
 ## Aktueller Branch
 
-`compat/upr-fvx-cfru-dpe-trainer-movesets-learnsets`
+`analysis/upr-fvx-cfru-dpe-p1-trainer-movesets-combinations`
 
 ## Aktueller Arbeitsblock
 
-P1 Trainer Movesets Learnsets-Fix fuer CFRU/DPE Gen9-BPRE.
+P1 Trainer Movesets Kombinationsdiagnosen fuer CFRU/DPE Gen9-BPRE.
 
 ## Ziel
 
-Trainer Movesets-only entblocken: minimal gegateter CFRU/DPE-Learnset-Reader in UPR-FVX und Diagnose 031 dokumentieren.
+Trainer Movesets-only als P1-supported Baseline in Kombinationslaeufen pruefen. Fokus: Gen8/9-Move-Datenmodell, TM/Tutor/Egg-Move-Folgerisiken und sensible movebasierte Trainer-Held-Item-Auswahl.
 
 ## In diesem Arbeitsblock geprueft / geaendert
 
-- Workspace PR #67 als gemerged geprueft.
-- Workspace-Branch `compat/upr-fvx-cfru-dpe-trainer-movesets-learnsets` verwendet; nicht auf `main` gearbeitet.
-- UPR-FVX-Fix erstellt: `655764816f9fefedb9433f33e4da0bc9d44bcda7`.
-- UPR-FVX per `./gradlew clean :random:jar` erfolgreich gebaut.
-- CFRU/DPE-Learnset-Reader und defensiver Ability-Log-Fallback in `Gen3RomHandler` umgesetzt.
-- Neues Protokoll erstellt: `08_tests/randomizer/031_trainer_movesets_learnsets_fix_diagnostics.md`.
-- `08_tests/randomizer/README.md` auf Latest Nr. 031 aktualisiert.
+- UPR-FVX PR #17 und Workspace PR #68 als gemerged geprueft.
+- Workspace-Branch `analysis/upr-fvx-cfru-dpe-p1-trainer-movesets-combinations` erstellt; nicht auf `main` gearbeitet.
+- Keine Aenderungen an `02_external/**`; UPR-FVX wurde nur read-only genutzt und gebaut.
+- Vier Kombinationslaeufe ausgefuehrt: Movesets-only, Movesets+Species, Movesets+Held Items normal, Movesets+sensible Held Items.
+- Neues Protokoll erstellt: `08_tests/randomizer/032_p1_trainer_movesets_combinations.md`.
+- `08_tests/randomizer/README.md` auf Latest Nr. 032 aktualisiert.
 
 ## Ergebnis
 
-- Move-Daten laden: `moves.total=559`.
-- Trainer-Load funktioniert: `trainers=255`, `trainerPokemon=481`, `nullSpecies=0`.
-- Vor Randomization: `before.movesetEntries=53`, `before.zeroMovePokemon=428`, `before.resetMoves=0`, `before.invalidMoves=0`, `before.unknownNamedMoves=0`.
-- Der fruehere Fehlerpfad `Gen3RomHandler.getMovesLearnt()` -> `No valid pointer at 0x25e49c` ist entblockt.
-- Direct Results: `saveSuccessful=true`, `logSuccessful=true`, `outputRomExists=true`, `logNonEmpty=true`, `directLogBytes=38171`.
-- Output-ROM und nichtleerer Trainer-Log entstehen; `Bad Egg=false`, `<unknown>=false`, Unknown-Move-Marker `false`.
-- Trainer-Movesets werden sichtbar geaendert: `beforeAfterMoveSignatureChanges=418`.
-- Write/Reload ist stabil: `writeReloadCompared=481`, `writeReloadMismatches=0`.
-- Trainer Movesets-only ist fuer den getesteten CFRU/DPE-Gen9-BPRE-Stand P1-supported auf dem Fixstand.
+- Gemeinsame Ausgangsdaten: `moves.total=559`, `trainers=255`, `trainerPokemon=481`, `before.movesetEntries=53`, `before.invalidMoves=0`.
+- Movesets-only: `saveSuccessful=true`, `logSuccessful=true`, `after/reload.movesetEntries=417`, `writeReloadMoveMismatches=0`.
+- Movesets+Species: `saveSuccessful=true`, `logSuccessful=true`, `after/reload.gen8plusSpecies=77`, `after/reload.gen9Species=38`, `writeReloadSpeciesMismatches=0`, `writeReloadMoveMismatches=0`.
+- Movesets+Held Items normal: `saveSuccessful=true`, `logSuccessful=true`, `after/reload.heldItemEntries=481`, `writeReloadHeldItemMismatches=0`, `writeReloadMoveMismatches=0`.
+- Movesets+sensible Held Items: `saveSuccessful=true`, `logSuccessful=true`, `after/reload.heldItemEntries=481`, `writeReloadHeldItemMismatches=0`, `writeReloadMoveMismatches=0`.
+- Alle Laeufe: Output-ROM entsteht, Log ist nicht leer, kein `Bad Egg`, kein `<unknown>`, keine Unknown-Move-Marker, keine invaliden Move-IDs.
+- Trainer Movesets ist in den geprueften Kombinationen P1-supported; Gen8/9-Move-Datenmodell und TM/Tutor/Egg-Move-Pfade bleiben separate Risiken.
 
 ## Noch nicht gestartet
 
-- CFRU/DPE-Level-Up-Learnset-Modell fuer `gLevelUpLearnsets`
-- Trainer-Movesets-Fix
-- Sensible movebasierte Trainer-Held-Item-Auswahl gegen CFRU/DPE-Learnsets
+- Gen8/9-Move-Datenmodell gegen CFRU/DPE `MOVES_COUNT=992`
+- TM-/Tutor-/Egg-Move-Tabellenpfade
 - Learnset-/TM-/Tutor-/Ability-Datenmodellierung nach der Schreibpfadmatrix
 - CFRU-Day/Night-Custom-Wild-Tabellen-Support
 - Nullslot-`<unknown>`-Analyse
@@ -67,7 +63,7 @@ Keine externen Original-Upstreams kontaktiert.
 
 Keine Aenderungen direkt auf `main`.
 
-Keine Aenderungen an `02_external/**`; UPR-FVX wurde nur read-only analysiert und gebaut.
+Keine Aenderungen an `02_external/**`; UPR-FVX wurde nur read-only genutzt und gebaut.
 
 Keine MCP-Configs mit Secrets angelegt.
 
@@ -85,9 +81,9 @@ git diff --check
 
 ## Naechster empfohlener Branch
 
-`analysis/upr-fvx-cfru-dpe-p1-trainer-movesets-combinations`
+`analysis/upr-fvx-cfru-dpe-p1-move-data-model`
 
-Zweck: Trainer Movesets-only als P1-supported Baseline in Kombinationslaeufen pruefen und die offenen Gen8/9-Move-, TM/Tutor/Egg- und Held-Item-Folgerisiken separat diagnostizieren.
+Zweck: Gen8/9-Move-Datenmodell, TM-/Tutor-/Egg-Move-Tabellen und Move-Listen-Coverage fuer CFRU/DPE read-only modellieren. Kein Learnset-Write und kein breiter Randomizer-Fix im selben Branch.
 
 ### 2026-05-12 – analysis/upr-fvx-cfru-dpe-p1-learnsets-model
 
@@ -112,3 +108,15 @@ Zweck: Trainer Movesets-only als P1-supported Baseline in Kombinationslaeufen pr
 - Diagnose 031: `saveSuccessful=true`, `logSuccessful=true`, Output-ROM und nichtleerer Trainer-Log entstehen.
 - Trainer-Movesets werden geschrieben und nach Reload erhalten: `after/reload.movesetEntries=417`, `writeReloadMismatches=0`.
 - Kein `Bad Egg`, kein `<unknown>`, keine Unknown-Move-Marker und keine invaliden Move-IDs im Trainerbestand.
+
+### 2026-05-13 – analysis/upr-fvx-cfru-dpe-p1-trainer-movesets-combinations
+
+- UPR-FVX PR #17 und Workspace PR #68 als gemerged geprueft.
+- Analysebranch `analysis/upr-fvx-cfru-dpe-p1-trainer-movesets-combinations` erstellt; keine Aenderungen an `02_external/**`.
+- Vier Kombinationsdiagnosen mit Seed `274269061345323` ausgefuehrt.
+- Movesets-only, Movesets+Species, Movesets+Held Items normal und Movesets+sensible Held Items melden jeweils `saveSuccessful=true`, `logSuccessful=true`, Output-ROM, nichtleeren Trainer-Log und `writeReloadMoveMismatches=0`.
+- Normale und sensible Held-Item-Kombinationen schreiben `heldItemEntries=481` und reloaden ohne Held-Item-Mismatches.
+- Movesets+Species erreicht Gen8/9-Trainer-Pokemon im geschriebenen Bestand: `after/reload.gen8plusSpecies=77`, `after/reload.gen9Species=38`.
+- Keine `Bad Egg`-/`<unknown>`-/Unknown-Move-Marker und keine invaliden Move-IDs im Trainerbestand.
+- Neues Protokoll erstellt: `08_tests/randomizer/032_p1_trainer_movesets_combinations.md`.
+- Trainer Movesets ist fuer die geprueften Kombinationen P1-supported; Gen8/9-Move-Datenmodell und TM/Tutor/Egg-Move-Pfade bleiben separate Folgerisiken.

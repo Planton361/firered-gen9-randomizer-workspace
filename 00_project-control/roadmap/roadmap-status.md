@@ -24,9 +24,9 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Aktueller Branch | `compat/upr-fvx-cfru-dpe-trainer-movesets-learnsets` |
-| Nächster Branch | `analysis/upr-fvx-cfru-dpe-p1-trainer-movesets-combinations` |
-| Aktueller Fokus | P1 Trainer Movesets Learnsets-Fix |
+| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-p1-trainer-movesets-combinations` |
+| Nächster Branch | `analysis/upr-fvx-cfru-dpe-p1-move-data-model` |
+| Aktueller Fokus | P1 Trainer Movesets Kombinationsdiagnosen |
 | ROM-/Build-Arbeit | lokaler Diagnose-Lauf nur unter `05_builds/**`; keine Artefakte committen |
 | Externe Repos | als Submodule auf Planton361-Forks eingebunden |
 | Forks | Planton361-Forks fuer UPR-FVX, DPE Gen9 und CFRU dokumentiert |
@@ -91,24 +91,25 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | 08 Randomizer-Kompatibilität | P1 Trainer Held Items-only Diagnose | Trainer-Held-Item-Pool `52` und Trainer-Load `255`/`481` bestaetigt; Lauf blockiert vor Save/Log in `getMovesLearnt()` bei `0x25e49c` |
 | 08 Randomizer-Kompatibilität | P1 Trainer Held Items lazy Moveset-/Learnset-Load | UPR-FVX `3864ad0e` bestaetigt `saveSuccessful=true`, nichtleeren Trainer-Log, `heldItemEntries=481` nach Reload und `writeReloadMismatches=0` |
 | 08 Randomizer-Kompatibilität | P1 Trainer Movesets-only Diagnose | Trainer-Load stabil, aber `TrainerMovesetRandomizer.getMoveSelectionPoolAtLevel()` blockiert vor Save/Log in `getMovesLearnt()` bei `0x25e49c` |
+| 08 Randomizer-Kompatibilität | P1 Trainer Movesets Learnsets-Fix | UPR-FVX PR #17 und Workspace PR #68 gemerged; `6557648` bestaetigt `saveSuccessful=true`, `logSuccessful=true`, `after/reload.movesetEntries=417` und `writeReloadMismatches=0` |
 
 ## In Arbeit
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Trainer Movesets Learnsets-Fix dokumentieren | UPR-FVX- und Workspace-PR reviewen und mergen |
+| 08 Randomizer-Kompatibilität | Trainer Movesets Kombinationsdiagnosen | Movesets-only als P1-supported Baseline in Kombinationen pruefen |
 
 ## Als Nächstes
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Trainer Movesets Kombinationsdiagnosen | Gen8/9-Move-, TM/Tutor/Egg- und Held-Item-Folgerisiken pruefen |
+| 08 Randomizer-Kompatibilität | Gen8/9-Move-Datenmodell | CFRU/DPE-Move-Coverage, TM-/Tutor-/Egg-Move-Pfade und FVX-Move-Liste read-only modellieren |
 
 ## Noch offen
 
 | Paket | Aufgabe | Hinweise |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Trainer-Pokémon erweitern | Trainer-Species-only und Trainer-Held-Items-only sind P1-supported; Trainer-Movesets blockiert am CFRU/DPE-Learnset-Pfad |
+| 08 Randomizer-Kompatibilität | Trainer-Pokémon erweitern | Trainer-Species-only, Trainer-Held-Items-only und Trainer-Movesets-Kombinationen sind im getesteten P1-Scope supported; Gen8/9-Move-Datenmodell bleibt separat |
 | 08 Randomizer-Kompatibilität | DPE-Gesamtumfang/PokemonCount praktisch bewerten | Count-Diagnose zeigt: Names bis Pecharunt, Movesets kappen auf 930, PokedexOrder kappt final auf 823; Modell empfiehlt Count nicht aus PokedexOrder abzuleiten |
 | 08 Randomizer-Kompatibilität | Wild-Log-`<unknown>` aufloesen | eindeutige Rohwerte sind `rawInternalSpeciesId=0`; Nullslots separat klassifizieren |
 | 08 Randomizer-Kompatibilität | CFRU-Day/Night-Custom-Wild-Tabellen analysieren | getrennt vom Vanilla/Fallback-Wild-Pool behandeln |
@@ -149,6 +150,9 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | P1j | `compat/upr-fvx-cfru-dpe-trainer-held-items-lazy-movesets` | Trainer-Held-Items entblocken | UPR-FVX `3864ad0e`; lokal bestaetigt mit `saveSuccessful=true`, `heldItemEntries=481` nach Reload und `writeReloadMismatches=0` |
 | P1k | `analysis/upr-fvx-cfru-dpe-p1-trainer-movesets-only` | Trainer-Movesets-only Diagnose | blockiert vor Save/Log in `getMovesLearnt()` bei `0x25e49c`; kein Fix |
 | P1l | `analysis/upr-fvx-cfru-dpe-p1-learnsets-model` | CFRU/DPE-Learnset-Modell analysieren | read-only Modell fuer `gLevelUpLearnsets`, bevor Trainer-Movesets-Fix versucht wird |
+| P1m | `compat/upr-fvx-cfru-dpe-trainer-movesets-learnsets` | Trainer-Movesets durch CFRU/DPE-Learnset-Reader entblocken | UPR-FVX PR #17 und Workspace PR #68 gemerged; `writeReloadMismatches=0` |
+| P1n | `analysis/upr-fvx-cfru-dpe-p1-trainer-movesets-combinations` | Trainer-Movesets-Kombinationen diagnostizieren | aktueller Analysebranch; Movesets-only, Movesets+Species, Movesets+Held Items normal und sensible Held Items pruefen |
+| P1o | `analysis/upr-fvx-cfru-dpe-p1-move-data-model` | Gen8/9-Move-Datenmodell analysieren | keine Learnset-Write-Ausweitung; TM-/Tutor-/Egg-Move-Pfade separat modellieren |
 | P2 | `randomizer/cfru-day-night-wild-table-analysis` | CFRU-Custom-Day/Night-Wild-Tabellen separat untersuchen | erst nach P1-Schreibpfad-Diagnose; Route-1-Fallback bleibt stabil |
 | P3 | noch festlegen | Nullslot-`<unknown>` mit `rawInternalSpeciesId=0` klassifizieren | nicht mit GenRestrictions vermischen |
 | P4 | noch festlegen | BizHawk-/Ironmon-Tracker-/RAM-Mapping pruefen | erst nach stabiler ROM-Randomizer-Kompatibilitaet |
@@ -191,12 +195,23 @@ Excel-Roadmap:
 ## Nächster empfohlener Branch
 
 ```text
-analysis/upr-fvx-cfru-dpe-p1-learnsets-model
+analysis/upr-fvx-cfru-dpe-p1-move-data-model
 ```
 
-Zweck: Nach Review/Merge dieses Diagnoseblocks das CFRU/DPE-Level-Up-Learnset- und Moveset-Datenmodell fuer `gLevelUpLearnsets` read-only modellieren. Kein Trainer-Movesets-, Held-Items-, TM-/Tutor-, Ability-, Wild-, Starter-, Static/Gift-, Evolution- oder Palette-Fix im selben Branch.
+Zweck: Nach Review/Merge dieses Diagnoseblocks das Gen8/9-Move-Datenmodell, FVX-Move-Coverage und TM-/Tutor-/Egg-Move-Tabellen read-only modellieren. Kein Learnset-Write, kein TM-/Tutor-Fix und kein breiter Randomizer-Refactor im selben Branch.
 
 ## Arbeitsblock-Log
+
+### 2026-05-13 – analysis/upr-fvx-cfru-dpe-p1-trainer-movesets-combinations
+
+- UPR-FVX PR #17 und Workspace PR #68 als gemerged geprueft.
+- Analysebranch `analysis/upr-fvx-cfru-dpe-p1-trainer-movesets-combinations` erstellt; keine Aenderungen an `02_external/**`.
+- Vier Kombinationsdiagnosen mit Seed `274269061345323` ausgefuehrt.
+- Movesets-only, Movesets+Species, Movesets+Held Items normal und Movesets+sensible Held Items melden jeweils `saveSuccessful=true`, `logSuccessful=true`, Output-ROM, nichtleeren Trainer-Log und `writeReloadMoveMismatches=0`.
+- Movesets+Species bestaetigt Gen8/9-Trainer-Pokemon nach Reload: `gen8plusSpecies=77`, `gen9Species=38`.
+- Normale und sensible Trainer-Held-Item-Kombinationen schreiben `heldItemEntries=481` und reloaden ohne Held-Item-Mismatches.
+- Kein `Bad Egg`, kein `<unknown>`, keine Unknown-Move-Marker und keine invaliden Move-IDs im Trainerbestand.
+- Neues Protokoll erstellt: `08_tests/randomizer/032_p1_trainer_movesets_combinations.md`.
 
 ### 2026-05-12 – analysis/upr-fvx-cfru-dpe-p1-trainer-movesets-only
 
