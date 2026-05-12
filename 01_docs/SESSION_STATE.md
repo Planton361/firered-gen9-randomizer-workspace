@@ -6,51 +6,52 @@
 - GitHub-Repo `Planton361/firered-gen9-randomizer-workspace` existiert und bleibt Source of Truth.
 - `main` ist Default Branch und bleibt stabil.
 - Branch Protection und PR-Pflicht sind laut dokumentiertem Projektstand eingerichtet.
-- UPR-FVX PR #15 ist gemerged; der Evolution-Scope-/Write-Fix `18766c4986db091d1e669c71302aa295195b039b` ist im Planton361-Fork verfuegbar.
-- Workspace PR #63 ist gemerged; `main` enthaelt den Evolution-Scope-/Write-Diagnosestand.
-- Wild, Starter, Static/Gift, Trainer-Species und Evolutions sind fuer den getesteten CFRU/DPE-Gen9-BPRE-Stand jeweils separat diagnostiziert und die bisherigen Scope-/Write-Fixes sind dokumentiert.
-- Trainer Held Items-only wurde auf UPR-FVX `18766c4986db091d1e669c71302aa295195b039b` diagnostiziert.
+- Workspace PR #64 ist gemerged; Trainer Held Items-only Diagnose 027 ist in `main` verfuegbar.
+- UPR-FVX PR #15 ist gemerged; der Evolution-Scope-/Write-Fix `18766c4986db091d1e669c71302aa295195b039b` ist Basis dieses Blocks.
+- Trainer Held Items-only ist auf UPR-FVX `3864ad0e7efda4ed8a329fb22edb3a28db1040e8` entblockt.
 - ROMs, Saves, Builds, Tool-Binaries und private Dateien sind ausgeschlossen.
 
 ## Aktueller Branch
 
-`analysis/upr-fvx-cfru-dpe-p1-trainer-held-items-only`
+`compat/upr-fvx-cfru-dpe-trainer-held-items-lazy-movesets`
 
 ## Aktueller Arbeitsblock
 
-P1 Trainer Held Items-only Diagnose fuer CFRU/DPE Gen9-BPRE.
+P1 Trainer Held Items lazy Moveset-/Learnset-Load fuer CFRU/DPE Gen9-BPRE.
 
 ## Ziel
 
-Trainer Held Items-only isoliert pruefen und dokumentieren. Keine Codeaenderung, kein Fix, keine Aenderungen an `02_external/**`.
+Trainer-Held-Items-only entblocken, indem `randomizeTrainerHeldItems()` `getMovesLearnt()` nur bei tatsaechlichem Bedarf laedt. Keine breiten Refactors.
 
 ## In diesem Arbeitsblock geprueft / geaendert
 
-- UPR-FVX PR #15 und Workspace PR #63 als gemerged geprueft.
-- Workspace-Branch `analysis/upr-fvx-cfru-dpe-p1-trainer-held-items-only` verwendet; nicht auf `main` gearbeitet.
-- UPR-FVX read-only geprueft: Submodule steht auf `18766c4986db091d1e669c71302aa295195b039b`.
-- UPR-FVX per `./gradlew clean :random:jar` erfolgreich gebaut.
-- Trainer Held Items-only Settings mit Seed `274269061345323` lokal diagnostiziert.
-- Neues Protokoll erstellt: `08_tests/randomizer/027_p1_trainer_held_items_only.md`.
-- `08_tests/randomizer/README.md` auf Latest Nr. 027 aktualisiert.
+- Workspace PR #64 als gemerged geprueft.
+- Workspace-Branch `compat/upr-fvx-cfru-dpe-trainer-held-items-lazy-movesets` erstellt.
+- UPR-FVX-Branch `compat/upr-fvx-cfru-dpe-trainer-held-items-lazy-movesets` erstellt.
+- Minimaler UPR-FVX-Fix umgesetzt: `randomizeTrainerHeldItems()` laedt `getMovesLearnt()` nicht mehr eager fuer normale Held-Items-only-Laeufe; Moveset-Kontext wird nur fuer sensible movebasierte Itemauswahl genutzt.
+- UPR-FVX-Commit erstellt: `3864ad0e7efda4ed8a329fb22edb3a28db1040e8`.
+- Trainer Held Items-only Settings mit Seed `274269061345323` lokal erneut ausgefuehrt.
+- Neues Protokoll erstellt: `08_tests/randomizer/028_trainer_held_items_lazy_movesets_diagnostics.md`.
+- `08_tests/randomizer/README.md` auf Latest Nr. 028 aktualisiert.
+- `01_docs/references/tool-manifest.md` auf den neuen UPR-FVX-Branch/Commit aktualisiert.
 
 ## Ergebnis
 
-- Itemdaten laden: `items.totalSlots=1375`, `items.nonNull=374`, `items.allowed=244`, `items.nonBad=181`.
-- Trainer-Held-Item-Pool ist sichtbar: `trainerHeldItemPool.size=52`.
+- Itemdaten laden stabil: `items.totalSlots=1375`, `items.nonNull=374`, `items.allowed=244`, `items.nonBad=181`.
+- Trainer-Held-Item-Pool bleibt sichtbar: `trainerHeldItemPool.size=52`.
 - Trainer-Load funktioniert: `trainers=255`, `trainerPokemon=481`, `nullSpecies=0`.
-- Vor Randomization gibt es keine Trainer-Held-Items: `before.heldItemEntries=0`, `before.noItemEntries=481`.
-- Der Lauf scheitert vor Save/Log in `TrainerPokemonRandomizer.randomizeTrainerHeldItems()`.
-- Fehlerpfad: `Gen3RomHandler.getMovesLearnt()` liest ueber `readPointer()` einen ungueltigen Pointer bei `0x25e49c`.
-- Direct Results: `saveSuccessful=false`, `logSuccessful=true`, `outputRomExists=false`, `logNonEmpty=false`, `directLogBytes=0`.
-- Kein Output-ROM und kein nichtleerer Trainer-Log entstehen; `Bad Egg` und `<unknown>` werden im Log nicht erreicht.
-- Write/Reload ist nicht pruefbar: `writeReloadCompared=0`, `writeReloadMismatches=not run`.
-- Trainer Held Items-only ist fuer den getesteten CFRU/DPE-Gen9-BPRE-Stand noch nicht P1-supported.
+- Vor Randomization: `before.heldItemEntries=0`, `before.noItemEntries=481`.
+- Nach Randomization: `after.heldItemEntries=481`, `after.noItemEntries=0`.
+- Nach Reload: `reload.heldItemEntries=481`, `reload.noItemEntries=0`.
+- Save und Log gelingen: `saveSuccessful=true`, `logSuccessful=true`, `outputRomExists=true`, `logNonEmpty=true`.
+- Trainer-Log enthaelt keinen `Bad Egg` und kein `<unknown>`.
+- Write/Reload ist stabil: `writeReloadCompared=481`, `writeReloadMismatches=0`.
+- Trainer Held Items-only ist damit fuer den getesteten CFRU/DPE-Gen9-BPRE-Stand P1-supported.
 
 ## Noch nicht gestartet
 
-- Trainer-Held-Items-Fix fuer lazy Moveset-/Learnset-Load
 - Trainer-Movesets-only Diagnose
+- Sensible movebasierte Trainer-Held-Item-Auswahl gegen CFRU/DPE-Learnsets
 - Separates DPE/CFRU-Learnset-Profil fuer `gLevelUpLearnsets`
 - Learnset-/TM-/Tutor-/Ability-Datenmodellierung nach der Schreibpfadmatrix
 - CFRU-Day/Night-Custom-Wild-Tabellen-Support
@@ -69,13 +70,13 @@ Keine externen Original-Upstreams kontaktiert.
 
 Keine Aenderungen direkt auf `main`.
 
-Keine Aenderungen an `02_external/**`; UPR-FVX wurde nur read-only analysiert und gebaut.
+UPR-FVX wurde im Planton361-Fork-Submodule gezielt geaendert. Workspace-Aenderungen ausser dem Submodule-Gitlink sind Dokumentation.
 
 Keine MCP-Configs mit Secrets angelegt.
 
 ## Naechste Pruefung
 
-Lokal im Workspace nach den Dokumentationsaenderungen pruefen:
+Lokal im Workspace nach den Submodule- und Dokumentationsaenderungen pruefen:
 
 ```sh
 git status --short
@@ -87,6 +88,6 @@ git diff --check
 
 ## Naechster empfohlener Branch
 
-`compat/upr-fvx-cfru-dpe-trainer-held-items-lazy-movesets`
+`analysis/upr-fvx-cfru-dpe-p1-trainer-movesets-only`
 
-Zweck: Trainer-Held-Items-only entblocken, indem `randomizeTrainerHeldItems()` den Learnset-/Moveset-Load nur bei tatsaechlichem Bedarf ausloest. Kein Trainer-Species-, Trainer-Moveset-, Learnset-, TM-/Tutor-, Ability-, Wild-, Starter-, Static/Gift-, Evolution- oder Palette-Fix im selben Branch.
+Zweck: Trainer-Movesets-only separat diagnostizieren. Kein Trainer-Held-Items-, Trainer-Species-, Learnset-, TM-/Tutor-, Ability-, Wild-, Starter-, Static/Gift-, Evolution- oder Palette-Fix im selben Branch.
