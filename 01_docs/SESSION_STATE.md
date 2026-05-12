@@ -31,44 +31,46 @@
 - UPR-FVX PR #8 ist offen; der konservative CFRU/DPE-Gen9-Count-Fix setzt `PokemonCount=1439` ueber `PokemonNames` plus BaseStats-Sanity und laesst Gen7/8/9 im Species-Load sichtbar werden.
 - Lokaler Diagnosebefund nach PR #8: `speciesList.size=1415`, `maxSpeciesIdentityNumber=1439`, `generationCounts={1=271, 2=118, 3=188, 4=174, 5=191, 6=127, 7=123, 8=127, 9=120}`.
 - Neuer Folgeblocker: Der vollstaendige CLI-Lauf bricht nach erfolgreichem Species-Load in `loadPokemonPalettes()` mit einem ungueltigen Pointer ab; Wild-Randomization wird in diesem Arbeitsblock deshalb noch nicht erreicht.
+- Der Paletten-Loader-Blocker ist read-only modelliert: `0x1a495d8` entspricht DPE `gMonPaletteTable + 1038 * 8`, also `SPECIES_CUBONE_A`; dieser Palette-Slot ist in DPE `Palette_Table.c`/`Shiny_Palette_Table.c` nicht initialisiert.
 - ROMs, Saves, Builds, Tool-Binaries und private Dateien sind ausgeschlossen.
 
 ## Aktueller Branch
 
-`analysis/upr-fvx-cfru-dpe-gen9-species-count`
+`analysis/upr-fvx-cfru-dpe-palette-loader-blocker`
 
 ## Aktueller Arbeitsblock
 
-Dokumentation und Diagnose zum konservativen UPR-FVX-CFRU/DPE-Gen9-SpeciesCount-Fix.
+Read-only Diagnose des `loadPokemonPalettes()`-Blockers nach dem CFRU/DPE-Gen9-SpeciesCount-Fix.
 
 ## Ziel
 
 Konkret festhalten:
 
-- welcher UPR-FVX-Fixbranch `PokemonCount=1439` erreicht
-- welche Checks und lokalen Diagnosewerte vorliegen
-- warum Wild-Randomization noch nicht erreicht wird
-- welcher naechste minimale Blocker separat modelliert werden muss
+- wann `loadPokemonPalettes()` im FVX-Lifecycle laeuft
+- welcher Palette-Tabellenindex den Abbruch verursacht
+- ob Palette-Load fuer P0/Wild fachlich noetig ist
+- welche Fixoption den naechsten kleinen UPR-FVX-Branch tragen sollte
 
 ## In diesem Arbeitsblock geprueft / geaendert
 
-- Workspace `main` per Fast-Forward geprueft und Branch `analysis/upr-fvx-cfru-dpe-gen9-species-count` erstellt.
-- UPR-FVX Branch `compat/upr-fvx-cfru-dpe-gen9-species-count` von `compat/firered-gen9-cfru-dpe` erstellt.
-- UPR-FVX Commit `d17b29a2 compat: detect CFRU DPE Gen9 species count` erstellt und PR #8 geoeffnet.
-- Lokalen CFRU/DPE-CLI-Lauf gestartet; Count-/Generation-Diagnose protokolliert, Abbruch in `loadPokemonPalettes()` dokumentiert.
-- Neues Protokoll erstellt: `08_tests/randomizer/upr-fvx-cfru-dpe-gen9-species-count-diagnostics.md`.
+- Workspace `main` per Fast-Forward geprueft und Branch `analysis/upr-fvx-cfru-dpe-palette-loader-blocker` erstellt.
+- UPR-FVX-Submodule read-only auf `d17b29a2` geprueft.
+- FVX `AbstractGBRomHandler`, `Gen3RomHandler`, `Species`, Palette-Randomizer und Save-Pfad read-only analysiert.
+- DPE/CFRU Palette-Tabellen, generierte DPE-Offsets und CyanSMP64 NatDex-Referenzen read-only verglichen.
+- Neues Modell erstellt: `01_docs/compat/upr-fvx-cfru-dpe-palette-loader-blocker.md`.
 
 ## Ergebnis
 
-- Der Count-Fix greift: `PokemonCount=1439` statt `823`.
-- Gen7/8/9 sind im Species-Load sichtbar: Gen7 `123`, Gen8 `127`, Gen9 `120`.
-- `PokemonMovesets` und `PokedexOrder` werden fuer den konservativ erkannten CFRU/DPE-Gen9-BPRE-Modus nicht mehr als Count-Grenze genutzt.
-- Der vollstaendige Randomizer-Lauf bricht danach im Palettenpfad ab; dieser Folgefehler ist nicht Teil des Count-Fixes.
+- `loadPokemonPalettes()` wird bedingungslos im ROM-Load aufgerufen, auch wenn Pokemon-Palette-Randomization nicht aktiv ist.
+- Der erste belegte ungueltige Pointer-Slot ist `SPECIES_CUBONE_A` (`1038` / `0x40E`) in `gMonPaletteTable`.
+- DPE/CFRU-Palettentabellen sind strukturell Gen3-kompatibel, enthalten aber fuer mindestens diesen internen Form-Slot keinen initialisierten Palette-Pointer.
+- Palette-Load ist fuer P0/Wild fachlich nicht noetig, aber in FVX aktuell technisch Teil von Load und Save.
+- Empfohlene Fixrichtung: defensiver Palette-Load/-Save fuer konservativ erkannte erweiterte CFRU/DPE-BPRE-Hacks; Count nicht zurueckbegrenzen.
 
 ## Noch nicht gestartet
 
 - UPR-FVX-Review/Merge von PR #8
-- Separates Modell oder Fix fuer `loadPokemonPalettes()` bei erweitertem CFRU/DPE-BPRE-Speciesraum
+- Separater UPR-FVX-Fix fuer defensiven `loadPokemonPalettes()`-/`savePokemonPalettes()`-Umgang bei erweitertem CFRU/DPE-BPRE-Speciesraum
 - Praktische P1-Diagnoselaeufe fuer Static/Gifts und Trainer-Species
 - Evolution-/Learnset-/TM-/Tutor-/Ability-Datenmodellierung nach der Schreibpfadmatrix
 - CFRU-Day/Night-Custom-Wild-Tabellen-Support
@@ -79,13 +81,13 @@ Konkret festhalten:
 
 Keine ROMs, Saves, Builds oder Tool-Binaries committed.
 
-Keine ROMs in ChatGPT hochgeladen. ROMs wurden nur lokal fuer den Diagnose-Lauf geladen; Artefakte blieben unter `05_builds/**` und wurden nicht committed.
+Keine ROMs in ChatGPT hochgeladen. In diesem Arbeitsblock wurden keine ROMs gelesen, kopiert oder veraendert.
 
 Keine externen Original-Upstreams kontaktiert.
 
 Keine Aenderungen direkt auf `main`.
 
-UPR-FVX-Codeaenderung erfolgte nur im Submodule auf Arbeitsbranch `compat/upr-fvx-cfru-dpe-gen9-species-count`; Workspace dokumentiert den Submodule-Pointer.
+Keine Codeaenderungen in `02_external/**`.
 
 Keine MCP-Configs mit Secrets angelegt.
 
@@ -105,4 +107,4 @@ git diff --check
 
 Noch festzulegen.
 
-Zweck: naechsten Loader-Blocker `loadPokemonPalettes()` fuer erweiterten CFRU/DPE-BPRE-Speciesraum isoliert analysieren oder fixen. Kein Static-/Gift-, Trainer-, Learnset- oder Moveset-Fix im selben Branch.
+Zweck: UPR-FVX-Fix fuer defensiven Palette-Load/-Save bei erweitertem CFRU/DPE-BPRE-Speciesraum. Kein Static-/Gift-, Trainer-, Learnset-, Moveset- oder Count-Fix im selben Branch.
