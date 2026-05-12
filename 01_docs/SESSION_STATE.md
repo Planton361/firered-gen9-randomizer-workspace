@@ -45,40 +45,42 @@
 - Post-Merge-Gen9-Wild-Smoke auf UPR-FVX Merge-Commit `ee82cb4e` ist dokumentiert: `PokemonCount=1439`, `speciesList.size=1415`, `maxSpeciesIdentityNumber=1439`, `generationCounts={1=271, 2=118, 3=188, 4=174, 5=191, 6=127, 7=123, 8=127, 9=120}`, Output-ROM und Wild-Log entstehen erfolgreich.
 - Der Post-Merge-Wild-Log enthaelt Gen7/8/9-Species, darunter `Magearna`, `Meltan`, `Hatenna`, `Calyrex`, `Glimmet`, `Toedscool`, `Tatsugiri`, `Floragato`, `Iron Crown` und `Hydrapple`; `<unknown>` bleibt `0`.
 - Im Post-Merge-Wild-Log erscheinen `12` `Bad Egg`-Eintraege; diese sind eine separate Folgeauffaelligkeit und nicht der fruehere `<unknown>`-Nullslot.
-- Die Bad-Egg-Diagnose reproduziert den Wild-only-Lauf mit Seed `274269061345319`: `saveSuccessful=true`, `<unknown>=0`, und alle `12` `Bad Egg`-Eintraege liegen in `Area #174 - ALTERING CAVE Grass/Cave`.
-- DPE/CFRU definieren `SPECIES_EGG=0x19C` innerhalb des geladenen Count-Bereichs; die DPE-Namensquelle mappt diesen Slot auf `Bad Egg`, waehrend FVX im Gen3/FRLG-Wild-Ban aktuell nur Unown entfernt.
+- Randomizer-Smoke-Artefakte wurden lokal bereinigt: `05_builds` sank von `1.3G` auf `196M`; der alte flache `05_builds/randomizer-smoke/`-Output ist leer.
+- `08_tests/randomizer/README.md` dokumentiert ab jetzt Nummerierungs- und Latest-Konvention fuer Randomizer-Smoke-Protokolle und lokale Artefaktordner.
+- UPR-FVX PR #12 ist offen; der CFRU/DPE-spezifische Wild-Ban entfernt im erkannten Gen9-BPRE-Modus `SPECIES_EGG=0x19C` aus dem Wild-Allowed-Pool, ohne Vanilla/normal Gen3 zu aendern.
+- Lokaler Diagnosebefund nach PR #12: `Bad Egg` faellt von `12` auf `0`, `<unknown>` bleibt `0`, `saveSuccessful=true`; `Area #174 - ALTERING CAVE Grass/Cave` enthaelt statt `Bad Egg` jetzt `Meowscrada` in allen 12 Slots.
 - ROMs, Saves, Builds, Tool-Binaries und private Dateien sind ausgeschlossen.
 
 ## Aktueller Branch
 
-`analysis/upr-fvx-cfru-dpe-wild-bad-egg-diagnostics`
+`analysis/upr-fvx-cfru-dpe-wild-banned-special-species`
 
 ## Aktueller Arbeitsblock
 
-Bad-Egg-Eintraege im bestaetigten CFRU/DPE-Gen9-Wild-Log diagnostizieren.
+CFRU/DPE-Special-Species-Wild-Ban diagnostisch bestaetigen.
 
 ## Ziel
 
-Klaeren, ob die `12` `Bad Egg`-Wild-Log-Eintraege aus dem Allowed Pool, aus Dummy-/Gap-/Form-Slots, aus Egg/BadEgg-Species, aus Log-Mapping oder aus Write/Reload entstehen.
+Festhalten, dass der UPR-FVX-Fix `SPECIES_EGG=0x19C` im CFRU/DPE-Gen9-BPRE-Wild-Pool bannt und der lokale Wild-only-Smoke danach ohne `Bad Egg` speichert.
 
 ## In diesem Arbeitsblock geprueft / geaendert
 
-- Workspace `main` per Fast-Forward geprueft und Branch `analysis/upr-fvx-cfru-dpe-wild-bad-egg-diagnostics` erstellt.
-- UPR-FVX `compat/firered-gen9-cfru-dpe` steht auf Merge-Commit `ee82cb4e`; Submodule-Status ist sauber.
-- UPR-FVX per `./gradlew clean :random:jar` erfolgreich gebaut.
-- Derselbe Wild-only-Lauf wie im Gen9-Wild-Post-Merge-Smoke wurde mit Seed `274269061345319` reproduziert.
-- Der Lauf bleibt erfolgreich: `PokemonCount=1439`, `speciesList.size=1415`, `maxSpeciesIdentityNumber=1439`, `saveSuccessful=true`, `<unknown>=0`.
-- Die `12` `Bad Egg`-Eintraege liegen vollstaendig in `Area #174 - ALTERING CAVE Grass/Cave (rate=5)`, Slots 1-12.
-- DPE/CFRU definieren `SPECIES_EGG=0x19C`; die DPE-Namensquelle mappt diesen Slot auf `Bad Egg`.
-- FVX bannt im Gen3/FRLG-Wild-Pfad aktuell nur Unown; `SPECIES_EGG` ist nicht Teil des Wild-Banned-Sets.
-- Neues Diagnoseprotokoll erstellt: `08_tests/randomizer/upr-fvx-cfru-dpe-wild-bad-egg-diagnostics.md`.
+- Workspace `main` per Fast-Forward geprueft und Branch `analysis/upr-fvx-cfru-dpe-wild-banned-special-species` erstellt.
+- UPR-FVX `compat/firered-gen9-cfru-dpe` geprueft, Branch `compat/upr-fvx-cfru-dpe-wild-banned-special-species` erstellt und Commit `0f127e9b` erzeugt.
+- UPR-FVX PR #12 erstellt: `compat: ban CFRU DPE special species from wild pool`.
+- UPR-FVX-Checks ausgefuehrt: `git diff --check`, `./gradlew test`, `./gradlew clean :random:jar`.
+- Lokaler CFRU/DPE-Wild-only-Lauf mit Seed `274269061345319` ausgefuehrt.
+- Neues Protokoll erstellt: `08_tests/randomizer/upr-fvx-cfru-dpe-wild-banned-special-species-diagnostics.md`.
+- Workspace-Submodule-Pointer auf UPR-FVX Commit `0f127e9b` aktualisiert.
 
 ## Ergebnis
 
-- `Bad Egg` ist sehr wahrscheinlich kein Reload- oder `<unknown>`-Mappingproblem, sondern `SPECIES_EGG` aus dem CFRU/DPE-Allowed-Wild-Pool.
-- Das Muster als ein kompletter 12-Slot-Altering-Cave-Block passt zu area-/game-1:1-Replacement.
-- Fuer einen wasserdichten Roh-ID-Beleg waere ein kleiner UPR-FVX-Diagnosebranch sinnvoll, weil der bestehende Wild-Logger fuer aufgeloeste Species keine interne ID ausgibt.
-- Naechster minimaler Fix waere ein CFRU/DPE-spezifisches Wild-Banned-Set fuer `SPECIES_NONE`, `SPECIES_EGG` und belegte Dummy-/Gap-Slots.
+- Der Wild-only-Smoke beendet mit CLI-Exit-Code `0` und `Randomized successfully!`.
+- Coverage bleibt stabil: `PokemonCount=1439`, `speciesList.size=1415`, `maxSpeciesIdentityNumber=1439`, Gen7/8/9 sichtbar.
+- `Bad Egg=0`; vorher waren es `12`.
+- `<unknown>=0`.
+- `Area #174 - ALTERING CAVE Grass/Cave` enthaelt jetzt `Meowscrada` in allen 12 Slots.
+- Wild-Log-Generation-Auswertung: Gen7 `92`, Gen8 `101`, Gen9 `412`.
 
 ## Noch nicht gestartet
 
@@ -95,11 +97,13 @@ Keine ROMs, Saves, Builds oder Tool-Binaries committed.
 
 Keine ROMs in ChatGPT hochgeladen. ROMs wurden nur lokal fuer den Diagnose-Lauf geladen; Artefakte blieben unter `05_builds/**` und wurden nicht committed.
 
+Lokale ignored Smoke-Outputs wurden nur summarisch ausgewertet. Private absolute Pfade und private ROM-Dateinamen wurden nicht dokumentiert.
+
 Keine externen Original-Upstreams kontaktiert.
 
 Keine Aenderungen direkt auf `main`.
 
-Keine UPR-FVX-Codeaenderung und keine Submodule-Aenderung in diesem Arbeitsblock.
+Keine Workspace-Codeaenderungen. UPR-FVX-Codeaenderung ist auf den erlaubten `Gen3RomHandler.java`-Pfad beschraenkt.
 
 Keine MCP-Configs mit Secrets angelegt.
 

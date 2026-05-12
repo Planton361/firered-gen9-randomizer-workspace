@@ -24,9 +24,9 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-gen9-wild-post-merge-smoke` |
+| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-wild-banned-special-species` |
 | Nächster Branch | `analysis/upr-fvx-cfru-dpe-p1-static-gift-write-diagnostics` |
-| Aktueller Fokus | Gen9-Wild-Post-Merge-Smoke dokumentieren |
+| Aktueller Fokus | CFRU/DPE-Special-Species-Wild-Ban diagnostisch bestaetigen |
 | ROM-/Build-Arbeit | lokaler Diagnose-Lauf nur unter `05_builds/**`; keine Artefakte committen |
 | Externe Repos | als Submodule auf Planton361-Forks eingebunden |
 | Forks | Planton361-Forks fuer UPR-FVX, DPE Gen9 und CFRU dokumentiert |
@@ -78,13 +78,15 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | 08 Randomizer-Kompatibilität | Palette-Save-Blocker-Modell | `0x16b9c08` als DPE `gFrontSprite252Pal` eingeordnet; FVX schreibt unveraenderte/geteilte Paletten bedingungslos neu |
 | 08 Randomizer-Kompatibilität | Skip-Unchanged-Palette-Save-Unblocker | UPR-FVX PR #11 gemerged; unveraenderte CFRU/DPE-Pokemon-Paletten werden nicht mehr neu geschrieben |
 | 08 Randomizer-Kompatibilität | Gen9-Wild-Post-Merge-Smoke | UPR-FVX Merge-Commit `ee82cb4e` bestaetigt: `PokemonCount=1439`, Gen7/8/9 im Wild-Log, `<unknown>=0`, Save erfolgreich |
+| 08 Randomizer-Kompatibilität | Randomizer-Smoke-Artefaktordnung | Lokale ignored Smoke-Outputs unter `05_builds/randomizer-smoke/` bereinigt; `08_tests/randomizer/README.md` dokumentiert Nummerierung und Latest-Konvention |
 | 08 Randomizer-Kompatibilität | Wild-Bad-Egg-Diagnose | `12` `Bad Egg`-Slots liegen komplett in `Area #174 - ALTERING CAVE`; Ursache ist sehr wahrscheinlich `SPECIES_EGG=0x19C` im CFRU/DPE-Wild-Allowed-Pool |
+| 08 Randomizer-Kompatibilität | CFRU/DPE-Special-Species-Wild-Ban | UPR-FVX PR #12 offen; lokaler Smoke zeigt `Bad Egg=0`, `<unknown>=0`, `saveSuccessful=true` |
 
 ## In Arbeit
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Wild-Bad-Egg-Diagnose reviewen | Dokumentations-PR fuer Bad-Egg-Auswertung mergen |
+| 08 Randomizer-Kompatibilität | CFRU/DPE-Special-Species-Wild-Ban reviewen | UPR-FVX- und Workspace-PR fuer Wild-Ban-Diagnose reviewen |
 
 ## Als Nächstes
 
@@ -126,9 +128,10 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Coverage follow-up | `analysis/upr-fvx-cfru-dpe-palette-save-blocker` | `savePokemonPalettes()`-Blocker nach Lazy-Trainer-Movesets analysieren | `saveSuccessful=false` bei `no compressed data found at offset 0x16b9c08`; kein Fix |
 | Coverage unblock | `compat/upr-fvx-cfru-dpe-skip-unchanged-palette-save` | Palette-Save fuer unveraenderte CFRU/DPE-Pokemon-Paletten ueberspringen | UPR-FVX PR #11 gemerged; kein Count-, Learnset-, Trainer-, Static/Gift-, Wild- oder Day/Night-Fix |
 | Coverage smoke | `analysis/upr-fvx-cfru-dpe-gen9-wild-post-merge-smoke` | komplette Gen9-Wild-only-Fixkette nach PR #11 bestaetigen | erledigt; `saveSuccessful=true`, Gen7/8/9 im Wild-Log, `<unknown>=0` |
-| Wild cleanup | `analysis/upr-fvx-cfru-dpe-wild-bad-egg-diagnostics` | `Bad Egg` im bestaetigten Gen9-Wild-Log klassifizieren | aktueller Diagnosebranch; `SPECIES_EGG=0x19C` ist wahrscheinlich im Allowed Pool |
-| Wild cleanup fix | `compat/upr-fvx-cfru-dpe-wild-banned-special-species` | CFRU/DPE-Sonder-Species aus Wild-Replacement-Pools bannen | naechster minimaler Schritt; Vanilla/normal Gen3 unveraendert lassen |
-| P1c | `analysis/upr-fvx-cfru-dpe-p1-static-gift-write-diagnostics` | Static-/Gift-Species-only Diagnose | nach Bad-Egg/Special-Species-Wild-Ban wieder aufnehmen; Roamer ausklammern |
+| Maintenance | `maintenance/randomizer-smoke-artifact-cleanup` | lokale Smoke-Artefakte bereinigen und Protokoll-/Latest-Konvention dokumentieren | aktueller Dokumentationsbranch; keine Codeaenderungen, keine Builds, keine Randomizer-Laeufe |
+| Wild cleanup | `analysis/upr-fvx-cfru-dpe-wild-bad-egg-diagnostics` | `Bad Egg` im bestaetigten Gen9-Wild-Log klassifizieren | Diagnosebranch; `SPECIES_EGG=0x19C` ist wahrscheinlich im Allowed Pool |
+| Wild cleanup | `compat/upr-fvx-cfru-dpe-wild-banned-special-species` | CFRU/DPE-Sonder-Species aus Wild-Replacement-Pools bannen | UPR-FVX PR #12 offen; `SPECIES_EGG=0x19C` entfernt, `Bad Egg=0` bestaetigt |
+| P1c | `analysis/upr-fvx-cfru-dpe-p1-static-gift-write-diagnostics` | Static-/Gift-Species-only Diagnose | naechster minimaler Schritt; Roamer ausklammern |
 | P2 | `randomizer/cfru-day-night-wild-table-analysis` | CFRU-Custom-Day/Night-Wild-Tabellen separat untersuchen | erst nach P1-Schreibpfad-Diagnose; Route-1-Fallback bleibt stabil |
 | P3 | noch festlegen | Nullslot-`<unknown>` mit `rawInternalSpeciesId=0` klassifizieren | nicht mit GenRestrictions vermischen |
 | P4 | noch festlegen | BizHawk-/Ironmon-Tracker-/RAM-Mapping pruefen | erst nach stabiler ROM-Randomizer-Kompatibilitaet |
