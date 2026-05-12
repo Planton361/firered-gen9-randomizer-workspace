@@ -56,46 +56,50 @@
 - Workspace PR #58 ist gemerged; `main` pinnt `02_external/upr-fvx` auf `009178e8848b4272e6b8be54a8bf5b2bed34d5f2`.
 - Trainer-Species-only Diagnose auf UPR-FVX `009178e8`: Trainer-Pool erreicht Gen1-Gen9 (`trainerPool.size=1414`), Trainer-Load funktioniert (`trainers=255`, `trainerPokemon=481`, `nullSpecies=0`), aber `randomizeTrainerPokes()` haengt vor Save/Log in `getRandomAbilitySlot()` auf Zero-Ability-Sonder-Species.
 - Im Trainer-Pool liegen acht Zero-Ability-/Zero-BST-Sonder-Species, darunter `Bad Egg`, zwei Zygarde-Sonderslots und vier Gen9-Ogerpon-Formslots; Output-ROM und Trainer-Log entstehen nicht.
+- UPR-FVX-Commit `56ec749e` behebt den Trainer-Species-Scope und Trainer-Species-Write-Pfad fuer CFRU/DPE: nicht kampffaehige Sonder-Species werden aus dem Trainer-Replacement-Pool entfernt, `getRandomAbilitySlot()` laeuft nicht mehr endlos, und echte Trainer-Species schreiben ueber interne SpeciesSet-Identitaet.
+- Lokaler Diagnosebefund nach `56ec749e`: `saveSuccessful=true`, Log nicht leer, Output-ROM erzeugt, Gen7/8/9-Picks sichtbar und `writeReloadMismatches=0`.
 - ROMs, Saves, Builds, Tool-Binaries und private Dateien sind ausgeschlossen.
 
 ## Aktueller Branch
 
-`analysis/upr-fvx-cfru-dpe-p1-trainer-species-only`
+`compat/upr-fvx-cfru-dpe-trainer-scope-and-write`
 
 ## Aktueller Arbeitsblock
 
-P1 Trainer-Species-only Diagnose fuer CFRU/DPE.
+P1 Trainer-Scope und Trainer-Species-Write fuer CFRU/DPE.
 
 ## Ziel
 
-Trainer-Species-only mit Gen1-Gen9-Pool diagnostizieren, ohne Codeaenderung oder Fix. Trainer-Movesets, Held Items, Learnsets, Abilities, Wild, Starter und Static/Gift bleiben ausserhalb dieses Blocks.
+Trainer-Species-only gezielt entblocken: nicht kampffaehige Sonder-Species aus dem CFRU/DPE-Trainer-Replacement-Pool ausschliessen, Zero-Ability-Species defensiv behandeln und Trainer-Species-Write/Reload ueber interne SpeciesSet-Identitaet bestaetigen. Trainer-Movesets, Held Items, Learnsets, allgemeine Ability-Randomization, Wild, Starter und Static/Gift bleiben ausserhalb dieses Blocks.
 
 ## In diesem Arbeitsblock geprueft / geaendert
 
-- UPR-FVX PR #13 und Workspace PR #58 als gemerged geprueft.
-- `main` per Fast-Forward aktualisiert und Branch `analysis/upr-fvx-cfru-dpe-p1-trainer-species-only` erstellt.
-- UPR-FVX-Submodule read-only geprueft: Planton361-Fork, Commit `009178e8848b4272e6b8be54a8bf5b2bed34d5f2`, Branch `compat/upr-fvx-cfru-dpe-static-gift-scope-and-write`.
-- UPR-FVX read-only gebaut: `./gradlew clean :random:jar` erfolgreich.
-- Trainer-Species-only Settings mit Seed `274269061345323` lokal ausgefuehrt.
-- Pool-, Trainer-Load-, Timeout- und Stack-Dump-Diagnosen mit temporaeren Helpers ausserhalb des Repos erstellt.
-- Neues Protokoll erstellt: `08_tests/randomizer/023_p1_trainer_species_only.md`.
-- `08_tests/randomizer/README.md` auf Latest Nr. 023 aktualisiert.
+- Workspace PR #59 als gemerged geprueft.
+- `main` per Fast-Forward aktualisiert und Branch `compat/upr-fvx-cfru-dpe-trainer-scope-and-write` erstellt.
+- UPR-FVX-Submodule geprueft: Planton361-Fork, Basis-Commit `009178e8848b4272e6b8be54a8bf5b2bed34d5f2`, neue Branch `compat/upr-fvx-cfru-dpe-trainer-scope-and-write`.
+- UPR-FVX-Fix umgesetzt und committed: `56ec749eca12a8637c20f943b520a9bb6a9d469a`.
+- UPR-FVX PR #14 erstellt: `https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/14`.
+- Trainer-Species-only Settings mit Seed `274269061345323` lokal erneut ausgefuehrt.
+- Pool-, Trainer-Log- und Write/Reload-Diagnosen mit temporaeren Helpers ausserhalb des Repos erstellt.
+- Neues Protokoll erstellt: `08_tests/randomizer/024_trainer_scope_write_diagnostics.md`.
+- `08_tests/randomizer/README.md` auf Latest Nr. 024 aktualisiert.
 
 ## Ergebnis
 
 - Species-Coverage bleibt stabil: `PokemonCount=1439`, `speciesList.size=1415`, `maxSpeciesIdentityNumber=1439`, Gen7/8/9 sichtbar.
-- Trainer-Pool: `trainerPool.size=1414`, Gen1-Gen9 enthalten.
-- Trainer-Load: `trainers=255`, `trainerPokemon=481`, `nullSpecies=0`, alle Original-Trainer-Species Gen1.
-- Trainer-Pool enthaelt acht Zero-Ability-/Zero-BST-Sonder-Species, darunter `Bad Egg`, zwei Zygarde-Sonderslots und vier Gen9-Ogerpon-Formslots.
-- `randomizeTrainerPokes()` erreicht innerhalb von 60 Sekunden keinen Abschluss; Stack-Dump zeigt `TrainerPokemonRandomizer.getRandomAbilitySlot()` als blockierenden Pfad.
-- `saveSuccessful` und `logSuccessful` werden nicht erreicht; Output-ROM und Trainer-Log entstehen nicht.
-- Trainer-Species-only ist damit fuer den getesteten CFRU/DPE-Gen9-BPRE-Stand noch nicht P1-supported.
-- Spaeterer Fixbedarf: Trainer-Scope gegen nicht kampffaehige/Trainer-ungeeignete Sonder-Species absichern oder Ability-Slot-Auswahl defensiv behandeln; danach Trainer-Species-Write/Reload separat pruefen.
+- Trainer-Pool vor Filter: `trainerPoolBefore.size=1414`, Gen1-Gen9 enthalten.
+- Trainer-Pool nach Filter: `trainerPoolAfter.size=1406`, Gen7/8/9 weiterhin enthalten.
+- Ausgeschlossen werden acht nicht kampffaehige Sonder-Species: `Bad Egg`, `Warrior`, zwei Zygarde-Sonderslots und vier Gen9-Ogerpon-Formslots.
+- Trainer-Load bleibt stabil: `trainers=255`, `trainerPokemon=481`, `nullSpecies=0`.
+- Trainer-Randomization erreicht Save/Log: `saveSuccessful=true`, `logSuccessful=true`, Output-ROM erzeugt, Trainer-Log nicht leer.
+- Gen7/8/9-Picks sind im Direct Results und im Trainer-Log sichtbar.
+- Write/Reload-Vergleich ueber interne SpeciesSet-Identitaet: `writeReloadCompared=481`, `writeReloadMismatches=0`.
+- Trainer-Species-only ist damit fuer den getesteten CFRU/DPE-Gen9-BPRE-Stand P1-supported.
 
 ## Noch nicht gestartet
 
 - Separates DPE/CFRU-Learnset-Profil fuer `gLevelUpLearnsets`
-- Praktische P1-Diagnoselaeufe fuer Trainer-Species
+- Praktische P1-Diagnoselaeufe fuer Trainer-Species-Movesets, Held Items und Folgepfade
 - Evolution-/Learnset-/TM-/Tutor-/Ability-Datenmodellierung nach der Schreibpfadmatrix
 - CFRU-Day/Night-Custom-Wild-Tabellen-Support
 - Nullslot-`<unknown>`-Analyse
@@ -113,7 +117,7 @@ Keine externen Original-Upstreams kontaktiert.
 
 Keine Aenderungen direkt auf `main`.
 
-Keine Workspace-Codeaenderungen ausser Dokumentation. Keine UPR-FVX-Codeaenderungen in diesem Analyseblock.
+Keine Workspace-Codeaenderungen ausser Dokumentation und Submodule-Gitlink. UPR-FVX-Codeaenderungen sind auf Trainer-Species-Scope, defensive Trainer-Ability-Slot-Auswahl und Trainer-Species-Write begrenzt.
 
 Keine MCP-Configs mit Secrets angelegt.
 
@@ -131,6 +135,6 @@ git diff --check
 
 ## Naechster empfohlener Branch
 
-`compat/upr-fvx-cfru-dpe-trainer-scope-and-write`
+`analysis/upr-fvx-cfru-dpe-p1-evolution-species-only`
 
-Zweck: Trainer-Species-Scope-Sonderfaelle gezielt entblocken und danach Trainer-Species-Write/Reload fuer CFRU/DPE ueber interne SpeciesSet-Identitaet pruefen, ohne Moveset-/Learnset-/Trainer-Item-/Ability-Randomization zu vermischen.
+Zweck: naechsten P1-Species-Pfad separat diagnostizieren, ohne Trainer-Moveset-/Learnset-/Item-/Ability-Randomization zu vermischen.
