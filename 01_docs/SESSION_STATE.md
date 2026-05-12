@@ -13,38 +13,37 @@
 
 ## Aktueller Branch
 
-`analysis/upr-fvx-cfru-dpe-p1-learnsets-model`
+`compat/upr-fvx-cfru-dpe-trainer-movesets-learnsets`
 
 ## Aktueller Arbeitsblock
 
-P1 CFRU/DPE-Learnset-Modell fuer Trainer Movesets-only fuer CFRU/DPE Gen9-BPRE.
+P1 Trainer Movesets Learnsets-Fix fuer CFRU/DPE Gen9-BPRE.
 
 ## Ziel
 
-Trainer Movesets-only isoliert pruefen und dokumentieren. Keine Codeaenderung, kein Fix, keine Aenderungen an `02_external/**`.
+Trainer Movesets-only entblocken: minimal gegateter CFRU/DPE-Learnset-Reader in UPR-FVX und Diagnose 031 dokumentieren.
 
 ## In diesem Arbeitsblock geprueft / geaendert
 
-- Workspace PR #66 als gemerged geprueft.
-- Workspace-Branch `analysis/upr-fvx-cfru-dpe-p1-learnsets-model` erstellt; nicht auf `main` gearbeitet.
-- UPR-FVX read-only geprueft: Submodule steht auf `3864ad0e7efda4ed8a329fb22edb3a28db1040e8`.
+- Workspace PR #67 als gemerged geprueft.
+- Workspace-Branch `compat/upr-fvx-cfru-dpe-trainer-movesets-learnsets` verwendet; nicht auf `main` gearbeitet.
+- UPR-FVX-Fix erstellt: `655764816f9fefedb9433f33e4da0bc9d44bcda7`.
 - UPR-FVX per `./gradlew clean :random:jar` erfolgreich gebaut.
-- UPR-FVX- und CFRU/DPE-Quellen read-only fuer `gLevelUpLearnsets` modelliert.
-- Neues Protokoll erstellt: `08_tests/randomizer/030_p1_learnsets_model.md`.
-- `08_tests/randomizer/README.md` auf Latest Nr. 030 aktualisiert.
+- CFRU/DPE-Learnset-Reader und defensiver Ability-Log-Fallback in `Gen3RomHandler` umgesetzt.
+- Neues Protokoll erstellt: `08_tests/randomizer/031_trainer_movesets_learnsets_fix_diagnostics.md`.
+- `08_tests/randomizer/README.md` auf Latest Nr. 031 aktualisiert.
 
 ## Ergebnis
 
 - Move-Daten laden: `moves.total=559`.
 - Trainer-Load funktioniert: `trainers=255`, `trainerPokemon=481`, `nullSpecies=0`.
 - Vor Randomization: `before.movesetEntries=53`, `before.zeroMovePokemon=428`, `before.resetMoves=0`, `before.invalidMoves=0`, `before.unknownNamedMoves=0`.
-- Der Lauf scheitert vor Save/Log in `TrainerMovesetRandomizer.getMoveSelectionPoolAtLevel()`.
-- Fehlerpfad: `Gen3RomHandler.getMovesLearnt()` liest ueber `readPointer()` einen ungueltigen Pointer bei `0x25e49c`.
-- Direct Results: `saveSuccessful=false`, `logSuccessful=true`, `outputRomExists=false`, `logNonEmpty=false`, `directLogBytes=0`.
-- Kein Output-ROM und kein nichtleerer Trainer-Log entstehen; `Bad Egg`, `<unknown>` und Unknown-Move-Befunde werden im Log nicht erreicht.
-- Nach dem Fehlversuch bleibt der Trainer-Moveset-Stand unveraendert: `beforeAfterMoveSignatureChanges=0`.
-- Write/Reload ist nicht pruefbar: `writeReloadCompared=0`, `writeReloadMismatches=not run`.
-- Trainer Movesets-only ist fuer den getesteten CFRU/DPE-Gen9-BPRE-Stand noch nicht P1-supported.
+- Der fruehere Fehlerpfad `Gen3RomHandler.getMovesLearnt()` -> `No valid pointer at 0x25e49c` ist entblockt.
+- Direct Results: `saveSuccessful=true`, `logSuccessful=true`, `outputRomExists=true`, `logNonEmpty=true`, `directLogBytes=38171`.
+- Output-ROM und nichtleerer Trainer-Log entstehen; `Bad Egg=false`, `<unknown>=false`, Unknown-Move-Marker `false`.
+- Trainer-Movesets werden sichtbar geaendert: `beforeAfterMoveSignatureChanges=418`.
+- Write/Reload ist stabil: `writeReloadCompared=481`, `writeReloadMismatches=0`.
+- Trainer Movesets-only ist fuer den getesteten CFRU/DPE-Gen9-BPRE-Stand P1-supported auf dem Fixstand.
 
 ## Noch nicht gestartet
 
@@ -86,13 +85,13 @@ git diff --check
 
 ## Naechster empfohlener Branch
 
-`analysis/upr-fvx-cfru-dpe-p1-learnsets-model`
+`analysis/upr-fvx-cfru-dpe-p1-trainer-movesets-combinations`
 
-Zweck: CFRU/DPE-Level-Up-Learnset- und Moveset-Datenmodell fuer `gLevelUpLearnsets` read-only modellieren, bevor ein Trainer-Movesets-Fix versucht wird. Kein Trainer-Movesets-, Held-Items-, TM-/Tutor-, Ability-, Wild-, Starter-, Static/Gift-, Evolution- oder Palette-Fix im selben Branch.
+Zweck: Trainer Movesets-only als P1-supported Baseline in Kombinationslaeufen pruefen und die offenen Gen8/9-Move-, TM/Tutor/Egg- und Held-Item-Folgerisiken separat diagnostizieren.
 
 ### 2026-05-12 – analysis/upr-fvx-cfru-dpe-p1-learnsets-model
 
-- Workspace PR #66 als gemerged geprueft und Branch `analysis/upr-fvx-cfru-dpe-p1-learnsets-model` erstellt.
+- Workspace PR #66 als gemerged geprueft und Branch `compat/upr-fvx-cfru-dpe-trainer-movesets-learnsets` erstellt.
 - UPR-FVX und CFRU/DPE read-only analysiert; keine Aenderungen an `02_external/**`.
 - Modellbefund: CFRU/DPE `gLevelUpLearnsets[]` ist eine interne Species-ID-Pointertabelle bis `SPECIES_PECHARUNT`/`NUM_SPECIES=1440`.
 - Learnset-Eintraege sind im DPE-Modell `u16 move` + `u8 level`; Sentinel ist `move == 0 && level == 0xFF`.
@@ -100,3 +99,16 @@ Zweck: CFRU/DPE-Level-Up-Learnset- und Moveset-Datenmodell fuer `gLevelUpLearnse
 - `0x25e49c` wurde als `0x25D7B4 + SPECIES_ZYGARDE(0x33A) * 4` eingeordnet; der Fehler ist ein Learnset-Modellblocker, kein Trainer-Write-Problem.
 - Neues Protokoll erstellt: `08_tests/randomizer/030_p1_learnsets_model.md`.
 - Kein Fix, keine Randomizer-Codeaenderung, keine committed ROM-/Build-Artefakte.
+
+### 2026-05-13 – compat/upr-fvx-cfru-dpe-trainer-movesets-learnsets
+
+- Workspace PR #67 als gemerged geprueft und Branch `compat/upr-fvx-cfru-dpe-trainer-movesets-learnsets` verwendet.
+- UPR-FVX-Branch `compat/upr-fvx-cfru-dpe-trainer-movesets-learnsets` erstellt.
+- Minimaler Fix in `Gen3RomHandler`: CFRU/DPE-`getMovesLearnt()`-Read-Pool fuer `useCfruDpeGen9SpeciesCount && !jamboMovesetHack`.
+- CFRU/DPE-Level-Up-Eintraege werden als `u16 move` + `u8 level` bis `{0, 0xFF}` gelesen; Move-IDs ausserhalb der geladenen FVX-Move-Liste werden gefiltert.
+- Learnset-Write / `setMovesLearnt()` wurde nicht erweitert.
+- Defensiver `abilityName()`-Fallback verhindert Trainer-Log-Abbruch bei erweiterten CFRU/DPE-Ability-IDs.
+- UPR-FVX-Commit erstellt: `655764816f9fefedb9433f33e4da0bc9d44bcda7`.
+- Diagnose 031: `saveSuccessful=true`, `logSuccessful=true`, Output-ROM und nichtleerer Trainer-Log entstehen.
+- Trainer-Movesets werden geschrieben und nach Reload erhalten: `after/reload.movesetEntries=417`, `writeReloadMismatches=0`.
+- Kein `Bad Egg`, kein `<unknown>`, keine Unknown-Move-Marker und keine invaliden Move-IDs im Trainerbestand.
