@@ -24,9 +24,9 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-p1-trainer-movesets-only` |
-| Nächster Branch | `analysis/upr-fvx-cfru-dpe-p1-learnsets-model` |
-| Aktueller Fokus | P1 Trainer Movesets-only Diagnose |
+| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-p1-learnsets-model` |
+| Nächster Branch | `compat/upr-fvx-cfru-dpe-trainer-movesets-learnsets` |
+| Aktueller Fokus | P1 CFRU/DPE-Learnset-Modell fuer Trainer Movesets-only |
 | ROM-/Build-Arbeit | lokaler Diagnose-Lauf nur unter `05_builds/**`; keine Artefakte committen |
 | Externe Repos | als Submodule auf Planton361-Forks eingebunden |
 | Forks | Planton361-Forks fuer UPR-FVX, DPE Gen9 und CFRU dokumentiert |
@@ -96,13 +96,13 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Trainer Movesets-only dokumentieren | Diagnose-PR reviewen und mergen |
+| 08 Randomizer-Kompatibilität | CFRU/DPE-Learnset-Modell dokumentieren | `gLevelUpLearnsets` und FVX-`getMovesLearnt()`-Annahmen read-only klaeren |
 
 ## Als Nächstes
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | CFRU/DPE-Learnset-Modell analysieren | `gLevelUpLearnsets` und FVX-`getMovesLearnt()`-Annahmen read-only klaeren |
+| 08 Randomizer-Kompatibilität | Trainer Movesets Learnset-Reader-Fix | CFRU/DPE-`gLevelUpLearnsets` minimal lesen und Trainer Movesets-only entblocken |
 
 ## Noch offen
 
@@ -207,7 +207,7 @@ Zweck: Nach Review/Merge dieses Diagnoseblocks das CFRU/DPE-Level-Up-Learnset- u
 - Befund: Trainer-Load `trainers=255`, `trainerPokemon=481`, `nullSpecies=0`; bestehende Movesets haben `before.invalidMoves=0`.
 - Der Lauf blockiert vor Save/Log in `TrainerMovesetRandomizer.getMoveSelectionPoolAtLevel()` durch `Gen3RomHandler.getMovesLearnt()` bei `No valid pointer at 0x25e49c`.
 - Keine Output-ROM und kein nichtleerer Trainer-Log entstehen; Write/Reload bleibt fuer einen spaeteren Learnset-/Moveset-Fixblock offen.
-- Neues Protokoll erstellt: `08_tests/randomizer/029_p1_trainer_movesets_only.md`.
+- Neues Protokoll erstellt: `08_tests/randomizer/030_p1_learnsets_model.md`.
 - Keine Codeaenderungen, keine Fixes, keine committed ROM-/Build-Artefakte.
 
 ### 2026-05-12 – compat/upr-fvx-cfru-dpe-trainer-held-items-lazy-movesets

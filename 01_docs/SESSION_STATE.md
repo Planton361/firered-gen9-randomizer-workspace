@@ -13,11 +13,11 @@
 
 ## Aktueller Branch
 
-`analysis/upr-fvx-cfru-dpe-p1-trainer-movesets-only`
+`analysis/upr-fvx-cfru-dpe-p1-learnsets-model`
 
 ## Aktueller Arbeitsblock
 
-P1 Trainer Movesets-only Diagnose fuer CFRU/DPE Gen9-BPRE.
+P1 CFRU/DPE-Learnset-Modell fuer Trainer Movesets-only fuer CFRU/DPE Gen9-BPRE.
 
 ## Ziel
 
@@ -25,13 +25,13 @@ Trainer Movesets-only isoliert pruefen und dokumentieren. Keine Codeaenderung, k
 
 ## In diesem Arbeitsblock geprueft / geaendert
 
-- UPR-FVX PR #16 und Workspace PR #65 als gemerged geprueft.
-- Workspace-Branch `analysis/upr-fvx-cfru-dpe-p1-trainer-movesets-only` erstellt; nicht auf `main` gearbeitet.
+- Workspace PR #66 als gemerged geprueft.
+- Workspace-Branch `analysis/upr-fvx-cfru-dpe-p1-learnsets-model` erstellt; nicht auf `main` gearbeitet.
 - UPR-FVX read-only geprueft: Submodule steht auf `3864ad0e7efda4ed8a329fb22edb3a28db1040e8`.
 - UPR-FVX per `./gradlew clean :random:jar` erfolgreich gebaut.
-- Trainer Movesets-only Settings mit Seed `274269061345323` lokal diagnostiziert.
-- Neues Protokoll erstellt: `08_tests/randomizer/029_p1_trainer_movesets_only.md`.
-- `08_tests/randomizer/README.md` auf Latest Nr. 029 aktualisiert.
+- UPR-FVX- und CFRU/DPE-Quellen read-only fuer `gLevelUpLearnsets` modelliert.
+- Neues Protokoll erstellt: `08_tests/randomizer/030_p1_learnsets_model.md`.
+- `08_tests/randomizer/README.md` auf Latest Nr. 030 aktualisiert.
 
 ## Ergebnis
 
@@ -89,3 +89,14 @@ git diff --check
 `analysis/upr-fvx-cfru-dpe-p1-learnsets-model`
 
 Zweck: CFRU/DPE-Level-Up-Learnset- und Moveset-Datenmodell fuer `gLevelUpLearnsets` read-only modellieren, bevor ein Trainer-Movesets-Fix versucht wird. Kein Trainer-Movesets-, Held-Items-, TM-/Tutor-, Ability-, Wild-, Starter-, Static/Gift-, Evolution- oder Palette-Fix im selben Branch.
+
+### 2026-05-12 – analysis/upr-fvx-cfru-dpe-p1-learnsets-model
+
+- Workspace PR #66 als gemerged geprueft und Branch `analysis/upr-fvx-cfru-dpe-p1-learnsets-model` erstellt.
+- UPR-FVX und CFRU/DPE read-only analysiert; keine Aenderungen an `02_external/**`.
+- Modellbefund: CFRU/DPE `gLevelUpLearnsets[]` ist eine interne Species-ID-Pointertabelle bis `SPECIES_PECHARUNT`/`NUM_SPECIES=1440`.
+- Learnset-Eintraege sind im DPE-Modell `u16 move` + `u8 level`; Sentinel ist `move == 0 && level == 0xFF`.
+- UPR-FVX nimmt fuer `getMovesLearnt()` aktuell Vanilla-Gen3-2-Byte- oder Jambo-3-Byte-Formate ueber `PokemonMovesets` und `pokedexToInternal` an.
+- `0x25e49c` wurde als `0x25D7B4 + SPECIES_ZYGARDE(0x33A) * 4` eingeordnet; der Fehler ist ein Learnset-Modellblocker, kein Trainer-Write-Problem.
+- Neues Protokoll erstellt: `08_tests/randomizer/030_p1_learnsets_model.md`.
+- Kein Fix, keine Randomizer-Codeaenderung, keine committed ROM-/Build-Artefakte.
