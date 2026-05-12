@@ -2,27 +2,28 @@
 
 ## Aktueller Arbeitsblock
 
-Starter-Write-Fix und Nachher-Diagnose abschliessen.
+Gen9-Species-Coverage-Diagnose abschliessen.
 
 Aktueller Branch:
 
 ```text
-analysis/upr-fvx-cfru-dpe-starter-internal-species-write
+analysis/upr-fvx-cfru-dpe-gen9-species-coverage
 ```
 
 Zieldokumente:
 
 ```text
-08_tests/randomizer/upr-fvx-cfru-dpe-starter-internal-species-write-diagnostics.md
+01_docs/compat/upr-fvx-cfru-dpe-gen9-species-coverage.md
 ```
 
 ## Naechste Schritte in diesem Block
 
 1. Dokumentation reviewen:
-   - `08_tests/randomizer/upr-fvx-cfru-dpe-starter-internal-species-write-diagnostics.md`
+   - `01_docs/compat/upr-fvx-cfru-dpe-gen9-species-coverage.md`
    - `01_docs/SESSION_STATE.md`
    - `01_docs/NEXT_STEPS.md`
    - `00_project-control/roadmap/roadmap-status.md`
+   - `01_docs/references/source-index.md`
 2. Workspace-Checks ausfuehren:
 
 ```sh
@@ -36,7 +37,7 @@ git diff --check
 3. Commit erstellen:
 
 ```text
-docs: record CFRU DPE starter internal species write diagnostics
+docs: analyze CFRU DPE Gen9 species coverage
 ```
 
 4. Branch pushen und Workspace-PR nach `main` vorbereiten.
@@ -46,15 +47,15 @@ docs: record CFRU DPE starter internal species write diagnostics
 Naechster minimaler Diagnosebranch:
 
 ```text
-analysis/upr-fvx-cfru-dpe-p1-static-gift-write-diagnostics
+analysis/upr-fvx-cfru-dpe-pokemon-count-cutoff-diagnostics
 ```
 
 Ziel:
 
-- Static-/Gift-Species-only Diagnose fuer erweiterte CFRU/DPE-BPRE-Hacks.
-- Pruefen, ob Gen4+-Static-/Gift-Species nach Write und Reload erhalten bleiben.
-- Roamer-Scope ausklammern.
-- Der Folgeblock darf keine Trainer-, Evolution-, Learnset-, TM-, Tutor-, Ability-, CFRU-Day/Night-Wildtable-, Swarm-, DexNav-, Raid- oder Nullslot-Logik vermischen.
+- Lokale ROM-Diagnose fuer den konkreten `PokemonCount=823`-Abbruchgrund.
+- In `basicBPRE10HackSupport()` Count nach Name-Scan, Moveset-Pointer-Check und PokedexOrder-Check protokollieren.
+- Name-, Moveset-Pointer-, PokedexOrder- und Stats-Sanity um interne IDs `820..900` pruefen.
+- Keine Gen9-Fixes, keine Static/Gift-Fixes und keine ROM-/Build-Artefakte committen.
 
 ## Fix-Reihenfolge
 
@@ -62,7 +63,7 @@ P0: GenRestrictions / finaler Gen4+ Allowed-Pool. Erledigt und post-merge bestae
 
 P0b: Gen3/CFRU-DPE-Wild-Write-Mapping fuer interne Species-Identitaet. Erledigt und post-merge bestaetigt.
 
-P1: Species-Schreibpfade. Analyse erledigt; Starter-Write-Fix ist als UPR-FVX PR #6 offen und diagnostisch bestaetigt, danach Static/Gifts und Trainer-Species separat testen.
+P1: Species-Schreibpfade. Analyse erledigt; Starter-Write-Fix ist als UPR-FVX PR #6 gemerged und diagnostisch bestaetigt. Static/Gifts und Trainer-Species bleiben pausiert, bis die Gen9-Coverage-/Count-Abbruchdiagnose geklaert ist.
 
 P2: CFRU Day/Night Custom Wild Tables. Separat nach P1-Schreibpfad-Diagnose.
 
@@ -77,8 +78,9 @@ P4: BizHawk/Ironmon Tracker/RAM-Mapping.
 - keine Saves oder Emulator States anfassen
 - keine Builds committen
 - keine Randomizer-JARs oder Tool-Binaries anfassen oder committen
-- keine weiteren Codeaenderungen in `02_external/**` in diesem Workspace-Dokumentationscommit ausser dem bewusst gepinnten UPR-FVX-Submodule-Pointer
+- keine Codeaenderungen in `02_external/**`
 - keine weiteren Wild-Write- oder Encounter-Fixes in diesem Branch
+- keine Gen9-Coverage-Fixes in diesem Branch
 - keine Day/Night-Wild-Fixes
 - keine Swarm-, Roamer-, DexNav- oder Raid-Fixes
 - keine Nullslot-Fixes
