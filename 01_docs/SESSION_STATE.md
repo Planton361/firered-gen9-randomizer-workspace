@@ -37,46 +37,51 @@
 - Der Save-/Moveset-Blocker nach Palette-Load ist read-only modelliert: `saveTrainers()` ruft beim Speichern `trainerPokemonToBytes()` fuer jeden Trainer auf, und dieser Pfad laedt aktuell die globale Learnset-Map ueber `getMovesLearnt()`.
 - Der Fehlerpointer `0x25e49c` entspricht `PokemonMovesets + 826 * 4`; interne ID `826` ist im DPE/CFRU-Modell `SPECIES_ZYGARDE`. Der Blocker ist damit sehr wahrscheinlich ein falscher/alter `PokemonMovesets`-/Learnset-Tabellenzugriff, nicht ein neuer SpeciesCount- oder Palette-Fehler.
 - DPE/CFRU-Source enthaelt Gen7-Gen9-Learnsets in `gLevelUpLearnsets` mit 3-Byte-LevelUpMove-Format bis Pecharunt; FVX erkennt im aktuellen Befund aber `jamboMovesetHack=false` und liest eine nicht passende Tabelle/Formatannahme.
+- UPR-FVX PR #10 ist offen; der Lazy-Trainer-Movesets-Unblocker laedt `getMovesLearnt()` in `trainerPokemonToBytes()` nur noch, wenn ein Trainer-Pokemon mit Custom-Moves tatsaechlich `resetMoves=true` hat.
+- Lokaler Diagnosebefund nach PR #10: `saveTrainers()`/`getMovesLearnt()` blockiert nicht mehr bei `0x25e49c`; `PokemonCount=1439`, `speciesList.size=1415` und Gen7/8/9-Coverage bleiben erhalten.
+- Neuer Folgeblocker nach PR #10: `savePokemonPalettes()` bricht mit `no compressed data found at offset 0x16b9c08` ab; `saveSuccessful=false`, daher entsteht weiterhin kein nutzbarer Wild-Log.
 - ROMs, Saves, Builds, Tool-Binaries und private Dateien sind ausgeschlossen.
 
 ## Aktueller Branch
 
-`analysis/upr-fvx-cfru-dpe-save-trainers-moveset-blocker`
+`analysis/upr-fvx-cfru-dpe-lazy-trainer-movesets`
 
 ## Aktueller Arbeitsblock
 
-Read-only Diagnose des `saveTrainers()`-/`getMovesLearnt()`-Blockers nach Gen9-SpeciesCount- und defensivem Palette-Load-Fix.
+Dokumentation des UPR-FVX-Lazy-Trainer-Movesets-Unblockers und des lokalen Diagnosebefunds.
 
 ## Ziel
 
 Konkret festhalten:
 
-- warum `saveTrainers()` auch in Wild-only-Laeufen `getMovesLearnt()` erreicht
-- welchem Tabellenindex der Pointer `0x25e49c` entspricht
-- ob der Blocker trainer-spezifisch oder ein allgemeiner Learnset-/Moveset-Zugriff ist
-- welche DPE/CFRU-Learnset-Struktur im Source sichtbar ist
-- welcher minimal getrennte Folgefix den Save-Pfad unblocken sollte
+- welcher UPR-FVX-Commit den Trainer-Save-Pfad lazy macht
+- ob `saveTrainers()`/`getMovesLearnt()` weiter bei `0x25e49c` blockiert
+- ob `PokemonCount=1439` und Gen7/8/9-Coverage erhalten bleiben
+- welcher neue nachgelagerte Blocker nach `saveTrainers()` sichtbar wird
 
 ## In diesem Arbeitsblock geprueft / geaendert
 
-- Workspace `main` per Fast-Forward geprueft und Branch `analysis/upr-fvx-cfru-dpe-save-trainers-moveset-blocker` erstellt.
-- UPR-FVX, DPE/CFRU und CyanSMP64-NatDex-Referenzen read-only analysiert.
-- Neues Modell erstellt: `01_docs/compat/upr-fvx-cfru-dpe-save-trainers-moveset-blocker.md`.
-- Keine Codeaenderungen, keine Builds und keine ROM-Zugriffe durchgefuehrt.
+- Workspace `main` per Fast-Forward geprueft und Branch `analysis/upr-fvx-cfru-dpe-lazy-trainer-movesets` erstellt.
+- UPR-FVX Branch `compat/upr-fvx-cfru-dpe-lazy-trainer-movesets` von `compat/firered-gen9-cfru-dpe` erstellt.
+- UPR-FVX Commit `29c34084 compat: lazily load trainer movesets for CFRU DPE` erstellt und PR #10 geoeffnet.
+- UPR-FVX `./gradlew test` und `./gradlew clean :random:jar` ausgefuehrt.
+- Lokalen CFRU/DPE-CLI-Lauf und JShell-Result-Auswertung gestartet; Save-Trainers-Unblock und neuen Palette-Save-Blocker dokumentiert.
+- Neues Protokoll erstellt: `08_tests/randomizer/upr-fvx-cfru-dpe-lazy-trainer-movesets-diagnostics.md`.
 
 ## Ergebnis
 
-- `saveTrainers()` ist der ausloesende Pfad, aber die Ursache ist allgemeiner: der globale Learnset-Loader liest eine fuer CFRU/DPE nicht passende `PokemonMovesets`-Quelle.
-- `0x25e49c` ist der Pointer-Slot fuer interne Species-ID `826` / `SPECIES_ZYGARDE`.
-- DPE/CFRU haben Source-Learnsets fuer Zygarde, Sprigatito, Pecharunt und weitere Gen7-Gen9-Species; der aktuelle FVX-Zugriff erreicht diese Tabelle nicht korrekt.
-- Minimal empfohlener naechster Fix ist eine Save-Trainers-Entkopplung: `getMovesLearnt()` nur laden, wenn Trainer-Custom-Moves mit `resetMoves` wirklich neu berechnet werden muessen.
-- Ein korrekter DPE/CFRU-`gLevelUpLearnsets`-Loader bleibt ein separates Folgepaket.
+- `trainerPokemonToBytes()` laedt `getMovesLearnt()` nur noch lazy fuer echte `resetMoves`-Faelle.
+- Der lokale Lauf blockiert nicht mehr in `saveTrainers()`/`getMovesLearnt()` am Pointer `0x25e49c`.
+- Count und Coverage bleiben stabil: `PokemonCount=1439`, `speciesList.size=1415`, `generationCounts={1=271, 2=118, 3=188, 4=174, 5=191, 6=127, 7=123, 8=127, 9=120}`.
+- Es gibt weiterhin keinen nutzbaren Wild-Log, weil `savePokemonPalettes()` spaeter mit `no compressed data found at offset 0x16b9c08` abbricht.
+- Der volle DPE/CFRU-Learnset-Loader bleibt ein separates Folgepaket.
 
 ## Noch nicht gestartet
 
 - UPR-FVX-Review/Merge von PR #8
 - UPR-FVX-Review/Merge von PR #9
-- UPR-FVX-Fix fuer den `saveTrainers()`-/`getMovesLearnt()`-Unblocker
+- UPR-FVX-Review/Merge von PR #10
+- Separates Modell oder Diagnose fuer `savePokemonPalettes()` bei `0x16b9c08`
 - Separates DPE/CFRU-Learnset-Profil fuer `gLevelUpLearnsets`
 - Praktische P1-Diagnoselaeufe fuer Static/Gifts und Trainer-Species
 - Evolution-/Learnset-/TM-/Tutor-/Ability-Datenmodellierung nach der Schreibpfadmatrix
@@ -88,13 +93,13 @@ Konkret festhalten:
 
 Keine ROMs, Saves, Builds oder Tool-Binaries committed.
 
-Keine ROMs in ChatGPT hochgeladen. In diesem read-only Analyseblock wurden keine ROMs gelesen oder ausgefuehrt.
+Keine ROMs in ChatGPT hochgeladen. ROMs wurden nur lokal fuer den Diagnose-Lauf geladen; Artefakte blieben unter `05_builds/**` und wurden nicht committed.
 
 Keine externen Original-Upstreams kontaktiert.
 
 Keine Aenderungen direkt auf `main`.
 
-UPR-FVX-Codeaenderung erfolgte nur im Submodule auf Arbeitsbranch `compat/upr-fvx-cfru-dpe-defensive-palette-loading`; Workspace dokumentiert den Submodule-Pointer.
+UPR-FVX-Codeaenderung erfolgte nur im Submodule auf Arbeitsbranch `compat/upr-fvx-cfru-dpe-lazy-trainer-movesets`; Workspace dokumentiert den Submodule-Pointer.
 
 Keine MCP-Configs mit Secrets angelegt.
 
@@ -112,6 +117,6 @@ git diff --check
 
 ## Naechster empfohlener Branch
 
-`compat/upr-fvx-cfru-dpe-save-trainers-lazy-movesets`
+`analysis/upr-fvx-cfru-dpe-palette-save-blocker`
 
-Zweck: `trainerPokemonToBytes()` so begrenzen, dass `getMovesLearnt()` nur bei tatsaechlich benoetigter Trainer-Move-Neuberechnung geladen wird. Kein Palette-, Count-, Learnset-, Static-/Gift-, Wild- oder Day/Night-Fix im selben Branch.
+Zweck: neuen `savePokemonPalettes()`-Blocker bei `0x16b9c08` separat diagnostizieren. Kein Count-, Learnset-, Trainer-, Static-/Gift-, Wild- oder Day/Night-Fix im selben Branch.
