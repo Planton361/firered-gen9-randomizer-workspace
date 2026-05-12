@@ -6,46 +6,44 @@
 - GitHub-Repo `Planton361/firered-gen9-randomizer-workspace` existiert und bleibt Source of Truth.
 - `main` ist Default Branch und bleibt stabil.
 - Branch Protection und PR-Pflicht sind laut dokumentiertem Projektstand eingerichtet.
-- Workspace PR #72 ist gemerged.
+- UPR-FVX PR #19 und Workspace PR #73 sind gemerged.
 - UPR-FVX-Fix `32e43ac03a5762542773213a13be4e0389f1deae` entblockt TM/HM-only im klassischen `50+8`-Scope fuer CFRU/DPE Gen9-BPRE.
-- TM/HM-only ist im getesteten FVX-`50+8`-Scope P1-supported; das CFRU/DPE-128-Slot-TM/HM-Modell bleibt separat offen.
+- TM/HM-only ist im getesteten FVX-`50+8`-Scope P1-supported; das CFRU/DPE-128-Slot-TM/HM-Modell ist read-only modelliert.
 - ROMs, Saves, Builds, Tool-Binaries und private Dateien sind ausgeschlossen.
 
 ## Aktueller Branch
 
-`compat/upr-fvx-cfru-dpe-tm-hm-scope-and-safety`
+`analysis/upr-fvx-cfru-dpe-p1-tm-hm-128-slot-model`
 
 ## Aktueller Arbeitsblock
 
-TM/HM Scope-and-Safety-Fix fuer CFRU/DPE Gen9-BPRE.
+CFRU/DPE TM/HM-128-Slot-Modell read-only.
 
 ## Ziel
 
-TM/HM-only entblocken, ohne Tutor-, Egg-Move-, Learnset-Write-, Move-Data-Write- oder 128-Slot-TM/HM-Ausweitung.
+Aktiven CFRU/DPE-128-Slot-TM/HM-Ort, Table-/Pointermodell, HM-Schutz und Write/Reload-Risiken dokumentieren. Kein Fix.
 
 ## In diesem Arbeitsblock geprueft / geaendert
 
-- Workspace PR #72 als gemerged geprueft.
-- Workspace-Branch `compat/upr-fvx-cfru-dpe-tm-hm-scope-and-safety` von `origin/main` erstellt; nicht auf `main` gearbeitet.
-- UPR-FVX-Branch `compat/upr-fvx-cfru-dpe-tm-hm-scope-and-safety` erstellt.
-- UPR-FVX-Fix implementiert: TM-Move-Auswahl gegen hohe Move-IDs abgesichert und TM/HM-Compatibility gegen Placeholder-Species/null-Typen abgesichert.
-- Diagnose-Laeufe fuer TM moves + Compatibility, Compatibility-only und TM moves-only ausgefuehrt.
-- Neues Protokoll erstellt: `08_tests/randomizer/036_tm_hm_scope_and_safety_fix_diagnostics.md`.
-- `08_tests/randomizer/README.md`, `SESSION_STATE.md`, `NEXT_STEPS.md`, Roadmap und Tool-Manifest aktualisiert.
+- UPR-FVX PR #19 und Workspace PR #73 als gemerged geprueft.
+- Workspace-Branch `analysis/upr-fvx-cfru-dpe-p1-tm-hm-128-slot-model` von `origin/main` erstellt; nicht auf `main` gearbeitet.
+- UPR-FVX, CFRU und DPE read-only auf TM/HM-128-Slot-Symbole, Pointer und Compatibility-Modell untersucht.
+- Neues Protokoll erstellt: `08_tests/randomizer/037_p1_tm_hm_128_slot_model.md`.
+- `08_tests/randomizer/README.md`, `SESSION_STATE.md`, `NEXT_STEPS.md` und Roadmap aktualisiert.
+- Keine Aenderungen an `02_external/**`.
 
 ## Ergebnis
 
-- `moves.total=992`, hoechster Move `PsychicNoise`, ID `991`.
-- FVX erkennt im TM/HM-Pfad weiterhin `tmCount=50`, `hmCount=8`, `compat.flagLength=59`.
-- TM moves + Compatibility: `saveSuccessful=true`, `logSuccessful=true`, Output-ROM, nichtleerer Log, `writeReloadTmHmMismatches=0`, `writeReloadCompatibilityMismatches=0`.
-- Compatibility-only: `saveSuccessful=true`, `logSuccessful=true`, Output-ROM, nichtleerer Log, `writeReloadTmHmMismatches=0`, `writeReloadCompatibilityMismatches=0`.
-- TM moves-only: `saveSuccessful=true`, `logSuccessful=true`, Output-ROM, nichtleerer Log, `writeReloadTmHmMismatches=0`, `writeReloadCompatibilityMismatches=0`.
-- Keine invaliden TM/HM-Move-IDs, kein `Bad Egg`, kein `<unknown>` und kein Unknown-Move-Marker im Log.
-- 10 Compatibility-Species haben weiterhin `null`-Primaertyp und werden im erweiterten BPRE-Hack-Scope uebersprungen.
+- CFRU/DPE definiert `EXPANDED_TMSHMS`, `NUM_TMS=120`, `NUM_HMS=8`, `NUM_TMSHMS=128`.
+- DPE `gTMHMMoves` ist `u16[128]` und wird ueber Pointer `0x8125A8C` angebunden.
+- Slots `1..120` sind TMs; Slots `121..128` sind HMs.
+- CFRU/DPE `gTMHMLearnsets` wird ueber Pointer `0x8043C68` angebunden und nutzt 128 Bits beziehungsweise 16 Bytes pro Species.
+- FVX nutzt aktuell den klassischen `50+8`-Ort `romEntry.TmMoves=0x45a5a4` und 8-Byte-Compatibility; nach 50+8 erscheinen dort unplausible Daten, weil ueber das klassische Tabellenende hinaus gelesen wird.
+- Ein minimaler 128-Slot-Fix ist plausibel, muss aber separat und eng gegatet erfolgen.
 
 ## Noch nicht gestartet
 
-- CFRU/DPE-128-Slot-TM/HM-Modellierung/Fix
+- CFRU/DPE-128-Slot-TM/HM-Fix
 - Tutor-Bitfeld-/Special-Tutor-Modellierung
 - Egg-Move-Species-/Move-ID-Diagnose
 - Move-Data-Write/`saveMoves()` fuer CFRU/DPE
@@ -61,7 +59,7 @@ Keine ROMs, Saves, Builds oder Tool-Binaries committed.
 
 Keine ROMs in ChatGPT hochgeladen.
 
-Lokale Diagnoseartefakte blieben ignored unter `05_builds/randomizer-smoke/036_tm_hm_scope_and_safety_fix/`.
+Keine neuen ROM-/Build-Artefakte erzeugt.
 
 Private absolute Pfade und private ROM-Dateinamen wurden nicht dokumentiert.
 
@@ -69,9 +67,9 @@ Keine externen Original-Upstreams kontaktiert.
 
 Keine Aenderungen direkt auf `main`.
 
-UPR-FVX wurde nur im erlaubten Planton361-Fork-Submodule geaendert.
+Keine Aenderungen an `02_external/**`; externe Repos wurden nur read-only analysiert.
 
-Keine Tutor-, Egg-Move-, Learnset-Write-, Move-Data-Write- oder 128-Slot-TM/HM-Ausweitung.
+Keine Tutor-, Egg-Move-, Learnset-Write-, Move-Data-Write- oder 128-Slot-TM/HM-Codeausweitung.
 
 Keine MCP-Configs mit Secrets angelegt.
 
@@ -89,7 +87,16 @@ git diff --check
 
 ## Naechster empfohlener Branch
 
-Nach Merge dieses Fixblocks: separater Analysebranch fuer das echte CFRU/DPE-128-Slot-TM/HM-Modell oder Tutor-/Egg-Move-Pfade. Nicht mit dem bestaetigten `50+8`-Scope vermischen.
+Nach Merge dieses Analyseblocks: separater Fixbranch fuer CFRU/DPE-128-Slot-TM/HM-Read/Write-Scope. Nicht mit Tutor-, Egg-Move-, Learnset-Write- oder Move-Data-Write vermischen.
+
+### 2026-05-13 - analysis/upr-fvx-cfru-dpe-p1-tm-hm-128-slot-model
+
+- UPR-FVX PR #19 und Workspace PR #73 als gemerged geprueft.
+- CFRU/DPE-128-Slot-TM/HM-Modell read-only dokumentiert.
+- `gTMHMMoves` ist `u16[128]` ueber Pointer `0x8125A8C`; TMs `1..120`, HMs `121..128`.
+- `gTMHMLearnsets` ist 128-Bit-/16-Byte-Compatibility pro Species ueber Pointer `0x8043C68`.
+- FVX-`50+8`-Pfad bleibt P1-supported, bildet aber das 128-Slot-Modell nicht ab.
+- Kein Fix, keine Aenderung an `02_external/**`, kein ROM-Zugriff.
 
 ### 2026-05-13 - compat/upr-fvx-cfru-dpe-tm-hm-scope-and-safety
 
