@@ -2,31 +2,32 @@
 
 ## Aktueller Arbeitsblock
 
-CFRU/DPE-Lazy-Trainer-Movesets-Unblocker dokumentieren.
+CFRU/DPE-`savePokemonPalettes()`-Blocker read-only modellieren.
 
 Aktueller Branch:
 
 ```text
-analysis/upr-fvx-cfru-dpe-lazy-trainer-movesets
+analysis/upr-fvx-cfru-dpe-palette-save-blocker
 ```
 
 Zieldokumente:
 
 ```text
-08_tests/randomizer/upr-fvx-cfru-dpe-lazy-trainer-movesets-diagnostics.md
+01_docs/compat/upr-fvx-cfru-dpe-palette-save-blocker.md
 01_docs/SESSION_STATE.md
 01_docs/NEXT_STEPS.md
 00_project-control/roadmap/roadmap-status.md
-02_external/upr-fvx
+01_docs/references/source-index.md
 ```
 
 ## Naechste Schritte in diesem Block
 
 1. Dokumentation reviewen:
-   - `08_tests/randomizer/upr-fvx-cfru-dpe-lazy-trainer-movesets-diagnostics.md`
+   - `01_docs/compat/upr-fvx-cfru-dpe-palette-save-blocker.md`
    - `01_docs/SESSION_STATE.md`
    - `01_docs/NEXT_STEPS.md`
    - `00_project-control/roadmap/roadmap-status.md`
+   - `01_docs/references/source-index.md`
 2. Workspace-Checks ausfuehren:
 
 ```sh
@@ -40,7 +41,7 @@ git diff --check
 3. Commit erstellen:
 
 ```text
-docs: record CFRU DPE lazy trainer moveset diagnostics
+docs: analyze CFRU DPE palette save blocker
 ```
 
 4. Branch pushen und Workspace-PR nach `main` erstellen.
@@ -50,14 +51,14 @@ docs: record CFRU DPE lazy trainer moveset diagnostics
 Naechster minimaler Folgebranch:
 
 ```text
-analysis/upr-fvx-cfru-dpe-palette-save-blocker
+compat/upr-fvx-cfru-dpe-skip-unchanged-palette-save
 ```
 
 Ziel:
 
 - UPR-FVX PR #8, PR #9 und PR #10 reviewen/mergen, falls noch offen.
-- Den neuen nachgelagerten `savePokemonPalettes()`-Blocker bei `no compressed data found at offset 0x16b9c08` separat diagnostizieren.
-- Ziel ist nur zu klaeren, warum der defensive Palette-Load den Load entblockt, der Palette-Save aber noch an einer nicht dekomprimierbaren Adresse scheitert.
+- `savePokemonPalettes()` fuer konservativ erkannte CFRU/DPE-Gen9-BPRE-Hacks ueberspringen, solange Pokemon-Palette-Randomization nicht aktiv war beziehungsweise keine Palette explizit geaendert wurde.
+- Ziel ist nur, den Save-Pfad fuer Wild-only-/Coverage-Laeufe zu entblocken; Palette-Randomization bleibt fuer CFRU/DPE partial/unsupported.
 - Weiterhin keine Static-/Gift-, Trainer-Species-, Count-, Learnset-Loader-, Wild- oder Day/Night-Fixes im selben Branch.
 - ROM-/Build-Artefakte nicht committen.
 
@@ -71,7 +72,7 @@ P1: Species-Schreibpfade. Analyse erledigt; Starter-Write-Fix ist als UPR-FVX PR
 
 Learnsets/Movesets: der Save-Trainers-Unblocker ist als UPR-FVX PR #10 offen. `trainerPokemonToBytes()` laedt `getMovesLearnt()` nur noch lazy fuer echte `resetMoves`-Faelle. Voller DPE/CFRU-`gLevelUpLearnsets`-Support bleibt ein eigener Folgeblock.
 
-Palette-Save: neuer Folgeblocker nach PR #10 ist `savePokemonPalettes()` mit `no compressed data found at offset 0x16b9c08`; dadurch bleibt `saveSuccessful=false` und es gibt noch keinen nutzbaren Wild-Log.
+Palette-Save: der Folgeblocker nach PR #10 ist modelliert. `0x16b9c08` entspricht DPE `gFrontSprite252Pal`, das fuer mehrere Gap-/Dummy-Slots `[252]..[276]` geteilt wird. `savePokemonPalettes()` schreibt aktuell auch unveraenderte Paletten neu; dadurch bleibt `saveSuccessful=false` und es gibt noch keinen nutzbaren Wild-Log.
 
 P2: CFRU Day/Night Custom Wild Tables. Separat nach P1-Schreibpfad-Diagnose.
 
