@@ -47,20 +47,21 @@ Der neueste bestaetigte Stand wird in Markdown ueber die Spalte `Latest` markier
 | 017 | `upr-fvx-cfru-dpe-lazy-trainer-movesets-diagnostics.md` | Lazy-Trainer-Movesets-Unblocker pruefen | bestaetigt | `05_builds/randomizer-smoke/` historisch | nein |
 | 018 | `upr-fvx-cfru-dpe-skip-unchanged-palette-save-diagnostics.md` | unveraenderte CFRU/DPE-Paletten beim Save ueberspringen | bestaetigt | `05_builds/randomizer-smoke/` historisch | nein |
 | 019 | `upr-fvx-cfru-dpe-gen9-wild-post-merge-smoke.md` | Gen9 Standard-/Fallback-Wild post-merge smoke | bestaetigt: `saveSuccessful=true`, Gen7/8/9 im Wild-Log | `05_builds/randomizer-smoke/` historisch, lokal bereinigt | nein |
-| 020 | `upr-fvx-cfru-dpe-wild-banned-special-species-diagnostics.md` | CFRU/DPE-Special-Species-Wild-Ban diagnostisch bestaetigen | bestaetigt: `Bad Egg=0`, `<unknown>=0`, Gen7/8/9 im Wild-Log | `05_builds/randomizer-smoke/` historisch, lokal bereinigt | ja |
+| 020 | `upr-fvx-cfru-dpe-wild-banned-special-species-diagnostics.md` | CFRU/DPE-Special-Species-Wild-Ban diagnostisch bestaetigen | bestaetigt: `Bad Egg=0`, `<unknown>=0`, Gen7/8/9 im Wild-Log | `05_builds/randomizer-smoke/` historisch, lokal bereinigt | nein |
+| 021 | `021_p1_static_gift_species_only.md` | Static/Gift Species-only Diagnose auf Gen9-Wild-sauberem Stand | blockiert: Gen1-Gen9-Pool vorhanden, Pick erreicht Gen7/8/9, Save bricht an Null-Static-Scope ab | `05_builds/randomizer-smoke/021_p1_static_gift_species_only/` lokal/ignored | ja |
 
 ## Aktuell bestaetigter Stand
 
-Latest ist Nr. 020: CFRU/DPE-Special-Species-Wild-Ban diagnostisch bestaetigen.
+Latest ist Nr. 021: Static/Gift Species-only Diagnose auf Gen9-Wild-sauberem Stand.
 
 Kernaussagen:
 
-- `saveSuccessful=true`
 - `PokemonCount=1439`
-- `speciesList.size=1415`
-- Gen7/8/9 erscheinen im Wild-Log
-- `<unknown>` bleibt `0`
-- `Bad Egg` bleibt `0`
+- Static/Gift-Pool enthaelt Gen1-Gen9
+- Static/Gift-Picks erreichen Gen7/8/9
+- `saveSuccessful=false` im direkten `GameRandomizer.Results`
+- CLI meldet irrefuehrend Erfolg, erzeugt aber nur ein leeres Log und keine Output-ROM
+- Blocker sind vier `<null>`-Static-Eintraege im Static/Roamer-/hardcoded-FRLG-Scope
 
 ## Lokale Artefaktpflege
 
@@ -70,8 +71,7 @@ Wenn ein Artefakt nicht eindeutig Smoke-Output ist, bleibt es lokal liegen und w
 
 ## Offene Themen
 
-- Bad Egg/Special-Species-Wild-Ban
-- Static/Gift
+- Static/Gift-Scope und interner Species-Write
 - Trainer
 - Learnsets/Movesets
 - TM/Tutor/Abilities
