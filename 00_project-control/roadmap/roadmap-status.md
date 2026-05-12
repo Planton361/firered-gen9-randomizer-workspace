@@ -24,10 +24,10 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-p1-tm-hm-only` |
-| Nächster Branch | `compat/upr-fvx-cfru-dpe-tm-hm-scope-and-safety` |
-| Aktueller Fokus | P1 TM/HM-only Diagnose fuer CFRU/DPE Gen9-BPRE |
-| ROM-/Build-Arbeit | lokale Randomizer-Diagnoseartefakte ignored unter `05_builds/randomizer-smoke/035_p1_tm_hm_only/`; keine Artefakte committen |
+| Aktueller Branch | `compat/upr-fvx-cfru-dpe-tm-hm-scope-and-safety` |
+| Nächster Branch | `analysis/upr-fvx-cfru-dpe-p1-tm-hm-128-slot-model` |
+| Aktueller Fokus | TM/HM Scope-and-Safety-Fix fuer CFRU/DPE Gen9-BPRE |
+| ROM-/Build-Arbeit | lokale Randomizer-Diagnoseartefakte ignored unter `05_builds/randomizer-smoke/036_tm_hm_scope_and_safety_fix/`; keine Artefakte committen |
 | Externe Repos | als Submodule auf Planton361-Forks eingebunden |
 | Forks | Planton361-Forks fuer UPR-FVX, DPE Gen9 und CFRU dokumentiert |
 | Installationen | devkitPro/devkitARM lokal dokumentiert; keine Installation in diesem Analyseblock |
@@ -93,18 +93,22 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | 08 Randomizer-Kompatibilität | P1 Trainer Movesets-only Diagnose | Trainer-Load stabil, aber `TrainerMovesetRandomizer.getMoveSelectionPoolAtLevel()` blockiert vor Save/Log in `getMovesLearnt()` bei `0x25e49c` |
 | 08 Randomizer-Kompatibilität | P1 Trainer Movesets Learnsets-Fix | UPR-FVX PR #17 und Workspace PR #68 gemerged; `6557648` bestaetigt `saveSuccessful=true`, `logSuccessful=true`, `after/reload.movesetEntries=417` und `writeReloadMismatches=0` |
 | 08 Randomizer-Kompatibilität | P1 Trainer Movesets Kombinationen | Workspace PR #69 gemerged; Movesets-only, Movesets+Species, Movesets+Held Items normal und sensible Held Items sind P1-stabil |
+| 08 Randomizer-Kompatibilität | Gen8/9-Move-Datenmodell | Diagnose 033 dokumentiert `moves.total=559` vs. CFRU/DPE `MOVES_COUNT=992` und minimale Move-Data-Reader-Richtung |
+| 08 Randomizer-Kompatibilität | CFRU/DPE Move-Data-Reader | UPR-FVX PR #18 und Workspace PR #71 gemerged; `moves.total=992`, hoechster Move `PsychicNoise` |
+| 08 Randomizer-Kompatibilität | P1 TM/HM-only Diagnose | Workspace PR #72 gemerged; klassischer `50+8`-Scope blockierte an hohem Move-ID-Limit und Null-Type-Species |
+| 08 Randomizer-Kompatibilität | P1 TM/HM Scope und Safety | UPR-FVX `32e43ac0` bestaetigt TM moves + Compatibility, Compatibility-only und TM moves-only mit Save/Log/Reload und `writeReloadMismatches=0` im klassischen `50+8`-Scope |
 
 ## In Arbeit
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Gen8/9-Move-Datenmodell | CFRU/DPE-Move-Coverage, TM-/Tutor-/Egg-Move-Pfade und FVX-Move-Liste read-only modellieren |
+| 08 Randomizer-Kompatibilität | TM/HM-128-Slot-Modell | CFRU/DPE-128-Slot-TM/HM-Ort und Write/Reload-Modell read-only nachweisen |
 
 ## Als Nächstes
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Gen8/9-Move-Datenmodell | CFRU/DPE-Move-Coverage, TM-/Tutor-/Egg-Move-Pfade und FVX-Move-Liste read-only modellieren |
+| 08 Randomizer-Kompatibilität | TM/HM-128-Slot-Modell | CFRU/DPE-128-Slot-TM/HM-Ort und Write/Reload-Modell read-only nachweisen |
 
 ## Noch offen
 
@@ -155,7 +159,8 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | P1n | `analysis/upr-fvx-cfru-dpe-p1-trainer-movesets-combinations` | Trainer-Movesets-Kombinationen diagnostizieren | erledigt; Movesets-only, Movesets+Species, Movesets+Held Items normal und sensible Held Items sind P1-stabil |
 | P1o | `analysis/upr-fvx-cfru-dpe-p1-move-data-model` | Gen8/9-Move-Datenmodell analysieren | erledigt; Diagnose 033 dokumentiert `moves.total=559` vs. CFRU/DPE `MOVES_COUNT=992` |
 | P1p | `compat/upr-fvx-cfru-dpe-move-data-reader` | CFRU/DPE-Move-Data-Reader minimal erweitern | erledigt; UPR-FVX PR #18 und Workspace PR #71 gemerged, `moves.total=992` |
-| P1q | `analysis/upr-fvx-cfru-dpe-p1-tm-hm-only` | TM/HM-only Diagnose | aktueller Diagnosebranch; blockiert an hohem Move-ID-Limit und Null-Type-Species im Compatibility-Pfad |
+| P1q | `analysis/upr-fvx-cfru-dpe-p1-tm-hm-only` | TM/HM-only Diagnose | erledigt; Workspace PR #72 gemerged, Fixbedarf fuer hohes Move-ID-Limit und Null-Type-Species belegt |
+| P1r | `compat/upr-fvx-cfru-dpe-tm-hm-scope-and-safety` | TM/HM Scope und Safety | aktueller Fixbranch; `50+8`-Scope entblockt, kein 128-Slot-, Tutor-, Egg-, Learnset-Write- oder Move-Data-Write-Fix |
 | P2 | `randomizer/cfru-day-night-wild-table-analysis` | CFRU-Custom-Day/Night-Wild-Tabellen separat untersuchen | erst nach P1-Schreibpfad-Diagnose; Route-1-Fallback bleibt stabil |
 | P3 | noch festlegen | Nullslot-`<unknown>` mit `rawInternalSpeciesId=0` klassifizieren | nicht mit GenRestrictions vermischen |
 | P4 | noch festlegen | BizHawk-/Ironmon-Tracker-/RAM-Mapping pruefen | erst nach stabiler ROM-Randomizer-Kompatibilitaet |
@@ -198,12 +203,21 @@ Excel-Roadmap:
 ## Nächster empfohlener Branch
 
 ```text
-compat/upr-fvx-cfru-dpe-tm-hm-scope-and-safety
+analysis/upr-fvx-cfru-dpe-p1-tm-hm-128-slot-model
 ```
 
-Zweck: TM/HM-only entblocken: hohe Move-IDs defensiv behandeln, Null-Type-Species im Compatibility-Pfad absichern und CFRU/DPE-TM/HM-Scope eng gaten.
+Zweck: CFRU/DPE-128-Slot-TM/HM-Modell read-only nachweisen, ohne den bestaetigten FVX-`50+8`-Scope zu vermischen.
 
 ## Arbeitsblock-Log
+
+### 2026-05-13 – compat/upr-fvx-cfru-dpe-tm-hm-scope-and-safety
+
+- Workspace PR #72 als gemerged geprueft.
+- UPR-FVX-Fix `32e43ac03a5762542773213a13be4e0389f1deae` erstellt.
+- TM-Move-Randomization fuer CFRU/DPE gegen Move-IDs oberhalb der vorhandenen FVX-Sicherheitslisten abgesichert.
+- TM/HM-Compatibility fuer CFRU/DPE gegen Placeholder-Species, `null`-Typen und ungueltige Move-/Flag-Indizes abgesichert.
+- Diagnose 036 bestaetigt TM moves + Compatibility, Compatibility-only und TM moves-only mit `saveSuccessful=true`, `logSuccessful=true`, Output-ROM, nichtleerem Log und `writeReloadMismatches=0`.
+- `50+8`-TM/HM-Scope ist P1-supported; CFRU/DPE-128-Slot-TM/HM bleibt separates Folgerisiko.
 
 ### 2026-05-13 – analysis/upr-fvx-cfru-dpe-p1-trainer-movesets-combinations
 
