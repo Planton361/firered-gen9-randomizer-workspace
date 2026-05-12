@@ -24,10 +24,10 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-save-trainers-moveset-blocker` |
-| Nächster Branch | `compat/upr-fvx-cfru-dpe-save-trainers-lazy-movesets` |
-| Aktueller Fokus | `saveTrainers()`-/`getMovesLearnt()`-Blocker nach Gen9-Count und Palette-Fix read-only modellieren |
-| ROM-/Build-Arbeit | keine ROM-/Build-Arbeit in diesem Analyseblock |
+| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-lazy-trainer-movesets` |
+| Nächster Branch | `analysis/upr-fvx-cfru-dpe-palette-save-blocker` |
+| Aktueller Fokus | Lazy-Trainer-Movesets-Unblocker dokumentieren und neuen Palette-Save-Blocker festhalten |
+| ROM-/Build-Arbeit | lokaler Diagnose-Lauf nur unter `05_builds/**`; keine Artefakte committen |
 | Externe Repos | als Submodule auf Planton361-Forks eingebunden |
 | Forks | Planton361-Forks fuer UPR-FVX, DPE Gen9 und CFRU dokumentiert |
 | Installationen | devkitPro/devkitARM lokal dokumentiert; keine Installation in diesem Analyseblock |
@@ -74,18 +74,19 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | 08 Randomizer-Kompatibilität | Palette-Loader-Blocker-Modell | `loadPokemonPalettes()`-Abbruch auf `SPECIES_CUBONE_A`/`gMonPaletteTable[1038]` eingeordnet; Palette-Load ist P0/Wild-fachlich nicht noetig |
 | 08 Randomizer-Kompatibilität | Defensiver Palette-Load/-Save-Fix | UPR-FVX PR #9 offen; fehlende Palette-Slots brechen den Load nicht mehr ab, naechster Blocker liegt in `saveTrainers()`/`getMovesLearnt()` |
 | 08 Randomizer-Kompatibilität | Save-Trainers-/Moveset-Blocker-Modell | `0x25e49c` als `PokemonMovesets + 826*4` eingeordnet; Ursache ist wahrscheinlich alter/falscher Learnset-Tabellenzugriff plus eager `saveTrainers()`-Moveset-Load |
+| 08 Randomizer-Kompatibilität | Lazy-Trainer-Movesets-Unblocker | UPR-FVX PR #10 offen; `saveTrainers()` blockiert nicht mehr bei `getMovesLearnt()`, naechster Blocker liegt in `savePokemonPalettes()` bei `0x16b9c08` |
 
 ## In Arbeit
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Save-Trainers-/Moveset-Blocker dokumentieren | Read-only Modell fuer `saveTrainers()`/`getMovesLearnt()` und naechsten minimalen Unblocker festhalten |
+| 08 Randomizer-Kompatibilität | Lazy-Trainer-Movesets-Diagnose dokumentieren | UPR-FVX PR #10, lokale Diagnosewerte und nachgelagerten Palette-Save-Blocker festhalten |
 
 ## Als Nächstes
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Save-Trainers-Learnset-Load entkoppeln | `getMovesLearnt()` nur laden, wenn Trainer-Custom-Moves mit `resetMoves` wirklich Level-up-Moves brauchen |
+| 08 Randomizer-Kompatibilität | Palette-Save-Blocker analysieren | `savePokemonPalettes()`-Abbruch `no compressed data found at offset 0x16b9c08` separat modellieren |
 
 ## Noch offen
 
@@ -118,6 +119,7 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Coverage unblock | `compat/upr-fvx-cfru-dpe-defensive-palette-loading` | defensiver Palette-Load/-Save fuer CFRU/DPE | UPR-FVX PR #9 offen; kein Count-, Moveset-, Static/Gift-, Trainer- oder Learnset-Fix |
 | Coverage follow-up | `analysis/upr-fvx-cfru-dpe-save-trainers-moveset-blocker` | `saveTrainers()`-/`getMovesLearnt()`-Blocker nach Palette-Fix analysieren | `0x25e49c` entspricht internem ID-Slot `826` / `SPECIES_ZYGARDE`; kein Fix |
 | Coverage unblock | `compat/upr-fvx-cfru-dpe-save-trainers-lazy-movesets` | Learnset-Load im Trainer-Save nur bei tatsaechlichem Reset-Moves-Bedarf ausloesen | kein Count-, Palette-, Learnset-Loader-, Static/Gift- oder Day/Night-Fix |
+| Coverage follow-up | `analysis/upr-fvx-cfru-dpe-palette-save-blocker` | `savePokemonPalettes()`-Blocker nach Lazy-Trainer-Movesets analysieren | `saveSuccessful=false` bei `no compressed data found at offset 0x16b9c08`; kein Fix |
 | P1c | `analysis/upr-fvx-cfru-dpe-p1-static-gift-write-diagnostics` | Static-/Gift-Species-only Diagnose | pausiert bis Gen9-Coverage/Count-Abbruch geklaert ist; Roamer ausklammern |
 | P2 | `randomizer/cfru-day-night-wild-table-analysis` | CFRU-Custom-Day/Night-Wild-Tabellen separat untersuchen | erst nach P1-Schreibpfad-Diagnose; Route-1-Fallback bleibt stabil |
 | P3 | noch festlegen | Nullslot-`<unknown>` mit `rawInternalSpeciesId=0` klassifizieren | nicht mit GenRestrictions vermischen |
@@ -161,10 +163,10 @@ Excel-Roadmap:
 ## Nächster empfohlener Branch
 
 ```text
-compat/upr-fvx-cfru-dpe-save-trainers-lazy-movesets
+analysis/upr-fvx-cfru-dpe-palette-save-blocker
 ```
 
-Zweck: kleiner UPR-FVX-Unblocker fuer den Save-Pfad: `getMovesLearnt()` in `trainerPokemonToBytes()` nur dann laden, wenn Trainer-Custom-Moves mit `resetMoves` wirklich Level-up-Moves neu berechnen muessen. Kein Palette-, Count-, Learnset-Loader-, Static-/Gift-, Wild- oder Day/Night-Fix im selben Branch.
+Zweck: neuen `savePokemonPalettes()`-Blocker bei `0x16b9c08` nach UPR-FVX PR #10 separat analysieren. Kein Count-, Learnset-, Trainer-, Static-/Gift-, Wild- oder Day/Night-Fix im selben Branch.
 
 ## Arbeitsblock-Log
 

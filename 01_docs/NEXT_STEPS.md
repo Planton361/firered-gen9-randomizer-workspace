@@ -2,32 +2,31 @@
 
 ## Aktueller Arbeitsblock
 
-CFRU/DPE-`saveTrainers()`-/`getMovesLearnt()`-Blocker read-only modellieren.
+CFRU/DPE-Lazy-Trainer-Movesets-Unblocker dokumentieren.
 
 Aktueller Branch:
 
 ```text
-analysis/upr-fvx-cfru-dpe-save-trainers-moveset-blocker
+analysis/upr-fvx-cfru-dpe-lazy-trainer-movesets
 ```
 
 Zieldokumente:
 
 ```text
-01_docs/compat/upr-fvx-cfru-dpe-save-trainers-moveset-blocker.md
+08_tests/randomizer/upr-fvx-cfru-dpe-lazy-trainer-movesets-diagnostics.md
 01_docs/SESSION_STATE.md
 01_docs/NEXT_STEPS.md
 00_project-control/roadmap/roadmap-status.md
-01_docs/references/source-index.md
+02_external/upr-fvx
 ```
 
 ## Naechste Schritte in diesem Block
 
 1. Dokumentation reviewen:
-   - `01_docs/compat/upr-fvx-cfru-dpe-save-trainers-moveset-blocker.md`
+   - `08_tests/randomizer/upr-fvx-cfru-dpe-lazy-trainer-movesets-diagnostics.md`
    - `01_docs/SESSION_STATE.md`
    - `01_docs/NEXT_STEPS.md`
    - `00_project-control/roadmap/roadmap-status.md`
-   - `01_docs/references/source-index.md`
 2. Workspace-Checks ausfuehren:
 
 ```sh
@@ -41,7 +40,7 @@ git diff --check
 3. Commit erstellen:
 
 ```text
-docs: analyze CFRU DPE save trainers moveset blocker
+docs: record CFRU DPE lazy trainer moveset diagnostics
 ```
 
 4. Branch pushen und Workspace-PR nach `main` erstellen.
@@ -51,15 +50,15 @@ docs: analyze CFRU DPE save trainers moveset blocker
 Naechster minimaler Folgebranch:
 
 ```text
-compat/upr-fvx-cfru-dpe-save-trainers-lazy-movesets
+analysis/upr-fvx-cfru-dpe-palette-save-blocker
 ```
 
 Ziel:
 
-- UPR-FVX PR #8 und PR #9 reviewen/mergen, falls noch offen.
-- `trainerPokemonToBytes()` so begrenzen, dass `getMovesLearnt()` nur geladen wird, wenn Trainer-Custom-Moves mit `resetMoves` wirklich neue Level-up-Moves brauchen.
-- Ziel ist nur, den Save-/Log-Pfad fuer Wild-only-Gen9-Coverage wieder zu unblocken.
-- Weiterhin keine Static-/Gift-, Trainer-Species-, Palette-, Count-, Learnset-Loader- oder Day/Night-Fixes im selben Branch.
+- UPR-FVX PR #8, PR #9 und PR #10 reviewen/mergen, falls noch offen.
+- Den neuen nachgelagerten `savePokemonPalettes()`-Blocker bei `no compressed data found at offset 0x16b9c08` separat diagnostizieren.
+- Ziel ist nur zu klaeren, warum der defensive Palette-Load den Load entblockt, der Palette-Save aber noch an einer nicht dekomprimierbaren Adresse scheitert.
+- Weiterhin keine Static-/Gift-, Trainer-Species-, Count-, Learnset-Loader-, Wild- oder Day/Night-Fixes im selben Branch.
 - ROM-/Build-Artefakte nicht committen.
 
 ## Fix-Reihenfolge
@@ -70,7 +69,9 @@ P0b: Gen3/CFRU-DPE-Wild-Write-Mapping fuer interne Species-Identitaet. Erledigt 
 
 P1: Species-Schreibpfade. Analyse erledigt; Starter-Write-Fix ist als UPR-FVX PR #6 gemerged und diagnostisch bestaetigt. Static/Gifts und Trainer-Species bleiben pausiert, bis UPR-FVX mit `PokemonCount=1439` wieder vollstaendig bis Save/Log laeuft.
 
-Learnsets/Movesets: aktueller Blocker ist dokumentiert. DPE/CFRU-Source enthaelt `gLevelUpLearnsets` im 3-Byte-Format bis Gen9; FVX liest derzeit eine nicht passende `PokemonMovesets`-Quelle. Voller Learnset-Support bleibt ein eigener Folgeblock nach dem kleinen Save-Trainers-Unblocker.
+Learnsets/Movesets: der Save-Trainers-Unblocker ist als UPR-FVX PR #10 offen. `trainerPokemonToBytes()` laedt `getMovesLearnt()` nur noch lazy fuer echte `resetMoves`-Faelle. Voller DPE/CFRU-`gLevelUpLearnsets`-Support bleibt ein eigener Folgeblock.
+
+Palette-Save: neuer Folgeblocker nach PR #10 ist `savePokemonPalettes()` mit `no compressed data found at offset 0x16b9c08`; dadurch bleibt `saveSuccessful=false` und es gibt noch keinen nutzbaren Wild-Log.
 
 P2: CFRU Day/Night Custom Wild Tables. Separat nach P1-Schreibpfad-Diagnose.
 
