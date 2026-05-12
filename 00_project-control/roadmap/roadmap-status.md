@@ -24,10 +24,10 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-palette-save-blocker` |
-| Nächster Branch | `compat/upr-fvx-cfru-dpe-skip-unchanged-palette-save` |
-| Aktueller Fokus | `savePokemonPalettes()`-Blocker bei `0x16b9c08` read-only modellieren |
-| ROM-/Build-Arbeit | keine ROM-/Build-Arbeit in diesem Analyseblock |
+| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-skip-unchanged-palette-save` |
+| Nächster Branch | `analysis/upr-fvx-cfru-dpe-post-merge-wild-smoke` |
+| Aktueller Fokus | Skip-Unchanged-Palette-Save-Unblocker dokumentieren |
+| ROM-/Build-Arbeit | lokaler Diagnose-Lauf nur unter `05_builds/**`; keine Artefakte committen |
 | Externe Repos | als Submodule auf Planton361-Forks eingebunden |
 | Forks | Planton361-Forks fuer UPR-FVX, DPE Gen9 und CFRU dokumentiert |
 | Installationen | devkitPro/devkitARM lokal dokumentiert; keine Installation in diesem Analyseblock |
@@ -76,18 +76,19 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | 08 Randomizer-Kompatibilität | Save-Trainers-/Moveset-Blocker-Modell | `0x25e49c` als `PokemonMovesets + 826*4` eingeordnet; Ursache ist wahrscheinlich alter/falscher Learnset-Tabellenzugriff plus eager `saveTrainers()`-Moveset-Load |
 | 08 Randomizer-Kompatibilität | Lazy-Trainer-Movesets-Unblocker | UPR-FVX PR #10 offen; `saveTrainers()` blockiert nicht mehr bei `getMovesLearnt()`, naechster Blocker liegt in `savePokemonPalettes()` bei `0x16b9c08` |
 | 08 Randomizer-Kompatibilität | Palette-Save-Blocker-Modell | `0x16b9c08` als DPE `gFrontSprite252Pal` eingeordnet; FVX schreibt unveraenderte/geteilte Paletten bedingungslos neu |
+| 08 Randomizer-Kompatibilität | Skip-Unchanged-Palette-Save-Unblocker | UPR-FVX PR #11 offen; lokaler Lauf erzeugt wieder Output-ROM und Wild-Log mit Gen7/8/9-Beispielen |
 
 ## In Arbeit
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Palette-Save-Blocker dokumentieren | Read-only Modell fuer `savePokemonPalettes()` und naechsten minimalen Unblocker festhalten |
+| 08 Randomizer-Kompatibilität | Skip-Unchanged-Palette-Save dokumentieren | UPR-FVX PR #11, lokale Diagnosewerte und Wild-Log-Auswertung festhalten |
 
 ## Als Nächstes
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Unveraenderten Palette-Save ueberspringen | `savePokemonPalettes()` fuer CFRU/DPE nur bei tatsaechlicher Palette-Aenderung ausfuehren |
+| 08 Randomizer-Kompatibilität | Post-Merge-Wild-Smoke | PR #11 nach Merge auf `compat/firered-gen9-cfru-dpe` bestaetigen |
 
 ## Noch offen
 
@@ -122,6 +123,7 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Coverage unblock | `compat/upr-fvx-cfru-dpe-save-trainers-lazy-movesets` | Learnset-Load im Trainer-Save nur bei tatsaechlichem Reset-Moves-Bedarf ausloesen | kein Count-, Palette-, Learnset-Loader-, Static/Gift- oder Day/Night-Fix |
 | Coverage follow-up | `analysis/upr-fvx-cfru-dpe-palette-save-blocker` | `savePokemonPalettes()`-Blocker nach Lazy-Trainer-Movesets analysieren | `saveSuccessful=false` bei `no compressed data found at offset 0x16b9c08`; kein Fix |
 | Coverage unblock | `compat/upr-fvx-cfru-dpe-skip-unchanged-palette-save` | Palette-Save fuer unveraenderte CFRU/DPE-Pokemon-Paletten ueberspringen | kein Count-, Learnset-, Trainer-, Static/Gift-, Wild- oder Day/Night-Fix |
+| Coverage smoke | `analysis/upr-fvx-cfru-dpe-post-merge-wild-smoke` | komplette Gen9-Wild-only-Fixkette nach PR #11 bestaetigen | erst nach Merge von UPR-FVX PR #11; keine neuen Fixes |
 | P1c | `analysis/upr-fvx-cfru-dpe-p1-static-gift-write-diagnostics` | Static-/Gift-Species-only Diagnose | pausiert bis Gen9-Coverage/Count-Abbruch geklaert ist; Roamer ausklammern |
 | P2 | `randomizer/cfru-day-night-wild-table-analysis` | CFRU-Custom-Day/Night-Wild-Tabellen separat untersuchen | erst nach P1-Schreibpfad-Diagnose; Route-1-Fallback bleibt stabil |
 | P3 | noch festlegen | Nullslot-`<unknown>` mit `rawInternalSpeciesId=0` klassifizieren | nicht mit GenRestrictions vermischen |
@@ -165,10 +167,10 @@ Excel-Roadmap:
 ## Nächster empfohlener Branch
 
 ```text
-compat/upr-fvx-cfru-dpe-skip-unchanged-palette-save
+analysis/upr-fvx-cfru-dpe-post-merge-wild-smoke
 ```
 
-Zweck: `savePokemonPalettes()` fuer CFRU/DPE nur dann ausfuehren, wenn Pokemon-Palette-Randomization wirklich aktiv war oder Paletten explizit geaendert wurden. Kein Count-, Learnset-, Trainer-, Static-/Gift-, Wild- oder Day/Night-Fix im selben Branch.
+Zweck: Nach Merge von UPR-FVX PR #11 die komplette Gen9-Wild-only-Fixkette auf `compat/firered-gen9-cfru-dpe` bestaetigen. Kein Static/Gift-, Learnset-, Trainer-, Palette-Randomizer- oder Day/Night-Fix im selben Branch.
 
 ## Arbeitsblock-Log
 

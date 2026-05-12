@@ -2,32 +2,31 @@
 
 ## Aktueller Arbeitsblock
 
-CFRU/DPE-`savePokemonPalettes()`-Blocker read-only modellieren.
+CFRU/DPE-Skip-Unchanged-Palette-Save-Unblocker dokumentieren.
 
 Aktueller Branch:
 
 ```text
-analysis/upr-fvx-cfru-dpe-palette-save-blocker
+analysis/upr-fvx-cfru-dpe-skip-unchanged-palette-save
 ```
 
 Zieldokumente:
 
 ```text
-01_docs/compat/upr-fvx-cfru-dpe-palette-save-blocker.md
+08_tests/randomizer/upr-fvx-cfru-dpe-skip-unchanged-palette-save-diagnostics.md
 01_docs/SESSION_STATE.md
 01_docs/NEXT_STEPS.md
 00_project-control/roadmap/roadmap-status.md
-01_docs/references/source-index.md
+02_external/upr-fvx
 ```
 
 ## Naechste Schritte in diesem Block
 
 1. Dokumentation reviewen:
-   - `01_docs/compat/upr-fvx-cfru-dpe-palette-save-blocker.md`
+   - `08_tests/randomizer/upr-fvx-cfru-dpe-skip-unchanged-palette-save-diagnostics.md`
    - `01_docs/SESSION_STATE.md`
    - `01_docs/NEXT_STEPS.md`
    - `00_project-control/roadmap/roadmap-status.md`
-   - `01_docs/references/source-index.md`
 2. Workspace-Checks ausfuehren:
 
 ```sh
@@ -41,7 +40,7 @@ git diff --check
 3. Commit erstellen:
 
 ```text
-docs: analyze CFRU DPE palette save blocker
+docs: record CFRU DPE skipped palette save diagnostics
 ```
 
 4. Branch pushen und Workspace-PR nach `main` erstellen.
@@ -51,14 +50,14 @@ docs: analyze CFRU DPE palette save blocker
 Naechster minimaler Folgebranch:
 
 ```text
-compat/upr-fvx-cfru-dpe-skip-unchanged-palette-save
+analysis/upr-fvx-cfru-dpe-post-merge-wild-smoke
 ```
 
 Ziel:
 
-- UPR-FVX PR #8, PR #9 und PR #10 reviewen/mergen, falls noch offen.
-- `savePokemonPalettes()` fuer konservativ erkannte CFRU/DPE-Gen9-BPRE-Hacks ueberspringen, solange Pokemon-Palette-Randomization nicht aktiv war beziehungsweise keine Palette explizit geaendert wurde.
-- Ziel ist nur, den Save-Pfad fuer Wild-only-/Coverage-Laeufe zu entblocken; Palette-Randomization bleibt fuer CFRU/DPE partial/unsupported.
+- UPR-FVX PR #8, PR #9, PR #10 und PR #11 reviewen/mergen, falls noch offen.
+- Nach Merge von PR #11 die komplette Wild-only-Fixkette auf `compat/firered-gen9-cfru-dpe` bestaetigen.
+- Ziel ist ein sauberer Post-Merge-Smoke mit `PokemonCount=1439`, Wild-Log und sichtbaren Gen7/8/9-Wild-Beispielen.
 - Weiterhin keine Static-/Gift-, Trainer-Species-, Count-, Learnset-Loader-, Wild- oder Day/Night-Fixes im selben Branch.
 - ROM-/Build-Artefakte nicht committen.
 
@@ -72,7 +71,7 @@ P1: Species-Schreibpfade. Analyse erledigt; Starter-Write-Fix ist als UPR-FVX PR
 
 Learnsets/Movesets: der Save-Trainers-Unblocker ist als UPR-FVX PR #10 offen. `trainerPokemonToBytes()` laedt `getMovesLearnt()` nur noch lazy fuer echte `resetMoves`-Faelle. Voller DPE/CFRU-`gLevelUpLearnsets`-Support bleibt ein eigener Folgeblock.
 
-Palette-Save: der Folgeblocker nach PR #10 ist modelliert. `0x16b9c08` entspricht DPE `gFrontSprite252Pal`, das fuer mehrere Gap-/Dummy-Slots `[252]..[276]` geteilt wird. `savePokemonPalettes()` schreibt aktuell auch unveraenderte Paletten neu; dadurch bleibt `saveSuccessful=false` und es gibt noch keinen nutzbaren Wild-Log.
+Palette-Save: UPR-FVX PR #11 ist offen. Unveraenderte CFRU/DPE-Pokemon-Paletten werden im Gen9-BPRE-Modus nicht mehr neu geschrieben; der lokale Diagnose-Lauf erzeugt wieder Output-ROM und Wild-Log. CFRU/DPE-Palette-Randomization bleibt partial/unsupported.
 
 P2: CFRU Day/Night Custom Wild Tables. Separat nach P1-Schreibpfad-Diagnose.
 
