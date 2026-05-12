@@ -45,42 +45,47 @@
 - Post-Merge-Gen9-Wild-Smoke auf UPR-FVX Merge-Commit `ee82cb4e` ist dokumentiert: `PokemonCount=1439`, `speciesList.size=1415`, `maxSpeciesIdentityNumber=1439`, `generationCounts={1=271, 2=118, 3=188, 4=174, 5=191, 6=127, 7=123, 8=127, 9=120}`, Output-ROM und Wild-Log entstehen erfolgreich.
 - Der Post-Merge-Wild-Log enthaelt Gen7/8/9-Species, darunter `Magearna`, `Meltan`, `Hatenna`, `Calyrex`, `Glimmet`, `Toedscool`, `Tatsugiri`, `Floragato`, `Iron Crown` und `Hydrapple`; `<unknown>` bleibt `0`.
 - Im Post-Merge-Wild-Log erscheinen `12` `Bad Egg`-Eintraege; diese sind eine separate Folgeauffaelligkeit und nicht der fruehere `<unknown>`-Nullslot.
+- Randomizer-Smoke-Artefakte wurden lokal bereinigt: `05_builds` sank von `1.3G` auf `196M`; der alte flache `05_builds/randomizer-smoke/`-Output ist leer.
+- `08_tests/randomizer/README.md` dokumentiert ab jetzt Nummerierungs- und Latest-Konvention fuer Randomizer-Smoke-Protokolle und lokale Artefaktordner.
 - ROMs, Saves, Builds, Tool-Binaries und private Dateien sind ausgeschlossen.
 
 ## Aktueller Branch
 
-`analysis/upr-fvx-cfru-dpe-gen9-wild-post-merge-smoke`
+`maintenance/randomizer-smoke-artifact-cleanup`
 
 ## Aktueller Arbeitsblock
 
-Post-Merge-Smoke fuer die gemergte CFRU/DPE-Gen9-Wild-only-Fixkette.
+Randomizer-Smoke-Artefakte und Testprotokolle ordnen.
 
 ## Ziel
 
 Konkret festhalten:
 
-- ob UPR-FVX `compat/firered-gen9-cfru-dpe` PR #11 enthaelt
-- ob der gemergte Zielbranch baut
-- ob der lokale CFRU/DPE-Wild-only-Smoke mit `PokemonCount=1439` erfolgreich speichert
-- ob der Wild-Log Gen7/8/9-Species enthaelt und `<unknown>` `0` bleibt
+- welche lokalen Smoke-/Build-Artefakte gross sind
+- ob `05_builds`, `04_private_roms` oder `03_tools/releases` versehentlich tracked Dateien enthalten
+- welche eindeutig lokalen Smoke-Outputs entfernt wurden
+- wie kuenftige Randomizer-Smokes nummeriert und als latest markiert werden
 
 ## In diesem Arbeitsblock geprueft / geaendert
 
-- Workspace `main` per Fast-Forward geprueft und Branch `analysis/upr-fvx-cfru-dpe-gen9-wild-post-merge-smoke` erstellt.
-- UPR-FVX `compat/firered-gen9-cfru-dpe` auf Merge-Commit `ee82cb4e` aktualisiert.
-- Workspace-Submodule-Pointer auf den gemergten UPR-FVX-Stand aktualisiert.
-- UPR-FVX `./gradlew clean :random:jar` ausgefuehrt.
-- Lokalen CFRU/DPE-Wild-only-CLI-Smoke gestartet; Save-Erfolg, Wild-Log und Gen7/8/9-Beispiele dokumentiert.
-- Neues Protokoll erstellt: `08_tests/randomizer/upr-fvx-cfru-dpe-gen9-wild-post-merge-smoke.md`.
+- Workspace `main` per Fast-Forward geprueft und Branch `maintenance/randomizer-smoke-artifact-cleanup` erstellt.
+- Lokale Groessen inventarisiert: vor Cleanup `05_builds=1.3G`, `05_builds/randomizer-smoke=1.1G`, `08_tests=196K`, `08_tests/randomizer=172K`.
+- `find 05_builds -maxdepth 3 -type f | wc -l` meldete vor Cleanup `107` Dateien.
+- `git ls-files 05_builds 04_private_roms 03_tools/releases` meldete keine tracked Dateien.
+- `git status --ignored --short 05_builds` meldete nur den ignored Build-Ordner.
+- Eindeutig lokale ignored Smoke-Outputs im flachen Ordner `05_builds/randomizer-smoke/` wurden entfernt: `.gba`- und `.log`-Dateien, keine Markdown-Dokumentation.
+- Nach Cleanup: `05_builds=196M`, `05_builds/randomizer-smoke=0`, `find 05_builds -maxdepth 3 -type f | wc -l` meldet `12`.
+- Neues Ordnungsdokument erstellt: `08_tests/randomizer/README.md`.
+- Statusdateien und Tool-Manifest auf die neue Artefaktkonvention aktualisiert.
 
 ## Ergebnis
 
-- Der gemergte UPR-FVX-Zielbranch baut erfolgreich.
-- Der lokale Wild-only-Smoke beendet mit CLI-Exit-Code `0` und `Randomized successfully!`.
-- Count und Coverage bleiben stabil: `PokemonCount=1439`, `speciesList.size=1415`, `maxSpeciesIdentityNumber=1439`, `generationCounts={1=271, 2=118, 3=188, 4=174, 5=191, 6=127, 7=123, 8=127, 9=120}`.
-- Der Wild-Log enthaelt Gen7 `85`, Gen8 `126`, Gen9 `289` sichtbare Wild-Slots; `<unknown>` bleibt `0`.
-- Sichtbare Gen7/8/9-Wild-Beispiele sind unter anderem `Magearna`, `Meltan`, `Hatenna`, `Calyrex`, `Glimmet`, `Toedscool`, `Tatsugiri`, `Floragato`, `Iron Crown` und `Hydrapple`.
-- `Bad Egg` erscheint `12` Mal und bleibt als separate Folgeauffaelligkeit offen.
+- Der grosse lokale Randomizer-Smoke-Output wurde entfernt, ohne tracked Dateien zu beruehren.
+- Dauerhafte Markdown-Protokolle unter `08_tests/randomizer/**` bleiben erhalten.
+- Kuenftige Smoke-Protokolle sollen nummerierte Namen wie `001_<kurzer-zweck>.md` nutzen; bestehende unnummerierte Protokolle bleiben ueber die README-Tabelle eingeordnet.
+- Kuenftige lokale Artefakte sollen nummerierte Ordner unter `05_builds/randomizer-smoke/NNN_<kurzer-zweck>/` nutzen.
+- Latest wird in Markdown ueber die README-Tabelle markiert, nicht zwingend per Symlink.
+- Neuester bestaetigter Stand bleibt der Gen9 Standard-/Fallback-Wild-Post-Merge-Smoke mit `saveSuccessful=true` und Gen7/8/9 im Wild-Log.
 
 ## Noch nicht gestartet
 
@@ -95,13 +100,15 @@ Konkret festhalten:
 
 Keine ROMs, Saves, Builds oder Tool-Binaries committed.
 
-Keine ROMs in ChatGPT hochgeladen. ROMs wurden nur lokal fuer den Diagnose-Lauf geladen; Artefakte blieben unter `05_builds/**` und wurden nicht committed.
+Keine ROMs in ChatGPT hochgeladen. In diesem Arbeitsblock wurden keine ROMs gelesen, kopiert, geaendert, gebaut oder randomisiert.
+
+Lokale ignored Smoke-Outputs unter `05_builds/randomizer-smoke/` wurden nur summarisch nach Groesse/Typ inventarisiert und bereinigt. Private absolute Pfade und private ROM-Dateinamen wurden nicht dokumentiert.
 
 Keine externen Original-Upstreams kontaktiert.
 
 Keine Aenderungen direkt auf `main`.
 
-Keine UPR-FVX-Codeaenderung in diesem Arbeitsblock; Workspace dokumentiert nur den gemergten Submodule-Pointer.
+Keine Codeaenderungen, keine Builds, keine Randomizer-Laeufe und keine Submodule-Aenderungen in diesem Arbeitsblock.
 
 Keine MCP-Configs mit Secrets angelegt.
 

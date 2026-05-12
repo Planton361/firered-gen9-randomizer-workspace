@@ -24,10 +24,10 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-gen9-wild-post-merge-smoke` |
+| Aktueller Branch | `maintenance/randomizer-smoke-artifact-cleanup` |
 | Nächster Branch | `analysis/upr-fvx-cfru-dpe-p1-static-gift-write-diagnostics` |
-| Aktueller Fokus | Gen9-Wild-Post-Merge-Smoke dokumentieren |
-| ROM-/Build-Arbeit | lokaler Diagnose-Lauf nur unter `05_builds/**`; keine Artefakte committen |
+| Aktueller Fokus | Randomizer-Smoke-Artefakte und Testprotokolle ordnen |
+| ROM-/Build-Arbeit | keine Builds, keine Randomizer-Laeufe; ignored lokale Smoke-Outputs unter `05_builds/**` bereinigt |
 | Externe Repos | als Submodule auf Planton361-Forks eingebunden |
 | Forks | Planton361-Forks fuer UPR-FVX, DPE Gen9 und CFRU dokumentiert |
 | Installationen | devkitPro/devkitARM lokal dokumentiert; keine Installation in diesem Analyseblock |
@@ -78,12 +78,13 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | 08 Randomizer-Kompatibilität | Palette-Save-Blocker-Modell | `0x16b9c08` als DPE `gFrontSprite252Pal` eingeordnet; FVX schreibt unveraenderte/geteilte Paletten bedingungslos neu |
 | 08 Randomizer-Kompatibilität | Skip-Unchanged-Palette-Save-Unblocker | UPR-FVX PR #11 gemerged; unveraenderte CFRU/DPE-Pokemon-Paletten werden nicht mehr neu geschrieben |
 | 08 Randomizer-Kompatibilität | Gen9-Wild-Post-Merge-Smoke | UPR-FVX Merge-Commit `ee82cb4e` bestaetigt: `PokemonCount=1439`, Gen7/8/9 im Wild-Log, `<unknown>=0`, Save erfolgreich |
+| 08 Randomizer-Kompatibilität | Randomizer-Smoke-Artefaktordnung | Lokale ignored Smoke-Outputs unter `05_builds/randomizer-smoke/` bereinigt; `08_tests/randomizer/README.md` dokumentiert Nummerierung und Latest-Konvention |
 
 ## In Arbeit
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Gen9-Wild-Post-Merge-Smoke dokumentieren | gemergte Fixkette auf UPR-FVX `compat/firered-gen9-cfru-dpe` bestaetigen |
+| 08 Randomizer-Kompatibilität | Randomizer-Smoke-Artefaktordnung reviewen | Dokumentations-PR fuer Cleanup und kuenftige Nummerierung mergen |
 
 ## Als Nächstes
 
@@ -124,7 +125,8 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Coverage unblock | `compat/upr-fvx-cfru-dpe-save-trainers-lazy-movesets` | Learnset-Load im Trainer-Save nur bei tatsaechlichem Reset-Moves-Bedarf ausloesen | UPR-FVX PR #10 gemerged; kein Count-, Palette-, Learnset-Loader-, Static/Gift- oder Day/Night-Fix |
 | Coverage follow-up | `analysis/upr-fvx-cfru-dpe-palette-save-blocker` | `savePokemonPalettes()`-Blocker nach Lazy-Trainer-Movesets analysieren | `saveSuccessful=false` bei `no compressed data found at offset 0x16b9c08`; kein Fix |
 | Coverage unblock | `compat/upr-fvx-cfru-dpe-skip-unchanged-palette-save` | Palette-Save fuer unveraenderte CFRU/DPE-Pokemon-Paletten ueberspringen | UPR-FVX PR #11 gemerged; kein Count-, Learnset-, Trainer-, Static/Gift-, Wild- oder Day/Night-Fix |
-| Coverage smoke | `analysis/upr-fvx-cfru-dpe-gen9-wild-post-merge-smoke` | komplette Gen9-Wild-only-Fixkette nach PR #11 bestaetigen | in Arbeit; keine neuen Fixes |
+| Coverage smoke | `analysis/upr-fvx-cfru-dpe-gen9-wild-post-merge-smoke` | komplette Gen9-Wild-only-Fixkette nach PR #11 bestaetigen | erledigt; `saveSuccessful=true`, Gen7/8/9 im Wild-Log, `<unknown>=0` |
+| Maintenance | `maintenance/randomizer-smoke-artifact-cleanup` | lokale Smoke-Artefakte bereinigen und Protokoll-/Latest-Konvention dokumentieren | aktueller Dokumentationsbranch; keine Codeaenderungen, keine Builds, keine Randomizer-Laeufe |
 | P1c | `analysis/upr-fvx-cfru-dpe-p1-static-gift-write-diagnostics` | Static-/Gift-Species-only Diagnose | naechster minimaler Schritt; Roamer ausklammern |
 | P2 | `randomizer/cfru-day-night-wild-table-analysis` | CFRU-Custom-Day/Night-Wild-Tabellen separat untersuchen | erst nach P1-Schreibpfad-Diagnose; Route-1-Fallback bleibt stabil |
 | P3 | noch festlegen | Nullslot-`<unknown>` mit `rawInternalSpeciesId=0` klassifizieren | nicht mit GenRestrictions vermischen |
@@ -174,6 +176,17 @@ analysis/upr-fvx-cfru-dpe-p1-static-gift-write-diagnostics
 Zweck: Nach bestaetigter Gen9-Wild-Coverage Static-/Gift-Species-only Schreibpfade diagnostizieren. Kein Learnset-, Trainer-, Palette-, Day/Night- oder Nullslot-Fix im selben Branch.
 
 ## Arbeitsblock-Log
+
+### 2026-05-12 – maintenance/randomizer-smoke-artifact-cleanup
+
+- Workspace `main` per Fast-Forward aktualisiert und Branch `maintenance/randomizer-smoke-artifact-cleanup` erstellt.
+- Lokales Inventar ohne ROM-Inhaltszugriff erstellt: vor Cleanup `05_builds=1.3G`, davon `05_builds/randomizer-smoke=1.1G`; `08_tests=196K`.
+- `git ls-files 05_builds 04_private_roms 03_tools/releases` meldete keine tracked Dateien.
+- Eindeutig ignored lokale Smoke-Outputs im flachen `05_builds/randomizer-smoke/`-Ordner entfernt: `.gba`- und `.log`-Dateien.
+- Nach Cleanup liegt `05_builds` bei `196M`; `05_builds/randomizer-smoke` ist leer.
+- Neues Ordnungsdokument `08_tests/randomizer/README.md` erstellt: Nummerierungsregel fuer neue Smoke-Protokolle, nummerierte lokale Artefaktordner und Markdown-`Latest`-Tabelle.
+- Latest bleibt der Gen9 Standard-/Fallback-Wild-Post-Merge-Smoke mit `saveSuccessful=true` und Gen7/8/9 im Wild-Log.
+- Keine ROMs gelesen, kopiert oder geaendert; keine Builds, keine Randomizer-Laeufe, keine Code- oder Submodule-Aenderungen.
 
 ### 2026-05-11 – setup/workspace-build-randomizer-smoke
 
