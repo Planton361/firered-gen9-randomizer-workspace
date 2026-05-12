@@ -243,7 +243,32 @@ Ergebnis:
 - DPE/CFRU-Source ist auf vollstaendige Gen9-Species bis Pecharunt ausgelegt.
 - Der aktuelle FVX-Diagnose-Load endet bei `PokemonCount=823` und erreicht damit weder Gen7 noch Gen8/Gen9.
 - Wahrscheinlichster Engpass ist die BPRE-Hack-Heuristik aus `PokemonNames`, `PokemonMovesets` und `PokedexOrder`, nicht fehlende DPE/CFRU-Source-Coverage.
-- Naechste Diagnose muss lokal mit ROM den konkreten Abbruchschritt um interne IDs `820..900` protokollieren.
+
+## PokedexOrder-/Count-Modell 2026-05-12
+
+Arbeitsblock: `analysis/upr-fvx-cfru-dpe-pokedex-order-model`.
+
+Neue Workspace-Referenz:
+
+- `01_docs/compat/upr-fvx-cfru-dpe-pokedex-order-model.md`
+
+Zusaetzlich relevant eingeordnete lokale Quellen:
+
+| Bereich | Lokaler Pfad | Zweck |
+|---|---|---|
+| DPE Pokedex Runtime | `02_external/Dynamic-Pokemon-Expansion-Gen-9/src/updated_code.c` | belegt, dass DPE `gPokedexOrder_*` als Species-ID-Listen nutzt und fuer Dex-Flags ueber `SpeciesToNationalPokedexNum()` wandelt |
+| DPE Species-to-Dex Mapping | `02_external/Dynamic-Pokemon-Expansion-Gen-9/src/Species_To_Pokdex_Table.c` | beste Dex-ID-Quelle fuer FVX: internes Species-Mapping auf National-Dex-ID |
+| DPE Pokedex Orders | `02_external/Dynamic-Pokemon-Expansion-Gen-9/src/Pokedex_Orders.c` | Species-ID-Sortierlisten fuer Regional/Alphabetical/Weight/Height/Type; keine FVX-kompatible Count-Quelle |
+| CFRU Dex Runtime | `02_external/CFRU-expansion/src/util.c` | National-Dex-Count und Species-to-Dex-Nutzung im CFRU-Kontext |
+| FVX Legacy Gen3 Offsets | `02_external/upr-fvx/romio/src/main/resources/com/uprfvx/romio/romentries/gen3_offsets.ini` | Vanilla-BPRE `PokedexOrder=0x251FEE`; im CFRU/DPE-Teststand nicht als Count-Grenze belastbar |
+| CyanSMP64 NatDex INI-Generator | `02_external/references/cyansmp64-pokefirered-natdex/tools/inigen/inigen.c` | Referenz fuer expliziten `PokemonCount = NUM_SPECIES - 1` und symbolbasierte Tabellenadressen |
+
+Ergebnis:
+
+- FVX `PokedexOrder` und DPE `PokedexOrder` haben unterschiedliche Semantik.
+- DPE `PokedexOrder`-Eintraege `>1023` koennen valide interne Species-IDs sein.
+- Fuer CFRU/DPE sollte `PokemonCount` nicht aus `PokedexOrder`-Sanity abgeleitet werden.
+- Naechster Schritt ist ein separater UPR-FVX-Fixbranch fuer CFRU/DPE-spezifische Count-Erkennung; keine Static-/Gift- oder Learnset-Fixes im selben Branch.
 
 ## Regel
 

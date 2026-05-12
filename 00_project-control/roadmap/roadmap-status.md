@@ -24,10 +24,10 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-pokemon-count-cutoff-diagnostics` |
+| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-pokedex-order-model` |
 | Nächster Branch | noch festzulegen |
-| Aktueller Fokus | konkrete `PokemonCount=823`-Cutoff-Ursache dokumentieren |
-| ROM-/Build-Arbeit | lokaler UPR-FVX-Build und lokaler ROM-Load nur fuer Diagnose; Artefakte bleiben ignored |
+| Aktueller Fokus | CFRU/DPE-`PokedexOrder`-Semantik und sichere Count-Quellen modellieren |
+| ROM-/Build-Arbeit | keine ROM-Zugriffe oder Builds in diesem Analyseblock |
 | Externe Repos | als Submodule auf Planton361-Forks eingebunden |
 | Forks | Planton361-Forks fuer UPR-FVX, DPE Gen9 und CFRU dokumentiert |
 | Installationen | devkitPro/devkitARM lokal dokumentiert; keine Installation in diesem Analyseblock |
@@ -69,18 +69,19 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | 08 Randomizer-Kompatibilität | P1-Starter-Write-Fix | UPR-FVX PR #6 gemerged; Starter werden fuer erweiterte BPRE-Hacks per interner SpeciesSet-Identitaet geschrieben |
 | 08 Randomizer-Kompatibilität | Gen9-Species-Coverage-Analyse | DPE/CFRU-Source reicht bis Pecharunt/`NUM_SPECIES=1440`; aktueller FVX-Load bleibt bei `PokemonCount=823` |
 | 08 Randomizer-Kompatibilität | PokemonCount-Cutoff-Diagnose | UPR-FVX PR #7 offen; Diagnose belegt `PokedexOrder`-Kappung bei interner ID `824` mit `pdEntry=1808` |
+| 08 Randomizer-Kompatibilität | PokedexOrder-Modell | DPE `PokedexOrder` als Species-ID-Sortierlisten eingeordnet; FVX-Count-Sanity auf `pdEntry > 1023` ist fuer CFRU/DPE ungeeignet |
 
 ## In Arbeit
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | PokemonCount-Cutoff-Diagnose dokumentieren | Workspace-Dokumentation, Submodule-Pointer und PR fuer Diagnose-Commit abschliessen |
+| 08 Randomizer-Kompatibilität | PokedexOrder-/Count-Quellenmodell dokumentieren | sichere Fix-Strategie und Entscheidungsmatrix fuer Gen9-Coverage festhalten |
 
 ## Als Nächstes
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Gen9-Count-Strategie modellieren | DPE/CFRU-`PokedexOrder`-Layout und sichere Count-Quelle fuer vollstaendige Gen9-Coverage klaeren |
+| 08 Randomizer-Kompatibilität | CFRU/DPE-Count-Fix vorbereiten | `PokedexOrder`-Kappung fuer CFRU/DPE ersetzen und Count aus Names + BaseStats-Sanity ableiten |
 
 ## Noch offen
 
@@ -88,7 +89,7 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 |---|---|---|
 | 08 Randomizer-Kompatibilität | Static/Gift-Schreibpfade fixen | erst nach separater Diagnose; keine Trainer-/Evolution-/Learnset-Pfade vermischen |
 | 08 Randomizer-Kompatibilität | Trainer-Pokémon testen | nach Static/Gift oder separat; aktueller Verdacht ebenfalls `pokedexToInternal[Species.number]` |
-| 08 Randomizer-Kompatibilität | DPE-Gesamtumfang/PokemonCount praktisch bewerten | Count-Diagnose zeigt: Names bis Pecharunt, Movesets kappen auf 930, PokedexOrder kappt final auf 823 |
+| 08 Randomizer-Kompatibilität | DPE-Gesamtumfang/PokemonCount praktisch bewerten | Count-Diagnose zeigt: Names bis Pecharunt, Movesets kappen auf 930, PokedexOrder kappt final auf 823; Modell empfiehlt Count nicht aus PokedexOrder abzuleiten |
 | 08 Randomizer-Kompatibilität | Wild-Log-`<unknown>` aufloesen | eindeutige Rohwerte sind `rawInternalSpeciesId=0`; Nullslots separat klassifizieren |
 | 08 Randomizer-Kompatibilität | CFRU-Day/Night-Custom-Wild-Tabellen analysieren | getrennt vom Vanilla/Fallback-Wild-Pool behandeln |
 | 08 Randomizer-Kompatibilität | Learnsets testen | späterer Einzeltest |
@@ -107,7 +108,8 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | P1b | `compat/upr-fvx-cfru-dpe-starter-internal-species-write` | Starter-Schreibpfad auf interne SpeciesSet-Identitaet fuer erweiterte BPRE-Hacks umstellen | UPR-FVX PR #6 gemerged; Seed `274269061345323` reloadet Pawniard/Scraggy korrekt |
 | Coverage | `analysis/upr-fvx-cfru-dpe-gen9-species-coverage` | Source-Umfang bis Gen9 gegen FVX-Load bis `PokemonCount=823` einordnen | read-only Dokumentation; keine ROM-Zugriffe |
 | Coverage follow-up | `analysis/upr-fvx-cfru-dpe-pokemon-count-cutoff-diagnostics` | konkrete Count-Abbruchursache lokal mit ROM diagnostizieren | UPR-FVX PR #7; direkte Ursache ist `PokedexOrder` ID `824` = `1808`, keine Fixes |
-| Coverage fix/model | noch festlegen | sichere Count-Strategie fuer CFRU/DPE-Gen9 modellieren | PokedexOrder und Moveset-Pointer getrennt bewerten; kein Static/Gift-Fix |
+| Coverage model | `analysis/upr-fvx-cfru-dpe-pokedex-order-model` | sichere Count-Strategie fuer CFRU/DPE-Gen9 modellieren | PokedexOrder und Moveset-Pointer getrennt bewerten; kein Static/Gift-Fix |
+| Coverage fix | noch festlegen | CFRU/DPE-spezifischen Count-Fix vorbereiten | PokedexOrder-Count-Sanity ersetzen; Vanilla/alte Gen3-Hacks schuetzen |
 | P1c | `analysis/upr-fvx-cfru-dpe-p1-static-gift-write-diagnostics` | Static-/Gift-Species-only Diagnose | pausiert bis Gen9-Coverage/Count-Abbruch geklaert ist; Roamer ausklammern |
 | P2 | `randomizer/cfru-day-night-wild-table-analysis` | CFRU-Custom-Day/Night-Wild-Tabellen separat untersuchen | erst nach P1-Schreibpfad-Diagnose; Route-1-Fallback bleibt stabil |
 | P3 | noch festlegen | Nullslot-`<unknown>` mit `rawInternalSpeciesId=0` klassifizieren | nicht mit GenRestrictions vermischen |
@@ -154,7 +156,7 @@ Excel-Roadmap:
 noch festzulegen
 ```
 
-Zweck: DPE/CFRU-`PokedexOrder`-Bedeutung und sichere Count-Quelle fuer Gen9-Coverage modellieren.
+Zweck: UPR-FVX-Fix fuer CFRU/DPE-spezifische Count-Erkennung vorbereiten. Kein Static-/Gift-Fix und kein Learnset-/Moveset-Fix im selben Branch.
 
 ## Arbeitsblock-Log
 
