@@ -111,3 +111,20 @@ Vermeiden:
 - Statusdokumente sind aktualisiert, wenn sich Projektstatus geändert hat.
 - Keine verbotenen Artefakte wurden gelesen, kopiert, geändert oder committed.
 - Handoff-Prompt liegt vor.
+
+### Codex-Verlauf: Multi-Repo-Fix mit Submodule und Diagnose
+
+**Beobachtung:**  
+Codex konnte einen komplexen UPR-FVX-Fix mit Submodule-Commit, Workspace-Gitlink, Diagnoseprotokoll und zwei PRs sauber abschließen. Die Aufgabe blieb fachlich eng begrenzt.
+
+**Usage-Problem:**  
+Der Prompt war sehr lang, mehrere Folgearbeitspakete liefen im selben Codex-Verlauf, und PR-Erstellung per Inline-Body scheiterte an Shell-Quoting.
+
+**Lesson Learned:**  
+Für komplexe Multi-Repo-Arbeit reicht ein kompakter Prompt mit Ziel, erlaubten Dateien, Stop-Regeln, Suchbegriffen, Checks und PR/Handoff. PR-Bodies mit Markdown werden immer per `--body-file` erstellt. Nach jedem PR/Handoff startet ein neuer Codex-Lauf.
+
+**Prozessänderung:**
+- Ein Codex-Lauf pro Arbeitspaket.
+- `gh pr create --body-file /tmp/pr-body.md` als Standard.
+- Während Entwicklung kein unnötiger Clean-Build; final einmal `./gradlew clean :random:jar`.
+- Wiederkehrende Randomizer-Diagnosen als lokale Helper/Harness prüfen.
