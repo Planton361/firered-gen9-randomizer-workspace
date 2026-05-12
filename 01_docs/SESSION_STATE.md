@@ -24,52 +24,51 @@
 - UPR-FVX PR #5 ist gemerged; der Gen3/CFRU-DPE-Wild-Write-Fix schreibt Vanilla/Fallback-Wild-Encounters fuer erweiterte BPRE-Hacks ueber interne SpeciesSet-Identitaet statt `pokedexToInternal[Species.number]`.
 - Der Post-Merge-P0-Smoke auf UPR-FVX Merge-Commit `843b75a8` bestaetigt die Fixkette PR #3/#4/#5: sichtbarer Wild-Log Gen1 `354`, Gen2 `388`, Gen3 `404`, Gen4 `398`, Gen5 `528`, Gen6 `104`, `<unknown>` `0`.
 - UPR-FVX PR #6 ist gemerged; der Starter-Write-Fix schreibt Starter fuer erweiterte BPRE-Hacks ueber interne SpeciesSet-Identitaet und erhaelt Pawniard/Scraggy im Reload.
-- Static/Gift-only Diagnose ist dokumentiert: Gen4+ ist im Pool und Pick-Pfad vorhanden, aber der echte Randomizer-Lauf bricht vor Save/Log an Null-Static-/Roamer-Eintraegen ab.
+- Gen9-Species-Coverage ist read-only analysiert: DPE/CFRU-Source reicht bis `SPECIES_PECHARUNT = 0x59F` / `NUM_SPECIES = 1440`, der aktuelle FVX-Load bleibt aber bei `PokemonCount=823` und erreicht damit keine Gen7-Gen9-Species.
 - ROMs, Saves, Builds, Tool-Binaries und private Dateien sind ausgeschlossen.
 
 ## Aktueller Branch
 
-`analysis/upr-fvx-cfru-dpe-p1-static-gift-write-diagnostics`
+`analysis/upr-fvx-cfru-dpe-gen9-species-coverage`
 
 ## Aktueller Arbeitsblock
 
-Static-/Gift-Write-Diagnose fuer erweiterte CFRU/DPE-BPRE-Hacks nach P1a Starter-Fix.
+Read-only Gen9-Species-Coverage-Diagnose fuer den aktuellen CFRU/DPE-Teststand.
 
 ## Ziel
 
 Konkret klaeren:
 
-- ob UPR-FVX Static/Gift-Species mit Gen4+ aus dem unrestricted Pool auswaehlen kann
-- ob der aktuelle Gen3-Static/Gift-Schreibpfad einen Write/Reload-Vergleich zulaesst
-- ob der naechste P1-Fix ein reiner Identity-Write-Fix sein kann oder zuerst Static/Roamer-/Null-Scope trennen muss
+- welchen Species-Umfang DPE Gen9 und CFRU-expansion im Source definieren
+- warum UPR-FVX im aktuellen Diagnosebefund nur `PokemonCount=823` laedt
+- welche Rolle `PokemonNames`, `PokemonMovesets`, `PokedexOrder`, `PokemonStats`, `SpeciesIDs.java` und `GenRestrictions` spielen
+- welche naechste lokale ROM-Diagnose die konkrete Count-Abbruchursache klaeren muss
 
 ## In diesem Arbeitsblock geprueft / geaendert
 
-- Workspace PR #40 und UPR-FVX PR #6 als gemerged geprueft.
-- Branch `analysis/upr-fvx-cfru-dpe-p1-static-gift-write-diagnostics` von aktuellem `main` erstellt.
-- UPR-FVX Submodule steht lokal sauber auf Commit `39c57880`, der in PR #6 gemerged wurde.
-- UPR-FVX lokal mit `./gradlew clean :random:jar` gebaut.
-- Static/Gift-only Settings erzeugt: Static `COMPLETELY_RANDOM`, Wild/Starters/Trainer/Evolutions/Movesets/TM/Tutor/Abilities aus, `limitPokemon=false`, `currentRestrictions=null`.
-- Lokaler CFRU/DPE-Teststand mit Seed `274269061345323` ausgefuehrt.
-- Direkter `GameRandomizer`-Check zeigt `saveSuccessful=false` durch NPE in `StaticPokemonRandomizer.randomizeStaticPokemon()` bei Null-Static-Eintraegen.
-- Read-only Pick-Diagnose zeigt fuer denselben Seed `14/29` Gen4+-Kandidaten im Static/Gift-Pick-Pfad.
-- Neues Diagnoseprotokoll erstellt: `08_tests/randomizer/upr-fvx-cfru-dpe-p1-static-gift-write-diagnostics.md`.
-- Keine Codeaenderungen und keine UPR-FVX-Fixes umgesetzt.
-- Keine ROMs, Saves, Emulator States, Tool-Binaries oder privaten Pfade committed.
+- Workspace `main` per Fast-Forward geprueft und Branch `analysis/upr-fvx-cfru-dpe-gen9-species-coverage` erstellt.
+- DPE/CFRU-Header und Tabellen read-only geprueft: `SPECIES_ROWLET = 0x3AB`, `SPECIES_GROOKEY = 0x44E`, `SPECIES_SPRIGATITO = 0x50E`, `SPECIES_PECHARUNT = 0x59F`, `NUM_SPECIES = SPECIES_PECHARUNT + 1`.
+- DPE/CFRU-Pokedex-Konstanten read-only geprueft: National-Dex bis Terapagos `1024` und Pecharunt `1025`.
+- DPE/CFRU-Tabellen-Coverage read-only geprueft: BaseStats, Learnsets, Species-to-Dex und Pokedex-Orders enthalten Gen7-Gen9-Belege.
+- UPR-FVX `Gen3RomHandler.basicBPRE10HackSupport()` read-only analysiert: `PokemonCount` entsteht aus Name-Scan, Moveset-Pointer-Kappung und PokedexOrder-Sanity.
+- UPR-FVX `SpeciesIDs.java`, `generationOf()` und `GenRestrictions` read-only geprueft.
+- CyanSMP64 NatDex-Strategie read-only verglichen.
+- Neues Analysemodell erstellt: `01_docs/compat/upr-fvx-cfru-dpe-gen9-species-coverage.md`.
+- Keine Codeaenderungen, keine Builds, keine ROM-Zugriffe und keine Aenderungen in `02_external/**` umgesetzt.
 
 ## Ergebnis
 
-- Static/Gift ist noch nicht P1-supported.
-- `canChangeStaticPokemon=true` und `staticPokemonMod=COMPLETELY_RANDOM` bleiben nach `Settings.tweakForRom()` aktiv.
-- Der unrestricted Static/Gift-Pool enthaelt `798` Species, davon `381` Gen4+.
-- Der Pick-Pfad kann Gen4+ waehlen, unter anderem Pawniard, Scraggy, Klang, Meloetta, Delphox, Arceus, Goomy, Phantump, Meowstic, Kricketot und Tornadus.
-- Der echte CLI-/GameRandomizer-Lauf bricht vor Save/Log an Null-Static-/Roamer-Eintraegen ab; kein Write/Reload-Beweis moeglich.
-- Der naechste Fix muss zuerst Static/Gift-, hardcoded- und Roamer-/Null-Scope abgrenzen und danach echte Static/Gift-Eintraege per interner SpeciesSet-Identitaet schreiben.
+- Erwarteter Source-Umfang: DPE/CFRU bis `SPECIES_PECHARUNT = 0x59F` und `NUM_SPECIES = 1440` interne Slots.
+- Tatsaechlicher FVX-Load-Umfang: `PokemonCount=823`, `speciesList.size=799`, sichtbarer Pool Gen1-Gen6, Gen7+ `0`.
+- `PokemonCount=823` liegt bei interner ID `0x337`; `SPECIES_XERNEAS = 0x338` waere bereits ausserhalb des Loads, Gen7 startet erst bei `SPECIES_ROWLET = 0x3AB`.
+- Wahrscheinlichster Engpass ist die FVX-BPRE-Hack-Heuristik vor dem eigentlichen Species-Load: `PokemonNames`, `PokemonMovesets` oder `PokedexOrder` kappt den Count.
+- `SpeciesIDs.java` kennt Gen8/Gen9 und `generationOf()` kann Gen9 klassifizieren, sobald Species geladen sind; `GenRestrictions.MAX_GENERATION=7` bleibt aber ein spaeteres Gen9-Settings-Risiko.
+- Naechste Diagnose muss lokal mit ROM den konkreten Count-Abbruchgrund loggen.
 
 ## Noch nicht gestartet
 
-- Praktische P1-Diagnoselaeufe fuer Trainer-Species
-- Static/Gift-Scope-/Write-Fix nach separater Freigabe
+- Lokale Count-Abbruchdiagnose um interne IDs `820..900`
+- Praktische P1-Diagnoselaeufe fuer Static/Gifts und Trainer-Species
 - Evolution-/Learnset-/TM-/Tutor-/Ability-Datenmodellierung nach der Schreibpfadmatrix
 - CFRU-Day/Night-Custom-Wild-Tabellen-Support
 - Nullslot-`<unknown>`-Analyse
@@ -79,7 +78,7 @@ Konkret klaeren:
 
 Keine ROMs, Saves, Builds oder Tool-Binaries committed.
 
-Keine ROMs in ChatGPT hochgeladen. Lokaler CFRU/DPE-Teststand wurde nur fuer den freigegebenen Diagnoselauf gelesen.
+Keine ROMs in ChatGPT hochgeladen. In diesem Arbeitsblock wurde kein ROM gelesen.
 
 Keine externen Original-Upstreams kontaktiert.
 
@@ -103,6 +102,6 @@ git diff --check
 
 ## Naechster empfohlener Branch
 
-`compat/upr-fvx-cfru-dpe-static-gift-scope-and-write`
+`analysis/upr-fvx-cfru-dpe-pokemon-count-cutoff-diagnostics`
 
-Zweck: Static/Gift-Scope sauber von Roamer-/hardcoded-/Null-Eintraegen trennen und echte Static/Gift-Species fuer erweiterte CFRU/DPE-BPRE-Hacks per interner SpeciesSet-Identitaet schreiben. Keine Trainer-, Evolution-, Learnset-, TM-, Tutor-, Ability-, Day/Night-Wild- oder allgemeine Roamer-Fixes vermischen.
+Zweck: lokale ROM-Diagnose fuer den konkreten `PokemonCount=823`-Abbruchgrund in `basicBPRE10HackSupport()`. Keine Gen9-Fixes, keine Static/Gift-Fixes und keine ROM-/Build-Artefakte committen.
