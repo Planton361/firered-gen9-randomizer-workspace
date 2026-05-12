@@ -2,12 +2,12 @@
 
 ## Aktueller Arbeitsblock
 
-P1 Static/Gift Scope und interner Species-Write fuer CFRU/DPE.
+P1 Trainer-Species-only Diagnose fuer CFRU/DPE.
 
 Aktueller Workspace-Branch:
 
 ```text
-compat/upr-fvx-cfru-dpe-static-gift-scope-and-write
+analysis/upr-fvx-cfru-dpe-p1-trainer-species-only
 ```
 
 UPR-FVX-Branch:
@@ -19,12 +19,11 @@ compat/upr-fvx-cfru-dpe-static-gift-scope-and-write
 Zieldokumente:
 
 ```text
-08_tests/randomizer/022_static_gift_scope_write_diagnostics.md
+08_tests/randomizer/023_p1_trainer_species_only.md
 08_tests/randomizer/README.md
 01_docs/SESSION_STATE.md
 01_docs/NEXT_STEPS.md
 00_project-control/roadmap/roadmap-status.md
-01_docs/references/tool-manifest.md
 ```
 
 ## Naechste Schritte in diesem Block
@@ -42,39 +41,38 @@ git diff --check
 2. Workspace-Commit erstellen:
 
 ```text
-docs: record CFRU DPE static gift fix diagnostics
+docs: diagnose Gen9 CFRU DPE trainer species only
 ```
 
-3. Branches pushen und PRs erstellen:
+3. Branch pushen und Workspace-PR erstellen:
 
-- UPR-FVX PR gegen `Planton361/universal-pokemon-randomizer-fvx`
 - Workspace PR gegen `Planton361/firered-gen9-randomizer-workspace` mit explizitem `--repo`
 
 ## Diagnosebefund
 
 - UPR-FVX-Commit: `009178e8848b4272e6b8be54a8bf5b2bed34d5f2`.
-- Static/Gift-only Settings mit Seed `274269061345323`.
+- Trainer-Species-only Settings mit Seed `274269061345323`.
 - Species-Coverage bleibt vollstaendig: `PokemonCount=1439`, `speciesList.size=1415`.
-- Static/Gift-Pool: `staticPool.size=1414`, Gen1-Gen9 enthalten.
-- Direkte `GameRandomizer.Results`: `saveSuccessful=true`, `logSuccessful=true`.
-- Output-ROM und nichtleerer Static/Gift-Log entstehen.
-- Gen7/8/9 sind im echten Static/Gift-Log sichtbar.
-- Null-Sonderfaelle bleiben erhalten: `nullBefore=4`, `nullAfterWrite=4`, `nullReloaded=4`.
-- Write/Reload ist stabil: `writeReloadMismatches=0`.
+- Trainer-Pool: `trainerPool.size=1414`, Gen1-Gen9 enthalten.
+- Trainer-Load: `trainers=255`, `trainerPokemon=481`, `nullSpecies=0`.
+- Der Trainer-Pool enthaelt acht Zero-Ability-/Zero-BST-Sonder-Species, darunter `Bad Egg`, zwei Zygarde-Sonderslots und vier Gen9-Ogerpon-Formslots.
+- `randomizeTrainerPokes()` erreicht Save/Log nicht und haengt im Stack-Dump in `TrainerPokemonRandomizer.getRandomAbilitySlot()`.
+- Output-ROM und Trainer-Log entstehen nicht.
+- Write/Reload ist noch nicht pruefbar.
 
 ## Danach
 
 Naechster minimaler Folgebranch:
 
 ```text
-analysis/upr-fvx-cfru-dpe-p1-trainer-species-only
+compat/upr-fvx-cfru-dpe-trainer-scope-and-write
 ```
 
 Ziel:
 
-- Trainer-Species-only mit Gen1-Gen9-Pool diagnostizieren.
-- `trainerPokemonToBytes()`-Species-Write separat bewerten.
-- Trainer-Movesets, Learnsets, Items, Abilities und EV-Spreads nicht im selben Block fixen.
+- Trainer-Species-Scope gegen nicht kampffaehige/Trainer-ungeeignete Sonder-Species absichern oder Ability-Slot-Auswahl defensiv behandeln.
+- Danach Trainer-Species-Write/Reload separat bewerten.
+- Trainer-Movesets, Learnsets, Items, Ability-Randomization und EV-Spreads nicht im selben Block fixen.
 
 Offene Folgethemen:
 
@@ -91,9 +89,9 @@ Offene Folgethemen:
 - keine ROMs committen oder in ChatGPT hochladen
 - keine Saves oder Emulator States anfassen
 - keine Builds, Randomizer-JARs oder Tool-Binaries committen
-- keine weiteren Codeaenderungen ausserhalb von `02_external/upr-fvx/**`
+- keine Codeaenderungen in diesem Analysebranch
 - keine CFRU-/DPE-Aenderungen
-- keine Trainer-, Learnset-, Evolution-, TM-/Tutor-, Ability-, Wild- oder Day/Night-Fixes in diesem Branch
+- keine Trainer-, Learnset-, Evolution-, TM-/Tutor-, Ability-, Wild- oder Day/Night-Fixes in diesem Analysebranch
 - keine externen Original-Upstreams kontaktieren
 - keine PRs ohne explizites `--repo Planton361/<repo>` beziehungsweise eindeutig ausgewaehltes Planton361-Repository
 - keine Aenderungen direkt auf `main`

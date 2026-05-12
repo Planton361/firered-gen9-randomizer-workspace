@@ -49,21 +49,22 @@ Der neueste bestaetigte Stand wird in Markdown ueber die Spalte `Latest` markier
 | 019 | `upr-fvx-cfru-dpe-gen9-wild-post-merge-smoke.md` | Gen9 Standard-/Fallback-Wild post-merge smoke | bestaetigt: `saveSuccessful=true`, Gen7/8/9 im Wild-Log | `05_builds/randomizer-smoke/` historisch, lokal bereinigt | nein |
 | 020 | `upr-fvx-cfru-dpe-wild-banned-special-species-diagnostics.md` | CFRU/DPE-Special-Species-Wild-Ban diagnostisch bestaetigen | bestaetigt: `Bad Egg=0`, `<unknown>=0`, Gen7/8/9 im Wild-Log | `05_builds/randomizer-smoke/` historisch, lokal bereinigt | nein |
 | 021 | `021_p1_static_gift_species_only.md` | Static/Gift Species-only Diagnose auf Gen9-Wild-sauberem Stand | blockiert: Gen1-Gen9-Pool vorhanden, Pick erreicht Gen7/8/9, Save bricht an Null-Static-Scope ab | `05_builds/randomizer-smoke/021_p1_static_gift_species_only/` lokal/ignored | nein |
-| 022 | `022_static_gift_scope_write_diagnostics.md` | Static/Gift-Scope und interner Species-Write fuer CFRU/DPE | bestaetigt: `saveSuccessful=true`, nichtleerer Static/Gift-Log, Gen7/8/9-Picks, `writeReloadMismatches=0` | `05_builds/randomizer-smoke/022_static_gift_scope_write/` lokal/ignored | ja |
+| 022 | `022_static_gift_scope_write_diagnostics.md` | Static/Gift-Scope und interner Species-Write fuer CFRU/DPE | bestaetigt: `saveSuccessful=true`, nichtleerer Static/Gift-Log, Gen7/8/9-Picks, `writeReloadMismatches=0` | `05_builds/randomizer-smoke/022_static_gift_scope_write/` lokal/ignored | nein |
+| 023 | `023_p1_trainer_species_only.md` | Trainer-Species-only Diagnose mit Gen1-Gen9-Pool | blockiert: Trainer-Pool Gen1-Gen9 vorhanden, aber `randomizeTrainerPokes()` haengt in `getRandomAbilitySlot()` auf Zero-Ability-Sonder-Species | `05_builds/randomizer-smoke/023_p1_trainer_species_only/` lokal/ignored | ja |
 
 ## Aktuell bestaetigter Stand
 
-Latest ist Nr. 022: Static/Gift-Scope und interner Species-Write fuer CFRU/DPE.
+Latest ist Nr. 023: Trainer-Species-only Diagnose mit Gen1-Gen9-Pool.
 
 Kernaussagen:
 
 - `PokemonCount=1439`
-- Static/Gift-Pool enthaelt Gen1-Gen9
-- Static/Gift-Picks erreichen Gen7/8/9
-- `saveSuccessful=true` im direkten `GameRandomizer.Results`
-- Output-ROM und nichtleerer Static/Gift-Log entstehen
-- vier `<null>`-Static-Eintraege bleiben erhalten, blockieren Save/Log aber nicht mehr
-- Write/Reload erhaelt echte Static/Gift-Species ueber interne SpeciesSet-Identitaet
+- Trainer-Pool enthaelt Gen1-Gen9: `trainerPool.size=1414`
+- Trainer-Load funktioniert: `trainers=255`, `trainerPokemon=481`, `nullSpecies=0`
+- Trainer-Pool enthaelt acht Zero-Ability-/Zero-BST-Sonder-Species, darunter `Bad Egg` und mehrere Gen9-Ogerpon-Formslots
+- `randomizeTrainerPokes()` erreicht Save/Log nicht und haengt in `getRandomAbilitySlot()`
+- Output-ROM und Trainer-Log entstehen nicht
+- Trainer-Species-Scope und danach Trainer-Species-Write bleiben als separater Fix-/Diagnoseblock offen
 
 ## Lokale Artefaktpflege
 
