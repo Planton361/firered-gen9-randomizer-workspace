@@ -72,7 +72,7 @@ Ziel:
 - Vanilla/normal Gen3 unveraendert lassen.
 - Kein Static/Gift-, Trainer-, Learnset-, Palette-, Day/Night- oder allgemeiner Gen3-Fix im selben Branch.
 
-Optionaler Vorlauf:
+Offene Folgethemen (separat, nicht in diesem Branch):
 
 - Static/Gift
 - Trainer

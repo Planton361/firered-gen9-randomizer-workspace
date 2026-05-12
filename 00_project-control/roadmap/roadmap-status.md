@@ -24,9 +24,9 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-gen9-wild-post-merge-smoke` |
+| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-wild-banned-special-species` |
 | Nächster Branch | `analysis/upr-fvx-cfru-dpe-p1-static-gift-write-diagnostics` |
-| Aktueller Fokus | Gen9-Wild-Post-Merge-Smoke dokumentieren |
+| Aktueller Fokus | CFRU/DPE-Special-Species-Wild-Ban diagnostisch bestaetigen |
 | ROM-/Build-Arbeit | lokaler Diagnose-Lauf nur unter `05_builds/**`; keine Artefakte committen |
 | Externe Repos | als Submodule auf Planton361-Forks eingebunden |
 | Forks | Planton361-Forks fuer UPR-FVX, DPE Gen9 und CFRU dokumentiert |
