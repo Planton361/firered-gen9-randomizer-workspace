@@ -2,19 +2,18 @@
 
 ## Aktueller Arbeitsblock
 
-CFRU/DPE-Special-Species-Wild-Ban diagnostisch bestaetigen.
+UPR-FVX Wild-Sonder-Species-Fix im Workspace pinnen.
 
 Aktueller Branch:
 
 ```text
-analysis/upr-fvx-cfru-dpe-wild-banned-special-species
+docs/pin-upr-fvx-wild-special-species-fix
 ```
 
 Zieldokumente:
 
 ```text
-08_tests/randomizer/upr-fvx-cfru-dpe-wild-banned-special-species-diagnostics.md
-08_tests/randomizer/README.md
+01_docs/references/tool-manifest.md
 01_docs/SESSION_STATE.md
 01_docs/NEXT_STEPS.md
 00_project-control/roadmap/roadmap-status.md
@@ -24,8 +23,7 @@ Zieldokumente:
 ## Naechste Schritte in diesem Block
 
 1. Dokumentation reviewen:
-   - `08_tests/randomizer/upr-fvx-cfru-dpe-wild-banned-special-species-diagnostics.md`
-   - `08_tests/randomizer/README.md`
+   - `01_docs/references/tool-manifest.md`
    - `01_docs/SESSION_STATE.md`
    - `01_docs/NEXT_STEPS.md`
    - `00_project-control/roadmap/roadmap-status.md`
@@ -42,35 +40,31 @@ git diff --check
 3. Commit erstellen:
 
 ```text
-docs: record CFRU DPE wild special species ban diagnostics
+chore: pin UPR FVX wild special species fix
 ```
 
 4. Branch pushen und Workspace-PR nach `main` erstellen.
 
-## Diagnosebefund
+## Pin-Stand
 
-- UPR-FVX PR #12 ist offen.
-- Der Fix bannt im erkannten CFRU/DPE-Gen9-BPRE-Modus `SPECIES_NONE=0` und `SPECIES_EGG=0x19C` aus dem Wild-Pool.
-- Vanilla/normal Gen3 bleiben unveraendert.
-- Lokaler Wild-only-Smoke mit Seed `274269061345319`: `saveSuccessful=true`.
-- Coverage bleibt stabil: `PokemonCount=1439`, `speciesList.size=1415`, `maxSpeciesIdentityNumber=1439`.
-- `Bad Egg` faellt von `12` auf `0`.
-- `<unknown>` bleibt `0`.
-- `Area #174 - ALTERING CAVE Grass/Cave` enthaelt jetzt `Meowscrada` in allen 12 Slots.
+- Workspace-Submodule `02_external/upr-fvx` ist auf `0f127e9bb9a5c47306fe1f2af11e8e9fe1802717` gepinnt.
+- Submodule-Branch: `compat/upr-fvx-cfru-dpe-wild-banned-special-species`.
+- Top-Commit: `0f127e9b compat: ban CFRU DPE special species from wild pool`.
+- Der Stand dient als Basis fuer die anschliessende P1 Static/Gift Species-only Diagnose.
 
 ## Danach
 
 Naechster minimaler Folgebranch:
 
 ```text
-compat/upr-fvx-cfru-dpe-wild-banned-special-species
+analysis/upr-fvx-cfru-dpe-p1-static-gift-write-diagnostics
 ```
 
 Ziel:
 
-- CFRU/DPE-spezifisch `SPECIES_NONE`, `SPECIES_EGG` und belegte Dummy-/Gap-Species aus Wild-Replacement-Pools entfernen.
-- Vanilla/normal Gen3 unveraendert lassen.
-- Kein Static/Gift-, Trainer-, Learnset-, Palette-, Day/Night- oder allgemeiner Gen3-Fix im selben Branch.
+- Static-/Gift-Species-only Schreibpfad auf dem gepinnten Gen9-Wild-sauberen UPR-FVX-Stand diagnostizieren.
+- Roamer ausklammern.
+- Kein Learnset-, Trainer-, Palette-, Day/Night- oder Nullslot-Fix im selben Branch.
 
 Offene Folgethemen (separat, nicht in diesem Branch):
 

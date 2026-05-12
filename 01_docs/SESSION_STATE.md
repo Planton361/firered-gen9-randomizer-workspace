@@ -53,34 +53,29 @@
 
 ## Aktueller Branch
 
-`analysis/upr-fvx-cfru-dpe-wild-banned-special-species`
+`docs/pin-upr-fvx-wild-special-species-fix`
 
 ## Aktueller Arbeitsblock
 
-CFRU/DPE-Special-Species-Wild-Ban diagnostisch bestaetigen.
+Workspace-Submodule-Pointer fuer UPR-FVX Wild-Sonder-Species-Fix pinnen.
 
 ## Ziel
 
-Festhalten, dass der UPR-FVX-Fix `SPECIES_EGG=0x19C` im CFRU/DPE-Gen9-BPRE-Wild-Pool bannt und der lokale Wild-only-Smoke danach ohne `Bad Egg` speichert.
+Den Workspace-Submodule-Pointer fuer `02_external/upr-fvx` bewusst auf den Planton361-Fork-Commit `0f127e9b` festhalten, damit die anschliessende P1 Static/Gift Species-only Diagnose auf dem Gen9-Wild-sauberen Stand startet.
 
 ## In diesem Arbeitsblock geprueft / geaendert
 
-- Workspace `main` per Fast-Forward geprueft und Branch `analysis/upr-fvx-cfru-dpe-wild-banned-special-species` erstellt.
-- UPR-FVX `compat/firered-gen9-cfru-dpe` geprueft, Branch `compat/upr-fvx-cfru-dpe-wild-banned-special-species` erstellt und Commit `0f127e9b` erzeugt.
-- UPR-FVX PR #12 erstellt: `compat: ban CFRU DPE special species from wild pool`.
-- UPR-FVX-Checks ausgefuehrt: `git diff --check`, `./gradlew test`, `./gradlew clean :random:jar`.
-- Lokaler CFRU/DPE-Wild-only-Lauf mit Seed `274269061345319` ausgefuehrt.
-- Neues Protokoll erstellt: `08_tests/randomizer/upr-fvx-cfru-dpe-wild-banned-special-species-diagnostics.md`.
-- Workspace-Submodule-Pointer auf UPR-FVX Commit `0f127e9b` aktualisiert.
+- Workspace `main` per Fast-Forward aktualisiert und Branch `docs/pin-upr-fvx-wild-special-species-fix` erstellt.
+- `main` enthaelt bereits den Workspace-Gitlink fuer `02_external/upr-fvx` auf `0f127e9bb9a5c47306fe1f2af11e8e9fe1802717`.
+- Submodule-Checkout geprueft: Branch `compat/upr-fvx-cfru-dpe-wild-banned-special-species`, HEAD `0f127e9b`, keine lokalen uncommitted Aenderungen.
+- Tool-Manifest auf den gepinnten Planton361-Fork-Stand fuer den CFRU/DPE-Wild-Sonder-Species-Fix aktualisiert.
+- Keine Codeaenderungen und keine Static/Gift-Diagnose in diesem Mini-Branch.
 
 ## Ergebnis
 
-- Der Wild-only-Smoke beendet mit CLI-Exit-Code `0` und `Randomized successfully!`.
-- Coverage bleibt stabil: `PokemonCount=1439`, `speciesList.size=1415`, `maxSpeciesIdentityNumber=1439`, Gen7/8/9 sichtbar.
-- `Bad Egg=0`; vorher waren es `12`.
-- `<unknown>=0`.
-- `Area #174 - ALTERING CAVE Grass/Cave` enthaelt jetzt `Meowscrada` in allen 12 Slots.
-- Wild-Log-Generation-Auswertung: Gen7 `92`, Gen8 `101`, Gen9 `412`.
+- UPR-FVX ist im Workspace auf `0f127e9b` gepinnt.
+- Der Commit enthaelt den CFRU/DPE-Wild-Sonder-Species-Fix (`compat: ban CFRU DPE special species from wild pool`).
+- Der Pin ist die dokumentierte Basis fuer die naechste P1 Static/Gift Species-only Diagnose.
 
 ## Noch nicht gestartet
 
@@ -95,7 +90,7 @@ Festhalten, dass der UPR-FVX-Fix `SPECIES_EGG=0x19C` im CFRU/DPE-Gen9-BPRE-Wild-
 
 Keine ROMs, Saves, Builds oder Tool-Binaries committed.
 
-Keine ROMs in ChatGPT hochgeladen. ROMs wurden nur lokal fuer den Diagnose-Lauf geladen; Artefakte blieben unter `05_builds/**` und wurden nicht committed.
+Keine ROMs in ChatGPT hochgeladen. In diesem Mini-Branch wurden keine ROMs gelesen, kopiert, geaendert, gebaut oder randomisiert.
 
 Lokale ignored Smoke-Outputs wurden nur summarisch ausgewertet. Private absolute Pfade und private ROM-Dateinamen wurden nicht dokumentiert.
 
@@ -103,7 +98,7 @@ Keine externen Original-Upstreams kontaktiert.
 
 Keine Aenderungen direkt auf `main`.
 
-Keine Workspace-Codeaenderungen. UPR-FVX-Codeaenderung ist auf den erlaubten `Gen3RomHandler.java`-Pfad beschraenkt.
+Keine Workspace-Codeaenderungen und keine UPR-FVX-Codeaenderungen.
 
 Keine MCP-Configs mit Secrets angelegt.
 
@@ -121,6 +116,6 @@ git diff --check
 
 ## Naechster empfohlener Branch
 
-`compat/upr-fvx-cfru-dpe-wild-banned-special-species`
+`analysis/upr-fvx-cfru-dpe-p1-static-gift-write-diagnostics`
 
-Zweck: CFRU/DPE-spezifisch `SPECIES_NONE`, `SPECIES_EGG` und belegte Dummy-/Gap-Species aus Wild-Replacement-Pools entfernen. Kein Static/Gift-, Trainer-, Learnset-, Palette-, Day/Night- oder allgemeiner Gen3-Fix im selben Branch.
+Zweck: Static-/Gift-Species-only Diagnose auf dem gepinnten Gen9-Wild-sauberen UPR-FVX-Stand. Kein Learnset-, Trainer-, Palette-, Day/Night- oder Nullslot-Fix im selben Branch.
