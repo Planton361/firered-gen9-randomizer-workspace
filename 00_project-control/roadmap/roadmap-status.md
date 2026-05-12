@@ -24,9 +24,9 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Aktueller Branch | `compat/upr-fvx-cfru-dpe-evolutions-scope-and-write` |
-| Nächster Branch | `analysis/upr-fvx-cfru-dpe-p1-trainer-movesets-or-held-items` |
-| Aktueller Fokus | P1 Evolution-Scope und Species-Write |
+| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-p1-trainer-held-items-only` |
+| Nächster Branch | `compat/upr-fvx-cfru-dpe-trainer-held-items-lazy-movesets` |
+| Aktueller Fokus | P1 Trainer Held Items-only Diagnose |
 | ROM-/Build-Arbeit | lokaler Diagnose-Lauf nur unter `05_builds/**`; keine Artefakte committen |
 | Externe Repos | als Submodule auf Planton361-Forks eingebunden |
 | Forks | Planton361-Forks fuer UPR-FVX, DPE Gen9 und CFRU dokumentiert |
@@ -87,25 +87,26 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | 08 Randomizer-Kompatibilität | P1 Trainer-Species-only Diagnose | Trainer-Pool enthaelt Gen1-Gen9, aber `randomizeTrainerPokes()` haengt vor Save/Log in `getRandomAbilitySlot()` auf Zero-Ability-Sonder-Species |
 | 08 Randomizer-Kompatibilität | P1 Trainer-Scope und Species-Write | UPR-FVX PR #14 gemerged; Workspace PR #60 gemerged; `56ec749e` bestaetigt `saveSuccessful=true`, nichtleeren Trainer-Log und `writeReloadMismatches=0` |
 | 08 Randomizer-Kompatibilität | P1 Evolution-Species-only Diagnose | Evolution-Pool Gen1-Gen9 bestaetigt; `saveSuccessful=true`, aber Direct Log-Fehler und `writeReloadMismatches=146` blockieren P1-Support |
-| 08 Randomizer-Kompatibilität | P1 Evolution-Scope und Species-Write | UPR-FVX `18766c49` bestaetigt `saveSuccessful=true`, `logSuccessful=true`, Gen7/8/9 im Log und `writeReloadMismatches=0` |
+| 08 Randomizer-Kompatibilität | P1 Evolution-Scope und Species-Write | UPR-FVX PR #15 gemerged; Workspace PR #63 gemerged; `18766c49` bestaetigt `saveSuccessful=true`, `logSuccessful=true`, Gen7/8/9 im Log und `writeReloadMismatches=0` |
+| 08 Randomizer-Kompatibilität | P1 Trainer Held Items-only Diagnose | Trainer-Held-Item-Pool `52` und Trainer-Load `255`/`481` bestaetigt; Lauf blockiert vor Save/Log in `getMovesLearnt()` bei `0x25e49c` |
 
 ## In Arbeit
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Evolution-Scope und Species-Write reviewen | UPR-FVX- und Workspace-PRs reviewen und mergen |
+| 08 Randomizer-Kompatibilität | Trainer Held Items-only dokumentieren | Diagnose-PR reviewen und mergen |
 
 ## Als Nächstes
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Trainer-Folgepfad diagnostizieren | Trainer-Movesets oder Trainer-Held-Items als naechsten kleinsten P1-Pfad getrennt pruefen |
+| 08 Randomizer-Kompatibilität | Trainer-Held-Items entblocken | Lazy Moveset-/Learnset-Load im Held-Item-Pfad als separaten Fix pruefen |
 
 ## Noch offen
 
 | Paket | Aufgabe | Hinweise |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Trainer-Pokémon erweitern | Trainer-Species-only ist P1-supported; Trainer-Movesets, Held Items und weitere Trainer-Pfade bleiben separat |
+| 08 Randomizer-Kompatibilität | Trainer-Pokémon erweitern | Trainer-Species-only ist P1-supported; Trainer-Held-Items blockiert aktuell am eager `getMovesLearnt()`-Pfad; Trainer-Movesets bleiben separat |
 | 08 Randomizer-Kompatibilität | DPE-Gesamtumfang/PokemonCount praktisch bewerten | Count-Diagnose zeigt: Names bis Pecharunt, Movesets kappen auf 930, PokedexOrder kappt final auf 823; Modell empfiehlt Count nicht aus PokedexOrder abzuleiten |
 | 08 Randomizer-Kompatibilität | Wild-Log-`<unknown>` aufloesen | eindeutige Rohwerte sind `rawInternalSpeciesId=0`; Nullslots separat klassifizieren |
 | 08 Randomizer-Kompatibilität | CFRU-Day/Night-Custom-Wild-Tabellen analysieren | getrennt vom Vanilla/Fallback-Wild-Pool behandeln |
@@ -142,7 +143,8 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | P1f | `compat/upr-fvx-cfru-dpe-trainer-scope-and-write` | Trainer-Scope und Species-Write | UPR-FVX `56ec749e`; lokal bestaetigt mit `saveSuccessful=true`, Gen7/8/9 im Log und `writeReloadMismatches=0` |
 | P1g | `analysis/upr-fvx-cfru-dpe-p1-evolutions-species-only` | Evolution-Species-only Diagnose | Pool/Pick bestaetigt Gen1-Gen9; Save erzeugt Output-ROM, aber Direct-Log-Fehler und `writeReloadMismatches=146` |
 | P1h | `compat/upr-fvx-cfru-dpe-evolutions-scope-and-write` | Evolution-Scope und Species-Write | UPR-FVX `18766c49`; lokal bestaetigt mit `saveSuccessful=true`, `logSuccessful=true`, Gen7/8/9 im Log und `writeReloadMismatches=0` |
-| P1i | `analysis/upr-fvx-cfru-dpe-p1-trainer-movesets-or-held-items` | Trainer-Folgepfad diagnostizieren | naechster minimaler Analyseblock; Trainer-Movesets und Held Items getrennt halten, falls separat steuerbar |
+| P1i | `analysis/upr-fvx-cfru-dpe-p1-trainer-held-items-only` | Trainer Held Items-only Diagnose | Pool/Trainer-Load bestaetigt; blockiert vor Save/Log in `getMovesLearnt()` bei `0x25e49c` |
+| P1j | `compat/upr-fvx-cfru-dpe-trainer-held-items-lazy-movesets` | Trainer-Held-Items entblocken | `randomizeTrainerHeldItems()` soll Learnsets nur bei Bedarf laden; kein Trainer-Moveset- oder Learnset-Modellfix |
 | P2 | `randomizer/cfru-day-night-wild-table-analysis` | CFRU-Custom-Day/Night-Wild-Tabellen separat untersuchen | erst nach P1-Schreibpfad-Diagnose; Route-1-Fallback bleibt stabil |
 | P3 | noch festlegen | Nullslot-`<unknown>` mit `rawInternalSpeciesId=0` klassifizieren | nicht mit GenRestrictions vermischen |
 | P4 | noch festlegen | BizHawk-/Ironmon-Tracker-/RAM-Mapping pruefen | erst nach stabiler ROM-Randomizer-Kompatibilitaet |
@@ -185,12 +187,24 @@ Excel-Roadmap:
 ## Nächster empfohlener Branch
 
 ```text
-analysis/upr-fvx-cfru-dpe-p1-trainer-movesets-or-held-items
+compat/upr-fvx-cfru-dpe-trainer-held-items-lazy-movesets
 ```
 
-Zweck: Nach Review/Merge des Evolution-Fixblocks den naechsten kleinsten P1-Trainer-Folgepfad diagnostizieren. Kein Evolution-, Wild-, Starter-, Static/Gift-, Learnset-, TM-/Tutor-, Ability- oder Palette-Fix im selben Branch.
+Zweck: Nach Review/Merge dieses Diagnoseblocks Trainer-Held-Items-only entblocken, indem der Held-Item-Pfad `getMovesLearnt()` nur bei tatsaechlichem Bedarf ausloest. Kein Trainer-Species-, Trainer-Moveset-, Learnset-, TM-/Tutor-, Ability-, Wild-, Starter-, Static/Gift-, Evolution- oder Palette-Fix im selben Branch.
 
 ## Arbeitsblock-Log
+
+### 2026-05-12 – analysis/upr-fvx-cfru-dpe-p1-trainer-held-items-only
+
+- UPR-FVX PR #15 und Workspace PR #63 als gemerged geprueft.
+- Analysebranch `analysis/upr-fvx-cfru-dpe-p1-trainer-held-items-only` verwendet; keine Aenderungen an `02_external/**`.
+- UPR-FVX read-only geprueft und gebaut: Submodule steht auf `18766c4986db091d1e669c71302aa295195b039b`; `./gradlew clean :random:jar` erfolgreich.
+- Trainer Held Items-only Diagnose mit Seed `274269061345323` ausgefuehrt.
+- Befund: Trainer-Held-Item-Pool `52`, Trainer-Load `trainers=255`, `trainerPokemon=481`, `nullSpecies=0`.
+- Der Lauf blockiert vor Save/Log in `TrainerPokemonRandomizer.randomizeTrainerHeldItems()` durch eager `Gen3RomHandler.getMovesLearnt()` bei `No valid pointer at 0x25e49c`.
+- Keine Output-ROM und kein nichtleerer Trainer-Log entstehen; Write/Reload bleibt fuer den naechsten Fix-/Diagnoseblock offen.
+- Neues Protokoll erstellt: `08_tests/randomizer/027_p1_trainer_held_items_only.md`.
+- Keine Codeaenderungen, keine Fixes, keine committed ROM-/Build-Artefakte.
 
 ### 2026-05-12 – compat/upr-fvx-cfru-dpe-evolutions-scope-and-write
 
