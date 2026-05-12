@@ -2,32 +2,30 @@
 
 ## Aktueller Arbeitsblock
 
-CFRU/DPE-Palette-Loader-Blocker read-only analysieren.
+CFRU/DPE-defensiven Palette-Load/-Save-Fix dokumentieren.
 
 Aktueller Branch:
 
 ```text
-analysis/upr-fvx-cfru-dpe-palette-loader-blocker
+analysis/upr-fvx-cfru-dpe-defensive-palette-loading
 ```
 
 Zieldokumente:
 
 ```text
-01_docs/compat/upr-fvx-cfru-dpe-palette-loader-blocker.md
+08_tests/randomizer/upr-fvx-cfru-dpe-defensive-palette-loading-diagnostics.md
 01_docs/SESSION_STATE.md
 01_docs/NEXT_STEPS.md
 00_project-control/roadmap/roadmap-status.md
-01_docs/references/source-index.md
 ```
 
 ## Naechste Schritte in diesem Block
 
 1. Dokumentation reviewen:
-   - `01_docs/compat/upr-fvx-cfru-dpe-palette-loader-blocker.md`
+   - `08_tests/randomizer/upr-fvx-cfru-dpe-defensive-palette-loading-diagnostics.md`
    - `01_docs/SESSION_STATE.md`
    - `01_docs/NEXT_STEPS.md`
    - `00_project-control/roadmap/roadmap-status.md`
-   - `01_docs/references/source-index.md`
 2. Workspace-Checks ausfuehren:
 
 ```sh
@@ -41,14 +39,14 @@ git diff --check
 3. Commit erstellen:
 
 ```text
-docs: analyze CFRU DPE palette loader blocker
+docs: record CFRU DPE defensive palette loading diagnostics
 ```
 
 4. Branch pushen und Workspace-PR nach `main` erstellen.
 
 ## Danach
 
-Naechster minimaler Fixbranch:
+Naechster minimaler Folgebranch:
 
 ```text
 noch festzulegen
@@ -56,10 +54,10 @@ noch festzulegen
 
 Ziel:
 
-- UPR-FVX PR #8 reviewen/mergen, falls akzeptiert.
-- Danach `loadPokemonPalettes()` und `savePokemonPalettes()` fuer konservativ erkannte erweiterte CFRU/DPE-BPRE-Hacks defensiv machen.
-- Ziel ist nur, den ROM-Load wieder bis zur bestehenden Randomization zu bringen.
-- Weiterhin keine Static-/Gift-, Trainer-, Learnset-, Moveset-, Count- oder Day/Night-Fixes im selben Branch.
+- UPR-FVX PR #8 und PR #9 reviewen/mergen, falls akzeptiert.
+- Danach den nachgelagerten `saveTrainers()`-/`getMovesLearnt()`-Blocker bei `PokemonCount=1439` separat diagnostizieren.
+- Ziel ist nur, den Save-/Log-Pfad so weit zu verstehen, dass Wild-Randomization wieder mit Gen7/8/9 sichtbar ausgewertet werden kann.
+- Weiterhin keine Static-/Gift-, Trainer-Species-, Palette-, Count- oder Day/Night-Fixes im selben Branch.
 - ROM-/Build-Artefakte nicht committen.
 
 ## Fix-Reihenfolge
@@ -68,7 +66,7 @@ P0: GenRestrictions / finaler Gen4+ Allowed-Pool. Erledigt und post-merge bestae
 
 P0b: Gen3/CFRU-DPE-Wild-Write-Mapping fuer interne Species-Identitaet. Erledigt und post-merge bestaetigt.
 
-P1: Species-Schreibpfade. Analyse erledigt; Starter-Write-Fix ist als UPR-FVX PR #6 gemerged und diagnostisch bestaetigt. Static/Gifts und Trainer-Species bleiben pausiert, bis UPR-FVX mit `PokemonCount=1439` wieder vollstaendig bis zur Randomization laedt.
+P1: Species-Schreibpfade. Analyse erledigt; Starter-Write-Fix ist als UPR-FVX PR #6 gemerged und diagnostisch bestaetigt. Static/Gifts und Trainer-Species bleiben pausiert, bis UPR-FVX mit `PokemonCount=1439` wieder vollstaendig bis Save/Log laeuft.
 
 P2: CFRU Day/Night Custom Wild Tables. Separat nach P1-Schreibpfad-Diagnose.
 
@@ -83,9 +81,9 @@ P4: BizHawk/Ironmon Tracker/RAM-Mapping.
 - keine Saves oder Emulator States anfassen
 - keine Builds committen
 - keine Randomizer-JARs oder Tool-Binaries anfassen oder committen
-- keine Codeaenderungen in `02_external/**`
+- keine weiteren Codeaenderungen in `02_external/**` in diesem Workspace-Dokumentationsbranch
 - keine weiteren Wild-Write- oder Encounter-Fixes in diesem Branch
-- keine Palette-, Count- oder Gen9-Coverage-Fixes in diesem Branch
+- keine weiteren Palette-, Count- oder Gen9-Coverage-Fixes in diesem Branch
 - keine Day/Night-Wild-Fixes
 - keine Swarm-, Roamer-, DexNav- oder Raid-Fixes
 - keine Nullslot-Fixes
