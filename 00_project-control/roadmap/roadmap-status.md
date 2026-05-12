@@ -24,9 +24,9 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-p1-tm-hm-128-slot-model` |
-| Nächster Branch | `compat/upr-fvx-cfru-dpe-tm-hm-128-slot` |
-| Aktueller Fokus | CFRU/DPE TM/HM-128-Slot-Modell read-only |
+| Aktueller Branch | `compat/upr-fvx-cfru-dpe-tm-hm-128-slot` |
+| Nächster Branch | `analysis/upr-fvx-cfru-dpe-p1-tutor-model` |
+| Aktueller Fokus | CFRU/DPE TM/HM-128-Slot-Fix |
 | ROM-/Build-Arbeit | keine neuen ROM-/Build-Artefakte; keine Artefakte committen |
 | Externe Repos | als Submodule auf Planton361-Forks eingebunden |
 | Forks | Planton361-Forks fuer UPR-FVX, DPE Gen9 und CFRU dokumentiert |
@@ -98,18 +98,19 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | 08 Randomizer-Kompatibilität | P1 TM/HM-only Diagnose | Workspace PR #72 gemerged; klassischer `50+8`-Scope blockierte an hohem Move-ID-Limit und Null-Type-Species |
 | 08 Randomizer-Kompatibilität | P1 TM/HM Scope und Safety | UPR-FVX `32e43ac0` bestaetigt TM moves + Compatibility, Compatibility-only und TM moves-only mit Save/Log/Reload und `writeReloadMismatches=0` im klassischen `50+8`-Scope |
 | 08 Randomizer-Kompatibilität | P1 TM/HM 128-Slot-Modell | CFRU/DPE `gTMHMMoves` als `u16[128]` ueber Pointer `0x8125A8C`, HMs Slots `121..128`, Compatibility 16 Bytes pro Species ueber `0x8043C68` dokumentiert |
+| 08 Randomizer-Kompatibilität | P1 TM/HM 128-Slot-Fix | UPR-FVX `58379ffd` bestaetigt `tmCount=120`, `hmCount=8`, Save/Log/Reload fuer TM moves-only, Compatibility-only und TM moves + Compatibility mit `writeReloadMismatches=0` |
 
 ## In Arbeit
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | TM/HM-128-Slot-Fix | CFRU/DPE-128-Slot-TM/HM-Read/Write-Scope eng gaten |
+| 08 Randomizer-Kompatibilität | TM/HM-128-Slot-Fix | PRs fuer UPR-FVX-Fix und Workspace-Diagnose erstellen |
 
 ## Als Nächstes
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | TM/HM-128-Slot-Fix | CFRU/DPE-128-Slot-TM/HM-Read/Write-Scope eng gaten |
+| 08 Randomizer-Kompatibilität | Tutor-Modellierung | CFRU/DPE Tutor-/Special-Tutor-Tabellen read-only modellieren |
 
 ## Noch offen
 

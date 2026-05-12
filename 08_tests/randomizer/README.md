@@ -65,18 +65,19 @@ Der neueste bestaetigte Stand wird in Markdown ueber die Spalte `Latest` markier
 | 035 | `035_p1_tm_hm_only.md` | TM/HM-only Diagnose | blockiert: FVX erkennt nur `50+8`, TM-Move-Randomization scheitert an altem Move-Ban-Array-Limit `827`, Compatibility-only scheitert an Null-Type-Species; kein Save/Output/Reload | `05_builds/randomizer-smoke/035_p1_tm_hm_only/` lokal/ignored | nein |
 | 036 | `036_tm_hm_scope_and_safety_fix_diagnostics.md` | TM/HM Scope-and-Safety-Fix Diagnose | bestaetigt im klassischen `50+8`-Scope: TM moves + Compatibility, Compatibility-only und TM moves-only jeweils mit `saveSuccessful=true`, `logSuccessful=true`, Output-ROM, nichtleerem Log und `writeReloadMismatches=0` | `05_builds/randomizer-smoke/036_tm_hm_scope_and_safety_fix/` lokal/ignored | nein |
 | 037 | `037_p1_tm_hm_128_slot_model.md` | CFRU/DPE TM/HM-128-Slot-Modell | dokumentiert: aktives `gTMHMMoves` ist `u16[128]` ueber Pointer `0x8125A8C`, TMs `1..120`, HMs `121..128`, Compatibility `16` Bytes pro Species ueber `0x8043C68`; kein Fix | keiner | ja |
+| 038 | `038_tm_hm_128_slot_fix_diagnostics.md` | CFRU/DPE TM/HM-128-Slot-Fix Diagnose | bestaetigt: `tmCount=120`, `hmCount=8`, 128 Slots, 129 Compatibility-Flags, HM-Slots unveraendert, alle drei TM/HM-Laeufe mit `saveSuccessful=true`, `logSuccessful=true` und `writeReloadMismatches=0` | `05_builds/randomizer-smoke/038_tm_hm_128_slot_fix/` lokal/ignored | nein |
 
 ## Aktuell bestaetigter Stand
 
-Latest ist Nr. 037: CFRU/DPE TM/HM-128-Slot-Modell.
+Latest ist Nr. 038: CFRU/DPE TM/HM-128-Slot-Fix Diagnose.
 
 Kernaussagen:
 
-- Das aktive CFRU/DPE-TM/HM-Modell nutzt `gTMHMMoves` als `u16[128]` ueber Pointer `0x8125A8C`.
-- Slots `1..120` sind TMs, Slots `121..128` sind HMs.
+- Der CFRU/DPE-TM/HM-Fix nutzt `gTMHMMoves` als `u16[128]` ueber Pointer `0x8125A8C`.
+- Slots `0..119` sind TMs, Slots `120..127` sind HMs.
 - `gTMHMLearnsets` nutzt 128 Compatibility-Bits beziehungsweise 16 Bytes pro Species ueber Pointer `0x8043C68`.
-- FVX nutzt aktuell weiterhin den klassischen `50+8`-Pfad bei `romEntry.TmMoves=0x45a5a4` und `compat.flagLength=59`; dieser Pfad bleibt nach Diagnose 036 P1-supported.
-- Ein 128-Slot-Fix ist plausibel, muss aber separat eng gegatet werden und darf Tutor-/Egg-/Learnset-/Move-Data-Write nicht mitziehen.
+- TM moves-only, TM/HM compatibility-only und TM moves + compatibility sind im 128-Slot-Scope P1-supported.
+- Tutor-, Egg-Move-, Learnset-Write-, Move-Data-Write- und TM51..TM120-Item-Text-/Palette-Erweiterungen bleiben out of scope.
 
 ## Lokale Artefaktpflege
 
