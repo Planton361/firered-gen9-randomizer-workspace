@@ -2,12 +2,12 @@
 
 ## Aktueller Arbeitsblock
 
-P1 Trainer Movesets-only Diagnose fuer CFRU/DPE Gen9-BPRE.
+P1 CFRU/DPE-Learnset-Modell fuer Trainer Movesets-only fuer CFRU/DPE Gen9-BPRE.
 
 Aktueller Workspace-Branch:
 
 ```text
-analysis/upr-fvx-cfru-dpe-p1-trainer-movesets-only
+analysis/upr-fvx-cfru-dpe-p1-learnsets-model
 ```
 
 UPR-FVX-Stand:
@@ -41,14 +41,14 @@ git diff --check
 2. Workspace-Commit erstellen:
 
 ```text
-test: document trainer movesets only diagnosis
+docs: document cfru dpe learnsets model
 ```
 
 3. Branch pushen und PR erstellen:
 
 ```sh
-git push -u origin analysis/upr-fvx-cfru-dpe-p1-trainer-movesets-only
-gh pr create --repo Planton361/firered-gen9-randomizer-workspace --base main --head analysis/upr-fvx-cfru-dpe-p1-trainer-movesets-only --title "test: document trainer movesets only diagnosis" --body-file /tmp/pr-body-trainer-movesets.md
+git push -u origin analysis/upr-fvx-cfru-dpe-p1-learnsets-model
+gh pr create --repo Planton361/firered-gen9-randomizer-workspace --base main --head analysis/upr-fvx-cfru-dpe-p1-learnsets-model --title "docs: document cfru dpe learnsets model" --body-file /tmp/pr-body-learnsets-model.md
 ```
 
 ## Diagnosebefund
@@ -111,3 +111,20 @@ Offene Folgethemen:
 
 - Abschlussdokumentation ist Teil der Definition of Done.
 - ROMs, Builds, Tool-Binaries und private Pfade bleiben ausserhalb von Git und ChatGPT.
+
+## Naechster empfohlener Arbeitsblock nach 030
+
+Branch:
+
+```text
+compat/upr-fvx-cfru-dpe-trainer-movesets-learnsets
+```
+
+Ziel:
+
+- Trainer Movesets-only entblocken, ohne breite Refactors.
+- In UPR-FVX einen schmal gegateten CFRU/DPE-Learnset-Reader fuer `Gen3RomHandler.getMovesLearnt()` implementieren.
+- `gLevelUpLearnsets` als interne Species-ID-Pointertabelle lesen.
+- CFRU/DPE-Level-Up-Eintraege als `u16 move` + `u8 level` bis Sentinel `{0, 0xFF}` dekodieren.
+- Move-IDs defensiv behandeln, weil CFRU/DPE bis `MOVES_COUNT=992` reicht und FVX in Diagnose 029 nur `moves.total=559` meldete.
+- `setMovesLearnt()`/Learnset-Write nicht ausweiten, solange Trainer Movesets-only nur einen Read-Pool braucht.

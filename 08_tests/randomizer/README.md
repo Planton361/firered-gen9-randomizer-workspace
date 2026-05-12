@@ -56,20 +56,20 @@ Der neueste bestaetigte Stand wird in Markdown ueber die Spalte `Latest` markier
 | 026 | `026_evolutions_scope_write_diagnostics.md` | Evolution-Scope und interner Species-Write fuer CFRU/DPE | bestaetigt: `saveSuccessful=true`, `logSuccessful=true`, Gen7/8/9-Picks, `writeReloadMismatches=0` | `05_builds/randomizer-smoke/026_evolutions_scope_write/` lokal/ignored | nein |
 | 027 | `027_p1_trainer_held_items_only.md` | Trainer Held Items-only Diagnose | blockiert: Trainer-Held-Item-Pool vorhanden, aber `randomizeTrainerHeldItems()` scheitert in `getMovesLearnt()` bei `0x25e49c`; kein Save/Log/Reload | `05_builds/randomizer-smoke/027_p1_trainer_held_items_only/` lokal/ignored | nein |
 | 028 | `028_trainer_held_items_lazy_movesets_diagnostics.md` | Trainer Held Items lazy Moveset-/Learnset-Load | bestaetigt: `saveSuccessful=true`, nichtleerer Trainer-Log, `after/reload.heldItemEntries=481`, `writeReloadMismatches=0` | `05_builds/randomizer-smoke/028_trainer_held_items_lazy_movesets/` lokal/ignored | nein |
-| 029 | `029_p1_trainer_movesets_only.md` | Trainer Movesets-only Diagnose | blockiert: Trainer-Load stabil, aber `TrainerMovesetRandomizer.getMoveSelectionPoolAtLevel()` scheitert in `getMovesLearnt()` bei `0x25e49c`; kein Save/Log/Reload | `05_builds/randomizer-smoke/029_p1_trainer_movesets_only/` lokal/ignored | ja |
+| 029 | `029_p1_trainer_movesets_only.md` | Trainer Movesets-only Diagnose | blockiert: Trainer-Load stabil, aber `TrainerMovesetRandomizer.getMoveSelectionPoolAtLevel()` scheitert in `getMovesLearnt()` bei `0x25e49c`; kein Save/Log/Reload | `05_builds/randomizer-smoke/029_p1_trainer_movesets_only/` lokal/ignored | nein |
+| 030 | `030_p1_learnsets_model.md` | CFRU/DPE-Level-Up-Learnset-Modell fuer `gLevelUpLearnsets` | dokumentiert: FVX liest CFRU/DPE-Learnsets mit alten Gen3-/Jambo-Annahmen; `0x25e49c` ist `PokemonMovesets + SPECIES_ZYGARDE*4`; minimaler Folgepfad ist ein gegateter CFRU/DPE-Learnset-Reader | keiner | ja |
 
 ## Aktuell bestaetigter Stand
 
-Latest ist Nr. 029: Trainer Movesets-only Diagnose.
+Latest ist Nr. 030: CFRU/DPE-Level-Up-Learnset-Modell.
 
 Kernaussagen:
 
-- Trainer-Load funktioniert: `trainers=255`, `trainerPokemon=481`, `nullSpecies=0`
-- Vor Randomization: `before.movesetEntries=53`, `before.resetMoves=0`, `before.invalidMoves=0`
-- Der Lauf scheitert vor Save/Log in `TrainerMovesetRandomizer.getMoveSelectionPoolAtLevel()`
-- Fehlerpfad: `Gen3RomHandler.getMovesLearnt()` -> `No valid pointer at 0x25e49c`
-- `saveSuccessful=false`, keine Output-ROM, kein nichtleerer Log, kein Write/Reload
-- Naechster sinnvoller Schritt ist ein CFRU/DPE-Learnset-Modell fuer `gLevelUpLearnsets`
+- `gLevelUpLearnsets` ist eine interne Species-ID-Pointertabelle bis `SPECIES_PECHARUNT`/`NUM_SPECIES=1440`.
+- CFRU/DPE-Level-Up-Eintraege sind `u16 move` + `u8 level` mit Sentinel `{0, 0xFF}`.
+- FVX liest aktuell alte Gen3-/Jambo-Learnsets ueber `PokemonMovesets` und `pokedexToInternal`.
+- `0x25e49c` ist `0x25D7B4 + SPECIES_ZYGARDE(0x33A) * 4`.
+- Minimaler Folgepfad: gegateter CFRU/DPE-Learnset-Reader fuer `getMovesLearnt()`, plus defensive Move-ID- und Species-Key-Behandlung.
 
 ## Lokale Artefaktpflege
 
@@ -79,7 +79,7 @@ Wenn ein Artefakt nicht eindeutig Smoke-Output ist, bleibt es lokal liegen und w
 
 ## Offene Themen
 
-- CFRU/DPE-Learnset-Modell fuer `gLevelUpLearnsets`
+- Trainer Movesets Learnset-Reader-Fix
 - Trainer Movesets
 - Sensible Trainer Held Items mit CFRU/DPE-Learnsets
 - Learnsets/Movesets
