@@ -46,11 +46,12 @@ Der neueste bestaetigte Stand wird in Markdown ueber die Spalte `Latest` markier
 | 016 | `upr-fvx-cfru-dpe-defensive-palette-loading-diagnostics.md` | defensives Palette-Load/-Save-Verhalten pruefen | bestaetigt | `05_builds/randomizer-smoke/` historisch | nein |
 | 017 | `upr-fvx-cfru-dpe-lazy-trainer-movesets-diagnostics.md` | Lazy-Trainer-Movesets-Unblocker pruefen | bestaetigt | `05_builds/randomizer-smoke/` historisch | nein |
 | 018 | `upr-fvx-cfru-dpe-skip-unchanged-palette-save-diagnostics.md` | unveraenderte CFRU/DPE-Paletten beim Save ueberspringen | bestaetigt | `05_builds/randomizer-smoke/` historisch | nein |
-| 019 | `upr-fvx-cfru-dpe-gen9-wild-post-merge-smoke.md` | Gen9 Standard-/Fallback-Wild post-merge smoke | bestaetigt: `saveSuccessful=true`, Gen7/8/9 im Wild-Log | `05_builds/randomizer-smoke/` historisch, lokal bereinigt | ja |
+| 019 | `upr-fvx-cfru-dpe-gen9-wild-post-merge-smoke.md` | Gen9 Standard-/Fallback-Wild post-merge smoke | bestaetigt: `saveSuccessful=true`, Gen7/8/9 im Wild-Log | `05_builds/randomizer-smoke/` historisch, lokal bereinigt | nein |
+| 020 | `upr-fvx-cfru-dpe-wild-banned-special-species-diagnostics.md` | CFRU/DPE-Special-Species-Wild-Ban diagnostisch bestaetigen | bestaetigt: `Bad Egg=0`, `<unknown>=0`, Gen7/8/9 im Wild-Log | `05_builds/randomizer-smoke/` historisch, lokal bereinigt | ja |
 
 ## Aktuell bestaetigter Stand
 
-Latest ist Nr. 019: Gen9 Standard-/Fallback Wild post-merge smoke.
+Latest ist Nr. 020: CFRU/DPE-Special-Species-Wild-Ban diagnostisch bestaetigen.
 
 Kernaussagen:
 
@@ -59,7 +60,7 @@ Kernaussagen:
 - `speciesList.size=1415`
 - Gen7/8/9 erscheinen im Wild-Log
 - `<unknown>` bleibt `0`
-- `Bad Egg` erscheint `12` Mal und bleibt separat zu diagnostizieren
+- `Bad Egg` bleibt `0`
 
 ## Lokale Artefaktpflege
 
@@ -69,7 +70,7 @@ Wenn ein Artefakt nicht eindeutig Smoke-Output ist, bleibt es lokal liegen und w
 
 ## Offene Themen
 
-- Bad Egg Diagnose
+- Bad Egg/Special-Species-Wild-Ban
 - Static/Gift
 - Trainer
 - Learnsets/Movesets

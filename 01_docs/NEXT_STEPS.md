@@ -2,27 +2,29 @@
 
 ## Aktueller Arbeitsblock
 
-Randomizer-Smoke-Artefakte und Testprotokolle ordnen.
+CFRU/DPE-Special-Species-Wild-Ban diagnostisch bestaetigen.
 
 Aktueller Branch:
 
 ```text
-maintenance/randomizer-smoke-artifact-cleanup
+analysis/upr-fvx-cfru-dpe-wild-banned-special-species
 ```
 
 Zieldokumente:
 
 ```text
+08_tests/randomizer/upr-fvx-cfru-dpe-wild-banned-special-species-diagnostics.md
 08_tests/randomizer/README.md
 01_docs/SESSION_STATE.md
 01_docs/NEXT_STEPS.md
 00_project-control/roadmap/roadmap-status.md
-01_docs/references/tool-manifest.md
+02_external/upr-fvx
 ```
 
 ## Naechste Schritte in diesem Block
 
 1. Dokumentation reviewen:
+   - `08_tests/randomizer/upr-fvx-cfru-dpe-wild-banned-special-species-diagnostics.md`
    - `08_tests/randomizer/README.md`
    - `01_docs/SESSION_STATE.md`
    - `01_docs/NEXT_STEPS.md`
@@ -36,40 +38,26 @@ git submodule status --recursive
 git diff --stat
 git diff --submodule
 git diff --check
-git ls-files 05_builds 04_private_roms 03_tools/releases
 ```
 
 3. Commit erstellen:
 
 ```text
-docs: organize randomizer smoke artifacts
+docs: record CFRU DPE wild special species ban diagnostics
 ```
 
 4. Branch pushen und Workspace-PR nach `main` erstellen.
 
-## Neue Randomizer-Smoke-Konvention
+## Diagnosebefund
 
-- Dauerhafte Smoke-Protokolle liegen unter `08_tests/randomizer/`.
-- Neue Smoke-Protokolle sollen nummerierte Dateinamen wie `001_<kurzer-zweck>.md`, `002_<kurzer-zweck>.md` nutzen.
-- Bestehende unnummerierte Protokolle bleiben fuer stabile Verweise unveraendert und werden ueber `08_tests/randomizer/README.md` tabellarisch eingeordnet.
-- Lokale Smoke-Artefakte sollen unter `05_builds/randomizer-smoke/NNN_<kurzer-zweck>/` abgelegt werden.
-- Der neueste bestaetigte Stand wird in der Markdown-Tabelle als `Latest` markiert; ein `latest`-Symlink ist nicht erforderlich.
-
-Aktueller Latest-Stand:
-
-```text
-Nr. 019 - Gen9 Standard-/Fallback Wild post-merge smoke
-saveSuccessful=true
-Gen7/8/9 im Wild-Log
-```
-
-## Cleanup-Stand
-
-- Vor Cleanup: `05_builds=1.3G`, `05_builds/randomizer-smoke=1.1G`, `08_tests=196K`.
-- Nach Cleanup: `05_builds=196M`, `05_builds/randomizer-smoke=0`.
-- Entfernt wurden nur ignored lokale Smoke-Outputs im flachen `05_builds/randomizer-smoke/`-Ordner: `.gba`- und `.log`-Dateien.
-- Nicht entfernt wurden Markdown-Protokolle, Source-Dateien, Submodules, Tool-Binaries, Saves oder Emulator States.
-- `git ls-files 05_builds 04_private_roms 03_tools/releases` bleibt leer.
+- UPR-FVX PR #12 ist offen.
+- Der Fix bannt im erkannten CFRU/DPE-Gen9-BPRE-Modus `SPECIES_NONE=0` und `SPECIES_EGG=0x19C` aus dem Wild-Pool.
+- Vanilla/normal Gen3 bleiben unveraendert.
+- Lokaler Wild-only-Smoke mit Seed `274269061345319`: `saveSuccessful=true`.
+- Coverage bleibt stabil: `PokemonCount=1439`, `speciesList.size=1415`, `maxSpeciesIdentityNumber=1439`.
+- `Bad Egg` faellt von `12` auf `0`.
+- `<unknown>` bleibt `0`.
+- `Area #174 - ALTERING CAVE Grass/Cave` enthaelt jetzt `Meowscrada` in allen 12 Slots.
 
 ## Danach
 
@@ -87,7 +75,6 @@ Ziel:
 
 ## Offene Randomizer-Themen
 
-- Bad Egg Diagnose
 - Static/Gift
 - Trainer
 - Learnsets/Movesets
@@ -98,12 +85,12 @@ Ziel:
 ## Nicht tun
 
 - keine ROMs bewegen
-- keine ROMs lesen, kopieren oder aendern
+- keine ROMs committen oder in ChatGPT hochladen
 - keine Saves oder Emulator States anfassen
-- keine Builds starten oder committen
-- keine Randomizer-Laeufe starten
+- keine weiteren Builds starten oder committen
+- keine weiteren Randomizer-Laeufe starten
 - keine Randomizer-JARs oder Tool-Binaries anfassen oder committen
-- keine Codeaenderungen in `02_external/**`
+- keine weiteren Codeaenderungen in `02_external/**`
 - keine Submodule-Aenderungen
 - keine externen Original-Upstreams kontaktieren
 - keine PRs ohne explizites `--repo Planton361/<repo>` beziehungsweise eindeutig ausgewaehltes Planton361-Repository

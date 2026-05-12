@@ -79,12 +79,13 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | 08 Randomizer-Kompatibilität | Skip-Unchanged-Palette-Save-Unblocker | UPR-FVX PR #11 gemerged; unveraenderte CFRU/DPE-Pokemon-Paletten werden nicht mehr neu geschrieben |
 | 08 Randomizer-Kompatibilität | Gen9-Wild-Post-Merge-Smoke | UPR-FVX Merge-Commit `ee82cb4e` bestaetigt: `PokemonCount=1439`, Gen7/8/9 im Wild-Log, `<unknown>=0`, Save erfolgreich |
 | 08 Randomizer-Kompatibilität | Randomizer-Smoke-Artefaktordnung | Lokale ignored Smoke-Outputs unter `05_builds/randomizer-smoke/` bereinigt; `08_tests/randomizer/README.md` dokumentiert Nummerierung und Latest-Konvention |
+| 08 Randomizer-Kompatibilität | CFRU/DPE-Special-Species-Wild-Ban | UPR-FVX PR #12 offen; lokaler Smoke zeigt `Bad Egg=0`, `<unknown>=0`, `saveSuccessful=true` |
 
 ## In Arbeit
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Randomizer-Smoke-Artefaktordnung reviewen | Dokumentations-PR fuer Cleanup und kuenftige Nummerierung mergen |
+| 08 Randomizer-Kompatibilität | CFRU/DPE-Special-Species-Wild-Ban reviewen | UPR-FVX- und Workspace-PR fuer Wild-Ban-Diagnose reviewen |
 
 ## Als Nächstes
 
@@ -127,6 +128,7 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Coverage unblock | `compat/upr-fvx-cfru-dpe-skip-unchanged-palette-save` | Palette-Save fuer unveraenderte CFRU/DPE-Pokemon-Paletten ueberspringen | UPR-FVX PR #11 gemerged; kein Count-, Learnset-, Trainer-, Static/Gift-, Wild- oder Day/Night-Fix |
 | Coverage smoke | `analysis/upr-fvx-cfru-dpe-gen9-wild-post-merge-smoke` | komplette Gen9-Wild-only-Fixkette nach PR #11 bestaetigen | erledigt; `saveSuccessful=true`, Gen7/8/9 im Wild-Log, `<unknown>=0` |
 | Maintenance | `maintenance/randomizer-smoke-artifact-cleanup` | lokale Smoke-Artefakte bereinigen und Protokoll-/Latest-Konvention dokumentieren | aktueller Dokumentationsbranch; keine Codeaenderungen, keine Builds, keine Randomizer-Laeufe |
+| Wild cleanup | `compat/upr-fvx-cfru-dpe-wild-banned-special-species` | CFRU/DPE-Sonder-Species aus Wild-Replacement-Pools bannen | UPR-FVX PR #12 offen; `SPECIES_EGG=0x19C` entfernt, `Bad Egg=0` bestaetigt |
 | P1c | `analysis/upr-fvx-cfru-dpe-p1-static-gift-write-diagnostics` | Static-/Gift-Species-only Diagnose | naechster minimaler Schritt; Roamer ausklammern |
 | P2 | `randomizer/cfru-day-night-wild-table-analysis` | CFRU-Custom-Day/Night-Wild-Tabellen separat untersuchen | erst nach P1-Schreibpfad-Diagnose; Route-1-Fallback bleibt stabil |
 | P3 | noch festlegen | Nullslot-`<unknown>` mit `rawInternalSpeciesId=0` klassifizieren | nicht mit GenRestrictions vermischen |
