@@ -24,10 +24,10 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-p1-move-data-model` |
-| Nächster Branch | `compat/upr-fvx-cfru-dpe-move-data-reader` |
-| Aktueller Fokus | P1 Move-Datenmodell fuer CFRU/DPE Gen9-BPRE |
-| ROM-/Build-Arbeit | keine ROM-Diagnose in diesem Analyseblock; keine Artefakte committen |
+| Aktueller Branch | `compat/upr-fvx-cfru-dpe-move-data-reader` |
+| Nächster Branch | offen nach Merge |
+| Aktueller Fokus | CFRU/DPE Move-Data-Reader-Fix fuer UPR-FVX |
+| ROM-/Build-Arbeit | lokale Randomizer-Diagnoseartefakte ignored unter `05_builds/randomizer-smoke/034_move_data_reader_fix_diagnostics/`; keine Artefakte committen |
 | Externe Repos | als Submodule auf Planton361-Forks eingebunden |
 | Forks | Planton361-Forks fuer UPR-FVX, DPE Gen9 und CFRU dokumentiert |
 | Installationen | devkitPro/devkitARM lokal dokumentiert; keine Installation in diesem Analyseblock |
@@ -153,8 +153,8 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | P1l | `analysis/upr-fvx-cfru-dpe-p1-learnsets-model` | CFRU/DPE-Learnset-Modell analysieren | read-only Modell fuer `gLevelUpLearnsets`, bevor Trainer-Movesets-Fix versucht wird |
 | P1m | `compat/upr-fvx-cfru-dpe-trainer-movesets-learnsets` | Trainer-Movesets durch CFRU/DPE-Learnset-Reader entblocken | UPR-FVX PR #17 und Workspace PR #68 gemerged; `writeReloadMismatches=0` |
 | P1n | `analysis/upr-fvx-cfru-dpe-p1-trainer-movesets-combinations` | Trainer-Movesets-Kombinationen diagnostizieren | erledigt; Movesets-only, Movesets+Species, Movesets+Held Items normal und sensible Held Items sind P1-stabil |
-| P1o | `analysis/upr-fvx-cfru-dpe-p1-move-data-model` | Gen8/9-Move-Datenmodell analysieren | aktueller Analysebranch; keine Learnset-Write-Ausweitung; TM-/Tutor-/Egg-Move-Pfade separat modellieren |
-| P1p | `compat/upr-fvx-cfru-dpe-move-data-reader` | CFRU/DPE-Move-Data-Reader minimal erweitern | naechster Fixbranch; `MOVES_COUNT=992` und `split` lesen, TM/HM/Tutor/Egg getrennt lassen |
+| P1o | `analysis/upr-fvx-cfru-dpe-p1-move-data-model` | Gen8/9-Move-Datenmodell analysieren | erledigt; Diagnose 033 dokumentiert `moves.total=559` vs. CFRU/DPE `MOVES_COUNT=992` |
+| P1p | `compat/upr-fvx-cfru-dpe-move-data-reader` | CFRU/DPE-Move-Data-Reader minimal erweitern | aktueller Fixbranch; UPR-FVX `c71fd75e` laedt `moves.total=992` und Trainer-Kombinationen bleiben stabil |
 | P2 | `randomizer/cfru-day-night-wild-table-analysis` | CFRU-Custom-Day/Night-Wild-Tabellen separat untersuchen | erst nach P1-Schreibpfad-Diagnose; Route-1-Fallback bleibt stabil |
 | P3 | noch festlegen | Nullslot-`<unknown>` mit `rawInternalSpeciesId=0` klassifizieren | nicht mit GenRestrictions vermischen |
 | P4 | noch festlegen | BizHawk-/Ironmon-Tracker-/RAM-Mapping pruefen | erst nach stabiler ROM-Randomizer-Kompatibilitaet |
@@ -197,10 +197,10 @@ Excel-Roadmap:
 ## Nächster empfohlener Branch
 
 ```text
-analysis/upr-fvx-cfru-dpe-p1-move-data-model
+offen nach Merge von compat/upr-fvx-cfru-dpe-move-data-reader
 ```
 
-Zweck: Nach Review/Merge dieses Diagnoseblocks das Gen8/9-Move-Datenmodell, FVX-Move-Coverage und TM-/Tutor-/Egg-Move-Tabellen read-only modellieren. Kein Learnset-Write, kein TM-/Tutor-Fix und kein breiter Randomizer-Refactor im selben Branch.
+Zweck: Separaten Scope fuer TM/HM-, Tutor-, Egg-Move- oder Move-Data-Write-Folgearbeit festlegen. Keine Learnset-Write- oder breite Randomizer-Ausweitung ohne eigenen Branch.
 
 ## Arbeitsblock-Log
 

@@ -60,20 +60,20 @@ Der neueste bestaetigte Stand wird in Markdown ueber die Spalte `Latest` markier
 | 030 | `030_p1_learnsets_model.md` | CFRU/DPE-Level-Up-Learnset-Modell fuer `gLevelUpLearnsets` | dokumentiert: FVX liest CFRU/DPE-Learnsets mit alten Gen3-/Jambo-Annahmen; `0x25e49c` ist `PokemonMovesets + SPECIES_ZYGARDE*4`; minimaler Folgepfad ist ein gegateter CFRU/DPE-Learnset-Reader | keiner | nein |
 | 031 | `031_trainer_movesets_learnsets_fix_diagnostics.md` | Trainer Movesets Learnsets-Fix Diagnose | bestaetigt: `saveSuccessful=true`, `logSuccessful=true`, Output-ROM, nichtleerer Trainer-Log, `after/reload.movesetEntries=417`, `writeReloadMismatches=0` | `05_builds/randomizer-smoke/031_trainer_movesets_learnsets_fix/` lokal/ignored | nein |
 | 032 | `032_p1_trainer_movesets_combinations.md` | Trainer Movesets Kombinationsdiagnosen | bestaetigt: Movesets-only, Movesets+Species, Movesets+Held Items normal und Movesets+sensible Held Items jeweils mit `saveSuccessful=true`, `logSuccessful=true`, `writeReloadMoveMismatches=0` | `05_builds/randomizer-smoke/032_p1_trainer_movesets_combinations/` lokal/ignored | nein |
-| 033 | `033_p1_move_data_model.md` | CFRU/DPE Gen8/9-Move-Datenmodell | dokumentiert: FVX laedt aktuell `moves.total=559`, CFRU/DPE definiert `MOVES_COUNT=992`; TM/HM-, Tutor- und Egg-Move-Pfade brauchen getrennte gegatete Modelle | keiner | ja |
+| 033 | `033_p1_move_data_model.md` | CFRU/DPE Gen8/9-Move-Datenmodell | dokumentiert: FVX laedt aktuell `moves.total=559`, CFRU/DPE definiert `MOVES_COUNT=992`; TM/HM-, Tutor- und Egg-Move-Pfade brauchen getrennte gegatete Modelle | keiner | nein |
+| 034 | `034_move_data_reader_fix_diagnostics.md` | CFRU/DPE Move-Data-Reader-Fix Diagnose | bestaetigt: `moves.total=992`, hoechster Move `PsychicNoise`, Trainer-Moveset-Kombinationen mit `saveSuccessful=true`, `logSuccessful=true`, `writeReloadMoveMismatches=0` | `05_builds/randomizer-smoke/034_move_data_reader_fix_diagnostics/` lokal/ignored | ja |
 
 ## Aktuell bestaetigter Stand
 
-Latest ist Nr. 033: CFRU/DPE Gen8/9-Move-Datenmodell.
+Latest ist Nr. 034: CFRU/DPE Move-Data-Reader-Fix Diagnose.
 
 Kernaussagen:
 
-- Trainer Movesets-only bleibt aus Nr. 032 als P1-stabiler Ausgangspunkt bestehen.
-- FVX laedt auf dem getesteten CFRU/DPE Gen9-BPRE-Stand weiterhin nur `moves.total=559`.
-- CFRU/DPE definiert `MOVES_COUNT=992` bis `MOVE_PSYCHICNOISE = 0x3DF`.
-- CFRU/DPE `struct BattleMove` bleibt 12 Bytes gross, enthaelt aber zusaetzlich `z_move_power`, `split` und `z_move_effect`; FVX ignoriert den gespeicherten Split aktuell.
-- TM/HM nutzt ein erweitertes 128-Slot-Modell, Tutor nutzt erweiterte Bitfelder und Egg Moves bleiben ein `u16`-Stream mit Species-Markern.
-- Minimaler Folgepfad: CFRU/DPE-Move-Reader gegatet erweitern; TM/HM-, Tutor-, Egg- und Learnset-Write-Pfade separat lassen.
+- Der gegatete CFRU/DPE-Move-Data-Reader laedt `moves.total=992` statt `559`.
+- Hoechster geladener Move ist `PsychicNoise` mit ID `991`.
+- `BattleMove.split` wird fuer CFRU/DPE als Kategorie gelesen: `physical=420`, `special=301`, `status=270`.
+- Trainer Movesets-only, Movesets+Species, Movesets+Held Items normal und Movesets+sensible Held Items bleiben stabil mit `saveSuccessful=true`, `logSuccessful=true` und `writeReloadMoveMismatches=0`.
+- TM/HM-, Tutor-, Egg-Move-, Learnset-Write- und Move-Data-Write-Pfade bleiben separate Folgearbeit.
 
 ## Lokale Artefaktpflege
 
