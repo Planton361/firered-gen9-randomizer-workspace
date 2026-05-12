@@ -24,10 +24,10 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-p1-trainer-movesets-combinations` |
-| Nächster Branch | `analysis/upr-fvx-cfru-dpe-p1-move-data-model` |
-| Aktueller Fokus | P1 Trainer Movesets Kombinationsdiagnosen |
-| ROM-/Build-Arbeit | lokaler Diagnose-Lauf nur unter `05_builds/**`; keine Artefakte committen |
+| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-p1-move-data-model` |
+| Nächster Branch | `compat/upr-fvx-cfru-dpe-move-data-reader` |
+| Aktueller Fokus | P1 Move-Datenmodell fuer CFRU/DPE Gen9-BPRE |
+| ROM-/Build-Arbeit | keine ROM-Diagnose in diesem Analyseblock; keine Artefakte committen |
 | Externe Repos | als Submodule auf Planton361-Forks eingebunden |
 | Forks | Planton361-Forks fuer UPR-FVX, DPE Gen9 und CFRU dokumentiert |
 | Installationen | devkitPro/devkitARM lokal dokumentiert; keine Installation in diesem Analyseblock |
@@ -92,12 +92,13 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | 08 Randomizer-Kompatibilität | P1 Trainer Held Items lazy Moveset-/Learnset-Load | UPR-FVX `3864ad0e` bestaetigt `saveSuccessful=true`, nichtleeren Trainer-Log, `heldItemEntries=481` nach Reload und `writeReloadMismatches=0` |
 | 08 Randomizer-Kompatibilität | P1 Trainer Movesets-only Diagnose | Trainer-Load stabil, aber `TrainerMovesetRandomizer.getMoveSelectionPoolAtLevel()` blockiert vor Save/Log in `getMovesLearnt()` bei `0x25e49c` |
 | 08 Randomizer-Kompatibilität | P1 Trainer Movesets Learnsets-Fix | UPR-FVX PR #17 und Workspace PR #68 gemerged; `6557648` bestaetigt `saveSuccessful=true`, `logSuccessful=true`, `after/reload.movesetEntries=417` und `writeReloadMismatches=0` |
+| 08 Randomizer-Kompatibilität | P1 Trainer Movesets Kombinationen | Workspace PR #69 gemerged; Movesets-only, Movesets+Species, Movesets+Held Items normal und sensible Held Items sind P1-stabil |
 
 ## In Arbeit
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Trainer Movesets Kombinationsdiagnosen | Movesets-only als P1-supported Baseline in Kombinationen pruefen |
+| 08 Randomizer-Kompatibilität | Gen8/9-Move-Datenmodell | CFRU/DPE-Move-Coverage, TM-/Tutor-/Egg-Move-Pfade und FVX-Move-Liste read-only modellieren |
 
 ## Als Nächstes
 
@@ -151,8 +152,9 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | P1k | `analysis/upr-fvx-cfru-dpe-p1-trainer-movesets-only` | Trainer-Movesets-only Diagnose | blockiert vor Save/Log in `getMovesLearnt()` bei `0x25e49c`; kein Fix |
 | P1l | `analysis/upr-fvx-cfru-dpe-p1-learnsets-model` | CFRU/DPE-Learnset-Modell analysieren | read-only Modell fuer `gLevelUpLearnsets`, bevor Trainer-Movesets-Fix versucht wird |
 | P1m | `compat/upr-fvx-cfru-dpe-trainer-movesets-learnsets` | Trainer-Movesets durch CFRU/DPE-Learnset-Reader entblocken | UPR-FVX PR #17 und Workspace PR #68 gemerged; `writeReloadMismatches=0` |
-| P1n | `analysis/upr-fvx-cfru-dpe-p1-trainer-movesets-combinations` | Trainer-Movesets-Kombinationen diagnostizieren | aktueller Analysebranch; Movesets-only, Movesets+Species, Movesets+Held Items normal und sensible Held Items pruefen |
-| P1o | `analysis/upr-fvx-cfru-dpe-p1-move-data-model` | Gen8/9-Move-Datenmodell analysieren | keine Learnset-Write-Ausweitung; TM-/Tutor-/Egg-Move-Pfade separat modellieren |
+| P1n | `analysis/upr-fvx-cfru-dpe-p1-trainer-movesets-combinations` | Trainer-Movesets-Kombinationen diagnostizieren | erledigt; Movesets-only, Movesets+Species, Movesets+Held Items normal und sensible Held Items sind P1-stabil |
+| P1o | `analysis/upr-fvx-cfru-dpe-p1-move-data-model` | Gen8/9-Move-Datenmodell analysieren | aktueller Analysebranch; keine Learnset-Write-Ausweitung; TM-/Tutor-/Egg-Move-Pfade separat modellieren |
+| P1p | `compat/upr-fvx-cfru-dpe-move-data-reader` | CFRU/DPE-Move-Data-Reader minimal erweitern | naechster Fixbranch; `MOVES_COUNT=992` und `split` lesen, TM/HM/Tutor/Egg getrennt lassen |
 | P2 | `randomizer/cfru-day-night-wild-table-analysis` | CFRU-Custom-Day/Night-Wild-Tabellen separat untersuchen | erst nach P1-Schreibpfad-Diagnose; Route-1-Fallback bleibt stabil |
 | P3 | noch festlegen | Nullslot-`<unknown>` mit `rawInternalSpeciesId=0` klassifizieren | nicht mit GenRestrictions vermischen |
 | P4 | noch festlegen | BizHawk-/Ironmon-Tracker-/RAM-Mapping pruefen | erst nach stabiler ROM-Randomizer-Kompatibilitaet |

@@ -59,19 +59,21 @@ Der neueste bestaetigte Stand wird in Markdown ueber die Spalte `Latest` markier
 | 029 | `029_p1_trainer_movesets_only.md` | Trainer Movesets-only Diagnose | blockiert: Trainer-Load stabil, aber `TrainerMovesetRandomizer.getMoveSelectionPoolAtLevel()` scheitert in `getMovesLearnt()` bei `0x25e49c`; kein Save/Log/Reload | `05_builds/randomizer-smoke/029_p1_trainer_movesets_only/` lokal/ignored | nein |
 | 030 | `030_p1_learnsets_model.md` | CFRU/DPE-Level-Up-Learnset-Modell fuer `gLevelUpLearnsets` | dokumentiert: FVX liest CFRU/DPE-Learnsets mit alten Gen3-/Jambo-Annahmen; `0x25e49c` ist `PokemonMovesets + SPECIES_ZYGARDE*4`; minimaler Folgepfad ist ein gegateter CFRU/DPE-Learnset-Reader | keiner | nein |
 | 031 | `031_trainer_movesets_learnsets_fix_diagnostics.md` | Trainer Movesets Learnsets-Fix Diagnose | bestaetigt: `saveSuccessful=true`, `logSuccessful=true`, Output-ROM, nichtleerer Trainer-Log, `after/reload.movesetEntries=417`, `writeReloadMismatches=0` | `05_builds/randomizer-smoke/031_trainer_movesets_learnsets_fix/` lokal/ignored | nein |
-| 032 | `032_p1_trainer_movesets_combinations.md` | Trainer Movesets Kombinationsdiagnosen | bestaetigt: Movesets-only, Movesets+Species, Movesets+Held Items normal und Movesets+sensible Held Items jeweils mit `saveSuccessful=true`, `logSuccessful=true`, `writeReloadMoveMismatches=0` | `05_builds/randomizer-smoke/032_p1_trainer_movesets_combinations/` lokal/ignored | ja |
+| 032 | `032_p1_trainer_movesets_combinations.md` | Trainer Movesets Kombinationsdiagnosen | bestaetigt: Movesets-only, Movesets+Species, Movesets+Held Items normal und Movesets+sensible Held Items jeweils mit `saveSuccessful=true`, `logSuccessful=true`, `writeReloadMoveMismatches=0` | `05_builds/randomizer-smoke/032_p1_trainer_movesets_combinations/` lokal/ignored | nein |
+| 033 | `033_p1_move_data_model.md` | CFRU/DPE Gen8/9-Move-Datenmodell | dokumentiert: FVX laedt aktuell `moves.total=559`, CFRU/DPE definiert `MOVES_COUNT=992`; TM/HM-, Tutor- und Egg-Move-Pfade brauchen getrennte gegatete Modelle | keiner | ja |
 
 ## Aktuell bestaetigter Stand
 
-Latest ist Nr. 032: Trainer Movesets Kombinationsdiagnosen.
+Latest ist Nr. 033: CFRU/DPE Gen8/9-Move-Datenmodell.
 
 Kernaussagen:
 
-- Trainer Movesets-only ist auf UPR-FVX `655764816f9fefedb9433f33e4da0bc9d44bcda7` auch in Kombinationslaeufen P1-stabil.
-- Geprueft wurden Movesets-only, Movesets+Species, Movesets+Held Items normal und Movesets+sensible Held Items.
-- Alle vier Laeufe melden `saveSuccessful=true`, `logSuccessful=true`, Output-ROM, nichtleeren Trainer-Log und `writeReloadMoveMismatches=0`.
-- Normale und sensible Trainer-Held-Items schreiben `heldItemEntries=481` und reloaden ohne Held-Item-Mismatches.
-- Gen8/9-Move-Daten bleiben nicht vollstaendig bestaetigt, weil FVX weiterhin nur `moves.total=559` laedt und die Logs keine Gen8/9-Move-Samples enthalten.
+- Trainer Movesets-only bleibt aus Nr. 032 als P1-stabiler Ausgangspunkt bestehen.
+- FVX laedt auf dem getesteten CFRU/DPE Gen9-BPRE-Stand weiterhin nur `moves.total=559`.
+- CFRU/DPE definiert `MOVES_COUNT=992` bis `MOVE_PSYCHICNOISE = 0x3DF`.
+- CFRU/DPE `struct BattleMove` bleibt 12 Bytes gross, enthaelt aber zusaetzlich `z_move_power`, `split` und `z_move_effect`; FVX ignoriert den gespeicherten Split aktuell.
+- TM/HM nutzt ein erweitertes 128-Slot-Modell, Tutor nutzt erweiterte Bitfelder und Egg Moves bleiben ein `u16`-Stream mit Species-Markern.
+- Minimaler Folgepfad: CFRU/DPE-Move-Reader gegatet erweitern; TM/HM-, Tutor-, Egg- und Learnset-Write-Pfade separat lassen.
 
 ## Lokale Artefaktpflege
 
@@ -81,7 +83,7 @@ Wenn ein Artefakt nicht eindeutig Smoke-Output ist, bleibt es lokal liegen und w
 
 ## Offene Themen
 
-- Gen8/9-Move-Datenmodell
+- Gen8/9-Move-Datenmodell-Fix
 - Learnsets/Movesets
 - TM/Tutor/Egg-Move-Pfade
 - TM/Tutor/Abilities
