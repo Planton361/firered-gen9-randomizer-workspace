@@ -28,45 +28,47 @@
 - UPR-FVX PR #7 ist offen; temporaere `[CFRU-DPE-COUNT-DIAG]`-Ausgaben belegen im lokalen CFRU/DPE-Teststand die konkrete `PokemonCount=823`-Kappung.
 - Lokale Count-Diagnose: `PokemonNames` erreicht ID `1439` / Pecharunt, der Moveset-Check kappt `1439 -> 930`, und der `PokedexOrder`-Check kappt wegen `pdEntry=1808` bei interner ID `824` final auf `823`.
 - DPE/CFRU-`PokedexOrder` ist read-only modelliert: DPE Order-Tabellen sind Species-ID-Sortierlisten fuer Dex-Views, nicht FVX-kompatible interne-Species-zu-Dex-ID-Mappings.
+- UPR-FVX PR #8 ist offen; der konservative CFRU/DPE-Gen9-Count-Fix setzt `PokemonCount=1439` ueber `PokemonNames` plus BaseStats-Sanity und laesst Gen7/8/9 im Species-Load sichtbar werden.
+- Lokaler Diagnosebefund nach PR #8: `speciesList.size=1415`, `maxSpeciesIdentityNumber=1439`, `generationCounts={1=271, 2=118, 3=188, 4=174, 5=191, 6=127, 7=123, 8=127, 9=120}`.
+- Neuer Folgeblocker: Der vollstaendige CLI-Lauf bricht nach erfolgreichem Species-Load in `loadPokemonPalettes()` mit einem ungueltigen Pointer ab; Wild-Randomization wird in diesem Arbeitsblock deshalb noch nicht erreicht.
 - ROMs, Saves, Builds, Tool-Binaries und private Dateien sind ausgeschlossen.
 
 ## Aktueller Branch
 
-`analysis/upr-fvx-cfru-dpe-pokedex-order-model`
+`analysis/upr-fvx-cfru-dpe-gen9-species-count`
 
 ## Aktueller Arbeitsblock
 
-Read-only Modellierung von CFRU/DPE-`PokedexOrder`, Dex-ID-Layout und sicheren Count-Quellen fuer vollstaendige Gen9-Coverage.
+Dokumentation und Diagnose zum konservativen UPR-FVX-CFRU/DPE-Gen9-SpeciesCount-Fix.
 
 ## Ziel
 
-Konkret klaeren:
+Konkret festhalten:
 
-- was DPE/CFRU `PokedexOrder` bedeutet
-- warum die FVX-Heuristik `pdEntry > 1023 => cutoff` fuer CFRU/DPE falsch ist
-- welche Quelle fuer `PokemonCount`, `PokedexCount`, SpeciesSet-Identitaet und Dex-Anzeige geeignet ist
-- welche konservative Fix-Strategie Vanilla/alte Gen3-Hacks nicht gefaehrdet
+- welcher UPR-FVX-Fixbranch `PokemonCount=1439` erreicht
+- welche Checks und lokalen Diagnosewerte vorliegen
+- warum Wild-Randomization noch nicht erreicht wird
+- welcher naechste minimale Blocker separat modelliert werden muss
 
 ## In diesem Arbeitsblock geprueft / geaendert
 
-- Workspace `main` per Fast-Forward geprueft und Branch `analysis/upr-fvx-cfru-dpe-pokedex-order-model` erstellt.
-- DPE/CFRU-Quellen read-only geprueft: `include/species.h`, `include/pokedex.h`, `src/Species_To_Pokdex_Table.c`, `src/Pokedex_Orders.c`, `src/updated_code.c`, CFRU `config.h` und `util.c`.
-- UPR-FVX `basicBPRE10HackSupport()`, `loadPokedexOrder()` und Gen3 `gen3_offsets.ini` read-only geprueft.
-- CyanSMP64 NatDex-Referenzen read-only verglichen: `tools/inigen/inigen.c`, `src/rom_header_gf.c`, NatDex `gen3_offsets.ini`, Gen8/Gen9-`GenRestrictions`.
-- Neues Modell erstellt: `01_docs/compat/upr-fvx-cfru-dpe-pokedex-order-model.md`.
-- Keine Codeaenderungen, keine Builds, keine ROM-Zugriffe und keine Aenderungen in `02_external/**` umgesetzt.
+- Workspace `main` per Fast-Forward geprueft und Branch `analysis/upr-fvx-cfru-dpe-gen9-species-count` erstellt.
+- UPR-FVX Branch `compat/upr-fvx-cfru-dpe-gen9-species-count` von `compat/firered-gen9-cfru-dpe` erstellt.
+- UPR-FVX Commit `d17b29a2 compat: detect CFRU DPE Gen9 species count` erstellt und PR #8 geoeffnet.
+- Lokalen CFRU/DPE-CLI-Lauf gestartet; Count-/Generation-Diagnose protokolliert, Abbruch in `loadPokemonPalettes()` dokumentiert.
+- Neues Protokoll erstellt: `08_tests/randomizer/upr-fvx-cfru-dpe-gen9-species-count-diagnostics.md`.
 
 ## Ergebnis
 
-- DPE `gPokedexOrder_*`-Tabellen sind Species-ID-Sortierlisten fuer Pokedex-Views. Die DPE-Runtime wandelt diese Eintraege bei Bedarf ueber `SpeciesToNationalPokedexNum()` in National-Dex-IDs um.
-- FVX liest `PokedexOrder` dagegen als lineares internes-Species-zu-Dex-ID-Mapping und nutzt den Wert zugleich als Count-Sanity.
-- `pdEntry=1808` bei ID `824` ist weder Xerneas-Dex-ID noch Xerneas-Species-ID; der Vanilla/FVX-Offset ist im CFRU/DPE-ROM fuer Count-Zwecke nicht belastbar.
-- Werte `>1023` koennen in DPE-Order-Listen valide interne Species-IDs sein, weil Gen8/Gen9 und Forms oberhalb `1023` liegen.
-- Sichere naechste Richtung: fuer konservativ erkannte CFRU/DPE-BPRE-Hacks `PokedexOrder` nicht als Count-Grenze nutzen; Count kurzfristig aus `PokemonNames` plus BaseStats-Sanity ableiten, langfristig eigenes CFRU/DPE-Profil mit explizitem SpeciesCount und `gSpeciesToNationalPokedexNum`-Mapping.
+- Der Count-Fix greift: `PokemonCount=1439` statt `823`.
+- Gen7/8/9 sind im Species-Load sichtbar: Gen7 `123`, Gen8 `127`, Gen9 `120`.
+- `PokemonMovesets` und `PokedexOrder` werden fuer den konservativ erkannten CFRU/DPE-Gen9-BPRE-Modus nicht mehr als Count-Grenze genutzt.
+- Der vollstaendige Randomizer-Lauf bricht danach im Palettenpfad ab; dieser Folgefehler ist nicht Teil des Count-Fixes.
 
 ## Noch nicht gestartet
 
-- UPR-FVX-Fixbranch fuer CFRU/DPE-spezifische Count-Heuristik ohne P1-Schreibpfade
+- UPR-FVX-Review/Merge von PR #8
+- Separates Modell oder Fix fuer `loadPokemonPalettes()` bei erweitertem CFRU/DPE-BPRE-Speciesraum
 - Praktische P1-Diagnoselaeufe fuer Static/Gifts und Trainer-Species
 - Evolution-/Learnset-/TM-/Tutor-/Ability-Datenmodellierung nach der Schreibpfadmatrix
 - CFRU-Day/Night-Custom-Wild-Tabellen-Support
@@ -77,13 +79,13 @@ Konkret klaeren:
 
 Keine ROMs, Saves, Builds oder Tool-Binaries committed.
 
-Keine ROMs in ChatGPT hochgeladen. In diesem Arbeitsblock wurden keine ROMs gelesen.
+Keine ROMs in ChatGPT hochgeladen. ROMs wurden nur lokal fuer den Diagnose-Lauf geladen; Artefakte blieben unter `05_builds/**` und wurden nicht committed.
 
 Keine externen Original-Upstreams kontaktiert.
 
 Keine Aenderungen direkt auf `main`.
 
-Keine Codeaenderungen in `02_external/**`.
+UPR-FVX-Codeaenderung erfolgte nur im Submodule auf Arbeitsbranch `compat/upr-fvx-cfru-dpe-gen9-species-count`; Workspace dokumentiert den Submodule-Pointer.
 
 Keine MCP-Configs mit Secrets angelegt.
 
@@ -103,4 +105,4 @@ git diff --check
 
 Noch festzulegen.
 
-Zweck: UPR-FVX-Fix fuer CFRU/DPE-spezifische Count-Erkennung vorbereiten. Kein Static-/Gift-Fix und kein Learnset-/Moveset-Fix im selben Branch.
+Zweck: naechsten Loader-Blocker `loadPokemonPalettes()` fuer erweiterten CFRU/DPE-BPRE-Speciesraum isoliert analysieren oder fixen. Kein Static-/Gift-, Trainer-, Learnset- oder Moveset-Fix im selben Branch.
