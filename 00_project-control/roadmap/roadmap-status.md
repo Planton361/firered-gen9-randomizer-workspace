@@ -24,10 +24,10 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-wild-banned-special-species` |
+| Aktueller Branch | `docs/pin-upr-fvx-wild-special-species-fix` |
 | Nächster Branch | `analysis/upr-fvx-cfru-dpe-p1-static-gift-write-diagnostics` |
-| Aktueller Fokus | CFRU/DPE-Special-Species-Wild-Ban diagnostisch bestaetigen |
-| ROM-/Build-Arbeit | lokaler Diagnose-Lauf nur unter `05_builds/**`; keine Artefakte committen |
+| Aktueller Fokus | UPR-FVX Wild-Sonder-Species-Fix im Workspace pinnen |
+| ROM-/Build-Arbeit | keine Builds, keine Randomizer-Laeufe, keine ROM-Zugriffe |
 | Externe Repos | als Submodule auf Planton361-Forks eingebunden |
 | Forks | Planton361-Forks fuer UPR-FVX, DPE Gen9 und CFRU dokumentiert |
 | Installationen | devkitPro/devkitARM lokal dokumentiert; keine Installation in diesem Analyseblock |
@@ -81,18 +81,19 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | 08 Randomizer-Kompatibilität | Randomizer-Smoke-Artefaktordnung | Lokale ignored Smoke-Outputs unter `05_builds/randomizer-smoke/` bereinigt; `08_tests/randomizer/README.md` dokumentiert Nummerierung und Latest-Konvention |
 | 08 Randomizer-Kompatibilität | Wild-Bad-Egg-Diagnose | `12` `Bad Egg`-Slots liegen komplett in `Area #174 - ALTERING CAVE`; Ursache ist sehr wahrscheinlich `SPECIES_EGG=0x19C` im CFRU/DPE-Wild-Allowed-Pool |
 | 08 Randomizer-Kompatibilität | CFRU/DPE-Special-Species-Wild-Ban | UPR-FVX PR #12 offen; lokaler Smoke zeigt `Bad Egg=0`, `<unknown>=0`, `saveSuccessful=true` |
+| 08 Randomizer-Kompatibilität | UPR-FVX Wild-Fix-Pin | Workspace-Submodule `02_external/upr-fvx` ist auf Planton361-Fork-Commit `0f127e9b` fuer den CFRU/DPE-Wild-Sonder-Species-Fix gepinnt |
 
 ## In Arbeit
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | CFRU/DPE-Special-Species-Wild-Ban reviewen | UPR-FVX- und Workspace-PR fuer Wild-Ban-Diagnose reviewen |
+| 08 Randomizer-Kompatibilität | UPR-FVX Wild-Fix-Pin reviewen | Workspace-Pin auf `0f127e9b` als Basis fuer P1 Static/Gift reviewen |
 
 ## Als Nächstes
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | CFRU/DPE Special-Species-Wild-Ban | `SPECIES_NONE`, `SPECIES_EGG` und belegte Dummy-/Gap-Species aus Wild-Replacement-Pools entfernen |
+| 08 Randomizer-Kompatibilität | P1 Static/Gift-Diagnose | Static-/Gift-Species-only Schreibpfad auf gepinntem Gen9-Wild-sauberen Stand pruefen |
 
 ## Noch offen
 
