@@ -41,51 +41,49 @@
 - Lokaler Diagnosebefund nach PR #10: `saveTrainers()`/`getMovesLearnt()` blockiert nicht mehr bei `0x25e49c`; `PokemonCount=1439`, `speciesList.size=1415` und Gen7/8/9-Coverage bleiben erhalten.
 - Neuer Folgeblocker nach PR #10: `savePokemonPalettes()` bricht mit `no compressed data found at offset 0x16b9c08` ab; `saveSuccessful=false`, daher entsteht weiterhin kein nutzbarer Wild-Log.
 - Der Palette-Save-Blocker ist read-only modelliert: `0x16b9c08` ist das alte Palette-Datenziel `gFrontSprite252Pal` (`0x096B9C08`), das DPE fuer die Gap-/Dummy-Slots `[252]..[276]` mehrfach verwendet. FVX schreibt Paletten auch ohne Palette-Randomization neu und verletzt damit die `DataRewriter`-Annahme, dass nur ein Pointer auf den alten komprimierten Datenblock zeigt.
-- UPR-FVX PR #11 ist offen; der Skip-Unchanged-Palette-Save-Unblocker ueberspringt fuer CFRU/DPE-Gen9-BPRE-Hacks den Pokemon-Palette-Save, wenn alle geladenen Paletten unveraendert sind.
-- Lokaler Diagnosebefund nach PR #11: `PokemonCount=1439`, `speciesList.size=1415`, `generationCounts={1=271, 2=118, 3=188, 4=174, 5=191, 6=127, 7=123, 8=127, 9=120}`, Palette-Load ueberspringt weiterhin `normal=2 shiny=2`, Palette-Save loggt den Unchanged-Skip, Output-ROM und Wild-Log entstehen wieder.
+- UPR-FVX PR #11 ist gemerged; der Skip-Unchanged-Palette-Save-Unblocker ist in `compat/firered-gen9-cfru-dpe` enthalten.
+- Post-Merge-Gen9-Wild-Smoke auf UPR-FVX Merge-Commit `ee82cb4e` ist dokumentiert: `PokemonCount=1439`, `speciesList.size=1415`, `maxSpeciesIdentityNumber=1439`, `generationCounts={1=271, 2=118, 3=188, 4=174, 5=191, 6=127, 7=123, 8=127, 9=120}`, Output-ROM und Wild-Log entstehen erfolgreich.
+- Der Post-Merge-Wild-Log enthaelt Gen7/8/9-Species, darunter `Magearna`, `Meltan`, `Hatenna`, `Calyrex`, `Glimmet`, `Toedscool`, `Tatsugiri`, `Floragato`, `Iron Crown` und `Hydrapple`; `<unknown>` bleibt `0`.
+- Im Post-Merge-Wild-Log erscheinen `12` `Bad Egg`-Eintraege; diese sind eine separate Folgeauffaelligkeit und nicht der fruehere `<unknown>`-Nullslot.
 - ROMs, Saves, Builds, Tool-Binaries und private Dateien sind ausgeschlossen.
 
 ## Aktueller Branch
 
-`analysis/upr-fvx-cfru-dpe-skip-unchanged-palette-save`
+`analysis/upr-fvx-cfru-dpe-gen9-wild-post-merge-smoke`
 
 ## Aktueller Arbeitsblock
 
-Dokumentation des UPR-FVX-Skip-Unchanged-Palette-Save-Unblockers und des lokalen Diagnosebefunds.
+Post-Merge-Smoke fuer die gemergte CFRU/DPE-Gen9-Wild-only-Fixkette.
 
 ## Ziel
 
 Konkret festhalten:
 
-- welcher UPR-FVX-Commit den unveraenderten CFRU/DPE-Palette-Save ueberspringt
-- ob der `0x16b9c08`-Abbruch weg ist
-- ob `PokemonCount=1439` und Gen7/8/9-Coverage erhalten bleiben
-- ob wieder ein Wild-Log entsteht
+- ob UPR-FVX `compat/firered-gen9-cfru-dpe` PR #11 enthaelt
+- ob der gemergte Zielbranch baut
+- ob der lokale CFRU/DPE-Wild-only-Smoke mit `PokemonCount=1439` erfolgreich speichert
+- ob der Wild-Log Gen7/8/9-Species enthaelt und `<unknown>` `0` bleibt
 
 ## In diesem Arbeitsblock geprueft / geaendert
 
-- Workspace `main` per Fast-Forward geprueft und Branch `analysis/upr-fvx-cfru-dpe-skip-unchanged-palette-save` erstellt.
-- UPR-FVX Branch `compat/upr-fvx-cfru-dpe-skip-unchanged-palette-save` von `compat/firered-gen9-cfru-dpe` erstellt.
-- UPR-FVX Commit `8926912a compat: skip unchanged CFRU DPE palette save` erstellt und PR #11 geoeffnet.
-- UPR-FVX `./gradlew test` und `./gradlew clean :random:jar` ausgefuehrt.
-- Lokalen CFRU/DPE-CLI-Lauf gestartet; Palette-Save-Unblock und wieder entstandenen Wild-Log dokumentiert.
-- Neues Protokoll erstellt: `08_tests/randomizer/upr-fvx-cfru-dpe-skip-unchanged-palette-save-diagnostics.md`.
+- Workspace `main` per Fast-Forward geprueft und Branch `analysis/upr-fvx-cfru-dpe-gen9-wild-post-merge-smoke` erstellt.
+- UPR-FVX `compat/firered-gen9-cfru-dpe` auf Merge-Commit `ee82cb4e` aktualisiert.
+- Workspace-Submodule-Pointer auf den gemergten UPR-FVX-Stand aktualisiert.
+- UPR-FVX `./gradlew clean :random:jar` ausgefuehrt.
+- Lokalen CFRU/DPE-Wild-only-CLI-Smoke gestartet; Save-Erfolg, Wild-Log und Gen7/8/9-Beispiele dokumentiert.
+- Neues Protokoll erstellt: `08_tests/randomizer/upr-fvx-cfru-dpe-gen9-wild-post-merge-smoke.md`.
 
 ## Ergebnis
 
-- `savePokemonPalettes()` bricht nicht mehr bei `0x16b9c08` ab, wenn `Pokemon Palettes: Unchanged` gilt.
-- Count und Coverage bleiben stabil: `PokemonCount=1439`, `speciesList.size=1415`, `generationCounts={1=271, 2=118, 3=188, 4=174, 5=191, 6=127, 7=123, 8=127, 9=120}`.
-- Der lokale Lauf erzeugt wieder eine Output-ROM und einen nicht-leeren Wild-Log.
-- Sichtbare Gen7/8/9-Wild-Beispiele im Log sind unter anderem `Magearna`, `Meltan`, `Hatenna`, `Calyrex`, `Glimmet`, `Toedscool` und `Tatsugiri`.
-- CFRU/DPE-Pokemon-Palette-Randomization bleibt partial/unsupported; bei tatsaechlich geaenderten Paletten faellt der Code bewusst in den bestehenden Save-Pfad.
+- Der gemergte UPR-FVX-Zielbranch baut erfolgreich.
+- Der lokale Wild-only-Smoke beendet mit CLI-Exit-Code `0` und `Randomized successfully!`.
+- Count und Coverage bleiben stabil: `PokemonCount=1439`, `speciesList.size=1415`, `maxSpeciesIdentityNumber=1439`, `generationCounts={1=271, 2=118, 3=188, 4=174, 5=191, 6=127, 7=123, 8=127, 9=120}`.
+- Der Wild-Log enthaelt Gen7 `85`, Gen8 `126`, Gen9 `289` sichtbare Wild-Slots; `<unknown>` bleibt `0`.
+- Sichtbare Gen7/8/9-Wild-Beispiele sind unter anderem `Magearna`, `Meltan`, `Hatenna`, `Calyrex`, `Glimmet`, `Toedscool`, `Tatsugiri`, `Floragato`, `Iron Crown` und `Hydrapple`.
+- `Bad Egg` erscheint `12` Mal und bleibt als separate Folgeauffaelligkeit offen.
 
 ## Noch nicht gestartet
 
-- UPR-FVX-Review/Merge von PR #8
-- UPR-FVX-Review/Merge von PR #9
-- UPR-FVX-Review/Merge von PR #10
-- UPR-FVX-Review/Merge von PR #11
-- Post-Merge-Wild-Smoke nach PR #11 auf `compat/firered-gen9-cfru-dpe`
 - Separates DPE/CFRU-Learnset-Profil fuer `gLevelUpLearnsets`
 - Praktische P1-Diagnoselaeufe fuer Static/Gifts und Trainer-Species
 - Evolution-/Learnset-/TM-/Tutor-/Ability-Datenmodellierung nach der Schreibpfadmatrix
@@ -103,7 +101,7 @@ Keine externen Original-Upstreams kontaktiert.
 
 Keine Aenderungen direkt auf `main`.
 
-UPR-FVX-Codeaenderung erfolgte nur im Submodule auf Arbeitsbranch `compat/upr-fvx-cfru-dpe-skip-unchanged-palette-save`; Workspace dokumentiert den Submodule-Pointer.
+Keine UPR-FVX-Codeaenderung in diesem Arbeitsblock; Workspace dokumentiert nur den gemergten Submodule-Pointer.
 
 Keine MCP-Configs mit Secrets angelegt.
 
@@ -121,6 +119,6 @@ git diff --check
 
 ## Naechster empfohlener Branch
 
-`analysis/upr-fvx-cfru-dpe-post-merge-wild-smoke`
+`analysis/upr-fvx-cfru-dpe-p1-static-gift-write-diagnostics`
 
-Zweck: Nach Merge von UPR-FVX PR #11 die komplette Gen9-Wild-only-Fixkette auf `compat/firered-gen9-cfru-dpe` bestaetigen. Kein Static/Gift-, Learnset-, Trainer-, Palette-Randomizer- oder Day/Night-Fix im selben Branch.
+Zweck: Static-/Gift-Species-only Diagnose nach bestaetigter Gen9-Wild-Coverage wieder aufnehmen. Kein Learnset-, Trainer-, Palette-, Day/Night- oder Nullslot-Fix im selben Branch.

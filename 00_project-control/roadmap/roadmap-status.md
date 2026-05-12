@@ -24,9 +24,9 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-skip-unchanged-palette-save` |
-| Nächster Branch | `analysis/upr-fvx-cfru-dpe-post-merge-wild-smoke` |
-| Aktueller Fokus | Skip-Unchanged-Palette-Save-Unblocker dokumentieren |
+| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-gen9-wild-post-merge-smoke` |
+| Nächster Branch | `analysis/upr-fvx-cfru-dpe-p1-static-gift-write-diagnostics` |
+| Aktueller Fokus | Gen9-Wild-Post-Merge-Smoke dokumentieren |
 | ROM-/Build-Arbeit | lokaler Diagnose-Lauf nur unter `05_builds/**`; keine Artefakte committen |
 | Externe Repos | als Submodule auf Planton361-Forks eingebunden |
 | Forks | Planton361-Forks fuer UPR-FVX, DPE Gen9 und CFRU dokumentiert |
@@ -70,31 +70,32 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | 08 Randomizer-Kompatibilität | Gen9-Species-Coverage-Analyse | DPE/CFRU-Source reicht bis Pecharunt/`NUM_SPECIES=1440`; aktueller FVX-Load bleibt bei `PokemonCount=823` |
 | 08 Randomizer-Kompatibilität | PokemonCount-Cutoff-Diagnose | UPR-FVX PR #7 offen; Diagnose belegt `PokedexOrder`-Kappung bei interner ID `824` mit `pdEntry=1808` |
 | 08 Randomizer-Kompatibilität | PokedexOrder-Modell | DPE `PokedexOrder` als Species-ID-Sortierlisten eingeordnet; FVX-Count-Sanity auf `pdEntry > 1023` ist fuer CFRU/DPE ungeeignet |
-| 08 Randomizer-Kompatibilität | CFRU/DPE-Gen9-SpeciesCount-Fix | UPR-FVX PR #8 offen; Count erreicht `PokemonCount=1439`, Gen7/8/9 werden im Species-Load sichtbar |
+| 08 Randomizer-Kompatibilität | CFRU/DPE-Gen9-SpeciesCount-Fix | UPR-FVX PR #8 gemerged; Count erreicht `PokemonCount=1439`, Gen7/8/9 werden im Species-Load sichtbar |
 | 08 Randomizer-Kompatibilität | Palette-Loader-Blocker-Modell | `loadPokemonPalettes()`-Abbruch auf `SPECIES_CUBONE_A`/`gMonPaletteTable[1038]` eingeordnet; Palette-Load ist P0/Wild-fachlich nicht noetig |
-| 08 Randomizer-Kompatibilität | Defensiver Palette-Load/-Save-Fix | UPR-FVX PR #9 offen; fehlende Palette-Slots brechen den Load nicht mehr ab, naechster Blocker liegt in `saveTrainers()`/`getMovesLearnt()` |
+| 08 Randomizer-Kompatibilität | Defensiver Palette-Load/-Save-Fix | UPR-FVX PR #9 gemerged; fehlende Palette-Slots brechen den Load nicht mehr ab |
 | 08 Randomizer-Kompatibilität | Save-Trainers-/Moveset-Blocker-Modell | `0x25e49c` als `PokemonMovesets + 826*4` eingeordnet; Ursache ist wahrscheinlich alter/falscher Learnset-Tabellenzugriff plus eager `saveTrainers()`-Moveset-Load |
-| 08 Randomizer-Kompatibilität | Lazy-Trainer-Movesets-Unblocker | UPR-FVX PR #10 offen; `saveTrainers()` blockiert nicht mehr bei `getMovesLearnt()`, naechster Blocker liegt in `savePokemonPalettes()` bei `0x16b9c08` |
+| 08 Randomizer-Kompatibilität | Lazy-Trainer-Movesets-Unblocker | UPR-FVX PR #10 gemerged; Wild-only Save blockiert nicht mehr bei `saveTrainers()`/`getMovesLearnt()` |
 | 08 Randomizer-Kompatibilität | Palette-Save-Blocker-Modell | `0x16b9c08` als DPE `gFrontSprite252Pal` eingeordnet; FVX schreibt unveraenderte/geteilte Paletten bedingungslos neu |
-| 08 Randomizer-Kompatibilität | Skip-Unchanged-Palette-Save-Unblocker | UPR-FVX PR #11 offen; lokaler Lauf erzeugt wieder Output-ROM und Wild-Log mit Gen7/8/9-Beispielen |
+| 08 Randomizer-Kompatibilität | Skip-Unchanged-Palette-Save-Unblocker | UPR-FVX PR #11 gemerged; unveraenderte CFRU/DPE-Pokemon-Paletten werden nicht mehr neu geschrieben |
+| 08 Randomizer-Kompatibilität | Gen9-Wild-Post-Merge-Smoke | UPR-FVX Merge-Commit `ee82cb4e` bestaetigt: `PokemonCount=1439`, Gen7/8/9 im Wild-Log, `<unknown>=0`, Save erfolgreich |
 
 ## In Arbeit
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Skip-Unchanged-Palette-Save dokumentieren | UPR-FVX PR #11, lokale Diagnosewerte und Wild-Log-Auswertung festhalten |
+| 08 Randomizer-Kompatibilität | Gen9-Wild-Post-Merge-Smoke dokumentieren | gemergte Fixkette auf UPR-FVX `compat/firered-gen9-cfru-dpe` bestaetigen |
 
 ## Als Nächstes
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Post-Merge-Wild-Smoke | PR #11 nach Merge auf `compat/firered-gen9-cfru-dpe` bestaetigen |
+| 08 Randomizer-Kompatibilität | P1 Static/Gift-Diagnose | Static-/Gift-Species-only Schreibpfad nach bestaetigter Gen9-Wild-Coverage pruefen |
 
 ## Noch offen
 
 | Paket | Aufgabe | Hinweise |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Static/Gift-Schreibpfade fixen | erst nach vollstaendigem Gen9-Load bis zur Randomization; keine Trainer-/Evolution-/Learnset-Pfade vermischen |
+| 08 Randomizer-Kompatibilität | Static/Gift-Schreibpfade diagnostizieren/fixen | Gen9-Wild-Smoke ist bestaetigt; keine Trainer-/Evolution-/Learnset-Pfade vermischen |
 | 08 Randomizer-Kompatibilität | Trainer-Pokémon testen | nach Static/Gift oder separat; aktueller Verdacht ebenfalls `pokedexToInternal[Species.number]` |
 | 08 Randomizer-Kompatibilität | DPE-Gesamtumfang/PokemonCount praktisch bewerten | Count-Diagnose zeigt: Names bis Pecharunt, Movesets kappen auf 930, PokedexOrder kappt final auf 823; Modell empfiehlt Count nicht aus PokedexOrder abzuleiten |
 | 08 Randomizer-Kompatibilität | Wild-Log-`<unknown>` aufloesen | eindeutige Rohwerte sind `rawInternalSpeciesId=0`; Nullslots separat klassifizieren |
@@ -116,15 +117,15 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Coverage | `analysis/upr-fvx-cfru-dpe-gen9-species-coverage` | Source-Umfang bis Gen9 gegen FVX-Load bis `PokemonCount=823` einordnen | read-only Dokumentation; keine ROM-Zugriffe |
 | Coverage follow-up | `analysis/upr-fvx-cfru-dpe-pokemon-count-cutoff-diagnostics` | konkrete Count-Abbruchursache lokal mit ROM diagnostizieren | UPR-FVX PR #7; direkte Ursache ist `PokedexOrder` ID `824` = `1808`, keine Fixes |
 | Coverage model | `analysis/upr-fvx-cfru-dpe-pokedex-order-model` | sichere Count-Strategie fuer CFRU/DPE-Gen9 modellieren | PokedexOrder und Moveset-Pointer getrennt bewerten; kein Static/Gift-Fix |
-| Coverage fix | `compat/upr-fvx-cfru-dpe-gen9-species-count` | CFRU/DPE-spezifischen Count-Fix vorbereiten | UPR-FVX PR #8 offen; Count erreicht 1439, Palettenpfad blockiert danach |
+| Coverage fix | `compat/upr-fvx-cfru-dpe-gen9-species-count` | CFRU/DPE-spezifischen Count-Fix vorbereiten | UPR-FVX PR #8 gemerged; Count erreicht 1439 |
 | Coverage follow-up | `analysis/upr-fvx-cfru-dpe-palette-loader-blocker` | Paletten-Loader-Blocker nach `PokemonCount=1439` modellieren | `SPECIES_CUBONE_A`-Palette-Nullslot als erster Abbruch; kein Fix |
-| Coverage unblock | `compat/upr-fvx-cfru-dpe-defensive-palette-loading` | defensiver Palette-Load/-Save fuer CFRU/DPE | UPR-FVX PR #9 offen; kein Count-, Moveset-, Static/Gift-, Trainer- oder Learnset-Fix |
+| Coverage unblock | `compat/upr-fvx-cfru-dpe-defensive-palette-loading` | defensiver Palette-Load/-Save fuer CFRU/DPE | UPR-FVX PR #9 gemerged; kein Count-, Moveset-, Static/Gift-, Trainer- oder Learnset-Fix |
 | Coverage follow-up | `analysis/upr-fvx-cfru-dpe-save-trainers-moveset-blocker` | `saveTrainers()`-/`getMovesLearnt()`-Blocker nach Palette-Fix analysieren | `0x25e49c` entspricht internem ID-Slot `826` / `SPECIES_ZYGARDE`; kein Fix |
-| Coverage unblock | `compat/upr-fvx-cfru-dpe-save-trainers-lazy-movesets` | Learnset-Load im Trainer-Save nur bei tatsaechlichem Reset-Moves-Bedarf ausloesen | kein Count-, Palette-, Learnset-Loader-, Static/Gift- oder Day/Night-Fix |
+| Coverage unblock | `compat/upr-fvx-cfru-dpe-save-trainers-lazy-movesets` | Learnset-Load im Trainer-Save nur bei tatsaechlichem Reset-Moves-Bedarf ausloesen | UPR-FVX PR #10 gemerged; kein Count-, Palette-, Learnset-Loader-, Static/Gift- oder Day/Night-Fix |
 | Coverage follow-up | `analysis/upr-fvx-cfru-dpe-palette-save-blocker` | `savePokemonPalettes()`-Blocker nach Lazy-Trainer-Movesets analysieren | `saveSuccessful=false` bei `no compressed data found at offset 0x16b9c08`; kein Fix |
-| Coverage unblock | `compat/upr-fvx-cfru-dpe-skip-unchanged-palette-save` | Palette-Save fuer unveraenderte CFRU/DPE-Pokemon-Paletten ueberspringen | kein Count-, Learnset-, Trainer-, Static/Gift-, Wild- oder Day/Night-Fix |
-| Coverage smoke | `analysis/upr-fvx-cfru-dpe-post-merge-wild-smoke` | komplette Gen9-Wild-only-Fixkette nach PR #11 bestaetigen | erst nach Merge von UPR-FVX PR #11; keine neuen Fixes |
-| P1c | `analysis/upr-fvx-cfru-dpe-p1-static-gift-write-diagnostics` | Static-/Gift-Species-only Diagnose | pausiert bis Gen9-Coverage/Count-Abbruch geklaert ist; Roamer ausklammern |
+| Coverage unblock | `compat/upr-fvx-cfru-dpe-skip-unchanged-palette-save` | Palette-Save fuer unveraenderte CFRU/DPE-Pokemon-Paletten ueberspringen | UPR-FVX PR #11 gemerged; kein Count-, Learnset-, Trainer-, Static/Gift-, Wild- oder Day/Night-Fix |
+| Coverage smoke | `analysis/upr-fvx-cfru-dpe-gen9-wild-post-merge-smoke` | komplette Gen9-Wild-only-Fixkette nach PR #11 bestaetigen | in Arbeit; keine neuen Fixes |
+| P1c | `analysis/upr-fvx-cfru-dpe-p1-static-gift-write-diagnostics` | Static-/Gift-Species-only Diagnose | naechster minimaler Schritt; Roamer ausklammern |
 | P2 | `randomizer/cfru-day-night-wild-table-analysis` | CFRU-Custom-Day/Night-Wild-Tabellen separat untersuchen | erst nach P1-Schreibpfad-Diagnose; Route-1-Fallback bleibt stabil |
 | P3 | noch festlegen | Nullslot-`<unknown>` mit `rawInternalSpeciesId=0` klassifizieren | nicht mit GenRestrictions vermischen |
 | P4 | noch festlegen | BizHawk-/Ironmon-Tracker-/RAM-Mapping pruefen | erst nach stabiler ROM-Randomizer-Kompatibilitaet |
@@ -167,10 +168,10 @@ Excel-Roadmap:
 ## Nächster empfohlener Branch
 
 ```text
-analysis/upr-fvx-cfru-dpe-post-merge-wild-smoke
+analysis/upr-fvx-cfru-dpe-p1-static-gift-write-diagnostics
 ```
 
-Zweck: Nach Merge von UPR-FVX PR #11 die komplette Gen9-Wild-only-Fixkette auf `compat/firered-gen9-cfru-dpe` bestaetigen. Kein Static/Gift-, Learnset-, Trainer-, Palette-Randomizer- oder Day/Night-Fix im selben Branch.
+Zweck: Nach bestaetigter Gen9-Wild-Coverage Static-/Gift-Species-only Schreibpfade diagnostizieren. Kein Learnset-, Trainer-, Palette-, Day/Night- oder Nullslot-Fix im selben Branch.
 
 ## Arbeitsblock-Log
 
@@ -275,3 +276,14 @@ Zweck: Nach Merge von UPR-FVX PR #11 die komplette Gen9-Wild-only-Fixkette auf `
 - CFRU Time-of-Day-Wild, Swarms, Roamers, DexNav, Wild Double Battles, Raids, Altering Cave und Tanoby/Unown sind partial oder unsupported und bleiben getrennte Folgearbeit.
 - Empfehlung: naechster Diagnoseblock zuerst P1-Species-Schreibpfade, nicht Day/Night-Fix.
 - Keine Codeaenderungen, keine Builds und keine ROM-Zugriffe.
+
+### 2026-05-12 – analysis/upr-fvx-cfru-dpe-gen9-wild-post-merge-smoke
+
+- Workspace PR #51 als gemerged geprueft und Branch `analysis/upr-fvx-cfru-dpe-gen9-wild-post-merge-smoke` erstellt.
+- UPR-FVX `compat/firered-gen9-cfru-dpe` auf Merge-Commit `ee82cb4e` aktualisiert; Submodule-Pointer im Workspace wurde nachgezogen.
+- UPR-FVX per `./gradlew clean :random:jar` erfolgreich gebaut.
+- Lokaler CFRU/DPE-Wild-only-Smoke beendet mit CLI-Exit-Code `0` und `Randomized successfully!`.
+- Diagnose bleibt stabil: `PokemonCount=1439`, `speciesList.size=1415`, `maxSpeciesIdentityNumber=1439`, `generationCounts={1=271, 2=118, 3=188, 4=174, 5=191, 6=127, 7=123, 8=127, 9=120}`.
+- Wild-Log enthaelt Gen7 `85`, Gen8 `126`, Gen9 `289`; `<unknown>` bleibt `0`.
+- `Bad Egg` erscheint `12` Mal und bleibt als separate Folgeauffaelligkeit offen.
+- Keine Codeaenderungen, keine neuen Fixes, keine ROMs/Builds/Tool-Binaries committed.
