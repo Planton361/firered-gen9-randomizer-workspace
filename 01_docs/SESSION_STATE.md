@@ -6,44 +6,42 @@
 - GitHub-Repo `Planton361/firered-gen9-randomizer-workspace` existiert und bleibt Source of Truth.
 - `main` ist Default Branch und bleibt stabil.
 - Branch Protection und PR-Pflicht sind laut dokumentiertem Projektstand eingerichtet.
-- UPR-FVX PR #19 und Workspace PR #73 sind gemerged.
-- UPR-FVX-Fix `32e43ac03a5762542773213a13be4e0389f1deae` entblockt TM/HM-only im klassischen `50+8`-Scope fuer CFRU/DPE Gen9-BPRE.
-- TM/HM-only ist im getesteten FVX-`50+8`-Scope P1-supported; das CFRU/DPE-128-Slot-TM/HM-Modell ist read-only modelliert.
+- Workspace PR #74 ist gemerged.
+- UPR-FVX-Fix `58379ffd3146fcd6bb0eb416647cdf9b752cfc0e` implementiert den eng gegateten CFRU/DPE-128-Slot-TM/HM-Reader/Writer.
+- TM/HM-only ist im getesteten CFRU/DPE-128-Slot-Scope P1-supported.
 - ROMs, Saves, Builds, Tool-Binaries und private Dateien sind ausgeschlossen.
 
 ## Aktueller Branch
 
-`analysis/upr-fvx-cfru-dpe-p1-tm-hm-128-slot-model`
+`compat/upr-fvx-cfru-dpe-tm-hm-128-slot`
 
 ## Aktueller Arbeitsblock
 
-CFRU/DPE TM/HM-128-Slot-Modell read-only.
+CFRU/DPE TM/HM-128-Slot-Fix.
 
 ## Ziel
 
-Aktiven CFRU/DPE-128-Slot-TM/HM-Ort, Table-/Pointermodell, HM-Schutz und Write/Reload-Risiken dokumentieren. Kein Fix.
+Minimal gegateten CFRU/DPE-128-Slot-TM/HM-Reader/Writer implementieren und diagnostisch bestaetigen.
 
 ## In diesem Arbeitsblock geprueft / geaendert
 
-- UPR-FVX PR #19 und Workspace PR #73 als gemerged geprueft.
-- Workspace-Branch `analysis/upr-fvx-cfru-dpe-p1-tm-hm-128-slot-model` von `origin/main` erstellt; nicht auf `main` gearbeitet.
-- UPR-FVX, CFRU und DPE read-only auf TM/HM-128-Slot-Symbole, Pointer und Compatibility-Modell untersucht.
-- Neues Protokoll erstellt: `08_tests/randomizer/037_p1_tm_hm_128_slot_model.md`.
-- `08_tests/randomizer/README.md`, `SESSION_STATE.md`, `NEXT_STEPS.md` und Roadmap aktualisiert.
-- Keine Aenderungen an `02_external/**`.
+- Workspace PR #74 als gemerged geprueft.
+- Workspace-Branch `compat/upr-fvx-cfru-dpe-tm-hm-128-slot` und UPR-FVX-Branch `compat/upr-fvx-cfru-dpe-tm-hm-128-slot` verwendet; nicht auf `main` gearbeitet.
+- UPR-FVX `Gen3RomHandler` fuer CFRU/DPE-Gen9-BPRE um 128-Slot-TM/HM-Read/Write und 16-Byte-Compatibility erweitert.
+- Neues Protokoll erstellt: `08_tests/randomizer/038_tm_hm_128_slot_fix_diagnostics.md`.
+- `08_tests/randomizer/README.md`, `SESSION_STATE.md`, `NEXT_STEPS.md`, Roadmap und Tool-Manifest aktualisiert.
 
 ## Ergebnis
 
-- CFRU/DPE definiert `EXPANDED_TMSHMS`, `NUM_TMS=120`, `NUM_HMS=8`, `NUM_TMSHMS=128`.
-- DPE `gTMHMMoves` ist `u16[128]` und wird ueber Pointer `0x8125A8C` angebunden.
-- Slots `1..120` sind TMs; Slots `121..128` sind HMs.
-- CFRU/DPE `gTMHMLearnsets` wird ueber Pointer `0x8043C68` angebunden und nutzt 128 Bits beziehungsweise 16 Bytes pro Species.
-- FVX nutzt aktuell den klassischen `50+8`-Ort `romEntry.TmMoves=0x45a5a4` und 8-Byte-Compatibility; nach 50+8 erscheinen dort unplausible Daten, weil ueber das klassische Tabellenende hinaus gelesen wird.
-- Ein minimaler 128-Slot-Fix ist plausibel, muss aber separat und eng gegatet erfolgen.
+- `getTMCount()` liefert im CFRU/DPE-Gate `120`, `getHMCount()` liefert `8`.
+- `gTMHMMoves` wird ueber Pointer-Location `0x8125A8C` gelesen; Zielpointer im Teststand `0x09A5981A`, ROM-Offset `0x1A5981A`.
+- TM-Slots `0..119` werden gelesen/geschrieben; HM-Slots `120..127` bleiben bei TM-Randomization unveraendert.
+- `gTMHMLearnsets` wird ueber Pointer-Location `0x8043C68` gelesen; Zielpointer im Teststand `0x096002D0`, ROM-Offset `0x16002D0`.
+- Compatibility nutzt `129` Flags inklusive Dummy-Index 0 und ist reload-stabil.
+- TM moves-only, TM/HM compatibility-only und TM moves + compatibility erzeugen Save, Log, Output-ROM und `writeReloadMismatches=0`.
 
 ## Noch nicht gestartet
 
-- CFRU/DPE-128-Slot-TM/HM-Fix
 - Tutor-Bitfeld-/Special-Tutor-Modellierung
 - Egg-Move-Species-/Move-ID-Diagnose
 - Move-Data-Write/`saveMoves()` fuer CFRU/DPE
@@ -59,7 +57,7 @@ Keine ROMs, Saves, Builds oder Tool-Binaries committed.
 
 Keine ROMs in ChatGPT hochgeladen.
 
-Keine neuen ROM-/Build-Artefakte erzeugt.
+Neue lokale ROM-/Log-Artefakte wurden nur unter `05_builds/randomizer-smoke/038_tm_hm_128_slot_fix/` erzeugt und bleiben ignored.
 
 Private absolute Pfade und private ROM-Dateinamen wurden nicht dokumentiert.
 
@@ -67,9 +65,9 @@ Keine externen Original-Upstreams kontaktiert.
 
 Keine Aenderungen direkt auf `main`.
 
-Keine Aenderungen an `02_external/**`; externe Repos wurden nur read-only analysiert.
+UPR-FVX wurde nur im erlaubten Submodule-Pfad `02_external/upr-fvx/romio/src/main/java/**` geaendert.
 
-Keine Tutor-, Egg-Move-, Learnset-Write-, Move-Data-Write- oder 128-Slot-TM/HM-Codeausweitung.
+Keine Tutor-, Egg-Move-, Learnset-Write-, Move-Data-Write- oder TM51..TM120-Item-Text-/Palette-Codeausweitung.
 
 Keine MCP-Configs mit Secrets angelegt.
 
@@ -87,7 +85,17 @@ git diff --check
 
 ## Naechster empfohlener Branch
 
-Nach Merge dieses Analyseblocks: separater Fixbranch fuer CFRU/DPE-128-Slot-TM/HM-Read/Write-Scope. Nicht mit Tutor-, Egg-Move-, Learnset-Write- oder Move-Data-Write vermischen.
+Nach Merge dieses Fixblocks: Tutor-Bitfeld-/Special-Tutor-Modellierung separat read-only untersuchen. Nicht mit Egg-Move-, Learnset-Write- oder Move-Data-Write vermischen.
+
+### 2026-05-13 - compat/upr-fvx-cfru-dpe-tm-hm-128-slot
+
+- Workspace PR #74 als gemerged geprueft.
+- UPR-FVX-Fix `58379ffd3146fcd6bb0eb416647cdf9b752cfc0e` erstellt.
+- CFRU/DPE-128-Slot-TM/HM-Pfad eng ueber `useCfruDpeGen9SpeciesCount` gegatet.
+- `gTMHMMoves` als `u16[128]` ueber `0x8125A8C` gelesen/geschrieben; TMs `0..119`, HMs `120..127`.
+- `gTMHMLearnsets` als 16-Byte-/128-Bit-Compatibility pro Species ueber `0x8043C68` gelesen/geschrieben.
+- Diagnose 038 bestaetigt TM moves-only, Compatibility-only und TM moves + Compatibility mit Save/Log/Output/Reload und `writeReloadMismatches=0`.
+- Kein Tutor-, Egg-Move-, Learnset-Write-, Move-Data-Write- oder TM51..TM120-Item-Text-/Palette-Fix.
 
 ### 2026-05-13 - analysis/upr-fvx-cfru-dpe-p1-tm-hm-128-slot-model
 

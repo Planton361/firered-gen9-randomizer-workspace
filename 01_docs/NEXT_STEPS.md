@@ -2,60 +2,70 @@
 
 ## Aktueller Arbeitsblock
 
-CFRU/DPE TM/HM-128-Slot-Modell read-only.
+CFRU/DPE TM/HM-128-Slot-Fix.
 
 Aktueller Workspace-Branch:
 
 ```text
-analysis/upr-fvx-cfru-dpe-p1-tm-hm-128-slot-model
+compat/upr-fvx-cfru-dpe-tm-hm-128-slot
 ```
 
 UPR-FVX-Stand:
 
 ```text
-32e43ac03a5762542773213a13be4e0389f1deae
+58379ffd3146fcd6bb0eb416647cdf9b752cfc0e
 ```
 
 ## Abschluss dieses Blocks
 
-1. Workspace-Commit erstellen:
+1. UPR-FVX-Commit ist erstellt:
 
 ```text
-docs: document tm hm 128 slot model
+fix: support cfru dpe tm hm 128 slots
 ```
 
-2. Workspace-PR erstellen:
+2. Workspace-Commit erstellen:
+
+```text
+docs: record tm hm 128 slot diagnostics
+```
+
+3. PRs erstellen:
 
 ```sh
-git push -u origin analysis/upr-fvx-cfru-dpe-p1-tm-hm-128-slot-model
-gh pr create --repo Planton361/firered-gen9-randomizer-workspace --base main --head analysis/upr-fvx-cfru-dpe-p1-tm-hm-128-slot-model --title "docs: document tm hm 128 slot model" --body-file /tmp/pr-body-workspace-tm-hm-128-slot.md
+git -C 02_external/upr-fvx push -u origin compat/upr-fvx-cfru-dpe-tm-hm-128-slot
+gh pr create --repo Planton361/universal-pokemon-randomizer-fvx --base compat/firered-gen9-cfru-dpe --head compat/upr-fvx-cfru-dpe-tm-hm-128-slot --title "compat: support CFRU DPE TM HM 128 slots" --body-file /tmp/pr-body-upr-tm-hm-128-slot.md
+
+git push -u origin compat/upr-fvx-cfru-dpe-tm-hm-128-slot
+gh pr create --repo Planton361/firered-gen9-randomizer-workspace --base main --head compat/upr-fvx-cfru-dpe-tm-hm-128-slot --title "docs: record tm hm 128 slot diagnostics" --body-file /tmp/pr-body-workspace-tm-hm-128-slot.md
 ```
 
-## Analysebefund 037
+## Diagnosebefund 038
 
-- CFRU/DPE nutzt `EXPANDED_TMSHMS` mit `NUM_TMS=120`, `NUM_HMS=8`, `NUM_TMSHMS=128`.
-- `gTMHMMoves` ist `u16[128]` und wird ueber Pointer `0x8125A8C` angebunden.
-- Slots `1..120` sind TMs; Slots `121..128` sind HMs.
-- `gTMHMLearnsets` wird ueber Pointer `0x8043C68` angebunden und nutzt 128 Bits beziehungsweise 16 Bytes pro Species.
-- FVX nutzt aktuell weiterhin den klassischen `50+8`-Pfad mit `romEntry.TmMoves=0x45a5a4` und `compat.flagLength=59`.
-- Der Bereich nach 50+8 am klassischen FVX-Ort ist unplausibel, weil er nicht die aktive DPE-128-Slot-Tabelle ist.
-- Ein minimaler 128-Slot-Fix ist plausibel, sollte aber separat und eng gegatet erfolgen.
+- `moves.total=992`, hoechster Move `PsychicNoise` ID `991`.
+- `tmCount=120`, `hmCount=8`, total TM/HM slots `128`.
+- `gTMHMMoves` Pointer-Location `0x8125A8C`, Zielpointer `0x09A5981A`, ROM-Offset `0x1A5981A`.
+- `gTMHMLearnsets` Pointer-Location `0x8043C68`, Zielpointer `0x096002D0`, ROM-Offset `0x16002D0`.
+- Compatibility flag length `129`, also 128 nutzbare TM/HM-Flags plus Dummy-Index 0.
+- TM moves-only: `saveSuccessful=true`, `logSuccessful=true`, `writeReloadTmHmMismatches=0`, HM-Slots unveraendert.
+- TM/HM compatibility-only: `saveSuccessful=true`, `logSuccessful=true`, `writeReloadCompatibilityMismatches=0`.
+- TM moves + compatibility: `saveSuccessful=true`, `logSuccessful=true`, `writeReloadTmHmMismatches=0`, `writeReloadCompatibilityMismatches=0`.
+- Keine invaliden TM/HM-Move-IDs, kein `Bad Egg`, kein `<unknown>` und kein Unknown-Move-Marker im Log.
 
 ## Naechster empfohlener Arbeitsblock nach Merge
 
 Branch:
 
 ```text
-compat/upr-fvx-cfru-dpe-tm-hm-128-slot
+analysis/upr-fvx-cfru-dpe-p1-tutor-model
 ```
 
 Ziel:
 
-- CFRU/DPE-128-Slot-TM/HM-Reader/Writer eng gaten.
-- `gTMHMMoves` ueber Pointer `0x8125A8C` als `u16[128]` lesen.
-- HM-Schutz slotbasiert fuer Slots `120..127` erhalten.
-- Compatibility separat als 16 Bytes pro Species ueber Pointer `0x8043C68` lesen/schreiben oder in einem eigenen Folgebranch behandeln.
-- Keine Tutor-, Egg-Move-, Learnset-Write- oder Move-Data-Write-Ausweitung.
+- CFRU/DPE Tutor-/Special-Tutor-Tabellen read-only modellieren.
+- Prüfen, ob Tutor-Moves eigene Pointer-, Slot- oder Bitfeldmodelle nutzen.
+- Keine Egg-Move-, Learnset-Write- oder Move-Data-Write-Ausweitung.
+- Kein Fix im Analysebranch.
 
 ## Nicht tun
 
