@@ -53,20 +53,21 @@ Der neueste bestaetigte Stand wird in Markdown ueber die Spalte `Latest` markier
 | 023 | `023_p1_trainer_species_only.md` | Trainer-Species-only Diagnose mit Gen1-Gen9-Pool | blockiert: Trainer-Pool Gen1-Gen9 vorhanden, aber `randomizeTrainerPokes()` haengt in `getRandomAbilitySlot()` auf Zero-Ability-Sonder-Species | `05_builds/randomizer-smoke/023_p1_trainer_species_only/` lokal/ignored | nein |
 | 024 | `024_trainer_scope_write_diagnostics.md` | Trainer-Scope und interner Species-Write fuer CFRU/DPE | bestaetigt: `saveSuccessful=true`, nichtleerer Trainer-Log, Gen7/8/9-Picks, `writeReloadMismatches=0` | `05_builds/randomizer-smoke/024_trainer_scope_write/` lokal/ignored | nein |
 | 025 | `025_p1_evolutions_species_only.md` | Evolution-Species-only Diagnose mit Gen1-Gen9-Pool | blockiert: Evolution-Pool Gen1-Gen9 vorhanden, Save erzeugt Output-ROM, aber Log-Fehler und `writeReloadMismatches=146` | `05_builds/randomizer-smoke/025_p1_evolutions_species_only/` lokal/ignored | nein |
-| 026 | `026_evolutions_scope_write_diagnostics.md` | Evolution-Scope und interner Species-Write fuer CFRU/DPE | bestaetigt: `saveSuccessful=true`, `logSuccessful=true`, Gen7/8/9-Picks, `writeReloadMismatches=0` | `05_builds/randomizer-smoke/026_evolutions_scope_write/` lokal/ignored | ja |
+| 026 | `026_evolutions_scope_write_diagnostics.md` | Evolution-Scope und interner Species-Write fuer CFRU/DPE | bestaetigt: `saveSuccessful=true`, `logSuccessful=true`, Gen7/8/9-Picks, `writeReloadMismatches=0` | `05_builds/randomizer-smoke/026_evolutions_scope_write/` lokal/ignored | nein |
+| 027 | `027_p1_trainer_held_items_only.md` | Trainer Held Items-only Diagnose | blockiert: Trainer-Held-Item-Pool vorhanden, aber `randomizeTrainerHeldItems()` scheitert in `getMovesLearnt()` bei `0x25e49c`; kein Save/Log/Reload | `05_builds/randomizer-smoke/027_p1_trainer_held_items_only/` lokal/ignored | ja |
 
 ## Aktuell bestaetigter Stand
 
-Latest ist Nr. 026: Evolution-Scope und interner Species-Write fuer CFRU/DPE.
+Latest ist Nr. 027: Trainer Held Items-only Diagnose.
 
 Kernaussagen:
 
-- `PokemonCount=1439`
-- Evolution-Pool: `evolutionPool.size=1414`, Gen1-Gen9 enthalten
-- Evolution-Picks erreichen Gen7/8/9: `after.pickedGen7plus=51`
-- `saveSuccessful=true`, `logSuccessful=true`, Output-ROM erzeugt, CLI-Log nicht leer
-- Logger-Fallbacks fuer nicht aufloesbare Evolution-ExtraInfos blockieren den Log nicht mehr
-- Write/Reload ist stabil: `writeReloadMismatches=0`, Gen8/9-Ziele bleiben nach Reload erhalten
+- Trainer-Held-Item-Pool ist vorhanden: `trainerHeldItemPool.size=52`
+- Trainer-Load funktioniert: `trainers=255`, `trainerPokemon=481`, `nullSpecies=0`
+- Vor Randomization: `before.heldItemEntries=0`, `before.noItemEntries=481`
+- Der Lauf scheitert vor Save/Log in `TrainerPokemonRandomizer.randomizeTrainerHeldItems()`
+- Fehlerpfad: `Gen3RomHandler.getMovesLearnt()` -> `No valid pointer at 0x25e49c`
+- `saveSuccessful=false`, keine Output-ROM, kein nichtleerer Log, kein Write/Reload
 
 ## Lokale Artefaktpflege
 
@@ -76,7 +77,8 @@ Wenn ein Artefakt nicht eindeutig Smoke-Output ist, bleibt es lokal liegen und w
 
 ## Offene Themen
 
-- Trainer
+- Trainer Held Items lazy Moveset-/Learnset-Load
+- Trainer Movesets
 - Learnsets/Movesets
 - TM/Tutor/Abilities
 - CFRU Day/Night
