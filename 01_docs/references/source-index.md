@@ -298,6 +298,32 @@ Ergebnis:
 - Fuer CFRU/DPE sollte `PokemonCount` nicht aus `PokedexOrder`-Sanity abgeleitet werden.
 - Naechster Schritt ist ein separater UPR-FVX-Fixbranch fuer CFRU/DPE-spezifische Count-Erkennung; keine Static-/Gift- oder Learnset-Fixes im selben Branch.
 
+## CFRU/DPE Save-Trainers-/Moveset-Blocker 2026-05-12
+
+Arbeitsblock: `analysis/upr-fvx-cfru-dpe-save-trainers-moveset-blocker`.
+
+Neue Workspace-Referenz:
+
+- `01_docs/compat/upr-fvx-cfru-dpe-save-trainers-moveset-blocker.md`
+
+Zusaetzlich relevant eingeordnete lokale Quellen:
+
+| Bereich | Lokaler Pfad | Zweck |
+|---|---|---|
+| FVX Save-Lifecycle | `02_external/upr-fvx/romio/src/main/java/com/uprfvx/romio/romhandlers/AbstractRomHandler.java` | `prepareSaveRom()` ruft `saveTrainers()` bedingungslos vor `savePokemonPalettes()` auf |
+| FVX Trainer-Save | `02_external/upr-fvx/romio/src/main/java/com/uprfvx/romio/romhandlers/Gen3RomHandler.java` | `saveTrainers()`, `trainerPokemonToBytes()`, `getMovesLearnt()`, `readMovesLearnt()` und `jamboMovesetHack` |
+| FVX Legacy Offsets | `02_external/upr-fvx/romio/src/main/resources/com/uprfvx/romio/romentries/gen3_offsets.ini` | Vanilla-BPRE-`PokemonMovesets`-Fallback, der im CFRU/DPE-Teststand nicht belastbar ist |
+| DPE Learnsets | `02_external/Dynamic-Pokemon-Expansion-Gen-9/src/Learnsets.c` | `gLevelUpLearnsets[NUM_SPECIES]`, 3-Byte-`LevelUpMove`, Gen7-Gen9-Learnsets bis Pecharunt |
+| CFRU Learnsets | `02_external/CFRU-expansion/src/Tables/level_up_learnsets.c`, `src/learn_move.c` | CFRU-seitige `gLevelUpLearnsets`-Nutzung und 3-Byte-LevelUpMove-Terminator |
+| Cyan NatDex Learnsets | `02_external/references/cyansmp64-pokefirered-natdex/tools/inigen/inigen.c`, `src/rom_header_gf.c`, `src/pokemon.c`, `include/constants/pokemon.h` | Referenz fuer symbol-/headerbasierte Learnset-Tabellenquellen und explizite Format-Metadaten |
+
+Ergebnis:
+
+- `saveTrainers()` ist nur der ausloesende Pfad; die Ursache ist ein allgemeiner Learnset-/Moveset-Zugriff auf eine fuer CFRU/DPE ungeeignete Tabelle.
+- `0x25e49c` entspricht `PokemonMovesets + 826 * 4`; ID `826` ist im DPE/CFRU-Modell `SPECIES_ZYGARDE`.
+- DPE/CFRU enthalten Source-Learnsets fuer Gen7-Gen9 bis Pecharunt; der aktuelle FVX-Zugriff liest diese Daten wahrscheinlich nicht korrekt.
+- Naechste empfohlene Richtung ist ein kleiner Save-Trainers-Unblocker durch Lazy-Learnset-Load, gefolgt von einem separaten DPE/CFRU-Learnset-Profil.
+
 ## Regel
 
 Vor produktiver Nutzung müssen Branch, Commit-Hash, lokaler Pfad und Zweck im Tool-Manifest festgehalten werden.
