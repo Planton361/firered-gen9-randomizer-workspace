@@ -24,9 +24,9 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Aktueller Branch | `compat/upr-fvx-cfru-dpe-static-gift-scope-and-write` |
-| Nächster Branch | `analysis/upr-fvx-cfru-dpe-p1-trainer-species-only` |
-| Aktueller Fokus | P1 Static/Gift Scope und interner Species-Write |
+| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-p1-trainer-species-only` |
+| Nächster Branch | `compat/upr-fvx-cfru-dpe-trainer-scope-and-write` |
+| Aktueller Fokus | P1 Trainer-Species-only Diagnose |
 | ROM-/Build-Arbeit | lokaler Diagnose-Lauf nur unter `05_builds/**`; keine Artefakte committen |
 | Externe Repos | als Submodule auf Planton361-Forks eingebunden |
 | Forks | Planton361-Forks fuer UPR-FVX, DPE Gen9 und CFRU dokumentiert |
@@ -83,25 +83,26 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | 08 Randomizer-Kompatibilität | CFRU/DPE-Special-Species-Wild-Ban | UPR-FVX PR #12 offen; lokaler Smoke zeigt `Bad Egg=0`, `<unknown>=0`, `saveSuccessful=true` |
 | 08 Randomizer-Kompatibilität | UPR-FVX Wild-Fix-Pin | Workspace-Submodule `02_external/upr-fvx` ist auf Planton361-Fork-Commit `0f127e9b` fuer den CFRU/DPE-Wild-Sonder-Species-Fix gepinnt |
 | 08 Randomizer-Kompatibilität | P1 Static/Gift Species-only Diagnose | Gen1-Gen9-Pool vorhanden und Pick erreicht Gen7/8/9; echter Save/Log blockiert an vier `<null>`-Static-Eintraegen |
-| 08 Randomizer-Kompatibilität | P1 Static/Gift Scope und Write | UPR-FVX PR #13 offen; `009178e8` bestaetigt `saveSuccessful=true`, nichtleeren Static/Gift-Log und `writeReloadMismatches=0` |
+| 08 Randomizer-Kompatibilität | P1 Static/Gift Scope und Write | UPR-FVX PR #13 gemerged; `009178e8` bestaetigt `saveSuccessful=true`, nichtleeren Static/Gift-Log und `writeReloadMismatches=0` |
+| 08 Randomizer-Kompatibilität | P1 Trainer-Species-only Diagnose | Trainer-Pool enthaelt Gen1-Gen9, aber `randomizeTrainerPokes()` haengt vor Save/Log in `getRandomAbilitySlot()` auf Zero-Ability-Sonder-Species |
 
 ## In Arbeit
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Static/Gift Scope und Write reviewen | UPR-FVX-Fix, Workspace-Pin und Diagnoseprotokoll reviewen |
+| 08 Randomizer-Kompatibilität | Trainer-Species Diagnose reviewen | Workspace-Diagnoseprotokoll reviewen; kein Fix in diesem Branch |
 
 ## Als Nächstes
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Trainer-Species-only Diagnose | naechsten P1-Schreibpfad separat pruefen |
+| 08 Randomizer-Kompatibilität | Trainer-Scope und Species-Write | Zero-Ability-/Sonder-Species-Scope entblocken und danach Write/Reload pruefen |
 
 ## Noch offen
 
 | Paket | Aufgabe | Hinweise |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Trainer-Pokémon testen | nach Static/Gift oder separat; aktueller Verdacht ebenfalls `pokedexToInternal[Species.number]` |
+| 08 Randomizer-Kompatibilität | Trainer-Pokémon testen | Trainer-Species-only blockiert aktuell vor Save in `getRandomAbilitySlot()`; danach bleibt `pokedexToInternal[Species.number]` als Write-Risiko |
 | 08 Randomizer-Kompatibilität | DPE-Gesamtumfang/PokemonCount praktisch bewerten | Count-Diagnose zeigt: Names bis Pecharunt, Movesets kappen auf 930, PokedexOrder kappt final auf 823; Modell empfiehlt Count nicht aus PokedexOrder abzuleiten |
 | 08 Randomizer-Kompatibilität | Wild-Log-`<unknown>` aufloesen | eindeutige Rohwerte sind `rawInternalSpeciesId=0`; Nullslots separat klassifizieren |
 | 08 Randomizer-Kompatibilität | CFRU-Day/Night-Custom-Wild-Tabellen analysieren | getrennt vom Vanilla/Fallback-Wild-Pool behandeln |
@@ -135,7 +136,8 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Wild cleanup | `compat/upr-fvx-cfru-dpe-wild-banned-special-species` | CFRU/DPE-Sonder-Species aus Wild-Replacement-Pools bannen | UPR-FVX PR #12 offen; `SPECIES_EGG=0x19C` entfernt, `Bad Egg=0` bestaetigt |
 | P1c | `analysis/upr-fvx-cfru-dpe-p1-static-gift-species-only` | Static-/Gift-Species-only Diagnose | Pool/Pick bestaetigt Gen1-Gen9; Save/Log blockiert an Null-Static-Scope |
 | P1d | `compat/upr-fvx-cfru-dpe-static-gift-scope-and-write` | Static/Gift-Scope und interner Species-Write | UPR-FVX `009178e8`; lokal bestaetigt mit `saveSuccessful=true`, Gen7/8/9 im Log und `writeReloadMismatches=0` |
-| P1e | `analysis/upr-fvx-cfru-dpe-p1-trainer-species-only` | Trainer-Species-only Diagnose | naechster minimaler Schritt; keine Moveset-/Learnset-/Item-/Ability-Fixes |
+| P1e | `analysis/upr-fvx-cfru-dpe-p1-trainer-species-only` | Trainer-Species-only Diagnose | Trainer-Pool Gen1-Gen9 bestaetigt; blockiert vor Save in `getRandomAbilitySlot()` auf Zero-Ability-Sonder-Species |
+| P1f | `compat/upr-fvx-cfru-dpe-trainer-scope-and-write` | Trainer-Scope und Species-Write | naechster minimaler Schritt; keine Moveset-/Learnset-/Item-/Ability-Randomization-Fixes |
 | P2 | `randomizer/cfru-day-night-wild-table-analysis` | CFRU-Custom-Day/Night-Wild-Tabellen separat untersuchen | erst nach P1-Schreibpfad-Diagnose; Route-1-Fallback bleibt stabil |
 | P3 | noch festlegen | Nullslot-`<unknown>` mit `rawInternalSpeciesId=0` klassifizieren | nicht mit GenRestrictions vermischen |
 | P4 | noch festlegen | BizHawk-/Ironmon-Tracker-/RAM-Mapping pruefen | erst nach stabiler ROM-Randomizer-Kompatibilitaet |
@@ -184,6 +186,20 @@ analysis/upr-fvx-cfru-dpe-p1-trainer-species-only
 Zweck: Trainer-Species-only mit Gen1-Gen9-Pool diagnostizieren und den dokumentierten Trainer-Species-Schreibpfad separat bewerten. Kein Static/Gift-, Learnset-, Palette-, Day/Night- oder Ability-Fix im selben Branch.
 
 ## Arbeitsblock-Log
+
+### 2026-05-12 – analysis/upr-fvx-cfru-dpe-p1-trainer-species-only
+
+- UPR-FVX PR #13 und Workspace PR #58 als gemerged geprueft; `main` per Fast-Forward aktualisiert.
+- Analysebranch `analysis/upr-fvx-cfru-dpe-p1-trainer-species-only` erstellt.
+- UPR-FVX read-only geprueft und gebaut: Submodule steht auf Planton361-Fork-Commit `009178e8848b4272e6b8be54a8bf5b2bed34d5f2`; `./gradlew clean :random:jar` erfolgreich.
+- Trainer-Species-only Diagnose mit Seed `274269061345323` ausgefuehrt.
+- Befund: `PokemonCount=1439`, `speciesList.size=1415`, Trainer-Pool `1414` mit Gen1-Gen9.
+- Trainer-Load funktioniert: `trainers=255`, `trainerPokemon=481`, `nullSpecies=0`.
+- Pool-Sonderfaelle: acht Zero-Ability-/Zero-BST-Species, darunter `Bad Egg`, zwei Zygarde-Sonderslots und vier Gen9-Ogerpon-Formslots.
+- `randomizeTrainerPokes()` blockiert vor Save/Log; Stack-Dump zeigt `TrainerPokemonRandomizer.getRandomAbilitySlot()` als laufenden Pfad.
+- Keine Output-ROM und kein Trainer-Log entstehen; Write/Reload bleibt fuer den naechsten Fix-/Diagnoseblock offen.
+- Neues Protokoll erstellt: `08_tests/randomizer/023_p1_trainer_species_only.md`.
+- Keine Codeaenderungen, keine Fixes, keine committed ROM-/Build-Artefakte.
 
 ### 2026-05-12 – compat/upr-fvx-cfru-dpe-static-gift-scope-and-write
 
