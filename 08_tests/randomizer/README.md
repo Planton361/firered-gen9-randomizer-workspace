@@ -58,19 +58,20 @@ Der neueste bestaetigte Stand wird in Markdown ueber die Spalte `Latest` markier
 | 028 | `028_trainer_held_items_lazy_movesets_diagnostics.md` | Trainer Held Items lazy Moveset-/Learnset-Load | bestaetigt: `saveSuccessful=true`, nichtleerer Trainer-Log, `after/reload.heldItemEntries=481`, `writeReloadMismatches=0` | `05_builds/randomizer-smoke/028_trainer_held_items_lazy_movesets/` lokal/ignored | nein |
 | 029 | `029_p1_trainer_movesets_only.md` | Trainer Movesets-only Diagnose | blockiert: Trainer-Load stabil, aber `TrainerMovesetRandomizer.getMoveSelectionPoolAtLevel()` scheitert in `getMovesLearnt()` bei `0x25e49c`; kein Save/Log/Reload | `05_builds/randomizer-smoke/029_p1_trainer_movesets_only/` lokal/ignored | nein |
 | 030 | `030_p1_learnsets_model.md` | CFRU/DPE-Level-Up-Learnset-Modell fuer `gLevelUpLearnsets` | dokumentiert: FVX liest CFRU/DPE-Learnsets mit alten Gen3-/Jambo-Annahmen; `0x25e49c` ist `PokemonMovesets + SPECIES_ZYGARDE*4`; minimaler Folgepfad ist ein gegateter CFRU/DPE-Learnset-Reader | keiner | nein |
-| 031 | `031_trainer_movesets_learnsets_fix_diagnostics.md` | Trainer Movesets Learnsets-Fix Diagnose | bestaetigt: `saveSuccessful=true`, `logSuccessful=true`, Output-ROM, nichtleerer Trainer-Log, `after/reload.movesetEntries=417`, `writeReloadMismatches=0` | `05_builds/randomizer-smoke/031_trainer_movesets_learnsets_fix/` lokal/ignored | ja |
+| 031 | `031_trainer_movesets_learnsets_fix_diagnostics.md` | Trainer Movesets Learnsets-Fix Diagnose | bestaetigt: `saveSuccessful=true`, `logSuccessful=true`, Output-ROM, nichtleerer Trainer-Log, `after/reload.movesetEntries=417`, `writeReloadMismatches=0` | `05_builds/randomizer-smoke/031_trainer_movesets_learnsets_fix/` lokal/ignored | nein |
+| 032 | `032_p1_trainer_movesets_combinations.md` | Trainer Movesets Kombinationsdiagnosen | bestaetigt: Movesets-only, Movesets+Species, Movesets+Held Items normal und Movesets+sensible Held Items jeweils mit `saveSuccessful=true`, `logSuccessful=true`, `writeReloadMoveMismatches=0` | `05_builds/randomizer-smoke/032_p1_trainer_movesets_combinations/` lokal/ignored | ja |
 
 ## Aktuell bestaetigter Stand
 
-Latest ist Nr. 031: Trainer Movesets Learnsets-Fix Diagnose.
+Latest ist Nr. 032: Trainer Movesets Kombinationsdiagnosen.
 
 Kernaussagen:
 
-- Trainer Movesets-only ist auf UPR-FVX `655764816f9fefedb9433f33e4da0bc9d44bcda7` entblockt.
-- `saveSuccessful=true`, `logSuccessful=true`, Output-ROM entsteht und der Trainer-Log ist nicht leer.
-- Movesets werden geschrieben und nach Reload erhalten: `after/reload.movesetEntries=417`, `writeReloadMismatches=0`.
-- Kein `Bad Egg`, kein `<unknown>`, keine Unknown-Move-Marker und keine invaliden Move-IDs im Trainerbestand.
-- Learnset-Write bleibt bewusst unveraendert; der Fix liefert einen CFRU/DPE-Read-Pool fuer Trainer Movesets-only.
+- Trainer Movesets-only ist auf UPR-FVX `655764816f9fefedb9433f33e4da0bc9d44bcda7` auch in Kombinationslaeufen P1-stabil.
+- Geprueft wurden Movesets-only, Movesets+Species, Movesets+Held Items normal und Movesets+sensible Held Items.
+- Alle vier Laeufe melden `saveSuccessful=true`, `logSuccessful=true`, Output-ROM, nichtleeren Trainer-Log und `writeReloadMoveMismatches=0`.
+- Normale und sensible Trainer-Held-Items schreiben `heldItemEntries=481` und reloaden ohne Held-Item-Mismatches.
+- Gen8/9-Move-Daten bleiben nicht vollstaendig bestaetigt, weil FVX weiterhin nur `moves.total=559` laedt und die Logs keine Gen8/9-Move-Samples enthalten.
 
 ## Lokale Artefaktpflege
 
@@ -80,9 +81,8 @@ Wenn ein Artefakt nicht eindeutig Smoke-Output ist, bleibt es lokal liegen und w
 
 ## Offene Themen
 
-- Trainer Movesets Kombinationsdiagnosen
-- Trainer Movesets
-- Sensible Trainer Held Items mit CFRU/DPE-Learnsets
+- Gen8/9-Move-Datenmodell
 - Learnsets/Movesets
+- TM/Tutor/Egg-Move-Pfade
 - TM/Tutor/Abilities
 - CFRU Day/Night
