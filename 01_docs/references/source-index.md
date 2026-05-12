@@ -241,6 +241,32 @@ Ergebnis:
 - Palette-Load ist fuer P0/Wild fachlich nicht noetig, aber in FVX aktuell technischer Bestandteil von ROM-Load und Save.
 - Naechste empfohlene Richtung ist ein defensiver CFRU/DPE-spezifischer Palette-Load/-Save-Fix, nicht eine erneute Count-Begrenzung.
 
+## CFRU/DPE Palette-Save-Blocker 2026-05-12
+
+Arbeitsblock: `analysis/upr-fvx-cfru-dpe-palette-save-blocker`.
+
+Neue Workspace-Referenz:
+
+- `01_docs/compat/upr-fvx-cfru-dpe-palette-save-blocker.md`
+
+Zusaetzlich relevant eingeordnete lokale Quellen:
+
+| Bereich | Lokaler Pfad | Zweck |
+|---|---|---|
+| FVX Save-Lifecycle | `02_external/upr-fvx/romio/src/main/java/com/uprfvx/romio/romhandlers/AbstractRomHandler.java` | `prepareSaveRom()` ruft `savePokemonPalettes()` bedingungslos auf |
+| FVX DataRewriter | `02_external/upr-fvx/romio/src/main/java/com/uprfvx/romio/romhandlers/AbstractGBRomHandler.java` | `rewriteData()` nimmt fuer einfache Writes einen einzelnen Pointer auf alte komprimierte Daten an |
+| FVX Gen3 Palette-Save | `02_external/upr-fvx/romio/src/main/java/com/uprfvx/romio/romhandlers/Gen3RomHandler.java` | `savePokemonPalettes()` schreibt alle geladenen normal/shiny Paletten neu, auch ohne Palette-Randomization |
+| DPE Palette-Gap | `02_external/Dynamic-Pokemon-Expansion-Gen-9/src/Palette_Table.c`, `src/Shiny_Palette_Table.c` | `[252]..[276]` teilen `gFrontSprite252Pal` beziehungsweise `gBackShinySprite252Pal` |
+| DPE Offsets | `02_external/Dynamic-Pokemon-Expansion-Gen-9/offsets.ini` | `gFrontSprite252Pal: 096B9C08`; Save-Blocker `0x16b9c08` entspricht diesem ROM-Offset |
+| FVX Palette-Randomizer | `02_external/upr-fvx/random/src/main/java/com/uprfvx/random/GameRandomizer.java` | `maybeRandomizePokemonPalettes()` laeuft nur bei `PokemonPalettesMod.RANDOM` |
+
+Ergebnis:
+
+- Der neue Save-Blocker ist kein Null-Palette-Slot wie `SPECIES_CUBONE_A`, sondern ein Save-/Repointing-Problem bei geladenen Paletten.
+- `0x16b9c08` ist das alte Datenziel `gFrontSprite252Pal`, das DPE fuer mehrere Gap-/Dummy-Tabelleneintraege teilt.
+- Der defensive Palette-Load schuetzt fehlende Paletten, aber nicht unveraenderte, gemeinsam genutzte oder nicht speicherbare Palette-Daten.
+- Naechste empfohlene Richtung ist, CFRU/DPE-Pokemon-Palette-Save zu ueberspringen, solange Palette-Randomization nicht aktiv war beziehungsweise keine Palette geaendert wurde.
+
 ## CFRU/DPE Gen9-Species-Coverage 2026-05-12
 
 Arbeitsblock: `analysis/upr-fvx-cfru-dpe-gen9-species-coverage`.
