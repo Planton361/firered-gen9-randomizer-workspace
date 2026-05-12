@@ -63,19 +63,20 @@ Der neueste bestaetigte Stand wird in Markdown ueber die Spalte `Latest` markier
 | 033 | `033_p1_move_data_model.md` | CFRU/DPE Gen8/9-Move-Datenmodell | dokumentiert: FVX laedt aktuell `moves.total=559`, CFRU/DPE definiert `MOVES_COUNT=992`; TM/HM-, Tutor- und Egg-Move-Pfade brauchen getrennte gegatete Modelle | keiner | nein |
 | 034 | `034_move_data_reader_fix_diagnostics.md` | CFRU/DPE Move-Data-Reader-Fix Diagnose | bestaetigt: `moves.total=992`, hoechster Move `PsychicNoise`, Trainer-Moveset-Kombinationen mit `saveSuccessful=true`, `logSuccessful=true`, `writeReloadMoveMismatches=0` | `05_builds/randomizer-smoke/034_move_data_reader_fix_diagnostics/` lokal/ignored | nein |
 | 035 | `035_p1_tm_hm_only.md` | TM/HM-only Diagnose | blockiert: FVX erkennt nur `50+8`, TM-Move-Randomization scheitert an altem Move-Ban-Array-Limit `827`, Compatibility-only scheitert an Null-Type-Species; kein Save/Output/Reload | `05_builds/randomizer-smoke/035_p1_tm_hm_only/` lokal/ignored | nein |
-| 036 | `036_tm_hm_scope_and_safety_fix_diagnostics.md` | TM/HM Scope-and-Safety-Fix Diagnose | bestaetigt im klassischen `50+8`-Scope: TM moves + Compatibility, Compatibility-only und TM moves-only jeweils mit `saveSuccessful=true`, `logSuccessful=true`, Output-ROM, nichtleerem Log und `writeReloadMismatches=0` | `05_builds/randomizer-smoke/036_tm_hm_scope_and_safety_fix/` lokal/ignored | ja |
+| 036 | `036_tm_hm_scope_and_safety_fix_diagnostics.md` | TM/HM Scope-and-Safety-Fix Diagnose | bestaetigt im klassischen `50+8`-Scope: TM moves + Compatibility, Compatibility-only und TM moves-only jeweils mit `saveSuccessful=true`, `logSuccessful=true`, Output-ROM, nichtleerem Log und `writeReloadMismatches=0` | `05_builds/randomizer-smoke/036_tm_hm_scope_and_safety_fix/` lokal/ignored | nein |
+| 037 | `037_p1_tm_hm_128_slot_model.md` | CFRU/DPE TM/HM-128-Slot-Modell | dokumentiert: aktives `gTMHMMoves` ist `u16[128]` ueber Pointer `0x8125A8C`, TMs `1..120`, HMs `121..128`, Compatibility `16` Bytes pro Species ueber `0x8043C68`; kein Fix | keiner | ja |
 
 ## Aktuell bestaetigter Stand
 
-Latest ist Nr. 036: TM/HM Scope-and-Safety-Fix Diagnose.
+Latest ist Nr. 037: CFRU/DPE TM/HM-128-Slot-Modell.
 
 Kernaussagen:
 
-- Move-Data-Coverage bleibt stabil mit `moves.total=992` und hoechstem Move `PsychicNoise`.
-- FVX erkennt im TM/HM-Pfad weiterhin nur das klassische Modell `50 TMs + 8 HMs`; `getTMHMCompatibility()` liefert `flagLength=59`.
-- TM moves + TM/HM Compatibility, Compatibility-only und TM moves-only speichern, loggen und reloaden im klassischen `50+8`-Scope ohne Mismatches.
-- Gen8/9-Moves oberhalb der FVX-Sicherheitslisten werden fuer TM-Move-Randomization defensiv ausgeschlossen, nicht voll als TM-Kandidaten modelliert.
-- Das CFRU/DPE-128-Slot-TM/HM-Modell bleibt separat offen.
+- Das aktive CFRU/DPE-TM/HM-Modell nutzt `gTMHMMoves` als `u16[128]` ueber Pointer `0x8125A8C`.
+- Slots `1..120` sind TMs, Slots `121..128` sind HMs.
+- `gTMHMLearnsets` nutzt 128 Compatibility-Bits beziehungsweise 16 Bytes pro Species ueber Pointer `0x8043C68`.
+- FVX nutzt aktuell weiterhin den klassischen `50+8`-Pfad bei `romEntry.TmMoves=0x45a5a4` und `compat.flagLength=59`; dieser Pfad bleibt nach Diagnose 036 P1-supported.
+- Ein 128-Slot-Fix ist plausibel, muss aber separat eng gegatet werden und darf Tutor-/Egg-/Learnset-/Move-Data-Write nicht mitziehen.
 
 ## Lokale Artefaktpflege
 
