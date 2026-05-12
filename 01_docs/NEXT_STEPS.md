@@ -2,28 +2,30 @@
 
 ## Aktueller Arbeitsblock
 
-Gen9-Species-Coverage-Diagnose abschliessen.
+PokemonCount-Cutoff-Diagnose abschliessen.
 
 Aktueller Branch:
 
 ```text
-analysis/upr-fvx-cfru-dpe-gen9-species-coverage
+analysis/upr-fvx-cfru-dpe-pokemon-count-cutoff-diagnostics
 ```
 
 Zieldokumente:
 
 ```text
-01_docs/compat/upr-fvx-cfru-dpe-gen9-species-coverage.md
+08_tests/randomizer/upr-fvx-cfru-dpe-pokemon-count-cutoff-diagnostics.md
+01_docs/SESSION_STATE.md
+01_docs/NEXT_STEPS.md
+00_project-control/roadmap/roadmap-status.md
 ```
 
 ## Naechste Schritte in diesem Block
 
 1. Dokumentation reviewen:
-   - `01_docs/compat/upr-fvx-cfru-dpe-gen9-species-coverage.md`
+   - `08_tests/randomizer/upr-fvx-cfru-dpe-pokemon-count-cutoff-diagnostics.md`
    - `01_docs/SESSION_STATE.md`
    - `01_docs/NEXT_STEPS.md`
    - `00_project-control/roadmap/roadmap-status.md`
-   - `01_docs/references/source-index.md`
 2. Workspace-Checks ausfuehren:
 
 ```sh
@@ -37,25 +39,25 @@ git diff --check
 3. Commit erstellen:
 
 ```text
-docs: analyze CFRU DPE Gen9 species coverage
+docs: record CFRU DPE PokemonCount cutoff diagnostics
 ```
 
-4. Branch pushen und Workspace-PR nach `main` vorbereiten.
+4. Branch pushen und Workspace-PR nach `main` erstellen.
 
 ## Danach
 
-Naechster minimaler Diagnosebranch:
+Naechster minimaler Analyse-/Fixbranch:
 
 ```text
-analysis/upr-fvx-cfru-dpe-pokemon-count-cutoff-diagnostics
+noch festzulegen
 ```
 
 Ziel:
 
-- Lokale ROM-Diagnose fuer den konkreten `PokemonCount=823`-Abbruchgrund.
-- In `basicBPRE10HackSupport()` Count nach Name-Scan, Moveset-Pointer-Check und PokedexOrder-Check protokollieren.
-- Name-, Moveset-Pointer-, PokedexOrder- und Stats-Sanity um interne IDs `820..900` pruefen.
-- Keine Gen9-Fixes, keine Static/Gift-Fixes und keine ROM-/Build-Artefakte committen.
+- DPE/CFRU-Bedeutung der von FVX gelesenen `PokedexOrder`-Adresse gegen Source-Symbole und generierte ROM-Offsets pruefen.
+- Eine sichere Count-Quelle fuer vollstaendige Gen9-Coverage modellieren.
+- Moveset-Pointer-Heuristik separat bewerten, weil sie im Diagnose-Lauf `1439 -> 930` kappen wuerde.
+- Keine Static-/Gift-Fixes und keine ROM-/Build-Artefakte committen.
 
 ## Fix-Reihenfolge
 
@@ -63,7 +65,7 @@ P0: GenRestrictions / finaler Gen4+ Allowed-Pool. Erledigt und post-merge bestae
 
 P0b: Gen3/CFRU-DPE-Wild-Write-Mapping fuer interne Species-Identitaet. Erledigt und post-merge bestaetigt.
 
-P1: Species-Schreibpfade. Analyse erledigt; Starter-Write-Fix ist als UPR-FVX PR #6 gemerged und diagnostisch bestaetigt. Static/Gifts und Trainer-Species bleiben pausiert, bis die Gen9-Coverage-/Count-Abbruchdiagnose geklaert ist.
+P1: Species-Schreibpfade. Analyse erledigt; Starter-Write-Fix ist als UPR-FVX PR #6 gemerged und diagnostisch bestaetigt. Static/Gifts und Trainer-Species bleiben pausiert, bis aus der `PokedexOrder`-/Count-Diagnose eine sichere Gen9-Coverage-Strategie folgt.
 
 P2: CFRU Day/Night Custom Wild Tables. Separat nach P1-Schreibpfad-Diagnose.
 
@@ -74,11 +76,11 @@ P4: BizHawk/Ironmon Tracker/RAM-Mapping.
 ## Nicht tun
 
 - keine ROMs bewegen
-- keine ROMs lesen, kopieren oder aendern
+- keine ROMs kopieren oder aendern
 - keine Saves oder Emulator States anfassen
 - keine Builds committen
 - keine Randomizer-JARs oder Tool-Binaries anfassen oder committen
-- keine Codeaenderungen in `02_external/**`
+- keine weiteren Codeaenderungen in `02_external/**` ausser einem expliziten Folgebranch fuer Count-Heuristik
 - keine weiteren Wild-Write- oder Encounter-Fixes in diesem Branch
 - keine Gen9-Coverage-Fixes in diesem Branch
 - keine Day/Night-Wild-Fixes
