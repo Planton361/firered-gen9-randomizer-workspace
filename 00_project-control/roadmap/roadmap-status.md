@@ -24,10 +24,10 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Aktueller Branch | `compat/upr-fvx-cfru-dpe-move-data-reader` |
-| Nächster Branch | offen nach Merge |
-| Aktueller Fokus | CFRU/DPE Move-Data-Reader-Fix fuer UPR-FVX |
-| ROM-/Build-Arbeit | lokale Randomizer-Diagnoseartefakte ignored unter `05_builds/randomizer-smoke/034_move_data_reader_fix_diagnostics/`; keine Artefakte committen |
+| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-p1-tm-hm-only` |
+| Nächster Branch | `compat/upr-fvx-cfru-dpe-tm-hm-scope-and-safety` |
+| Aktueller Fokus | P1 TM/HM-only Diagnose fuer CFRU/DPE Gen9-BPRE |
+| ROM-/Build-Arbeit | lokale Randomizer-Diagnoseartefakte ignored unter `05_builds/randomizer-smoke/035_p1_tm_hm_only/`; keine Artefakte committen |
 | Externe Repos | als Submodule auf Planton361-Forks eingebunden |
 | Forks | Planton361-Forks fuer UPR-FVX, DPE Gen9 und CFRU dokumentiert |
 | Installationen | devkitPro/devkitARM lokal dokumentiert; keine Installation in diesem Analyseblock |
@@ -154,7 +154,8 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | P1m | `compat/upr-fvx-cfru-dpe-trainer-movesets-learnsets` | Trainer-Movesets durch CFRU/DPE-Learnset-Reader entblocken | UPR-FVX PR #17 und Workspace PR #68 gemerged; `writeReloadMismatches=0` |
 | P1n | `analysis/upr-fvx-cfru-dpe-p1-trainer-movesets-combinations` | Trainer-Movesets-Kombinationen diagnostizieren | erledigt; Movesets-only, Movesets+Species, Movesets+Held Items normal und sensible Held Items sind P1-stabil |
 | P1o | `analysis/upr-fvx-cfru-dpe-p1-move-data-model` | Gen8/9-Move-Datenmodell analysieren | erledigt; Diagnose 033 dokumentiert `moves.total=559` vs. CFRU/DPE `MOVES_COUNT=992` |
-| P1p | `compat/upr-fvx-cfru-dpe-move-data-reader` | CFRU/DPE-Move-Data-Reader minimal erweitern | aktueller Fixbranch; UPR-FVX `c71fd75e` laedt `moves.total=992` und Trainer-Kombinationen bleiben stabil |
+| P1p | `compat/upr-fvx-cfru-dpe-move-data-reader` | CFRU/DPE-Move-Data-Reader minimal erweitern | erledigt; UPR-FVX PR #18 und Workspace PR #71 gemerged, `moves.total=992` |
+| P1q | `analysis/upr-fvx-cfru-dpe-p1-tm-hm-only` | TM/HM-only Diagnose | aktueller Diagnosebranch; blockiert an hohem Move-ID-Limit und Null-Type-Species im Compatibility-Pfad |
 | P2 | `randomizer/cfru-day-night-wild-table-analysis` | CFRU-Custom-Day/Night-Wild-Tabellen separat untersuchen | erst nach P1-Schreibpfad-Diagnose; Route-1-Fallback bleibt stabil |
 | P3 | noch festlegen | Nullslot-`<unknown>` mit `rawInternalSpeciesId=0` klassifizieren | nicht mit GenRestrictions vermischen |
 | P4 | noch festlegen | BizHawk-/Ironmon-Tracker-/RAM-Mapping pruefen | erst nach stabiler ROM-Randomizer-Kompatibilitaet |
@@ -197,10 +198,10 @@ Excel-Roadmap:
 ## Nächster empfohlener Branch
 
 ```text
-offen nach Merge von compat/upr-fvx-cfru-dpe-move-data-reader
+compat/upr-fvx-cfru-dpe-tm-hm-scope-and-safety
 ```
 
-Zweck: Separaten Scope fuer TM/HM-, Tutor-, Egg-Move- oder Move-Data-Write-Folgearbeit festlegen. Keine Learnset-Write- oder breite Randomizer-Ausweitung ohne eigenen Branch.
+Zweck: TM/HM-only entblocken: hohe Move-IDs defensiv behandeln, Null-Type-Species im Compatibility-Pfad absichern und CFRU/DPE-TM/HM-Scope eng gaten.
 
 ## Arbeitsblock-Log
 
