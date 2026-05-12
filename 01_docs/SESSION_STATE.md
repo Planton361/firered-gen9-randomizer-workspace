@@ -51,44 +51,52 @@
 - Lokaler Diagnosebefund nach PR #12: `Bad Egg` faellt von `12` auf `0`, `<unknown>` bleibt `0`, `saveSuccessful=true`; `Area #174 - ALTERING CAVE Grass/Cave` enthaelt statt `Bad Egg` jetzt `Meowscrada` in allen 12 Slots.
 - Workspace PR #56 ist gemerged; `main` pinnt `02_external/upr-fvx` auf `0f127e9b`.
 - Static/Gift Species-only Diagnose auf UPR-FVX `0f127e9b`: Static/Gift-Pool erreicht Gen1-Gen9 (`staticPool.size=1414`), der Pick-Pfad erreicht Gen7/8/9 (`pickedGen4plus=18`, `pickedGen7plus=8`), aber der echte Lauf bricht vor Save/Log an vier `<null>`-Static-Eintraegen ab (`saveSuccessful=false`).
+- UPR-FVX-Commit `009178e8` behebt den Static/Gift-Scope- und Species-Write-Pfad fuer CFRU/DPE: Null-Static-Eintraege blockieren nicht mehr, echte Static/Gift-Species schreiben ueber interne SpeciesSet-Identitaet.
+- Lokaler Diagnosebefund nach `009178e8`: `saveSuccessful=true`, Log nicht leer, Output-ROM erzeugt, Gen7/8/9-Picks sichtbar und `writeReloadMismatches=0`.
 - ROMs, Saves, Builds, Tool-Binaries und private Dateien sind ausgeschlossen.
 
 ## Aktueller Branch
 
-`analysis/upr-fvx-cfru-dpe-p1-static-gift-species-only`
+`compat/upr-fvx-cfru-dpe-static-gift-scope-and-write`
 
 ## Aktueller Arbeitsblock
 
-P1 Static/Gift Species-only Diagnose auf Gen9-Wild-sauberem Stand.
+P1 Static/Gift Scope und interner Species-Write fuer CFRU/DPE.
 
 ## Ziel
 
-Festhalten, ob Static/Gift-Randomization mit vollstaendigem Gen1-Gen9-Species-Pool auf dem gepinnten UPR-FVX-Stand laden, auswaehlen, speichern und loggen kann. Keine Codeaenderung, kein Fix.
+Static/Gift-Randomization fuer CFRU/DPE gezielt entblocken: Null-/Roamer-/hardcoded-FRLG-Sonderfaelle duerfen Save/Log nicht blockieren, und echte Static/Gift-Species muessen ueber interne SpeciesSet-Identitaet schreiben und nach Reload erhalten bleiben.
 
 ## In diesem Arbeitsblock geprueft / geaendert
 
-- PR #56 als gemerged geprueft und `main` per Fast-Forward aktualisiert.
-- Analysebranch `analysis/upr-fvx-cfru-dpe-p1-static-gift-species-only` auf aktuellen `main`-Stand gebracht.
-- UPR-FVX-Submodule-Stand geprueft: `0f127e9bb9a5c47306fe1f2af11e8e9fe1802717`, Branch `compat/upr-fvx-cfru-dpe-wild-banned-special-species`, Working Tree sauber.
-- UPR-FVX gebaut: `./gradlew clean :random:jar` erfolgreich.
-- Static/Gift-only CLI-Lauf mit Seed `274269061345323` ausgefuehrt.
-- Direkte `GameRandomizer.Results`-Diagnose ueber temporaeren Helper ausserhalb des Repos ausgefuehrt.
-- Neues Protokoll erstellt: `08_tests/randomizer/021_p1_static_gift_species_only.md`.
-- `08_tests/randomizer/README.md` auf Latest Nr. 021 aktualisiert.
+- PR #57 als gemerged vorausgesetzt und `main` per Fast-Forward aktualisiert.
+- Workspace-Branch `compat/upr-fvx-cfru-dpe-static-gift-scope-and-write` erstellt.
+- UPR-FVX-Submodule-Branch `compat/upr-fvx-cfru-dpe-static-gift-scope-and-write` von `0f127e9b` erstellt.
+- UPR-FVX-Code minimal geaendert:
+  - `StaticPokemonRandomizer` reicht Null-StaticEncounter-Species unveraendert durch.
+  - `Gen3RomHandler.StaticPokemon.setPokemon()` ueberspringt Null-Species defensiv.
+  - Static/Gift- und hardcoded Gen3-Static-Schreibstellen nutzen fuer erweiterte BPRE-Hacks interne SpeciesSet-Identitaet.
+- UPR-FVX-Commit erstellt: `009178e8848b4272e6b8be54a8bf5b2bed34d5f2`.
+- UPR-FVX PR #13 erstellt: `https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/13`.
+- Static/Gift-only CLI-Lauf und direkter Reload-Helper mit Seed `274269061345323` ausgefuehrt.
+- Neues Protokoll erstellt: `08_tests/randomizer/022_static_gift_scope_write_diagnostics.md`.
+- `08_tests/randomizer/README.md` auf Latest Nr. 022 aktualisiert.
 
 ## Ergebnis
 
 - Species-Coverage bleibt stabil: `PokemonCount=1439`, `speciesList.size=1415`, `maxSpeciesIdentityNumber=1439`, Gen7/8/9 sichtbar.
-- Static/Gift-Pool ist vollstaendig genug fuer Gen1-Gen9: `staticPool.size=1414`, Generationen `{1=271, 2=118, 3=188, 4=149, 5=191, 6=127, 7=123, 8=127, 9=120}`.
-- Static/Gift-Pick-Pfad erreicht Gen7/8/9: `pickedGen4plus=18`, `pickedGen7plus=8` fuer Seed `274269061345323`.
-- CLI meldet `Randomized successfully!`, erzeugt aber nur ein leeres 3-Byte-Log und keine Output-ROM.
-- Direkter Ergebnisstatus: `saveSuccessful=false`, NPE in `StaticPokemonRandomizer.randomizeStaticPokemon()` wegen vier `<null>`-Static-Eintraegen.
-- Static/Gift ist damit noch nicht P1-supported; spaeterer Scope-Fix ist noetig, Write-Fix ueber interne SpeciesSet-Identitaet sehr wahrscheinlich.
+- Static/Gift-Pool bleibt `staticPool.size=1414`.
+- Direkter Ergebnisstatus: `saveSuccessful=true`, `logSuccessful=true`, `directLogBytes=3988`.
+- CLI erzeugt Output-ROM und nichtleeren Static/Gift-Log.
+- Der echte Log enthaelt Gen7/8/9-Picks wie Rockruff, Fidough, Baxcalibur, Finizen, IronLeaves, Hydrapple und Mimikyu.
+- Vier `<null>`-Static-Eintraege bleiben erhalten (`nullBefore=4`, `nullAfterWrite=4`, `nullReloaded=4`), blockieren aber nicht mehr.
+- Reload-Vergleich: `pickedGen4plus=15`, `pickedGen7plus=7`, `reloadedGen4plus=15`, `reloadedGen7plus=7`, `writeReloadMismatches=0`.
+- Static/Gift-Species-only ist damit fuer den getesteten CFRU/DPE-Gen9-BPRE-Stand P1-supported.
 
 ## Noch nicht gestartet
 
 - Separates DPE/CFRU-Learnset-Profil fuer `gLevelUpLearnsets`
-- Praktische P1-Diagnoselaeufe fuer Static/Gifts und Trainer-Species
+- Praktische P1-Diagnoselaeufe fuer Trainer-Species
 - Evolution-/Learnset-/TM-/Tutor-/Ability-Datenmodellierung nach der Schreibpfadmatrix
 - CFRU-Day/Night-Custom-Wild-Tabellen-Support
 - Nullslot-`<unknown>`-Analyse
@@ -106,7 +114,7 @@ Keine externen Original-Upstreams kontaktiert.
 
 Keine Aenderungen direkt auf `main`.
 
-Keine Workspace-Codeaenderungen ausser Dokumentation. Keine UPR-FVX-Codeaenderungen.
+Keine Workspace-Codeaenderungen ausser Dokumentation und Submodule-Gitlink. UPR-FVX-Codeaenderungen nur im erlaubten Submodule-Branch.
 
 Keine MCP-Configs mit Secrets angelegt.
 
@@ -124,6 +132,6 @@ git diff --check
 
 ## Naechster empfohlener Branch
 
-`compat/upr-fvx-cfru-dpe-static-gift-scope-and-write`
+`analysis/upr-fvx-cfru-dpe-p1-trainer-species-only`
 
-Zweck: Static/Gift-, Roamer- und hardcoded-FRLG-Eintraege sauber klassifizieren, Null-Species aus dem normalen Static/Gift-Pfad ausklammern oder modellieren und echte Static/Gift-Species fuer erweiterte CFRU/DPE-BPRE-Hacks ueber interne SpeciesSet-Identitaet schreiben.
+Zweck: Trainer-Species-only als naechsten P1-Schreibpfad separat diagnostizieren, ohne Moveset-/Learnset-/Trainer-Item-/Ability-Fixes zu vermischen.

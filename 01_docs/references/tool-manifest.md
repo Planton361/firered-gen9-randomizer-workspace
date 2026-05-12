@@ -4,15 +4,15 @@ Dieses Manifest dokumentiert Tools, Repos, Forks, Versionen, Pfade und Sicherhei
 
 ## Sicherheitsstatus
 
-Dieser Stand dokumentiert den read-only Setupblock `setup/intellij-mcp-readonly-check`. Es wurden keine Codeaenderungen vorgenommen, keine Builds gestartet, keine ROMs gelesen oder kopiert und keine Tool-Binaries oder Release-Assets angefasst.
+Dieser Stand dokumentiert den Arbeitsblock `compat/upr-fvx-cfru-dpe-static-gift-scope-and-write`. UPR-FVX wurde im Planton361-Fork-Submodule gezielt geaendert und gebaut; lokale ROM-/Log-/Output-Artefakte blieben ignored unter `05_builds/**` und wurden nicht committed. Tool-Binaries, Release-Assets, Secrets und private Pfade wurden nicht dokumentiert.
 
 Linux/CachyOS ist die primaere lokale Umgebung. Windows-Toolchain-Befunde bleiben historischer Referenzstand und duerfen nicht als Linux-Ist-Stand verwendet werden.
 
-Der aktuelle Arbeitsblock dokumentiert, ob JetBrains MCP lokal optional fuer read-only Codex-Codebase-Analyse nutzbar waere.
+Der aktuelle Arbeitsblock pinnt den Workspace auf den UPR-FVX-Static/Gift-Fix-Commit fuer CFRU/DPE.
 
 | Tool/Repo | Zweck | Upstream | Fork/Origin | Lokaler Pfad | Branch | Commit | Codex darf ändern | Status |
 |---|---|---|---|---|---|---|---|---|
-| Workspace Repo | Source of Truth | n/a | git@github.com:Planton361/firered-gen9-randomizer-workspace.git | Workspace-Root | `docs/pin-upr-fvx-wild-special-species-fix` | offen | ja, nur Branches | aktiv |
+| Workspace Repo | Source of Truth | n/a | git@github.com:Planton361/firered-gen9-randomizer-workspace.git | Workspace-Root | `compat/upr-fvx-cfru-dpe-static-gift-scope-and-write` | offen | ja, nur Branches | aktiv |
 | Git | Versionierung | n/a | n/a | `/usr/bin/git` | n/a | n/a | nein | gefunden: 2.54.0 |
 | GitHub CLI (`gh`) | PRs und GitHub-Checks automatisieren | https://cli.github.com/ | n/a | `/usr/bin/gh` | n/a | n/a | nein | gefunden: 2.92.0; Auth via Keyring aktiv |
 | POSIX Shell | Terminal-Standard | n/a | n/a | `/bin/fish` laut `$SHELL` | n/a | n/a | nein | primär |
@@ -43,11 +43,11 @@ Der aktuelle Arbeitsblock dokumentiert, ob JetBrains MCP lokal optional fuer rea
 
 ## Lokale Submodule-Pins 2026-05-12
 
-Arbeitsblock: `docs/pin-upr-fvx-wild-special-species-fix`.
+Arbeitsblock: `compat/upr-fvx-cfru-dpe-static-gift-scope-and-write`.
 
 | Repo | Zweck | Origin | Lokaler Pfad | Branch | Commit | Codex darf aendern | Status |
 |---|---|---|---|---|---|---|---|
-| UPR-FVX Fork | Haupt-Randomizer-Fork | `https://github.com/Planton361/universal-pokemon-randomizer-fvx.git` | `02_external/upr-fvx` | `compat/upr-fvx-cfru-dpe-wild-banned-special-species` | `0f127e9bb9a5c47306fe1f2af11e8e9fe1802717` | nein in diesem Block | gepinnter Planton361-Fork-Stand fuer CFRU/DPE-Wild-Sonder-Species-Fix |
+| UPR-FVX Fork | Haupt-Randomizer-Fork | `https://github.com/Planton361/universal-pokemon-randomizer-fvx.git` | `02_external/upr-fvx` | `compat/upr-fvx-cfru-dpe-static-gift-scope-and-write` | `009178e8848b4272e6b8be54a8bf5b2bed34d5f2` | ja, nur in diesem Branch | Static/Gift-Scope- und Species-Write-Fix fuer CFRU/DPE; basiert auf `0f127e9b` |
 | CFRU-expansion Fork | CFRU/Gen9-Basis | `https://github.com/Planton361/CFRU-expansion.git` | `02_external/CFRU-expansion` | `compat/firered-gen9-randomizer` | `b885d7a974375c6c722e5698914963b82e8cdad6` | nein in diesem Block | read-only analysiert |
 | DPE Gen9 Fork | DPE/Gen9-Basis | `https://github.com/Planton361/Dynamic-Pokemon-Expansion-Gen-9.git` | `02_external/Dynamic-Pokemon-Expansion-Gen-9` | `compat/firered-gen9-randomizer` | `5906aa4d4904e41393fd9184a16951c961e96263` | nein in diesem Block | read-only analysiert |
 | CyanSMP64 UPR-ZX NatDex | NatDex-Randomizer-Referenz | `https://github.com/CyanSMP64/universal-pokemon-randomizer-zx.git` | `02_external/references/cyansmp64-upr-zx-natdex` | `natdex` | `9b63eb2876d901dc2e5af49855ae41ac255e1a72` | nein | read-only Referenz |
@@ -86,8 +86,8 @@ Bestehende unnummerierte Protokolle unter `08_tests/randomizer/` bleiben vorerst
 | Lokaler Pfad | `02_external/upr-fvx` |
 | Einbindung | Git-Submodule auf `Planton361/universal-pokemon-randomizer-fvx` |
 | Upstream | `upr-fvx/universal-pokemon-randomizer-fvx` |
-| Arbeitsbranch | `compat/firered-gen9-cfru-dpe` |
-| Gepinnter Workspace-Stand | `0f127e9bb9a5c47306fe1f2af11e8e9fe1802717` auf `compat/upr-fvx-cfru-dpe-wild-banned-special-species`; enthaelt den CFRU/DPE-Wild-Sonder-Species-Fix |
+| Arbeitsbranch | `compat/upr-fvx-cfru-dpe-static-gift-scope-and-write` |
+| Gepinnter Workspace-Stand | `009178e8848b4272e6b8be54a8bf5b2bed34d5f2` auf `compat/upr-fvx-cfru-dpe-static-gift-scope-and-write`; enthaelt den CFRU/DPE-Static/Gift-Scope- und Species-Write-Fix auf Basis des Wild-Sonder-Species-Fix `0f127e9b` |
 | Buildsystem | Gradle Wrapper |
 | Java | JDK 25 |
 | JAR-Build | `./gradlew :random:jar` |
