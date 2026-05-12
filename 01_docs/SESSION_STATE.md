@@ -45,47 +45,40 @@
 - Post-Merge-Gen9-Wild-Smoke auf UPR-FVX Merge-Commit `ee82cb4e` ist dokumentiert: `PokemonCount=1439`, `speciesList.size=1415`, `maxSpeciesIdentityNumber=1439`, `generationCounts={1=271, 2=118, 3=188, 4=174, 5=191, 6=127, 7=123, 8=127, 9=120}`, Output-ROM und Wild-Log entstehen erfolgreich.
 - Der Post-Merge-Wild-Log enthaelt Gen7/8/9-Species, darunter `Magearna`, `Meltan`, `Hatenna`, `Calyrex`, `Glimmet`, `Toedscool`, `Tatsugiri`, `Floragato`, `Iron Crown` und `Hydrapple`; `<unknown>` bleibt `0`.
 - Im Post-Merge-Wild-Log erscheinen `12` `Bad Egg`-Eintraege; diese sind eine separate Folgeauffaelligkeit und nicht der fruehere `<unknown>`-Nullslot.
-- Randomizer-Smoke-Artefakte wurden lokal bereinigt: `05_builds` sank von `1.3G` auf `196M`; der alte flache `05_builds/randomizer-smoke/`-Output ist leer.
-- `08_tests/randomizer/README.md` dokumentiert ab jetzt Nummerierungs- und Latest-Konvention fuer Randomizer-Smoke-Protokolle und lokale Artefaktordner.
+- Die Bad-Egg-Diagnose reproduziert den Wild-only-Lauf mit Seed `274269061345319`: `saveSuccessful=true`, `<unknown>=0`, und alle `12` `Bad Egg`-Eintraege liegen in `Area #174 - ALTERING CAVE Grass/Cave`.
+- DPE/CFRU definieren `SPECIES_EGG=0x19C` innerhalb des geladenen Count-Bereichs; die DPE-Namensquelle mappt diesen Slot auf `Bad Egg`, waehrend FVX im Gen3/FRLG-Wild-Ban aktuell nur Unown entfernt.
 - ROMs, Saves, Builds, Tool-Binaries und private Dateien sind ausgeschlossen.
 
 ## Aktueller Branch
 
-`maintenance/randomizer-smoke-artifact-cleanup`
+`analysis/upr-fvx-cfru-dpe-wild-bad-egg-diagnostics`
 
 ## Aktueller Arbeitsblock
 
-Randomizer-Smoke-Artefakte und Testprotokolle ordnen.
+Bad-Egg-Eintraege im bestaetigten CFRU/DPE-Gen9-Wild-Log diagnostizieren.
 
 ## Ziel
 
-Konkret festhalten:
-
-- welche lokalen Smoke-/Build-Artefakte gross sind
-- ob `05_builds`, `04_private_roms` oder `03_tools/releases` versehentlich tracked Dateien enthalten
-- welche eindeutig lokalen Smoke-Outputs entfernt wurden
-- wie kuenftige Randomizer-Smokes nummeriert und als latest markiert werden
+Klaeren, ob die `12` `Bad Egg`-Wild-Log-Eintraege aus dem Allowed Pool, aus Dummy-/Gap-/Form-Slots, aus Egg/BadEgg-Species, aus Log-Mapping oder aus Write/Reload entstehen.
 
 ## In diesem Arbeitsblock geprueft / geaendert
 
-- Workspace `main` per Fast-Forward geprueft und Branch `maintenance/randomizer-smoke-artifact-cleanup` erstellt.
-- Lokale Groessen inventarisiert: vor Cleanup `05_builds=1.3G`, `05_builds/randomizer-smoke=1.1G`, `08_tests=196K`, `08_tests/randomizer=172K`.
-- `find 05_builds -maxdepth 3 -type f | wc -l` meldete vor Cleanup `107` Dateien.
-- `git ls-files 05_builds 04_private_roms 03_tools/releases` meldete keine tracked Dateien.
-- `git status --ignored --short 05_builds` meldete nur den ignored Build-Ordner.
-- Eindeutig lokale ignored Smoke-Outputs im flachen Ordner `05_builds/randomizer-smoke/` wurden entfernt: `.gba`- und `.log`-Dateien, keine Markdown-Dokumentation.
-- Nach Cleanup: `05_builds=196M`, `05_builds/randomizer-smoke=0`, `find 05_builds -maxdepth 3 -type f | wc -l` meldet `12`.
-- Neues Ordnungsdokument erstellt: `08_tests/randomizer/README.md`.
-- Statusdateien und Tool-Manifest auf die neue Artefaktkonvention aktualisiert.
+- Workspace `main` per Fast-Forward geprueft und Branch `analysis/upr-fvx-cfru-dpe-wild-bad-egg-diagnostics` erstellt.
+- UPR-FVX `compat/firered-gen9-cfru-dpe` steht auf Merge-Commit `ee82cb4e`; Submodule-Status ist sauber.
+- UPR-FVX per `./gradlew clean :random:jar` erfolgreich gebaut.
+- Derselbe Wild-only-Lauf wie im Gen9-Wild-Post-Merge-Smoke wurde mit Seed `274269061345319` reproduziert.
+- Der Lauf bleibt erfolgreich: `PokemonCount=1439`, `speciesList.size=1415`, `maxSpeciesIdentityNumber=1439`, `saveSuccessful=true`, `<unknown>=0`.
+- Die `12` `Bad Egg`-Eintraege liegen vollstaendig in `Area #174 - ALTERING CAVE Grass/Cave (rate=5)`, Slots 1-12.
+- DPE/CFRU definieren `SPECIES_EGG=0x19C`; die DPE-Namensquelle mappt diesen Slot auf `Bad Egg`.
+- FVX bannt im Gen3/FRLG-Wild-Pfad aktuell nur Unown; `SPECIES_EGG` ist nicht Teil des Wild-Banned-Sets.
+- Neues Diagnoseprotokoll erstellt: `08_tests/randomizer/upr-fvx-cfru-dpe-wild-bad-egg-diagnostics.md`.
 
 ## Ergebnis
 
-- Der grosse lokale Randomizer-Smoke-Output wurde entfernt, ohne tracked Dateien zu beruehren.
-- Dauerhafte Markdown-Protokolle unter `08_tests/randomizer/**` bleiben erhalten.
-- Kuenftige Smoke-Protokolle sollen nummerierte Namen wie `001_<kurzer-zweck>.md` nutzen; bestehende unnummerierte Protokolle bleiben ueber die README-Tabelle eingeordnet.
-- Kuenftige lokale Artefakte sollen nummerierte Ordner unter `05_builds/randomizer-smoke/NNN_<kurzer-zweck>/` nutzen.
-- Latest wird in Markdown ueber die README-Tabelle markiert, nicht zwingend per Symlink.
-- Neuester bestaetigter Stand bleibt der Gen9 Standard-/Fallback-Wild-Post-Merge-Smoke mit `saveSuccessful=true` und Gen7/8/9 im Wild-Log.
+- `Bad Egg` ist sehr wahrscheinlich kein Reload- oder `<unknown>`-Mappingproblem, sondern `SPECIES_EGG` aus dem CFRU/DPE-Allowed-Wild-Pool.
+- Das Muster als ein kompletter 12-Slot-Altering-Cave-Block passt zu area-/game-1:1-Replacement.
+- Fuer einen wasserdichten Roh-ID-Beleg waere ein kleiner UPR-FVX-Diagnosebranch sinnvoll, weil der bestehende Wild-Logger fuer aufgeloeste Species keine interne ID ausgibt.
+- Naechster minimaler Fix waere ein CFRU/DPE-spezifisches Wild-Banned-Set fuer `SPECIES_NONE`, `SPECIES_EGG` und belegte Dummy-/Gap-Slots.
 
 ## Noch nicht gestartet
 
@@ -100,15 +93,13 @@ Konkret festhalten:
 
 Keine ROMs, Saves, Builds oder Tool-Binaries committed.
 
-Keine ROMs in ChatGPT hochgeladen. In diesem Arbeitsblock wurden keine ROMs gelesen, kopiert, geaendert, gebaut oder randomisiert.
-
-Lokale ignored Smoke-Outputs unter `05_builds/randomizer-smoke/` wurden nur summarisch nach Groesse/Typ inventarisiert und bereinigt. Private absolute Pfade und private ROM-Dateinamen wurden nicht dokumentiert.
+Keine ROMs in ChatGPT hochgeladen. ROMs wurden nur lokal fuer den Diagnose-Lauf geladen; Artefakte blieben unter `05_builds/**` und wurden nicht committed.
 
 Keine externen Original-Upstreams kontaktiert.
 
 Keine Aenderungen direkt auf `main`.
 
-Keine Codeaenderungen, keine Builds, keine Randomizer-Laeufe und keine Submodule-Aenderungen in diesem Arbeitsblock.
+Keine UPR-FVX-Codeaenderung und keine Submodule-Aenderung in diesem Arbeitsblock.
 
 Keine MCP-Configs mit Secrets angelegt.
 
@@ -126,6 +117,6 @@ git diff --check
 
 ## Naechster empfohlener Branch
 
-`analysis/upr-fvx-cfru-dpe-p1-static-gift-write-diagnostics`
+`compat/upr-fvx-cfru-dpe-wild-banned-special-species`
 
-Zweck: Static-/Gift-Species-only Diagnose nach bestaetigter Gen9-Wild-Coverage wieder aufnehmen. Kein Learnset-, Trainer-, Palette-, Day/Night- oder Nullslot-Fix im selben Branch.
+Zweck: CFRU/DPE-spezifisch `SPECIES_NONE`, `SPECIES_EGG` und belegte Dummy-/Gap-Species aus Wild-Replacement-Pools entfernen. Kein Static/Gift-, Trainer-, Learnset-, Palette-, Day/Night- oder allgemeiner Gen3-Fix im selben Branch.
