@@ -2,30 +2,32 @@
 
 ## Aktueller Arbeitsblock
 
-CFRU/DPE-Gen9-SpeciesCount-Fix dokumentieren.
+CFRU/DPE-Palette-Loader-Blocker read-only analysieren.
 
 Aktueller Branch:
 
 ```text
-analysis/upr-fvx-cfru-dpe-gen9-species-count
+analysis/upr-fvx-cfru-dpe-palette-loader-blocker
 ```
 
 Zieldokumente:
 
 ```text
-08_tests/randomizer/upr-fvx-cfru-dpe-gen9-species-count-diagnostics.md
+01_docs/compat/upr-fvx-cfru-dpe-palette-loader-blocker.md
 01_docs/SESSION_STATE.md
 01_docs/NEXT_STEPS.md
 00_project-control/roadmap/roadmap-status.md
+01_docs/references/source-index.md
 ```
 
 ## Naechste Schritte in diesem Block
 
 1. Dokumentation reviewen:
-   - `08_tests/randomizer/upr-fvx-cfru-dpe-gen9-species-count-diagnostics.md`
+   - `01_docs/compat/upr-fvx-cfru-dpe-palette-loader-blocker.md`
    - `01_docs/SESSION_STATE.md`
    - `01_docs/NEXT_STEPS.md`
    - `00_project-control/roadmap/roadmap-status.md`
+   - `01_docs/references/source-index.md`
 2. Workspace-Checks ausfuehren:
 
 ```sh
@@ -39,14 +41,14 @@ git diff --check
 3. Commit erstellen:
 
 ```text
-docs: record CFRU DPE Gen9 species count diagnostics
+docs: analyze CFRU DPE palette loader blocker
 ```
 
 4. Branch pushen und Workspace-PR nach `main` erstellen.
 
 ## Danach
 
-Naechster minimaler Folgebranch:
+Naechster minimaler Fixbranch:
 
 ```text
 noch festzulegen
@@ -55,8 +57,9 @@ noch festzulegen
 Ziel:
 
 - UPR-FVX PR #8 reviewen/mergen, falls akzeptiert.
-- Danach den naechsten Loader-Blocker `loadPokemonPalettes()` separat modellieren oder minimal fixen.
-- Weiterhin keine Static-/Gift-, Trainer-, Learnset-, Moveset- oder Day/Night-Fixes im selben Branch.
+- Danach `loadPokemonPalettes()` und `savePokemonPalettes()` fuer konservativ erkannte erweiterte CFRU/DPE-BPRE-Hacks defensiv machen.
+- Ziel ist nur, den ROM-Load wieder bis zur bestehenden Randomization zu bringen.
+- Weiterhin keine Static-/Gift-, Trainer-, Learnset-, Moveset-, Count- oder Day/Night-Fixes im selben Branch.
 - ROM-/Build-Artefakte nicht committen.
 
 ## Fix-Reihenfolge
@@ -80,9 +83,9 @@ P4: BizHawk/Ironmon Tracker/RAM-Mapping.
 - keine Saves oder Emulator States anfassen
 - keine Builds committen
 - keine Randomizer-JARs oder Tool-Binaries anfassen oder committen
-- keine weiteren Codeaenderungen in `02_external/**` in diesem Workspace-Dokumentationsbranch
+- keine Codeaenderungen in `02_external/**`
 - keine weiteren Wild-Write- oder Encounter-Fixes in diesem Branch
-- keine Gen9-Coverage-Fixes in diesem Branch
+- keine Palette-, Count- oder Gen9-Coverage-Fixes in diesem Branch
 - keine Day/Night-Wild-Fixes
 - keine Swarm-, Roamer-, DexNav- oder Raid-Fixes
 - keine Nullslot-Fixes

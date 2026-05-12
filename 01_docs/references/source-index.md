@@ -213,6 +213,34 @@ Ergebnis:
 - Evolutions, Learnsets, TM/HM, Tutor und Abilities brauchen zuerst mehr Datenmodellierung, weil Quelle, Tabellenbreite, Hidden Ability und Map-Key-Semantik ueber einen kleinen Wild-Write-aehnlichen Patch hinausgehen.
 - Empfohlener naechster Diagnosebranch ist `analysis/upr-fvx-cfru-dpe-p1-starter-write-diagnostics`.
 
+## CFRU/DPE Palette-Loader-Blocker 2026-05-12
+
+Arbeitsblock: `analysis/upr-fvx-cfru-dpe-palette-loader-blocker`.
+
+Neue Workspace-Referenz:
+
+- `01_docs/compat/upr-fvx-cfru-dpe-palette-loader-blocker.md`
+
+Zusaetzlich relevant eingeordnete lokale Quellen:
+
+| Bereich | Lokaler Pfad | Zweck |
+|---|---|---|
+| FVX Load-Lifecycle | `02_external/upr-fvx/romio/src/main/java/com/uprfvx/romio/romhandlers/AbstractGBRomHandler.java` | bedingungsloser `loadPokemonPalettes()`-Aufruf im ROM-Load |
+| FVX Gen3 Palette-Load/-Save | `02_external/upr-fvx/romio/src/main/java/com/uprfvx/romio/romhandlers/Gen3RomHandler.java` | Palette-Pointer-Lesen ueber `PokemonNormalPalettes`/`PokemonShinyPalettes` und `pokedexToInternal[Species.number]` |
+| FVX Species-Palette-Felder | `02_external/upr-fvx/romio/src/main/java/com/uprfvx/romio/gamedata/Species.java` | `normalPalette`/`shinyPalette`-Speicher |
+| FVX Palette Randomizer | `02_external/upr-fvx/random/src/main/java/com/uprfvx/random/randomizers/Gen3to5PaletteRandomizer.java`, `random/src/main/java/com/uprfvx/random/GameRandomizer.java` | Palette-Randomization ist settings-abhaengig, Palette-Load aber nicht |
+| DPE Palettentabellen | `02_external/Dynamic-Pokemon-Expansion-Gen-9/src/Palette_Table.c`, `src/Shiny_Palette_Table.c` | `gMonPaletteTable[NUM_SPECIES]`, `gMonShinyPaletteTable[NUM_SPECIES]`; `SPECIES_CUBONE_A` fehlt als erster belegter Nullslot |
+| DPE Offsets | `02_external/Dynamic-Pokemon-Expansion-Gen-9/offsets.ini` | `gMonPaletteTable: 09A47568`, `gMonShinyPaletteTable: 09A55EAC`; Fehleradresse `0x1a495d8` entspricht Index `1038` |
+| DPE/CFRU Runtime | `02_external/Dynamic-Pokemon-Expansion-Gen-9/src/updated_code.c`, `02_external/CFRU-expansion/src/scripting.c`, `src/follower_mon.c` | Runtime nutzt Palette-Tabellen bedarfsbezogen pro Species |
+| Cyan NatDex Runtime | `02_external/references/cyansmp64-pokefirered-natdex/src/rom_header_gf.c`, `src/pokemon.c`, `tools/inigen/inigen.c` | NatDex-Referenz fuer Header-/Symbolquellen und bedarfsbezogene Palette-Nutzung |
+
+Ergebnis:
+
+- Der erste belegte Paletten-Loader-Abbruch bei `0x1a495d8` ist `gMonPaletteTable[1038]`, also `SPECIES_CUBONE_A`.
+- DPE/CFRU-Palettentabellen sind strukturell Gen3-kompatibel, enthalten aber mindestens diesen nicht initialisierten Form-Slot.
+- Palette-Load ist fuer P0/Wild fachlich nicht noetig, aber in FVX aktuell technischer Bestandteil von ROM-Load und Save.
+- Naechste empfohlene Richtung ist ein defensiver CFRU/DPE-spezifischer Palette-Load/-Save-Fix, nicht eine erneute Count-Begrenzung.
+
 ## CFRU/DPE Gen9-Species-Coverage 2026-05-12
 
 Arbeitsblock: `analysis/upr-fvx-cfru-dpe-gen9-species-coverage`.
