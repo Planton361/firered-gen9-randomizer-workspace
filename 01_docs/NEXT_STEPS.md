@@ -2,28 +2,29 @@
 
 ## Aktueller Arbeitsblock
 
-UPR-FVX Wild-Sonder-Species-Fix im Workspace pinnen.
+P1 Static/Gift Species-only Diagnose auf Gen9-Wild-sauberem Stand.
 
 Aktueller Branch:
 
 ```text
-docs/pin-upr-fvx-wild-special-species-fix
+analysis/upr-fvx-cfru-dpe-p1-static-gift-species-only
 ```
 
 Zieldokumente:
 
 ```text
-01_docs/references/tool-manifest.md
+08_tests/randomizer/021_p1_static_gift_species_only.md
+08_tests/randomizer/README.md
 01_docs/SESSION_STATE.md
 01_docs/NEXT_STEPS.md
 00_project-control/roadmap/roadmap-status.md
-02_external/upr-fvx
 ```
 
 ## Naechste Schritte in diesem Block
 
 1. Dokumentation reviewen:
-   - `01_docs/references/tool-manifest.md`
+   - `08_tests/randomizer/021_p1_static_gift_species_only.md`
+   - `08_tests/randomizer/README.md`
    - `01_docs/SESSION_STATE.md`
    - `01_docs/NEXT_STEPS.md`
    - `00_project-control/roadmap/roadmap-status.md`
@@ -40,35 +41,39 @@ git diff --check
 3. Commit erstellen:
 
 ```text
-chore: pin UPR FVX wild special species fix
+docs: diagnose CFRU DPE static gift species only
 ```
 
 4. Branch pushen und Workspace-PR nach `main` erstellen.
 
-## Pin-Stand
+## Diagnosebefund
 
-- Workspace-Submodule `02_external/upr-fvx` ist auf `0f127e9bb9a5c47306fe1f2af11e8e9fe1802717` gepinnt.
-- Submodule-Branch: `compat/upr-fvx-cfru-dpe-wild-banned-special-species`.
-- Top-Commit: `0f127e9b compat: ban CFRU DPE special species from wild pool`.
-- Der Stand dient als Basis fuer die anschliessende P1 Static/Gift Species-only Diagnose.
+- Workspace-Submodule `02_external/upr-fvx` steht auf `0f127e9bb9a5c47306fe1f2af11e8e9fe1802717`.
+- Static/Gift-only Settings mit Seed `274269061345323`.
+- Species-Coverage bleibt vollstaendig: `PokemonCount=1439`, `speciesList.size=1415`.
+- Static/Gift-Pool: `staticPool.size=1414`, Gen1-Gen9 enthalten.
+- Pick-Pfad: `pickedGen4plus=18`, `pickedGen7plus=8`.
+- CLI meldet `Randomized successfully!`, erzeugt aber nur ein leeres 3-Byte-Log und keine Output-ROM.
+- Direkte `GameRandomizer.Results`: `saveSuccessful=false`.
+- Blocker: vier `<null>`-Static-Eintraege im Static/Roamer-/hardcoded-FRLG-Scope.
 
 ## Danach
 
 Naechster minimaler Folgebranch:
 
 ```text
-analysis/upr-fvx-cfru-dpe-p1-static-gift-write-diagnostics
+compat/upr-fvx-cfru-dpe-static-gift-scope-and-write
 ```
 
 Ziel:
 
-- Static-/Gift-Species-only Schreibpfad auf dem gepinnten Gen9-Wild-sauberen UPR-FVX-Stand diagnostizieren.
-- Roamer ausklammern.
-- Kein Learnset-, Trainer-, Palette-, Day/Night- oder Nullslot-Fix im selben Branch.
+- Static/Gift-, Roamer- und hardcoded-FRLG-Eintraege sauber klassifizieren.
+- Null-Species aus dem normalen Static/Gift-Randomizer-Pfad ausklammern oder korrekt modellieren.
+- Echte Static/Gift-Species fuer erweiterte CFRU/DPE-BPRE-Hacks ueber interne SpeciesSet-Identitaet schreiben.
+- Danach denselben Seed erneut mit Reload-/Log-Beweis pruefen.
 
 Offene Folgethemen (separat, nicht in diesem Branch):
 
-- Static/Gift
 - Trainer
 - Learnsets/Movesets
 - TM/Tutor/Abilities

@@ -49,33 +49,41 @@
 - `08_tests/randomizer/README.md` dokumentiert ab jetzt Nummerierungs- und Latest-Konvention fuer Randomizer-Smoke-Protokolle und lokale Artefaktordner.
 - UPR-FVX PR #12 ist offen; der CFRU/DPE-spezifische Wild-Ban entfernt im erkannten Gen9-BPRE-Modus `SPECIES_EGG=0x19C` aus dem Wild-Allowed-Pool, ohne Vanilla/normal Gen3 zu aendern.
 - Lokaler Diagnosebefund nach PR #12: `Bad Egg` faellt von `12` auf `0`, `<unknown>` bleibt `0`, `saveSuccessful=true`; `Area #174 - ALTERING CAVE Grass/Cave` enthaelt statt `Bad Egg` jetzt `Meowscrada` in allen 12 Slots.
+- Workspace PR #56 ist gemerged; `main` pinnt `02_external/upr-fvx` auf `0f127e9b`.
+- Static/Gift Species-only Diagnose auf UPR-FVX `0f127e9b`: Static/Gift-Pool erreicht Gen1-Gen9 (`staticPool.size=1414`), der Pick-Pfad erreicht Gen7/8/9 (`pickedGen4plus=18`, `pickedGen7plus=8`), aber der echte Lauf bricht vor Save/Log an vier `<null>`-Static-Eintraegen ab (`saveSuccessful=false`).
 - ROMs, Saves, Builds, Tool-Binaries und private Dateien sind ausgeschlossen.
 
 ## Aktueller Branch
 
-`docs/pin-upr-fvx-wild-special-species-fix`
+`analysis/upr-fvx-cfru-dpe-p1-static-gift-species-only`
 
 ## Aktueller Arbeitsblock
 
-Workspace-Submodule-Pointer fuer UPR-FVX Wild-Sonder-Species-Fix pinnen.
+P1 Static/Gift Species-only Diagnose auf Gen9-Wild-sauberem Stand.
 
 ## Ziel
 
-Den Workspace-Submodule-Pointer fuer `02_external/upr-fvx` bewusst auf den Planton361-Fork-Commit `0f127e9b` festhalten, damit die anschliessende P1 Static/Gift Species-only Diagnose auf dem Gen9-Wild-sauberen Stand startet.
+Festhalten, ob Static/Gift-Randomization mit vollstaendigem Gen1-Gen9-Species-Pool auf dem gepinnten UPR-FVX-Stand laden, auswaehlen, speichern und loggen kann. Keine Codeaenderung, kein Fix.
 
 ## In diesem Arbeitsblock geprueft / geaendert
 
-- Workspace `main` per Fast-Forward aktualisiert und Branch `docs/pin-upr-fvx-wild-special-species-fix` erstellt.
-- `main` enthaelt bereits den Workspace-Gitlink fuer `02_external/upr-fvx` auf `0f127e9bb9a5c47306fe1f2af11e8e9fe1802717`.
-- Submodule-Checkout geprueft: Branch `compat/upr-fvx-cfru-dpe-wild-banned-special-species`, HEAD `0f127e9b`, keine lokalen uncommitted Aenderungen.
-- Tool-Manifest auf den gepinnten Planton361-Fork-Stand fuer den CFRU/DPE-Wild-Sonder-Species-Fix aktualisiert.
-- Keine Codeaenderungen und keine Static/Gift-Diagnose in diesem Mini-Branch.
+- PR #56 als gemerged geprueft und `main` per Fast-Forward aktualisiert.
+- Analysebranch `analysis/upr-fvx-cfru-dpe-p1-static-gift-species-only` auf aktuellen `main`-Stand gebracht.
+- UPR-FVX-Submodule-Stand geprueft: `0f127e9bb9a5c47306fe1f2af11e8e9fe1802717`, Branch `compat/upr-fvx-cfru-dpe-wild-banned-special-species`, Working Tree sauber.
+- UPR-FVX gebaut: `./gradlew clean :random:jar` erfolgreich.
+- Static/Gift-only CLI-Lauf mit Seed `274269061345323` ausgefuehrt.
+- Direkte `GameRandomizer.Results`-Diagnose ueber temporaeren Helper ausserhalb des Repos ausgefuehrt.
+- Neues Protokoll erstellt: `08_tests/randomizer/021_p1_static_gift_species_only.md`.
+- `08_tests/randomizer/README.md` auf Latest Nr. 021 aktualisiert.
 
 ## Ergebnis
 
-- UPR-FVX ist im Workspace auf `0f127e9b` gepinnt.
-- Der Commit enthaelt den CFRU/DPE-Wild-Sonder-Species-Fix (`compat: ban CFRU DPE special species from wild pool`).
-- Der Pin ist die dokumentierte Basis fuer die naechste P1 Static/Gift Species-only Diagnose.
+- Species-Coverage bleibt stabil: `PokemonCount=1439`, `speciesList.size=1415`, `maxSpeciesIdentityNumber=1439`, Gen7/8/9 sichtbar.
+- Static/Gift-Pool ist vollstaendig genug fuer Gen1-Gen9: `staticPool.size=1414`, Generationen `{1=271, 2=118, 3=188, 4=149, 5=191, 6=127, 7=123, 8=127, 9=120}`.
+- Static/Gift-Pick-Pfad erreicht Gen7/8/9: `pickedGen4plus=18`, `pickedGen7plus=8` fuer Seed `274269061345323`.
+- CLI meldet `Randomized successfully!`, erzeugt aber nur ein leeres 3-Byte-Log und keine Output-ROM.
+- Direkter Ergebnisstatus: `saveSuccessful=false`, NPE in `StaticPokemonRandomizer.randomizeStaticPokemon()` wegen vier `<null>`-Static-Eintraegen.
+- Static/Gift ist damit noch nicht P1-supported; spaeterer Scope-Fix ist noetig, Write-Fix ueber interne SpeciesSet-Identitaet sehr wahrscheinlich.
 
 ## Noch nicht gestartet
 
@@ -90,7 +98,7 @@ Den Workspace-Submodule-Pointer fuer `02_external/upr-fvx` bewusst auf den Plant
 
 Keine ROMs, Saves, Builds oder Tool-Binaries committed.
 
-Keine ROMs in ChatGPT hochgeladen. In diesem Mini-Branch wurden keine ROMs gelesen, kopiert, geaendert, gebaut oder randomisiert.
+Keine ROMs in ChatGPT hochgeladen. ROMs wurden nur lokal fuer den Diagnose-Lauf gelesen; Artefakte blieben unter `05_builds/**` und wurden nicht committed.
 
 Lokale ignored Smoke-Outputs wurden nur summarisch ausgewertet. Private absolute Pfade und private ROM-Dateinamen wurden nicht dokumentiert.
 
@@ -98,7 +106,7 @@ Keine externen Original-Upstreams kontaktiert.
 
 Keine Aenderungen direkt auf `main`.
 
-Keine Workspace-Codeaenderungen und keine UPR-FVX-Codeaenderungen.
+Keine Workspace-Codeaenderungen ausser Dokumentation. Keine UPR-FVX-Codeaenderungen.
 
 Keine MCP-Configs mit Secrets angelegt.
 
@@ -116,6 +124,6 @@ git diff --check
 
 ## Naechster empfohlener Branch
 
-`analysis/upr-fvx-cfru-dpe-p1-static-gift-write-diagnostics`
+`compat/upr-fvx-cfru-dpe-static-gift-scope-and-write`
 
-Zweck: Static-/Gift-Species-only Diagnose auf dem gepinnten Gen9-Wild-sauberen UPR-FVX-Stand. Kein Learnset-, Trainer-, Palette-, Day/Night- oder Nullslot-Fix im selben Branch.
+Zweck: Static/Gift-, Roamer- und hardcoded-FRLG-Eintraege sauber klassifizieren, Null-Species aus dem normalen Static/Gift-Pfad ausklammern oder modellieren und echte Static/Gift-Species fuer erweiterte CFRU/DPE-BPRE-Hacks ueber interne SpeciesSet-Identitaet schreiben.

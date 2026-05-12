@@ -24,10 +24,10 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Aktueller Branch | `docs/pin-upr-fvx-wild-special-species-fix` |
-| Nächster Branch | `analysis/upr-fvx-cfru-dpe-p1-static-gift-write-diagnostics` |
-| Aktueller Fokus | UPR-FVX Wild-Sonder-Species-Fix im Workspace pinnen |
-| ROM-/Build-Arbeit | keine Builds, keine Randomizer-Laeufe, keine ROM-Zugriffe |
+| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-p1-static-gift-species-only` |
+| Nächster Branch | `compat/upr-fvx-cfru-dpe-static-gift-scope-and-write` |
+| Aktueller Fokus | P1 Static/Gift Species-only Diagnose |
+| ROM-/Build-Arbeit | lokaler Diagnose-Lauf nur unter `05_builds/**`; keine Artefakte committen |
 | Externe Repos | als Submodule auf Planton361-Forks eingebunden |
 | Forks | Planton361-Forks fuer UPR-FVX, DPE Gen9 und CFRU dokumentiert |
 | Installationen | devkitPro/devkitARM lokal dokumentiert; keine Installation in diesem Analyseblock |
@@ -82,18 +82,19 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | 08 Randomizer-Kompatibilität | Wild-Bad-Egg-Diagnose | `12` `Bad Egg`-Slots liegen komplett in `Area #174 - ALTERING CAVE`; Ursache ist sehr wahrscheinlich `SPECIES_EGG=0x19C` im CFRU/DPE-Wild-Allowed-Pool |
 | 08 Randomizer-Kompatibilität | CFRU/DPE-Special-Species-Wild-Ban | UPR-FVX PR #12 offen; lokaler Smoke zeigt `Bad Egg=0`, `<unknown>=0`, `saveSuccessful=true` |
 | 08 Randomizer-Kompatibilität | UPR-FVX Wild-Fix-Pin | Workspace-Submodule `02_external/upr-fvx` ist auf Planton361-Fork-Commit `0f127e9b` fuer den CFRU/DPE-Wild-Sonder-Species-Fix gepinnt |
+| 08 Randomizer-Kompatibilität | P1 Static/Gift Species-only Diagnose | Gen1-Gen9-Pool vorhanden und Pick erreicht Gen7/8/9; echter Save/Log blockiert an vier `<null>`-Static-Eintraegen |
 
 ## In Arbeit
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | UPR-FVX Wild-Fix-Pin reviewen | Workspace-Pin auf `0f127e9b` als Basis fuer P1 Static/Gift reviewen |
+| 08 Randomizer-Kompatibilität | P1 Static/Gift-Diagnose reviewen | Diagnoseprotokoll fuer Pool, Pick, Log und Save-Blocker reviewen |
 
 ## Als Nächstes
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | P1 Static/Gift-Diagnose | Static-/Gift-Species-only Schreibpfad auf gepinntem Gen9-Wild-sauberen Stand pruefen |
+| 08 Randomizer-Kompatibilität | Static/Gift Scope und Write | Null-/Roamer-/hardcoded-FRLG-Scope klassifizieren und echte Static/Gift-Species intern schreiben |
 
 ## Noch offen
 
@@ -132,7 +133,8 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Maintenance | `maintenance/randomizer-smoke-artifact-cleanup` | lokale Smoke-Artefakte bereinigen und Protokoll-/Latest-Konvention dokumentieren | aktueller Dokumentationsbranch; keine Codeaenderungen, keine Builds, keine Randomizer-Laeufe |
 | Wild cleanup | `analysis/upr-fvx-cfru-dpe-wild-bad-egg-diagnostics` | `Bad Egg` im bestaetigten Gen9-Wild-Log klassifizieren | Diagnosebranch; `SPECIES_EGG=0x19C` ist wahrscheinlich im Allowed Pool |
 | Wild cleanup | `compat/upr-fvx-cfru-dpe-wild-banned-special-species` | CFRU/DPE-Sonder-Species aus Wild-Replacement-Pools bannen | UPR-FVX PR #12 offen; `SPECIES_EGG=0x19C` entfernt, `Bad Egg=0` bestaetigt |
-| P1c | `analysis/upr-fvx-cfru-dpe-p1-static-gift-write-diagnostics` | Static-/Gift-Species-only Diagnose | naechster minimaler Schritt; Roamer ausklammern |
+| P1c | `analysis/upr-fvx-cfru-dpe-p1-static-gift-species-only` | Static-/Gift-Species-only Diagnose | Pool/Pick bestaetigt Gen1-Gen9; Save/Log blockiert an Null-Static-Scope |
+| P1d | `compat/upr-fvx-cfru-dpe-static-gift-scope-and-write` | Static/Gift-Scope und interner Species-Write | naechster minimaler Schritt; Roamer/hardcoded-FRLG sauber abgrenzen |
 | P2 | `randomizer/cfru-day-night-wild-table-analysis` | CFRU-Custom-Day/Night-Wild-Tabellen separat untersuchen | erst nach P1-Schreibpfad-Diagnose; Route-1-Fallback bleibt stabil |
 | P3 | noch festlegen | Nullslot-`<unknown>` mit `rawInternalSpeciesId=0` klassifizieren | nicht mit GenRestrictions vermischen |
 | P4 | noch festlegen | BizHawk-/Ironmon-Tracker-/RAM-Mapping pruefen | erst nach stabiler ROM-Randomizer-Kompatibilitaet |
@@ -175,12 +177,25 @@ Excel-Roadmap:
 ## Nächster empfohlener Branch
 
 ```text
-analysis/upr-fvx-cfru-dpe-p1-static-gift-write-diagnostics
+compat/upr-fvx-cfru-dpe-static-gift-scope-and-write
 ```
 
-Zweck: Nach bestaetigter Gen9-Wild-Coverage Static-/Gift-Species-only Schreibpfade diagnostizieren. Kein Learnset-, Trainer-, Palette-, Day/Night- oder Nullslot-Fix im selben Branch.
+Zweck: Null-/Roamer-/hardcoded-FRLG-Scope der Static/Gift-Liste klassifizieren und echte Static/Gift-Species fuer erweiterte CFRU/DPE-BPRE-Hacks ueber interne SpeciesSet-Identitaet schreiben. Kein Trainer-, Learnset-, Palette-, Day/Night- oder Nullslot-Fix im selben Branch.
 
 ## Arbeitsblock-Log
+
+### 2026-05-12 – analysis/upr-fvx-cfru-dpe-p1-static-gift-species-only
+
+- PR #56 als gemerged geprueft und `main` per Fast-Forward aktualisiert.
+- Analysebranch auf den gepinnten UPR-FVX-Stand `0f127e9b` gebracht.
+- UPR-FVX read-only geprueft und gebaut: `./gradlew clean :random:jar` erfolgreich.
+- Static/Gift-only Diagnose mit Seed `274269061345323` ausgefuehrt.
+- Befund: `PokemonCount=1439`, `speciesList.size=1415`, Static/Gift-Pool `1414` mit Gen1-Gen9.
+- Pick-Pfad erreicht Gen7/8/9: `pickedGen4plus=18`, `pickedGen7plus=8`.
+- Echter Save/Log blockiert: CLI meldet Erfolg, aber `GameRandomizer.Results.wasSaveSuccessful=false`, Log ist leer und keine Output-ROM entsteht.
+- Ursache im Diagnosebefund: vier `<null>`-Static-Eintraege im Static/Roamer-/hardcoded-FRLG-Scope.
+- Neues Protokoll erstellt: `08_tests/randomizer/021_p1_static_gift_species_only.md`.
+- Keine Codeaenderungen, keine Fixes, keine committed ROM-/Build-Artefakte.
 
 ### 2026-05-11 – setup/workspace-build-randomizer-smoke
 
