@@ -41,46 +41,51 @@
 - Lokaler Diagnosebefund nach PR #10: `saveTrainers()`/`getMovesLearnt()` blockiert nicht mehr bei `0x25e49c`; `PokemonCount=1439`, `speciesList.size=1415` und Gen7/8/9-Coverage bleiben erhalten.
 - Neuer Folgeblocker nach PR #10: `savePokemonPalettes()` bricht mit `no compressed data found at offset 0x16b9c08` ab; `saveSuccessful=false`, daher entsteht weiterhin kein nutzbarer Wild-Log.
 - Der Palette-Save-Blocker ist read-only modelliert: `0x16b9c08` ist das alte Palette-Datenziel `gFrontSprite252Pal` (`0x096B9C08`), das DPE fuer die Gap-/Dummy-Slots `[252]..[276]` mehrfach verwendet. FVX schreibt Paletten auch ohne Palette-Randomization neu und verletzt damit die `DataRewriter`-Annahme, dass nur ein Pointer auf den alten komprimierten Datenblock zeigt.
+- UPR-FVX PR #11 ist offen; der Skip-Unchanged-Palette-Save-Unblocker ueberspringt fuer CFRU/DPE-Gen9-BPRE-Hacks den Pokemon-Palette-Save, wenn alle geladenen Paletten unveraendert sind.
+- Lokaler Diagnosebefund nach PR #11: `PokemonCount=1439`, `speciesList.size=1415`, `generationCounts={1=271, 2=118, 3=188, 4=174, 5=191, 6=127, 7=123, 8=127, 9=120}`, Palette-Load ueberspringt weiterhin `normal=2 shiny=2`, Palette-Save loggt den Unchanged-Skip, Output-ROM und Wild-Log entstehen wieder.
 - ROMs, Saves, Builds, Tool-Binaries und private Dateien sind ausgeschlossen.
 
 ## Aktueller Branch
 
-`analysis/upr-fvx-cfru-dpe-palette-save-blocker`
+`analysis/upr-fvx-cfru-dpe-skip-unchanged-palette-save`
 
 ## Aktueller Arbeitsblock
 
-Read-only Diagnose des `savePokemonPalettes()`-Blockers bei `0x16b9c08`.
+Dokumentation des UPR-FVX-Skip-Unchanged-Palette-Save-Unblockers und des lokalen Diagnosebefunds.
 
 ## Ziel
 
 Konkret festhalten:
 
-- warum `savePokemonPalettes()` trotz deaktivierter Palette-Randomization laeuft
-- welchem DPE-Palette-Symbol `0x16b9c08` entspricht
-- warum der defensive Palette-Load diesen Save-Blocker nicht abdeckt
-- welcher minimale Folgefix den Save-Pfad entblocken sollte
+- welcher UPR-FVX-Commit den unveraenderten CFRU/DPE-Palette-Save ueberspringt
+- ob der `0x16b9c08`-Abbruch weg ist
+- ob `PokemonCount=1439` und Gen7/8/9-Coverage erhalten bleiben
+- ob wieder ein Wild-Log entsteht
 
 ## In diesem Arbeitsblock geprueft / geaendert
 
-- Workspace `main` per Fast-Forward geprueft und Branch `analysis/upr-fvx-cfru-dpe-palette-save-blocker` erstellt.
-- UPR-FVX-, DPE/CFRU- und CyanSMP64-NatDex-Quellen read-only analysiert.
-- Neues Modell erstellt: `01_docs/compat/upr-fvx-cfru-dpe-palette-save-blocker.md`.
-- Keine Codeaenderungen, keine Builds und keine ROM-Zugriffe durchgefuehrt.
+- Workspace `main` per Fast-Forward geprueft und Branch `analysis/upr-fvx-cfru-dpe-skip-unchanged-palette-save` erstellt.
+- UPR-FVX Branch `compat/upr-fvx-cfru-dpe-skip-unchanged-palette-save` von `compat/firered-gen9-cfru-dpe` erstellt.
+- UPR-FVX Commit `8926912a compat: skip unchanged CFRU DPE palette save` erstellt und PR #11 geoeffnet.
+- UPR-FVX `./gradlew test` und `./gradlew clean :random:jar` ausgefuehrt.
+- Lokalen CFRU/DPE-CLI-Lauf gestartet; Palette-Save-Unblock und wieder entstandenen Wild-Log dokumentiert.
+- Neues Protokoll erstellt: `08_tests/randomizer/upr-fvx-cfru-dpe-skip-unchanged-palette-save-diagnostics.md`.
 
 ## Ergebnis
 
-- `savePokemonPalettes()` laeuft bedingungslos in `prepareSaveRom()`, unabhaengig davon, ob `PokemonPalettesMod.RANDOM` aktiv war.
-- `0x16b9c08` entspricht als GBA-Adresse `0x096B9C08` dem DPE-Symbol `gFrontSprite252Pal`.
-- DPE `Palette_Table.c` nutzt `gFrontSprite252Pal` mehrfach fuer `[252]..[276]`; der FVX-Save-Pfad schreibt alle geladenen Paletten neu und kann dadurch einen bereits freigegebenen/geteilten Datenblock erneut dekomprimieren wollen.
-- Der defensive Palette-Load schuetzt nur fehlende/null geladene Paletten, nicht unveraenderte, gemeinsam genutzte oder nicht savebare Palette-Daten.
-- Minimal empfohlener Folgefix: CFRU/DPE-Pokemon-Palette-Save ueberspringen, solange keine Palette-Randomization aktiv war beziehungsweise keine Palette explizit geaendert wurde.
+- `savePokemonPalettes()` bricht nicht mehr bei `0x16b9c08` ab, wenn `Pokemon Palettes: Unchanged` gilt.
+- Count und Coverage bleiben stabil: `PokemonCount=1439`, `speciesList.size=1415`, `generationCounts={1=271, 2=118, 3=188, 4=174, 5=191, 6=127, 7=123, 8=127, 9=120}`.
+- Der lokale Lauf erzeugt wieder eine Output-ROM und einen nicht-leeren Wild-Log.
+- Sichtbare Gen7/8/9-Wild-Beispiele im Log sind unter anderem `Magearna`, `Meltan`, `Hatenna`, `Calyrex`, `Glimmet`, `Toedscool` und `Tatsugiri`.
+- CFRU/DPE-Pokemon-Palette-Randomization bleibt partial/unsupported; bei tatsaechlich geaenderten Paletten faellt der Code bewusst in den bestehenden Save-Pfad.
 
 ## Noch nicht gestartet
 
 - UPR-FVX-Review/Merge von PR #8
 - UPR-FVX-Review/Merge von PR #9
 - UPR-FVX-Review/Merge von PR #10
-- UPR-FVX-Fix fuer den `savePokemonPalettes()`-Unblocker bei unveraenderten CFRU/DPE-Paletten
+- UPR-FVX-Review/Merge von PR #11
+- Post-Merge-Wild-Smoke nach PR #11 auf `compat/firered-gen9-cfru-dpe`
 - Separates DPE/CFRU-Learnset-Profil fuer `gLevelUpLearnsets`
 - Praktische P1-Diagnoselaeufe fuer Static/Gifts und Trainer-Species
 - Evolution-/Learnset-/TM-/Tutor-/Ability-Datenmodellierung nach der Schreibpfadmatrix
@@ -92,13 +97,13 @@ Konkret festhalten:
 
 Keine ROMs, Saves, Builds oder Tool-Binaries committed.
 
-Keine ROMs in ChatGPT hochgeladen. In diesem read-only Analyseblock wurden keine ROMs gelesen oder ausgefuehrt.
+Keine ROMs in ChatGPT hochgeladen. ROMs wurden nur lokal fuer den Diagnose-Lauf geladen; Artefakte blieben unter `05_builds/**` und wurden nicht committed.
 
 Keine externen Original-Upstreams kontaktiert.
 
 Keine Aenderungen direkt auf `main`.
 
-Keine UPR-FVX-Codeaenderung in diesem Branch.
+UPR-FVX-Codeaenderung erfolgte nur im Submodule auf Arbeitsbranch `compat/upr-fvx-cfru-dpe-skip-unchanged-palette-save`; Workspace dokumentiert den Submodule-Pointer.
 
 Keine MCP-Configs mit Secrets angelegt.
 
@@ -116,6 +121,6 @@ git diff --check
 
 ## Naechster empfohlener Branch
 
-`compat/upr-fvx-cfru-dpe-skip-unchanged-palette-save`
+`analysis/upr-fvx-cfru-dpe-post-merge-wild-smoke`
 
-Zweck: `savePokemonPalettes()` fuer CFRU/DPE nur dann ausfuehren, wenn Pokemon-Palette-Randomization wirklich aktiv war oder Paletten explizit geaendert wurden. Kein Count-, Learnset-, Trainer-, Static-/Gift-, Wild- oder Day/Night-Fix im selben Branch.
+Zweck: Nach Merge von UPR-FVX PR #11 die komplette Gen9-Wild-only-Fixkette auf `compat/firered-gen9-cfru-dpe` bestaetigen. Kein Static/Gift-, Learnset-, Trainer-, Palette-Randomizer- oder Day/Night-Fix im selben Branch.
