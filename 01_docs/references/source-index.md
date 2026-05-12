@@ -213,6 +213,38 @@ Ergebnis:
 - Evolutions, Learnsets, TM/HM, Tutor und Abilities brauchen zuerst mehr Datenmodellierung, weil Quelle, Tabellenbreite, Hidden Ability und Map-Key-Semantik ueber einen kleinen Wild-Write-aehnlichen Patch hinausgehen.
 - Empfohlener naechster Diagnosebranch ist `analysis/upr-fvx-cfru-dpe-p1-starter-write-diagnostics`.
 
+## CFRU/DPE Gen9-Species-Coverage 2026-05-12
+
+Arbeitsblock: `analysis/upr-fvx-cfru-dpe-gen9-species-coverage`.
+
+Neue Workspace-Referenz:
+
+- `01_docs/compat/upr-fvx-cfru-dpe-gen9-species-coverage.md`
+
+Zusaetzlich relevant eingeordnete lokale Quellen:
+
+| Bereich | Lokaler Pfad | Zweck |
+|---|---|---|
+| DPE Species-Grenzen | `02_external/Dynamic-Pokemon-Expansion-Gen-9/include/species.h` | Gen7-/Gen8-/Gen9-Startpunkte und `NUM_SPECIES = SPECIES_PECHARUNT + 1` |
+| CFRU Species-Grenzen | `02_external/CFRU-expansion/include/constants/species.h` | gespiegelter DPE-ID-Raum, `NUM_SPECIES_GEN_7`, `NUM_SPECIES_GEN_8`, `NUM_SPECIES` |
+| DPE Pokedex-Grenzen | `02_external/Dynamic-Pokemon-Expansion-Gen-9/include/pokedex.h` | National-Dex bis `NATIONAL_DEX_PECHARUNT = 1025` und `NATIONAL_DEX_COUNT` |
+| CFRU Runtime-Dex-Count | `02_external/CFRU-expansion/src/config.h` | `NATIONAL_DEX_COUNT 1025` und `NUM_SPECIES_RANDOMIZER NUM_SPECIES` |
+| DPE Dex-Mapping | `02_external/Dynamic-Pokemon-Expansion-Gen-9/src/Species_To_Pokdex_Table.c` | Gen7-Gen9 Species-to-National-Dex-Mapping bis Pecharunt |
+| DPE Pokedex-Orders | `02_external/Dynamic-Pokemon-Expansion-Gen-9/src/Pokedex_Orders.c` | Species-ID-orientierte Dex-Ordnungen bis Terapagos/Pecharunt |
+| DPE Gen9-Daten | `02_external/Dynamic-Pokemon-Expansion-Gen-9/src/Base_Stats.c`, `src/Learnsets.c`, `src/Evolution Table.c` | Gen7-Gen9-Tabelleneintraege bis Pecharunt |
+| CFRU Gen9-Learnsets | `02_external/CFRU-expansion/src/Tables/level_up_learnsets.c` | Gen7-Gen9-Learnset-Eintraege im CFRU-Kontext |
+| FVX Count-Heuristik | `02_external/upr-fvx/romio/src/main/java/com/uprfvx/romio/romhandlers/Gen3RomHandler.java` | `basicBPRE10HackSupport()`, `loadPokemonNames()`, `loadPokedexOrder()`, `loadSpeciesStats()` |
+| FVX Species-/Generation-Modell | `02_external/upr-fvx/romio/src/main/java/com/uprfvx/romio/constants/SpeciesIDs.java`, `romio/src/main/java/com/uprfvx/romio/gamedata/GenRestrictions.java` | Gen8/Gen9-Konstanten, `generationOf()`-Schwellen und `MAX_GENERATION=7` |
+| CyanSMP64 NatDex-Randomizer | `02_external/references/cyansmp64-upr-zx-natdex/src/com/dabomstew/pkrandom/pokemon/GenRestrictions.java`, `src/com/dabomstew/pkrandom/romhandlers/AbstractRomHandler.java` | Gen8/Gen9-Restriction-Bits und NatDex-Range-Strategie |
+| CyanSMP64 FireRed NatDex | `02_external/references/cyansmp64-pokefirered-natdex/src/rom_header_gf.c`, `include/constants/species.h`, `include/constants/pokedex.h` | explizite NatDex-Metadaten und Species-/Dex-Grenzen |
+
+Ergebnis:
+
+- DPE/CFRU-Source ist auf vollstaendige Gen9-Species bis Pecharunt ausgelegt.
+- Der aktuelle FVX-Diagnose-Load endet bei `PokemonCount=823` und erreicht damit weder Gen7 noch Gen8/Gen9.
+- Wahrscheinlichster Engpass ist die BPRE-Hack-Heuristik aus `PokemonNames`, `PokemonMovesets` und `PokedexOrder`, nicht fehlende DPE/CFRU-Source-Coverage.
+- Naechste Diagnose muss lokal mit ROM den konkreten Abbruchschritt um interne IDs `820..900` protokollieren.
+
 ## Regel
 
 Vor produktiver Nutzung müssen Branch, Commit-Hash, lokaler Pfad und Zweck im Tool-Manifest festgehalten werden.
