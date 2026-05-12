@@ -24,9 +24,9 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Aktueller Branch | `compat/upr-fvx-cfru-dpe-trainer-scope-and-write` |
-| Nächster Branch | `analysis/upr-fvx-cfru-dpe-p1-evolution-species-only` |
-| Aktueller Fokus | P1 Trainer-Scope und Trainer-Species-Write |
+| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-p1-evolutions-species-only` |
+| Nächster Branch | `compat/upr-fvx-cfru-dpe-evolutions-scope-and-write` |
+| Aktueller Fokus | P1 Evolution-Species-only Diagnose |
 | ROM-/Build-Arbeit | lokaler Diagnose-Lauf nur unter `05_builds/**`; keine Artefakte committen |
 | Externe Repos | als Submodule auf Planton361-Forks eingebunden |
 | Forks | Planton361-Forks fuer UPR-FVX, DPE Gen9 und CFRU dokumentiert |
@@ -85,30 +85,31 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | 08 Randomizer-Kompatibilität | P1 Static/Gift Species-only Diagnose | Gen1-Gen9-Pool vorhanden und Pick erreicht Gen7/8/9; echter Save/Log blockiert an vier `<null>`-Static-Eintraegen |
 | 08 Randomizer-Kompatibilität | P1 Static/Gift Scope und Write | UPR-FVX PR #13 gemerged; `009178e8` bestaetigt `saveSuccessful=true`, nichtleeren Static/Gift-Log und `writeReloadMismatches=0` |
 | 08 Randomizer-Kompatibilität | P1 Trainer-Species-only Diagnose | Trainer-Pool enthaelt Gen1-Gen9, aber `randomizeTrainerPokes()` haengt vor Save/Log in `getRandomAbilitySlot()` auf Zero-Ability-Sonder-Species |
-| 08 Randomizer-Kompatibilität | P1 Trainer-Scope und Species-Write | UPR-FVX PR #14 offen; `56ec749e` bestaetigt `saveSuccessful=true`, nichtleeren Trainer-Log und `writeReloadMismatches=0` |
+| 08 Randomizer-Kompatibilität | P1 Trainer-Scope und Species-Write | UPR-FVX PR #14 gemerged; Workspace PR #60 gemerged; `56ec749e` bestaetigt `saveSuccessful=true`, nichtleeren Trainer-Log und `writeReloadMismatches=0` |
+| 08 Randomizer-Kompatibilität | P1 Evolution-Species-only Diagnose | Evolution-Pool Gen1-Gen9 bestaetigt; `saveSuccessful=true`, aber Direct Log-Fehler und `writeReloadMismatches=146` blockieren P1-Support |
 
 ## In Arbeit
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Trainer-Scope und Species-Write reviewen | UPR-FVX PR #14 und Workspace-Pin/Diagnoseprotokoll reviewen |
+| 08 Randomizer-Kompatibilität | Evolution-Species-only Diagnose reviewen | Diagnoseprotokoll #025 reviewen und als Basis fuer Evolution-Scope-/Write-Fix mergen |
 
 ## Als Nächstes
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Naechsten P1-Species-Pfad diagnostizieren | Evolution-Species-only als separaten Diagnoseblock vorbereiten |
+| 08 Randomizer-Kompatibilität | Evolution-Scope und Species-Write fixen | Evolution-Source-/Target-Write und Reload fuer CFRU/DPE ueber interne SpeciesSet-Identitaet absichern |
 
 ## Noch offen
 
 | Paket | Aufgabe | Hinweise |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Trainer-Pokémon erweitern | Trainer-Species-only ist lokal P1-supported; Trainer-Movesets, Held Items und weitere Trainer-Pfade bleiben separat |
+| 08 Randomizer-Kompatibilität | Trainer-Pokémon erweitern | Trainer-Species-only ist P1-supported; Trainer-Movesets, Held Items und weitere Trainer-Pfade bleiben separat |
 | 08 Randomizer-Kompatibilität | DPE-Gesamtumfang/PokemonCount praktisch bewerten | Count-Diagnose zeigt: Names bis Pecharunt, Movesets kappen auf 930, PokedexOrder kappt final auf 823; Modell empfiehlt Count nicht aus PokedexOrder abzuleiten |
 | 08 Randomizer-Kompatibilität | Wild-Log-`<unknown>` aufloesen | eindeutige Rohwerte sind `rawInternalSpeciesId=0`; Nullslots separat klassifizieren |
 | 08 Randomizer-Kompatibilität | CFRU-Day/Night-Custom-Wild-Tabellen analysieren | getrennt vom Vanilla/Fallback-Wild-Pool behandeln |
+| 08 Randomizer-Kompatibilität | Evolution-Scope-/Write fixen | Diagnose zeigt `writeReloadMismatches=146` und Direct-Log-Fehler; spaeterer Fixblock erforderlich |
 | 08 Randomizer-Kompatibilität | Learnsets testen | späterer Einzeltest |
-| 08 Randomizer-Kompatibilität | Evolutions testen | späterer Einzeltest |
 | 08 Randomizer-Kompatibilität | Items/Moves/Abilities testen | späterer Einzeltest |
 | 09 Ironmon | BizHawk-/Ironmon-Tracker-Anbindung prüfen | erst nach stabiler Randomizer-Kompatibilität |
 
@@ -139,7 +140,8 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | P1d | `compat/upr-fvx-cfru-dpe-static-gift-scope-and-write` | Static/Gift-Scope und interner Species-Write | UPR-FVX `009178e8`; lokal bestaetigt mit `saveSuccessful=true`, Gen7/8/9 im Log und `writeReloadMismatches=0` |
 | P1e | `analysis/upr-fvx-cfru-dpe-p1-trainer-species-only` | Trainer-Species-only Diagnose | Trainer-Pool Gen1-Gen9 bestaetigt; blockiert vor Save in `getRandomAbilitySlot()` auf Zero-Ability-Sonder-Species |
 | P1f | `compat/upr-fvx-cfru-dpe-trainer-scope-and-write` | Trainer-Scope und Species-Write | UPR-FVX `56ec749e`; lokal bestaetigt mit `saveSuccessful=true`, Gen7/8/9 im Log und `writeReloadMismatches=0` |
-| P1g | `analysis/upr-fvx-cfru-dpe-p1-evolution-species-only` | Evolution-Species-only Diagnose | naechster minimaler Diagnoseblock; keine Trainer-Moveset-/Learnset-/Item-/Ability-Randomization-Fixes |
+| P1g | `analysis/upr-fvx-cfru-dpe-p1-evolutions-species-only` | Evolution-Species-only Diagnose | Pool/Pick bestaetigt Gen1-Gen9; Save erzeugt Output-ROM, aber Direct-Log-Fehler und `writeReloadMismatches=146` |
+| P1h | `compat/upr-fvx-cfru-dpe-evolutions-scope-and-write` | Evolution-Scope und Species-Write | naechster minimaler Fixblock; keine Wild-, Starter-, Static/Gift-, Trainer-, Learnset-, TM-/Tutor-, Ability- oder Palette-Fixes |
 | P2 | `randomizer/cfru-day-night-wild-table-analysis` | CFRU-Custom-Day/Night-Wild-Tabellen separat untersuchen | erst nach P1-Schreibpfad-Diagnose; Route-1-Fallback bleibt stabil |
 | P3 | noch festlegen | Nullslot-`<unknown>` mit `rawInternalSpeciesId=0` klassifizieren | nicht mit GenRestrictions vermischen |
 | P4 | noch festlegen | BizHawk-/Ironmon-Tracker-/RAM-Mapping pruefen | erst nach stabiler ROM-Randomizer-Kompatibilitaet |
@@ -182,12 +184,25 @@ Excel-Roadmap:
 ## Nächster empfohlener Branch
 
 ```text
-analysis/upr-fvx-cfru-dpe-p1-evolution-species-only
+compat/upr-fvx-cfru-dpe-evolutions-scope-and-write
 ```
 
-Zweck: naechsten P1-Species-Pfad separat diagnostizieren. Kein Trainer-Moveset-, Learnset-, Palette-, Day/Night- oder Ability-Fix im selben Branch.
+Zweck: Evolution-Species-Scope, Evolution-Species-Write/Reload und Evolution-Log defensiv fuer CFRU/DPE absichern. Kein Wild-, Starter-, Static/Gift-, Trainer-, Learnset-, TM-/Tutor-, Ability- oder Palette-Fix im selben Branch.
 
 ## Arbeitsblock-Log
+
+### 2026-05-12 – analysis/upr-fvx-cfru-dpe-p1-evolutions-species-only
+
+- UPR-FVX PR #14 und Workspace PR #60 als gemerged geprueft; `main` per Fast-Forward aktualisiert.
+- Analysebranch `analysis/upr-fvx-cfru-dpe-p1-evolutions-species-only` erstellt.
+- UPR-FVX read-only geprueft und gebaut: Submodule steht auf Planton361-Fork-Commit `56ec749eca12a8637c20f943b520a9bb6a9d469a`; `./gradlew clean :random:jar` erfolgreich.
+- Evolution-Species-only Diagnose mit Seed `274269061345323` ausgefuehrt.
+- Befund: `PokemonCount=1439`, `speciesList.size=1415`, Evolution-Pool `1414` mit Gen1-Gen9.
+- Evolution-Picks erreichen Gen7/8/9: `after.pickedGen7plus=43`, `after.toGenerationCounts={1=35, 2=16, 3=24, 4=30, 5=20, 6=22, 7=18, 8=13, 9=12}`.
+- Save gelingt und Output-ROM entsteht; CLI-Log ist nicht leer, Direct Results meldet aber `logSuccessful=false` in `RandomizationLogger.evolutionMethodToString()`.
+- Write/Reload bleibt blockiert: Reload verliert Evolution-Eintraege und Gen8/9-Ziele; `writeReloadMismatches=146`.
+- Neues Protokoll erstellt: `08_tests/randomizer/025_p1_evolutions_species_only.md`.
+- Keine Codeaenderungen, keine Fixes, keine committed ROM-/Build-Artefakte.
 
 ### 2026-05-12 – compat/upr-fvx-cfru-dpe-trainer-scope-and-write
 
