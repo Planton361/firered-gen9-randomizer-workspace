@@ -6,50 +6,49 @@
 - GitHub-Repo `Planton361/firered-gen9-randomizer-workspace` existiert und bleibt Source of Truth.
 - `main` ist Default Branch und bleibt stabil.
 - Branch Protection und PR-Pflicht sind laut dokumentiertem Projektstand eingerichtet.
-- Workspace PR #70 ist gemerged; `main` enthaelt das CFRU/DPE-Move-Datenmodell aus Diagnose 033.
+- UPR-FVX PR #18 und Workspace PR #71 sind gemerged.
 - UPR-FVX-Fix `c71fd75e67f5a839560bbf5de7c6f17317a64bd1` liest fuer sicher erkannte CFRU/DPE Gen9-BPRE-Hacks `MOVES_COUNT=992` und `BattleMove.split`.
-- Trainer Movesets-Kombinationen wurden nach dem Move-Data-Reader-Fix erneut diagnostiziert und bleiben P1-stabil.
+- TM/HM-only wurde auf dem Move-Data-Reader-Fixstand diagnostiziert und ist blockiert.
 - ROMs, Saves, Builds, Tool-Binaries und private Dateien sind ausgeschlossen.
 
 ## Aktueller Branch
 
-`compat/upr-fvx-cfru-dpe-move-data-reader`
+`analysis/upr-fvx-cfru-dpe-p1-tm-hm-only`
 
 ## Aktueller Arbeitsblock
 
-CFRU/DPE Move-Data-Reader-Fix fuer UPR-FVX.
+P1 TM/HM-only Diagnose fuer CFRU/DPE Gen9-BPRE.
 
 ## Ziel
 
-Minimal gegateten CFRU/DPE-Move-Data-Reader in `Gen3RomHandler.loadMoves()` implementieren. Fuer sicher erkannte CFRU/DPE Gen9-BPRE-Hacks sollen `MOVES_COUNT=992` und `BattleMove.split` verwendet werden. Keine TM/HM-, Tutor-, Egg-Move- oder Learnset-Write-Ausweitung.
+TM/HM-only Randomizer-Diagnose durchfuehren und dokumentieren. Keine Codeaenderung, kein Fix, keine Aenderungen an `02_external/**`.
 
 ## In diesem Arbeitsblock geprueft / geaendert
 
-- Workspace PR #70 als gemerged geprueft.
-- Workspace-Branch `compat/upr-fvx-cfru-dpe-move-data-reader` von `origin/main` erstellt; nicht auf `main` gearbeitet.
-- UPR-FVX-Branch `compat/upr-fvx-cfru-dpe-move-data-reader` erstellt.
-- UPR-FVX `Gen3RomHandler.loadMoves()` minimal erweitert.
-- Gate: vorhandene sichere CFRU/DPE-Gen9-BPRE-Erkennung `useCfruDpeGen9SpeciesCount`.
-- Fuer diesen Gate-Pfad wird `MoveCount` auf `CFRU_DPE_MOVES_COUNT - 1` gesetzt.
-- CFRU/DPE-`BattleMove.split` wird als Kategorie gelesen; unbekannte Split-Werte fallen auf die alte Gen3-Ableitung zurueck.
-- Neues Protokoll erstellt: `08_tests/randomizer/034_move_data_reader_fix_diagnostics.md`.
-- `08_tests/randomizer/README.md`, `NEXT_STEPS.md`, Roadmap und Tool-Manifest auf den Fixstand aktualisiert.
+- UPR-FVX PR #18 und Workspace PR #71 als gemerged geprueft.
+- Workspace-Branch `analysis/upr-fvx-cfru-dpe-p1-tm-hm-only` von `origin/main` erstellt; nicht auf `main` gearbeitet.
+- UPR-FVX-Stand `c71fd75e67f5a839560bbf5de7c6f17317a64bd1` bestaetigt.
+- Keine Aenderungen an `02_external/**`; UPR-FVX wurde nur gebaut und read-only diagnostiziert.
+- TM/HM-only und TM/HM-Compatibility-only diagnostisch ausgefuehrt.
+- Neues Protokoll erstellt: `08_tests/randomizer/035_p1_tm_hm_only.md`.
+- `08_tests/randomizer/README.md`, `NEXT_STEPS.md` und Roadmap aktualisiert.
 
 ## Ergebnis
 
-- Vor Fix aus Diagnose 033: `moves.total=559`.
-- Nach Fix: `moves.total=992`.
-- Hoechster geladener Move: `moves.highestLoaded=991`, `moves.highestLoadedName=PsychicNoise`.
-- Split/Kategoriezaehlung: `physical=420`, `special=301`, `status=270`.
-- Trainer Movesets-only: `saveSuccessful=true`, `logSuccessful=true`, `writeReloadMoveMismatches=0`.
-- Trainer Movesets + Species: `saveSuccessful=true`, `logSuccessful=true`, `writeReloadMoveMismatches=0`, `writeReloadSpeciesMismatches=0`, `after.gen8plusSpecies=81`, `after.gen9Species=37`.
-- Trainer Movesets + Held Items normal: `saveSuccessful=true`, `logSuccessful=true`, `writeReloadMoveMismatches=0`, `writeReloadHeldItemMismatches=0`.
-- Trainer Movesets + sensible Held Items: `saveSuccessful=true`, `logSuccessful=true`, `writeReloadMoveMismatches=0`, `writeReloadHeldItemMismatches=0`.
-- In allen Diagnose-Laeufen: Output-ROM vorhanden, Log nicht leer, keine invaliden Moves, kein Bad Egg und kein `<unknown>` im Log.
+- `moves.total=992`, `moves.highestLoaded=991`, `moves.highestLoadedName=PsychicNoise`.
+- FVX erkennt im TM/HM-Pfad nur `tmCount=50` und `hmCount=8`.
+- `getTMHMCompatibility()` liefert `flagLength=59`, also 58 Slots plus Nullslot, nicht 128 Slots.
+- Oeffentliche 50 TMs und 8 HMs enthalten keine invaliden Move-IDs.
+- Rohe 128-Slot-Lesung ab FVX-`TmMoves` zeigt nach den klassischen 50 TMs und 8 HMs keine plausible 128-Slot-Tabelle; Slots `59..128` sind unplausibel/invalid.
+- TM-Move-Randomization scheitert vor Save an `ArrayIndexOutOfBoundsException: Index 827 out of bounds for length 827` in `TMTutorMoveRandomizer.randomizeTMMoves()`.
+- TM/HM-Compatibility-only scheitert separat vor Save an einer `NullPointerException` in `TMHMTutorCompatibilityRandomizer.getMoveCompatibilityProbability()` wegen Species mit `null`-Primaertyp.
+- Kein Output-ROM, kein nichtleeres Log und kein Reload-Vergleich fuer die TM/HM-only-Pfade.
+- TM/HM-only ist nicht P1-supported.
 
 ## Noch nicht gestartet
 
-- TM/HM-128-Slot-Read-/Write-Modellierung
+- TM/HM-Fixbranch fuer hohes Move-ID-Limit und Null-Type-Species im Compatibility-Pfad
+- CFRU/DPE-128-Slot-TM/HM-Modellierung/Fix
 - Tutor-Bitfeld-/Special-Tutor-Modellierung
 - Egg-Move-Species-/Move-ID-Diagnose
 - Move-Data-Write/`saveMoves()` fuer CFRU/DPE
@@ -65,7 +64,7 @@ Keine ROMs, Saves, Builds oder Tool-Binaries committed.
 
 Keine ROMs in ChatGPT hochgeladen.
 
-Lokale Diagnoseartefakte blieben ignored unter `05_builds/randomizer-smoke/034_move_data_reader_fix_diagnostics/`.
+Lokale Diagnoseartefakte blieben ignored unter `05_builds/randomizer-smoke/035_p1_tm_hm_only/`.
 
 Private absolute Pfade und private ROM-Dateinamen wurden nicht dokumentiert.
 
@@ -73,7 +72,9 @@ Keine externen Original-Upstreams kontaktiert.
 
 Keine Aenderungen direkt auf `main`.
 
-UPR-FVX wurde nur im Planton361-Fork-Submodule auf dem Arbeitsbranch geaendert.
+Keine Aenderungen an `02_external/**`; UPR-FVX wurde nur read-only genutzt und gebaut.
+
+Keine Tutor-, Egg-Move-, Learnset-Write- oder Move-Data-Write-Ausweitung.
 
 Keine MCP-Configs mit Secrets angelegt.
 
@@ -91,12 +92,14 @@ git diff --check
 
 ## Naechster empfohlener Branch
 
-Nach Merge der UPR-FVX- und Workspace-PRs: separaten Analyseblock fuer TM/HM-, Tutor- oder Egg-Move-Pfade waehlen. Keine Learnset-Write- oder Move-Data-Write-Ausweitung ohne eigenen Scope.
+Nach Merge dieses Diagnoseblocks: separater Fixbranch fuer TM/HM-only. Minimaler Scope: hohe Move-IDs defensiv behandeln, Null-Type-Species im Compatibility-Pfad ueberspringen oder absichern, dann CFRU/DPE-128-Slot-TM/HM-Modell eng gaten.
 
-### 2026-05-13 - compat/upr-fvx-cfru-dpe-move-data-reader
+### 2026-05-13 - analysis/upr-fvx-cfru-dpe-p1-tm-hm-only
 
-- Workspace PR #70 als gemerged geprueft und Branch `compat/upr-fvx-cfru-dpe-move-data-reader` erstellt.
-- UPR-FVX-Branch `compat/upr-fvx-cfru-dpe-move-data-reader` erstellt.
-- UPR-FVX-Fix `c71fd75e67f5a839560bbf5de7c6f17317a64bd1` committed.
-- Diagnose 034 bestaetigt `moves.total=992`, `PsychicNoise` als hoechsten geladenen Move und stabile Trainer-Moveset-Kombinationen.
-- Keine TM/HM-, Tutor-, Egg-Move- oder Learnset-Write-Ausweitung vorgenommen.
+- UPR-FVX PR #18 und Workspace PR #71 als gemerged geprueft.
+- TM/HM-only Diagnose auf UPR-FVX `c71fd75e67f5a839560bbf5de7c6f17317a64bd1` ausgefuehrt.
+- FVX erkennt nur klassisches `50+8`-TM/HM-Modell.
+- TM-Move-Randomization blockiert an altem Move-Ban-Array-Limit.
+- TM/HM-Compatibility-only blockiert separat an Null-Type-Species.
+- Neues Protokoll erstellt: `08_tests/randomizer/035_p1_tm_hm_only.md`.
+- Kein Fix, keine Randomizer-Codeaenderung, keine committed ROM-/Build-Artefakte.

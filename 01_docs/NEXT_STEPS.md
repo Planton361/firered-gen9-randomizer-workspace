@@ -2,12 +2,12 @@
 
 ## Aktueller Arbeitsblock
 
-CFRU/DPE Move-Data-Reader-Fix fuer UPR-FVX.
+P1 TM/HM-only Diagnose fuer CFRU/DPE Gen9-BPRE.
 
 Aktueller Workspace-Branch:
 
 ```text
-compat/upr-fvx-cfru-dpe-move-data-reader
+analysis/upr-fvx-cfru-dpe-p1-tm-hm-only
 ```
 
 UPR-FVX-Stand:
@@ -18,46 +18,45 @@ c71fd75e67f5a839560bbf5de7c6f17317a64bd1
 
 ## Abschluss dieses Blocks
 
-1. UPR-FVX-Commit pushen und PR erstellen:
-
-```sh
-git -C 02_external/upr-fvx push -u origin compat/upr-fvx-cfru-dpe-move-data-reader
-gh pr create --repo Planton361/universal-pokemon-randomizer-fvx --base compat/firered-gen9-cfru-dpe --head compat/upr-fvx-cfru-dpe-move-data-reader --title "fix: read cfru dpe move data" --body-file /tmp/pr-body-upr-move-data-reader.md
-```
-
-2. Workspace-Commit erstellen:
+1. Workspace-Commit erstellen:
 
 ```text
-docs: record move data reader diagnostics
+test: document tm hm only diagnosis
 ```
 
-3. Workspace-PR erstellen:
+2. Workspace-PR erstellen:
 
 ```sh
-git push -u origin compat/upr-fvx-cfru-dpe-move-data-reader
-gh pr create --repo Planton361/firered-gen9-randomizer-workspace --base main --head compat/upr-fvx-cfru-dpe-move-data-reader --title "docs: record move data reader diagnostics" --body-file /tmp/pr-body-workspace-move-data-reader.md
+git push -u origin analysis/upr-fvx-cfru-dpe-p1-tm-hm-only
+gh pr create --repo Planton361/firered-gen9-randomizer-workspace --base main --head analysis/upr-fvx-cfru-dpe-p1-tm-hm-only --title "test: document tm hm only diagnosis" --body-file /tmp/pr-body-workspace-tm-hm-only.md
 ```
 
-## Diagnosebefund 034
+## Diagnosebefund 035
 
-- UPR-FVX-Ausgangsstand: `655764816f9fefedb9433f33e4da0bc9d44bcda7`.
-- UPR-FVX-Fixstand: `c71fd75e67f5a839560bbf5de7c6f17317a64bd1`.
-- Vor Fix aus Diagnose 033: `moves.total=559`.
-- Nach Fix: `moves.total=992`.
-- Hoechster geladener Move: `moves.highestLoaded=991`, `moves.highestLoadedName=PsychicNoise`.
-- Kategoriezaehlung aus `BattleMove.split`: `physical=420`, `special=301`, `status=270`.
-- Trainer Movesets-only, Movesets+Species, Movesets+Held Items normal und Movesets+sensible Held Items speichern/loggen/reloaden erfolgreich.
-- Alle vier Laeufe: `saveSuccessful=true`, `logSuccessful=true`, `outputRomExists=true`, `logNonEmpty=true`, `writeReloadMoveMismatches=0`.
-- Keine invaliden Moves, kein Bad Egg und kein `<unknown>` im Log.
+- `moves.total=992`, `moves.highestLoaded=991`, `moves.highestLoadedName=PsychicNoise`.
+- FVX erkennt im TM/HM-Pfad `tmCount=50`, `hmCount=8`.
+- `getTMHMCompatibility()` liefert `flagLength=59`, nicht 128 Slots.
+- Oeffentliche 50 TMs und 8 HMs sind gueltige Move-IDs.
+- Rohe 128-Slot-Lesung ab FVX-`TmMoves` zeigt nach den klassischen 50 TMs und 8 HMs unplausible/invalid Daten.
+- TM-Move-Randomization scheitert vor Save an `ArrayIndexOutOfBoundsException: Index 827 out of bounds for length 827`.
+- TM/HM-Compatibility-only scheitert separat vor Save an `NullPointerException` wegen Species mit `null`-Primaertyp.
+- Kein Output-ROM, kein nichtleeres Log, kein Reload-Vergleich.
+- TM/HM-only ist nicht P1-supported.
 
 ## Naechster empfohlener Arbeitsblock nach Merge
 
-Separater Analyse- oder Fixbranch fuer einen der verbleibenden Move-Pfade:
+Branch:
 
-1. TM/HM-128-Slot-Read-/Write-Modell fuer CFRU/DPE.
-2. Tutor-Bitfeld- und Special-Tutor-Modell fuer CFRU/DPE.
-3. Egg-Move-Species-/Move-ID-Diagnose fuer CFRU/DPE.
-4. Move-Data-Write/`saveMoves()` nur, falls Move-Data-Randomization explizit scoped wird.
+```text
+compat/upr-fvx-cfru-dpe-tm-hm-scope-and-safety
+```
+
+Ziel:
+
+- TM-Move-Randomizer defensiv gegen hohe CFRU/DPE-Move-IDs absichern.
+- TM/HM-Compatibility-Randomizer gegen Null-/Placeholder-Species absichern.
+- CFRU/DPE-TM/HM-Scope eng gaten und klaeren, ob/wo das aktive 128-Slot-Modell im getesteten ROM liegt.
+- Keine Tutor-, Egg-Move-, Learnset-Write- oder Move-Data-Write-Ausweitung im selben Branch.
 
 ## Nicht tun
 
@@ -67,4 +66,4 @@ Separater Analyse- oder Fixbranch fuer einen der verbleibenden Move-Pfade:
 - keine privaten Pfade, Secrets, Tokens oder `.env` dokumentieren
 - keine Original-Upstreams kontaktieren
 - keine Aenderungen direkt auf `main`
-- keine TM/HM-, Tutor-, Egg-Move- oder Learnset-Write-Ausweitung ohne eigenen Branch
+- keine Tutor-, Egg-Move-, Learnset-Write- oder Move-Data-Write-Ausweitung ohne eigenen Branch

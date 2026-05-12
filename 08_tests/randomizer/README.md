@@ -61,19 +61,20 @@ Der neueste bestaetigte Stand wird in Markdown ueber die Spalte `Latest` markier
 | 031 | `031_trainer_movesets_learnsets_fix_diagnostics.md` | Trainer Movesets Learnsets-Fix Diagnose | bestaetigt: `saveSuccessful=true`, `logSuccessful=true`, Output-ROM, nichtleerer Trainer-Log, `after/reload.movesetEntries=417`, `writeReloadMismatches=0` | `05_builds/randomizer-smoke/031_trainer_movesets_learnsets_fix/` lokal/ignored | nein |
 | 032 | `032_p1_trainer_movesets_combinations.md` | Trainer Movesets Kombinationsdiagnosen | bestaetigt: Movesets-only, Movesets+Species, Movesets+Held Items normal und Movesets+sensible Held Items jeweils mit `saveSuccessful=true`, `logSuccessful=true`, `writeReloadMoveMismatches=0` | `05_builds/randomizer-smoke/032_p1_trainer_movesets_combinations/` lokal/ignored | nein |
 | 033 | `033_p1_move_data_model.md` | CFRU/DPE Gen8/9-Move-Datenmodell | dokumentiert: FVX laedt aktuell `moves.total=559`, CFRU/DPE definiert `MOVES_COUNT=992`; TM/HM-, Tutor- und Egg-Move-Pfade brauchen getrennte gegatete Modelle | keiner | nein |
-| 034 | `034_move_data_reader_fix_diagnostics.md` | CFRU/DPE Move-Data-Reader-Fix Diagnose | bestaetigt: `moves.total=992`, hoechster Move `PsychicNoise`, Trainer-Moveset-Kombinationen mit `saveSuccessful=true`, `logSuccessful=true`, `writeReloadMoveMismatches=0` | `05_builds/randomizer-smoke/034_move_data_reader_fix_diagnostics/` lokal/ignored | ja |
+| 034 | `034_move_data_reader_fix_diagnostics.md` | CFRU/DPE Move-Data-Reader-Fix Diagnose | bestaetigt: `moves.total=992`, hoechster Move `PsychicNoise`, Trainer-Moveset-Kombinationen mit `saveSuccessful=true`, `logSuccessful=true`, `writeReloadMoveMismatches=0` | `05_builds/randomizer-smoke/034_move_data_reader_fix_diagnostics/` lokal/ignored | nein |
+| 035 | `035_p1_tm_hm_only.md` | TM/HM-only Diagnose | blockiert: FVX erkennt nur `50+8`, TM-Move-Randomization scheitert an altem Move-Ban-Array-Limit `827`, Compatibility-only scheitert an Null-Type-Species; kein Save/Output/Reload | `05_builds/randomizer-smoke/035_p1_tm_hm_only/` lokal/ignored | ja |
 
 ## Aktuell bestaetigter Stand
 
-Latest ist Nr. 034: CFRU/DPE Move-Data-Reader-Fix Diagnose.
+Latest ist Nr. 035: TM/HM-only Diagnose.
 
 Kernaussagen:
 
-- Der gegatete CFRU/DPE-Move-Data-Reader laedt `moves.total=992` statt `559`.
-- Hoechster geladener Move ist `PsychicNoise` mit ID `991`.
-- `BattleMove.split` wird fuer CFRU/DPE als Kategorie gelesen: `physical=420`, `special=301`, `status=270`.
-- Trainer Movesets-only, Movesets+Species, Movesets+Held Items normal und Movesets+sensible Held Items bleiben stabil mit `saveSuccessful=true`, `logSuccessful=true` und `writeReloadMoveMismatches=0`.
-- TM/HM-, Tutor-, Egg-Move-, Learnset-Write- und Move-Data-Write-Pfade bleiben separate Folgearbeit.
+- Move-Data-Coverage bleibt nach Nr. 034 stabil mit `moves.total=992` und hoechstem Move `PsychicNoise`.
+- FVX erkennt im TM/HM-Pfad weiterhin nur das klassische Modell `50 TMs + 8 HMs`; `getTMHMCompatibility()` liefert `flagLength=59`.
+- TM-Move-Randomization scheitert vor Save an `ArrayIndexOutOfBoundsException: Index 827 out of bounds for length 827`.
+- TM/HM-Compatibility-only scheitert separat vor Save an einer Species mit `null`-Primaertyp.
+- TM/HM-only ist damit nicht P1-supported und braucht einen eigenen Fixbranch.
 
 ## Lokale Artefaktpflege
 
