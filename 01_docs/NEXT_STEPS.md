@@ -2,33 +2,34 @@
 
 ## Aktueller Arbeitsblock
 
-P1 Static/Gift Species-only Diagnose auf Gen9-Wild-sauberem Stand.
+P1 Static/Gift Scope und interner Species-Write fuer CFRU/DPE.
 
-Aktueller Branch:
+Aktueller Workspace-Branch:
 
 ```text
-analysis/upr-fvx-cfru-dpe-p1-static-gift-species-only
+compat/upr-fvx-cfru-dpe-static-gift-scope-and-write
+```
+
+UPR-FVX-Branch:
+
+```text
+compat/upr-fvx-cfru-dpe-static-gift-scope-and-write
 ```
 
 Zieldokumente:
 
 ```text
-08_tests/randomizer/021_p1_static_gift_species_only.md
+08_tests/randomizer/022_static_gift_scope_write_diagnostics.md
 08_tests/randomizer/README.md
 01_docs/SESSION_STATE.md
 01_docs/NEXT_STEPS.md
 00_project-control/roadmap/roadmap-status.md
+01_docs/references/tool-manifest.md
 ```
 
 ## Naechste Schritte in diesem Block
 
-1. Dokumentation reviewen:
-   - `08_tests/randomizer/021_p1_static_gift_species_only.md`
-   - `08_tests/randomizer/README.md`
-   - `01_docs/SESSION_STATE.md`
-   - `01_docs/NEXT_STEPS.md`
-   - `00_project-control/roadmap/roadmap-status.md`
-2. Workspace-Checks ausfuehren:
+1. Workspace-Checks abschliessen:
 
 ```sh
 git status --short
@@ -38,44 +39,48 @@ git diff --submodule
 git diff --check
 ```
 
-3. Commit erstellen:
+2. Workspace-Commit erstellen:
 
 ```text
-docs: diagnose CFRU DPE static gift species only
+docs: record CFRU DPE static gift fix diagnostics
 ```
 
-4. Branch pushen und Workspace-PR nach `main` erstellen.
+3. Branches pushen und PRs erstellen:
+
+- UPR-FVX PR gegen `Planton361/universal-pokemon-randomizer-fvx`
+- Workspace PR gegen `Planton361/firered-gen9-randomizer-workspace` mit explizitem `--repo`
 
 ## Diagnosebefund
 
-- Workspace-Submodule `02_external/upr-fvx` steht auf `0f127e9bb9a5c47306fe1f2af11e8e9fe1802717`.
+- UPR-FVX-Commit: `009178e8848b4272e6b8be54a8bf5b2bed34d5f2`.
 - Static/Gift-only Settings mit Seed `274269061345323`.
 - Species-Coverage bleibt vollstaendig: `PokemonCount=1439`, `speciesList.size=1415`.
 - Static/Gift-Pool: `staticPool.size=1414`, Gen1-Gen9 enthalten.
-- Pick-Pfad: `pickedGen4plus=18`, `pickedGen7plus=8`.
-- CLI meldet `Randomized successfully!`, erzeugt aber nur ein leeres 3-Byte-Log und keine Output-ROM.
-- Direkte `GameRandomizer.Results`: `saveSuccessful=false`.
-- Blocker: vier `<null>`-Static-Eintraege im Static/Roamer-/hardcoded-FRLG-Scope.
+- Direkte `GameRandomizer.Results`: `saveSuccessful=true`, `logSuccessful=true`.
+- Output-ROM und nichtleerer Static/Gift-Log entstehen.
+- Gen7/8/9 sind im echten Static/Gift-Log sichtbar.
+- Null-Sonderfaelle bleiben erhalten: `nullBefore=4`, `nullAfterWrite=4`, `nullReloaded=4`.
+- Write/Reload ist stabil: `writeReloadMismatches=0`.
 
 ## Danach
 
 Naechster minimaler Folgebranch:
 
 ```text
-compat/upr-fvx-cfru-dpe-static-gift-scope-and-write
+analysis/upr-fvx-cfru-dpe-p1-trainer-species-only
 ```
 
 Ziel:
 
-- Static/Gift-, Roamer- und hardcoded-FRLG-Eintraege sauber klassifizieren.
-- Null-Species aus dem normalen Static/Gift-Randomizer-Pfad ausklammern oder korrekt modellieren.
-- Echte Static/Gift-Species fuer erweiterte CFRU/DPE-BPRE-Hacks ueber interne SpeciesSet-Identitaet schreiben.
-- Danach denselben Seed erneut mit Reload-/Log-Beweis pruefen.
+- Trainer-Species-only mit Gen1-Gen9-Pool diagnostizieren.
+- `trainerPokemonToBytes()`-Species-Write separat bewerten.
+- Trainer-Movesets, Learnsets, Items, Abilities und EV-Spreads nicht im selben Block fixen.
 
-Offene Folgethemen (separat, nicht in diesem Branch):
+Offene Folgethemen:
 
-- Trainer
+- Trainer-Species-Write
 - Learnsets/Movesets
+- Evolutions
 - TM/Tutor/Abilities
 - CFRU Day/Night Custom Wild Tables
 - Ironmon-Tracker-Tests
@@ -85,21 +90,17 @@ Offene Folgethemen (separat, nicht in diesem Branch):
 - keine ROMs bewegen
 - keine ROMs committen oder in ChatGPT hochladen
 - keine Saves oder Emulator States anfassen
-- keine weiteren Builds starten oder committen
-- keine weiteren Randomizer-Laeufe starten
-- keine Randomizer-JARs oder Tool-Binaries anfassen oder committen
-- keine weiteren Codeaenderungen in `02_external/**`
-- keine Submodule-Aenderungen
+- keine Builds, Randomizer-JARs oder Tool-Binaries committen
+- keine weiteren Codeaenderungen ausserhalb von `02_external/upr-fvx/**`
+- keine CFRU-/DPE-Aenderungen
+- keine Trainer-, Learnset-, Evolution-, TM-/Tutor-, Ability-, Wild- oder Day/Night-Fixes in diesem Branch
 - keine externen Original-Upstreams kontaktieren
 - keine PRs ohne explizites `--repo Planton361/<repo>` beziehungsweise eindeutig ausgewaehltes Planton361-Repository
 - keine Aenderungen direkt auf `main`
-- keine Installationen erzwingen
 - keine GitHub-Tokens oder lokale Secrets dokumentieren
 - keine MCP-Configs mit Secrets committen
-- keine parallelen Agenten auf demselben Branch einsetzen
 
 ## Quality
 
 - Abschlussdokumentation ist Teil der Definition of Done.
-- Prompts sollen kurz bleiben und auf Dateipfade statt kopierte Inhalte verweisen.
 - ROMs, Builds, Tool-Binaries und private Pfade bleiben ausserhalb von Git und ChatGPT.

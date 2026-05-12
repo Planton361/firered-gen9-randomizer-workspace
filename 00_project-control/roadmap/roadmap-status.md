@@ -24,9 +24,9 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-p1-static-gift-species-only` |
-| Nächster Branch | `compat/upr-fvx-cfru-dpe-static-gift-scope-and-write` |
-| Aktueller Fokus | P1 Static/Gift Species-only Diagnose |
+| Aktueller Branch | `compat/upr-fvx-cfru-dpe-static-gift-scope-and-write` |
+| Nächster Branch | `analysis/upr-fvx-cfru-dpe-p1-trainer-species-only` |
+| Aktueller Fokus | P1 Static/Gift Scope und interner Species-Write |
 | ROM-/Build-Arbeit | lokaler Diagnose-Lauf nur unter `05_builds/**`; keine Artefakte committen |
 | Externe Repos | als Submodule auf Planton361-Forks eingebunden |
 | Forks | Planton361-Forks fuer UPR-FVX, DPE Gen9 und CFRU dokumentiert |
@@ -83,24 +83,24 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | 08 Randomizer-Kompatibilität | CFRU/DPE-Special-Species-Wild-Ban | UPR-FVX PR #12 offen; lokaler Smoke zeigt `Bad Egg=0`, `<unknown>=0`, `saveSuccessful=true` |
 | 08 Randomizer-Kompatibilität | UPR-FVX Wild-Fix-Pin | Workspace-Submodule `02_external/upr-fvx` ist auf Planton361-Fork-Commit `0f127e9b` fuer den CFRU/DPE-Wild-Sonder-Species-Fix gepinnt |
 | 08 Randomizer-Kompatibilität | P1 Static/Gift Species-only Diagnose | Gen1-Gen9-Pool vorhanden und Pick erreicht Gen7/8/9; echter Save/Log blockiert an vier `<null>`-Static-Eintraegen |
+| 08 Randomizer-Kompatibilität | P1 Static/Gift Scope und Write | UPR-FVX PR #13 offen; `009178e8` bestaetigt `saveSuccessful=true`, nichtleeren Static/Gift-Log und `writeReloadMismatches=0` |
 
 ## In Arbeit
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | P1 Static/Gift-Diagnose reviewen | Diagnoseprotokoll fuer Pool, Pick, Log und Save-Blocker reviewen |
+| 08 Randomizer-Kompatibilität | Static/Gift Scope und Write reviewen | UPR-FVX-Fix, Workspace-Pin und Diagnoseprotokoll reviewen |
 
 ## Als Nächstes
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Static/Gift Scope und Write | Null-/Roamer-/hardcoded-FRLG-Scope klassifizieren und echte Static/Gift-Species intern schreiben |
+| 08 Randomizer-Kompatibilität | Trainer-Species-only Diagnose | naechsten P1-Schreibpfad separat pruefen |
 
 ## Noch offen
 
 | Paket | Aufgabe | Hinweise |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Static/Gift-Schreibpfade diagnostizieren/fixen | Gen9-Wild-Smoke ist bestaetigt; keine Trainer-/Evolution-/Learnset-Pfade vermischen |
 | 08 Randomizer-Kompatibilität | Trainer-Pokémon testen | nach Static/Gift oder separat; aktueller Verdacht ebenfalls `pokedexToInternal[Species.number]` |
 | 08 Randomizer-Kompatibilität | DPE-Gesamtumfang/PokemonCount praktisch bewerten | Count-Diagnose zeigt: Names bis Pecharunt, Movesets kappen auf 930, PokedexOrder kappt final auf 823; Modell empfiehlt Count nicht aus PokedexOrder abzuleiten |
 | 08 Randomizer-Kompatibilität | Wild-Log-`<unknown>` aufloesen | eindeutige Rohwerte sind `rawInternalSpeciesId=0`; Nullslots separat klassifizieren |
@@ -134,7 +134,8 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Wild cleanup | `analysis/upr-fvx-cfru-dpe-wild-bad-egg-diagnostics` | `Bad Egg` im bestaetigten Gen9-Wild-Log klassifizieren | Diagnosebranch; `SPECIES_EGG=0x19C` ist wahrscheinlich im Allowed Pool |
 | Wild cleanup | `compat/upr-fvx-cfru-dpe-wild-banned-special-species` | CFRU/DPE-Sonder-Species aus Wild-Replacement-Pools bannen | UPR-FVX PR #12 offen; `SPECIES_EGG=0x19C` entfernt, `Bad Egg=0` bestaetigt |
 | P1c | `analysis/upr-fvx-cfru-dpe-p1-static-gift-species-only` | Static-/Gift-Species-only Diagnose | Pool/Pick bestaetigt Gen1-Gen9; Save/Log blockiert an Null-Static-Scope |
-| P1d | `compat/upr-fvx-cfru-dpe-static-gift-scope-and-write` | Static/Gift-Scope und interner Species-Write | naechster minimaler Schritt; Roamer/hardcoded-FRLG sauber abgrenzen |
+| P1d | `compat/upr-fvx-cfru-dpe-static-gift-scope-and-write` | Static/Gift-Scope und interner Species-Write | UPR-FVX `009178e8`; lokal bestaetigt mit `saveSuccessful=true`, Gen7/8/9 im Log und `writeReloadMismatches=0` |
+| P1e | `analysis/upr-fvx-cfru-dpe-p1-trainer-species-only` | Trainer-Species-only Diagnose | naechster minimaler Schritt; keine Moveset-/Learnset-/Item-/Ability-Fixes |
 | P2 | `randomizer/cfru-day-night-wild-table-analysis` | CFRU-Custom-Day/Night-Wild-Tabellen separat untersuchen | erst nach P1-Schreibpfad-Diagnose; Route-1-Fallback bleibt stabil |
 | P3 | noch festlegen | Nullslot-`<unknown>` mit `rawInternalSpeciesId=0` klassifizieren | nicht mit GenRestrictions vermischen |
 | P4 | noch festlegen | BizHawk-/Ironmon-Tracker-/RAM-Mapping pruefen | erst nach stabiler ROM-Randomizer-Kompatibilitaet |
@@ -177,12 +178,22 @@ Excel-Roadmap:
 ## Nächster empfohlener Branch
 
 ```text
-compat/upr-fvx-cfru-dpe-static-gift-scope-and-write
+analysis/upr-fvx-cfru-dpe-p1-trainer-species-only
 ```
 
-Zweck: Null-/Roamer-/hardcoded-FRLG-Scope der Static/Gift-Liste klassifizieren und echte Static/Gift-Species fuer erweiterte CFRU/DPE-BPRE-Hacks ueber interne SpeciesSet-Identitaet schreiben. Kein Trainer-, Learnset-, Palette-, Day/Night- oder Nullslot-Fix im selben Branch.
+Zweck: Trainer-Species-only mit Gen1-Gen9-Pool diagnostizieren und den dokumentierten Trainer-Species-Schreibpfad separat bewerten. Kein Static/Gift-, Learnset-, Palette-, Day/Night- oder Ability-Fix im selben Branch.
 
 ## Arbeitsblock-Log
+
+### 2026-05-12 – compat/upr-fvx-cfru-dpe-static-gift-scope-and-write
+
+- Workspace auf PR #57-Stand aktualisiert und Branch `compat/upr-fvx-cfru-dpe-static-gift-scope-and-write` erstellt.
+- UPR-FVX-Branch vom gepinnten `0f127e9b`-Stand erstellt.
+- Minimaler UPR-FVX-Fix umgesetzt: Null-Static-Species werden nicht randomisiert und blockieren den Save nicht; echte Static/Gift-Species schreiben fuer erweiterte BPRE-Hacks interne SpeciesSet-Identitaet.
+- UPR-FVX-Commit erstellt: `009178e8848b4272e6b8be54a8bf5b2bed34d5f2`; PR #13 erstellt.
+- Diagnose mit Seed `274269061345323`: `saveSuccessful=true`, `logSuccessful=true`, Output-ROM und nichtleerer Static/Gift-Log entstehen.
+- Static/Gift-Log enthaelt Gen7/8/9-Picks; Reload-Vergleich meldet `writeReloadMismatches=0`.
+- Neues Protokoll erstellt: `08_tests/randomizer/022_static_gift_scope_write_diagnostics.md`.
 
 ### 2026-05-12 – analysis/upr-fvx-cfru-dpe-p1-static-gift-species-only
 
