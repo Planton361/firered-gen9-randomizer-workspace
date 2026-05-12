@@ -29,7 +29,6 @@ Zieldokumente:
    - `01_docs/SESSION_STATE.md`
    - `01_docs/NEXT_STEPS.md`
    - `00_project-control/roadmap/roadmap-status.md`
-   - `01_docs/references/tool-manifest.md`
 2. Workspace-Checks ausfuehren:
 
 ```sh
@@ -64,16 +63,16 @@ docs: record CFRU DPE wild special species ban diagnostics
 Naechster minimaler Folgebranch:
 
 ```text
-analysis/upr-fvx-cfru-dpe-p1-static-gift-write-diagnostics
+compat/upr-fvx-cfru-dpe-wild-banned-special-species
 ```
 
 Ziel:
 
-- Nach bestaetigter Gen9-Wild-Coverage P1 Static-/Gift-Species-only Diagnose wieder aufnehmen.
-- Weiterhin keine Learnset-, Trainer-, Palette-, Day/Night- oder Nullslot-Fixes im selben Branch.
-- ROM-/Build-Artefakte nicht committen.
+- CFRU/DPE-spezifisch `SPECIES_NONE`, `SPECIES_EGG` und belegte Dummy-/Gap-Species aus Wild-Replacement-Pools entfernen.
+- Vanilla/normal Gen3 unveraendert lassen.
+- Kein Static/Gift-, Trainer-, Learnset-, Palette-, Day/Night- oder allgemeiner Gen3-Fix im selben Branch.
 
-## Offene Randomizer-Themen
+Optionaler Vorlauf:
 
 - Static/Gift
 - Trainer
@@ -95,7 +94,10 @@ Ziel:
 - keine externen Original-Upstreams kontaktieren
 - keine PRs ohne explizites `--repo Planton361/<repo>` beziehungsweise eindeutig ausgewaehltes Planton361-Repository
 - keine Aenderungen direkt auf `main`
+- keine Installationen erzwingen
 - keine GitHub-Tokens oder lokale Secrets dokumentieren
+- keine MCP-Configs mit Secrets committen
+- keine parallelen Agenten auf demselben Branch einsetzen
 
 ## Quality
 

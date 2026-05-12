@@ -121,6 +121,6 @@ git diff --check
 
 ## Naechster empfohlener Branch
 
-`analysis/upr-fvx-cfru-dpe-p1-static-gift-write-diagnostics`
+`compat/upr-fvx-cfru-dpe-wild-banned-special-species`
 
-Zweck: Static-/Gift-Species-only Diagnose nach bestaetigter Gen9-Wild-Coverage wieder aufnehmen. Kein Learnset-, Trainer-, Palette-, Day/Night- oder Nullslot-Fix im selben Branch.
+Zweck: CFRU/DPE-spezifisch `SPECIES_NONE`, `SPECIES_EGG` und belegte Dummy-/Gap-Species aus Wild-Replacement-Pools entfernen. Kein Static/Gift-, Trainer-, Learnset-, Palette-, Day/Night- oder allgemeiner Gen3-Fix im selben Branch.
