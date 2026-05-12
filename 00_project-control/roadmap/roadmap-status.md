@@ -24,10 +24,10 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-palette-loader-blocker` |
+| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-defensive-palette-loading` |
 | Nächster Branch | noch festzulegen |
-| Aktueller Fokus | CFRU/DPE-Palette-Loader-Blocker read-only analysieren |
-| ROM-/Build-Arbeit | keine ROM-Zugriffe oder Builds in diesem Analyseblock |
+| Aktueller Fokus | CFRU/DPE-defensiven Palette-Load/-Save-Fix dokumentieren |
+| ROM-/Build-Arbeit | lokaler Diagnose-Lauf nur unter `05_builds/**`; keine Artefakte committen |
 | Externe Repos | als Submodule auf Planton361-Forks eingebunden |
 | Forks | Planton361-Forks fuer UPR-FVX, DPE Gen9 und CFRU dokumentiert |
 | Installationen | devkitPro/devkitARM lokal dokumentiert; keine Installation in diesem Analyseblock |
@@ -72,18 +72,19 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | 08 Randomizer-Kompatibilität | PokedexOrder-Modell | DPE `PokedexOrder` als Species-ID-Sortierlisten eingeordnet; FVX-Count-Sanity auf `pdEntry > 1023` ist fuer CFRU/DPE ungeeignet |
 | 08 Randomizer-Kompatibilität | CFRU/DPE-Gen9-SpeciesCount-Fix | UPR-FVX PR #8 offen; Count erreicht `PokemonCount=1439`, Gen7/8/9 werden im Species-Load sichtbar |
 | 08 Randomizer-Kompatibilität | Palette-Loader-Blocker-Modell | `loadPokemonPalettes()`-Abbruch auf `SPECIES_CUBONE_A`/`gMonPaletteTable[1038]` eingeordnet; Palette-Load ist P0/Wild-fachlich nicht noetig |
+| 08 Randomizer-Kompatibilität | Defensiver Palette-Load/-Save-Fix | UPR-FVX PR #9 offen; fehlende Palette-Slots brechen den Load nicht mehr ab, naechster Blocker liegt in `saveTrainers()`/`getMovesLearnt()` |
 
 ## In Arbeit
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Palette-Loader-Blocker dokumentieren | Ursache, P0-Relevanz und naechste Fixoption festhalten |
+| 08 Randomizer-Kompatibilität | Defensive Palette-Loading-Diagnose dokumentieren | PR #9, lokale Diagnosewerte und nachgelagerten Save-Blocker festhalten |
 
 ## Als Nächstes
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Defensiven Palette-Load-Fix vorbereiten | `loadPokemonPalettes()`/`savePokemonPalettes()` fuer CFRU/DPE kapseln, ohne Count/P1-Pfade zu vermischen |
+| 08 Randomizer-Kompatibilität | Trainer/Learnset-Save-Blocker analysieren | `saveTrainers()`/`getMovesLearnt()`-Abbruch bei Pointer `0x25e49c` separat modellieren |
 
 ## Noch offen
 
@@ -113,7 +114,8 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Coverage model | `analysis/upr-fvx-cfru-dpe-pokedex-order-model` | sichere Count-Strategie fuer CFRU/DPE-Gen9 modellieren | PokedexOrder und Moveset-Pointer getrennt bewerten; kein Static/Gift-Fix |
 | Coverage fix | `compat/upr-fvx-cfru-dpe-gen9-species-count` | CFRU/DPE-spezifischen Count-Fix vorbereiten | UPR-FVX PR #8 offen; Count erreicht 1439, Palettenpfad blockiert danach |
 | Coverage follow-up | `analysis/upr-fvx-cfru-dpe-palette-loader-blocker` | Paletten-Loader-Blocker nach `PokemonCount=1439` modellieren | `SPECIES_CUBONE_A`-Palette-Nullslot als erster Abbruch; kein Fix |
-| Coverage unblock | noch festlegen | defensiver Palette-Load/-Save fuer CFRU/DPE | kein Count-, Moveset-, Static/Gift-, Trainer- oder Learnset-Fix |
+| Coverage unblock | `compat/upr-fvx-cfru-dpe-defensive-palette-loading` | defensiver Palette-Load/-Save fuer CFRU/DPE | UPR-FVX PR #9 offen; kein Count-, Moveset-, Static/Gift-, Trainer- oder Learnset-Fix |
+| Coverage follow-up | noch festlegen | `saveTrainers()`-/`getMovesLearnt()`-Blocker nach Palette-Fix analysieren | separater Branch; keine Palette-, Count-, Static/Gift- oder Day/Night-Fixes |
 | P1c | `analysis/upr-fvx-cfru-dpe-p1-static-gift-write-diagnostics` | Static-/Gift-Species-only Diagnose | pausiert bis Gen9-Coverage/Count-Abbruch geklaert ist; Roamer ausklammern |
 | P2 | `randomizer/cfru-day-night-wild-table-analysis` | CFRU-Custom-Day/Night-Wild-Tabellen separat untersuchen | erst nach P1-Schreibpfad-Diagnose; Route-1-Fallback bleibt stabil |
 | P3 | noch festlegen | Nullslot-`<unknown>` mit `rawInternalSpeciesId=0` klassifizieren | nicht mit GenRestrictions vermischen |
@@ -160,7 +162,7 @@ Excel-Roadmap:
 noch festzulegen
 ```
 
-Zweck: UPR-FVX-Fix fuer defensiven `loadPokemonPalettes()`-/`savePokemonPalettes()`-Umgang bei erweitertem CFRU/DPE-BPRE-Speciesraum. Kein Count-, Static-/Gift-, Trainer- oder Learnset-/Moveset-Fix im selben Branch.
+Zweck: `saveTrainers()`-/`getMovesLearnt()`-Blocker nach defensivem Palette-Load bei `PokemonCount=1439` separat analysieren. Kein Palette-, Count-, Static-/Gift-, Wild- oder Day/Night-Fix im selben Branch.
 
 ## Arbeitsblock-Log
 
