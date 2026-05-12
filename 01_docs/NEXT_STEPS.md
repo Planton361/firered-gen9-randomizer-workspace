@@ -2,28 +2,27 @@
 
 ## Aktueller Arbeitsblock
 
-CFRU/DPE-Gen9-Wild-Post-Merge-Smoke dokumentieren.
+Bad-Egg-Eintraege im bestaetigten CFRU/DPE-Gen9-Wild-Log diagnostizieren.
 
 Aktueller Branch:
 
 ```text
-analysis/upr-fvx-cfru-dpe-gen9-wild-post-merge-smoke
+analysis/upr-fvx-cfru-dpe-wild-bad-egg-diagnostics
 ```
 
 Zieldokumente:
 
 ```text
-08_tests/randomizer/upr-fvx-cfru-dpe-gen9-wild-post-merge-smoke.md
+08_tests/randomizer/upr-fvx-cfru-dpe-wild-bad-egg-diagnostics.md
 01_docs/SESSION_STATE.md
 01_docs/NEXT_STEPS.md
 00_project-control/roadmap/roadmap-status.md
-02_external/upr-fvx
 ```
 
 ## Naechste Schritte in diesem Block
 
 1. Dokumentation reviewen:
-   - `08_tests/randomizer/upr-fvx-cfru-dpe-gen9-wild-post-merge-smoke.md`
+   - `08_tests/randomizer/upr-fvx-cfru-dpe-wild-bad-egg-diagnostics.md`
    - `01_docs/SESSION_STATE.md`
    - `01_docs/NEXT_STEPS.md`
    - `00_project-control/roadmap/roadmap-status.md`
@@ -40,24 +39,44 @@ git diff --check
 3. Commit erstellen:
 
 ```text
-docs: confirm Gen9 wild randomizer post-merge smoke
+docs: diagnose CFRU DPE wild bad egg entries
 ```
 
 4. Branch pushen und Workspace-PR nach `main` erstellen.
+
+## Diagnosebefund
+
+- Der lokale Wild-only-Lauf mit Seed `274269061345319` reproduziert `saveSuccessful=true`.
+- Coverage bleibt stabil: `PokemonCount=1439`, `speciesList.size=1415`, `maxSpeciesIdentityNumber=1439`, Gen7/8/9 sichtbar.
+- `<unknown>` bleibt `0`.
+- `Bad Egg=12`.
+- Alle `12` `Bad Egg`-Eintraege liegen in `Area #174 - ALTERING CAVE Grass/Cave (rate=5)`, Slots 1-12.
+- DPE/CFRU definieren `SPECIES_EGG=0x19C`, und die DPE-Namensquelle zeigt fuer diesen Slot `Bad Egg`.
+- FVX bannt im Gen3/FRLG-Wild-Pfad aktuell nur Unown; `SPECIES_EGG` wird nicht explizit aus dem Wild-Allowed-Pool entfernt.
+
+Wahrscheinlichste Ursache:
+
+```text
+SPECIES_EGG gelangt als regulaere Species in den CFRU/DPE-Wild-Allowed-Pool.
+```
 
 ## Danach
 
 Naechster minimaler Folgebranch:
 
 ```text
-analysis/upr-fvx-cfru-dpe-p1-static-gift-write-diagnostics
+compat/upr-fvx-cfru-dpe-wild-banned-special-species
 ```
 
 Ziel:
 
-- Nach bestaetigter Gen9-Wild-Coverage P1 Static-/Gift-Species-only Diagnose wieder aufnehmen.
-- Weiterhin keine Learnset-, Trainer-, Palette-, Day/Night- oder Nullslot-Fixes im selben Branch.
-- ROM-/Build-Artefakte nicht committen.
+- CFRU/DPE-spezifisch `SPECIES_NONE`, `SPECIES_EGG` und belegte Dummy-/Gap-Species aus Wild-Replacement-Pools entfernen.
+- Vanilla/normal Gen3 unveraendert lassen.
+- Kein Static/Gift-, Trainer-, Learnset-, Palette-, Day/Night- oder allgemeiner Gen3-Fix im selben Branch.
+
+Optionaler Vorlauf:
+
+- Ein kleiner UPR-FVX-Diagnosebranch kann vor dem Fix Wild-Replacement-Roh-IDs loggen, falls ein wasserdichter `Bad Egg -> SPECIES_EGG=0x19C`-Nachweis im PR gewuenscht ist.
 
 ## Fix-Reihenfolge
 
@@ -73,7 +92,7 @@ Learnsets/Movesets: Lazy-Trainer-Movesets ist gemerged und entblockt Wild-only S
 
 Palette-Save: Skip-Unchanged-Palette-Save ist gemerged und post-merge bestaetigt. CFRU/DPE-Palette-Randomization bleibt partial/unsupported.
 
-Bad-Egg-Folgeauffaelligkeit: Der Post-Merge-Wild-Log enthaelt `12` `Bad Egg`-Eintraege. Das ist nicht der fruehere `<unknown>`-Nullslot und sollte spaeter separat klassifiziert werden.
+Bad-Egg-Folgeauffaelligkeit: Die Diagnose zeigt `SPECIES_EGG=0x19C` als wahrscheinlichsten Allowed-Pool-Kandidaten. Naechster Schritt ist ein CFRU/DPE-spezifischer Special-Species-Wild-Ban.
 
 P2: CFRU Day/Night Custom Wild Tables. Separat nach P1-Schreibpfad-Diagnose.
 
