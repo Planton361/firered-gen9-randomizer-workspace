@@ -7,43 +7,44 @@
 - `main` ist Default Branch und bleibt stabil.
 - Branch Protection und PR-Pflicht sind laut dokumentiertem Projektstand eingerichtet.
 - Workspace PR #80 ist gemerged.
+- UPR-FVX PR #23 und Workspace PR #81 sind gemerged.
 - UPR-FVX-Stand im Workspace: `dd9d80c16936a99bac1d7ef777b43baa7c2f029d`.
 - TM/HM-only ist im getesteten CFRU/DPE-128-Slot-Scope P1-supported.
 - Tutor-only ist im getesteten CFRU/DPE-152-Slot-Scope P1-supported.
 - Egg-Move direct scope ist P1-supported.
-- Learnset-Write bounded in-place ist implementiert und diagnostisch stabil fuer strikt validierte same-size Writes; voller Learnset-Write braucht weiter ein separates Repointing-Modell.
+- Learnset-Write bounded in-place ist implementiert und diagnostisch stabil fuer strikt validierte same-size Writes.
+- Full Learnset-Write-Repointing-Modell ist read-only dokumentiert; Umsetzung bleibt separater Fixbranch.
 - ROMs, Saves, Builds, Tool-Binaries und private Dateien sind ausgeschlossen.
 
 ## Aktueller Branch
 
-`compat/upr-fvx-cfru-dpe-learnset-write-bounded`
+`analysis/upr-fvx-cfru-dpe-p1-learnset-repointing-model`
 
 ## Aktueller Arbeitsblock
 
-CFRU/DPE Learnset-Write bounded in-place Fix.
+CFRU/DPE Learnset-Repointing-Modellierung.
 
 ## Ziel
 
-Minimal gegateten CFRU/DPE-`setMovesLearnt()`-Pfad fuer bounded in-place Writes implementieren. Kein Repointing, keine Move-Data-Write-, Tutor-Text-, Special-Tutor- oder Egg-Move-Ausweitung.
+Full Learnset-Write-Repointing-Modell fuer CFRU/DPE Gen9-BPRE read-only klaeren. Kein Fix, kein Repointing, keine Move-Data-Write-, Tutor-Text-, Special-Tutor- oder Egg-Move-Ausweitung.
 
 ## In diesem Arbeitsblock geprueft / geaendert
 
-- Workspace PR #80 als gemerged geprueft.
-- Workspace-Branch `compat/upr-fvx-cfru-dpe-learnset-write-bounded` verwendet; nicht auf `main` gearbeitet.
-- UPR-FVX-Fix `dd9d80c16936a99bac1d7ef777b43baa7c2f029d` erstellt.
-- CFRU/DPE-`setMovesLearnt()` eng ueber den vorhandenen CFRU/DPE-Gen9-Gate gegatet.
-- Bounded in-place Learnset-Write ohne Repointing implementiert.
-- Neues Protokoll erstellt: `08_tests/randomizer/044_learnset_write_bounded_fix_diagnostics.md`.
-- `08_tests/randomizer/README.md`, `SESSION_STATE.md`, `NEXT_STEPS.md`, Roadmap und Tool-Manifest aktualisiert.
+- UPR-FVX PR #23 und Workspace PR #81 als gemerged geprueft.
+- Workspace-Branch `analysis/upr-fvx-cfru-dpe-p1-learnset-repointing-model` erstellt; nicht auf `main` gearbeitet.
+- UPR-FVX, CFRU und DPE read-only untersucht.
+- Neues Protokoll erstellt: `08_tests/randomizer/045_p1_learnset_repointing_model.md`.
+- `08_tests/randomizer/README.md`, `SESSION_STATE.md`, `NEXT_STEPS.md` und Roadmap aktualisiert.
 
 ## Ergebnis
 
-- `moves.total=992`; hoechster geladener Move ist `991:PsychicNoise`.
-- `gLevelUpLearnsets` wird ueber Pointer-Ort `0x03EA7C` / Zielpointer `0x0825D7B4` validiert.
-- Entry-Format bleibt `u16 move + u8 level` mit Sentinel `{0, 0xFF}`.
-- Diagnose-Harness bestaetigt `saveSuccessful=true`, `logSuccessful=true`, Output-ROM, nichtleeren Log und `writeReloadLearnsetMismatches=0`.
-- Writer-Diagnose: `boundedWrites=1`, `skippedGrowth=0`, `needsRepoint=0`, `skippedSharedPointer=0`, `skippedPlaceholderSpecies=1`, `skippedInvalidPointer=1412`, `skippedInvalidMoves=0`.
-- Gesamtbewertung: sicherer bounded Writer vorhanden, aber voller Learnset-Write ist noch nicht P1-supported, weil der getestete Scope nur sehr wenige sichere in-place Ziele akzeptiert.
+- `gLevelUpLearnsets` Pointer-Ort `0x03EA7C` zeigt im getesteten Stand auf `0x0825D7B4` / ROM-Offset `0x25D7B4`.
+- Die bestehende Pointertable reicht fuer `NUM_SPECIES=1440` rechnerisch `0x1680` Bytes.
+- Quellenanalyse zeigt `1408` Pointertable-Zuweisungen, `1104` eindeutige Learnset-Zielarrays und `148` Shared-Zielgruppen.
+- Groesster Source-Learnset: `41` Eintraege / `126` Bytes inkl. Sentinel.
+- Worst-case fuer Full Write unter `MAX_LEARNABLE_MOVES=50`: `220320` Bytes ohne Sharing.
+- Es gibt keinen belastbar belegten statisch freien Append-Bereich; DPE `0x1600000` ist Insert-Ort, kein Randomizer-FreeSpace.
+- Empfohlener Folgefix: neue Learnset-Blobs in nachgewiesen freie ROM-Fläche schreiben, Pointertable pro interner Species-ID aktualisieren, Reload per SpeciesSet-Identitaet pruefen.
 
 ## Noch nicht gestartet
 
@@ -69,9 +70,9 @@ Keine externen Original-Upstreams kontaktiert.
 
 Keine Aenderungen direkt auf `main`.
 
-UPR-FVX wurde nur im erlaubten Submodule-Branch geaendert; CFRU und DPE wurden nicht geaendert.
+Keine Aenderungen an `02_external/**`; UPR-FVX, CFRU und DPE wurden nur read-only analysiert.
 
-Keine Repointing-, Move-Data-Write-, Tutor-Text-, Special-Tutor- oder Egg-Move-Ausweitung.
+Keine Codeaenderung, kein Repointing, keine Move-Data-Write-, Tutor-Text-, Special-Tutor- oder Egg-Move-Ausweitung.
 
 Keine MCP-Configs mit Secrets angelegt.
 
@@ -89,7 +90,16 @@ git diff --check
 
 ## Naechster empfohlener Branch
 
-Nach Merge dieses Fixblocks: Learnset-Repointing-Modell separat analysieren, falls voller Learnset-Write benoetigt wird. Move-Data-Write, Special Tutors und Tutor-Text/Menu-Rewrites bleiben eigene Folgebranches.
+Nach Merge dieses Analyseblocks: Full Learnset-Write-Repointing nur in separatem Fixbranch versuchen, wenn freie ROM-Fläche im konkreten ROM diagnostisch nachgewiesen wird. Move-Data-Write, Special Tutors und Tutor-Text/Menu-Rewrites bleiben eigene Folgebranches.
+
+### 2026-05-13 - analysis/upr-fvx-cfru-dpe-p1-learnset-repointing-model
+
+- UPR-FVX PR #23 und Workspace PR #81 als gemerged geprueft.
+- CFRU/DPE Learnset-Repointing-Modell read-only dokumentiert.
+- `gLevelUpLearnsets` Pointer-Ort `0x03EA7C` zeigt auf die aktive Pointertable bei `0x25D7B4`.
+- Quellenanalyse: `1408` Pointertable-Zuweisungen, `1104` eindeutige Learnset-Ziele, `148` Shared-Zielgruppen.
+- Kein statisch freier Append-Bereich belastbar belegt; spaeterer Fix muss FreeSpace im konkreten ROM nachweisen.
+- Kein Fix, keine Aenderung an `02_external/**`, kein Repointing.
 
 ### 2026-05-13 - compat/upr-fvx-cfru-dpe-learnset-write-bounded
 

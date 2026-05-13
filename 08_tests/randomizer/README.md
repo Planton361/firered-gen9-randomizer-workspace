@@ -71,18 +71,19 @@ Der neueste bestaetigte Stand wird in Markdown ueber die Spalte `Latest` markier
 | 041 | `041_p1_egg_move_model.md` | CFRU/DPE Egg-Move-Modell | dokumentiert: Streamformat `u16`, Species-Marker `species + 20000`, Terminator `0xFFFF`; DPE-Stream enthaelt Gen8/9-Species und Move-IDs bis `967`, aber FVX nutzt noch falschen Tabellenort/Pokedex-Mapping und hat hohe-Move-ID-Risiken | keiner | nein |
 | 042 | `042_egg_moves_scope_and_write_fix_diagnostics.md` | CFRU/DPE Egg-Move-Scope-and-Write-Fix Diagnose | bestaetigt: `gEggMoves` ueber `0x45C50`, interne SpeciesSet-Keys, Gen8/9-Species und Gen9-Moves bleiben erhalten, `writeReloadEggMoveMismatches=0` | `05_builds/randomizer-smoke/042_egg_moves_scope_and_write_fix/` lokal/ignored | nein |
 | 043 | `043_p1_learnset_write_model.md` | CFRU/DPE Learnset-Write-Modell | dokumentiert: `gLevelUpLearnsets` ueber `0x03EA7C`, interne Species-ID-Pointertabelle, `u16 move + u8 level`, Sentinel `{0, 0xFF}`; Folgefix nur bounded in-place ohne Repointing | keiner | nein |
-| 044 | `044_learnset_write_bounded_fix_diagnostics.md` | CFRU/DPE Learnset-Write bounded in-place Fix Diagnose | teilweise bestaetigt: eng gegateter Writer speichert/reloadet sichere same-size Learnsets mit `writeReloadLearnsetMismatches=0`, aber die getestete ROM liefert nur `boundedWrites=1` und `skippedInvalidPointer=1412`; voller Learnset-Write braucht Repointing-Modell | `05_builds/randomizer-smoke/044_learnset_write_bounded_fix/` lokal/ignored | ja |
+| 044 | `044_learnset_write_bounded_fix_diagnostics.md` | CFRU/DPE Learnset-Write bounded in-place Fix Diagnose | teilweise bestaetigt: eng gegateter Writer speichert/reloadet sichere same-size Learnsets mit `writeReloadLearnsetMismatches=0`, aber die getestete ROM liefert nur `boundedWrites=1` und `skippedInvalidPointer=1412`; voller Learnset-Write braucht Repointing-Modell | `05_builds/randomizer-smoke/044_learnset_write_bounded_fix/` lokal/ignored | nein |
+| 045 | `045_p1_learnset_repointing_model.md` | CFRU/DPE Learnset-Repointing-Modell | dokumentiert: Pointertable bleibt ueber `0x03EA7C -> 0x25D7B4`, Quellen zeigen `1408` Zuweisungen, `1104` eindeutige Ziele, `148` Shared-Gruppen und keinen belastbar reservierten freien Append-Bereich; Folgefix muss freie ROM-Fläche nachweisen | keiner | ja |
 
 ## Aktuell bestaetigter Stand
 
-Latest ist Nr. 044: CFRU/DPE Learnset-Write bounded in-place Fix Diagnose.
+Latest ist Nr. 045: CFRU/DPE Learnset-Repointing-Modell.
 
 Kernaussagen:
 
-- UPR-FVX `dd9d80c1` implementiert einen eng gegateten CFRU/DPE-`setMovesLearnt()`-Pfad fuer bounded in-place writes.
-- `gLevelUpLearnsets` wird ueber Pointer-Ort `0x03EA7C` validiert; Eintraege bleiben `u16 move + u8 level` mit Sentinel `{0, 0xFF}`.
-- Der Diagnose-Harness bestaetigt Save, Log, Output, nichtleeren Log und `writeReloadLearnsetMismatches=0`.
-- Der praktische Scope bleibt begrenzt: der Writer akzeptierte im Test `boundedWrites=1` und skippt `1412` unsafe Pointer. Full Learnset-Write braucht ein separates Repointing-/Tabellenmodell.
+- `gLevelUpLearnsets` wird ueber Pointer-Ort `0x03EA7C` auf die aktive Pointertable bei `0x25D7B4` gefuehrt.
+- Quellenanalyse zeigt `1408` Pointertable-Zuweisungen, `1104` eindeutige Learnset-Zielarrays und `148` Shared-Zielgruppen.
+- DPE insertet seine Erweiterung ab `0x1600000`; daraus folgt kein freier Randomizer-Append-Bereich.
+- Minimaler Folgefix muss neue Learnset-Blobs in nachgewiesen freie ROM-Fläche schreiben, Pointertable-Eintraege pro interner Species-ID aktualisieren und Reload per SpeciesSet-Identitaet pruefen.
 
 ## Lokale Artefaktpflege
 
