@@ -6,46 +6,47 @@
 - GitHub-Repo `Planton361/firered-gen9-randomizer-workspace` existiert und bleibt Source of Truth.
 - `main` ist Default Branch und bleibt stabil.
 - Branch Protection und PR-Pflicht sind laut dokumentiertem Projektstand eingerichtet.
-- Workspace PR #76 ist gemerged.
-- UPR-FVX-Fix `4ce93754de390e9177efd2541c02edba0afbb0c4` implementiert den eng gegateten CFRU/DPE-Tutor-Reader/Writer.
+- UPR-FVX PR #21 und Workspace PR #77 sind gemerged.
+- UPR-FVX-Stand im Workspace: `4ce93754de390e9177efd2541c02edba0afbb0c4`.
 - TM/HM-only ist im getesteten CFRU/DPE-128-Slot-Scope P1-supported.
 - Tutor-only ist im getesteten CFRU/DPE-152-Slot-Scope P1-supported.
+- Egg-Move-Modell ist read-only dokumentiert; Egg-Move-only ist noch nicht P1-supported.
 - ROMs, Saves, Builds, Tool-Binaries und private Dateien sind ausgeschlossen.
 
 ## Aktueller Branch
 
-`compat/upr-fvx-cfru-dpe-tutor-scope-and-compatibility`
+`analysis/upr-fvx-cfru-dpe-p1-egg-move-model`
 
 ## Aktueller Arbeitsblock
 
-CFRU/DPE Tutor-Scope-and-Compatibility-Fix.
+CFRU/DPE Egg-Move-Species-/Move-ID-Modellierung.
 
 ## Ziel
 
-Minimal gegateten CFRU/DPE-Tutor-Reader/Writer implementieren und diagnostisch bestaetigen. Keine Special-Tutor-, Egg-Move-, Learnset-Write-, Move-Data-Write- oder Tutor-Text-Rewrite-Ausweitung.
+CFRU/DPE Egg-Move-Modell read-only untersuchen und bewerten, ob das FVX-Egg-Move-Streamformat fuer interne Species-IDs und Move-IDs bis `991` stabil ist. Kein Fix, keine Codeaenderung, keine Learnset-Write-, Move-Data-Write-, Tutor-Text- oder Special-Tutor-Ausweitung.
 
 ## In diesem Arbeitsblock geprueft / geaendert
 
-- Workspace PR #76 als gemerged geprueft.
-- Workspace-Branch `compat/upr-fvx-cfru-dpe-tutor-scope-and-compatibility` und UPR-FVX-Branch `compat/upr-fvx-cfru-dpe-tutor-scope-and-compatibility` verwendet; nicht auf `main` gearbeitet.
-- UPR-FVX `Gen3RomHandler` fuer CFRU/DPE-Gen9-BPRE um 152-Slot-Tutor-Read/Write und 19-Byte-Tutor-Compatibility erweitert.
-- UPR-FVX `TMTutorMoveRandomizer` gegen hohe Tutor-Move-IDs abgesichert.
-- Neues Protokoll erstellt: `08_tests/randomizer/040_tutor_scope_and_compatibility_fix_diagnostics.md`.
-- `08_tests/randomizer/README.md`, `SESSION_STATE.md`, `NEXT_STEPS.md`, Roadmap und Tool-Manifest aktualisiert.
+- UPR-FVX PR #21 und Workspace PR #77 als gemerged geprueft.
+- Workspace-Branch `analysis/upr-fvx-cfru-dpe-p1-egg-move-model` verwendet; nicht auf `main` gearbeitet.
+- UPR-FVX-, CFRU- und DPE-Egg-Move-Pfade read-only untersucht.
+- Neues Protokoll erstellt: `08_tests/randomizer/041_p1_egg_move_model.md`.
+- `08_tests/randomizer/README.md`, `SESSION_STATE.md`, `NEXT_STEPS.md` und Roadmap aktualisiert.
+- Keine Aenderung an `02_external/**` und kein Submodule-Pin-Wechsel.
 
 ## Ergebnis
 
-- `gMoveTutorMoves` wird ueber Pointer-Location `0x8120BE4` gelesen; Zielpointer im Teststand `0x09A596EA`, ROM-Offset `0x1A596EA`.
-- `gMoveTutorMoves` wird als `u16[152]` gelesen/geschrieben.
-- `gTutorLearnsets` wird ueber Pointer-Location `0x8120C30` gelesen; Zielpointer im Teststand `0x09605CD0`, ROM-Offset `0x1605CD0`.
-- Aktiver Compatibility-Stride ist `19` Bytes pro Species; FVX bildet das als `153` Flags inklusive Dummy-Index 0 ab.
-- Tutor moves-only, Tutor compatibility-only und Tutor moves + compatibility erzeugen Save, Log, Output-ROM und `writeReloadMismatches=0`.
-- Special Tutors bleiben unveraendert und out of scope.
+- CFRU/DPE nutzt fuer `gEggMoves` weiterhin ein klassisches `u16`-Streamformat mit Species-Marker `species + 20000` und End-Sentinel `0xFFFF`.
+- DPE `repointall` dokumentiert `gEggMoves 08045C50`; FVX nutzt aktuell weiter den FireRed-RomEntry-Wert `EggMoves=0x25EF0C`.
+- Der DPE-Egg-Move-Stream enthaelt `437` Species-Eintraege, darunter `41` Gen8-, `5` PLA/Hisuian- und `47` Paldea-/Gen9-Eintraege.
+- Hoechste Species im Stream: `SPECIES_WOOPER_P`, ID `0x584` / `1412`.
+- Der Stream enthaelt `4121` Move-Werte, `465` eindeutige Move-IDs, `77` eindeutige Move-IDs `>=559` und Gen9-Moves bis `MOVE_TIDYUP` ID `0x3C7` / `967`.
+- Das Streamformat ist formal kompatibel, aber der aktuelle FVX-Pfad ist fuer P1 noch nicht stabil: falscher Tabellenort, Pokédex-ID-Mapping statt interner Species-ID, hohe Move-ID-Arraygrenzen und Kopplung an Learnset-Write.
 
 ## Noch nicht gestartet
 
+- Egg-Move-Reader-/Writer-Fix
 - Special-Tutor-Modell/Fix
-- Egg-Move-Species-/Move-ID-Diagnose
 - Move-Data-Write/`saveMoves()` fuer CFRU/DPE
 - Learnset-Write / `setMovesLearnt()` fuer CFRU/DPE
 - Ability-Datenmodellierung
@@ -59,7 +60,7 @@ Keine ROMs, Saves, Builds oder Tool-Binaries committed.
 
 Keine ROMs in ChatGPT hochgeladen.
 
-Neue lokale ROM-/Log-Artefakte wurden nur unter `05_builds/randomizer-smoke/040_tutor_scope_and_compatibility_fix/` erzeugt und bleiben ignored.
+Keine ROM-/Log-/Output-Artefakte erzeugt.
 
 Private absolute Pfade und private ROM-Dateinamen wurden nicht dokumentiert.
 
@@ -67,9 +68,9 @@ Keine externen Original-Upstreams kontaktiert.
 
 Keine Aenderungen direkt auf `main`.
 
-UPR-FVX wurde nur in erlaubten Submodule-Pfaden unter `02_external/upr-fvx/romio/src/main/java/**` und `02_external/upr-fvx/random/src/main/java/**` geaendert.
+Keine Aenderungen an `02_external/**`; UPR-FVX, CFRU und DPE wurden nur read-only analysiert.
 
-Keine Special-Tutor-, Egg-Move-, Learnset-Write-, Move-Data-Write- oder Tutor-Text-Rewrite-Ausweitung.
+Keine Learnset-Write-, Move-Data-Write-, Tutor-Text- oder Special-Tutor-Ausweitung.
 
 Keine MCP-Configs mit Secrets angelegt.
 
@@ -87,7 +88,17 @@ git diff --check
 
 ## Naechster empfohlener Branch
 
-Nach Merge dieses Fixblocks: Egg-Move-Species-/Move-ID-Diagnose separat read-only untersuchen. Nicht mit Learnset-Write oder Move-Data-Write vermischen.
+Nach Merge dieses Analyseblocks: Egg-Move-Reader-/Writer-Fix separat umsetzen. Tabellenort ueber `0x45C50` validieren, interne Species-ID-Marker erhalten und hohe Move-ID-Arrayzugriffe absichern. Learnset-Write bleibt separat.
+
+### 2026-05-13 - analysis/upr-fvx-cfru-dpe-p1-egg-move-model
+
+- UPR-FVX PR #21 und Workspace PR #77 als gemerged geprueft.
+- CFRU/DPE Egg-Move-Modell read-only dokumentiert.
+- `gEggMoves` als `u16`-Stream mit Species-Marker `species + 20000` und Terminator `0xFFFF` eingeordnet.
+- DPE `repointall` zeigt `gEggMoves 08045C50`; FVX nutzt aktuell noch `EggMoves=0x25EF0C` aus dem FireRed-RomEntry.
+- DPE-Egg-Move-Stream enthaelt Gen8-/PLA-/Paldea-Species und Move-IDs bis `MOVE_TIDYUP` ID `967`.
+- Aktuelle FVX-Risiken: Pokédex-ID-Mapping statt interner Species-ID, globale Move-Ban-Arrays mit Laenge `827`, Egg-Move-Randomization an Learnset-Write gekoppelt.
+- Kein Fix, keine Aenderung an `02_external/**`, kein ROM-Zugriff.
 
 ### 2026-05-13 - compat/upr-fvx-cfru-dpe-tutor-scope-and-compatibility
 
