@@ -1,6 +1,6 @@
 # Decisions Index
 
-| ID | Datum | Entscheidung | Begründung |
+| ID | Datum | Entscheidung | Begruendung |
 |---|---|---|---|
 | DEC-001 | 2026-05-09 | GitHub-Repo ist Source of Truth | Browser-Chat, Codex und lokaler Workspace brauchen einen gemeinsamen Stand |
 | DEC-002 | 2026-05-09 | PowerShell war Standardterminal | Historischer Windows-Stand; fuer neue lokale Arbeit durch DEC-009 ersetzt |
@@ -12,3 +12,4 @@
 | DEC-008 | 2026-05-09 | Codex arbeitet nur auf freigegebenen Branches | verhindert unkontrollierte Aenderungen |
 | DEC-009 | 2026-05-10 | Linux/CachyOS ist primaere lokale Entwicklungsumgebung | Nutzer hat die lokale Arbeitsumgebung gewechselt |
 | DEC-010 | 2026-05-10 | Windows-Toolchain-Inventur ist historischer Stand | Fruehere Windows-Pfade und PATH-Befunde duerfen nicht als Linux-Ist-Stand verwendet werden |
+| DEC-011 | 2026-05-13 | UPR FVX GUI Features werden als Requirements-Basis genutzt | Detailstatus kommt in eine eigene Feature-Coverage-Matrix; die Roadmap bleibt paketorientiert |
