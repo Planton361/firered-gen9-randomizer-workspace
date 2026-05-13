@@ -472,3 +472,9 @@ Zweck: CFRU/DPE-128-Slot-TM/HM-Reader/Writer eng gaten, ohne Tutor-, Egg-Move-, 
 - UPR-FVX-Commit erstellt: `655764816f9fefedb9433f33e4da0bc9d44bcda7`.
 - Diagnose 031 bestaetigt `saveSuccessful=true`, `logSuccessful=true`, Output-ROM, nichtleeren Trainer-Log und `writeReloadMismatches=0`.
 - Keine ROMs, Saves, Emulator States, Builds, Tool-Binaries, privaten Pfade, Secrets oder `.env` committed oder dokumentiert.
+
+## 2026-05-13 - Egg-Move P1 scope
+
+- CFRU/DPE Gen9 BPRE Egg-Move reader/writer is now implemented in UPR-FVX on branch `compat/upr-fvx-cfru-dpe-egg-moves-scope-and-write` at `18168b78b973a4c39f34053ac58f21279a26d8d2`.
+- Diagnosis 042 reports Egg-Move direct scope as P1-supported for the tested ROM: Save/Log/Output succeed and Write/Reload mismatches are `0`.
+- Learnset-Write, Move-Data-Write, Special Tutors, and Tutor text remain separate roadmap items.

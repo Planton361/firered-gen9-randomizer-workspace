@@ -65,3 +65,9 @@ Ziel:
 - keine Original-Upstreams kontaktieren
 - keine Aenderungen direkt auf `main`
 - keine Learnset-Write-, Move-Data-Write-, Tutor-Text- oder Special-Tutor-Ausweitung ohne eigenen Branch
+
+## After Egg-Move scope/write fix
+
+- Merge UPR-FVX PR for `compat/upr-fvx-cfru-dpe-egg-moves-scope-and-write`, then merge the workspace documentation PR.
+- Next compatibility scopes remain separate: Learnset-Write, Move-Data-Write, Special Tutors, and Tutor text/menu rewrites.
+- Recommended next branch after merge: model or diagnose CFRU/DPE Learnset-Write separately before any write-path implementation.

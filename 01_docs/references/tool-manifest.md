@@ -203,3 +203,10 @@ Vor dem ersten Clone pro externer Quelle weiterhin festlegen:
 - welcher Branch relevant ist
 - welcher Commit-Hash gepinnt wird
 - ob Codex Änderungen durchführen darf
+
+## 2026-05-13 - UPR-FVX Egg-Move scope/write pin
+
+- Workspace branch: `compat/upr-fvx-cfru-dpe-egg-moves-scope-and-write`.
+- UPR-FVX branch: `compat/upr-fvx-cfru-dpe-egg-moves-scope-and-write`.
+- UPR-FVX commit: `18168b78b973a4c39f34053ac58f21279a26d8d2`.
+- Scope: gated CFRU/DPE Gen9 BPRE `gEggMoves` reader/writer plus high move-ID safety in Egg-Move randomization.

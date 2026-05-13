@@ -157,3 +157,13 @@ Nach Merge dieses Analyseblocks: Egg-Move-Reader-/Writer-Fix separat umsetzen. T
 - TM/HM-Compatibility-only blockiert separat an Null-Type-Species.
 - Neues Protokoll erstellt: `08_tests/randomizer/035_p1_tm_hm_only.md`.
 - Kein Fix, keine Randomizer-Codeaenderung, keine committed ROM-/Build-Artefakte.
+
+## 2026-05-13 - CFRU/DPE Egg-Move scope/write fix
+
+- Active branch: `compat/upr-fvx-cfru-dpe-egg-moves-scope-and-write`.
+- UPR-FVX fix commit: `18168b78b973a4c39f34053ac58f21279a26d8d2`.
+- Implemented a gated CFRU/DPE `gEggMoves` reader/writer through pointer location `0x45C50` while preserving the classic `u16` stream, `species + 20000` markers, and `0xFFFF` sentinel.
+- Preserved internal `SpeciesSet` identity for Egg-Move keys and guarded high move-ID flag-array access in `SpeciesMovesetRandomizer`.
+- Added diagnosis `08_tests/randomizer/042_egg_moves_scope_and_write_fix_diagnostics.md`.
+- Direct Egg-Move harness result: `moves.total=992`, highest loaded move `991:PsychicNoise`, target pointer `0x09A0E94C`, species entries `436 -> 436 -> 436`, highest species `1412`, highest move after/reload `991`, `writeReloadEggMoveMismatches=0`, `saveSuccessful=true`, `logSuccessful=true`, `outputRomExists=true`, `logNonEmpty=true`.
+- No Learnset-Write, Move-Data-Write, Tutor-Text, Special-Tutor, or `setMovesLearnt()` expansion was included.

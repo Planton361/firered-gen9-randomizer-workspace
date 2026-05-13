@@ -94,3 +94,5 @@ Wenn ein Artefakt nicht eindeutig Smoke-Output ist, bleibt es lokal liegen und w
 - TM/Tutor/Egg-Move-Pfade
 - TM/Tutor/Abilities
 - CFRU Day/Night
+
+- `042_egg_moves_scope_and_write_fix_diagnostics.md` - CFRU/DPE Gen9 BPRE Egg-Move reader/writer fix diagnostics; direct Egg-Move harness confirms `gEggMoves` pointer `0x45C50 -> 0x09A0E94C`, `moves.total=992`, Gen8/9 species retained, Gen9 moves written/reloaded, and `writeReloadEggMoveMismatches=0`.
