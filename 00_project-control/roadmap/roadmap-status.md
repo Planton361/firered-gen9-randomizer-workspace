@@ -24,9 +24,9 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-p1-field-items-shops-pickup-model` |
-| Nächster Branch | `analysis/upr-fvx-cfru-dpe-p1-palette-randomization-model` |
-| Aktueller Fokus | CFRU/DPE Field Items / Shops / Pickup Item-Modell |
+| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-p1-palette-randomization-model` |
+| Nächster Branch | `analysis/upr-fvx-cfru-dpe-p1-type-chart-model` |
+| Aktueller Fokus | CFRU/DPE Palette-Randomization-Modell |
 | ROM-/Build-Arbeit | keine neuen ROM-/Build-Artefakte; keine Artefakte committen |
 | Externe Repos | als Submodule auf Planton361-Forks eingebunden |
 | Forks | Planton361-Forks fuer UPR-FVX, DPE Gen9 und CFRU dokumentiert |
@@ -117,18 +117,19 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | 08 Randomizer-Kompatibilität | CFRU/DPE Type-Log-/Placeholder-Hygiene | Diagnose 055 klassifiziert `Bad Egg`, `<unknown>`, Unknown-Type-/Ability-/Item-Fallbacks und Null-/BST-zero-/all-zero-Ability-Species aus bestehenden Protokollen; Marker aus 051/052/054 blockieren P1-Support nicht bei stabilen Save/Log/Output/Reload-Kriterien und `0` Mismatches |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Move-Data-Write-Modell | Diagnose 056 modelliert `moves.total=992`, `991:PsychicNoise`, `BattleMove.split`, aktuelle `saveMoves()`-Teilfeldwrites, Preserve-Policy und Reload-Kriterien fuer spaeteren Fix |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Field Items/Shops/Pickup-Modell | Diagnose 057 modelliert Field Items, Shops, Pickup und allgemeine Item-Randomization getrennt von Encounter Held Items; eigene Preserve-/Skip-Policy und Reload-Kriterien dokumentiert |
+| 08 Randomizer-Kompatibilität | CFRU/DPE Palette-Randomization-Modell | Diagnose 058 trennt Palette-Safety/Skip-Unchanged-Save von echter geaenderter Palette-Randomization; compressed/shared/repointing risks, Preserve-/Skip-Policy, Reload-Kriterien und Graphics/P2-Abgrenzung dokumentiert |
 
 ## In Arbeit
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Field Items/Shops/Pickup-Modell | Diagnose 057 dokumentieren und PR erstellen |
+| 08 Randomizer-Kompatibilität | Palette-Randomization-Modell | Diagnose 058 dokumentieren und PR erstellen |
 
 ## Als Nächstes
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Palette-Randomization-Modell | Vorhandene Palette-Safety von echter Palette-/Graphics-Randomization trennen und Write-/Repointing-Risiken modellieren |
+| 08 Randomizer-Kompatibilität | Type-Chart-Modell | Type-Chart- und moderne Type-Interaktion getrennt von Pokemon-Type-Read/Write modellieren |
 
 ## Noch offen
 
