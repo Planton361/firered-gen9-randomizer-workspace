@@ -1,5 +1,23 @@
 # Session State
 
+## 2026-05-13 - CFRU/DPE Base Stats, Types, Abilities Model
+
+Arbeitsbranch: `analysis/upr-fvx-cfru-dpe-p1-base-stats-types-abilities-model`
+
+Aktueller Stand:
+
+- UPR-FVX PR #25 und Workspace PR #87 als gemerged geprueft.
+- Neues read-only Protokoll `08_tests/randomizer/050_p1_base_stats_types_abilities_model.md` erstellt.
+- `gBaseStats` fuer den getesteten CFRU/DPE Gen9-BPRE-Stand modelliert: Pointer-Ort `0x080001BC`, Entry-Size `0x1C`, internes Species-Indexing bis `SPECIES_PECHARUNT=0x59F` / `NUM_SPECIES=1440`.
+- CFRU BaseStats-Felder eingeordnet: Stats, `type1/type2`, `item1/item2`, `ability1/ability2` und `hiddenAbility` bei Offset `0x1A`.
+- FVX-Risiken dokumentiert: Gen3-Type-Mapping liest/schreibt Fairy aktuell nicht korrekt, Stellar ist nicht im FVX-Type-Enum, Hidden Ability wird nicht gelesen/geschrieben, Ability-Count ist `77` statt CFRU `255`, Encounter Held Items haengen am erweiterten Itemmodell.
+- Keine Codeaenderung, keine Aenderung an `02_external/**`, kein ROM-/Build-/Log-Artefakt.
+
+Naechster sinnvoller Schritt:
+
+- `compat/upr-fvx-cfru-dpe-base-stats-types-scope-and-write` als kleinen ersten Fixbranch planen.
+- Hidden Abilities und Encounter Held Items getrennt behandeln; Encounter Held Items erst nach Item-/Bad-Item-Modell.
+
 ## 2026-05-13 - CFRU/DPE Learnset GUI Flow Safety Fix
 
 Arbeitsbranch: `compat/upr-fvx-cfru-dpe-learnset-gui-flow-safety`
@@ -93,40 +111,39 @@ Naechster sinnvoller Schritt:
 
 ## Aktueller Branch
 
-`compat/upr-fvx-cfru-dpe-learnset-gui-flow-safety`
+`analysis/upr-fvx-cfru-dpe-p1-base-stats-types-abilities-model`
 
 ## Aktueller Arbeitsblock
 
-CFRU/DPE Learnset GUI-Flow-Safety-Fix.
+CFRU/DPE Base Stats, Types, Abilities und Encounter Held Items Modell.
 
 ## Ziel
 
-CFRU/DPE Pokemon Movesets/Learnsets im normalen GameRandomizer-/Settings-Flow entblocken. Minimalfix fuer Logger, Multiwrite-Repointing, Trainer-Movesets und TM/HM-/Tutor-Level-Up-Sanity; keine Move-Data-Write-, Tutor-Text-, Special-Tutor-, Egg-Move-, Palette/Graphics- oder Text/Menu-Ausweitung.
+Base Stats, Pokemon Types, Ability Slots, Hidden Abilities und Encounter Held Items fuer den getesteten CFRU/DPE Gen9-BPRE-Stand read-only modellieren. Keine Codeaenderung, kein Fix.
 
 ## In diesem Arbeitsblock geprueft / geaendert
 
-- Workspace PR #86, Workspace PR #85 und UPR-FVX PR #24 als gemerged geprueft.
-- Workspace- und UPR-FVX-Branch `compat/upr-fvx-cfru-dpe-learnset-gui-flow-safety` erstellt; nicht auf `main` gearbeitet.
-- UPR-FVX `Gen3RomHandler.setMovesLearnt()` fuer wiederholte CFRU/DPE-Repointing-Writes innerhalb der validierten FreeSpace-Region abgesichert.
-- Logger, Trainer-Movesets und TM/HM-/Tutor-Level-Up-Sanity defensiv gegen fehlende Moveset-Daten abgesichert.
-- Neues Protokoll erstellt: `08_tests/randomizer/049_p1_learnset_gui_flow_safety_fix_diagnostics.md`.
-- `08_tests/randomizer/README.md`, `SESSION_STATE.md`, `NEXT_STEPS.md`, Roadmap und Tool-Manifest aktualisiert.
+- UPR-FVX PR #25 und Workspace PR #87 als gemerged geprueft.
+- Workspace-Branch `analysis/upr-fvx-cfru-dpe-p1-base-stats-types-abilities-model` erstellt; nicht auf `main` gearbeitet.
+- UPR-FVX, CFRU und DPE read-only untersucht.
+- Neues Protokoll erstellt: `08_tests/randomizer/050_p1_base_stats_types_abilities_model.md`.
+- `08_tests/randomizer/README.md`, `SESSION_STATE.md`, `NEXT_STEPS.md` und Roadmap aktualisiert.
 
 ## Ergebnis
 
-- Alle sieben Diagnose-049-Laeufe speichern, loggen, erzeugen Output und reloaden erfolgreich.
-- `writeReloadLearnsetMismatches=0` in allen Laeufen.
-- Reorder-Damaging fuehrt zwei `setMovesLearnt()`-Writes aus und nutzt `0x1219A48-0x1221663` sowie `0x1221664-0x122927F`.
-- Trainer-Movesets mit fehlendem Moveset-Map-Eintrag werden diagnostiziert und uebersprungen statt per NPE abzubrechen.
-- TM/HM- und Tutor-Level-Up-Sanity laufen mit `0` Mismatches.
-- Pokemon Movesets/Learnsets sind im getesteten GUI-/Settings-nahen CFRU/DPE Gen9-BPRE-Scope P1-supported.
+- `gBaseStats` wird im CFRU/DPE-Stand ueber Pointer-Ort `0x080001BC` gefuehrt und nutzt eine `0x1C`-Entry-Size.
+- CFRU/DPE Species-Scope reicht bis `SPECIES_PECHARUNT=0x59F`, `NUM_SPECIES=0x5A0` / `1440`.
+- Types sind in BaseStats bei `0x06/0x07`; `TYPE_FAIRY=0x17` und `TYPE_STELLAR=0x18` brauchen CFRU/DPE-spezifische Behandlung.
+- Ability1/2 liegen bei `0x16/0x17`; Hidden Ability liegt bei `0x1A` und wird von FVX Gen3 aktuell nicht modelliert.
+- Encounter Held Items liegen als `item1/item2` bei `0x0C/0x0E`; moderne Item-IDs und Bad-/Key-Item-Filter brauchen separates Itemmodell.
 
 ## Noch nicht gestartet
 
 - Special-Tutor-Modell/Fix
 - Move-Data-Write/`saveMoves()` fuer CFRU/DPE
-- Ability-Datenmodellierung
-- Base Stats-/Types-/Abilities-Datenmodellierung
+- Base Stats + Fairy-Type-Scope-and-Write-Fix
+- Hidden-Ability-Scope-and-Write-Fix
+- Item-/Bad-Item-Datenmodellierung fuer Encounter Held Items
 - CFRU-Day/Night-Custom-Wild-Tabellen-Support
 - Nullslot-`<unknown>`-Analyse
 - Ironmon-Tracker-Tests
@@ -165,7 +182,7 @@ git diff --check
 
 ## Naechster empfohlener Branch
 
-Nach Merge dieses Fixblocks: `analysis/upr-fvx-cfru-dpe-p1-base-stats-types-abilities-model`. Move-Data-Write, Special Tutors, Tutor-Text/Menu-Rewrites, Items/Shops/Field und Palette/Graphics bleiben eigene Folgebranches.
+Nach Merge dieses Analyseblocks: `compat/upr-fvx-cfru-dpe-base-stats-types-scope-and-write`. Hidden Abilities, Encounter Held Items, Move-Data-Write, Special Tutors, Tutor-Text/Menu-Rewrites, Items/Shops/Field und Palette/Graphics bleiben eigene Folgebranches.
 
 ### 2026-05-13 - analysis/upr-fvx-cfru-dpe-p1-learnset-repointing-model
 
