@@ -1,5 +1,25 @@
 # Session State
 
+## 2026-05-13 - CFRU/DPE Type-Chart-Modell
+
+Arbeitsbranch: `analysis/upr-fvx-cfru-dpe-p1-type-chart-model`
+
+Aktueller Stand:
+
+- Neues read-only Analyseprotokoll `08_tests/randomizer/059_p1_type_chart_model.md` erstellt.
+- Pokemon-Type-Read/Write aus Diagnose 051 wurde strikt von Type-Chart-/Effectiveness-Randomization getrennt.
+- Klar dokumentiert: 051 beweist `gBaseStats`-Type-Read/Write inklusive Fairy `0x17` und `typeIdMismatches=0`, aber keinen Type-Chart-Support.
+- Fairy `0x17` in Species-Daten wurde von Fairy-Effectiveness-Eintraegen in der TypeTable getrennt.
+- Stellar `0x18` bleibt unsupported/preserve-only und darf nicht stillschweigend in Random-Pools oder TypeChart-Writes eingefuehrt werden.
+- `TypeEffectivenessRandomizer`, `getTypeTable()`/`setTypeTable()`, `TypeEffectivenessOffset`, Foresight-/End-Table-Terminatoren und `nonNeutralEffectivenessCount` wurden als eigener Hochrisiko-Writer klassifiziert.
+- Preserve-/Skip-Policy und Reload-/Diagnosekriterien fuer spaetere TypeChart-Fixbranches festgelegt.
+- Diagnose 058 bleibt Palette-Grenze, 057 Item-/Field-/Shop-/Pickup-Grenze, 056 MoveData-Grenze und 055 Log-Hygiene-Grenze.
+- Keine Codeaenderung, keine Aenderung an `02_external/**`, keine neuen Randomizer-Laeufe, kein Tool-Manifest-Update.
+
+Naechster sinnvoller Schritt:
+
+- `analysis/upr-fvx-cfru-dpe-p1-gui-suboptions-regression-matrix`: GUI-Suboptionen nach den read-only Modellen 055-059 regressionsorientiert konsolidieren.
+
 ## 2026-05-13 - CFRU/DPE Palette-Randomization-Modell
 
 Arbeitsbranch: `analysis/upr-fvx-cfru-dpe-p1-palette-randomization-model`
