@@ -24,9 +24,9 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-p1-egg-move-model` |
-| Nächster Branch | `compat/upr-fvx-cfru-dpe-egg-moves-scope-and-write` |
-| Aktueller Fokus | CFRU/DPE Egg-Move-Modellierung |
+| Aktueller Branch | `compat/upr-fvx-cfru-dpe-learnset-write-bounded` |
+| Nächster Branch | `analysis/upr-fvx-cfru-dpe-p1-learnset-repointing-model` |
+| Aktueller Fokus | CFRU/DPE Learnset-Write bounded in-place Fix |
 | ROM-/Build-Arbeit | keine neuen ROM-/Build-Artefakte; keine Artefakte committen |
 | Externe Repos | als Submodule auf Planton361-Forks eingebunden |
 | Forks | Planton361-Forks fuer UPR-FVX, DPE Gen9 und CFRU dokumentiert |
@@ -102,18 +102,20 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | 08 Randomizer-Kompatibilität | CFRU/DPE Tutor-/Special-Tutor-Modell | `gMoveTutorMoves` `u16[152]`, `gTutorLearnsets` `152` Bits und Special-Tutor-Sonderlogik read-only dokumentiert; Tutor-only noch nicht P1-supported |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Tutor-Scope-and-Compatibility-Fix | UPR-FVX `4ce93754` bestaetigt `tutorMoveCount=152`, 19-Byte-Compatibility-Stride und Save/Log/Reload fuer Tutor moves-only, Compatibility-only und kombinierte Tutor-Laeufe mit `writeReloadMismatches=0` |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Egg-Move-Modell | `gEggMoves` als `u16`-Stream mit `species + 20000` und `0xFFFF` dokumentiert; DPE-Stream enthaelt Gen8/9-Species und Move-IDs bis `967`; Egg-Move-only braucht separaten Fix |
+| 08 Randomizer-Kompatibilität | CFRU/DPE Egg-Move-Scope und Write | UPR-FVX `18168b78` bestaetigt `gEggMoves` ueber `0x45C50`, interne SpeciesSet-Keys, Gen8/9-Species und Gen9-Moves mit `writeReloadEggMoveMismatches=0` |
+| 08 Randomizer-Kompatibilität | CFRU/DPE Learnset-Write-Modell | `gLevelUpLearnsets` ueber `0x03EA7C`, internes Species-Indexing, `u16 move + u8 level`, Sentinel `{0, 0xFF}` und bounded-in-place-Folgepfad dokumentiert |
 
 ## In Arbeit
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Egg-Move-Modellierung | CFRU/DPE Egg-Move-Species-/Move-ID-Modell read-only dokumentieren |
+| 08 Randomizer-Kompatibilität | Learnset-Write bounded in-place | Minimal gegateten CFRU/DPE-`setMovesLearnt()`-Pfad ohne Repointing diagnostisch absichern |
 
 ## Als Nächstes
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Egg-Move-Scope und Write | Minimal gegateten CFRU/DPE-Egg-Move-Reader/Writer vorbereiten |
+| 08 Randomizer-Kompatibilität | Learnset-Repointing-Modell | Full Learnset-Write getrennt modellieren, bevor Repointing umgesetzt wird |
 
 ## Noch offen
 
@@ -167,6 +169,13 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | P1q | `analysis/upr-fvx-cfru-dpe-p1-tm-hm-only` | TM/HM-only Diagnose | erledigt; Workspace PR #72 gemerged, Fixbedarf fuer hohes Move-ID-Limit und Null-Type-Species belegt |
 | P1r | `compat/upr-fvx-cfru-dpe-tm-hm-scope-and-safety` | TM/HM Scope und Safety | erledigt; `50+8`-Scope entblockt, kein 128-Slot-, Tutor-, Egg-, Learnset-Write- oder Move-Data-Write-Fix |
 | P1s | `analysis/upr-fvx-cfru-dpe-p1-tm-hm-128-slot-model` | TM/HM 128-Slot-Modell | aktueller Analysebranch; `gTMHMMoves`/`gTMHMLearnsets` Pointermodell dokumentiert, kein Fix |
+| P1t | `compat/upr-fvx-cfru-dpe-tm-hm-128-slot` | TM/HM 128-Slot-Fix | erledigt; UPR-FVX `58379ffd` bestaetigt 120 TMs, 8 HMs, 128-Slot-Write/Reload und 128-Bit-Compatibility |
+| P1u | `analysis/upr-fvx-cfru-dpe-p1-tutor-model` | Tutor-/Special-Tutor-Modell | erledigt; normale Tutor-Tabelle 152 Slots, Special Tutors separat |
+| P1v | `compat/upr-fvx-cfru-dpe-tutor-scope-and-compatibility` | Tutor-Scope und Compatibility | erledigt; UPR-FVX `4ce93754` bestaetigt 152 Tutor-Moves, 19-Byte-Compatibility und Reload ohne Mismatches |
+| P1w | `analysis/upr-fvx-cfru-dpe-p1-egg-move-model` | Egg-Move-Modell | erledigt; `gEggMoves` Streamformat und Gen8/9-Scope dokumentiert |
+| P1x | `compat/upr-fvx-cfru-dpe-egg-moves-scope-and-write` | Egg-Move-Scope und Write | erledigt; UPR-FVX `18168b78` bestaetigt direct Egg-Move Write/Reload ohne Mismatches |
+| P1y | `analysis/upr-fvx-cfru-dpe-p1-learnset-write-model` | Learnset-Write-Modell | erledigt; bounded in-place als minimaler Folgefix empfohlen |
+| P1z | `compat/upr-fvx-cfru-dpe-learnset-write-bounded` | Learnset-Write bounded in-place | aktueller Fixbranch; UPR-FVX `dd9d80c1` speichert sichere same-size Learnsets ohne Repointing, voller Learnset-Write bleibt separat |
 | P2 | `randomizer/cfru-day-night-wild-table-analysis` | CFRU-Custom-Day/Night-Wild-Tabellen separat untersuchen | erst nach P1-Schreibpfad-Diagnose; Route-1-Fallback bleibt stabil |
 | P3 | noch festlegen | Nullslot-`<unknown>` mit `rawInternalSpeciesId=0` klassifizieren | nicht mit GenRestrictions vermischen |
 | P4 | noch festlegen | BizHawk-/Ironmon-Tracker-/RAM-Mapping pruefen | erst nach stabiler ROM-Randomizer-Kompatibilitaet |
@@ -209,10 +218,10 @@ Excel-Roadmap:
 ## Nächster empfohlener Branch
 
 ```text
-compat/upr-fvx-cfru-dpe-tm-hm-128-slot
+analysis/upr-fvx-cfru-dpe-p1-learnset-repointing-model
 ```
 
-Zweck: CFRU/DPE-128-Slot-TM/HM-Reader/Writer eng gaten, ohne Tutor-, Egg-Move-, Learnset-Write- oder Move-Data-Write mitzuziehen.
+Zweck: Repointing- und Speicherbereichsmodell fuer full CFRU/DPE Learnset-Write read-only klaeren, bevor ein breiterer Write-Pfad umgesetzt wird.
 
 ## Arbeitsblock-Log
 
