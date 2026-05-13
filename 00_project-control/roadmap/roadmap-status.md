@@ -24,9 +24,9 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Aktueller Branch | `compat/upr-fvx-cfru-dpe-tutor-scope-and-compatibility` |
-| Nächster Branch | `analysis/upr-fvx-cfru-dpe-p1-egg-move-model` |
-| Aktueller Fokus | CFRU/DPE Tutor-Scope-and-Compatibility-Fix |
+| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-p1-egg-move-model` |
+| Nächster Branch | `compat/upr-fvx-cfru-dpe-egg-moves-scope-and-write` |
+| Aktueller Fokus | CFRU/DPE Egg-Move-Modellierung |
 | ROM-/Build-Arbeit | keine neuen ROM-/Build-Artefakte; keine Artefakte committen |
 | Externe Repos | als Submodule auf Planton361-Forks eingebunden |
 | Forks | Planton361-Forks fuer UPR-FVX, DPE Gen9 und CFRU dokumentiert |
@@ -101,18 +101,19 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | 08 Randomizer-Kompatibilität | P1 TM/HM 128-Slot-Fix | UPR-FVX `58379ffd` bestaetigt `tmCount=120`, `hmCount=8`, Save/Log/Reload fuer TM moves-only, Compatibility-only und TM moves + Compatibility mit `writeReloadMismatches=0` |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Tutor-/Special-Tutor-Modell | `gMoveTutorMoves` `u16[152]`, `gTutorLearnsets` `152` Bits und Special-Tutor-Sonderlogik read-only dokumentiert; Tutor-only noch nicht P1-supported |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Tutor-Scope-and-Compatibility-Fix | UPR-FVX `4ce93754` bestaetigt `tutorMoveCount=152`, 19-Byte-Compatibility-Stride und Save/Log/Reload fuer Tutor moves-only, Compatibility-only und kombinierte Tutor-Laeufe mit `writeReloadMismatches=0` |
+| 08 Randomizer-Kompatibilität | CFRU/DPE Egg-Move-Modell | `gEggMoves` als `u16`-Stream mit `species + 20000` und `0xFFFF` dokumentiert; DPE-Stream enthaelt Gen8/9-Species und Move-IDs bis `967`; Egg-Move-only braucht separaten Fix |
 
 ## In Arbeit
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | TM/HM-128-Slot-Fix | PRs fuer UPR-FVX-Fix und Workspace-Diagnose erstellen |
+| 08 Randomizer-Kompatibilität | Egg-Move-Modellierung | CFRU/DPE Egg-Move-Species-/Move-ID-Modell read-only dokumentieren |
 
 ## Als Nächstes
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Tutor-Modellierung | CFRU/DPE Tutor-/Special-Tutor-Tabellen read-only modellieren |
+| 08 Randomizer-Kompatibilität | Egg-Move-Scope und Write | Minimal gegateten CFRU/DPE-Egg-Move-Reader/Writer vorbereiten |
 
 ## Noch offen
 

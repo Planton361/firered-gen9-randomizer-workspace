@@ -2,12 +2,12 @@
 
 ## Aktueller Arbeitsblock
 
-CFRU/DPE Tutor-Scope-and-Compatibility-Fix.
+CFRU/DPE Egg-Move-Species-/Move-ID-Modellierung.
 
 Aktueller Workspace-Branch:
 
 ```text
-compat/upr-fvx-cfru-dpe-tutor-scope-and-compatibility
+analysis/upr-fvx-cfru-dpe-p1-egg-move-model
 ```
 
 UPR-FVX-Stand:
@@ -18,55 +18,43 @@ UPR-FVX-Stand:
 
 ## Abschluss dieses Blocks
 
-1. UPR-FVX-Commit ist erstellt:
+1. Workspace-Commit erstellen:
 
 ```text
-fix: support cfru dpe tutor compatibility
+docs: document cfru dpe egg move model
 ```
 
-2. Workspace-Commit erstellen:
-
-```text
-docs: record tutor compatibility diagnostics
-```
-
-3. PRs erstellen:
+2. PR erstellen:
 
 ```sh
-git -C 02_external/upr-fvx push -u origin compat/upr-fvx-cfru-dpe-tutor-scope-and-compatibility
-gh pr create --repo Planton361/universal-pokemon-randomizer-fvx --base compat/firered-gen9-cfru-dpe --head compat/upr-fvx-cfru-dpe-tutor-scope-and-compatibility --title "compat: support CFRU DPE tutor compatibility" --body-file /tmp/pr-body-upr-tutor-compatibility.md
-
-git push -u origin compat/upr-fvx-cfru-dpe-tutor-scope-and-compatibility
-gh pr create --repo Planton361/firered-gen9-randomizer-workspace --base main --head compat/upr-fvx-cfru-dpe-tutor-scope-and-compatibility --title "docs: record tutor compatibility diagnostics" --body-file /tmp/pr-body-workspace-tutor-compatibility.md
+git push -u origin analysis/upr-fvx-cfru-dpe-p1-egg-move-model
+gh pr create --repo Planton361/firered-gen9-randomizer-workspace --base main --head analysis/upr-fvx-cfru-dpe-p1-egg-move-model --title "docs: document CFRU DPE egg move model" --body-file /tmp/pr-body-workspace-egg-move-model.md
 ```
 
-## Diagnosebefund 040
+## Analysebefund 041
 
-- `moves.total=992`, hoechster Move `PsychicNoise` ID `991`.
-- `tutorMoveCount=152`, letzter Tutor-Move `MOVE_TERABLAST` ID `966`, hoechste Tutor-Move-ID `969`.
-- `gMoveTutorMoves` Pointer-Location `0x8120BE4`, Zielpointer `0x09A596EA`, ROM-Offset `0x1A596EA`.
-- `gTutorLearnsets` Pointer-Location `0x8120C30`, Zielpointer `0x09605CD0`, ROM-Offset `0x1605CD0`.
-- Nachgewiesener Compatibility-Stride: `19` Bytes pro Species.
-- Compatibility flag length `153`, also 152 nutzbare Tutor-Flags plus Dummy-Index 0.
-- Tutor moves-only: `saveSuccessful=true`, `logSuccessful=true`, `writeReloadTutorMoveMismatches=0`.
-- Tutor compatibility-only: `saveSuccessful=true`, `logSuccessful=true`, `writeReloadTutorCompatibilityMismatches=0`.
-- Tutor moves + compatibility: `saveSuccessful=true`, `logSuccessful=true`, beide Write/Reload-Mismatch-Werte `0`.
-- Keine invaliden Tutor-Move-IDs, kein `Bad Egg`, kein `<unknown>` und kein Unknown-Move-Marker im Log.
+- `gEggMoves` bleibt ein `u16`-Stream mit Species-Markern `species + 20000` und Terminator `0xFFFF`.
+- DPE `repointall` dokumentiert `gEggMoves 08045C50`; FVX nutzt aktuell fuer FireRed-BPRE noch `EggMoves=0x25EF0C`.
+- Der DPE-Stream enthaelt `437` Species-Eintraege, darunter Gen8-/PLA-/Paldea-Species.
+- Hoechste Species im Stream: `SPECIES_WOOPER_P`, ID `0x584` / `1412`.
+- Der Stream enthaelt Move-IDs bis `MOVE_TIDYUP`, ID `0x3C7` / `967`; damit sind Gen9-Moves enthalten und innerhalb `moves.total=992`.
+- Egg-Move-only ist noch nicht P1-supported: Tabellenort, interne Species-ID-Abbildung, hohe Move-ID-Arraygrenzen und Kopplung an Learnset-Write brauchen einen separaten Fixbranch.
 
 ## Naechster empfohlener Arbeitsblock nach Merge
 
 Branch:
 
 ```text
-analysis/upr-fvx-cfru-dpe-p1-egg-move-model
+compat/upr-fvx-cfru-dpe-egg-moves-scope-and-write
 ```
 
 Ziel:
 
-- CFRU/DPE Egg-Move-Species-/Move-ID-Modell read-only untersuchen.
-- Pruefen, ob FVX-Egg-Move-Streamformat fuer interne CFRU/DPE-Species und Move-IDs bis 991 stabil ist.
-- Kein Fix im Analysebranch.
-- Keine Learnset-Write- oder Move-Data-Write-Ausweitung.
+- Minimal gegateten CFRU/DPE-Egg-Move-Reader/Writer implementieren.
+- `gEggMoves` ueber Pointer-Ort `0x45C50` lesen/schreiben, sofern Zielpointer sicher validiert ist.
+- Species-Marker fuer CFRU/DPE ueber interne SpeciesSet-Identitaet erhalten, nicht ueber Pokédex-ID roundtrips.
+- Hohe Move-ID-Arrayzugriffe im SpeciesMoveset-/Egg-Move-Pool defensiv absichern.
+- Egg-Move-Write/Reload separat diagnostizieren; `setMovesLearnt()` bleibt out of scope.
 
 ## Nicht tun
 
@@ -76,4 +64,4 @@ Ziel:
 - keine privaten Pfade, Secrets, Tokens oder `.env` dokumentieren
 - keine Original-Upstreams kontaktieren
 - keine Aenderungen direkt auf `main`
-- keine Special-Tutor-, Egg-Move-, Learnset-Write- oder Move-Data-Write-Ausweitung ohne eigenen Branch
+- keine Learnset-Write-, Move-Data-Write-, Tutor-Text- oder Special-Tutor-Ausweitung ohne eigenen Branch
