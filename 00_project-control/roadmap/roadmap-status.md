@@ -115,18 +115,19 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | 08 Randomizer-Kompatibilität | CFRU/DPE Item-/Bad-Item-/Encounter-Held-Item-Modell | Diagnose 053 dokumentiert CFRU/DPE Itemgrenzen `779`/ca. `799`, klassischen FVX-`ItemCount=374`, moderne Bad-/Key-Item-Risiken und Encounter-Held-Item-Felder `item1/item2` bei `0x0C`/`0x0E`; Encounter Held Items brauchen separaten Fixbranch |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Encounter Held Items Scope-and-Write-Fix | UPR-FVX Commit `5c7170b6`; Diagnose 054 bestaetigt Item-Scope bis `778`, moderne Bad-/Banned-Filter und Encounter Held Items-only sowie Kombinationen mit Base Stats, Abilities und Types mit Save/Log/Reload und `writeReloadEncounterHeldItemMismatches=0` |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Type-Log-/Placeholder-Hygiene | Diagnose 055 klassifiziert `Bad Egg`, `<unknown>`, Unknown-Type-/Ability-/Item-Fallbacks und Null-/BST-zero-/all-zero-Ability-Species aus bestehenden Protokollen; Marker aus 051/052/054 blockieren P1-Support nicht bei stabilen Save/Log/Output/Reload-Kriterien und `0` Mismatches |
+| 08 Randomizer-Kompatibilität | CFRU/DPE Move-Data-Write-Modell | Diagnose 056 modelliert `moves.total=992`, `991:PsychicNoise`, `BattleMove.split`, aktuelle `saveMoves()`-Teilfeldwrites, Preserve-Policy und Reload-Kriterien fuer spaeteren Fix |
 
 ## In Arbeit
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Type-Log-/Placeholder-Hygiene | Diagnose 055 dokumentieren und PR erstellen |
+| 08 Randomizer-Kompatibilität | Move-Data-Write-Modell | Diagnose 056 dokumentieren und PR erstellen |
 
 ## Als Nächstes
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Move-Data-Write-Modell | `moves.total=992`, `BattleMove.split` und CFRU/DPE-Felder read-only fuer spaeteren Write-Scope modellieren |
+| 08 Randomizer-Kompatibilität | Field Items/Shops/Pickup-Modell | Field Items, Shops, Pickup und allgemeine Item-Randomization getrennt von Encounter Held Items modellieren |
 
 ## Noch offen
 

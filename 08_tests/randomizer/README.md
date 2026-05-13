@@ -2,9 +2,9 @@
 
 ## Latest
 
-- `055_type_log_placeholder_hygiene.md` klassifiziert `Bad Egg`, `<unknown>`, Unknown-Type-/Unknown-Ability-/Unknown-Item-Marker und Placeholder-/Null-Species aus bestehenden Protokollen.
-- Die Marker aus 051/052/054 blockieren den dokumentierten P1-Support nicht, solange Save/Log/Output/Reload stabil bleiben und die jeweiligen Mismatch-Zaehler `0` sind.
-- Log-Hygiene bleibt getrennt von Type-Chart-, Ability-Name-, Item-Name-, Species-Scope- und Fix-Themen.
+- `056_p1_move_data_write_model.md` modelliert read-only den CFRU/DPE Move-Data-Write-Scope fuer `moves.total=992`.
+- Der aktuelle Read-Stand bleibt `moves.total=992` mit hoechstem geladenen Move `991:PsychicNoise`; `BattleMove.split` ist die Category-Quelle.
+- `saveMoves()` schreibt aktuell nur klassische Teilfelder; Move-Data-Write bleibt ein separater Hochrisiko-Writer mit Preserve- und Reload-Anforderungen.
 
 Dieses Verzeichnis enthaelt die dauerhaften Markdown-Protokolle fuer UPR-FVX/CFRU-DPE-Randomizer-Analysen und Smokes. Lokale ROM-, Build-, Log- und Tool-Artefakte bleiben unter `05_builds/**` oder `03_tools/releases/**` und werden nicht committed.
 
@@ -88,18 +88,20 @@ Der neueste bestaetigte Stand wird in Markdown ueber die Spalte `Latest` markier
 | 052 | `052_abilities_hidden_ability_scope_write_diagnostics.md` | CFRU/DPE Ability1/2 + Hidden Ability Scope-and-Write-Fix Diagnose | bestaetigt: Ability1/2-only, Hidden Ability-only, Ability1/2 + Hidden Ability und Base Stats + Types + Abilities mit Save/Log/Output/Reload, `abilitiesPerSpecies=3`, `highestAbilityIndex=254`, `writeReloadAbilityMismatches=0` und `writeReloadHiddenAbilityMismatches=0` | `05_builds/randomizer-smoke/052_abilities_hidden_ability_scope_write/` lokal/ignored | nein |
 | 053 | `053_p1_item_data_and_bad_item_model.md` | CFRU/DPE Item-ID-, Itemnamen-, Bad-/Key-Item- und Encounter-Held-Item-Modell | dokumentiert: CFRU/DPE Itemgrenzen `779`/ca. `799`, klassischer FVX-`ItemCount=374`, moderne Bad-/Key-Item-Risiken und Encounter-Held-Item-Felder `item1/item2` bei `0x0C`/`0x0E`; Encounter Held Items brauchen separaten Fix | keiner, read-only Analyse | nein |
 | 054 | `054_encounter_held_items_scope_write_diagnostics.md` | CFRU/DPE Encounter Held Items Scope-and-Write-Fix Diagnose | bestaetigt: Item-Scope bis `778`, moderne Bad-/Banned-Filter, Encounter Held Items-only sowie Kombinationen mit Base Stats, Abilities und Types mit Save/Log/Output/Reload und `writeReloadEncounterHeldItemMismatches=0` | `05_builds/randomizer-smoke/054_encounter_held_items_scope_write/` lokal/ignored | nein |
-| 055 | `055_type_log_placeholder_hygiene.md` | CFRU/DPE Type-/Trait-Log-, Placeholder- und Unknown-Marker-Klassifikation | dokumentiert: `Bad Egg`, `<unknown>`, Unknown-Type-/Ability-/Item-Fallbacks und Null-/BST-zero-/all-zero-Ability-Species aus vorhandenen Protokollen klassifiziert; keine neuen Randomizer-Laeufe, kein Fix | keiner, read-only Analyse | ja |
+| 055 | `055_type_log_placeholder_hygiene.md` | CFRU/DPE Type-/Trait-Log-, Placeholder- und Unknown-Marker-Klassifikation | dokumentiert: `Bad Egg`, `<unknown>`, Unknown-Type-/Ability-/Item-Fallbacks und Null-/BST-zero-/all-zero-Ability-Species aus vorhandenen Protokollen klassifiziert; keine neuen Randomizer-Laeufe, kein Fix | keiner, read-only Analyse | nein |
+| 056 | `056_p1_move_data_write_model.md` | CFRU/DPE Move-Data-Write-Modell | dokumentiert: `moves.total=992`, `991:PsychicNoise`, `BattleMove.split`-/Category-Semantik, aktuelle `saveMoves()`-Teilfeld-Write-Annahme, Preserve-Policy und Reload-Kriterien fuer spaeteren Fix; kein Fix | keiner, read-only Analyse | ja |
 
 ## Aktuell bestaetigter Stand
 
-Latest ist Nr. 055: CFRU/DPE Type-Log-/Placeholder-Hygiene-Klassifikation.
+Latest ist Nr. 056: CFRU/DPE Move-Data-Write-Modell.
 
 Kernaussagen:
 
-- `Bad Egg`, Unknown-Type-/`null`-Marker, Unknown-Ability-Fallbacks und Item-Fallbacks aus 051/052/054 sind klassifiziert.
-- Diese Marker blockieren den dokumentierten P1-Support nicht, solange Save/Log/Output/Reload stabil bleiben und die jeweiligen Mismatch-Zaehler `0` sind.
-- Null-Species, `BST == 0` und all-zero Ability Species bleiben als potenzielle echte Blocker zu unterscheiden, wenn ein Pfad sie dereferenziert oder schreibt.
-- Type-Chart, Ability-Namen, Item-Namen, Species-Scope, Field Items/Shops/Pickup, Move-Data-Write und Palette/Graphics bleiben separate Folgearbeiten.
+- Der Move-Data-Reader erreicht fuer den getesteten CFRU/DPE Gen9-BPRE-Stand `moves.total=992` und `991:PsychicNoise`.
+- `BattleMove` bleibt 12 Bytes gross; Byte `+10` ist bei CFRU/DPE das `split`-/Category-Feld.
+- Der aktuelle Gen3-`saveMoves()`-Pfad schreibt nur Move-Namen sowie `effect`, `power`, `type`, `accuracy` und `pp`.
+- Ein spaeterer Move-Data-Write-Fix muss unbekannte/zusatzliche Felder preserven und Reload-Mismatches separat nachweisen.
+- Log-Hygiene/Fallback-Marker aus Diagnose 055 bleiben getrennt von echten MoveData-Writer-/Scope-Risiken.
 
 ## Lokale Artefaktpflege
 

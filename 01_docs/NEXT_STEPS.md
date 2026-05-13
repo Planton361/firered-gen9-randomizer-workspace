@@ -2,21 +2,21 @@
 
 ## Aktueller Fokus
 
-CFRU/DPE Type-Log-/Placeholder-Hygiene ist read-only klassifiziert. Diagnose: `08_tests/randomizer/055_type_log_placeholder_hygiene.md`.
+CFRU/DPE Move-Data-Write ist read-only modelliert. Diagnose: `08_tests/randomizer/056_p1_move_data_write_model.md`.
 
 ## Priorisierte naechste Arbeitsbloecke
 
-1. `analysis/upr-fvx-cfru-dpe-p1-move-data-write-model`
-   - Move-Data-Write fuer `moves.total=992`, `BattleMove.split` und CFRU/DPE-Felder read-only modellieren.
-
-2. `analysis/upr-fvx-cfru-dpe-p1-field-items-shops-pickup-model`
+1. `analysis/upr-fvx-cfru-dpe-p1-field-items-shops-pickup-model`
    - Field Items, Shops, Pickup und allgemeine Item-Randomization getrennt von Encounter Held Items modellieren.
 
-3. `analysis/upr-fvx-cfru-dpe-p1-palette-randomization-model`
+2. `analysis/upr-fvx-cfru-dpe-p1-palette-randomization-model`
    - Vorhandene Palette-Safety von echter Palette-/Graphics-Randomization trennen und Write-/Repointing-Risiken modellieren.
 
-4. `analysis/upr-fvx-cfru-dpe-p1-type-chart-model`
+3. `analysis/upr-fvx-cfru-dpe-p1-type-chart-model`
    - Type-Chart- und moderne Type-Interaktion getrennt von Pokemon-Type-Read/Write modellieren.
+
+4. `compat/upr-fvx-cfru-dpe-move-data-write-preserve`
+   - Nur nach separater Freigabe: eng gegateten MoveData-Writer mit Preserve-Policy und Reload-Diagnose umsetzen.
 
 ## Sicherheitsgrenzen
 
