@@ -68,6 +68,59 @@ Abgabeformat:
 - Handoff-Prompt für den nächsten neuen Chat
 ```
 
+## Codex Plan-/Goal-Modus
+
+Siehe auch:
+
+```text
+01_docs/quality/codex-plan-goal-usage.md
+```
+
+Regel:
+
+- Standardprompt fuer kleine Diagnose- und Fixbranches.
+- Plan-Modus fuer groessere oder riskantere Analyse-/Fixbloecke, bei denen Codex zuerst Scope, Dateien, Risiken und Stop-Regeln klaeren soll.
+- Goal-Modus nur fuer lange, klar validierbare und moeglichst read-only Aufgaben.
+- Kein Goal-Modus fuer Repointing-Fixes, Move-Data-Write, ROM-nahe Writer oder grosse Multi-Fix-PRs.
+
+### Plan-Modus-Handoff
+
+```text
+Empfohlen: mit Plan-Modus starten.
+
+Arbeitsbranch:
+<branch>
+
+Ziel:
+<klarer Analyse- oder Fixscope>
+
+Lies zuerst:
+- README.md
+- AGENTS.md
+- 01_docs/PROJECT_BRIEF.md
+- 01_docs/SESSION_STATE.md
+- 01_docs/NEXT_STEPS.md
+- 01_docs/quality/codex-plan-goal-usage.md
+
+Erwartung:
+Erstelle zuerst einen knappen Plan mit Arbeitsschritten, betroffenen Dateien, Risiken, Abbruchpunkten und erwarteten Dokumenten. Danach auf Freigabe warten.
+```
+
+### Goal-Modus-Handoff
+
+```text
+Optional: Goal-Modus ist geeignet, weil die Aufgabe read-only und klar validierbar ist.
+
+Ziel:
+<lange, klar validierbare read-only Aufgabe>
+
+Grenzen:
+- Keine Codeaenderung.
+- Keine Aenderung an 02_external/**.
+- Keine ROMs, Saves, Builds, Tool-Binaries, Secrets oder .env.
+- Stoppe bei unerwarteten Dateien oder fehlenden PR-Voraussetzungen.
+```
+
 ## Minimaler Codex-Fixprompt
 
 ```text
