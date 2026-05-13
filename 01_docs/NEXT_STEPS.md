@@ -2,12 +2,12 @@
 
 ## Aktueller Fokus
 
-CFRU/DPE Full Learnset-Write Repointing ist im direkten `setMovesLearnt()`-Scope dokumentiert in `08_tests/randomizer/046_learnset_write_repointing_diagnostics.md`.
+CFRU/DPE Learnset GUI-Kombinationsdiagnose ist dokumentiert in `08_tests/randomizer/048_p1_learnset_gui_combinations.md`.
 
 ## Priorisierte naechste Arbeitsbloecke
 
-1. `analysis/upr-fvx-cfru-dpe-p1-learnset-gui-combinations`
-   - Komplette GUI-/Settings-Kombinationen fuer Pokemon Movesets/Learnsets nach dem Repointing-Fix pruefen.
+1. `compat/upr-fvx-cfru-dpe-learnset-gui-flow-safety`
+   - Logger-Fehler, Trainer-Movesets-Key-Luecke, Reorder-Damaging-Zweitwrite und TM/HM-/Tutor-Level-Up-Sanity nach Diagnose 048 entblocken.
 
 2. `analysis/upr-fvx-cfru-dpe-p1-base-stats-types-abilities-model`
    - Base Stats, Types, Ability Slots, Hidden Abilities und Encounter Held Items auf ein gemeinsames CFRU/DPE-Species-Datenmodell zurueckfuehren.

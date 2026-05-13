@@ -1,5 +1,24 @@
 # Session State
 
+## 2026-05-13 - CFRU/DPE Learnset GUI Combination Diagnostics
+
+Arbeitsbranch: `analysis/upr-fvx-cfru-dpe-p1-learnset-gui-combinations`
+
+Aktueller Stand:
+
+- UPR-FVX PR #24 und Workspace PR #85 als gemerged geprueft.
+- Neues Protokoll `08_tests/randomizer/048_p1_learnset_gui_combinations.md` erstellt.
+- GameRandomizer-nahe Movesets/Learnsets-Laeufe diagnostiziert; keine Codeaenderung und keine `02_external/**`-Aenderung.
+- Erster Learnset-Repointing-Write bleibt stabil: `plannedBlobBytes=30099`, `writtenBlobBytes=31771`, `pointertableEntriesUpdated=1413`, `writeReloadLearnsetMismatches=0`.
+- Movesets-only, Movesets+TM/HM ohne Level-Up-Sanity, Movesets+Tutor ohne Level-Up-Sanity und gekoppelte Egg Moves speichern/reloaden stabil.
+- Voller GUI-P1-Support bleibt blockiert durch Logger-Fehler, Trainer-Movesets-Kombinationen, Reorder-Damaging-Moves sowie TM/HM-/Tutor-Level-Up-Sanity.
+
+Naechster sinnvoller Schritt:
+
+- Fixbranch `compat/upr-fvx-cfru-dpe-learnset-gui-flow-safety` starten.
+- Ziele: multi-write-sicheren Learnset-Repointing-Pfad, interne Species-ID-Key-Fallbacks fuer Sanity/Trainer-Movesets und Logger-Nullpfad beheben.
+
+
 ## 2026-05-13 - CFRU/DPE Learnset-Write Repointing Fix
 
 Arbeitsbranch: `compat/upr-fvx-cfru-dpe-learnset-write-repointing`
@@ -58,11 +77,11 @@ Naechster sinnvoller Schritt:
 
 ## Aktueller Arbeitsblock
 
-CFRU/DPE Learnset-Write Repointing-Fix.
+CFRU/DPE Learnset GUI-Kombinationsdiagnose.
 
 ## Ziel
 
-Full Learnset-Write mit Repointing fuer CFRU/DPE Gen9-BPRE implementieren und per Save/Reload-Diagnose 046 dokumentieren. Keine Move-Data-Write-, Tutor-Text-, Special-Tutor-, Egg-Move-, Palette/Graphics- oder Text/Menu-Ausweitung.
+Komplette GUI-/Settings-nahe Pokemon-Movesets-/Learnsets-Laeufe fuer CFRU/DPE Gen9-BPRE pruefen. Keine Codeaenderung, kein Fix, keine Move-Data-Write-, Tutor-Text-, Special-Tutor-, Egg-Move-, Palette/Graphics- oder Text/Menu-Ausweitung.
 
 ## In diesem Arbeitsblock geprueft / geaendert
 
@@ -84,7 +103,7 @@ Full Learnset-Write mit Repointing fuer CFRU/DPE Gen9-BPRE implementieren und pe
 
 - Special-Tutor-Modell/Fix
 - Move-Data-Write/`saveMoves()` fuer CFRU/DPE
-- GUI-/Settings-Kombinationssmoke fuer Pokemon Movesets/Learnsets
+- Learnset GUI-Flow-Safety-Fix fuer Logger, Trainer-Movesets, Reorder-Damaging und Level-Up-Sanity
 - Ability-Datenmodellierung
 - CFRU-Day/Night-Custom-Wild-Tabellen-Support
 - Nullslot-`<unknown>`-Analyse
