@@ -2,12 +2,12 @@
 
 ## Aktueller Arbeitsblock
 
-CFRU/DPE TM/HM-128-Slot-Fix.
+CFRU/DPE Tutor-/Special-Tutor-Modellierung.
 
 Aktueller Workspace-Branch:
 
 ```text
-compat/upr-fvx-cfru-dpe-tm-hm-128-slot
+analysis/upr-fvx-cfru-dpe-p1-tutor-model
 ```
 
 UPR-FVX-Stand:
@@ -18,54 +18,46 @@ UPR-FVX-Stand:
 
 ## Abschluss dieses Blocks
 
-1. UPR-FVX-Commit ist erstellt:
+1. Workspace-Commit erstellen:
 
 ```text
-fix: support cfru dpe tm hm 128 slots
+docs: document cfru dpe tutor model
 ```
 
-2. Workspace-Commit erstellen:
-
-```text
-docs: record tm hm 128 slot diagnostics
-```
-
-3. PRs erstellen:
+2. PR erstellen:
 
 ```sh
-git -C 02_external/upr-fvx push -u origin compat/upr-fvx-cfru-dpe-tm-hm-128-slot
-gh pr create --repo Planton361/universal-pokemon-randomizer-fvx --base compat/firered-gen9-cfru-dpe --head compat/upr-fvx-cfru-dpe-tm-hm-128-slot --title "compat: support CFRU DPE TM HM 128 slots" --body-file /tmp/pr-body-upr-tm-hm-128-slot.md
-
-git push -u origin compat/upr-fvx-cfru-dpe-tm-hm-128-slot
-gh pr create --repo Planton361/firered-gen9-randomizer-workspace --base main --head compat/upr-fvx-cfru-dpe-tm-hm-128-slot --title "docs: record tm hm 128 slot diagnostics" --body-file /tmp/pr-body-workspace-tm-hm-128-slot.md
+git push -u origin analysis/upr-fvx-cfru-dpe-p1-tutor-model
+gh pr create --repo Planton361/firered-gen9-randomizer-workspace --base main --head analysis/upr-fvx-cfru-dpe-p1-tutor-model --title "docs: document CFRU DPE tutor model" --body-file /tmp/pr-body-workspace-tutor-model.md
 ```
 
-## Diagnosebefund 038
+## Analysebefund 039
 
-- `moves.total=992`, hoechster Move `PsychicNoise` ID `991`.
-- `tmCount=120`, `hmCount=8`, total TM/HM slots `128`.
-- `gTMHMMoves` Pointer-Location `0x8125A8C`, Zielpointer `0x09A5981A`, ROM-Offset `0x1A5981A`.
-- `gTMHMLearnsets` Pointer-Location `0x8043C68`, Zielpointer `0x096002D0`, ROM-Offset `0x16002D0`.
-- Compatibility flag length `129`, also 128 nutzbare TM/HM-Flags plus Dummy-Index 0.
-- TM moves-only: `saveSuccessful=true`, `logSuccessful=true`, `writeReloadTmHmMismatches=0`, HM-Slots unveraendert.
-- TM/HM compatibility-only: `saveSuccessful=true`, `logSuccessful=true`, `writeReloadCompatibilityMismatches=0`.
-- TM moves + compatibility: `saveSuccessful=true`, `logSuccessful=true`, `writeReloadTmHmMismatches=0`, `writeReloadCompatibilityMismatches=0`.
-- Keine invaliden TM/HM-Move-IDs, kein `Bad Egg`, kein `<unknown>` und kein Unknown-Move-Marker im Log.
+- `gMoveTutorMoves` ist eine CFRU/DPE-`u16`-Tabelle mit `152` Eintraegen.
+- Pointer-Location fuer `gMoveTutorMoves`: `0x8120BE4`.
+- Letzter sichtbarer Tutor-Move: `MOVE_TERABLAST`, ID `0x3C6` / `966`.
+- `gTutorLearnsets` liegt laut `repointall` an Pointer-Location `0x8120C30`.
+- Generierte DPE-Tutor-Compatibility zeigt `19` Bytes pro Species, passend zu `152` Bits.
+- DPE Special Tutors sind als `Not in Table` markiert und duerfen nicht als normale Tutor-Slots behandelt werden.
+- FVX nutzt aktuell fuer FireRed-BPRE im Tutor-Move-Pfad klassisch `MoveTutorMoves=15` und `MoveTutorData=0x459B60`.
+- FVX ueberschreibt aktuell nur den Compatibility-Pointer auf `readPointer(0x120C30)`; Count und Move-Tabelle bleiben klassisch.
+- Tutor-only ist daher noch nicht P1-supported.
 
 ## Naechster empfohlener Arbeitsblock nach Merge
 
 Branch:
 
 ```text
-analysis/upr-fvx-cfru-dpe-p1-tutor-model
+compat/upr-fvx-cfru-dpe-tutor-scope-and-compatibility
 ```
 
 Ziel:
 
-- CFRU/DPE Tutor-/Special-Tutor-Tabellen read-only modellieren.
-- Prüfen, ob Tutor-Moves eigene Pointer-, Slot- oder Bitfeldmodelle nutzen.
+- Minimal gegateten CFRU/DPE-Tutor-Reader/Writer implementieren.
+- `gMoveTutorMoves` ueber `0x8120BE4` lesen/schreiben.
+- `gTutorLearnsets` ueber `0x8120C30` mit nachgewiesenem 19- oder 20-Byte-Stride lesen/schreiben.
+- Special Tutors nicht randomisieren, solange deren Sonderlogik nicht separat modelliert ist.
 - Keine Egg-Move-, Learnset-Write- oder Move-Data-Write-Ausweitung.
-- Kein Fix im Analysebranch.
 
 ## Nicht tun
 
@@ -75,4 +67,4 @@ Ziel:
 - keine privaten Pfade, Secrets, Tokens oder `.env` dokumentieren
 - keine Original-Upstreams kontaktieren
 - keine Aenderungen direkt auf `main`
-- keine Tutor-, Egg-Move-, Learnset-Write- oder Move-Data-Write-Ausweitung ohne eigenen Branch
+- keine Egg-Move-, Learnset-Write-, Move-Data-Write- oder Special-Tutor-Fixes ohne eigenen Branch

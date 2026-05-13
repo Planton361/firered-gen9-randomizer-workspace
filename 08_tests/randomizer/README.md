@@ -64,20 +64,21 @@ Der neueste bestaetigte Stand wird in Markdown ueber die Spalte `Latest` markier
 | 034 | `034_move_data_reader_fix_diagnostics.md` | CFRU/DPE Move-Data-Reader-Fix Diagnose | bestaetigt: `moves.total=992`, hoechster Move `PsychicNoise`, Trainer-Moveset-Kombinationen mit `saveSuccessful=true`, `logSuccessful=true`, `writeReloadMoveMismatches=0` | `05_builds/randomizer-smoke/034_move_data_reader_fix_diagnostics/` lokal/ignored | nein |
 | 035 | `035_p1_tm_hm_only.md` | TM/HM-only Diagnose | blockiert: FVX erkennt nur `50+8`, TM-Move-Randomization scheitert an altem Move-Ban-Array-Limit `827`, Compatibility-only scheitert an Null-Type-Species; kein Save/Output/Reload | `05_builds/randomizer-smoke/035_p1_tm_hm_only/` lokal/ignored | nein |
 | 036 | `036_tm_hm_scope_and_safety_fix_diagnostics.md` | TM/HM Scope-and-Safety-Fix Diagnose | bestaetigt im klassischen `50+8`-Scope: TM moves + Compatibility, Compatibility-only und TM moves-only jeweils mit `saveSuccessful=true`, `logSuccessful=true`, Output-ROM, nichtleerem Log und `writeReloadMismatches=0` | `05_builds/randomizer-smoke/036_tm_hm_scope_and_safety_fix/` lokal/ignored | nein |
-| 037 | `037_p1_tm_hm_128_slot_model.md` | CFRU/DPE TM/HM-128-Slot-Modell | dokumentiert: aktives `gTMHMMoves` ist `u16[128]` ueber Pointer `0x8125A8C`, TMs `1..120`, HMs `121..128`, Compatibility `16` Bytes pro Species ueber `0x8043C68`; kein Fix | keiner | ja |
+| 037 | `037_p1_tm_hm_128_slot_model.md` | CFRU/DPE TM/HM-128-Slot-Modell | dokumentiert: aktives `gTMHMMoves` ist `u16[128]` ueber Pointer `0x8125A8C`, TMs `1..120`, HMs `121..128`, Compatibility `16` Bytes pro Species ueber `0x8043C68`; kein Fix | keiner | nein |
 | 038 | `038_tm_hm_128_slot_fix_diagnostics.md` | CFRU/DPE TM/HM-128-Slot-Fix Diagnose | bestaetigt: `tmCount=120`, `hmCount=8`, 128 Slots, 129 Compatibility-Flags, HM-Slots unveraendert, alle drei TM/HM-Laeufe mit `saveSuccessful=true`, `logSuccessful=true` und `writeReloadMismatches=0` | `05_builds/randomizer-smoke/038_tm_hm_128_slot_fix/` lokal/ignored | nein |
+| 039 | `039_p1_tutor_model.md` | CFRU/DPE Tutor-/Special-Tutor-Modell | dokumentiert: normale Tutor-Tabelle `gMoveTutorMoves` mit `152` `u16`-Eintraegen ueber Pointer-Location `0x8120BE4`, `gTutorLearnsets` ueber `0x8120C30`, Special Tutors separat; kein Fix | keiner | ja |
 
 ## Aktuell bestaetigter Stand
 
-Latest ist Nr. 038: CFRU/DPE TM/HM-128-Slot-Fix Diagnose.
+Latest ist Nr. 039: CFRU/DPE Tutor-/Special-Tutor-Modell.
 
 Kernaussagen:
 
-- Der CFRU/DPE-TM/HM-Fix nutzt `gTMHMMoves` als `u16[128]` ueber Pointer `0x8125A8C`.
-- Slots `0..119` sind TMs, Slots `120..127` sind HMs.
-- `gTMHMLearnsets` nutzt 128 Compatibility-Bits beziehungsweise 16 Bytes pro Species ueber Pointer `0x8043C68`.
-- TM moves-only, TM/HM compatibility-only und TM moves + compatibility sind im 128-Slot-Scope P1-supported.
-- Tutor-, Egg-Move-, Learnset-Write-, Move-Data-Write- und TM51..TM120-Item-Text-/Palette-Erweiterungen bleiben out of scope.
+- CFRU/DPE nutzt fuer normale Tutor-Moves `gMoveTutorMoves` als `u16[152]` ueber Pointer-Location `0x8120BE4`.
+- `gTutorLearnsets` liegt laut `repointall` an Pointer-Location `0x8120C30` und ist im DPE-Assemblybefund als `19` Bytes beziehungsweise `152` Bits pro Species sichtbar.
+- Special Tutors sind nicht in der normalen Tutor-Tabelle und brauchen getrennte Sonderlogik.
+- FVX nutzt aktuell im Tutor-Move-Pfad noch den klassischen FireRed-Scope `MoveTutorMoves=15`; Tutor-only ist daher noch nicht P1-supported.
+- Egg-Move-, Learnset-Write-, Move-Data-Write- und Tutor-Text-Erweiterungen bleiben out of scope.
 
 ## Lokale Artefaktpflege
 
