@@ -2,20 +2,18 @@
 
 ## Aktueller Fokus
 
-CFRU/DPE Item-ID-, Itemnamen-, Bad-/Key-Item- und Encounter-Held-Item-Modell ist read-only dokumentiert in `08_tests/randomizer/053_p1_item_data_and_bad_item_model.md`.
+CFRU/DPE Encounter Held Items sind im getesteten `gBaseStats`-Scope P1-supported. Diagnose: `08_tests/randomizer/054_encounter_held_items_scope_write_diagnostics.md`.
 
 ## Priorisierte naechste Arbeitsbloecke
 
-1. `compat/upr-fvx-cfru-dpe-encounter-held-items-scope-and-write`
-   - CFRU/DPE-gated ItemCount-/Itemnamen-Scope validieren und erweitern.
-   - Moderne Bad-/Banned-Item-Filter fuer Key/System Items, TMs/HMs, Mail, Balls, Free-/Shiny-Space und Form-/Mega-/Z-/Plate-/Mask-/Tera-Sonderitems absichern.
-   - Encounter Held Items in `gBaseStats` bei `item1/item2` (`0x0C`/`0x0E`) schreiben/reloaden.
-
-2. `analysis/upr-fvx-cfru-dpe-p1-type-log-placeholder-hygiene`
+1. `analysis/upr-fvx-cfru-dpe-p1-type-log-placeholder-hygiene`
    - `Bad Egg`-/Unknown-Type-/`null`-Marker aus Placeholder- oder unsupported-Type-Species im BaseStats-/Traits-Log einordnen.
 
-3. `analysis/upr-fvx-cfru-dpe-p1-move-data-write-model`
+2. `analysis/upr-fvx-cfru-dpe-p1-move-data-write-model`
    - Move-Data-Write fuer `moves.total=992`, `BattleMove.split` und CFRU/DPE-Felder read-only modellieren.
+
+3. `analysis/upr-fvx-cfru-dpe-p1-field-items-shops-pickup-model`
+   - Field Items, Shops, Pickup und allgemeine Item-Randomization getrennt von Encounter Held Items modellieren.
 
 4. `analysis/upr-fvx-cfru-dpe-p1-palette-randomization-model`
    - Vorhandene Palette-Safety von echter Palette-/Graphics-Randomization trennen und Write-/Repointing-Risiken modellieren.

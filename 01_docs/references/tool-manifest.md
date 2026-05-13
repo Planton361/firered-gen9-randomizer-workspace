@@ -4,15 +4,15 @@ Dieses Manifest dokumentiert Tools, Repos, Forks, Versionen, Pfade und Sicherhei
 
 ## Sicherheitsstatus
 
-Dieser Stand dokumentiert den Arbeitsblock `compat/upr-fvx-cfru-dpe-abilities-hidden-ability-scope-and-write`. UPR-FVX wurde im Planton361-Fork-Submodule gezielt geaendert und gebaut; lokale ROM-/Log-/Output-Artefakte blieben ignored unter `05_builds/**` und wurden nicht committed. Tool-Binaries, Release-Assets, Secrets und private Pfade wurden nicht dokumentiert.
+Dieser Stand dokumentiert den Arbeitsblock `compat/upr-fvx-cfru-dpe-encounter-held-items-scope-and-write`. UPR-FVX wurde im Planton361-Fork-Submodule gezielt geaendert und gebaut; lokale ROM-/Log-/Output-Artefakte blieben ignored unter `05_builds/**` und wurden nicht committed. Tool-Binaries, Release-Assets, Secrets und private Pfade wurden nicht dokumentiert.
 
 Linux/CachyOS ist die primaere lokale Umgebung. Windows-Toolchain-Befunde bleiben historischer Referenzstand und duerfen nicht als Linux-Ist-Stand verwendet werden.
 
-Der aktuelle Arbeitsblock pinnt den Workspace auf den UPR-FVX-Abilities-Hidden-Ability-Scope-and-Write-Fix-Commit fuer CFRU/DPE.
+Der aktuelle Arbeitsblock pinnt den Workspace auf den UPR-FVX-Encounter-Held-Items-Scope-and-Write-Fix-Commit fuer CFRU/DPE.
 
 | Tool/Repo | Zweck | Upstream | Fork/Origin | Lokaler Pfad | Branch | Commit | Codex darf ändern | Status |
 |---|---|---|---|---|---|---|---|---|
-| Workspace Repo | Source of Truth | n/a | git@github.com:Planton361/firered-gen9-randomizer-workspace.git | Workspace-Root | `compat/upr-fvx-cfru-dpe-abilities-hidden-ability-scope-and-write` | offen | ja, nur Branches | aktiv |
+| Workspace Repo | Source of Truth | n/a | git@github.com:Planton361/firered-gen9-randomizer-workspace.git | Workspace-Root | `compat/upr-fvx-cfru-dpe-encounter-held-items-scope-and-write` | offen | ja, nur Branches | aktiv |
 | Git | Versionierung | n/a | n/a | `/usr/bin/git` | n/a | n/a | nein | gefunden: 2.54.0 |
 | GitHub CLI (`gh`) | PRs und GitHub-Checks automatisieren | https://cli.github.com/ | n/a | `/usr/bin/gh` | n/a | n/a | nein | gefunden: 2.92.0; Auth via Keyring aktiv |
 | POSIX Shell | Terminal-Standard | n/a | n/a | `/bin/fish` laut `$SHELL` | n/a | n/a | nein | primär |
@@ -43,11 +43,11 @@ Der aktuelle Arbeitsblock pinnt den Workspace auf den UPR-FVX-Abilities-Hidden-A
 
 ## Lokale Submodule-Pins 2026-05-13
 
-Arbeitsblock: `compat/upr-fvx-cfru-dpe-abilities-hidden-ability-scope-and-write`.
+Arbeitsblock: `compat/upr-fvx-cfru-dpe-encounter-held-items-scope-and-write`.
 
 | Repo | Zweck | Origin | Lokaler Pfad | Branch | Commit | Codex darf aendern | Status |
 |---|---|---|---|---|---|---|---|
-| UPR-FVX Fork | Haupt-Randomizer-Fork | `https://github.com/Planton361/universal-pokemon-randomizer-fvx.git` | `02_external/upr-fvx` | `compat/upr-fvx-cfru-dpe-abilities-hidden-ability-scope-and-write` | `639c7e61adbeffea2e29b1d0dafdba8a02a83f89` | ja, nur in diesem Branch | Abilities-Hidden-Ability-Scope-and-Write-Fix fuer CFRU/DPE; basiert auf BaseStats-/Types-Scope-and-Write-Fix `20f16d07` |
+| UPR-FVX Fork | Haupt-Randomizer-Fork | `https://github.com/Planton361/universal-pokemon-randomizer-fvx.git` | `02_external/upr-fvx` | `compat/upr-fvx-cfru-dpe-encounter-held-items-scope-and-write` | `5c7170b654b09e1fc27ced6857dd50a8e4711f08` | ja, nur in diesem Branch | Encounter-Held-Items-Scope-and-Write-Fix fuer CFRU/DPE; basiert auf Abilities-Hidden-Ability-Scope-and-Write-Fix `639c7e61` |
 | CFRU-expansion Fork | CFRU/Gen9-Basis | `https://github.com/Planton361/CFRU-expansion.git` | `02_external/CFRU-expansion` | `compat/firered-gen9-randomizer` | `b885d7a974375c6c722e5698914963b82e8cdad6` | nein in diesem Block | read-only analysiert |
 | DPE Gen9 Fork | DPE/Gen9-Basis | `https://github.com/Planton361/Dynamic-Pokemon-Expansion-Gen-9.git` | `02_external/Dynamic-Pokemon-Expansion-Gen-9` | `compat/firered-gen9-randomizer` | `5906aa4d4904e41393fd9184a16951c961e96263` | nein in diesem Block | read-only analysiert |
 | CyanSMP64 UPR-ZX NatDex | NatDex-Randomizer-Referenz | `https://github.com/CyanSMP64/universal-pokemon-randomizer-zx.git` | `02_external/references/cyansmp64-upr-zx-natdex` | `natdex` | `9b63eb2876d901dc2e5af49855ae41ac255e1a72` | nein | read-only Referenz |
@@ -86,8 +86,8 @@ Bestehende unnummerierte Protokolle unter `08_tests/randomizer/` bleiben vorerst
 | Lokaler Pfad | `02_external/upr-fvx` |
 | Einbindung | Git-Submodule auf `Planton361/universal-pokemon-randomizer-fvx` |
 | Upstream | `upr-fvx/universal-pokemon-randomizer-fvx` |
-| Arbeitsbranch | `compat/upr-fvx-cfru-dpe-abilities-hidden-ability-scope-and-write` |
-| Gepinnter Workspace-Stand | `639c7e61adbeffea2e29b1d0dafdba8a02a83f89` auf `compat/upr-fvx-cfru-dpe-abilities-hidden-ability-scope-and-write`; enthaelt den CFRU/DPE-Abilities-Hidden-Ability-Scope-and-Write-Fix auf Basis des Learnset-GUI-Flow-Safety-Fix `086d2a91` |
+| Arbeitsbranch | `compat/upr-fvx-cfru-dpe-encounter-held-items-scope-and-write` |
+| Gepinnter Workspace-Stand | `5c7170b654b09e1fc27ced6857dd50a8e4711f08` auf `compat/upr-fvx-cfru-dpe-encounter-held-items-scope-and-write`; enthaelt den CFRU/DPE-Encounter-Held-Items-Scope-and-Write-Fix auf Basis des Abilities-Hidden-Ability-Scope-and-Write-Fix `639c7e61` |
 | Buildsystem | Gradle Wrapper |
 | Java | JDK 25 |
 | JAR-Build | `./gradlew :random:jar` |
@@ -217,6 +217,13 @@ Vor dem ersten Clone pro externer Quelle weiterhin festlegen:
 - UPR-FVX branch: `compat/upr-fvx-cfru-dpe-learnset-write-repointing`.
 - UPR-FVX commit: `77de517da880bebb6ed690ca6e170e5bd10b9cad`.
 - Scope: gated CFRU/DPE Gen9 BPRE `setMovesLearnt()` full repointing writer for `gLevelUpLearnsets`; no Move-Data-Write, no Tutor text/menu rewrite, no Special Tutors, no Egg-Move expansion.
+
+## 2026-05-13 - UPR-FVX Encounter Held Items scope/write pin
+
+- Workspace branch: `compat/upr-fvx-cfru-dpe-encounter-held-items-scope-and-write`.
+- UPR-FVX branch: `compat/upr-fvx-cfru-dpe-encounter-held-items-scope-and-write`.
+- UPR-FVX commit: `5c7170b654b09e1fc27ced6857dd50a8e4711f08`.
+- Scope: gated CFRU/DPE Gen9 BPRE Item-Scope, modern Bad-/Banned-Item filters, and `gBaseStats` Encounter Held Item read/write/reload for `item1`/`item2`.
 
 ## 2026-05-13 - UPR-FVX Learnset GUI flow safety pin
 

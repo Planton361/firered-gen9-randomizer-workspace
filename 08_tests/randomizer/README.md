@@ -2,9 +2,9 @@
 
 ## Latest
 
-- `053_p1_item_data_and_bad_item_model.md` dokumentiert das CFRU/DPE Item-ID-, Itemnamen-, Bad-/Key-Item- und Encounter-Held-Item-Modell.
-- CFRU/DPE Itemgrenzen liegen je Quelle bei `ITEMS_COUNT=779` beziehungsweise ca. `799`; FVX nutzt im klassischen FireRed-RomEntry weiterhin `ItemCount=374`.
-- Encounter Held Items liegen in `gBaseStats` bei `item1/item2` (`0x0C`/`0x0E`), brauchen aber vor Randomization einen erweiterten Item-Scope und moderne Bad-/Key-Item-Filter.
+- `054_encounter_held_items_scope_write_diagnostics.md` dokumentiert den CFRU/DPE Encounter-Held-Item-Scope-and-Write-Fix.
+- Encounter Held Items sind im getesteten Scope P1-supported: alle Pflichtlaeufe liefern Save/Log/Output/Reload und `writeReloadEncounterHeldItemMismatches=0`.
+- Der CFRU/DPE-Item-Scope laedt konservativ bis `778`, bannt moderne Sonder-/Placeholder-Items fuer Random-Picks und preservt bestehende moderne Held-Item-IDs als Fallback.
 
 Dieses Verzeichnis enthaelt die dauerhaften Markdown-Protokolle fuer UPR-FVX/CFRU-DPE-Randomizer-Analysen und Smokes. Lokale ROM-, Build-, Log- und Tool-Artefakte bleiben unter `05_builds/**` oder `03_tools/releases/**` und werden nicht committed.
 
@@ -86,18 +86,19 @@ Der neueste bestaetigte Stand wird in Markdown ueber die Spalte `Latest` markier
 | 050 | `050_p1_base_stats_types_abilities_model.md` | CFRU/DPE Base Stats, Types, Abilities und Encounter Held Items Modell | dokumentiert: `gBaseStats` ueber `0x080001BC`, Entry-Size `0x1C`, interne Species-ID bis `0x59F`, Fairy/Hidden-Ability/Ability-Count/Item-Count-Risiken fuer Folgefixes | keiner | nein |
 | 051 | `051_base_stats_types_scope_write_diagnostics.md` | CFRU/DPE Base Stats + Types Scope-and-Write-Fix Diagnose | bestaetigt: Base Stats-only, Types-only und Base Stats + Types mit Save/Log/Output/Reload, `writeReloadBaseStatsMismatches=0`, `typeIdMismatches=0`, Fairy `0x17` gelesen/geschrieben, Stellar preserve/skip | `05_builds/randomizer-smoke/051_base_stats_types_scope_write/` lokal/ignored | nein |
 | 052 | `052_abilities_hidden_ability_scope_write_diagnostics.md` | CFRU/DPE Ability1/2 + Hidden Ability Scope-and-Write-Fix Diagnose | bestaetigt: Ability1/2-only, Hidden Ability-only, Ability1/2 + Hidden Ability und Base Stats + Types + Abilities mit Save/Log/Output/Reload, `abilitiesPerSpecies=3`, `highestAbilityIndex=254`, `writeReloadAbilityMismatches=0` und `writeReloadHiddenAbilityMismatches=0` | `05_builds/randomizer-smoke/052_abilities_hidden_ability_scope_write/` lokal/ignored | nein |
-| 053 | `053_p1_item_data_and_bad_item_model.md` | CFRU/DPE Item-ID-, Itemnamen-, Bad-/Key-Item- und Encounter-Held-Item-Modell | dokumentiert: CFRU/DPE Itemgrenzen `779`/ca. `799`, klassischer FVX-`ItemCount=374`, moderne Bad-/Key-Item-Risiken und Encounter-Held-Item-Felder `item1/item2` bei `0x0C`/`0x0E`; Encounter Held Items brauchen separaten Fix | keiner, read-only Analyse | ja |
+| 053 | `053_p1_item_data_and_bad_item_model.md` | CFRU/DPE Item-ID-, Itemnamen-, Bad-/Key-Item- und Encounter-Held-Item-Modell | dokumentiert: CFRU/DPE Itemgrenzen `779`/ca. `799`, klassischer FVX-`ItemCount=374`, moderne Bad-/Key-Item-Risiken und Encounter-Held-Item-Felder `item1/item2` bei `0x0C`/`0x0E`; Encounter Held Items brauchen separaten Fix | keiner, read-only Analyse | nein |
+| 054 | `054_encounter_held_items_scope_write_diagnostics.md` | CFRU/DPE Encounter Held Items Scope-and-Write-Fix Diagnose | bestaetigt: Item-Scope bis `778`, moderne Bad-/Banned-Filter, Encounter Held Items-only sowie Kombinationen mit Base Stats, Abilities und Types mit Save/Log/Output/Reload und `writeReloadEncounterHeldItemMismatches=0` | `05_builds/randomizer-smoke/054_encounter_held_items_scope_write/` lokal/ignored | ja |
 
 ## Aktuell bestaetigter Stand
 
-Latest ist Nr. 053: CFRU/DPE Item-ID-, Bad-/Key-Item- und Encounter-Held-Item-Modell.
+Latest ist Nr. 054: CFRU/DPE Encounter Held Items Scope-and-Write-Fix.
 
 Kernaussagen:
 
-- Item-Datenmodell ist read-only eingeordnet; CFRU/DPE Quellen zeigen Itemgrenzen `779` und ca. `799`, waehrend FVX FireRed aktuell klassisch bei `ItemCount=374` startet.
-- `gBaseStats` bleibt ueber Pointer-Ort `0x080001BC` und Entry-Size `0x1C` relevant; Encounter Held Items liegen als `u16 item1/item2` bei `0x0C`/`0x0E`.
-- Moderne Items wie Booster Energy, Tera Orb, Portable PC, Free-/Shiny-Space und Form-/Mega-/Z-/Plate-/Mask-Items brauchen vor Encounter-Held-Item-Randomization klare Bad-/Banned-Filter.
-- Encounter Held Items sind noch nicht P1-supported; naechster Fix sollte ItemCount-/Itemnamen-Scope, Bad-/Key-Item-Filter und `item1/item2`-Write/Reload gemeinsam eng gaten.
+- CFRU/DPE Encounter Held Items sind im getesteten `gBaseStats`-Scope P1-supported.
+- `gBaseStats` bleibt ueber Pointer-Ort `0x080001BC` und Entry-Size `0x1C` relevant; `item1/item2` liegen als `u16` bei `0x0C`/`0x0E`.
+- Der getestete Item-Scope laedt konservativ bis `778`; die DPE-Oberregion `779..798` wird nur genutzt, wenn sie plausibel lesbar ist.
+- Moderne Sonder-/Placeholder-Items werden fuer Random-Picks gebannt; bestehende moderne Held-Item-IDs werden nicht mehr zu `null` und damit nicht zu `0` beim Save.
 - Field Items, Shops, Pickup, Move-Data-Write, Type-Chart-Randomization und Palette/Graphics bleiben separate Folgearbeiten.
 
 ## Lokale Artefaktpflege
