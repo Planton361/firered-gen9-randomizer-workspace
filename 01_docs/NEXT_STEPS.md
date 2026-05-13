@@ -2,59 +2,68 @@
 
 ## Aktueller Arbeitsblock
 
-CFRU/DPE Egg-Move-Species-/Move-ID-Modellierung.
+CFRU/DPE Learnset-Write bounded in-place Fix.
 
 Aktueller Workspace-Branch:
 
 ```text
-analysis/upr-fvx-cfru-dpe-p1-egg-move-model
+compat/upr-fvx-cfru-dpe-learnset-write-bounded
 ```
 
 UPR-FVX-Stand:
 
 ```text
-4ce93754de390e9177efd2541c02edba0afbb0c4
+dd9d80c16936a99bac1d7ef777b43baa7c2f029d
 ```
 
 ## Abschluss dieses Blocks
 
-1. Workspace-Commit erstellen:
+1. UPR-FVX-Commit ist erstellt:
 
 ```text
-docs: document cfru dpe egg move model
+fix: support bounded cfru dpe learnset writes
 ```
 
-2. PR erstellen:
+2. Workspace-Commit erstellen:
+
+```text
+docs: record bounded learnset write diagnostics
+```
+
+3. PRs erstellen:
 
 ```sh
-git push -u origin analysis/upr-fvx-cfru-dpe-p1-egg-move-model
-gh pr create --repo Planton361/firered-gen9-randomizer-workspace --base main --head analysis/upr-fvx-cfru-dpe-p1-egg-move-model --title "docs: document CFRU DPE egg move model" --body-file /tmp/pr-body-workspace-egg-move-model.md
+git -C 02_external/upr-fvx push -u origin compat/upr-fvx-cfru-dpe-learnset-write-bounded
+gh pr create --repo Planton361/universal-pokemon-randomizer-fvx --base compat/firered-gen9-cfru-dpe --head compat/upr-fvx-cfru-dpe-learnset-write-bounded --title "compat: support bounded CFRU DPE learnset writes" --body-file /tmp/pr-body-upr-learnset-write-bounded.md
+
+git push -u origin compat/upr-fvx-cfru-dpe-learnset-write-bounded
+gh pr create --repo Planton361/firered-gen9-randomizer-workspace --base main --head compat/upr-fvx-cfru-dpe-learnset-write-bounded --title "docs: record bounded learnset write diagnostics" --body-file /tmp/pr-body-workspace-learnset-write-bounded.md
 ```
 
-## Analysebefund 041
+## Diagnosebefund 044
 
-- `gEggMoves` bleibt ein `u16`-Stream mit Species-Markern `species + 20000` und Terminator `0xFFFF`.
-- DPE `repointall` dokumentiert `gEggMoves 08045C50`; FVX nutzt aktuell fuer FireRed-BPRE noch `EggMoves=0x25EF0C`.
-- Der DPE-Stream enthaelt `437` Species-Eintraege, darunter Gen8-/PLA-/Paldea-Species.
-- Hoechste Species im Stream: `SPECIES_WOOPER_P`, ID `0x584` / `1412`.
-- Der Stream enthaelt Move-IDs bis `MOVE_TIDYUP`, ID `0x3C7` / `967`; damit sind Gen9-Moves enthalten und innerhalb `moves.total=992`.
-- Egg-Move-only ist noch nicht P1-supported: Tabellenort, interne Species-ID-Abbildung, hohe Move-ID-Arraygrenzen und Kopplung an Learnset-Write brauchen einen separaten Fixbranch.
+- `moves.total=992`; hoechster geladener Move ist `991:PsychicNoise`.
+- `gLevelUpLearnsets` wird ueber Pointer-Ort `0x03EA7C` validiert; Zielpointer im Test: `0x0825D7B4`, ROM-Offset `0x25D7B4`.
+- Der CFRU/DPE-Writer schreibt `u16 move + u8 level` bis Sentinel `{0, 0xFF}`.
+- Bounded in-place Write wird nur ausgefuehrt, wenn `newEntryCount <= originalEntryCount`.
+- Kein Repointing: Growth wird als `needsRepoint` / `skippedGrowth` gezaehlt und nicht geschrieben.
+- Writer-Diagnose im Test: `boundedWrites=1`, `skippedGrowth=0`, `needsRepoint=0`, `skippedSharedPointer=0`, `skippedPlaceholderSpecies=1`, `skippedInvalidPointer=1412`, `skippedInvalidMoves=0`.
+- Diagnose-Harness bestaetigt `saveSuccessful=true`, `logSuccessful=true`, `outputRomExists=true`, `logNonEmpty=true`, `writeReloadLearnsetMismatches=0`.
+- Gesamtbewertung: bounded Writer ist sicher und stabil, aber voller Learnset-Write ist noch nicht P1-supported. Ein Repointing-/Tabellenmodell bleibt separat.
 
 ## Naechster empfohlener Arbeitsblock nach Merge
 
 Branch:
 
 ```text
-compat/upr-fvx-cfru-dpe-egg-moves-scope-and-write
+analysis/upr-fvx-cfru-dpe-p1-learnset-repointing-model
 ```
 
 Ziel:
 
-- Minimal gegateten CFRU/DPE-Egg-Move-Reader/Writer implementieren.
-- `gEggMoves` ueber Pointer-Ort `0x45C50` lesen/schreiben, sofern Zielpointer sicher validiert ist.
-- Species-Marker fuer CFRU/DPE ueber interne SpeciesSet-Identitaet erhalten, nicht ueber Pokédex-ID roundtrips.
-- Hohe Move-ID-Arrayzugriffe im SpeciesMoveset-/Egg-Move-Pool defensiv absichern.
-- Egg-Move-Write/Reload separat diagnostizieren; `setMovesLearnt()` bleibt out of scope.
+- Repointing- und Speicherbereichsmodell fuer full CFRU/DPE Learnset-Write read-only klaeren.
+- Shared-Pointer-Policy, freie ROM-Bereiche, Pointertable-Update und Reload-Verhalten dokumentieren.
+- Keine Umsetzung, solange das Repointing-Modell nicht sicher nachgewiesen ist.
 
 ## Nicht tun
 
@@ -64,17 +73,5 @@ Ziel:
 - keine privaten Pfade, Secrets, Tokens oder `.env` dokumentieren
 - keine Original-Upstreams kontaktieren
 - keine Aenderungen direkt auf `main`
-- keine Learnset-Write-, Move-Data-Write-, Tutor-Text- oder Special-Tutor-Ausweitung ohne eigenen Branch
-
-## After Egg-Move scope/write fix
-
-- Merge UPR-FVX PR for `compat/upr-fvx-cfru-dpe-egg-moves-scope-and-write`, then merge the workspace documentation PR.
-- Next compatibility scopes remain separate: Learnset-Write, Move-Data-Write, Special Tutors, and Tutor text/menu rewrites.
-- Recommended next branch after merge: model or diagnose CFRU/DPE Learnset-Write separately before any write-path implementation.
-
-## After Learnset-Write model
-
-- Merge workspace PR for `analysis/upr-fvx-cfru-dpe-p1-learnset-write-model`.
-- Recommended next branch: `compat/upr-fvx-cfru-dpe-learnset-write-bounded`.
-- Scope recommendation: implement a gated CFRU/DPE `setMovesLearnt()` path only for bounded in-place writes; skip and diagnose growth that would require repointing.
-- Keep Move-Data-Write, Special Tutors, Tutor text/menu rewrites, and full Learnset repointing separate.
+- kein Repointing in diesem Branch
+- keine Move-Data-Write-, Tutor-Text-, Special-Tutor- oder Egg-Move-Ausweitung ohne eigenen Branch
