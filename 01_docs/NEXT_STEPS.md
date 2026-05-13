@@ -1,76 +1,29 @@
 # Next Steps
 
-## Aktueller Arbeitsblock
+## Aktueller Fokus
 
-Codex Plan-/Goal-Nutzung dokumentieren.
+FVX-GUI-Options-Kompatibilitaetsmatrix fuer den getesteten CFRU/DPE Gen9-BPRE-Stand ist dokumentiert in `08_tests/randomizer/047_fvx_gui_options_compatibility_matrix.md`.
 
-Aktueller Workspace-Branch:
+## Priorisierte naechste Arbeitsbloecke
 
-```text
-docs/codex-plan-goal-usage-guidance
-```
+1. `compat/upr-fvx-cfru-dpe-learnset-write-repointing`
+   - Nur fortsetzen, wenn Phase 2 genug reservierbaren FreeSpace fuer den actual Learnset-Blob-Bedarf nachweist.
 
-## Ziel
+2. `analysis/upr-fvx-cfru-dpe-p1-base-stats-types-abilities-model`
+   - Base Stats, Types, Ability Slots, Hidden Abilities und Encounter Held Items auf ein gemeinsames CFRU/DPE-Species-Datenmodell zurueckfuehren.
 
-Die Erkenntnis dokumentieren, wann Codex kuenftig mit Plan-Modus oder Goal-Modus arbeiten soll, damit spaetere Chats diese Regel ueber Projektdateien laden koennen.
+3. `analysis/upr-fvx-cfru-dpe-p1-move-data-write-model`
+   - Move-Data-Write fuer `moves.total=992`, `BattleMove.split` und CFRU/DPE-Felder read-only modellieren.
 
-## Geaendert in diesem Block
+4. `analysis/upr-fvx-cfru-dpe-p1-items-shops-field-model`
+   - Field Items, Shops, Pickup und Item-ID-/Bad-Item-Scope fuer CFRU/DPE Gen9 inventarisieren.
 
-- Neues Quality-Dokument:
-  - `01_docs/quality/codex-plan-goal-usage.md`
-- Verweise/Template-Ergaenzungen:
-  - `01_docs/quality/usage-optimization.md`
-  - `01_docs/quality/prompt-templates.md`
+5. `analysis/upr-fvx-cfru-dpe-p1-palette-randomization-model`
+   - Vorhandene Palette-Safety von echter Palette-/Graphics-Randomization trennen und Write-/Repointing-Risiken modellieren.
 
-## Regel fuer kuenftige Chats
+## Sicherheitsgrenzen
 
-- Kleine Diagnose- und Fixbranches: kompakter Standardprompt.
-- Groessere oder riskantere Analyse-/Fixbloecke: Plan-Modus zuerst, damit Codex Scope, Dateien, Risiken und Stop-Regeln klaert.
-- Lange, klar validierbare read-only Aufgaben: Goal-Modus optional.
-- Kein Goal-Modus fuer Repointing-Fixes, Move-Data-Write, ROM-nahe Writer oder grosse Multi-Fix-PRs.
-- Bei Unsicherheit: Plan-Modus vor Goal-Modus.
-
-## Abschluss dieses Blocks
-
-1. PR reviewen und mergen:
-
-```text
-docs: document Codex plan/goal usage guidance
-```
-
-2. Nach Merge in neuen Chats bei groesseren Aufgaben zusaetzlich lesen lassen:
-
-```text
-01_docs/quality/codex-plan-goal-usage.md
-```
-
-## Naechster empfohlener Arbeitsblock nach Merge
-
-Zurueck zum technischen Randomizer-Track:
-
-```text
-compat/upr-fvx-cfru-dpe-learnset-write-repointing
-```
-
-Ziel bleibt:
-
-- Full CFRU/DPE Learnset-Write mit Repointing nur dann implementieren, wenn freie ROM-Fläche diagnostisch nachgewiesen wird.
-- Bestehende Pointertable bei `0x25D7B4` nutzen.
-- Neue `u16 move + u8 level` Blobs schreiben und Pointertable-Eintraege pro interner Species-ID aktualisieren.
-- Reload per interner SpeciesSet-Identitaet pruefen.
-
-Empfohlen fuer diesen Folgeblock:
-
-```text
-Mit Plan-Modus starten.
-```
-
-## Nicht tun
-
-- keine ROMs bewegen oder committen
-- keine Saves oder Emulator States anfassen
-- keine Builds, Randomizer-JARs oder Tool-Binaries committen
-- keine privaten Pfade, Secrets, Tokens oder `.env` dokumentieren
-- keine Original-Upstreams kontaktieren
-- keine Aenderungen direkt auf `main`
-- keine technische Randomizer-Codeaenderung in diesem Docs-Block
+- Keine ROMs, Saves, Emulator States, Builds, Tool-Binaries, privaten Pfade, Secrets oder `.env` dokumentieren oder committen.
+- Keine Aenderungen direkt auf `main`.
+- Keine Original-Upstreams kontaktieren.
+- `02_external/**` nur in expliziten Fixbranches und nur nach Freigabe aendern.
