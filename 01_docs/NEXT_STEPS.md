@@ -71,3 +71,10 @@ Ziel:
 - Merge UPR-FVX PR for `compat/upr-fvx-cfru-dpe-egg-moves-scope-and-write`, then merge the workspace documentation PR.
 - Next compatibility scopes remain separate: Learnset-Write, Move-Data-Write, Special Tutors, and Tutor text/menu rewrites.
 - Recommended next branch after merge: model or diagnose CFRU/DPE Learnset-Write separately before any write-path implementation.
+
+## After Learnset-Write model
+
+- Merge workspace PR for `analysis/upr-fvx-cfru-dpe-p1-learnset-write-model`.
+- Recommended next branch: `compat/upr-fvx-cfru-dpe-learnset-write-bounded`.
+- Scope recommendation: implement a gated CFRU/DPE `setMovesLearnt()` path only for bounded in-place writes; skip and diagnose growth that would require repointing.
+- Keep Move-Data-Write, Special Tutors, Tutor text/menu rewrites, and full Learnset repointing separate.

@@ -167,3 +167,12 @@ Nach Merge dieses Analyseblocks: Egg-Move-Reader-/Writer-Fix separat umsetzen. T
 - Added diagnosis `08_tests/randomizer/042_egg_moves_scope_and_write_fix_diagnostics.md`.
 - Direct Egg-Move harness result: `moves.total=992`, highest loaded move `991:PsychicNoise`, target pointer `0x09A0E94C`, species entries `436 -> 436 -> 436`, highest species `1412`, highest move after/reload `991`, `writeReloadEggMoveMismatches=0`, `saveSuccessful=true`, `logSuccessful=true`, `outputRomExists=true`, `logNonEmpty=true`.
 - No Learnset-Write, Move-Data-Write, Tutor-Text, Special-Tutor, or `setMovesLearnt()` expansion was included.
+
+## 2026-05-13 - CFRU/DPE Learnset-Write-Modell
+
+- Active branch: `analysis/upr-fvx-cfru-dpe-p1-learnset-write-model`.
+- UPR-FVX PR #22 und Workspace PR #79 als gemerged geprueft.
+- `gLevelUpLearnsets` Write-Modell read-only dokumentiert; keine Aenderung an `02_external/**`.
+- Neues Protokoll: `08_tests/randomizer/043_p1_learnset_write_model.md`.
+- Befund: Pointer-Ort `0x03EA7C` / `0x0803EA7C`, interne Species-ID-Pointertabelle, Eintraege `u16 move + u8 level`, Sentinel `{0, 0xFF}`, `MAX_LEARNABLE_MOVES=50`, Species bis `SPECIES_PECHARUNT=0x59F`, Moves bis `MOVE_PSYCHICNOISE=0x3DF`.
+- Empfehlung: Folgefix nur eng gegatet und zunaechst bounded in-place; Repointing separat modellieren.

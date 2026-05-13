@@ -96,3 +96,5 @@ Wenn ein Artefakt nicht eindeutig Smoke-Output ist, bleibt es lokal liegen und w
 - CFRU Day/Night
 
 - `042_egg_moves_scope_and_write_fix_diagnostics.md` - CFRU/DPE Gen9 BPRE Egg-Move reader/writer fix diagnostics; direct Egg-Move harness confirms `gEggMoves` pointer `0x45C50 -> 0x09A0E94C`, `moves.total=992`, Gen8/9 species retained, Gen9 moves written/reloaded, and `writeReloadEggMoveMismatches=0`.
+
+- `043_p1_learnset_write_model.md` - CFRU/DPE Gen9 BPRE Learnset-Write-Modell fuer `gLevelUpLearnsets`; dokumentiert Pointer-Ort `0x03EA7C` / `0x0803EA7C`, internes Species-Indexing, `u16 move + u8 level`, Sentinel `{0, 0xFF}`, In-place-/Repointing-Risiken und minimalen bounded Write-Folgepfad.
