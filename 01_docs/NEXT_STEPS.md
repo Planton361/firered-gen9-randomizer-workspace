@@ -2,32 +2,29 @@
 
 ## Aktueller Fokus
 
-UPR FVX GUI-Features werden als Requirements-/Coverage-Basis dokumentiert.
-
-Neue Steuerungsdateien auf Branch `docs/fvx-feature-coverage-matrix`:
-
-- `01_docs/randomizer/fvx-feature-coverage.md`
-- `00_project-control/roadmap/fvx-feature-roadmap.md`
-- `01_docs/decisions/DEC-011-fvx-feature-coverage.md`
+CFRU/DPE P1 Regression-Smoke-Plan ist read-only erstellt. Diagnose: `08_tests/randomizer/061_p1_regression_smoke_plan.md`.
 
 ## Priorisierte naechste Arbeitsbloecke
 
-1. `docs/fvx-feature-coverage-matrix`
-   - PR reviewen und mergen, falls Feature-Zaehlung, Statusmodell und Roadmap-Pakete passen.
+1. `analysis/upr-fvx-cfru-dpe-p1-global-species-pool-regression-smoke`
+   - Ersten spaeteren Regression-Smoke fuer `Limit Pokemon`, Generation Limits und related Pokemon vorbereiten oder ausfuehren, strikt ohne offene Writer.
 
-2. `analysis/upr-fvx-cfru-dpe-p1-regression-smoke-plan`
-   - Smoke-/Regression-Plan fuer priorisierte GUI-Suboptionen aus `01_docs/randomizer/fvx-feature-coverage.md` erstellen, ohne neue Randomizer-Laeufe im Planblock.
+2. `analysis/upr-fvx-cfru-dpe-p1-starters-suboptions-regression-smoke`
+   - Starter-Poolfilter wie random basic/two evolutions, Type Restrictions, No Legendaries und BST-Min/Max getrennt von Starter-Held-Items pruefen.
 
-3. `compat/upr-fvx-cfru-dpe-type-chart-preserve-effectiveness`
+3. `analysis/upr-fvx-cfru-dpe-p1-similar-strength-same-type-regression-smoke`
+   - BST-/Type-basierte Pooling-Suboptionen pruefen, ohne TypeChart oder MoveData-Write zu aktivieren.
+
+4. `compat/upr-fvx-cfru-dpe-type-chart-preserve-effectiveness`
    - Nur nach separater Freigabe: Type-Effectiveness-Table mit Fairy-Reload, unsupported/Stellar-Preserve und Terminator-/Kapazitaetskriterien absichern.
 
-4. `compat/upr-fvx-cfru-dpe-move-data-write-preserve`
+5. `compat/upr-fvx-cfru-dpe-move-data-write-preserve`
    - Nur nach separater Freigabe: eng gegateten MoveData-Writer mit Preserve-Policy und Reload-Diagnose umsetzen.
 
-5. `compat/upr-fvx-cfru-dpe-palette-randomization-preserve-repoint`
+6. `compat/upr-fvx-cfru-dpe-palette-randomization-preserve-repoint`
    - Nur nach separater Freigabe: echte geaenderte Palette-Randomization mit compressed/shared/repointing Reload-Kriterien absichern.
 
-6. `compat/upr-fvx-cfru-dpe-field-items-shops-pickup-scope-and-write`
+7. `compat/upr-fvx-cfru-dpe-field-items-shops-pickup-scope-and-write`
    - Nur nach separater Freigabe: Field Items, Shops und Pickup mit getrennten Reload-Kriterien absichern.
 
 ## Sicherheitsgrenzen

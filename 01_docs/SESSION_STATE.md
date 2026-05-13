@@ -1,5 +1,23 @@
 # Session State
 
+## 2026-05-13 - CFRU/DPE P1 Regression-Smoke-Plan
+
+Arbeitsbranch: `analysis/upr-fvx-cfru-dpe-p1-regression-smoke-plan`
+
+Aktueller Stand:
+
+- Neues read-only Analyseprotokoll `08_tests/randomizer/061_p1_regression_smoke_plan.md` erstellt.
+- Priorisierte Smoke-Gruppen aus Diagnose 060 und der FVX Feature-Coverage-Matrix abgeleitet.
+- Feature-Coverage mit `130` Feature-/Suboption-Zeilen eingebunden; spaetere Smokes sollen Feature-IDs referenzieren.
+- Smoke-Gruppen festgelegt: Global Species Pools / Generation Limits, Similar Strength / Same Type Pooling, Evolutions-Suboptionen ohne offene Method-/Item-/Move-Writer, Starters, Movesets/TM/Tutor/Egg, Trainer Level Modifier separat und Wild Level Modifier separat.
+- Offene Writer explizit als Nicht-Smoke-Fixbereiche markiert: MoveData Write, Field Items/Shops/Pickup, Palette Randomization, TypeChart, Graphics/Sprites und Text/Menu.
+- Allgemeine spaetere Metriken definiert: Save/Log/Output/Reload, relevanter Mismatch-Zaehler `0`, `stacktrace=none`, keine verbotenen Artefakte und Marker nur nach 055 klassifizieren.
+- Keine Codeaenderung, keine Aenderung an `02_external/**`, keine neuen Randomizer-Laeufe, kein Tool-Manifest-Update.
+
+Naechster sinnvoller Schritt:
+
+- `analysis/upr-fvx-cfru-dpe-p1-global-species-pool-regression-smoke`: erster spaeterer Regression-Smoke fuer `Limit Pokemon`, Generation Limits und related Pokemon, strikt ohne offene Writer.
+
 ## 2026-05-13 - CFRU/DPE GUI-Suboptions-Regressionsmatrix
 
 Arbeitsbranch: `analysis/upr-fvx-cfru-dpe-p1-gui-suboptions-regression-matrix`

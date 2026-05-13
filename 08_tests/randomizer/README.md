@@ -2,9 +2,9 @@
 
 ## Latest
 
-- `060_p1_gui_suboptions_regression_matrix.md` ordnet konkrete FVX-GUI-Hauptoptionen und Suboptionen gegen den aktuellen CFRU/DPE-P1-Supportstand ein.
-- Die Matrix trennt direkt belegte Datenpfade, wahrscheinlich stabile Suboptionen, modellierte offene Writer und ungetestete GUI-Kombinationen.
-- Diagnose 055-059 bleiben harte Grenzen fuer Log-Hygiene, MoveData, Field Items/Shops/Pickup, Paletten und TypeChart.
+- `061_p1_regression_smoke_plan.md` plant read-only spaetere Regression-Smokes fuer priorisierte FVX-GUI-Suboptionen.
+- Der Plan gleicht Diagnose 060 mit der FVX Feature-Coverage-Matrix ab und referenziert Feature-IDs fuer spaetere Tests.
+- Offene Writer aus 056-059 bleiben explizit Nicht-Smoke-Fixbereiche und werden nicht in allgemeine Regression-Smokes gemischt.
 
 Dieses Verzeichnis enthaelt die dauerhaften Markdown-Protokolle fuer UPR-FVX/CFRU-DPE-Randomizer-Analysen und Smokes. Lokale ROM-, Build-, Log- und Tool-Artefakte bleiben unter `05_builds/**` oder `03_tools/releases/**` und werden nicht committed.
 
@@ -93,19 +93,20 @@ Der neueste bestaetigte Stand wird in Markdown ueber die Spalte `Latest` markier
 | 057 | `057_p1_field_items_shops_pickup_model.md` | CFRU/DPE Field-Items-/Shops-/Pickup-Item-Modell | dokumentiert: Grenze zu Encounter Held Items, Item-Scope aus 053/054, Field-/Shop-/Pickup-Risiken, allgemeine Bad-/Banned-Item-Risiken, Preserve-/Skip-Policy und Reload-Kriterien fuer spaetere Fixbranches; kein Fix | keiner, read-only Analyse | nein |
 | 058 | `058_p1_palette_randomization_model.md` | CFRU/DPE Palette-Randomization-Modell | dokumentiert: Palette-Safety/Skip-Unchanged-Save, Grenze zu echter Palette-Randomization, `PokemonPalettesMod.RANDOM`, `Gen3to5PaletteRandomizer`, `savePokemonPalettes()`, compressed/shared/repointing risks, Graphics-Abgrenzung, Preserve-/Skip-Policy und Reload-Kriterien; kein Fix | keiner, read-only Analyse | nein |
 | 059 | `059_p1_type_chart_model.md` | CFRU/DPE Type-Chart-Modell | dokumentiert: Grenze zu Pokemon-Type-Read/Write aus 051, Fairy-vs-TypeChart-Grenze, Stellar-/unsupported-Type-Grenze, Type-Effectiveness-Table-Risiken, Preserve-/Skip-Policy und Reload-Kriterien; kein Fix | keiner, read-only Analyse | nein |
-| 060 | `060_p1_gui_suboptions_regression_matrix.md` | CFRU/DPE GUI-Suboptions-Regressionsmatrix | dokumentiert: konkrete FVX-GUI-Hauptoptionen und Suboptionen nach Statusklassen, belegten Datenpfaden, wahrscheinlich stabilen Suboptionen, modellierten offenen Writern und ungetesteten GUI-Kombinationen; kein Fix | keiner, read-only Analyse | ja |
+| 060 | `060_p1_gui_suboptions_regression_matrix.md` | CFRU/DPE GUI-Suboptions-Regressionsmatrix | dokumentiert: konkrete FVX-GUI-Hauptoptionen und Suboptionen nach Statusklassen, belegten Datenpfaden, wahrscheinlich stabilen Suboptionen, modellierten offenen Writern und ungetesteten GUI-Kombinationen; kein Fix | keiner, read-only Analyse | nein |
+| 061 | `061_p1_regression_smoke_plan.md` | CFRU/DPE P1 Regression-Smoke-Plan | dokumentiert: priorisierte Smoke-Gruppen mit Feature-IDs, spaetere Metriken, Reihenfolge, Stop-Regeln und explizite Nicht-Smoke-Fixbereiche fuer offene Writer; keine Testausfuehrung | keiner, read-only Analyse | ja |
 
 ## Aktuell bestaetigter Stand
 
-Latest ist Nr. 060: CFRU/DPE GUI-Suboptions-Regressionsmatrix.
+Latest ist Nr. 061: CFRU/DPE P1 Regression-Smoke-Plan.
 
 Kernaussagen:
 
-- P1-supported wird nur vergeben, wenn der konkrete Datenpfad direkt belegt ist.
-- Viele Suboptionen sind wahrscheinlich stabil, aber nicht einzeln getestet, wenn sie nur Pool-/Filter-/Follow-Logik ueber bereits stabile Writer nutzen.
-- MoveData, Field Items/Shops/Pickup, echte Palette-Randomization und Type Effectiveness bleiben modellierte offene Writer.
-- Levelmodifier, Evolution-Methoden, Text, Misc und Graphics bleiben eigene offene oder out-of-scope Bereiche.
-- Diagnose 055-059 bleiben harte Grenzen und werden nicht durch aehnliche GUI-Hauptpfade ueberschrieben.
+- 061 fuehrt keine Tests aus und erfindet keine Diagnosewerte.
+- Spaetere Smokes sollen Feature-IDs aus der FVX Feature-Coverage-Matrix referenzieren.
+- Prioritaet haben Pool-/Filter- und Follow-Suboptionen ueber bereits belegte Writer.
+- MoveData Write, Field Items/Shops/Pickup, Palette Randomization, TypeChart, Graphics/Sprites und Text/Menu bleiben separate Nicht-Smoke-Fixbereiche.
+- Allgemeine Smoke-Metriken sind Save/Log/Output/Reload, relevanter Mismatch-Zaehler `0`, `stacktrace=none` und keine verbotenen Artefakte.
 
 ## Lokale Artefaktpflege
 
