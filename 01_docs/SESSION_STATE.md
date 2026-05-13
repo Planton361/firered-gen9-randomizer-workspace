@@ -1,5 +1,24 @@
 # Session State
 
+## 2026-05-13 - CFRU/DPE Learnset GUI Flow Safety Fix
+
+Arbeitsbranch: `compat/upr-fvx-cfru-dpe-learnset-gui-flow-safety`
+
+Aktueller Stand:
+
+- UPR-FVX-Fix `086d2a9177df7624a0e7ca1876b210a200d7aa98` erstellt.
+- Logger-Nullsafety, Learnset-Repointing-Multiwrite-Safety, Trainer-Movesets-Key-Fallbacks sowie TM/HM-/Tutor-Level-Up-Sanity defensiv stabilisiert.
+- Neues Protokoll `08_tests/randomizer/049_p1_learnset_gui_flow_safety_fix_diagnostics.md` erstellt.
+- Sieben GameRandomizer-nahe Movesets/Learnsets-Laeufe diagnostiziert: Movesets-only, Trainer-Movesets, Reorder-Damaging, TM/HM-Sanity, Tutor-Sanity, gekoppelte Egg Moves und TM/HM+Tutor-Sanity.
+- Alle Laeufe liefern `saveSuccessful=true`, `logSuccessful=true`, `outputRomExists=true`, `logNonEmpty=true` und `writeReloadLearnsetMismatches=0`.
+- Reorder-Damaging nutzt zwei freie Learnset-Blob-Bloecke innerhalb `0x1219A48-0x1600000`; der zweite Write blockiert nicht mehr an einem statischen FreeSpace-Start.
+- Keine Move-Data-Write-, Tutor-Text/Menu-, Special-Tutor-, Egg-Move-, Palette/Graphics- oder Text/Menu-Ausweitung.
+
+Naechster sinnvoller Schritt:
+
+- Nach Merge der PRs `analysis/upr-fvx-cfru-dpe-p1-base-stats-types-abilities-model` starten.
+- Danach Move-Data-Write, Items/Shops/Field, Palette/Graphics und Special-Tutor/Text/Menu separat modellieren.
+
 ## 2026-05-13 - CFRU/DPE Learnset GUI Combination Diagnostics
 
 Arbeitsbranch: `analysis/upr-fvx-cfru-dpe-p1-learnset-gui-combinations`
@@ -63,48 +82,51 @@ Naechster sinnvoller Schritt:
 - Branch Protection und PR-Pflicht sind laut dokumentiertem Projektstand eingerichtet.
 - Workspace PR #80 ist gemerged.
 - UPR-FVX PR #23 und Workspace PR #81 sind gemerged.
-- UPR-FVX-Stand im Workspace: `77de517da880bebb6ed690ca6e170e5bd10b9cad`.
+- UPR-FVX-Stand im Workspace: `086d2a9177df7624a0e7ca1876b210a200d7aa98`.
 - TM/HM-only ist im getesteten CFRU/DPE-128-Slot-Scope P1-supported.
 - Tutor-only ist im getesteten CFRU/DPE-152-Slot-Scope P1-supported.
 - Egg-Move direct scope ist P1-supported.
 - Learnset-Write bounded in-place ist implementiert und diagnostisch stabil fuer strikt validierte same-size Writes.
 - Full Learnset-Write-Repointing ist im direkten `setMovesLearnt()`-Scope implementiert und diagnostisch stabil.
+- Pokemon Movesets/Learnsets sind im getesteten GUI-/Settings-nahen Flow P1-supported.
 - ROMs, Saves, Builds, Tool-Binaries und private Dateien sind ausgeschlossen.
 
 ## Aktueller Branch
 
-`compat/upr-fvx-cfru-dpe-learnset-write-repointing`
+`compat/upr-fvx-cfru-dpe-learnset-gui-flow-safety`
 
 ## Aktueller Arbeitsblock
 
-CFRU/DPE Learnset GUI-Kombinationsdiagnose.
+CFRU/DPE Learnset GUI-Flow-Safety-Fix.
 
 ## Ziel
 
-Komplette GUI-/Settings-nahe Pokemon-Movesets-/Learnsets-Laeufe fuer CFRU/DPE Gen9-BPRE pruefen. Keine Codeaenderung, kein Fix, keine Move-Data-Write-, Tutor-Text-, Special-Tutor-, Egg-Move-, Palette/Graphics- oder Text/Menu-Ausweitung.
+CFRU/DPE Pokemon Movesets/Learnsets im normalen GameRandomizer-/Settings-Flow entblocken. Minimalfix fuer Logger, Multiwrite-Repointing, Trainer-Movesets und TM/HM-/Tutor-Level-Up-Sanity; keine Move-Data-Write-, Tutor-Text-, Special-Tutor-, Egg-Move-, Palette/Graphics- oder Text/Menu-Ausweitung.
 
 ## In diesem Arbeitsblock geprueft / geaendert
 
-- Workspace PR #84, UPR-FVX PR #23 sowie Workspace PR #81/#82 als gemerged geprueft.
-- Workspace- und UPR-FVX-Branch `compat/upr-fvx-cfru-dpe-learnset-write-repointing` erstellt; nicht auf `main` gearbeitet.
-- UPR-FVX `Gen3RomHandler.setMovesLearnt()` fuer CFRU/DPE Full Repointing erweitert.
-- Neues Protokoll erstellt: `08_tests/randomizer/046_learnset_write_repointing_diagnostics.md`.
+- Workspace PR #86, Workspace PR #85 und UPR-FVX PR #24 als gemerged geprueft.
+- Workspace- und UPR-FVX-Branch `compat/upr-fvx-cfru-dpe-learnset-gui-flow-safety` erstellt; nicht auf `main` gearbeitet.
+- UPR-FVX `Gen3RomHandler.setMovesLearnt()` fuer wiederholte CFRU/DPE-Repointing-Writes innerhalb der validierten FreeSpace-Region abgesichert.
+- Logger, Trainer-Movesets und TM/HM-/Tutor-Level-Up-Sanity defensiv gegen fehlende Moveset-Daten abgesichert.
+- Neues Protokoll erstellt: `08_tests/randomizer/049_p1_learnset_gui_flow_safety_fix_diagnostics.md`.
 - `08_tests/randomizer/README.md`, `SESSION_STATE.md`, `NEXT_STEPS.md`, Roadmap und Tool-Manifest aktualisiert.
 
 ## Ergebnis
 
-- `gLevelUpLearnsets` Pointer-Ort `0x03EA7C` zeigt im getesteten Stand auf `0x0825D7B4` / ROM-Offset `0x25D7B4`.
-- Die validierte FreeSpace-Region `0x1219A48-0x1600000` ist gross genug fuer actual und worst-case Learnset-Blob-Bedarf.
-- Diagnose 046 schreibt `11547` Blob-Bytes, aktualisiert `1413` Pointertable-Eintraege und dedupliziert `997` byte-identische Blob-Writes.
-- Reload bestaetigt `1413` Species-Eintraege, `4393` Learnset-Eintraege, hoechste Move-ID `991` und `writeReloadLearnsetMismatches=0`.
-- Full `setMovesLearnt()`-Repointing ist im direkten Learnset-Write-Scope P1-supported.
+- Alle sieben Diagnose-049-Laeufe speichern, loggen, erzeugen Output und reloaden erfolgreich.
+- `writeReloadLearnsetMismatches=0` in allen Laeufen.
+- Reorder-Damaging fuehrt zwei `setMovesLearnt()`-Writes aus und nutzt `0x1219A48-0x1221663` sowie `0x1221664-0x122927F`.
+- Trainer-Movesets mit fehlendem Moveset-Map-Eintrag werden diagnostiziert und uebersprungen statt per NPE abzubrechen.
+- TM/HM- und Tutor-Level-Up-Sanity laufen mit `0` Mismatches.
+- Pokemon Movesets/Learnsets sind im getesteten GUI-/Settings-nahen CFRU/DPE Gen9-BPRE-Scope P1-supported.
 
 ## Noch nicht gestartet
 
 - Special-Tutor-Modell/Fix
 - Move-Data-Write/`saveMoves()` fuer CFRU/DPE
-- Learnset GUI-Flow-Safety-Fix fuer Logger, Trainer-Movesets, Reorder-Damaging und Level-Up-Sanity
 - Ability-Datenmodellierung
+- Base Stats-/Types-/Abilities-Datenmodellierung
 - CFRU-Day/Night-Custom-Wild-Tabellen-Support
 - Nullslot-`<unknown>`-Analyse
 - Ironmon-Tracker-Tests
@@ -125,7 +147,7 @@ Keine Aenderungen direkt auf `main`.
 
 UPR-FVX wurde nur im erlaubten Fixscope geaendert; andere `02_external/**`-Repos blieben unangetastet.
 
-Keine Move-Data-Write-, Tutor-Text-, Special-Tutor-, Egg-Move-, Palette/Graphics- oder Text/Menu-Ausweitung.
+Keine Move-Data-Write-, Tutor-Text/Menu-, Special-Tutor-, Egg-Move-, Palette/Graphics- oder Text/Menu-Ausweitung.
 
 Keine MCP-Configs mit Secrets angelegt.
 
@@ -143,7 +165,7 @@ git diff --check
 
 ## Naechster empfohlener Branch
 
-Nach Merge dieses Fixblocks: GUI-/Settings-Kombinationssmoke fuer Pokemon Movesets/Learnsets oder `analysis/upr-fvx-cfru-dpe-p1-base-stats-types-abilities-model`. Move-Data-Write, Special Tutors und Tutor-Text/Menu-Rewrites bleiben eigene Folgebranches.
+Nach Merge dieses Fixblocks: `analysis/upr-fvx-cfru-dpe-p1-base-stats-types-abilities-model`. Move-Data-Write, Special Tutors, Tutor-Text/Menu-Rewrites, Items/Shops/Field und Palette/Graphics bleiben eigene Folgebranches.
 
 ### 2026-05-13 - analysis/upr-fvx-cfru-dpe-p1-learnset-repointing-model
 

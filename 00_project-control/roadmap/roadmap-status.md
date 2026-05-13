@@ -24,9 +24,9 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-p1-learnset-gui-combinations` |
-| Nächster Branch | `compat/upr-fvx-cfru-dpe-learnset-gui-flow-safety` oder `analysis/upr-fvx-cfru-dpe-p1-base-stats-types-abilities-model` |
-| Aktueller Fokus | CFRU/DPE Learnset GUI-Kombinationsdiagnose |
+| Aktueller Branch | `compat/upr-fvx-cfru-dpe-learnset-gui-flow-safety` |
+| Nächster Branch | `analysis/upr-fvx-cfru-dpe-p1-base-stats-types-abilities-model` |
+| Aktueller Fokus | CFRU/DPE Learnset GUI-Flow-Safety-Fix |
 | ROM-/Build-Arbeit | keine neuen ROM-/Build-Artefakte; keine Artefakte committen |
 | Externe Repos | als Submodule auf Planton361-Forks eingebunden |
 | Forks | Planton361-Forks fuer UPR-FVX, DPE Gen9 und CFRU dokumentiert |
@@ -108,18 +108,18 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | 08 Randomizer-Kompatibilität | FVX-GUI-Options-Kompatibilitaetsmatrix | P1-supported, teilunterstuetzte, offene und blockierte FVX-GUI-Optionsbereiche fuer den getesteten CFRU/DPE Gen9-BPRE-Stand dokumentiert |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Learnset-Write Repointing-Fix | UPR-FVX `77de517d` bestaetigt Full `setMovesLearnt()`-Repointing mit validierter FreeSpace-Region, `pointertableEntriesUpdated=1413` und `writeReloadLearnsetMismatches=0` |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Learnset GUI-Kombinationsdiagnose | Diagnose 048 bestaetigt ersten GameRandomizer-Repointing-Write mit `writeReloadLearnsetMismatches=0`, blockiert aber vollen GUI-P1-Support durch Logger, Trainer-Movesets, Reorder-Damaging und Level-Up-Sanity |
+| 08 Randomizer-Kompatibilität | CFRU/DPE Learnset GUI-Flow-Safety-Fix | UPR-FVX `086d2a91` bestaetigt Movesets-only, Trainer-Movesets, Reorder-Damaging, TM/HM-Sanity, Tutor-Sanity, gekoppelte Egg Moves und TM/HM+Tutor-Sanity mit Save/Log/Output/Reload und `writeReloadLearnsetMismatches=0` |
 
 ## In Arbeit
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Learnset GUI-Kombinationsdiagnose | Dokumentation pruefen und PR mergen |
+| 08 Randomizer-Kompatibilität | Learnset GUI-Flow-Safety-Fix | Dokumentation pruefen und PR mergen |
 
 ## Als Nächstes
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Learnset GUI-Flow-Safety-Fix | Logger, Trainer-Movesets, Reorder-Damaging und Level-Up-Sanity entblocken |
 | 08 Randomizer-Kompatibilität | Base Stats/Types/Abilities Modell | Naechster Datenmodell-Analyseblock fuer Species-basierte Writer |
 
 ## Noch offen
@@ -182,7 +182,8 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | P1y | `analysis/upr-fvx-cfru-dpe-p1-learnset-write-model` | Learnset-Write-Modell | erledigt; bounded in-place als minimaler Folgefix empfohlen |
 | P1z | `compat/upr-fvx-cfru-dpe-learnset-write-bounded` | Learnset-Write bounded in-place | erledigt; UPR-FVX `dd9d80c1` speichert sichere same-size Learnsets ohne Repointing, voller Learnset-Write bleibt separat |
 | P1aa | `analysis/upr-fvx-cfru-dpe-p1-learnset-repointing-model` | Learnset-Repointing-Modell | erledigt; Pointertable, Shared-Pointer-Policy und FreeSpace-Risiken read-only dokumentiert |
-| P1ab | `analysis/upr-fvx-cfru-dpe-fvx-gui-options-matrix` | FVX-GUI-Options-Kompatibilitaetsmatrix | aktueller Analysebranch; P1-supported, teilunterstuetzte, offene und blockierte GUI-Optionsbereiche konsolidieren |
+| P1ab | `analysis/upr-fvx-cfru-dpe-fvx-gui-options-matrix` | FVX-GUI-Options-Kompatibilitaetsmatrix | erledigt; P1-supported, teilunterstuetzte, offene und blockierte GUI-Optionsbereiche konsolidiert |
+| P1ac | `compat/upr-fvx-cfru-dpe-learnset-gui-flow-safety` | Learnset GUI-Flow-Safety-Fix | aktueller Fixbranch; Logger, Multiwrite-Repointing, Trainer-Movesets und Level-Up-Sanity fuer Pokemon Movesets/Learnsets entblockt |
 | P2 | `randomizer/cfru-day-night-wild-table-analysis` | CFRU-Custom-Day/Night-Wild-Tabellen separat untersuchen | erst nach P1-Schreibpfad-Diagnose; Route-1-Fallback bleibt stabil |
 | P3 | noch festlegen | Nullslot-`<unknown>` mit `rawInternalSpeciesId=0` klassifizieren | nicht mit GenRestrictions vermischen |
 | P4 | noch festlegen | BizHawk-/Ironmon-Tracker-/RAM-Mapping pruefen | erst nach stabiler ROM-Randomizer-Kompatibilitaet |
