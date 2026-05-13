@@ -478,3 +478,9 @@ Zweck: CFRU/DPE-128-Slot-TM/HM-Reader/Writer eng gaten, ohne Tutor-, Egg-Move-, 
 - CFRU/DPE Gen9 BPRE Egg-Move reader/writer is now implemented in UPR-FVX on branch `compat/upr-fvx-cfru-dpe-egg-moves-scope-and-write` at `18168b78b973a4c39f34053ac58f21279a26d8d2`.
 - Diagnosis 042 reports Egg-Move direct scope as P1-supported for the tested ROM: Save/Log/Output succeed and Write/Reload mismatches are `0`.
 - Learnset-Write, Move-Data-Write, Special Tutors, and Tutor text remain separate roadmap items.
+
+## 2026-05-13 - Learnset-Write model
+
+- CFRU/DPE Gen9 BPRE Learnset-Write model documented in `08_tests/randomizer/043_p1_learnset_write_model.md`.
+- `gLevelUpLearnsets` should be treated as an internal Species-ID pointertable via pointer location `0x03EA7C` / `0x0803EA7C`; entries are `u16 move + u8 level` with `{0, 0xFF}` sentinel.
+- Recommended next status: bounded in-place CFRU/DPE `setMovesLearnt()` fix branch; full repointing remains out of scope.
