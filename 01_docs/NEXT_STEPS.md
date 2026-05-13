@@ -2,12 +2,12 @@
 
 ## Aktueller Fokus
 
-FVX-GUI-Options-Kompatibilitaetsmatrix fuer den getesteten CFRU/DPE Gen9-BPRE-Stand ist dokumentiert in `08_tests/randomizer/047_fvx_gui_options_compatibility_matrix.md`.
+CFRU/DPE Full Learnset-Write Repointing ist im direkten `setMovesLearnt()`-Scope dokumentiert in `08_tests/randomizer/046_learnset_write_repointing_diagnostics.md`.
 
 ## Priorisierte naechste Arbeitsbloecke
 
-1. `compat/upr-fvx-cfru-dpe-learnset-write-repointing`
-   - Nur fortsetzen, wenn Phase 2 genug reservierbaren FreeSpace fuer den actual Learnset-Blob-Bedarf nachweist.
+1. `analysis/upr-fvx-cfru-dpe-p1-learnset-gui-combinations`
+   - Komplette GUI-/Settings-Kombinationen fuer Pokemon Movesets/Learnsets nach dem Repointing-Fix pruefen.
 
 2. `analysis/upr-fvx-cfru-dpe-p1-base-stats-types-abilities-model`
    - Base Stats, Types, Ability Slots, Hidden Abilities und Encounter Held Items auf ein gemeinsames CFRU/DPE-Species-Datenmodell zurueckfuehren.

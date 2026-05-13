@@ -4,15 +4,15 @@ Dieses Manifest dokumentiert Tools, Repos, Forks, Versionen, Pfade und Sicherhei
 
 ## Sicherheitsstatus
 
-Dieser Stand dokumentiert den Arbeitsblock `compat/upr-fvx-cfru-dpe-learnset-write-bounded`. UPR-FVX wurde im Planton361-Fork-Submodule gezielt geaendert und gebaut; lokale ROM-/Log-/Output-Artefakte blieben ignored unter `05_builds/**` und wurden nicht committed. Tool-Binaries, Release-Assets, Secrets und private Pfade wurden nicht dokumentiert.
+Dieser Stand dokumentiert den Arbeitsblock `compat/upr-fvx-cfru-dpe-learnset-write-repointing`. UPR-FVX wurde im Planton361-Fork-Submodule gezielt geaendert und gebaut; lokale ROM-/Log-/Output-Artefakte blieben ignored unter `05_builds/**` und wurden nicht committed. Tool-Binaries, Release-Assets, Secrets und private Pfade wurden nicht dokumentiert.
 
 Linux/CachyOS ist die primaere lokale Umgebung. Windows-Toolchain-Befunde bleiben historischer Referenzstand und duerfen nicht als Linux-Ist-Stand verwendet werden.
 
-Der aktuelle Arbeitsblock pinnt den Workspace auf den UPR-FVX-Learnset-Write-bounded-Fix-Commit fuer CFRU/DPE.
+Der aktuelle Arbeitsblock pinnt den Workspace auf den UPR-FVX-Learnset-Write-Repointing-Fix-Commit fuer CFRU/DPE.
 
 | Tool/Repo | Zweck | Upstream | Fork/Origin | Lokaler Pfad | Branch | Commit | Codex darf ändern | Status |
 |---|---|---|---|---|---|---|---|---|
-| Workspace Repo | Source of Truth | n/a | git@github.com:Planton361/firered-gen9-randomizer-workspace.git | Workspace-Root | `compat/upr-fvx-cfru-dpe-learnset-write-bounded` | offen | ja, nur Branches | aktiv |
+| Workspace Repo | Source of Truth | n/a | git@github.com:Planton361/firered-gen9-randomizer-workspace.git | Workspace-Root | `compat/upr-fvx-cfru-dpe-learnset-write-repointing` | offen | ja, nur Branches | aktiv |
 | Git | Versionierung | n/a | n/a | `/usr/bin/git` | n/a | n/a | nein | gefunden: 2.54.0 |
 | GitHub CLI (`gh`) | PRs und GitHub-Checks automatisieren | https://cli.github.com/ | n/a | `/usr/bin/gh` | n/a | n/a | nein | gefunden: 2.92.0; Auth via Keyring aktiv |
 | POSIX Shell | Terminal-Standard | n/a | n/a | `/bin/fish` laut `$SHELL` | n/a | n/a | nein | primär |
@@ -43,11 +43,11 @@ Der aktuelle Arbeitsblock pinnt den Workspace auf den UPR-FVX-Learnset-Write-bou
 
 ## Lokale Submodule-Pins 2026-05-13
 
-Arbeitsblock: `compat/upr-fvx-cfru-dpe-learnset-write-bounded`.
+Arbeitsblock: `compat/upr-fvx-cfru-dpe-learnset-write-repointing`.
 
 | Repo | Zweck | Origin | Lokaler Pfad | Branch | Commit | Codex darf aendern | Status |
 |---|---|---|---|---|---|---|---|
-| UPR-FVX Fork | Haupt-Randomizer-Fork | `https://github.com/Planton361/universal-pokemon-randomizer-fvx.git` | `02_external/upr-fvx` | `compat/upr-fvx-cfru-dpe-learnset-write-bounded` | `dd9d80c16936a99bac1d7ef777b43baa7c2f029d` | ja, nur in diesem Branch | Learnset-Write bounded in-place Fix fuer CFRU/DPE; basiert auf Egg-Move-Fix `18168b78` |
+| UPR-FVX Fork | Haupt-Randomizer-Fork | `https://github.com/Planton361/universal-pokemon-randomizer-fvx.git` | `02_external/upr-fvx` | `compat/upr-fvx-cfru-dpe-learnset-write-repointing` | `77de517da880bebb6ed690ca6e170e5bd10b9cad` | ja, nur in diesem Branch | Learnset-Write Repointing Fix fuer CFRU/DPE; basiert auf Egg-Move-Fix `18168b78` |
 | CFRU-expansion Fork | CFRU/Gen9-Basis | `https://github.com/Planton361/CFRU-expansion.git` | `02_external/CFRU-expansion` | `compat/firered-gen9-randomizer` | `b885d7a974375c6c722e5698914963b82e8cdad6` | nein in diesem Block | read-only analysiert |
 | DPE Gen9 Fork | DPE/Gen9-Basis | `https://github.com/Planton361/Dynamic-Pokemon-Expansion-Gen-9.git` | `02_external/Dynamic-Pokemon-Expansion-Gen-9` | `compat/firered-gen9-randomizer` | `5906aa4d4904e41393fd9184a16951c961e96263` | nein in diesem Block | read-only analysiert |
 | CyanSMP64 UPR-ZX NatDex | NatDex-Randomizer-Referenz | `https://github.com/CyanSMP64/universal-pokemon-randomizer-zx.git` | `02_external/references/cyansmp64-upr-zx-natdex` | `natdex` | `9b63eb2876d901dc2e5af49855ae41ac255e1a72` | nein | read-only Referenz |
@@ -86,8 +86,8 @@ Bestehende unnummerierte Protokolle unter `08_tests/randomizer/` bleiben vorerst
 | Lokaler Pfad | `02_external/upr-fvx` |
 | Einbindung | Git-Submodule auf `Planton361/universal-pokemon-randomizer-fvx` |
 | Upstream | `upr-fvx/universal-pokemon-randomizer-fvx` |
-| Arbeitsbranch | `compat/upr-fvx-cfru-dpe-learnset-write-bounded` |
-| Gepinnter Workspace-Stand | `dd9d80c16936a99bac1d7ef777b43baa7c2f029d` auf `compat/upr-fvx-cfru-dpe-learnset-write-bounded`; enthaelt den CFRU/DPE-Learnset-Write-bounded-Fix auf Basis des Egg-Move-Fix `18168b78` |
+| Arbeitsbranch | `compat/upr-fvx-cfru-dpe-learnset-write-repointing` |
+| Gepinnter Workspace-Stand | `77de517da880bebb6ed690ca6e170e5bd10b9cad` auf `compat/upr-fvx-cfru-dpe-learnset-write-repointing`; enthaelt den CFRU/DPE-Learnset-Write-Repointing-Fix auf Basis des Egg-Move-Fix `18168b78` |
 | Buildsystem | Gradle Wrapper |
 | Java | JDK 25 |
 | JAR-Build | `./gradlew :random:jar` |
@@ -213,7 +213,15 @@ Vor dem ersten Clone pro externer Quelle weiterhin festlegen:
 
 ## 2026-05-13 - UPR-FVX Learnset-Write bounded pin
 
-- Workspace branch: `compat/upr-fvx-cfru-dpe-learnset-write-bounded`.
-- UPR-FVX branch: `compat/upr-fvx-cfru-dpe-learnset-write-bounded`.
-- UPR-FVX commit: `dd9d80c16936a99bac1d7ef777b43baa7c2f029d`.
-- Scope: gated CFRU/DPE Gen9 BPRE `setMovesLearnt()` bounded in-place writer for `gLevelUpLearnsets`; no repointing, no Move-Data-Write, no Tutor text/menu rewrite, no Special Tutors, no Egg-Move expansion.
+- Workspace branch: `compat/upr-fvx-cfru-dpe-learnset-write-repointing`.
+- UPR-FVX branch: `compat/upr-fvx-cfru-dpe-learnset-write-repointing`.
+- UPR-FVX commit: `77de517da880bebb6ed690ca6e170e5bd10b9cad`.
+- Scope: gated CFRU/DPE Gen9 BPRE `setMovesLearnt()` full repointing writer for `gLevelUpLearnsets`; no Move-Data-Write, no Tutor text/menu rewrite, no Special Tutors, no Egg-Move expansion.
+
+
+## 2026-05-13 - UPR-FVX Learnset-Write repointing pin
+
+- Workspace branch: `compat/upr-fvx-cfru-dpe-learnset-write-repointing`.
+- UPR-FVX branch: `compat/upr-fvx-cfru-dpe-learnset-write-repointing`.
+- UPR-FVX commit: `77de517da880bebb6ed690ca6e170e5bd10b9cad`.
+- Scope: gated CFRU/DPE Gen9 BPRE `setMovesLearnt()` full repointing writer for `gLevelUpLearnsets`; writes new blobs into validated FreeSpace, updates the existing pointertable by internal SpeciesSet ID, and leaves Move-Data-Write, Tutor text/menu rewrites, Special Tutors and Egg Moves out of scope.
