@@ -2,18 +2,18 @@
 
 ## Aktueller Fokus
 
-CFRU/DPE Base Stats, Types, Abilities und Encounter Held Items Modell ist dokumentiert in `08_tests/randomizer/050_p1_base_stats_types_abilities_model.md`.
+CFRU/DPE Base Stats + Types Scope-and-Write ist implementiert und dokumentiert in `08_tests/randomizer/051_base_stats_types_scope_write_diagnostics.md`.
 
 ## Priorisierte naechste Arbeitsbloecke
 
-1. `compat/upr-fvx-cfru-dpe-base-stats-types-scope-and-write`
-   - Base Stats und Fairy-Type-Mapping eng gegatet schreiben/reloaden; Stellar zunaechst preserve/skip.
-
-2. `compat/upr-fvx-cfru-dpe-abilities-hidden-ability-scope-and-write`
+1. `compat/upr-fvx-cfru-dpe-abilities-hidden-ability-scope-and-write`
    - Ability1/2, Hidden Ability, Ability-Count bis `0xFE` und Ability-Logger-Fallbacks separat entblocken.
 
-3. `analysis/upr-fvx-cfru-dpe-p1-item-data-and-bad-item-model`
+2. `analysis/upr-fvx-cfru-dpe-p1-item-data-and-bad-item-model`
    - Item-ID-Grenzen, Bad-/Key-Item-Filter und moderne Held-Item-Sicherheit fuer Encounter Held Items modellieren.
+
+3. `analysis/upr-fvx-cfru-dpe-p1-type-log-placeholder-hygiene`
+   - `Bad Egg`-/Unknown-Type-/`null`-Marker aus Placeholder- oder unsupported-Type-Species im BaseStats-/Traits-Log einordnen.
 
 4. `analysis/upr-fvx-cfru-dpe-p1-move-data-write-model`
    - Move-Data-Write fuer `moves.total=992`, `BattleMove.split` und CFRU/DPE-Felder read-only modellieren.

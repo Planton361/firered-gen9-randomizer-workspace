@@ -1,5 +1,23 @@
 # Session State
 
+## 2026-05-13 - CFRU/DPE Base Stats + Types Scope-and-Write Fix
+
+Arbeitsbranch: `compat/upr-fvx-cfru-dpe-base-stats-types-scope-and-write`
+
+Aktueller Stand:
+
+- Workspace PR #88 als gemerged geprueft.
+- UPR-FVX-Fix `20f16d07ab4ea62e5cd3f27ef09a6d5b036d2392` erstellt.
+- CFRU/DPE-gegatetes BaseStats-Type-Mapping implementiert: raw `0x17` wird als `Type.FAIRY` gelesen und `Type.FAIRY` als `0x17` geschrieben.
+- CFRU/DPE-TypeTable-Pool enthaelt Fairy, aber kein Stellar; Stellar-/unsupported Primary-Type-Species werden im Type-Randomizer defensiv uebersprungen.
+- Neues Diagnoseprotokoll `08_tests/randomizer/051_base_stats_types_scope_write_diagnostics.md` erstellt.
+- Base Stats-only, Types-only und Base Stats + Types liefern `saveSuccessful=true`, `logSuccessful=true`, `outputRomExists=true`, `logNonEmpty=true`, `writeReloadBaseStatsMismatches=0` und `typeIdMismatches=0`.
+- Keine Hidden-Ability-, Encounter-Held-Item-, Move-Data-Write-, Tutor-, Egg-Move-, Palette/Graphics- oder Text/Menu-Ausweitung.
+
+Naechster sinnvoller Schritt:
+
+- Hidden Abilities separat fixen oder vorher Item-/Bad-Item-Modell fuer Encounter Held Items starten.
+
 ## 2026-05-13 - CFRU/DPE Base Stats, Types, Abilities Model
 
 Arbeitsbranch: `analysis/upr-fvx-cfru-dpe-p1-base-stats-types-abilities-model`
@@ -100,7 +118,7 @@ Naechster sinnvoller Schritt:
 - Branch Protection und PR-Pflicht sind laut dokumentiertem Projektstand eingerichtet.
 - Workspace PR #80 ist gemerged.
 - UPR-FVX PR #23 und Workspace PR #81 sind gemerged.
-- UPR-FVX-Stand im Workspace: `086d2a9177df7624a0e7ca1876b210a200d7aa98`.
+- UPR-FVX-Stand im Workspace: `20f16d07ab4ea62e5cd3f27ef09a6d5b036d2392`.
 - TM/HM-only ist im getesteten CFRU/DPE-128-Slot-Scope P1-supported.
 - Tutor-only ist im getesteten CFRU/DPE-152-Slot-Scope P1-supported.
 - Egg-Move direct scope ist P1-supported.
@@ -115,11 +133,11 @@ Naechster sinnvoller Schritt:
 
 ## Aktueller Arbeitsblock
 
-CFRU/DPE Base Stats, Types, Abilities und Encounter Held Items Modell.
+CFRU/DPE Base Stats + Types Scope-and-Write-Fix.
 
 ## Ziel
 
-Base Stats, Pokemon Types, Ability Slots, Hidden Abilities und Encounter Held Items fuer den getesteten CFRU/DPE Gen9-BPRE-Stand read-only modellieren. Keine Codeaenderung, kein Fix.
+Base Stats und Types fuer den getesteten CFRU/DPE Gen9-BPRE-Stand minimal gegatet schreiben/reloaden; Fairy `0x17` mappen und Stellar preserve/skip.
 
 ## In diesem Arbeitsblock geprueft / geaendert
 
