@@ -1,5 +1,25 @@
 # Session State
 
+## 2026-05-13 - CFRU/DPE Encounter Held Items Scope-and-Write Fix
+
+Arbeitsbranch: `compat/upr-fvx-cfru-dpe-encounter-held-items-scope-and-write`
+
+Aktueller Stand:
+
+- Workspace PR #91 als gemerged geprueft.
+- UPR-FVX-Fix `5c7170b654b09e1fc27ced6857dd50a8e4711f08` erstellt.
+- CFRU/DPE-gegateter Item-Scope implementiert: DPE-Oberregion bis `798` wird nur bei plausiblen Itemnamen genutzt, sonst konservativer Scope bis `778`.
+- Itemnamen-Fallbacks bleiben sichtbar als `item #<id>` und werden nicht als Random-Pick zugelassen.
+- Moderne Bad-/Banned-Filter fuer Encounter Held Items ergaenzt: TMs/HMs, Mail, Balls, Free-/Placeholder-/Shiny-Space, Booster Energy, Tera Orb, Portable PC und modellierte Form-/Mega-/Z-/Plate-/Mask-/Utility-Items.
+- Encounter Held Items in `gBaseStats` bei `item1/item2` (`0x0C`/`0x0E`) werden read/write/reload-stabil behandelt; moderne bestehende IDs werden preserved statt zu `0` zu kollabieren.
+- Neues Diagnoseprotokoll `08_tests/randomizer/054_encounter_held_items_scope_write_diagnostics.md` erstellt.
+- Encounter Held Items-only, Encounter Held Items + Base Stats, + Abilities und + Types liefern `saveSuccessful=true`, `logSuccessful=true`, `outputRomExists=true`, `logNonEmpty=true` und `writeReloadEncounterHeldItemMismatches=0`.
+- Keine Field-Items-, Shops-, Pickup-, Move-Data-, Tutor-, Egg-Move-, Palette/Graphics-, Type-Chart- oder Text/Menu-Ausweitung.
+
+Naechster sinnvoller Schritt:
+
+- Nach Merge der PRs einen der offenen Matrixbereiche modellieren: Move-Data-Write, Field Items/Shops/Pickup, Palette/Graphics, Type-Chart oder Placeholder-/Bad-Egg-Log-Hygiene.
+
 ## 2026-05-13 - CFRU/DPE Item-/Bad-Item-/Encounter-Held-Item Modell
 
 Arbeitsbranch: `analysis/upr-fvx-cfru-dpe-p1-item-data-and-bad-item-model`
@@ -155,50 +175,49 @@ Naechster sinnvoller Schritt:
 - Branch Protection und PR-Pflicht sind laut dokumentiertem Projektstand eingerichtet.
 - Workspace PR #80 ist gemerged.
 - UPR-FVX PR #23 und Workspace PR #81 sind gemerged.
-- UPR-FVX-Stand im Workspace: `20f16d07ab4ea62e5cd3f27ef09a6d5b036d2392`.
+- UPR-FVX-Stand im Workspace: `5c7170b654b09e1fc27ced6857dd50a8e4711f08`.
 - TM/HM-only ist im getesteten CFRU/DPE-128-Slot-Scope P1-supported.
 - Tutor-only ist im getesteten CFRU/DPE-152-Slot-Scope P1-supported.
 - Egg-Move direct scope ist P1-supported.
 - Learnset-Write bounded in-place ist implementiert und diagnostisch stabil fuer strikt validierte same-size Writes.
 - Full Learnset-Write-Repointing ist im direkten `setMovesLearnt()`-Scope implementiert und diagnostisch stabil.
 - Pokemon Movesets/Learnsets sind im getesteten GUI-/Settings-nahen Flow P1-supported.
+- Encounter Held Items sind im getesteten CFRU/DPE-`gBaseStats`-Scope P1-supported.
 - ROMs, Saves, Builds, Tool-Binaries und private Dateien sind ausgeschlossen.
 
 ## Aktueller Branch
 
-`analysis/upr-fvx-cfru-dpe-p1-base-stats-types-abilities-model`
+`compat/upr-fvx-cfru-dpe-encounter-held-items-scope-and-write`
 
 ## Aktueller Arbeitsblock
 
-CFRU/DPE Base Stats + Types Scope-and-Write-Fix.
+CFRU/DPE Encounter Held Items Scope-and-Write-Fix.
 
 ## Ziel
 
-Base Stats und Types fuer den getesteten CFRU/DPE Gen9-BPRE-Stand minimal gegatet schreiben/reloaden; Fairy `0x17` mappen und Stellar preserve/skip.
+Encounter Held Items fuer den getesteten CFRU/DPE Gen9-BPRE-Stand minimal gegatet schreiben/reloaden; Item-Scope und moderne Bad-/Banned-Filter absichern.
 
 ## In diesem Arbeitsblock geprueft / geaendert
 
-- UPR-FVX PR #25 und Workspace PR #87 als gemerged geprueft.
-- Workspace-Branch `analysis/upr-fvx-cfru-dpe-p1-base-stats-types-abilities-model` erstellt; nicht auf `main` gearbeitet.
-- UPR-FVX, CFRU und DPE read-only untersucht.
-- Neues Protokoll erstellt: `08_tests/randomizer/050_p1_base_stats_types_abilities_model.md`.
-- `08_tests/randomizer/README.md`, `SESSION_STATE.md`, `NEXT_STEPS.md` und Roadmap aktualisiert.
+- Workspace PR #91 als gemerged geprueft.
+- Workspace-Branch `compat/upr-fvx-cfru-dpe-encounter-held-items-scope-and-write` erstellt; nicht auf `main` gearbeitet.
+- UPR-FVX-Fix fuer Item-Scope, moderne Bad-/Banned-Filter und Encounter-Held-Item-Read/Write/Reload erstellt.
+- Neues Protokoll erstellt: `08_tests/randomizer/054_encounter_held_items_scope_write_diagnostics.md`.
+- `08_tests/randomizer/README.md`, `SESSION_STATE.md`, `NEXT_STEPS.md`, Roadmap und Tool-Manifest aktualisiert.
 
 ## Ergebnis
 
-- `gBaseStats` wird im CFRU/DPE-Stand ueber Pointer-Ort `0x080001BC` gefuehrt und nutzt eine `0x1C`-Entry-Size.
-- CFRU/DPE Species-Scope reicht bis `SPECIES_PECHARUNT=0x59F`, `NUM_SPECIES=0x5A0` / `1440`.
-- Types sind in BaseStats bei `0x06/0x07`; `TYPE_FAIRY=0x17` und `TYPE_STELLAR=0x18` brauchen CFRU/DPE-spezifische Behandlung.
-- Ability1/2 liegen bei `0x16/0x17`; Hidden Ability liegt bei `0x1A` und wird von FVX Gen3 aktuell nicht modelliert.
-- Encounter Held Items liegen als `item1/item2` bei `0x0C/0x0E`; moderne Item-IDs und Bad-/Key-Item-Filter brauchen separates Itemmodell.
+- CFRU/DPE Item-Scope laedt im getesteten Stand konservativ bis `778`; DPE `779..798` wird nur genutzt, wenn ROM-seitig plausibel lesbar.
+- `gBaseStats` bleibt ueber Pointer-Ort `0x080001BC` und Entry-Size `0x1C` relevant; Encounter Held Items liegen als `item1/item2` bei `0x0C`/`0x0E`.
+- Encounter Held Items-only sowie Kombinationen mit Base Stats, Abilities und Types liefern Save/Log/Output/Reload und `writeReloadEncounterHeldItemMismatches=0`.
+- Bad-/Banned-Item-Verletzungen: `0`.
+- `Bad Egg` bleibt als bestehendes Placeholder-/Sonder-Species-Logrisiko sichtbar, blockiert aber den Encounter-Held-Item-Write/Reload nicht.
 
 ## Noch nicht gestartet
 
 - Special-Tutor-Modell/Fix
 - Move-Data-Write/`saveMoves()` fuer CFRU/DPE
-- Base Stats + Fairy-Type-Scope-and-Write-Fix
-- Hidden-Ability-Scope-and-Write-Fix
-- Item-/Bad-Item-Datenmodellierung fuer Encounter Held Items
+- Field Items/Shops/Pickup-Itemmodell
 - CFRU-Day/Night-Custom-Wild-Tabellen-Support
 - Nullslot-`<unknown>`-Analyse
 - Ironmon-Tracker-Tests
