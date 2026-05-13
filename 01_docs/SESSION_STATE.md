@@ -1,5 +1,24 @@
 # Session State
 
+## 2026-05-13 - CFRU/DPE Learnset-Write Repointing Fix
+
+Arbeitsbranch: `compat/upr-fvx-cfru-dpe-learnset-write-repointing`
+
+Aktueller Stand:
+
+- UPR-FVX-Fix `77de517da880bebb6ed690ca6e170e5bd10b9cad` erstellt.
+- `setMovesLearnt()` schreibt fuer den eng gegateten CFRU/DPE Gen9-BPRE-Pfad neue Level-Up-Learnset-Blobs in die validierte FreeSpace-Region `0x1219A48-0x1600000`.
+- Die bestehende `gLevelUpLearnsets`-Pointertable bei `0x25D7B4` bleibt erhalten und wird pro interner Species-ID aktualisiert.
+- Diagnose 046 bestaetigt `plannedBlobBytes=17418`, `writtenBlobBytes=11547`, `uniqueBlobCount=416`, `pointertableEntriesUpdated=1413` und `writeReloadLearnsetMismatches=0`.
+- Save, Reload, Output-ROM und nichtleerer Log waren im lokalen Diagnoseharness erfolgreich; lokale Artefakte blieben ignored unter `05_builds/**`.
+- Keine Move-Data-Write-, Tutor-Text-, Special-Tutor-, Egg-Move-, Palette/Graphics- oder Text/Menu-Ausweitung.
+
+Naechster sinnvoller Schritt:
+
+- Nach Merge der PRs einen GUI-/Settings-Kombinationssmoke fuer Pokemon Movesets/Learnsets planen.
+- Danach `analysis/upr-fvx-cfru-dpe-p1-base-stats-types-abilities-model` starten.
+
+
 ## 2026-05-13 - FVX GUI Options Compatibility Matrix
 
 Arbeitsbranch: `analysis/upr-fvx-cfru-dpe-fvx-gui-options-matrix`
@@ -25,49 +44,47 @@ Naechster sinnvoller Schritt:
 - Branch Protection und PR-Pflicht sind laut dokumentiertem Projektstand eingerichtet.
 - Workspace PR #80 ist gemerged.
 - UPR-FVX PR #23 und Workspace PR #81 sind gemerged.
-- UPR-FVX-Stand im Workspace: `dd9d80c16936a99bac1d7ef777b43baa7c2f029d`.
+- UPR-FVX-Stand im Workspace: `77de517da880bebb6ed690ca6e170e5bd10b9cad`.
 - TM/HM-only ist im getesteten CFRU/DPE-128-Slot-Scope P1-supported.
 - Tutor-only ist im getesteten CFRU/DPE-152-Slot-Scope P1-supported.
 - Egg-Move direct scope ist P1-supported.
 - Learnset-Write bounded in-place ist implementiert und diagnostisch stabil fuer strikt validierte same-size Writes.
-- Full Learnset-Write-Repointing-Modell ist read-only dokumentiert; Umsetzung bleibt separater Fixbranch.
+- Full Learnset-Write-Repointing ist im direkten `setMovesLearnt()`-Scope implementiert und diagnostisch stabil.
 - ROMs, Saves, Builds, Tool-Binaries und private Dateien sind ausgeschlossen.
 
 ## Aktueller Branch
 
-`analysis/upr-fvx-cfru-dpe-p1-learnset-repointing-model`
+`compat/upr-fvx-cfru-dpe-learnset-write-repointing`
 
 ## Aktueller Arbeitsblock
 
-CFRU/DPE Learnset-Repointing-Modellierung.
+CFRU/DPE Learnset-Write Repointing-Fix.
 
 ## Ziel
 
-Full Learnset-Write-Repointing-Modell fuer CFRU/DPE Gen9-BPRE read-only klaeren. Kein Fix, kein Repointing, keine Move-Data-Write-, Tutor-Text-, Special-Tutor- oder Egg-Move-Ausweitung.
+Full Learnset-Write mit Repointing fuer CFRU/DPE Gen9-BPRE implementieren und per Save/Reload-Diagnose 046 dokumentieren. Keine Move-Data-Write-, Tutor-Text-, Special-Tutor-, Egg-Move-, Palette/Graphics- oder Text/Menu-Ausweitung.
 
 ## In diesem Arbeitsblock geprueft / geaendert
 
-- UPR-FVX PR #23 und Workspace PR #81 als gemerged geprueft.
-- Workspace-Branch `analysis/upr-fvx-cfru-dpe-p1-learnset-repointing-model` erstellt; nicht auf `main` gearbeitet.
-- UPR-FVX, CFRU und DPE read-only untersucht.
-- Neues Protokoll erstellt: `08_tests/randomizer/045_p1_learnset_repointing_model.md`.
-- `08_tests/randomizer/README.md`, `SESSION_STATE.md`, `NEXT_STEPS.md` und Roadmap aktualisiert.
+- Workspace PR #84, UPR-FVX PR #23 sowie Workspace PR #81/#82 als gemerged geprueft.
+- Workspace- und UPR-FVX-Branch `compat/upr-fvx-cfru-dpe-learnset-write-repointing` erstellt; nicht auf `main` gearbeitet.
+- UPR-FVX `Gen3RomHandler.setMovesLearnt()` fuer CFRU/DPE Full Repointing erweitert.
+- Neues Protokoll erstellt: `08_tests/randomizer/046_learnset_write_repointing_diagnostics.md`.
+- `08_tests/randomizer/README.md`, `SESSION_STATE.md`, `NEXT_STEPS.md`, Roadmap und Tool-Manifest aktualisiert.
 
 ## Ergebnis
 
 - `gLevelUpLearnsets` Pointer-Ort `0x03EA7C` zeigt im getesteten Stand auf `0x0825D7B4` / ROM-Offset `0x25D7B4`.
-- Die bestehende Pointertable reicht fuer `NUM_SPECIES=1440` rechnerisch `0x1680` Bytes.
-- Quellenanalyse zeigt `1408` Pointertable-Zuweisungen, `1104` eindeutige Learnset-Zielarrays und `148` Shared-Zielgruppen.
-- Groesster Source-Learnset: `41` Eintraege / `126` Bytes inkl. Sentinel.
-- Worst-case fuer Full Write unter `MAX_LEARNABLE_MOVES=50`: `220320` Bytes ohne Sharing.
-- Es gibt keinen belastbar belegten statisch freien Append-Bereich; DPE `0x1600000` ist Insert-Ort, kein Randomizer-FreeSpace.
-- Empfohlener Folgefix: neue Learnset-Blobs in nachgewiesen freie ROM-Fläche schreiben, Pointertable pro interner Species-ID aktualisieren, Reload per SpeciesSet-Identitaet pruefen.
+- Die validierte FreeSpace-Region `0x1219A48-0x1600000` ist gross genug fuer actual und worst-case Learnset-Blob-Bedarf.
+- Diagnose 046 schreibt `11547` Blob-Bytes, aktualisiert `1413` Pointertable-Eintraege und dedupliziert `997` byte-identische Blob-Writes.
+- Reload bestaetigt `1413` Species-Eintraege, `4393` Learnset-Eintraege, hoechste Move-ID `991` und `writeReloadLearnsetMismatches=0`.
+- Full `setMovesLearnt()`-Repointing ist im direkten Learnset-Write-Scope P1-supported.
 
 ## Noch nicht gestartet
 
 - Special-Tutor-Modell/Fix
 - Move-Data-Write/`saveMoves()` fuer CFRU/DPE
-- Full Learnset-Write mit Repointing fuer CFRU/DPE
+- GUI-/Settings-Kombinationssmoke fuer Pokemon Movesets/Learnsets
 - Ability-Datenmodellierung
 - CFRU-Day/Night-Custom-Wild-Tabellen-Support
 - Nullslot-`<unknown>`-Analyse
@@ -87,9 +104,9 @@ Keine externen Original-Upstreams kontaktiert.
 
 Keine Aenderungen direkt auf `main`.
 
-Keine Aenderungen an `02_external/**`; UPR-FVX, CFRU und DPE wurden nur read-only analysiert.
+UPR-FVX wurde nur im erlaubten Fixscope geaendert; andere `02_external/**`-Repos blieben unangetastet.
 
-Keine Codeaenderung, kein Repointing, keine Move-Data-Write-, Tutor-Text-, Special-Tutor- oder Egg-Move-Ausweitung.
+Keine Move-Data-Write-, Tutor-Text-, Special-Tutor-, Egg-Move-, Palette/Graphics- oder Text/Menu-Ausweitung.
 
 Keine MCP-Configs mit Secrets angelegt.
 
@@ -107,7 +124,7 @@ git diff --check
 
 ## Naechster empfohlener Branch
 
-Nach Merge dieses Analyseblocks: Full Learnset-Write-Repointing nur in separatem Fixbranch versuchen, wenn freie ROM-Fläche im konkreten ROM diagnostisch nachgewiesen wird. Move-Data-Write, Special Tutors und Tutor-Text/Menu-Rewrites bleiben eigene Folgebranches.
+Nach Merge dieses Fixblocks: GUI-/Settings-Kombinationssmoke fuer Pokemon Movesets/Learnsets oder `analysis/upr-fvx-cfru-dpe-p1-base-stats-types-abilities-model`. Move-Data-Write, Special Tutors und Tutor-Text/Menu-Rewrites bleiben eigene Folgebranches.
 
 ### 2026-05-13 - analysis/upr-fvx-cfru-dpe-p1-learnset-repointing-model
 

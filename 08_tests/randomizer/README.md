@@ -2,10 +2,9 @@
 
 ## Latest
 
-- `047_fvx_gui_options_compatibility_matrix.md` dokumentiert die aktuelle FVX-GUI-Options-Kompatibilitaetsmatrix fuer den getesteten CFRU/DPE Gen9-BPRE-Stand.
-- P1-supported sind unter anderem Standard/Fallback-Wild, Starters, Static/Gift, Trainer Species, Trainer Movesets, Trainer Held Items, Evolutions, Move-Data-Read, TM/HM 128-Slot, normale Tutor-Tabellen und direkte Egg Moves.
-- Teilunterstuetzt bleiben Learnset-Write bounded in-place, Palette-Safety und Move-Data-Read ohne Write.
-- Offen bzw. hochriskant bleiben Full Learnset Repointing, Base Stats/Types/Abilities, Move-Data-Write, Items/Shops/Field/Pickup und echte Palette/Graphics-Randomization.
+- `046_learnset_write_repointing_diagnostics.md` dokumentiert den Full CFRU/DPE Learnset-Write-Repointing-Fix fuer den getesteten Gen9-BPRE-Stand.
+- P1-supported im direkten `setMovesLearnt()`-Scope: neue Learnset-Blobs in validierter FreeSpace-Region, Pointertable-Update pro interner Species-ID, Save/Reload stabil mit `writeReloadLearnsetMismatches=0`.
+- Weiterhin separat zu pruefen: komplette GUI-Pokemon-Moveset-/Learnset-Kombinationen, Move-Data-Write, Base Stats/Types/Abilities, Items/Shops/Field/Pickup und echte Palette/Graphics-Randomization.
 
 Dieses Verzeichnis enthaelt die dauerhaften Markdown-Protokolle fuer UPR-FVX/CFRU-DPE-Randomizer-Analysen und Smokes. Lokale ROM-, Build-, Log- und Tool-Artefakte bleiben unter `05_builds/**` oder `03_tools/releases/**` und werden nicht committed.
 
@@ -79,18 +78,20 @@ Der neueste bestaetigte Stand wird in Markdown ueber die Spalte `Latest` markier
 | 042 | `042_egg_moves_scope_and_write_fix_diagnostics.md` | CFRU/DPE Egg-Move-Scope-and-Write-Fix Diagnose | bestaetigt: `gEggMoves` ueber `0x45C50`, interne SpeciesSet-Keys, Gen8/9-Species und Gen9-Moves bleiben erhalten, `writeReloadEggMoveMismatches=0` | `05_builds/randomizer-smoke/042_egg_moves_scope_and_write_fix/` lokal/ignored | nein |
 | 043 | `043_p1_learnset_write_model.md` | CFRU/DPE Learnset-Write-Modell | dokumentiert: `gLevelUpLearnsets` ueber `0x03EA7C`, interne Species-ID-Pointertabelle, `u16 move + u8 level`, Sentinel `{0, 0xFF}`; Folgefix nur bounded in-place ohne Repointing | keiner | nein |
 | 044 | `044_learnset_write_bounded_fix_diagnostics.md` | CFRU/DPE Learnset-Write bounded in-place Fix Diagnose | teilweise bestaetigt: eng gegateter Writer speichert/reloadet sichere same-size Learnsets mit `writeReloadLearnsetMismatches=0`, aber die getestete ROM liefert nur `boundedWrites=1` und `skippedInvalidPointer=1412`; voller Learnset-Write braucht Repointing-Modell | `05_builds/randomizer-smoke/044_learnset_write_bounded_fix/` lokal/ignored | nein |
-| 045 | `045_p1_learnset_repointing_model.md` | CFRU/DPE Learnset-Repointing-Modell | dokumentiert: Pointertable bleibt ueber `0x03EA7C -> 0x25D7B4`, Quellen zeigen `1408` Zuweisungen, `1104` eindeutige Ziele, `148` Shared-Gruppen und keinen belastbar reservierten freien Append-Bereich; Folgefix muss freie ROM-Fläche nachweisen | keiner | ja |
+| 045 | `045_p1_learnset_repointing_model.md` | CFRU/DPE Learnset-Repointing-Modell | dokumentiert: Pointertable bleibt ueber `0x03EA7C -> 0x25D7B4`, Quellen zeigen `1408` Zuweisungen, `1104` eindeutige Ziele, `148` Shared-Gruppen und keinen belastbar reservierten freien Append-Bereich; Folgefix muss freie ROM-Fläche nachweisen | keiner | nein |
+| 046 | `046_learnset_write_repointing_diagnostics.md` | CFRU/DPE Learnset-Write Repointing-Fix Diagnose | bestaetigt: Full `setMovesLearnt()`-Repointing schreibt neue Blobs in `0x1219A48-0x1600000`, aktualisiert `1413` Pointertable-Eintraege und reloadet mit `writeReloadLearnsetMismatches=0` | `05_builds/randomizer-smoke/046_learnset_write_repointing/` lokal/ignored | ja |
+| 047 | `047_fvx_gui_options_compatibility_matrix.md` | FVX-GUI-Options-Kompatibilitaetsmatrix | dokumentiert: P1-supported, teilunterstuetzte, offene und blockierte FVX-GUI-Optionsbereiche fuer den getesteten CFRU/DPE Gen9-BPRE-Stand | keiner | nein |
 
 ## Aktuell bestaetigter Stand
 
-Latest ist Nr. 045: CFRU/DPE Learnset-Repointing-Modell.
+Latest ist Nr. 046: CFRU/DPE Learnset-Write Repointing-Fix Diagnose.
 
 Kernaussagen:
 
 - `gLevelUpLearnsets` wird ueber Pointer-Ort `0x03EA7C` auf die aktive Pointertable bei `0x25D7B4` gefuehrt.
-- Quellenanalyse zeigt `1408` Pointertable-Zuweisungen, `1104` eindeutige Learnset-Zielarrays und `148` Shared-Zielgruppen.
-- DPE insertet seine Erweiterung ab `0x1600000`; daraus folgt kein freier Randomizer-Append-Bereich.
-- Minimaler Folgefix muss neue Learnset-Blobs in nachgewiesen freie ROM-Fläche schreiben, Pointertable-Eintraege pro interner Species-ID aktualisieren und Reload per SpeciesSet-Identitaet pruefen.
+- Der Fix schreibt neue Learnset-Blobs in die validierte FreeSpace-Region `0x1219A48-0x1600000` und aktualisiert Pointertable-Eintraege pro interner Species-ID.
+- Diagnose 046 bestaetigt `plannedBlobBytes=17418`, `writtenBlobBytes=11547`, `pointertableEntriesUpdated=1413` und `writeReloadLearnsetMismatches=0`.
+- Full `setMovesLearnt()`-Repointing ist im direkten Learnset-Write-Scope P1-supported; komplette GUI-Moveset-/Learnset-Kombinationen bleiben Folge-Smoke.
 
 ## Lokale Artefaktpflege
 

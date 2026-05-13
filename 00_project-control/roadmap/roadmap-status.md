@@ -24,9 +24,9 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-fvx-gui-options-matrix` |
-| Nächster Branch | `compat/upr-fvx-cfru-dpe-learnset-write-repointing` oder `analysis/upr-fvx-cfru-dpe-p1-base-stats-types-abilities-model` |
-| Aktueller Fokus | FVX-GUI-Options-Kompatibilitaetsmatrix fuer CFRU/DPE Gen9-BPRE |
+| Aktueller Branch | `compat/upr-fvx-cfru-dpe-learnset-write-repointing` |
+| Nächster Branch | `analysis/upr-fvx-cfru-dpe-p1-learnset-gui-combinations` oder `analysis/upr-fvx-cfru-dpe-p1-base-stats-types-abilities-model` |
+| Aktueller Fokus | CFRU/DPE Learnset-Write Repointing-Fix |
 | ROM-/Build-Arbeit | keine neuen ROM-/Build-Artefakte; keine Artefakte committen |
 | Externe Repos | als Submodule auf Planton361-Forks eingebunden |
 | Forks | Planton361-Forks fuer UPR-FVX, DPE Gen9 und CFRU dokumentiert |
@@ -106,19 +106,20 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | 08 Randomizer-Kompatibilität | CFRU/DPE Learnset-Write-Modell | `gLevelUpLearnsets` ueber `0x03EA7C`, internes Species-Indexing, `u16 move + u8 level`, Sentinel `{0, 0xFF}` und bounded-in-place-Folgepfad dokumentiert |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Learnset-Write bounded in-place | UPR-FVX `dd9d80c1` bestaetigt sicheren bounded Writer fuer validierte same-size Learnsets mit `writeReloadLearnsetMismatches=0`; Full Write bleibt separat |
 | 08 Randomizer-Kompatibilität | FVX-GUI-Options-Kompatibilitaetsmatrix | P1-supported, teilunterstuetzte, offene und blockierte FVX-GUI-Optionsbereiche fuer den getesteten CFRU/DPE Gen9-BPRE-Stand dokumentiert |
+| 08 Randomizer-Kompatibilität | CFRU/DPE Learnset-Write Repointing-Fix | UPR-FVX `77de517d` bestaetigt Full `setMovesLearnt()`-Repointing mit validierter FreeSpace-Region, `pointertableEntriesUpdated=1413` und `writeReloadLearnsetMismatches=0` |
 
 ## In Arbeit
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | FVX-GUI-Options-Kompatibilitaetsmatrix | P1-Support-Flaeche und naechste Fix-/Analysebloecke konsolidieren |
+| 08 Randomizer-Kompatibilität | Learnset-Write Repointing-Fix | PRs fuer UPR-FVX und Workspace reviewen/mergen |
 
 ## Als Nächstes
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Learnset-Write Repointing-Fix | Full Learnset-Write nur nach FreeSpace-Nachweis umsetzen |
-| 08 Randomizer-Kompatibilität | Base Stats/Types/Abilities Modell | Naechster Analyseblock, falls Learnset-Repointing durch FreeSpace-Nachweis blockiert bleibt |
+| 08 Randomizer-Kompatibilität | Learnset GUI-/Settings-Kombinationssmoke | Pokemon Movesets/Learnsets nach Repointing-Fix in breiterem Settings-Flow pruefen |
+| 08 Randomizer-Kompatibilität | Base Stats/Types/Abilities Modell | Naechster Datenmodell-Analyseblock fuer Species-basierte Writer |
 
 ## Noch offen
 
