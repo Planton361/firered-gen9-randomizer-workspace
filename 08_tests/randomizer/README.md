@@ -2,9 +2,9 @@
 
 ## Latest
 
-- `050_p1_base_stats_types_abilities_model.md` dokumentiert das read-only Datenmodell fuer Base Stats, Types, Abilities, Hidden Abilities und Encounter Held Items.
-- `gBaseStats` nutzt im getesteten CFRU/DPE-Stand denselben Pointer-Ort `0x080001BC` und eine `0x1C`-Entry-Size, aber Fairy/Stellar-Type, Hidden Ability und erweiterte Ability-/Item-Counts bleiben getrennte Fixrisiken.
-- Empfohlene Folgefixes: Base Stats + Fairy-Type-Mapping zuerst, Hidden Abilities separat, Encounter Held Items erst nach Item-/Bad-Item-Modell.
+- `051_base_stats_types_scope_write_diagnostics.md` dokumentiert den CFRU/DPE BaseStats-/Types-Scope-and-Write-Fix.
+- Base Stats-only, Types-only und Base Stats + Types speichern, loggen und reloaden mit `writeReloadBaseStatsMismatches=0` und `typeIdMismatches=0`.
+- Fairy wird im CFRU/DPE-Scope als `0x17` gelesen/geschrieben; Stellar bleibt preserve/skip und wird nicht in Random-Pools aufgenommen. Hidden Abilities und Encounter Held Items bleiben getrennte Folgefixes.
 
 Dieses Verzeichnis enthaelt die dauerhaften Markdown-Protokolle fuer UPR-FVX/CFRU-DPE-Randomizer-Analysen und Smokes. Lokale ROM-, Build-, Log- und Tool-Artefakte bleiben unter `05_builds/**` oder `03_tools/releases/**` und werden nicht committed.
 
@@ -83,18 +83,20 @@ Der neueste bestaetigte Stand wird in Markdown ueber die Spalte `Latest` markier
 | 047 | `047_fvx_gui_options_compatibility_matrix.md` | FVX-GUI-Options-Kompatibilitaetsmatrix | dokumentiert: P1-supported, teilunterstuetzte, offene und blockierte FVX-GUI-Optionsbereiche fuer den getesteten CFRU/DPE Gen9-BPRE-Stand | keiner | nein |
 | 048 | `048_p1_learnset_gui_combinations.md` | CFRU/DPE Learnset GUI-Kombinationsdiagnose | teilweise bestaetigt: erster Repointing-Write im GameRandomizer-Flow reloadet mit `writeReloadLearnsetMismatches=0`, aber Logger, Trainer-Movesets, Reorder-Damaging und Level-Up-Sanity-Kombinationen blockieren | `05_builds/randomizer-smoke/048_p1_learnset_gui_combinations/` lokal/ignored | nein |
 | 049 | `049_p1_learnset_gui_flow_safety_fix_diagnostics.md` | CFRU/DPE Learnset GUI-Flow-Safety-Fix Diagnose | bestaetigt: Movesets-only, Trainer-Movesets, Reorder-Damaging, TM/HM-Sanity, Tutor-Sanity, gekoppelte Egg Moves und TM/HM+Tutor-Sanity jeweils mit Save/Log/Output/Reload und `writeReloadLearnsetMismatches=0` | `05_builds/randomizer-smoke/049_gui_flow_safety/` lokal/ignored | nein |
-| 050 | `050_p1_base_stats_types_abilities_model.md` | CFRU/DPE Base Stats, Types, Abilities und Encounter Held Items Modell | dokumentiert: `gBaseStats` ueber `0x080001BC`, Entry-Size `0x1C`, interne Species-ID bis `0x59F`, Fairy/Hidden-Ability/Ability-Count/Item-Count-Risiken fuer Folgefixes | keiner | ja |
+| 050 | `050_p1_base_stats_types_abilities_model.md` | CFRU/DPE Base Stats, Types, Abilities und Encounter Held Items Modell | dokumentiert: `gBaseStats` ueber `0x080001BC`, Entry-Size `0x1C`, interne Species-ID bis `0x59F`, Fairy/Hidden-Ability/Ability-Count/Item-Count-Risiken fuer Folgefixes | keiner | nein |
+| 051 | `051_base_stats_types_scope_write_diagnostics.md` | CFRU/DPE Base Stats + Types Scope-and-Write-Fix Diagnose | bestaetigt: Base Stats-only, Types-only und Base Stats + Types mit Save/Log/Output/Reload, `writeReloadBaseStatsMismatches=0`, `typeIdMismatches=0`, Fairy `0x17` gelesen/geschrieben, Stellar preserve/skip | `05_builds/randomizer-smoke/051_base_stats_types_scope_write/` lokal/ignored | ja |
 
 ## Aktuell bestaetigter Stand
 
-Latest ist Nr. 050: CFRU/DPE Base Stats, Types, Abilities und Encounter Held Items Modell.
+Latest ist Nr. 051: CFRU/DPE Base Stats + Types Scope-and-Write-Fix Diagnose.
 
 Kernaussagen:
 
-- `gBaseStats` wird ueber Pointer-Ort `0x080001BC` gefuehrt und bleibt im CFRU/DPE-Stand ein `0x1C`-Entry-Array mit internem Species-Indexing.
-- Base Stats, Types, Ability1/2, Hidden Ability und Encounter Held Items liegen fachlich eng beieinander, haben aber getrennte Count-/Enum-/Logger-Risiken.
-- FVX Gen3 liest/schreibt aktuell Ability1/2 und Common/Rare Held Items, aber keine Hidden Ability; `abilitiesPerSpecies()` bleibt `2` und `highestAbilityIndex=77`.
-- CFRU/DPE definiert `TYPE_FAIRY=0x17`, `TYPE_STELLAR=0x18`, `ABILITY_PASTELVEIL=0xFE`, `ABILITIES_COUNT=255` und Item-Counts oberhalb klassischer Gen3-Grenzen.
+- Base Stats-only, Types-only und Base Stats + Types sind im getesteten Scope save-/log-/reload-stabil.
+- `gBaseStats` bleibt ueber Pointer-Ort `0x080001BC` und Ziel-ROM-Offset `0x19FC4CC` mit Entry-Size `0x1C` angebunden.
+- Fairy wird im CFRU/DPE-Scope als raw Type-ID `0x17` gelesen und geschrieben; Type-Randomization kann Fairy ziehen.
+- Stellar `0x18` bleibt mangels FVX-Type-Enum preserve/skip und wird nicht in Random-Pools aufgenommen.
+- Hidden Ability, Encounter Held Items, Type-Chart-Randomization und Placeholder-/Unknown-Type-Log-Hygiene bleiben separate Folgearbeiten.
 
 ## Lokale Artefaktpflege
 
