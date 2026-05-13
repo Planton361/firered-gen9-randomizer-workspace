@@ -1,5 +1,23 @@
 # Session State
 
+## 2026-05-13 - CFRU/DPE Move-Data-Write-Modell
+
+Arbeitsbranch: `analysis/upr-fvx-cfru-dpe-p1-move-data-write-model`
+
+Aktueller Stand:
+
+- Neues read-only Analyseprotokoll `08_tests/randomizer/056_p1_move_data_write_model.md` erstellt.
+- Der aktuelle Move-Data-Read-Stand wurde aus vorhandenen Diagnosen eingeordnet: `moves.total=992`, hoechster geladener Move `991:PsychicNoise`, Category-Verteilung aus Diagnose 034.
+- Das CFRU/DPE-`BattleMove`-Layout wurde als 12-Byte-Entry mit `split` bei Byte `+10` dokumentiert.
+- Der aktuelle Gen3-`saveMoves()`-Pfad wurde read-only klassifiziert: Move-Namen und die ersten fuenf MoveData-Bytes werden geschrieben; `secondaryEffectChance`, `target`, `priority`, `flags`, `z_move_power`, `split` und `z_move_effect` bleiben nicht als Writer modelliert.
+- Preserve-Policy und Reload-Kriterien fuer einen spaeteren Move-Data-Write-Fix wurden festgelegt.
+- Diagnose 055 bleibt die Grenze: Log-Hygiene/Fallback-Marker sind getrennt von echten MoveData-Writer-/Scope-Risiken.
+- Keine Codeaenderung, keine Aenderung an `02_external/**`, keine neuen Randomizer-Laeufe, kein Tool-Manifest-Update.
+
+Naechster sinnvoller Schritt:
+
+- `analysis/upr-fvx-cfru-dpe-p1-field-items-shops-pickup-model`: Field Items, Shops, Pickup und allgemeine Item-Randomization getrennt von Encounter Held Items modellieren.
+
 ## 2026-05-13 - CFRU/DPE Type Log / Placeholder Hygiene
 
 Arbeitsbranch: `analysis/upr-fvx-cfru-dpe-p1-type-log-placeholder-hygiene`
@@ -204,37 +222,36 @@ Naechster sinnvoller Schritt:
 
 ## Aktueller Branch
 
-`analysis/upr-fvx-cfru-dpe-p1-type-log-placeholder-hygiene`
+`analysis/upr-fvx-cfru-dpe-p1-move-data-write-model`
 
 ## Aktueller Arbeitsblock
 
-CFRU/DPE Type-Log-/Placeholder-Hygiene-Klassifikation.
+CFRU/DPE Move-Data-Write-Modell.
 
 ## Ziel
 
-Read-only klassifizieren, wo `Bad Egg`, `<unknown>`, Unknown-Type-/Unknown-Ability-/Unknown-Item-Marker und Placeholder-/Null-Species im Randomizer-Log herkommen.
+Read-only modellieren, wie ein spaeterer Move-Data-Write fuer `moves.total=992`, `BattleMove.split` und CFRU/DPE-Zusatzfelder abgegrenzt werden muss.
 
 ## In diesem Arbeitsblock geprueft / geaendert
 
-- Workspace-Branch `analysis/upr-fvx-cfru-dpe-p1-type-log-placeholder-hygiene` genutzt; nicht auf `main` gearbeitet.
-- Pflichtdokumente und Diagnosen 047/051/052/053/054 gelesen.
-- Read-only `rg`-Suche nach `Bad Egg`, `<unknown>`, Unknown-/Placeholder-/Fallback-Markern ausgefuehrt.
-- Neues Protokoll erstellt: `08_tests/randomizer/055_type_log_placeholder_hygiene.md`.
+- Workspace-Branch `analysis/upr-fvx-cfru-dpe-p1-move-data-write-model` genutzt; nicht auf `main` gearbeitet.
+- Pflichtdokumente und Diagnosen 033/034/047/055 gelesen.
+- Read-only `rg`-Suche nach MoveData-, `saveMoves()`-, `MOVES_COUNT`-, `PsychicNoise`-, Split- und Category-Markern ausgefuehrt.
+- Neues Protokoll erstellt: `08_tests/randomizer/056_p1_move_data_write_model.md`.
 - `08_tests/randomizer/README.md`, `SESSION_STATE.md`, `NEXT_STEPS.md` und Roadmap aktualisiert.
 - Tool-Manifest nicht geaendert, weil kein Tool-/Repo-/Commit-/Submodule-Stand geaendert wurde.
 
 ## Ergebnis
 
-- `Bad Egg` aus 051/052/054 ist als Placeholder-/Special-Species-Logartefakt klassifiziert, nicht als aktueller Save-/Reload-Blocker.
-- Unknown-Type-/`null`-Marker aus 051 sind als unsupported-Type-/Placeholder-Hygiene klassifiziert; `typeIdMismatches=0` bleibt der relevante P1-Nachweis.
-- Unknown-Ability-Fallbacks wie `ability #<id>` sind als Namens-/Logger-Fallbacks klassifiziert; Ability1/2 und Hidden Ability bleiben mit `0` Mismatches P1-supported.
-- Item-Fallbacks wie `item #<id>` und `unknown item #<id>` sind von Encounter Held Items, Field Items/Shops/Pickup und Item-Text getrennt.
-- Null-Species, `BST == 0` und all-zero Ability Species bleiben potenzielle echte Blocker, wenn sie nicht defensiv behandelt werden; 052/054 behandeln sie defensiv.
+- Move-Data-Read ist fuer den getesteten Stand mit `moves.total=992` und `991:PsychicNoise` dokumentiert.
+- `BattleMove` bleibt 12 Bytes gross; Byte `+10` ist bei CFRU/DPE das `split`-/Category-Feld.
+- Der aktuelle Gen3-`saveMoves()`-Pfad schreibt nur Move-Namen und die ersten fuenf MoveData-Bytes.
+- Move-Data-Write bleibt ein offener Hochrisiko-Writer, der Preserve-Policy und eigene Reload-Diagnose braucht.
+- Diagnose 055 / Log-Hygiene bleibt getrennt von echten MoveData-Writer-/Scope-Risiken.
 
 ## Noch nicht gestartet
 
 - Special-Tutor-Modell/Fix
-- Move-Data-Write/`saveMoves()` fuer CFRU/DPE
 - Field Items/Shops/Pickup-Itemmodell
 - CFRU-Day/Night-Custom-Wild-Tabellen-Support
 - Vollstaendige Nullslot-`<unknown>`-Analyse ausserhalb der bereits dokumentierten Klassifikation
