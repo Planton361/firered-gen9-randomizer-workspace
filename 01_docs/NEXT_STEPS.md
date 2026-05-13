@@ -2,62 +2,71 @@
 
 ## Aktueller Arbeitsblock
 
-CFRU/DPE Tutor-/Special-Tutor-Modellierung.
+CFRU/DPE Tutor-Scope-and-Compatibility-Fix.
 
 Aktueller Workspace-Branch:
 
 ```text
-analysis/upr-fvx-cfru-dpe-p1-tutor-model
+compat/upr-fvx-cfru-dpe-tutor-scope-and-compatibility
 ```
 
 UPR-FVX-Stand:
 
 ```text
-58379ffd3146fcd6bb0eb416647cdf9b752cfc0e
+4ce93754de390e9177efd2541c02edba0afbb0c4
 ```
 
 ## Abschluss dieses Blocks
 
-1. Workspace-Commit erstellen:
+1. UPR-FVX-Commit ist erstellt:
 
 ```text
-docs: document cfru dpe tutor model
+fix: support cfru dpe tutor compatibility
 ```
 
-2. PR erstellen:
+2. Workspace-Commit erstellen:
+
+```text
+docs: record tutor compatibility diagnostics
+```
+
+3. PRs erstellen:
 
 ```sh
-git push -u origin analysis/upr-fvx-cfru-dpe-p1-tutor-model
-gh pr create --repo Planton361/firered-gen9-randomizer-workspace --base main --head analysis/upr-fvx-cfru-dpe-p1-tutor-model --title "docs: document CFRU DPE tutor model" --body-file /tmp/pr-body-workspace-tutor-model.md
+git -C 02_external/upr-fvx push -u origin compat/upr-fvx-cfru-dpe-tutor-scope-and-compatibility
+gh pr create --repo Planton361/universal-pokemon-randomizer-fvx --base compat/firered-gen9-cfru-dpe --head compat/upr-fvx-cfru-dpe-tutor-scope-and-compatibility --title "compat: support CFRU DPE tutor compatibility" --body-file /tmp/pr-body-upr-tutor-compatibility.md
+
+git push -u origin compat/upr-fvx-cfru-dpe-tutor-scope-and-compatibility
+gh pr create --repo Planton361/firered-gen9-randomizer-workspace --base main --head compat/upr-fvx-cfru-dpe-tutor-scope-and-compatibility --title "docs: record tutor compatibility diagnostics" --body-file /tmp/pr-body-workspace-tutor-compatibility.md
 ```
 
-## Analysebefund 039
+## Diagnosebefund 040
 
-- `gMoveTutorMoves` ist eine CFRU/DPE-`u16`-Tabelle mit `152` Eintraegen.
-- Pointer-Location fuer `gMoveTutorMoves`: `0x8120BE4`.
-- Letzter sichtbarer Tutor-Move: `MOVE_TERABLAST`, ID `0x3C6` / `966`.
-- `gTutorLearnsets` liegt laut `repointall` an Pointer-Location `0x8120C30`.
-- Generierte DPE-Tutor-Compatibility zeigt `19` Bytes pro Species, passend zu `152` Bits.
-- DPE Special Tutors sind als `Not in Table` markiert und duerfen nicht als normale Tutor-Slots behandelt werden.
-- FVX nutzt aktuell fuer FireRed-BPRE im Tutor-Move-Pfad klassisch `MoveTutorMoves=15` und `MoveTutorData=0x459B60`.
-- FVX ueberschreibt aktuell nur den Compatibility-Pointer auf `readPointer(0x120C30)`; Count und Move-Tabelle bleiben klassisch.
-- Tutor-only ist daher noch nicht P1-supported.
+- `moves.total=992`, hoechster Move `PsychicNoise` ID `991`.
+- `tutorMoveCount=152`, letzter Tutor-Move `MOVE_TERABLAST` ID `966`, hoechste Tutor-Move-ID `969`.
+- `gMoveTutorMoves` Pointer-Location `0x8120BE4`, Zielpointer `0x09A596EA`, ROM-Offset `0x1A596EA`.
+- `gTutorLearnsets` Pointer-Location `0x8120C30`, Zielpointer `0x09605CD0`, ROM-Offset `0x1605CD0`.
+- Nachgewiesener Compatibility-Stride: `19` Bytes pro Species.
+- Compatibility flag length `153`, also 152 nutzbare Tutor-Flags plus Dummy-Index 0.
+- Tutor moves-only: `saveSuccessful=true`, `logSuccessful=true`, `writeReloadTutorMoveMismatches=0`.
+- Tutor compatibility-only: `saveSuccessful=true`, `logSuccessful=true`, `writeReloadTutorCompatibilityMismatches=0`.
+- Tutor moves + compatibility: `saveSuccessful=true`, `logSuccessful=true`, beide Write/Reload-Mismatch-Werte `0`.
+- Keine invaliden Tutor-Move-IDs, kein `Bad Egg`, kein `<unknown>` und kein Unknown-Move-Marker im Log.
 
 ## Naechster empfohlener Arbeitsblock nach Merge
 
 Branch:
 
 ```text
-compat/upr-fvx-cfru-dpe-tutor-scope-and-compatibility
+analysis/upr-fvx-cfru-dpe-p1-egg-move-model
 ```
 
 Ziel:
 
-- Minimal gegateten CFRU/DPE-Tutor-Reader/Writer implementieren.
-- `gMoveTutorMoves` ueber `0x8120BE4` lesen/schreiben.
-- `gTutorLearnsets` ueber `0x8120C30` mit nachgewiesenem 19- oder 20-Byte-Stride lesen/schreiben.
-- Special Tutors nicht randomisieren, solange deren Sonderlogik nicht separat modelliert ist.
-- Keine Egg-Move-, Learnset-Write- oder Move-Data-Write-Ausweitung.
+- CFRU/DPE Egg-Move-Species-/Move-ID-Modell read-only untersuchen.
+- Pruefen, ob FVX-Egg-Move-Streamformat fuer interne CFRU/DPE-Species und Move-IDs bis 991 stabil ist.
+- Kein Fix im Analysebranch.
+- Keine Learnset-Write- oder Move-Data-Write-Ausweitung.
 
 ## Nicht tun
 
@@ -67,4 +76,4 @@ Ziel:
 - keine privaten Pfade, Secrets, Tokens oder `.env` dokumentieren
 - keine Original-Upstreams kontaktieren
 - keine Aenderungen direkt auf `main`
-- keine Egg-Move-, Learnset-Write-, Move-Data-Write- oder Special-Tutor-Fixes ohne eigenen Branch
+- keine Special-Tutor-, Egg-Move-, Learnset-Write- oder Move-Data-Write-Ausweitung ohne eigenen Branch

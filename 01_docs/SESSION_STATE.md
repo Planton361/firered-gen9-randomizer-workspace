@@ -6,47 +6,45 @@
 - GitHub-Repo `Planton361/firered-gen9-randomizer-workspace` existiert und bleibt Source of Truth.
 - `main` ist Default Branch und bleibt stabil.
 - Branch Protection und PR-Pflicht sind laut dokumentiertem Projektstand eingerichtet.
-- UPR-FVX PR #20 und Workspace PR #75 sind gemerged.
-- UPR-FVX-Stand im Workspace: `58379ffd3146fcd6bb0eb416647cdf9b752cfc0e`.
+- Workspace PR #76 ist gemerged.
+- UPR-FVX-Fix `4ce93754de390e9177efd2541c02edba0afbb0c4` implementiert den eng gegateten CFRU/DPE-Tutor-Reader/Writer.
 - TM/HM-only ist im getesteten CFRU/DPE-128-Slot-Scope P1-supported.
-- Tutor-/Special-Tutor-Modell ist read-only dokumentiert; Tutor-only ist noch nicht P1-supported.
+- Tutor-only ist im getesteten CFRU/DPE-152-Slot-Scope P1-supported.
 - ROMs, Saves, Builds, Tool-Binaries und private Dateien sind ausgeschlossen.
 
 ## Aktueller Branch
 
-`analysis/upr-fvx-cfru-dpe-p1-tutor-model`
+`compat/upr-fvx-cfru-dpe-tutor-scope-and-compatibility`
 
 ## Aktueller Arbeitsblock
 
-CFRU/DPE Tutor-/Special-Tutor-Modellierung.
+CFRU/DPE Tutor-Scope-and-Compatibility-Fix.
 
 ## Ziel
 
-Tutor- und Special-Tutor-Tabellen fuer CFRU/DPE Gen9-BPRE read-only modellieren. Kein Fix, keine Codeaenderung.
+Minimal gegateten CFRU/DPE-Tutor-Reader/Writer implementieren und diagnostisch bestaetigen. Keine Special-Tutor-, Egg-Move-, Learnset-Write-, Move-Data-Write- oder Tutor-Text-Rewrite-Ausweitung.
 
 ## In diesem Arbeitsblock geprueft / geaendert
 
-- UPR-FVX PR #20 und Workspace PR #75 als gemerged geprueft.
-- Workspace-Branch `analysis/upr-fvx-cfru-dpe-p1-tutor-model` von `origin/main` erstellt; nicht auf `main` gearbeitet.
-- UPR-FVX-, CFRU- und DPE-Quellen read-only untersucht.
-- Neues Protokoll erstellt: `08_tests/randomizer/039_p1_tutor_model.md`.
-- `08_tests/randomizer/README.md`, `SESSION_STATE.md`, `NEXT_STEPS.md` und Roadmap aktualisiert.
+- Workspace PR #76 als gemerged geprueft.
+- Workspace-Branch `compat/upr-fvx-cfru-dpe-tutor-scope-and-compatibility` und UPR-FVX-Branch `compat/upr-fvx-cfru-dpe-tutor-scope-and-compatibility` verwendet; nicht auf `main` gearbeitet.
+- UPR-FVX `Gen3RomHandler` fuer CFRU/DPE-Gen9-BPRE um 152-Slot-Tutor-Read/Write und 19-Byte-Tutor-Compatibility erweitert.
+- UPR-FVX `TMTutorMoveRandomizer` gegen hohe Tutor-Move-IDs abgesichert.
+- Neues Protokoll erstellt: `08_tests/randomizer/040_tutor_scope_and_compatibility_fix_diagnostics.md`.
+- `08_tests/randomizer/README.md`, `SESSION_STATE.md`, `NEXT_STEPS.md`, Roadmap und Tool-Manifest aktualisiert.
 
 ## Ergebnis
 
-- DPE definiert normale Tutor-IDs `0..127` plus 9 Special Tutors `128..136`, markiert als nicht in der normalen Tabelle.
-- Der aktive DPE-Tabellenstand nutzt `NUM_MOVE_TUTOR_MOVES=152`.
-- `gMoveTutorMoves` ist eine `u16`-Tabelle mit `152` Eintraegen; letzter Eintrag `MOVE_TERABLAST` ID `0x3C6` / `966`.
-- `gTutorLearnsets` liegt laut `repointall` an Pointer-Location `0x8120C30`.
-- `gMoveTutorMoves` liegt laut `repointall` an Pointer-Location `0x8120BE4`.
-- Generierte Tutor-Compatibility-Daten zeigen `19` Bytes pro Species, also `152` Bits.
-- FVX nutzt fuer FireRed-BPRE aktuell klassisch `MoveTutorMoves=15` und `MoveTutorData=0x459B60`.
-- FVX ueberschreibt fuer BPRE-Hacks nur `MoveTutorCompatibility = readPointer(0x120C30)`, nicht `MoveTutorData` oder `MoveTutorMoves`.
-- Tutor-only braucht einen separaten, eng gegateten Folge-Fixbranch.
+- `gMoveTutorMoves` wird ueber Pointer-Location `0x8120BE4` gelesen; Zielpointer im Teststand `0x09A596EA`, ROM-Offset `0x1A596EA`.
+- `gMoveTutorMoves` wird als `u16[152]` gelesen/geschrieben.
+- `gTutorLearnsets` wird ueber Pointer-Location `0x8120C30` gelesen; Zielpointer im Teststand `0x09605CD0`, ROM-Offset `0x1605CD0`.
+- Aktiver Compatibility-Stride ist `19` Bytes pro Species; FVX bildet das als `153` Flags inklusive Dummy-Index 0 ab.
+- Tutor moves-only, Tutor compatibility-only und Tutor moves + compatibility erzeugen Save, Log, Output-ROM und `writeReloadMismatches=0`.
+- Special Tutors bleiben unveraendert und out of scope.
 
 ## Noch nicht gestartet
 
-- CFRU/DPE Tutor-Reader-/Writer-Fix
+- Special-Tutor-Modell/Fix
 - Egg-Move-Species-/Move-ID-Diagnose
 - Move-Data-Write/`saveMoves()` fuer CFRU/DPE
 - Learnset-Write / `setMovesLearnt()` fuer CFRU/DPE
@@ -61,7 +59,7 @@ Keine ROMs, Saves, Builds oder Tool-Binaries committed.
 
 Keine ROMs in ChatGPT hochgeladen.
 
-Keine neuen lokalen ROM-/Log-/Output-Artefakte erzeugt.
+Neue lokale ROM-/Log-Artefakte wurden nur unter `05_builds/randomizer-smoke/040_tutor_scope_and_compatibility_fix/` erzeugt und bleiben ignored.
 
 Private absolute Pfade und private ROM-Dateinamen wurden nicht dokumentiert.
 
@@ -69,9 +67,9 @@ Keine externen Original-Upstreams kontaktiert.
 
 Keine Aenderungen direkt auf `main`.
 
-`02_external/**` wurde nur read-only analysiert.
+UPR-FVX wurde nur in erlaubten Submodule-Pfaden unter `02_external/upr-fvx/romio/src/main/java/**` und `02_external/upr-fvx/random/src/main/java/**` geaendert.
 
-Keine Egg-Move-, Learnset-Write-, Move-Data-Write-, TM/HM-Item-Text- oder Tutor-Fixes umgesetzt.
+Keine Special-Tutor-, Egg-Move-, Learnset-Write-, Move-Data-Write- oder Tutor-Text-Rewrite-Ausweitung.
 
 Keine MCP-Configs mit Secrets angelegt.
 
@@ -89,7 +87,17 @@ git diff --check
 
 ## Naechster empfohlener Branch
 
-Nach Merge dieses Analyseblocks: CFRU/DPE Tutor-Move- und Tutor-Compatibility-Fix separat implementieren. Nicht mit Egg-Move-, Learnset-Write- oder Move-Data-Write vermischen.
+Nach Merge dieses Fixblocks: Egg-Move-Species-/Move-ID-Diagnose separat read-only untersuchen. Nicht mit Learnset-Write oder Move-Data-Write vermischen.
+
+### 2026-05-13 - compat/upr-fvx-cfru-dpe-tutor-scope-and-compatibility
+
+- Workspace PR #76 als gemerged geprueft.
+- UPR-FVX-Fix `4ce93754de390e9177efd2541c02edba0afbb0c4` erstellt.
+- CFRU/DPE-Tutor-Pfad eng ueber `useCfruDpeGen9SpeciesCount` gegatet.
+- `gMoveTutorMoves` als `u16[152]` ueber `0x8120BE4` gelesen/geschrieben.
+- `gTutorLearnsets` als 19-Byte-/152-Bit-Compatibility pro Species ueber `0x8120C30` gelesen/geschrieben.
+- Diagnose 040 bestaetigt Tutor moves-only, Compatibility-only und Tutor moves + Compatibility mit Save/Log/Output/Reload und `writeReloadMismatches=0`.
+- Kein Special-Tutor-, Egg-Move-, Learnset-Write-, Move-Data-Write- oder Tutor-Text-Rewrite-Fix.
 
 ### 2026-05-13 - analysis/upr-fvx-cfru-dpe-p1-tutor-model
 

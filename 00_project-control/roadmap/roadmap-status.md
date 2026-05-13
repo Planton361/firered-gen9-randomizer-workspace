@@ -24,9 +24,9 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-p1-tutor-model` |
-| Nächster Branch | `compat/upr-fvx-cfru-dpe-tutor-scope-and-compatibility` |
-| Aktueller Fokus | CFRU/DPE Tutor-/Special-Tutor-Modellierung |
+| Aktueller Branch | `compat/upr-fvx-cfru-dpe-tutor-scope-and-compatibility` |
+| Nächster Branch | `analysis/upr-fvx-cfru-dpe-p1-egg-move-model` |
+| Aktueller Fokus | CFRU/DPE Tutor-Scope-and-Compatibility-Fix |
 | ROM-/Build-Arbeit | keine neuen ROM-/Build-Artefakte; keine Artefakte committen |
 | Externe Repos | als Submodule auf Planton361-Forks eingebunden |
 | Forks | Planton361-Forks fuer UPR-FVX, DPE Gen9 und CFRU dokumentiert |
@@ -100,6 +100,7 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | 08 Randomizer-Kompatibilität | P1 TM/HM 128-Slot-Modell | CFRU/DPE `gTMHMMoves` als `u16[128]` ueber Pointer `0x8125A8C`, HMs Slots `121..128`, Compatibility 16 Bytes pro Species ueber `0x8043C68` dokumentiert |
 | 08 Randomizer-Kompatibilität | P1 TM/HM 128-Slot-Fix | UPR-FVX `58379ffd` bestaetigt `tmCount=120`, `hmCount=8`, Save/Log/Reload fuer TM moves-only, Compatibility-only und TM moves + Compatibility mit `writeReloadMismatches=0` |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Tutor-/Special-Tutor-Modell | `gMoveTutorMoves` `u16[152]`, `gTutorLearnsets` `152` Bits und Special-Tutor-Sonderlogik read-only dokumentiert; Tutor-only noch nicht P1-supported |
+| 08 Randomizer-Kompatibilität | CFRU/DPE Tutor-Scope-and-Compatibility-Fix | UPR-FVX `4ce93754` bestaetigt `tutorMoveCount=152`, 19-Byte-Compatibility-Stride und Save/Log/Reload fuer Tutor moves-only, Compatibility-only und kombinierte Tutor-Laeufe mit `writeReloadMismatches=0` |
 
 ## In Arbeit
 

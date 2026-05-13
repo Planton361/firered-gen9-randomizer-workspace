@@ -4,15 +4,15 @@ Dieses Manifest dokumentiert Tools, Repos, Forks, Versionen, Pfade und Sicherhei
 
 ## Sicherheitsstatus
 
-Dieser Stand dokumentiert den Arbeitsblock `compat/upr-fvx-cfru-dpe-tm-hm-128-slot`. UPR-FVX wurde im Planton361-Fork-Submodule gezielt geaendert und gebaut; lokale ROM-/Log-/Output-Artefakte blieben ignored unter `05_builds/**` und wurden nicht committed. Tool-Binaries, Release-Assets, Secrets und private Pfade wurden nicht dokumentiert.
+Dieser Stand dokumentiert den Arbeitsblock `compat/upr-fvx-cfru-dpe-tutor-scope-and-compatibility`. UPR-FVX wurde im Planton361-Fork-Submodule gezielt geaendert und gebaut; lokale ROM-/Log-/Output-Artefakte blieben ignored unter `05_builds/**` und wurden nicht committed. Tool-Binaries, Release-Assets, Secrets und private Pfade wurden nicht dokumentiert.
 
 Linux/CachyOS ist die primaere lokale Umgebung. Windows-Toolchain-Befunde bleiben historischer Referenzstand und duerfen nicht als Linux-Ist-Stand verwendet werden.
 
-Der aktuelle Arbeitsblock pinnt den Workspace auf den UPR-FVX-TM/HM-128-Slot-Fix-Commit fuer CFRU/DPE.
+Der aktuelle Arbeitsblock pinnt den Workspace auf den UPR-FVX-Tutor-Scope-and-Compatibility-Fix-Commit fuer CFRU/DPE.
 
 | Tool/Repo | Zweck | Upstream | Fork/Origin | Lokaler Pfad | Branch | Commit | Codex darf ändern | Status |
 |---|---|---|---|---|---|---|---|---|
-| Workspace Repo | Source of Truth | n/a | git@github.com:Planton361/firered-gen9-randomizer-workspace.git | Workspace-Root | `compat/upr-fvx-cfru-dpe-tm-hm-128-slot` | offen | ja, nur Branches | aktiv |
+| Workspace Repo | Source of Truth | n/a | git@github.com:Planton361/firered-gen9-randomizer-workspace.git | Workspace-Root | `compat/upr-fvx-cfru-dpe-tutor-scope-and-compatibility` | offen | ja, nur Branches | aktiv |
 | Git | Versionierung | n/a | n/a | `/usr/bin/git` | n/a | n/a | nein | gefunden: 2.54.0 |
 | GitHub CLI (`gh`) | PRs und GitHub-Checks automatisieren | https://cli.github.com/ | n/a | `/usr/bin/gh` | n/a | n/a | nein | gefunden: 2.92.0; Auth via Keyring aktiv |
 | POSIX Shell | Terminal-Standard | n/a | n/a | `/bin/fish` laut `$SHELL` | n/a | n/a | nein | primär |
@@ -43,11 +43,11 @@ Der aktuelle Arbeitsblock pinnt den Workspace auf den UPR-FVX-TM/HM-128-Slot-Fix
 
 ## Lokale Submodule-Pins 2026-05-13
 
-Arbeitsblock: `compat/upr-fvx-cfru-dpe-tm-hm-128-slot`.
+Arbeitsblock: `compat/upr-fvx-cfru-dpe-tutor-scope-and-compatibility`.
 
 | Repo | Zweck | Origin | Lokaler Pfad | Branch | Commit | Codex darf aendern | Status |
 |---|---|---|---|---|---|---|---|
-| UPR-FVX Fork | Haupt-Randomizer-Fork | `https://github.com/Planton361/universal-pokemon-randomizer-fvx.git` | `02_external/upr-fvx` | `compat/upr-fvx-cfru-dpe-tm-hm-128-slot` | `58379ffd3146fcd6bb0eb416647cdf9b752cfc0e` | ja, nur in diesem Branch | TM/HM-128-Slot-Fix fuer CFRU/DPE; basiert auf `32e43ac0` |
+| UPR-FVX Fork | Haupt-Randomizer-Fork | `https://github.com/Planton361/universal-pokemon-randomizer-fvx.git` | `02_external/upr-fvx` | `compat/upr-fvx-cfru-dpe-tutor-scope-and-compatibility` | `4ce93754de390e9177efd2541c02edba0afbb0c4` | ja, nur in diesem Branch | Tutor-Scope-and-Compatibility-Fix fuer CFRU/DPE; basiert auf `58379ffd` |
 | CFRU-expansion Fork | CFRU/Gen9-Basis | `https://github.com/Planton361/CFRU-expansion.git` | `02_external/CFRU-expansion` | `compat/firered-gen9-randomizer` | `b885d7a974375c6c722e5698914963b82e8cdad6` | nein in diesem Block | read-only analysiert |
 | DPE Gen9 Fork | DPE/Gen9-Basis | `https://github.com/Planton361/Dynamic-Pokemon-Expansion-Gen-9.git` | `02_external/Dynamic-Pokemon-Expansion-Gen-9` | `compat/firered-gen9-randomizer` | `5906aa4d4904e41393fd9184a16951c961e96263` | nein in diesem Block | read-only analysiert |
 | CyanSMP64 UPR-ZX NatDex | NatDex-Randomizer-Referenz | `https://github.com/CyanSMP64/universal-pokemon-randomizer-zx.git` | `02_external/references/cyansmp64-upr-zx-natdex` | `natdex` | `9b63eb2876d901dc2e5af49855ae41ac255e1a72` | nein | read-only Referenz |
@@ -86,8 +86,8 @@ Bestehende unnummerierte Protokolle unter `08_tests/randomizer/` bleiben vorerst
 | Lokaler Pfad | `02_external/upr-fvx` |
 | Einbindung | Git-Submodule auf `Planton361/universal-pokemon-randomizer-fvx` |
 | Upstream | `upr-fvx/universal-pokemon-randomizer-fvx` |
-| Arbeitsbranch | `compat/upr-fvx-cfru-dpe-tm-hm-128-slot` |
-| Gepinnter Workspace-Stand | `58379ffd3146fcd6bb0eb416647cdf9b752cfc0e` auf `compat/upr-fvx-cfru-dpe-tm-hm-128-slot`; enthaelt den CFRU/DPE-TM/HM-128-Slot-Fix auf Basis des Scope-and-Safety-Fix `32e43ac0` |
+| Arbeitsbranch | `compat/upr-fvx-cfru-dpe-tutor-scope-and-compatibility` |
+| Gepinnter Workspace-Stand | `4ce93754de390e9177efd2541c02edba0afbb0c4` auf `compat/upr-fvx-cfru-dpe-tutor-scope-and-compatibility`; enthaelt den CFRU/DPE-Tutor-Scope-and-Compatibility-Fix auf Basis des TM/HM-128-Slot-Fix `58379ffd` |
 | Buildsystem | Gradle Wrapper |
 | Java | JDK 25 |
 | JAR-Build | `./gradlew :random:jar` |

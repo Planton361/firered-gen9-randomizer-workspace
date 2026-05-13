@@ -66,19 +66,19 @@ Der neueste bestaetigte Stand wird in Markdown ueber die Spalte `Latest` markier
 | 036 | `036_tm_hm_scope_and_safety_fix_diagnostics.md` | TM/HM Scope-and-Safety-Fix Diagnose | bestaetigt im klassischen `50+8`-Scope: TM moves + Compatibility, Compatibility-only und TM moves-only jeweils mit `saveSuccessful=true`, `logSuccessful=true`, Output-ROM, nichtleerem Log und `writeReloadMismatches=0` | `05_builds/randomizer-smoke/036_tm_hm_scope_and_safety_fix/` lokal/ignored | nein |
 | 037 | `037_p1_tm_hm_128_slot_model.md` | CFRU/DPE TM/HM-128-Slot-Modell | dokumentiert: aktives `gTMHMMoves` ist `u16[128]` ueber Pointer `0x8125A8C`, TMs `1..120`, HMs `121..128`, Compatibility `16` Bytes pro Species ueber `0x8043C68`; kein Fix | keiner | nein |
 | 038 | `038_tm_hm_128_slot_fix_diagnostics.md` | CFRU/DPE TM/HM-128-Slot-Fix Diagnose | bestaetigt: `tmCount=120`, `hmCount=8`, 128 Slots, 129 Compatibility-Flags, HM-Slots unveraendert, alle drei TM/HM-Laeufe mit `saveSuccessful=true`, `logSuccessful=true` und `writeReloadMismatches=0` | `05_builds/randomizer-smoke/038_tm_hm_128_slot_fix/` lokal/ignored | nein |
-| 039 | `039_p1_tutor_model.md` | CFRU/DPE Tutor-/Special-Tutor-Modell | dokumentiert: normale Tutor-Tabelle `gMoveTutorMoves` mit `152` `u16`-Eintraegen ueber Pointer-Location `0x8120BE4`, `gTutorLearnsets` ueber `0x8120C30`, Special Tutors separat; kein Fix | keiner | ja |
+| 039 | `039_p1_tutor_model.md` | CFRU/DPE Tutor-/Special-Tutor-Modell | dokumentiert: normale Tutor-Tabelle `gMoveTutorMoves` mit `152` `u16`-Eintraegen ueber Pointer-Location `0x8120BE4`, `gTutorLearnsets` ueber `0x8120C30`, Special Tutors separat; kein Fix | keiner | nein |
+| 040 | `040_tutor_scope_and_compatibility_fix_diagnostics.md` | CFRU/DPE Tutor-Scope-and-Compatibility-Fix Diagnose | bestaetigt: `tutorMoveCount=152`, `gMoveTutorMoves` ueber `0x8120BE4`, `gTutorLearnsets` mit 19-Byte-Stride ueber `0x8120C30`, alle drei Tutor-Laeufe mit Save/Log/Reload und `writeReloadMismatches=0` | `05_builds/randomizer-smoke/040_tutor_scope_and_compatibility_fix/` lokal/ignored | ja |
 
 ## Aktuell bestaetigter Stand
 
-Latest ist Nr. 039: CFRU/DPE Tutor-/Special-Tutor-Modell.
+Latest ist Nr. 040: CFRU/DPE Tutor-Scope-and-Compatibility-Fix Diagnose.
 
 Kernaussagen:
 
-- CFRU/DPE nutzt fuer normale Tutor-Moves `gMoveTutorMoves` als `u16[152]` ueber Pointer-Location `0x8120BE4`.
-- `gTutorLearnsets` liegt laut `repointall` an Pointer-Location `0x8120C30` und ist im DPE-Assemblybefund als `19` Bytes beziehungsweise `152` Bits pro Species sichtbar.
-- Special Tutors sind nicht in der normalen Tutor-Tabelle und brauchen getrennte Sonderlogik.
-- FVX nutzt aktuell im Tutor-Move-Pfad noch den klassischen FireRed-Scope `MoveTutorMoves=15`; Tutor-only ist daher noch nicht P1-supported.
-- Egg-Move-, Learnset-Write-, Move-Data-Write- und Tutor-Text-Erweiterungen bleiben out of scope.
+- CFRU/DPE nutzt fuer normale Tutor-Moves `gMoveTutorMoves` als `u16[152]` ueber Pointer-Location `0x8120BE4`; Zielpointer im Teststand `0x09A596EA`.
+- `gTutorLearnsets` nutzt im getesteten ROM `19` Bytes beziehungsweise `152` Bits pro Species ueber Pointer-Location `0x8120C30`; Zielpointer `0x09605CD0`.
+- Tutor moves-only, Tutor compatibility-only und Tutor moves + compatibility sind im normalen 152-Slot-Scope P1-supported.
+- Special Tutors, Tutor-Text-/Menu-Rewrites, Egg-Move-, Learnset-Write- und Move-Data-Write-Erweiterungen bleiben out of scope.
 
 ## Lokale Artefaktpflege
 
