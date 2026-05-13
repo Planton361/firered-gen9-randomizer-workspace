@@ -12,6 +12,7 @@ Dieses Dokument hält fest, wie ChatGPT, Codex und optionale Agent-Tools im Proj
 - Stabile Regeln in `AGENTS.md`, nicht in jedem Prompt wiederholen.
 - Handoff-Prompts statt langer Chat-Verläufe.
 - Nur notwendige Tools aktivieren.
+- Fuer groessere oder riskantere Codex-Aufgaben zuerst `01_docs/quality/codex-plan-goal-usage.md` pruefen.
 
 ## Ein Arbeitspaket pro Chat
 
@@ -93,6 +94,21 @@ Vermeiden:
 - MCP-Server ohne klaren Zweck
 - Tool-Konfigurationen, die Secrets oder private Pfade enthalten
 - lange Preambles, starre Pläne oder wiederholte Governance-Blöcke in jedem Prompt
+
+## Codex Plan-/Goal-Modus
+
+Fuer groessere Codex-Aufgaben gibt es eine separate Projektregel:
+
+```text
+01_docs/quality/codex-plan-goal-usage.md
+```
+
+Kurzfassung:
+
+- Plan-Modus fuer groessere oder riskantere Analyse-/Fixbloecke nutzen, wenn Codex zuerst Scope, Dateien, Risiken und Stop-Regeln klaeren soll.
+- Goal-Modus nur fuer lange, klar validierbare und moeglichst read-only Aufgaben nutzen.
+- Keine Goal-Modus-Nutzung fuer Repointing-Fixes, Move-Data-Write, ROM-nahe Writer oder grosse Multi-Fix-PRs.
+- Bei Unsicherheit: Plan-Modus vor Goal-Modus.
 
 ## Kompakter Standardablauf
 
