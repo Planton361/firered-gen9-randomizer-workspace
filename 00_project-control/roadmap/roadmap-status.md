@@ -24,9 +24,9 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Aktueller Branch | `compat/upr-fvx-cfru-dpe-base-stats-types-scope-and-write` |
-| Nächster Branch | `compat/upr-fvx-cfru-dpe-abilities-hidden-ability-scope-and-write` |
-| Aktueller Fokus | CFRU/DPE Base Stats + Types Scope-and-Write-Fix |
+| Aktueller Branch | `compat/upr-fvx-cfru-dpe-abilities-hidden-ability-scope-and-write` |
+| Nächster Branch | `analysis/upr-fvx-cfru-dpe-p1-item-data-and-bad-item-model` |
+| Aktueller Fokus | CFRU/DPE Ability1/2 + Hidden Ability Scope-and-Write-Fix |
 | ROM-/Build-Arbeit | keine neuen ROM-/Build-Artefakte; keine Artefakte committen |
 | Externe Repos | als Submodule auf Planton361-Forks eingebunden |
 | Forks | Planton361-Forks fuer UPR-FVX, DPE Gen9 und CFRU dokumentiert |
@@ -111,18 +111,19 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | 08 Randomizer-Kompatibilität | CFRU/DPE Learnset GUI-Flow-Safety-Fix | UPR-FVX `086d2a91` bestaetigt Movesets-only, Trainer-Movesets, Reorder-Damaging, TM/HM-Sanity, Tutor-Sanity, gekoppelte Egg Moves und TM/HM+Tutor-Sanity mit Save/Log/Output/Reload und `writeReloadLearnsetMismatches=0` |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Base Stats, Types, Abilities Modell | `gBaseStats` ueber `0x080001BC`, Entry-Size `0x1C`, Species-Scope `NUM_SPECIES=1440`, Fairy/Stellar-Type-, Hidden-Ability-, Ability-Count- und Item-Count-Risiken dokumentiert |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Base Stats + Types Scope-and-Write-Fix | UPR-FVX `20f16d07` bestaetigt Base Stats-only, Types-only und Base Stats + Types mit Save/Log/Reload, `writeReloadBaseStatsMismatches=0` und `typeIdMismatches=0` |
+| 08 Randomizer-Kompatibilität | CFRU/DPE Ability1/2 + Hidden Ability Scope-and-Write-Fix | UPR-FVX Commit `639c7e61`; Diagnose 052 bestaetigt Ability1/2-only, Hidden Ability-only, Ability1/2 + Hidden Ability und Base Stats + Types + Abilities mit Save/Log/Reload, `writeReloadAbilityMismatches=0` und `writeReloadHiddenAbilityMismatches=0` |
 
 ## In Arbeit
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Base Stats + Types Scope-and-Write | Fix dokumentieren und PRs erstellen |
+| 08 Randomizer-Kompatibilität | Hidden Abilities Scope-and-Write | Fix dokumentieren und PRs erstellen |
 
 ## Als Nächstes
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Hidden Abilities Scope-and-Write | Ability1/2, Hidden Ability und Ability-Count separat entblocken |
+| 08 Randomizer-Kompatibilität | Item-/Bad-Item-Modell | Encounter Held Items und Bad-/Key-Item-Filter separat modellieren |
 
 ## Noch offen
 
@@ -188,6 +189,8 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | P1ac | `compat/upr-fvx-cfru-dpe-learnset-gui-flow-safety` | Learnset GUI-Flow-Safety-Fix | erledigt; Logger, Multiwrite-Repointing, Trainer-Movesets und Level-Up-Sanity fuer Pokemon Movesets/Learnsets entblockt |
 | P1ad | `analysis/upr-fvx-cfru-dpe-p1-base-stats-types-abilities-model` | Base Stats, Types, Abilities Modell | erledigt; gemeinsames Datenmodell und getrennte Folgefixes dokumentiert |
 | P1ae | `compat/upr-fvx-cfru-dpe-base-stats-types-scope-and-write` | Base Stats + Types Scope-and-Write | erledigt; UPR-FVX `20f16d07` bestaetigt Fairy `0x17` Read/Write, Stellar preserve/skip und Reload ohne Mismatches |
+| P1af | `compat/upr-fvx-cfru-dpe-abilities-hidden-ability-scope-and-write` | Ability1/2 + Hidden Ability Scope-and-Write | aktueller Fixbranch; Diagnose 052 bestaetigt `abilitiesPerSpecies=3`, `highestAbilityIndex=254` und Reload ohne Ability-/Hidden-Ability-Mismatches |
+| P1ag | `analysis/upr-fvx-cfru-dpe-p1-item-data-and-bad-item-model` | Item-/Bad-Item-Modell fuer Encounter Held Items | naechster empfohlener Analysebranch; keine Encounter-Held-Item-Randomization vor Itemmodell |
 | P2 | `randomizer/cfru-day-night-wild-table-analysis` | CFRU-Custom-Day/Night-Wild-Tabellen separat untersuchen | erst nach P1-Schreibpfad-Diagnose; Route-1-Fallback bleibt stabil |
 | P3 | noch festlegen | Nullslot-`<unknown>` mit `rawInternalSpeciesId=0` klassifizieren | nicht mit GenRestrictions vermischen |
 | P4 | noch festlegen | BizHawk-/Ironmon-Tracker-/RAM-Mapping pruefen | erst nach stabiler ROM-Randomizer-Kompatibilitaet |
