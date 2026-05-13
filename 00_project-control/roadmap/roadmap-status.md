@@ -24,9 +24,9 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Aktueller Branch | `compat/upr-fvx-cfru-dpe-learnset-write-bounded` |
-| Nächster Branch | `analysis/upr-fvx-cfru-dpe-p1-learnset-repointing-model` |
-| Aktueller Fokus | CFRU/DPE Learnset-Write bounded in-place Fix |
+| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-p1-learnset-repointing-model` |
+| Nächster Branch | `compat/upr-fvx-cfru-dpe-learnset-write-repointing` |
+| Aktueller Fokus | CFRU/DPE Learnset-Repointing-Modellierung |
 | ROM-/Build-Arbeit | keine neuen ROM-/Build-Artefakte; keine Artefakte committen |
 | Externe Repos | als Submodule auf Planton361-Forks eingebunden |
 | Forks | Planton361-Forks fuer UPR-FVX, DPE Gen9 und CFRU dokumentiert |
@@ -104,18 +104,19 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | 08 Randomizer-Kompatibilität | CFRU/DPE Egg-Move-Modell | `gEggMoves` als `u16`-Stream mit `species + 20000` und `0xFFFF` dokumentiert; DPE-Stream enthaelt Gen8/9-Species und Move-IDs bis `967`; Egg-Move-only braucht separaten Fix |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Egg-Move-Scope und Write | UPR-FVX `18168b78` bestaetigt `gEggMoves` ueber `0x45C50`, interne SpeciesSet-Keys, Gen8/9-Species und Gen9-Moves mit `writeReloadEggMoveMismatches=0` |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Learnset-Write-Modell | `gLevelUpLearnsets` ueber `0x03EA7C`, internes Species-Indexing, `u16 move + u8 level`, Sentinel `{0, 0xFF}` und bounded-in-place-Folgepfad dokumentiert |
+| 08 Randomizer-Kompatibilität | CFRU/DPE Learnset-Write bounded in-place | UPR-FVX `dd9d80c1` bestaetigt sicheren bounded Writer fuer validierte same-size Learnsets mit `writeReloadLearnsetMismatches=0`; Full Write bleibt separat |
 
 ## In Arbeit
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Learnset-Write bounded in-place | Minimal gegateten CFRU/DPE-`setMovesLearnt()`-Pfad ohne Repointing diagnostisch absichern |
+| 08 Randomizer-Kompatibilität | Learnset-Repointing-Modell | Full Learnset-Write-Repointing read-only modellieren |
 
 ## Als Nächstes
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Learnset-Repointing-Modell | Full Learnset-Write getrennt modellieren, bevor Repointing umgesetzt wird |
+| 08 Randomizer-Kompatibilität | Learnset-Write Repointing-Fix | Full Learnset-Write nur nach FreeSpace-Nachweis umsetzen |
 
 ## Noch offen
 
@@ -175,7 +176,8 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | P1w | `analysis/upr-fvx-cfru-dpe-p1-egg-move-model` | Egg-Move-Modell | erledigt; `gEggMoves` Streamformat und Gen8/9-Scope dokumentiert |
 | P1x | `compat/upr-fvx-cfru-dpe-egg-moves-scope-and-write` | Egg-Move-Scope und Write | erledigt; UPR-FVX `18168b78` bestaetigt direct Egg-Move Write/Reload ohne Mismatches |
 | P1y | `analysis/upr-fvx-cfru-dpe-p1-learnset-write-model` | Learnset-Write-Modell | erledigt; bounded in-place als minimaler Folgefix empfohlen |
-| P1z | `compat/upr-fvx-cfru-dpe-learnset-write-bounded` | Learnset-Write bounded in-place | aktueller Fixbranch; UPR-FVX `dd9d80c1` speichert sichere same-size Learnsets ohne Repointing, voller Learnset-Write bleibt separat |
+| P1z | `compat/upr-fvx-cfru-dpe-learnset-write-bounded` | Learnset-Write bounded in-place | erledigt; UPR-FVX `dd9d80c1` speichert sichere same-size Learnsets ohne Repointing, voller Learnset-Write bleibt separat |
+| P1aa | `analysis/upr-fvx-cfru-dpe-p1-learnset-repointing-model` | Learnset-Repointing-Modell | aktueller Analysebranch; Pointertable, Shared-Pointer-Policy und FreeSpace-Risiken read-only klaeren |
 | P2 | `randomizer/cfru-day-night-wild-table-analysis` | CFRU-Custom-Day/Night-Wild-Tabellen separat untersuchen | erst nach P1-Schreibpfad-Diagnose; Route-1-Fallback bleibt stabil |
 | P3 | noch festlegen | Nullslot-`<unknown>` mit `rawInternalSpeciesId=0` klassifizieren | nicht mit GenRestrictions vermischen |
 | P4 | noch festlegen | BizHawk-/Ironmon-Tracker-/RAM-Mapping pruefen | erst nach stabiler ROM-Randomizer-Kompatibilitaet |
@@ -218,10 +220,10 @@ Excel-Roadmap:
 ## Nächster empfohlener Branch
 
 ```text
-analysis/upr-fvx-cfru-dpe-p1-learnset-repointing-model
+compat/upr-fvx-cfru-dpe-learnset-write-repointing
 ```
 
-Zweck: Repointing- und Speicherbereichsmodell fuer full CFRU/DPE Learnset-Write read-only klaeren, bevor ein breiterer Write-Pfad umgesetzt wird.
+Zweck: Full CFRU/DPE Learnset-Write nur mit nachgewiesener freier ROM-Fläche, Pointertable-Update pro interner Species-ID und Reload-Diagnose umsetzen.
 
 ## Arbeitsblock-Log
 
