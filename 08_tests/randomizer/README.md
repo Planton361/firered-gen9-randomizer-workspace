@@ -2,9 +2,9 @@
 
 ## Latest
 
-- `049_p1_learnset_gui_flow_safety_fix_diagnostics.md` dokumentiert den Learnset-GUI-Flow-Safety-Fix fuer CFRU/DPE Gen9-BPRE.
-- Pokemon Movesets/Learnsets sind im getesteten GameRandomizer-/Settings-nahen Flow P1-supported: alle sieben Diagnose-Laeufe speichern, loggen, erzeugen Output und reloaden mit `writeReloadLearnsetMismatches=0`.
-- Reorder-Damaging-Multiwrite, Trainer-Movesets, TM/HM-Level-Up-Sanity, Tutor-Level-Up-Sanity, gekoppelte Egg Moves und Logger-Nullpfade sind im getesteten Scope stabil.
+- `050_p1_base_stats_types_abilities_model.md` dokumentiert das read-only Datenmodell fuer Base Stats, Types, Abilities, Hidden Abilities und Encounter Held Items.
+- `gBaseStats` nutzt im getesteten CFRU/DPE-Stand denselben Pointer-Ort `0x080001BC` und eine `0x1C`-Entry-Size, aber Fairy/Stellar-Type, Hidden Ability und erweiterte Ability-/Item-Counts bleiben getrennte Fixrisiken.
+- Empfohlene Folgefixes: Base Stats + Fairy-Type-Mapping zuerst, Hidden Abilities separat, Encounter Held Items erst nach Item-/Bad-Item-Modell.
 
 Dieses Verzeichnis enthaelt die dauerhaften Markdown-Protokolle fuer UPR-FVX/CFRU-DPE-Randomizer-Analysen und Smokes. Lokale ROM-, Build-, Log- und Tool-Artefakte bleiben unter `05_builds/**` oder `03_tools/releases/**` und werden nicht committed.
 
@@ -82,18 +82,19 @@ Der neueste bestaetigte Stand wird in Markdown ueber die Spalte `Latest` markier
 | 046 | `046_learnset_write_repointing_diagnostics.md` | CFRU/DPE Learnset-Write Repointing-Fix Diagnose | bestaetigt: Full `setMovesLearnt()`-Repointing schreibt neue Blobs in `0x1219A48-0x1600000`, aktualisiert `1413` Pointertable-Eintraege und reloadet mit `writeReloadLearnsetMismatches=0` | `05_builds/randomizer-smoke/046_learnset_write_repointing/` lokal/ignored | nein |
 | 047 | `047_fvx_gui_options_compatibility_matrix.md` | FVX-GUI-Options-Kompatibilitaetsmatrix | dokumentiert: P1-supported, teilunterstuetzte, offene und blockierte FVX-GUI-Optionsbereiche fuer den getesteten CFRU/DPE Gen9-BPRE-Stand | keiner | nein |
 | 048 | `048_p1_learnset_gui_combinations.md` | CFRU/DPE Learnset GUI-Kombinationsdiagnose | teilweise bestaetigt: erster Repointing-Write im GameRandomizer-Flow reloadet mit `writeReloadLearnsetMismatches=0`, aber Logger, Trainer-Movesets, Reorder-Damaging und Level-Up-Sanity-Kombinationen blockieren | `05_builds/randomizer-smoke/048_p1_learnset_gui_combinations/` lokal/ignored | nein |
-| 049 | `049_p1_learnset_gui_flow_safety_fix_diagnostics.md` | CFRU/DPE Learnset GUI-Flow-Safety-Fix Diagnose | bestaetigt: Movesets-only, Trainer-Movesets, Reorder-Damaging, TM/HM-Sanity, Tutor-Sanity, gekoppelte Egg Moves und TM/HM+Tutor-Sanity jeweils mit Save/Log/Output/Reload und `writeReloadLearnsetMismatches=0` | `05_builds/randomizer-smoke/049_gui_flow_safety/` lokal/ignored | ja |
+| 049 | `049_p1_learnset_gui_flow_safety_fix_diagnostics.md` | CFRU/DPE Learnset GUI-Flow-Safety-Fix Diagnose | bestaetigt: Movesets-only, Trainer-Movesets, Reorder-Damaging, TM/HM-Sanity, Tutor-Sanity, gekoppelte Egg Moves und TM/HM+Tutor-Sanity jeweils mit Save/Log/Output/Reload und `writeReloadLearnsetMismatches=0` | `05_builds/randomizer-smoke/049_gui_flow_safety/` lokal/ignored | nein |
+| 050 | `050_p1_base_stats_types_abilities_model.md` | CFRU/DPE Base Stats, Types, Abilities und Encounter Held Items Modell | dokumentiert: `gBaseStats` ueber `0x080001BC`, Entry-Size `0x1C`, interne Species-ID bis `0x59F`, Fairy/Hidden-Ability/Ability-Count/Item-Count-Risiken fuer Folgefixes | keiner | ja |
 
 ## Aktuell bestaetigter Stand
 
-Latest ist Nr. 049: CFRU/DPE Learnset GUI-Flow-Safety-Fix Diagnose.
+Latest ist Nr. 050: CFRU/DPE Base Stats, Types, Abilities und Encounter Held Items Modell.
 
 Kernaussagen:
 
-- `gLevelUpLearnsets` wird ueber Pointer-Ort `0x03EA7C` auf die aktive Pointertable bei `0x25D7B4` gefuehrt.
-- Learnset-Repointing nutzt bei wiederholten `setMovesLearnt()`-Writes jeweils freie `0xFF`-Bloecke innerhalb `0x1219A48-0x1600000`.
-- Alle sieben GUI-/Settings-nahen Diagnose-Laeufe speichern, loggen, erzeugen Output und reloaden mit `writeReloadLearnsetMismatches=0`.
-- Pokemon Movesets/Learnsets sind im getesteten CFRU/DPE Gen9-BPRE-Scope P1-supported; Move-Data-Write, Base Stats/Types/Abilities, Special Tutors, Tutor-Text/Menu und Palette/Graphics bleiben separate Folgearbeit.
+- `gBaseStats` wird ueber Pointer-Ort `0x080001BC` gefuehrt und bleibt im CFRU/DPE-Stand ein `0x1C`-Entry-Array mit internem Species-Indexing.
+- Base Stats, Types, Ability1/2, Hidden Ability und Encounter Held Items liegen fachlich eng beieinander, haben aber getrennte Count-/Enum-/Logger-Risiken.
+- FVX Gen3 liest/schreibt aktuell Ability1/2 und Common/Rare Held Items, aber keine Hidden Ability; `abilitiesPerSpecies()` bleibt `2` und `highestAbilityIndex=77`.
+- CFRU/DPE definiert `TYPE_FAIRY=0x17`, `TYPE_STELLAR=0x18`, `ABILITY_PASTELVEIL=0xFE`, `ABILITIES_COUNT=255` und Item-Counts oberhalb klassischer Gen3-Grenzen.
 
 ## Lokale Artefaktpflege
 
