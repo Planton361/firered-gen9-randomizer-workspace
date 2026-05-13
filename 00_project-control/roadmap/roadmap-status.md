@@ -24,9 +24,9 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Aktueller Branch | `compat/upr-fvx-cfru-dpe-encounter-held-items-scope-and-write` |
-| Nächster Branch | `analysis/upr-fvx-cfru-dpe-p1-type-log-placeholder-hygiene` |
-| Aktueller Fokus | CFRU/DPE Encounter Held Items Scope-and-Write-Fix |
+| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-p1-type-log-placeholder-hygiene` |
+| Nächster Branch | `analysis/upr-fvx-cfru-dpe-p1-move-data-write-model` |
+| Aktueller Fokus | CFRU/DPE Type-Log-/Placeholder-Hygiene-Klassifikation |
 | ROM-/Build-Arbeit | keine neuen ROM-/Build-Artefakte; keine Artefakte committen |
 | Externe Repos | als Submodule auf Planton361-Forks eingebunden |
 | Forks | Planton361-Forks fuer UPR-FVX, DPE Gen9 und CFRU dokumentiert |
@@ -114,18 +114,19 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | 08 Randomizer-Kompatibilität | CFRU/DPE Ability1/2 + Hidden Ability Scope-and-Write-Fix | UPR-FVX Commit `639c7e61`; Diagnose 052 bestaetigt Ability1/2-only, Hidden Ability-only, Ability1/2 + Hidden Ability und Base Stats + Types + Abilities mit Save/Log/Reload, `writeReloadAbilityMismatches=0` und `writeReloadHiddenAbilityMismatches=0` |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Item-/Bad-Item-/Encounter-Held-Item-Modell | Diagnose 053 dokumentiert CFRU/DPE Itemgrenzen `779`/ca. `799`, klassischen FVX-`ItemCount=374`, moderne Bad-/Key-Item-Risiken und Encounter-Held-Item-Felder `item1/item2` bei `0x0C`/`0x0E`; Encounter Held Items brauchen separaten Fixbranch |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Encounter Held Items Scope-and-Write-Fix | UPR-FVX Commit `5c7170b6`; Diagnose 054 bestaetigt Item-Scope bis `778`, moderne Bad-/Banned-Filter und Encounter Held Items-only sowie Kombinationen mit Base Stats, Abilities und Types mit Save/Log/Reload und `writeReloadEncounterHeldItemMismatches=0` |
+| 08 Randomizer-Kompatibilität | CFRU/DPE Type-Log-/Placeholder-Hygiene | Diagnose 055 klassifiziert `Bad Egg`, `<unknown>`, Unknown-Type-/Ability-/Item-Fallbacks und Null-/BST-zero-/all-zero-Ability-Species aus bestehenden Protokollen; Marker aus 051/052/054 blockieren P1-Support nicht bei stabilen Save/Log/Output/Reload-Kriterien und `0` Mismatches |
 
 ## In Arbeit
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Encounter Held Items Scope-and-Write | Diagnose 054 dokumentieren und PRs erstellen |
+| 08 Randomizer-Kompatibilität | Type-Log-/Placeholder-Hygiene | Diagnose 055 dokumentieren und PR erstellen |
 
 ## Als Nächstes
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Placeholder-/Bad-Egg-Log-Hygiene | bestehende `Bad Egg`-/Placeholder-Marker im Traits-/BaseStats-Log getrennt von Encounter Held Items einordnen |
+| 08 Randomizer-Kompatibilität | Move-Data-Write-Modell | `moves.total=992`, `BattleMove.split` und CFRU/DPE-Felder read-only fuer spaeteren Write-Scope modellieren |
 
 ## Noch offen
 
@@ -193,7 +194,8 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | P1ae | `compat/upr-fvx-cfru-dpe-base-stats-types-scope-and-write` | Base Stats + Types Scope-and-Write | erledigt; UPR-FVX `20f16d07` bestaetigt Fairy `0x17` Read/Write, Stellar preserve/skip und Reload ohne Mismatches |
 | P1af | `compat/upr-fvx-cfru-dpe-abilities-hidden-ability-scope-and-write` | Ability1/2 + Hidden Ability Scope-and-Write | erledigt; Diagnose 052 bestaetigt `abilitiesPerSpecies=3`, `highestAbilityIndex=254` und Reload ohne Ability-/Hidden-Ability-Mismatches |
 | P1ag | `analysis/upr-fvx-cfru-dpe-p1-item-data-and-bad-item-model` | Item-/Bad-Item-Modell fuer Encounter Held Items | erledigt; Diagnose 053 dokumentiert Item-ID-/Itemnamen-Scope, moderne Bad-/Key-Item-Risiken und Encounter-Held-Item-Folgefix |
-| P1ah | `compat/upr-fvx-cfru-dpe-encounter-held-items-scope-and-write` | Encounter Held Items Scope-and-Write | aktueller Fixbranch; UPR-FVX `5c7170b6` und Diagnose 054 bestaetigen Save/Log/Reload ohne Encounter-Held-Item-Mismatches |
+| P1ah | `compat/upr-fvx-cfru-dpe-encounter-held-items-scope-and-write` | Encounter Held Items Scope-and-Write | erledigt; UPR-FVX `5c7170b6` und Diagnose 054 bestaetigen Save/Log/Reload ohne Encounter-Held-Item-Mismatches |
+| P1ai | `analysis/upr-fvx-cfru-dpe-p1-type-log-placeholder-hygiene` | Type-Log-/Placeholder-Hygiene | aktueller Analysebranch; Diagnose 055 klassifiziert bestehende `Bad Egg`-/Unknown-/Fallback-/Null-Species-Marker read-only und trennt sie von Fix- und Text-/Name-Scope |
 | P2 | `randomizer/cfru-day-night-wild-table-analysis` | CFRU-Custom-Day/Night-Wild-Tabellen separat untersuchen | erst nach P1-Schreibpfad-Diagnose; Route-1-Fallback bleibt stabil |
 | P3 | noch festlegen | Nullslot-`<unknown>` mit `rawInternalSpeciesId=0` klassifizieren | nicht mit GenRestrictions vermischen |
 | P4 | noch festlegen | BizHawk-/Ironmon-Tracker-/RAM-Mapping pruefen | erst nach stabiler ROM-Randomizer-Kompatibilitaet |

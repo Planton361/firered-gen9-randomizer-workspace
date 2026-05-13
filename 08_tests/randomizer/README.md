@@ -2,9 +2,9 @@
 
 ## Latest
 
-- `054_encounter_held_items_scope_write_diagnostics.md` dokumentiert den CFRU/DPE Encounter-Held-Item-Scope-and-Write-Fix.
-- Encounter Held Items sind im getesteten Scope P1-supported: alle Pflichtlaeufe liefern Save/Log/Output/Reload und `writeReloadEncounterHeldItemMismatches=0`.
-- Der CFRU/DPE-Item-Scope laedt konservativ bis `778`, bannt moderne Sonder-/Placeholder-Items fuer Random-Picks und preservt bestehende moderne Held-Item-IDs als Fallback.
+- `055_type_log_placeholder_hygiene.md` klassifiziert `Bad Egg`, `<unknown>`, Unknown-Type-/Unknown-Ability-/Unknown-Item-Marker und Placeholder-/Null-Species aus bestehenden Protokollen.
+- Die Marker aus 051/052/054 blockieren den dokumentierten P1-Support nicht, solange Save/Log/Output/Reload stabil bleiben und die jeweiligen Mismatch-Zaehler `0` sind.
+- Log-Hygiene bleibt getrennt von Type-Chart-, Ability-Name-, Item-Name-, Species-Scope- und Fix-Themen.
 
 Dieses Verzeichnis enthaelt die dauerhaften Markdown-Protokolle fuer UPR-FVX/CFRU-DPE-Randomizer-Analysen und Smokes. Lokale ROM-, Build-, Log- und Tool-Artefakte bleiben unter `05_builds/**` oder `03_tools/releases/**` und werden nicht committed.
 
@@ -87,19 +87,19 @@ Der neueste bestaetigte Stand wird in Markdown ueber die Spalte `Latest` markier
 | 051 | `051_base_stats_types_scope_write_diagnostics.md` | CFRU/DPE Base Stats + Types Scope-and-Write-Fix Diagnose | bestaetigt: Base Stats-only, Types-only und Base Stats + Types mit Save/Log/Output/Reload, `writeReloadBaseStatsMismatches=0`, `typeIdMismatches=0`, Fairy `0x17` gelesen/geschrieben, Stellar preserve/skip | `05_builds/randomizer-smoke/051_base_stats_types_scope_write/` lokal/ignored | nein |
 | 052 | `052_abilities_hidden_ability_scope_write_diagnostics.md` | CFRU/DPE Ability1/2 + Hidden Ability Scope-and-Write-Fix Diagnose | bestaetigt: Ability1/2-only, Hidden Ability-only, Ability1/2 + Hidden Ability und Base Stats + Types + Abilities mit Save/Log/Output/Reload, `abilitiesPerSpecies=3`, `highestAbilityIndex=254`, `writeReloadAbilityMismatches=0` und `writeReloadHiddenAbilityMismatches=0` | `05_builds/randomizer-smoke/052_abilities_hidden_ability_scope_write/` lokal/ignored | nein |
 | 053 | `053_p1_item_data_and_bad_item_model.md` | CFRU/DPE Item-ID-, Itemnamen-, Bad-/Key-Item- und Encounter-Held-Item-Modell | dokumentiert: CFRU/DPE Itemgrenzen `779`/ca. `799`, klassischer FVX-`ItemCount=374`, moderne Bad-/Key-Item-Risiken und Encounter-Held-Item-Felder `item1/item2` bei `0x0C`/`0x0E`; Encounter Held Items brauchen separaten Fix | keiner, read-only Analyse | nein |
-| 054 | `054_encounter_held_items_scope_write_diagnostics.md` | CFRU/DPE Encounter Held Items Scope-and-Write-Fix Diagnose | bestaetigt: Item-Scope bis `778`, moderne Bad-/Banned-Filter, Encounter Held Items-only sowie Kombinationen mit Base Stats, Abilities und Types mit Save/Log/Output/Reload und `writeReloadEncounterHeldItemMismatches=0` | `05_builds/randomizer-smoke/054_encounter_held_items_scope_write/` lokal/ignored | ja |
+| 054 | `054_encounter_held_items_scope_write_diagnostics.md` | CFRU/DPE Encounter Held Items Scope-and-Write-Fix Diagnose | bestaetigt: Item-Scope bis `778`, moderne Bad-/Banned-Filter, Encounter Held Items-only sowie Kombinationen mit Base Stats, Abilities und Types mit Save/Log/Output/Reload und `writeReloadEncounterHeldItemMismatches=0` | `05_builds/randomizer-smoke/054_encounter_held_items_scope_write/` lokal/ignored | nein |
+| 055 | `055_type_log_placeholder_hygiene.md` | CFRU/DPE Type-/Trait-Log-, Placeholder- und Unknown-Marker-Klassifikation | dokumentiert: `Bad Egg`, `<unknown>`, Unknown-Type-/Ability-/Item-Fallbacks und Null-/BST-zero-/all-zero-Ability-Species aus vorhandenen Protokollen klassifiziert; keine neuen Randomizer-Laeufe, kein Fix | keiner, read-only Analyse | ja |
 
 ## Aktuell bestaetigter Stand
 
-Latest ist Nr. 054: CFRU/DPE Encounter Held Items Scope-and-Write-Fix.
+Latest ist Nr. 055: CFRU/DPE Type-Log-/Placeholder-Hygiene-Klassifikation.
 
 Kernaussagen:
 
-- CFRU/DPE Encounter Held Items sind im getesteten `gBaseStats`-Scope P1-supported.
-- `gBaseStats` bleibt ueber Pointer-Ort `0x080001BC` und Entry-Size `0x1C` relevant; `item1/item2` liegen als `u16` bei `0x0C`/`0x0E`.
-- Der getestete Item-Scope laedt konservativ bis `778`; die DPE-Oberregion `779..798` wird nur genutzt, wenn sie plausibel lesbar ist.
-- Moderne Sonder-/Placeholder-Items werden fuer Random-Picks gebannt; bestehende moderne Held-Item-IDs werden nicht mehr zu `null` und damit nicht zu `0` beim Save.
-- Field Items, Shops, Pickup, Move-Data-Write, Type-Chart-Randomization und Palette/Graphics bleiben separate Folgearbeiten.
+- `Bad Egg`, Unknown-Type-/`null`-Marker, Unknown-Ability-Fallbacks und Item-Fallbacks aus 051/052/054 sind klassifiziert.
+- Diese Marker blockieren den dokumentierten P1-Support nicht, solange Save/Log/Output/Reload stabil bleiben und die jeweiligen Mismatch-Zaehler `0` sind.
+- Null-Species, `BST == 0` und all-zero Ability Species bleiben als potenzielle echte Blocker zu unterscheiden, wenn ein Pfad sie dereferenziert oder schreibt.
+- Type-Chart, Ability-Namen, Item-Namen, Species-Scope, Field Items/Shops/Pickup, Move-Data-Write und Palette/Graphics bleiben separate Folgearbeiten.
 
 ## Lokale Artefaktpflege
 

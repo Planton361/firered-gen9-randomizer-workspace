@@ -1,5 +1,22 @@
 # Session State
 
+## 2026-05-13 - CFRU/DPE Type Log / Placeholder Hygiene
+
+Arbeitsbranch: `analysis/upr-fvx-cfru-dpe-p1-type-log-placeholder-hygiene`
+
+Aktueller Stand:
+
+- Neues read-only Analyseprotokoll `08_tests/randomizer/055_type_log_placeholder_hygiene.md` erstellt.
+- `Bad Egg`, `<unknown>`, Unknown-Type-/Unknown-Ability-/Unknown-Item-Marker und Placeholder-/Null-Species wurden strikt aus bestehenden Protokollen und read-only `rg`-Befunden klassifiziert.
+- Die Marker aus 051/052/054 blockieren den dokumentierten P1-Support nicht, solange Save/Log/Output/Reload stabil bleiben und die jeweiligen Mismatch-Zaehler `0` sind.
+- Echte Blocker bleiben getrennt: Null-Species-/BST-zero-/all-zero-Ability-Species sind nur dann Blocker, wenn ein konkreter Randomizer-Pfad abbricht, falsch schreibt oder falsch reloadet.
+- Log-Hygiene wurde getrennt von Type-Chart-, Ability-Name-, Item-Name-, Species-Scope- und Fix-Themen dokumentiert.
+- Keine Codeaenderung, keine Aenderung an `02_external/**`, keine neuen Randomizer-Laeufe.
+
+Naechster sinnvoller Schritt:
+
+- `analysis/upr-fvx-cfru-dpe-p1-move-data-write-model`: Move-Data-Write fuer `moves.total=992`, `BattleMove.split` und CFRU/DPE-Felder read-only modellieren.
+
 ## 2026-05-13 - CFRU/DPE Encounter Held Items Scope-and-Write Fix
 
 Arbeitsbranch: `compat/upr-fvx-cfru-dpe-encounter-held-items-scope-and-write`
@@ -187,31 +204,32 @@ Naechster sinnvoller Schritt:
 
 ## Aktueller Branch
 
-`compat/upr-fvx-cfru-dpe-encounter-held-items-scope-and-write`
+`analysis/upr-fvx-cfru-dpe-p1-type-log-placeholder-hygiene`
 
 ## Aktueller Arbeitsblock
 
-CFRU/DPE Encounter Held Items Scope-and-Write-Fix.
+CFRU/DPE Type-Log-/Placeholder-Hygiene-Klassifikation.
 
 ## Ziel
 
-Encounter Held Items fuer den getesteten CFRU/DPE Gen9-BPRE-Stand minimal gegatet schreiben/reloaden; Item-Scope und moderne Bad-/Banned-Filter absichern.
+Read-only klassifizieren, wo `Bad Egg`, `<unknown>`, Unknown-Type-/Unknown-Ability-/Unknown-Item-Marker und Placeholder-/Null-Species im Randomizer-Log herkommen.
 
 ## In diesem Arbeitsblock geprueft / geaendert
 
-- Workspace PR #91 als gemerged geprueft.
-- Workspace-Branch `compat/upr-fvx-cfru-dpe-encounter-held-items-scope-and-write` erstellt; nicht auf `main` gearbeitet.
-- UPR-FVX-Fix fuer Item-Scope, moderne Bad-/Banned-Filter und Encounter-Held-Item-Read/Write/Reload erstellt.
-- Neues Protokoll erstellt: `08_tests/randomizer/054_encounter_held_items_scope_write_diagnostics.md`.
-- `08_tests/randomizer/README.md`, `SESSION_STATE.md`, `NEXT_STEPS.md`, Roadmap und Tool-Manifest aktualisiert.
+- Workspace-Branch `analysis/upr-fvx-cfru-dpe-p1-type-log-placeholder-hygiene` genutzt; nicht auf `main` gearbeitet.
+- Pflichtdokumente und Diagnosen 047/051/052/053/054 gelesen.
+- Read-only `rg`-Suche nach `Bad Egg`, `<unknown>`, Unknown-/Placeholder-/Fallback-Markern ausgefuehrt.
+- Neues Protokoll erstellt: `08_tests/randomizer/055_type_log_placeholder_hygiene.md`.
+- `08_tests/randomizer/README.md`, `SESSION_STATE.md`, `NEXT_STEPS.md` und Roadmap aktualisiert.
+- Tool-Manifest nicht geaendert, weil kein Tool-/Repo-/Commit-/Submodule-Stand geaendert wurde.
 
 ## Ergebnis
 
-- CFRU/DPE Item-Scope laedt im getesteten Stand konservativ bis `778`; DPE `779..798` wird nur genutzt, wenn ROM-seitig plausibel lesbar.
-- `gBaseStats` bleibt ueber Pointer-Ort `0x080001BC` und Entry-Size `0x1C` relevant; Encounter Held Items liegen als `item1/item2` bei `0x0C`/`0x0E`.
-- Encounter Held Items-only sowie Kombinationen mit Base Stats, Abilities und Types liefern Save/Log/Output/Reload und `writeReloadEncounterHeldItemMismatches=0`.
-- Bad-/Banned-Item-Verletzungen: `0`.
-- `Bad Egg` bleibt als bestehendes Placeholder-/Sonder-Species-Logrisiko sichtbar, blockiert aber den Encounter-Held-Item-Write/Reload nicht.
+- `Bad Egg` aus 051/052/054 ist als Placeholder-/Special-Species-Logartefakt klassifiziert, nicht als aktueller Save-/Reload-Blocker.
+- Unknown-Type-/`null`-Marker aus 051 sind als unsupported-Type-/Placeholder-Hygiene klassifiziert; `typeIdMismatches=0` bleibt der relevante P1-Nachweis.
+- Unknown-Ability-Fallbacks wie `ability #<id>` sind als Namens-/Logger-Fallbacks klassifiziert; Ability1/2 und Hidden Ability bleiben mit `0` Mismatches P1-supported.
+- Item-Fallbacks wie `item #<id>` und `unknown item #<id>` sind von Encounter Held Items, Field Items/Shops/Pickup und Item-Text getrennt.
+- Null-Species, `BST == 0` und all-zero Ability Species bleiben potenzielle echte Blocker, wenn sie nicht defensiv behandelt werden; 052/054 behandeln sie defensiv.
 
 ## Noch nicht gestartet
 
@@ -219,7 +237,7 @@ Encounter Held Items fuer den getesteten CFRU/DPE Gen9-BPRE-Stand minimal gegate
 - Move-Data-Write/`saveMoves()` fuer CFRU/DPE
 - Field Items/Shops/Pickup-Itemmodell
 - CFRU-Day/Night-Custom-Wild-Tabellen-Support
-- Nullslot-`<unknown>`-Analyse
+- Vollstaendige Nullslot-`<unknown>`-Analyse ausserhalb der bereits dokumentierten Klassifikation
 - Ironmon-Tracker-Tests
 
 ## Sicherheitsstatus
@@ -236,9 +254,9 @@ Keine externen Original-Upstreams kontaktiert.
 
 Keine Aenderungen direkt auf `main`.
 
-UPR-FVX wurde nur im erlaubten Fixscope geaendert; andere `02_external/**`-Repos blieben unangetastet.
+UPR-FVX und andere `02_external/**`-Repos blieben in diesem Analyseblock unangetastet.
 
-Keine Move-Data-Write-, Tutor-Text/Menu-, Special-Tutor-, Egg-Move-, Palette/Graphics- oder Text/Menu-Ausweitung.
+Keine Type-Chart-, Ability-Name-, Item-Name-, Move-Data-Write-, Tutor-Text/Menu-, Special-Tutor-, Egg-Move-, Palette/Graphics- oder Text/Menu-Ausweitung.
 
 Keine MCP-Configs mit Secrets angelegt.
 
@@ -256,7 +274,7 @@ git diff --check
 
 ## Naechster empfohlener Branch
 
-Nach Merge dieses Analyseblocks: `compat/upr-fvx-cfru-dpe-base-stats-types-scope-and-write`. Hidden Abilities, Encounter Held Items, Move-Data-Write, Special Tutors, Tutor-Text/Menu-Rewrites, Items/Shops/Field und Palette/Graphics bleiben eigene Folgebranches.
+Nach Merge dieses Analyseblocks: `analysis/upr-fvx-cfru-dpe-p1-move-data-write-model`. Field Items/Shops/Pickup, Palette/Graphics, Type-Chart, Special Tutors und Tutor-Text/Menu-Rewrites bleiben eigene Folgebranches.
 
 ### 2026-05-13 - analysis/upr-fvx-cfru-dpe-p1-learnset-repointing-model
 
