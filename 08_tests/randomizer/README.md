@@ -2,9 +2,9 @@
 
 ## Latest
 
-- `058_p1_palette_randomization_model.md` modelliert read-only Palette-Randomization fuer CFRU/DPE.
-- Bestehende Palette-Safety / Skip-Unchanged-Save ist vom echten Schreiben geaenderter Paletten getrennt.
-- Graphics/Sprites bleiben ein eigenes P2-Modell.
+- `059_p1_type_chart_model.md` modelliert read-only Type-Chart und moderne Type-Interaktion fuer CFRU/DPE.
+- Pokemon-Type-Read/Write aus Diagnose 051 ist strikt von Type-Chart-/Effectiveness-Randomization getrennt.
+- Fairy `0x17` in Species-Daten beweist keine korrekte Fairy-Effectiveness-Tabelle; Stellar `0x18` bleibt unsupported/preserve-only.
 
 Dieses Verzeichnis enthaelt die dauerhaften Markdown-Protokolle fuer UPR-FVX/CFRU-DPE-Randomizer-Analysen und Smokes. Lokale ROM-, Build-, Log- und Tool-Artefakte bleiben unter `05_builds/**` oder `03_tools/releases/**` und werden nicht committed.
 
@@ -91,20 +91,20 @@ Der neueste bestaetigte Stand wird in Markdown ueber die Spalte `Latest` markier
 | 055 | `055_type_log_placeholder_hygiene.md` | CFRU/DPE Type-/Trait-Log-, Placeholder- und Unknown-Marker-Klassifikation | dokumentiert: `Bad Egg`, `<unknown>`, Unknown-Type-/Ability-/Item-Fallbacks und Null-/BST-zero-/all-zero-Ability-Species aus vorhandenen Protokollen klassifiziert; keine neuen Randomizer-Laeufe, kein Fix | keiner, read-only Analyse | nein |
 | 056 | `056_p1_move_data_write_model.md` | CFRU/DPE Move-Data-Write-Modell | dokumentiert: `moves.total=992`, `991:PsychicNoise`, `BattleMove.split`-/Category-Semantik, aktuelle `saveMoves()`-Teilfeld-Write-Annahme, Preserve-Policy und Reload-Kriterien fuer spaeteren Fix; kein Fix | keiner, read-only Analyse | nein |
 | 057 | `057_p1_field_items_shops_pickup_model.md` | CFRU/DPE Field-Items-/Shops-/Pickup-Item-Modell | dokumentiert: Grenze zu Encounter Held Items, Item-Scope aus 053/054, Field-/Shop-/Pickup-Risiken, allgemeine Bad-/Banned-Item-Risiken, Preserve-/Skip-Policy und Reload-Kriterien fuer spaetere Fixbranches; kein Fix | keiner, read-only Analyse | nein |
-| 058 | `058_p1_palette_randomization_model.md` | CFRU/DPE Palette-Randomization-Modell | dokumentiert: Palette-Safety/Skip-Unchanged-Save, Grenze zu echter Palette-Randomization, `PokemonPalettesMod.RANDOM`, `Gen3to5PaletteRandomizer`, `savePokemonPalettes()`, compressed/shared/repointing risks, Graphics-Abgrenzung, Preserve-/Skip-Policy und Reload-Kriterien; kein Fix | keiner, read-only Analyse | ja |
+| 058 | `058_p1_palette_randomization_model.md` | CFRU/DPE Palette-Randomization-Modell | dokumentiert: Palette-Safety/Skip-Unchanged-Save, Grenze zu echter Palette-Randomization, `PokemonPalettesMod.RANDOM`, `Gen3to5PaletteRandomizer`, `savePokemonPalettes()`, compressed/shared/repointing risks, Graphics-Abgrenzung, Preserve-/Skip-Policy und Reload-Kriterien; kein Fix | keiner, read-only Analyse | nein |
+| 059 | `059_p1_type_chart_model.md` | CFRU/DPE Type-Chart-Modell | dokumentiert: Grenze zu Pokemon-Type-Read/Write aus 051, Fairy-vs-TypeChart-Grenze, Stellar-/unsupported-Type-Grenze, Type-Effectiveness-Table-Risiken, Preserve-/Skip-Policy und Reload-Kriterien; kein Fix | keiner, read-only Analyse | ja |
 
 ## Aktuell bestaetigter Stand
 
-Latest ist Nr. 058: CFRU/DPE Palette-Randomization-Modell.
+Latest ist Nr. 059: CFRU/DPE Type-Chart-Modell.
 
 Kernaussagen:
 
-- Palette-Safety ist fuer den unveraenderten Pfad belegt: fehlende/invalid Paletten blockieren den Load nicht mehr, unveraenderte Paletten werden beim Save uebersprungen.
-- Safety-Diagnosen beweisen keine sichere geaenderte Palette-Randomization.
-- `PokemonPalettesMod.RANDOM` und `Gen3to5PaletteRandomizer` bleiben fuer CFRU/DPE ein offener Writer.
-- `savePokemonPalettes()` faellt bei geaenderten Paletten in den komprimierten Write-/Repointing-Pfad.
-- Shared/missing Palette-Pointer, compressed-data-Rewrites und Dex-/Pokedex-Mapping bleiben eigene Risiken.
-- Graphics/Sprites bleiben ein eigenes P2-Modell.
+- Diagnose 051 beweist `gBaseStats`-Pokemon-Type-Read/Write, nicht Type-Chart-Support.
+- Fairy `0x17` in Species-Daten beweist keine korrekte Fairy-Effectiveness-Tabelle.
+- Stellar `0x18` bleibt unsupported und darf nicht stillschweigend in Random-Pools oder TypeChart-Writes eingefuehrt werden.
+- `TypeEffectivenessRandomizer` und `getTypeTable()`/`setTypeTable()` bleiben ein eigener offener Hochrisiko-Writer.
+- Log-Hygiene, Palette, Items, MoveData und Graphics/Sprites bleiben getrennte Themen.
 
 ## Lokale Artefaktpflege
 

@@ -24,9 +24,9 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-p1-palette-randomization-model` |
-| Nächster Branch | `analysis/upr-fvx-cfru-dpe-p1-type-chart-model` |
-| Aktueller Fokus | CFRU/DPE Palette-Randomization-Modell |
+| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-p1-type-chart-model` |
+| Nächster Branch | `analysis/upr-fvx-cfru-dpe-p1-gui-suboptions-regression-matrix` |
+| Aktueller Fokus | CFRU/DPE Type-Chart-Modell |
 | ROM-/Build-Arbeit | keine neuen ROM-/Build-Artefakte; keine Artefakte committen |
 | Externe Repos | als Submodule auf Planton361-Forks eingebunden |
 | Forks | Planton361-Forks fuer UPR-FVX, DPE Gen9 und CFRU dokumentiert |
@@ -118,18 +118,19 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | 08 Randomizer-Kompatibilität | CFRU/DPE Move-Data-Write-Modell | Diagnose 056 modelliert `moves.total=992`, `991:PsychicNoise`, `BattleMove.split`, aktuelle `saveMoves()`-Teilfeldwrites, Preserve-Policy und Reload-Kriterien fuer spaeteren Fix |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Field Items/Shops/Pickup-Modell | Diagnose 057 modelliert Field Items, Shops, Pickup und allgemeine Item-Randomization getrennt von Encounter Held Items; eigene Preserve-/Skip-Policy und Reload-Kriterien dokumentiert |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Palette-Randomization-Modell | Diagnose 058 trennt Palette-Safety/Skip-Unchanged-Save von echter geaenderter Palette-Randomization; compressed/shared/repointing risks, Preserve-/Skip-Policy, Reload-Kriterien und Graphics/P2-Abgrenzung dokumentiert |
+| 08 Randomizer-Kompatibilität | CFRU/DPE Type-Chart-Modell | Diagnose 059 trennt Pokemon-Type-Read/Write aus 051 von Type-Chart-/Effectiveness-Randomization; Fairy `0x17`, Stellar/unsupported `0x18`, TypeTable-Risiken, Preserve-/Skip-Policy und Reload-Kriterien dokumentiert |
 
 ## In Arbeit
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Palette-Randomization-Modell | Diagnose 058 dokumentieren und PR erstellen |
+| 08 Randomizer-Kompatibilität | Type-Chart-Modell | Diagnose 059 dokumentieren und PR erstellen |
 
 ## Als Nächstes
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Type-Chart-Modell | Type-Chart- und moderne Type-Interaktion getrennt von Pokemon-Type-Read/Write modellieren |
+| 08 Randomizer-Kompatibilität | GUI-Suboptions-Regressionsmatrix | GUI-Suboptionen nach den Modellen 055-059 regressionsorientiert konsolidieren |
 
 ## Noch offen
 
@@ -198,7 +199,11 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | P1af | `compat/upr-fvx-cfru-dpe-abilities-hidden-ability-scope-and-write` | Ability1/2 + Hidden Ability Scope-and-Write | erledigt; Diagnose 052 bestaetigt `abilitiesPerSpecies=3`, `highestAbilityIndex=254` und Reload ohne Ability-/Hidden-Ability-Mismatches |
 | P1ag | `analysis/upr-fvx-cfru-dpe-p1-item-data-and-bad-item-model` | Item-/Bad-Item-Modell fuer Encounter Held Items | erledigt; Diagnose 053 dokumentiert Item-ID-/Itemnamen-Scope, moderne Bad-/Key-Item-Risiken und Encounter-Held-Item-Folgefix |
 | P1ah | `compat/upr-fvx-cfru-dpe-encounter-held-items-scope-and-write` | Encounter Held Items Scope-and-Write | erledigt; UPR-FVX `5c7170b6` und Diagnose 054 bestaetigen Save/Log/Reload ohne Encounter-Held-Item-Mismatches |
-| P1ai | `analysis/upr-fvx-cfru-dpe-p1-type-log-placeholder-hygiene` | Type-Log-/Placeholder-Hygiene | aktueller Analysebranch; Diagnose 055 klassifiziert bestehende `Bad Egg`-/Unknown-/Fallback-/Null-Species-Marker read-only und trennt sie von Fix- und Text-/Name-Scope |
+| P1ai | `analysis/upr-fvx-cfru-dpe-p1-type-log-placeholder-hygiene` | Type-Log-/Placeholder-Hygiene | erledigt; Diagnose 055 klassifiziert bestehende `Bad Egg`-/Unknown-/Fallback-/Null-Species-Marker read-only und trennt sie von Fix- und Text-/Name-Scope |
+| P1aj | `analysis/upr-fvx-cfru-dpe-p1-move-data-write-model` | Move-Data-Write-Modell | erledigt; Diagnose 056 dokumentiert 992-Move-Scope, `BattleMove.split`, Preserve-Policy und Reload-Kriterien |
+| P1ak | `analysis/upr-fvx-cfru-dpe-p1-field-items-shops-pickup-model` | Field Items/Shops/Pickup-Modell | erledigt; Diagnose 057 trennt Field Items, Shops, Pickup und allgemeine Item-Randomization von Encounter Held Items |
+| P1al | `analysis/upr-fvx-cfru-dpe-p1-palette-randomization-model` | Palette-Randomization-Modell | erledigt; Diagnose 058 trennt Palette-Safety von echter geaenderter Palette-Randomization und Graphics/Sprites |
+| P1am | `analysis/upr-fvx-cfru-dpe-p1-type-chart-model` | Type-Chart-Modell | aktueller Analysebranch; Diagnose 059 trennt `gBaseStats`-Type-Read/Write aus 051 von Type-Chart-/Effectiveness-Randomization |
 | P2 | `randomizer/cfru-day-night-wild-table-analysis` | CFRU-Custom-Day/Night-Wild-Tabellen separat untersuchen | erst nach P1-Schreibpfad-Diagnose; Route-1-Fallback bleibt stabil |
 | P3 | noch festlegen | Nullslot-`<unknown>` mit `rawInternalSpeciesId=0` klassifizieren | nicht mit GenRestrictions vermischen |
 | P4 | noch festlegen | BizHawk-/Ironmon-Tracker-/RAM-Mapping pruefen | erst nach stabiler ROM-Randomizer-Kompatibilitaet |
@@ -241,10 +246,10 @@ Excel-Roadmap:
 ## Nächster empfohlener Branch
 
 ```text
-compat/upr-fvx-cfru-dpe-learnset-write-repointing
+analysis/upr-fvx-cfru-dpe-p1-gui-suboptions-regression-matrix
 ```
 
-Zweck: Full CFRU/DPE Learnset-Write nur mit nachgewiesener freier ROM-Fläche, Pointertable-Update pro interner Species-ID und Reload-Diagnose umsetzen.
+Zweck: GUI-Suboptionen nach den read-only Modellen 055-059 regressionsorientiert konsolidieren, ohne neue Randomizer-Laeufe oder Fixumsetzung.
 
 ## Arbeitsblock-Log
 
