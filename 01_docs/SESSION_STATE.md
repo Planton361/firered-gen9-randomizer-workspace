@@ -1,5 +1,25 @@
 # Session State
 
+## 2026-05-13 - CFRU/DPE Field Items / Shops / Pickup Modell
+
+Arbeitsbranch: `analysis/upr-fvx-cfru-dpe-p1-field-items-shops-pickup-model`
+
+Aktueller Stand:
+
+- Neues read-only Analyseprotokoll `08_tests/randomizer/057_p1_field_items_shops_pickup_model.md` erstellt.
+- Field Items, Shops, Pickup und allgemeine Item-Randomization wurden strikt von Encounter Held Items aus Diagnose 054 getrennt.
+- Item-Scope-Stand aus 053/054 eingeordnet: klassischer FVX-FRLG-`ItemCount=374`, CFRU-naher Scope bis `778`/`779`, DPE-Header-Scope bis ca. `799`, getesteter 054-Scope `item.count=778`.
+- Field-Item-Risiken dokumentiert: Map-/Script-Kontext, required field TMs, moderne TM/HM-Items, Key-/System-/Placeholder-Items und eigener Reload-Nachweis.
+- Shop-Randomization-Risiken dokumentiert: `ShopPointerOffsets`, Special-/Main-Game-Shop-Scope, Shopgroessen, Preise, Guaranteed Items und Text/Menu-Grenze.
+- Pickup-Risiken dokumentiert: klassischer `PickupTableStartLocator`/`PickupItemCount`, CFRU `sPickupCommonItems`/`sPickupRareItems`, Probability-Slots und moderne Item-Pools.
+- Preserve-/Skip-Policy und Reload-/Diagnosekriterien fuer spaetere Fixbranches festgelegt.
+- Diagnose 055 bleibt Log-Hygiene-Grenze; Diagnose 056 bleibt Move-Data-Write-Grenze.
+- Keine Codeaenderung, keine Aenderung an `02_external/**`, keine neuen Randomizer-Laeufe, kein Tool-Manifest-Update.
+
+Naechster sinnvoller Schritt:
+
+- `analysis/upr-fvx-cfru-dpe-p1-palette-randomization-model`: Vorhandene Palette-Safety von echter Palette-/Graphics-Randomization trennen und Write-/Repointing-Risiken modellieren.
+
 ## 2026-05-13 - CFRU/DPE Move-Data-Write-Modell
 
 Arbeitsbranch: `analysis/upr-fvx-cfru-dpe-p1-move-data-write-model`
@@ -222,37 +242,37 @@ Naechster sinnvoller Schritt:
 
 ## Aktueller Branch
 
-`analysis/upr-fvx-cfru-dpe-p1-move-data-write-model`
+`analysis/upr-fvx-cfru-dpe-p1-field-items-shops-pickup-model`
 
 ## Aktueller Arbeitsblock
 
-CFRU/DPE Move-Data-Write-Modell.
+CFRU/DPE Field Items / Shops / Pickup Item-Modell.
 
 ## Ziel
 
-Read-only modellieren, wie ein spaeterer Move-Data-Write fuer `moves.total=992`, `BattleMove.split` und CFRU/DPE-Zusatzfelder abgegrenzt werden muss.
+Read-only modellieren, wie Field Items, Shops, Pickup und allgemeine Item-Randomization vom Encounter-Held-Item-Scope getrennt abzusichern sind.
 
 ## In diesem Arbeitsblock geprueft / geaendert
 
-- Workspace-Branch `analysis/upr-fvx-cfru-dpe-p1-move-data-write-model` genutzt; nicht auf `main` gearbeitet.
-- Pflichtdokumente und Diagnosen 033/034/047/055 gelesen.
-- Read-only `rg`-Suche nach MoveData-, `saveMoves()`-, `MOVES_COUNT`-, `PsychicNoise`-, Split- und Category-Markern ausgefuehrt.
-- Neues Protokoll erstellt: `08_tests/randomizer/056_p1_move_data_write_model.md`.
+- Workspace-Branch `analysis/upr-fvx-cfru-dpe-p1-field-items-shops-pickup-model` genutzt; nicht auf `main` gearbeitet.
+- Pflichtdokumente und Diagnosen 047/053/054/055/056 gelesen.
+- Read-only `rg`-Suche nach Field-/Shop-/Pickup-, `ItemRandomizer`-, `getAllowedItems`-/`getNonBadItems`-, Bad-/Banned-Item-, `ItemCount`-/`ItemData`- und `item.count`-Markern ausgefuehrt.
+- Neues Protokoll erstellt: `08_tests/randomizer/057_p1_field_items_shops_pickup_model.md`.
 - `08_tests/randomizer/README.md`, `SESSION_STATE.md`, `NEXT_STEPS.md` und Roadmap aktualisiert.
 - Tool-Manifest nicht geaendert, weil kein Tool-/Repo-/Commit-/Submodule-Stand geaendert wurde.
 
 ## Ergebnis
 
-- Move-Data-Read ist fuer den getesteten Stand mit `moves.total=992` und `991:PsychicNoise` dokumentiert.
-- `BattleMove` bleibt 12 Bytes gross; Byte `+10` ist bei CFRU/DPE das `split`-/Category-Feld.
-- Der aktuelle Gen3-`saveMoves()`-Pfad schreibt nur Move-Namen und die ersten fuenf MoveData-Bytes.
-- Move-Data-Write bleibt ein offener Hochrisiko-Writer, der Preserve-Policy und eigene Reload-Diagnose braucht.
-- Diagnose 055 / Log-Hygiene bleibt getrennt von echten MoveData-Writer-/Scope-Risiken.
+- 054 bleibt nur Encounter-Held-Item-Nachweis; Field Items, Shops und Pickup bleiben eigene offene Writer.
+- Item-Scope aus 053/054 wurde als Grundlage, aber nicht als Field-/Shop-/Pickup-Beweis eingeordnet.
+- Field Items brauchen eigene Map-/Script-/TM-/Reload-Kriterien.
+- Shops brauchen eigene Shoplisten-, Terminator-/Pointer-, Preis- und Progressionskriterien.
+- Pickup braucht eigene Tabellen-, Probability- und Common-/Rare-Kriterien.
+- Diagnose 055 / Log-Hygiene und Diagnose 056 / Move-Data-Write bleiben getrennte Grenzen.
 
 ## Noch nicht gestartet
 
 - Special-Tutor-Modell/Fix
-- Field Items/Shops/Pickup-Itemmodell
 - CFRU-Day/Night-Custom-Wild-Tabellen-Support
 - Vollstaendige Nullslot-`<unknown>`-Analyse ausserhalb der bereits dokumentierten Klassifikation
 - Ironmon-Tracker-Tests
@@ -291,7 +311,7 @@ git diff --check
 
 ## Naechster empfohlener Branch
 
-Nach Merge dieses Analyseblocks: `analysis/upr-fvx-cfru-dpe-p1-move-data-write-model`. Field Items/Shops/Pickup, Palette/Graphics, Type-Chart, Special Tutors und Tutor-Text/Menu-Rewrites bleiben eigene Folgebranches.
+Nach Merge dieses Analyseblocks: `analysis/upr-fvx-cfru-dpe-p1-palette-randomization-model`. Type-Chart, Special Tutors, Tutor-Text/Menu-Rewrites und spaetere Field-Items-/Shops-/Pickup-Fixes bleiben eigene Folgebranches.
 
 ### 2026-05-13 - analysis/upr-fvx-cfru-dpe-p1-learnset-repointing-model
 
