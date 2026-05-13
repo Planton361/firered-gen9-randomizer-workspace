@@ -1,5 +1,23 @@
 # Session State
 
+## 2026-05-13 - CFRU/DPE GUI-Suboptions-Regressionsmatrix
+
+Arbeitsbranch: `analysis/upr-fvx-cfru-dpe-p1-gui-suboptions-regression-matrix`
+
+Aktueller Stand:
+
+- Neues read-only Analyseprotokoll `08_tests/randomizer/060_p1_gui_suboptions_regression_matrix.md` erstellt.
+- Konkrete FVX-GUI-Hauptoptionen und Suboptionen wurden gegen den aktuellen CFRU/DPE-P1-Supportstand eingeordnet.
+- Statusklassen festgelegt: `P1-supported`, `wahrscheinlich supported, aber nicht einzeln getestet`, `modelliert, Fix offen`, `open-not-diagnosed` und `out of scope`.
+- Direkt belegte Datenpfade wurden von nur wahrscheinlich stabilen Suboptionen, modellierten offenen Writern und ungetesteten GUI-Kombinationen getrennt.
+- Similar Strength, Same Type / Prefer Same Type, Follow Evolutions, Level Modifier, Force Change, Change Impossible Evolutions und Make Evolutions Easier wurden konservativ nach Datenpfad- und Writer-Risiko eingeordnet.
+- Diagnose 055 bleibt Log-Hygiene-Grenze, 056 MoveData-Grenze, 057 Field-/Shop-/Pickup-Grenze, 058 Palette-/Graphics-Grenze und 059 TypeChart-Grenze.
+- Keine Codeaenderung, keine Aenderung an `02_external/**`, keine neuen Randomizer-Laeufe, kein Tool-Manifest-Update.
+
+Naechster sinnvoller Schritt:
+
+- `analysis/upr-fvx-cfru-dpe-p1-regression-smoke-plan`: read-only Smoke-/Regression-Plan fuer priorisierte Suboptionen erstellen, bevor mehrere offene Writer in einem Fixbranch vermischt werden.
+
 ## 2026-05-13 - CFRU/DPE Type-Chart-Modell
 
 Arbeitsbranch: `analysis/upr-fvx-cfru-dpe-p1-type-chart-model`

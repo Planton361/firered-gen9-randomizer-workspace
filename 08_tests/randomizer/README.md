@@ -2,9 +2,9 @@
 
 ## Latest
 
-- `059_p1_type_chart_model.md` modelliert read-only Type-Chart und moderne Type-Interaktion fuer CFRU/DPE.
-- Pokemon-Type-Read/Write aus Diagnose 051 ist strikt von Type-Chart-/Effectiveness-Randomization getrennt.
-- Fairy `0x17` in Species-Daten beweist keine korrekte Fairy-Effectiveness-Tabelle; Stellar `0x18` bleibt unsupported/preserve-only.
+- `060_p1_gui_suboptions_regression_matrix.md` ordnet konkrete FVX-GUI-Hauptoptionen und Suboptionen gegen den aktuellen CFRU/DPE-P1-Supportstand ein.
+- Die Matrix trennt direkt belegte Datenpfade, wahrscheinlich stabile Suboptionen, modellierte offene Writer und ungetestete GUI-Kombinationen.
+- Diagnose 055-059 bleiben harte Grenzen fuer Log-Hygiene, MoveData, Field Items/Shops/Pickup, Paletten und TypeChart.
 
 Dieses Verzeichnis enthaelt die dauerhaften Markdown-Protokolle fuer UPR-FVX/CFRU-DPE-Randomizer-Analysen und Smokes. Lokale ROM-, Build-, Log- und Tool-Artefakte bleiben unter `05_builds/**` oder `03_tools/releases/**` und werden nicht committed.
 
@@ -92,19 +92,20 @@ Der neueste bestaetigte Stand wird in Markdown ueber die Spalte `Latest` markier
 | 056 | `056_p1_move_data_write_model.md` | CFRU/DPE Move-Data-Write-Modell | dokumentiert: `moves.total=992`, `991:PsychicNoise`, `BattleMove.split`-/Category-Semantik, aktuelle `saveMoves()`-Teilfeld-Write-Annahme, Preserve-Policy und Reload-Kriterien fuer spaeteren Fix; kein Fix | keiner, read-only Analyse | nein |
 | 057 | `057_p1_field_items_shops_pickup_model.md` | CFRU/DPE Field-Items-/Shops-/Pickup-Item-Modell | dokumentiert: Grenze zu Encounter Held Items, Item-Scope aus 053/054, Field-/Shop-/Pickup-Risiken, allgemeine Bad-/Banned-Item-Risiken, Preserve-/Skip-Policy und Reload-Kriterien fuer spaetere Fixbranches; kein Fix | keiner, read-only Analyse | nein |
 | 058 | `058_p1_palette_randomization_model.md` | CFRU/DPE Palette-Randomization-Modell | dokumentiert: Palette-Safety/Skip-Unchanged-Save, Grenze zu echter Palette-Randomization, `PokemonPalettesMod.RANDOM`, `Gen3to5PaletteRandomizer`, `savePokemonPalettes()`, compressed/shared/repointing risks, Graphics-Abgrenzung, Preserve-/Skip-Policy und Reload-Kriterien; kein Fix | keiner, read-only Analyse | nein |
-| 059 | `059_p1_type_chart_model.md` | CFRU/DPE Type-Chart-Modell | dokumentiert: Grenze zu Pokemon-Type-Read/Write aus 051, Fairy-vs-TypeChart-Grenze, Stellar-/unsupported-Type-Grenze, Type-Effectiveness-Table-Risiken, Preserve-/Skip-Policy und Reload-Kriterien; kein Fix | keiner, read-only Analyse | ja |
+| 059 | `059_p1_type_chart_model.md` | CFRU/DPE Type-Chart-Modell | dokumentiert: Grenze zu Pokemon-Type-Read/Write aus 051, Fairy-vs-TypeChart-Grenze, Stellar-/unsupported-Type-Grenze, Type-Effectiveness-Table-Risiken, Preserve-/Skip-Policy und Reload-Kriterien; kein Fix | keiner, read-only Analyse | nein |
+| 060 | `060_p1_gui_suboptions_regression_matrix.md` | CFRU/DPE GUI-Suboptions-Regressionsmatrix | dokumentiert: konkrete FVX-GUI-Hauptoptionen und Suboptionen nach Statusklassen, belegten Datenpfaden, wahrscheinlich stabilen Suboptionen, modellierten offenen Writern und ungetesteten GUI-Kombinationen; kein Fix | keiner, read-only Analyse | ja |
 
 ## Aktuell bestaetigter Stand
 
-Latest ist Nr. 059: CFRU/DPE Type-Chart-Modell.
+Latest ist Nr. 060: CFRU/DPE GUI-Suboptions-Regressionsmatrix.
 
 Kernaussagen:
 
-- Diagnose 051 beweist `gBaseStats`-Pokemon-Type-Read/Write, nicht Type-Chart-Support.
-- Fairy `0x17` in Species-Daten beweist keine korrekte Fairy-Effectiveness-Tabelle.
-- Stellar `0x18` bleibt unsupported und darf nicht stillschweigend in Random-Pools oder TypeChart-Writes eingefuehrt werden.
-- `TypeEffectivenessRandomizer` und `getTypeTable()`/`setTypeTable()` bleiben ein eigener offener Hochrisiko-Writer.
-- Log-Hygiene, Palette, Items, MoveData und Graphics/Sprites bleiben getrennte Themen.
+- P1-supported wird nur vergeben, wenn der konkrete Datenpfad direkt belegt ist.
+- Viele Suboptionen sind wahrscheinlich stabil, aber nicht einzeln getestet, wenn sie nur Pool-/Filter-/Follow-Logik ueber bereits stabile Writer nutzen.
+- MoveData, Field Items/Shops/Pickup, echte Palette-Randomization und Type Effectiveness bleiben modellierte offene Writer.
+- Levelmodifier, Evolution-Methoden, Text, Misc und Graphics bleiben eigene offene oder out-of-scope Bereiche.
+- Diagnose 055-059 bleiben harte Grenzen und werden nicht durch aehnliche GUI-Hauptpfade ueberschrieben.
 
 ## Lokale Artefaktpflege
 
