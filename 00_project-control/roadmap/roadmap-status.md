@@ -24,9 +24,9 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-p1-learnset-repointing-model` |
-| Nächster Branch | `compat/upr-fvx-cfru-dpe-learnset-write-repointing` |
-| Aktueller Fokus | CFRU/DPE Learnset-Repointing-Modellierung |
+| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-fvx-gui-options-matrix` |
+| Nächster Branch | `compat/upr-fvx-cfru-dpe-learnset-write-repointing` oder `analysis/upr-fvx-cfru-dpe-p1-base-stats-types-abilities-model` |
+| Aktueller Fokus | FVX-GUI-Options-Kompatibilitaetsmatrix fuer CFRU/DPE Gen9-BPRE |
 | ROM-/Build-Arbeit | keine neuen ROM-/Build-Artefakte; keine Artefakte committen |
 | Externe Repos | als Submodule auf Planton361-Forks eingebunden |
 | Forks | Planton361-Forks fuer UPR-FVX, DPE Gen9 und CFRU dokumentiert |
@@ -105,18 +105,20 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | 08 Randomizer-Kompatibilität | CFRU/DPE Egg-Move-Scope und Write | UPR-FVX `18168b78` bestaetigt `gEggMoves` ueber `0x45C50`, interne SpeciesSet-Keys, Gen8/9-Species und Gen9-Moves mit `writeReloadEggMoveMismatches=0` |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Learnset-Write-Modell | `gLevelUpLearnsets` ueber `0x03EA7C`, internes Species-Indexing, `u16 move + u8 level`, Sentinel `{0, 0xFF}` und bounded-in-place-Folgepfad dokumentiert |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Learnset-Write bounded in-place | UPR-FVX `dd9d80c1` bestaetigt sicheren bounded Writer fuer validierte same-size Learnsets mit `writeReloadLearnsetMismatches=0`; Full Write bleibt separat |
+| 08 Randomizer-Kompatibilität | FVX-GUI-Options-Kompatibilitaetsmatrix | P1-supported, teilunterstuetzte, offene und blockierte FVX-GUI-Optionsbereiche fuer den getesteten CFRU/DPE Gen9-BPRE-Stand dokumentiert |
 
 ## In Arbeit
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Learnset-Repointing-Modell | Full Learnset-Write-Repointing read-only modellieren |
+| 08 Randomizer-Kompatibilität | FVX-GUI-Options-Kompatibilitaetsmatrix | P1-Support-Flaeche und naechste Fix-/Analysebloecke konsolidieren |
 
 ## Als Nächstes
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
 | 08 Randomizer-Kompatibilität | Learnset-Write Repointing-Fix | Full Learnset-Write nur nach FreeSpace-Nachweis umsetzen |
+| 08 Randomizer-Kompatibilität | Base Stats/Types/Abilities Modell | Naechster Analyseblock, falls Learnset-Repointing durch FreeSpace-Nachweis blockiert bleibt |
 
 ## Noch offen
 
@@ -177,7 +179,8 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | P1x | `compat/upr-fvx-cfru-dpe-egg-moves-scope-and-write` | Egg-Move-Scope und Write | erledigt; UPR-FVX `18168b78` bestaetigt direct Egg-Move Write/Reload ohne Mismatches |
 | P1y | `analysis/upr-fvx-cfru-dpe-p1-learnset-write-model` | Learnset-Write-Modell | erledigt; bounded in-place als minimaler Folgefix empfohlen |
 | P1z | `compat/upr-fvx-cfru-dpe-learnset-write-bounded` | Learnset-Write bounded in-place | erledigt; UPR-FVX `dd9d80c1` speichert sichere same-size Learnsets ohne Repointing, voller Learnset-Write bleibt separat |
-| P1aa | `analysis/upr-fvx-cfru-dpe-p1-learnset-repointing-model` | Learnset-Repointing-Modell | aktueller Analysebranch; Pointertable, Shared-Pointer-Policy und FreeSpace-Risiken read-only klaeren |
+| P1aa | `analysis/upr-fvx-cfru-dpe-p1-learnset-repointing-model` | Learnset-Repointing-Modell | erledigt; Pointertable, Shared-Pointer-Policy und FreeSpace-Risiken read-only dokumentiert |
+| P1ab | `analysis/upr-fvx-cfru-dpe-fvx-gui-options-matrix` | FVX-GUI-Options-Kompatibilitaetsmatrix | aktueller Analysebranch; P1-supported, teilunterstuetzte, offene und blockierte GUI-Optionsbereiche konsolidieren |
 | P2 | `randomizer/cfru-day-night-wild-table-analysis` | CFRU-Custom-Day/Night-Wild-Tabellen separat untersuchen | erst nach P1-Schreibpfad-Diagnose; Route-1-Fallback bleibt stabil |
 | P3 | noch festlegen | Nullslot-`<unknown>` mit `rawInternalSpeciesId=0` klassifizieren | nicht mit GenRestrictions vermischen |
 | P4 | noch festlegen | BizHawk-/Ironmon-Tracker-/RAM-Mapping pruefen | erst nach stabiler ROM-Randomizer-Kompatibilitaet |

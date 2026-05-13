@@ -1,5 +1,12 @@
 # Randomizer Testprotokolle
 
+## Latest
+
+- `047_fvx_gui_options_compatibility_matrix.md` dokumentiert die aktuelle FVX-GUI-Options-Kompatibilitaetsmatrix fuer den getesteten CFRU/DPE Gen9-BPRE-Stand.
+- P1-supported sind unter anderem Standard/Fallback-Wild, Starters, Static/Gift, Trainer Species, Trainer Movesets, Trainer Held Items, Evolutions, Move-Data-Read, TM/HM 128-Slot, normale Tutor-Tabellen und direkte Egg Moves.
+- Teilunterstuetzt bleiben Learnset-Write bounded in-place, Palette-Safety und Move-Data-Read ohne Write.
+- Offen bzw. hochriskant bleiben Full Learnset Repointing, Base Stats/Types/Abilities, Move-Data-Write, Items/Shops/Field/Pickup und echte Palette/Graphics-Randomization.
+
 Dieses Verzeichnis enthaelt die dauerhaften Markdown-Protokolle fuer UPR-FVX/CFRU-DPE-Randomizer-Analysen und Smokes. Lokale ROM-, Build-, Log- und Tool-Artefakte bleiben unter `05_builds/**` oder `03_tools/releases/**` und werden nicht committed.
 
 ## Nummerierung und Latest
