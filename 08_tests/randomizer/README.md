@@ -2,9 +2,9 @@
 
 ## Latest
 
-- `056_p1_move_data_write_model.md` modelliert read-only den CFRU/DPE Move-Data-Write-Scope fuer `moves.total=992`.
-- Der aktuelle Read-Stand bleibt `moves.total=992` mit hoechstem geladenen Move `991:PsychicNoise`; `BattleMove.split` ist die Category-Quelle.
-- `saveMoves()` schreibt aktuell nur klassische Teilfelder; Move-Data-Write bleibt ein separater Hochrisiko-Writer mit Preserve- und Reload-Anforderungen.
+- `057_p1_field_items_shops_pickup_model.md` modelliert read-only Field Items, Shops, Pickup und allgemeine Item-Randomization.
+- Diagnose 054 bleibt nur der Nachweis fuer Encounter Held Items; Field Items, Shops und Pickup bleiben eigene offene Writer.
+- Diagnose 055 bleibt Log-Hygiene-Grenze, Diagnose 056 bleibt Move-Data-Write-Grenze.
 
 Dieses Verzeichnis enthaelt die dauerhaften Markdown-Protokolle fuer UPR-FVX/CFRU-DPE-Randomizer-Analysen und Smokes. Lokale ROM-, Build-, Log- und Tool-Artefakte bleiben unter `05_builds/**` oder `03_tools/releases/**` und werden nicht committed.
 
@@ -89,19 +89,21 @@ Der neueste bestaetigte Stand wird in Markdown ueber die Spalte `Latest` markier
 | 053 | `053_p1_item_data_and_bad_item_model.md` | CFRU/DPE Item-ID-, Itemnamen-, Bad-/Key-Item- und Encounter-Held-Item-Modell | dokumentiert: CFRU/DPE Itemgrenzen `779`/ca. `799`, klassischer FVX-`ItemCount=374`, moderne Bad-/Key-Item-Risiken und Encounter-Held-Item-Felder `item1/item2` bei `0x0C`/`0x0E`; Encounter Held Items brauchen separaten Fix | keiner, read-only Analyse | nein |
 | 054 | `054_encounter_held_items_scope_write_diagnostics.md` | CFRU/DPE Encounter Held Items Scope-and-Write-Fix Diagnose | bestaetigt: Item-Scope bis `778`, moderne Bad-/Banned-Filter, Encounter Held Items-only sowie Kombinationen mit Base Stats, Abilities und Types mit Save/Log/Output/Reload und `writeReloadEncounterHeldItemMismatches=0` | `05_builds/randomizer-smoke/054_encounter_held_items_scope_write/` lokal/ignored | nein |
 | 055 | `055_type_log_placeholder_hygiene.md` | CFRU/DPE Type-/Trait-Log-, Placeholder- und Unknown-Marker-Klassifikation | dokumentiert: `Bad Egg`, `<unknown>`, Unknown-Type-/Ability-/Item-Fallbacks und Null-/BST-zero-/all-zero-Ability-Species aus vorhandenen Protokollen klassifiziert; keine neuen Randomizer-Laeufe, kein Fix | keiner, read-only Analyse | nein |
-| 056 | `056_p1_move_data_write_model.md` | CFRU/DPE Move-Data-Write-Modell | dokumentiert: `moves.total=992`, `991:PsychicNoise`, `BattleMove.split`-/Category-Semantik, aktuelle `saveMoves()`-Teilfeld-Write-Annahme, Preserve-Policy und Reload-Kriterien fuer spaeteren Fix; kein Fix | keiner, read-only Analyse | ja |
+| 056 | `056_p1_move_data_write_model.md` | CFRU/DPE Move-Data-Write-Modell | dokumentiert: `moves.total=992`, `991:PsychicNoise`, `BattleMove.split`-/Category-Semantik, aktuelle `saveMoves()`-Teilfeld-Write-Annahme, Preserve-Policy und Reload-Kriterien fuer spaeteren Fix; kein Fix | keiner, read-only Analyse | nein |
+| 057 | `057_p1_field_items_shops_pickup_model.md` | CFRU/DPE Field-Items-/Shops-/Pickup-Item-Modell | dokumentiert: Grenze zu Encounter Held Items, Item-Scope aus 053/054, Field-/Shop-/Pickup-Risiken, allgemeine Bad-/Banned-Item-Risiken, Preserve-/Skip-Policy und Reload-Kriterien fuer spaetere Fixbranches; kein Fix | keiner, read-only Analyse | ja |
 
 ## Aktuell bestaetigter Stand
 
-Latest ist Nr. 056: CFRU/DPE Move-Data-Write-Modell.
+Latest ist Nr. 057: CFRU/DPE Field Items / Shops / Pickup Item-Modell.
 
 Kernaussagen:
 
-- Der Move-Data-Reader erreicht fuer den getesteten CFRU/DPE Gen9-BPRE-Stand `moves.total=992` und `991:PsychicNoise`.
-- `BattleMove` bleibt 12 Bytes gross; Byte `+10` ist bei CFRU/DPE das `split`-/Category-Feld.
-- Der aktuelle Gen3-`saveMoves()`-Pfad schreibt nur Move-Namen sowie `effect`, `power`, `type`, `accuracy` und `pp`.
-- Ein spaeterer Move-Data-Write-Fix muss unbekannte/zusatzliche Felder preserven und Reload-Mismatches separat nachweisen.
-- Log-Hygiene/Fallback-Marker aus Diagnose 055 bleiben getrennt von echten MoveData-Writer-/Scope-Risiken.
+- Encounter Held Items aus 054 sind P1-supported, beweisen aber keine Field Items, Shops oder Pickup.
+- Der nutzbare Item-Scope aus 054 bleibt `item.count=778`; DPE-Oberregion `779..798` wurde nicht als Random-Pick-Scope belegt.
+- Field Items brauchen eigene Script-/TM-/Map-Offset- und Reload-Kriterien.
+- Shops brauchen eigene Shoplisten-, Terminator-/Pointer-, Preis- und Progressionskriterien.
+- Pickup braucht eigene Tabellen-/Probability-/Common-Rare- und Reload-Kriterien.
+- Item-Text/Menu/Description, Move-Data-Write und Log-Hygiene bleiben getrennte Themen.
 
 ## Lokale Artefaktpflege
 
