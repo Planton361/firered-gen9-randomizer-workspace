@@ -1,5 +1,24 @@
 # Session State
 
+## 2026-05-14 - CFRU/DPE Global Species Pool Regression-Smoke-Plan
+
+Arbeitsbranch: `analysis/upr-fvx-cfru-dpe-p1-global-species-pool-regression-smoke`
+
+Aktueller Stand:
+
+- Neues read-only Analyseprotokoll `08_tests/randomizer/062_p1_global_species_pool_regression_smoke.md` erstellt.
+- Erster konkreter Regression-Smoke aus Diagnose 061 fuer Global Species Pools / Generation Limits geplant.
+- Primaere Feature-IDs festgelegt: `FVX-GEN-001` Limit Pokemon und `FVX-GEN-002` No Premature Evolutions.
+- Generation Limits und related-Pokemon-Scope werden unter `FVX-GEN-001` gefuehrt, weil keine separaten Feature-IDs existieren.
+- `FVX-GEN-003` No Random Intro Mon und `FVX-GEN-004` Race Mode sind ausdruecklich nicht Teil dieses Smokes.
+- Minimaler Carrier fuer spaetere Laeufe ist ein einzelner P1-stabiler Species-Writer, bevorzugt `FVX-SST-002`; optionaler Wild-Vergleich gegen `FVX-WILD-001` bleibt separat.
+- Spaetere Smoke-Slices, erlaubte Settings, ausgeschlossene offene Writer, erwartete Metriken, Artefaktregeln und Stop-Regeln dokumentiert.
+- Keine Codeaenderung, keine Aenderung an `02_external/**`, keine Randomizer-Laeufe, kein Tool-Manifest-Update.
+
+Naechster sinnvoller Schritt:
+
+- `analysis/upr-fvx-cfru-dpe-p1-starters-suboptions-regression-smoke`: Starter-Poolfilter wie random basic/two evolutions, Type Restrictions, No Legendaries und BST-Min/Max getrennt von Starter-Held-Items planen.
+
 ## 2026-05-13 - CFRU/DPE P1 Regression-Smoke-Plan
 
 Arbeitsbranch: `analysis/upr-fvx-cfru-dpe-p1-regression-smoke-plan`
