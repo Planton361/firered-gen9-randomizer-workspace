@@ -2,9 +2,9 @@
 
 ## Latest
 
-- `062_p1_global_species_pool_regression_smoke.md` plant read-only den ersten Regression-Smoke fuer Global Species Pools / Generation Limits.
-- Der Plan isoliert `FVX-GEN-001` Limit Pokemon, Generation Limits und related Pokemon sowie `FVX-GEN-002` No Premature Evolutions gegen einen einzelnen stabilen Species-Carrier.
-- Offene Writer wie MoveData Write, Field Items/Shops/Pickup, Palette Randomization, TypeChart, Graphics/Sprites und Text/Menu bleiben explizit ausgeschlossen.
+- `063_p1_starters_suboptions_regression_smoke.md` plant read-only den Starter-Suboptions-Regression-Smoke.
+- Der Plan nutzt `FVX-SST-002` nur als belegten Starter-Species-Carrier und plant `FVX-SST-003`, `FVX-SST-004`, `FVX-SST-005`, `FVX-SST-006` und `FVX-SST-009` als getrennte spaetere Smoke-Slices.
+- Starter Held Items (`FVX-SST-007`/`FVX-SST-008`) und offene Writer bleiben explizit ausgeschlossen.
 
 Dieses Verzeichnis enthaelt die dauerhaften Markdown-Protokolle fuer UPR-FVX/CFRU-DPE-Randomizer-Analysen und Smokes. Lokale ROM-, Build-, Log- und Tool-Artefakte bleiben unter `05_builds/**` oder `03_tools/releases/**` und werden nicht committed.
 
@@ -95,19 +95,20 @@ Der neueste bestaetigte Stand wird in Markdown ueber die Spalte `Latest` markier
 | 059 | `059_p1_type_chart_model.md` | CFRU/DPE Type-Chart-Modell | dokumentiert: Grenze zu Pokemon-Type-Read/Write aus 051, Fairy-vs-TypeChart-Grenze, Stellar-/unsupported-Type-Grenze, Type-Effectiveness-Table-Risiken, Preserve-/Skip-Policy und Reload-Kriterien; kein Fix | keiner, read-only Analyse | nein |
 | 060 | `060_p1_gui_suboptions_regression_matrix.md` | CFRU/DPE GUI-Suboptions-Regressionsmatrix | dokumentiert: konkrete FVX-GUI-Hauptoptionen und Suboptionen nach Statusklassen, belegten Datenpfaden, wahrscheinlich stabilen Suboptionen, modellierten offenen Writern und ungetesteten GUI-Kombinationen; kein Fix | keiner, read-only Analyse | nein |
 | 061 | `061_p1_regression_smoke_plan.md` | CFRU/DPE P1 Regression-Smoke-Plan | dokumentiert: priorisierte Smoke-Gruppen mit Feature-IDs, spaetere Metriken, Reihenfolge, Stop-Regeln und explizite Nicht-Smoke-Fixbereiche fuer offene Writer; keine Testausfuehrung | keiner, read-only Analyse | nein |
-| 062 | `062_p1_global_species_pool_regression_smoke.md` | CFRU/DPE P1 Global Species Pool Regression-Smoke-Plan | dokumentiert: erster geplanter Smoke fuer `FVX-GEN-001` Limit Pokemon inklusive Generation Limits / related Pokemon und `FVX-GEN-002` No Premature Evolutions gegen einen einzelnen stabilen Species-Carrier; keine Testausfuehrung | keiner, read-only Analyse | ja |
+| 062 | `062_p1_global_species_pool_regression_smoke.md` | CFRU/DPE P1 Global Species Pool Regression-Smoke-Plan | dokumentiert: erster geplanter Smoke fuer `FVX-GEN-001` Limit Pokemon inklusive Generation Limits / related Pokemon und `FVX-GEN-002` No Premature Evolutions gegen einen einzelnen stabilen Species-Carrier; keine Testausfuehrung | keiner, read-only Analyse | nein |
+| 063 | `063_p1_starters_suboptions_regression_smoke.md` | CFRU/DPE P1 Starters Suboptions Regression-Smoke-Plan | dokumentiert: Starter-Suboptionen `FVX-SST-003`, `FVX-SST-004`, `FVX-SST-005`, `FVX-SST-006` und `FVX-SST-009` ueber den belegten `FVX-SST-002`-Carrier; Starter Held Items und offene Writer ausgeschlossen; keine Testausfuehrung | keiner, read-only Analyse | ja |
 
 ## Aktuell bestaetigter Stand
 
-Latest ist Nr. 062: CFRU/DPE P1 Global Species Pool Regression-Smoke-Plan.
+Latest ist Nr. 063: CFRU/DPE P1 Starters Suboptions Regression-Smoke-Plan.
 
 Kernaussagen:
 
-- 062 fuehrt keine Tests aus und erfindet keine Diagnosewerte.
-- `FVX-GEN-001` umfasst in diesem Plan auch Generation Limits und related Pokemon, weil keine separaten Feature-IDs existieren.
-- `FVX-GEN-003` No Random Intro Mon und `FVX-GEN-004` Race Mode sind nicht Teil dieses Smokes.
-- Bevorzugter Carrier ist ein einzelner stabiler Species-Writer wie `FVX-SST-002`; optionaler Wild-Vergleich bleibt ein separater spaeterer Slice.
-- Offene Writer bleiben strikt ausgeschlossen; Marker aus 055 werden nur klassifiziert.
+- 063 fuehrt keine Tests aus und erfindet keine Diagnosewerte.
+- `FVX-SST-002` bleibt nur der belegte Starter-Species-Carrier.
+- `FVX-SST-003`, `FVX-SST-004`, `FVX-SST-005`, `FVX-SST-006` und `FVX-SST-009` werden als getrennte spaetere Starter-Slices geplant.
+- Starter Held Items (`FVX-SST-007`/`FVX-SST-008`) bleiben ein eigener Item-Writer-Scope.
+- Type Restrictions beweisen keinen TypeChart-Support; Marker aus 055 werden nur klassifiziert.
 
 ## Lokale Artefaktpflege
 
