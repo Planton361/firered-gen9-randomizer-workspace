@@ -1,5 +1,25 @@
 # Session State
 
+## 2026-05-13 - CFRU/DPE Palette-Randomization-Modell
+
+Arbeitsbranch: `analysis/upr-fvx-cfru-dpe-p1-palette-randomization-model`
+
+Aktueller Stand:
+
+- Neues read-only Analyseprotokoll `08_tests/randomizer/058_p1_palette_randomization_model.md` erstellt.
+- Bestehende Palette-Safety wurde strikt von echter geaenderter Palette-Randomization getrennt.
+- Safety-Stand eingeordnet: defensiver `loadPokemonPalettes()` fuer missing/invalid Slots und Skip-Unchanged-`savePokemonPalettes()` fuer unveraenderte CFRU/DPE-Pokemon-Paletten.
+- Klar dokumentiert: `PokemonPalettesMod.RANDOM` und `Gen3to5PaletteRandomizer` sind echte Writer-Pfade und nicht durch die Safety-Diagnosen als P1-supported belegt.
+- `savePokemonPalettes()`, `rewriteCompressedPalette()` und der komprimierte `DataRewriter`-Repointing-Pfad wurden als offene Hochrisiko-Writer klassifiziert.
+- Shared/missing Palette-Pointer-Risiken dokumentiert, inklusive `SPECIES_CUBONE_A`-/`gMonPaletteTable[1038]`-Nullslot, DPE-Gap-Slots `[252]..[276]` und `gFrontSprite252Pal`/`gBackShinySprite252Pal`.
+- Preserve-/Skip-Policy und Reload-/Diagnosekriterien fuer spaetere Palette-Fixbranches festgelegt.
+- Graphics/Sprites bleiben ein eigenes P2-Modell; keine Vermischung mit Pokemon-Palette-Randomization.
+- Keine Codeaenderung, keine Aenderung an `02_external/**`, keine neuen Randomizer-Laeufe, kein Tool-Manifest-Update.
+
+Naechster sinnvoller Schritt:
+
+- `analysis/upr-fvx-cfru-dpe-p1-type-chart-model`: Type-Chart- und moderne Type-Interaktion getrennt von Pokemon-Type-Read/Write modellieren.
+
 ## 2026-05-13 - CFRU/DPE Field Items / Shops / Pickup Modell
 
 Arbeitsbranch: `analysis/upr-fvx-cfru-dpe-p1-field-items-shops-pickup-model`
@@ -242,33 +262,32 @@ Naechster sinnvoller Schritt:
 
 ## Aktueller Branch
 
-`analysis/upr-fvx-cfru-dpe-p1-field-items-shops-pickup-model`
+`analysis/upr-fvx-cfru-dpe-p1-palette-randomization-model`
 
 ## Aktueller Arbeitsblock
 
-CFRU/DPE Field Items / Shops / Pickup Item-Modell.
+CFRU/DPE Palette-Randomization-Modell.
 
 ## Ziel
 
-Read-only modellieren, wie Field Items, Shops, Pickup und allgemeine Item-Randomization vom Encounter-Held-Item-Scope getrennt abzusichern sind.
+Read-only modellieren, wie bestehende Palette-Safety von echter geaenderter Palette-/Graphics-Randomization zu trennen ist.
 
 ## In diesem Arbeitsblock geprueft / geaendert
 
-- Workspace-Branch `analysis/upr-fvx-cfru-dpe-p1-field-items-shops-pickup-model` genutzt; nicht auf `main` gearbeitet.
-- Pflichtdokumente und Diagnosen 047/053/054/055/056 gelesen.
-- Read-only `rg`-Suche nach Field-/Shop-/Pickup-, `ItemRandomizer`-, `getAllowedItems`-/`getNonBadItems`-, Bad-/Banned-Item-, `ItemCount`-/`ItemData`- und `item.count`-Markern ausgefuehrt.
-- Neues Protokoll erstellt: `08_tests/randomizer/057_p1_field_items_shops_pickup_model.md`.
+- Workspace-Branch `analysis/upr-fvx-cfru-dpe-p1-palette-randomization-model` genutzt; nicht auf `main` gearbeitet.
+- Pflichtdokumente und Diagnosen 047/055/056/057 sowie vorhandene Palette-Safety-Protokolle gelesen.
+- Read-only `rg`-Suche nach Palette-, `PokemonPalettesMod.RANDOM`-, `Gen3to5PaletteRandomizer`-, `savePokemonPalettes()`-, `rewriteCompressedPalette()`-, compressed-, repoint-, sprite- und graphics-Markern ausgefuehrt.
+- Neues Protokoll erstellt: `08_tests/randomizer/058_p1_palette_randomization_model.md`.
 - `08_tests/randomizer/README.md`, `SESSION_STATE.md`, `NEXT_STEPS.md` und Roadmap aktualisiert.
 - Tool-Manifest nicht geaendert, weil kein Tool-/Repo-/Commit-/Submodule-Stand geaendert wurde.
 
 ## Ergebnis
 
-- 054 bleibt nur Encounter-Held-Item-Nachweis; Field Items, Shops und Pickup bleiben eigene offene Writer.
-- Item-Scope aus 053/054 wurde als Grundlage, aber nicht als Field-/Shop-/Pickup-Beweis eingeordnet.
-- Field Items brauchen eigene Map-/Script-/TM-/Reload-Kriterien.
-- Shops brauchen eigene Shoplisten-, Terminator-/Pointer-, Preis- und Progressionskriterien.
-- Pickup braucht eigene Tabellen-, Probability- und Common-/Rare-Kriterien.
-- Diagnose 055 / Log-Hygiene und Diagnose 056 / Move-Data-Write bleiben getrennte Grenzen.
+- Palette-Safety ist nur fuer defensive Loads, missing/invalid Slots und unveraenderte Palette-Saves belegt.
+- Echte geaenderte Palette-Randomization ueber `PokemonPalettesMod.RANDOM` / `Gen3to5PaletteRandomizer` bleibt open / not diagnosed.
+- `savePokemonPalettes()` faellt bei geaenderten Paletten in compressed Write-/Repointing-Semantik.
+- Shared/missing Palette-Pointer, Dex-/Pokedex-Mapping und FreeSpace/Repointing bleiben eigene Risiken.
+- Graphics/Sprites bleiben ein separates P2-Modell.
 
 ## Noch nicht gestartet
 
@@ -293,7 +312,7 @@ Keine Aenderungen direkt auf `main`.
 
 UPR-FVX und andere `02_external/**`-Repos blieben in diesem Analyseblock unangetastet.
 
-Keine Type-Chart-, Ability-Name-, Item-Name-, Move-Data-Write-, Tutor-Text/Menu-, Special-Tutor-, Egg-Move-, Palette/Graphics- oder Text/Menu-Ausweitung.
+Keine Type-Chart-, Ability-Name-, Item-Name-, Move-Data-Write-, Tutor-Text/Menu-, Special-Tutor-, Egg-Move-, Graphics/Sprite- oder Text/Menu-Ausweitung.
 
 Keine MCP-Configs mit Secrets angelegt.
 
@@ -311,7 +330,7 @@ git diff --check
 
 ## Naechster empfohlener Branch
 
-Nach Merge dieses Analyseblocks: `analysis/upr-fvx-cfru-dpe-p1-palette-randomization-model`. Type-Chart, Special Tutors, Tutor-Text/Menu-Rewrites und spaetere Field-Items-/Shops-/Pickup-Fixes bleiben eigene Folgebranches.
+Nach Merge dieses Analyseblocks: `analysis/upr-fvx-cfru-dpe-p1-type-chart-model`. Graphics/Sprites, Special Tutors, Tutor-Text/Menu-Rewrites und spaetere Palette- oder Field-Items-/Shops-/Pickup-Fixes bleiben eigene Folgebranches.
 
 ### 2026-05-13 - analysis/upr-fvx-cfru-dpe-p1-learnset-repointing-model
 
