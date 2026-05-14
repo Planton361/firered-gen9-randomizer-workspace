@@ -181,3 +181,5 @@ Wenn ein Artefakt nicht eindeutig Smoke-Output ist, bleibt es lokal liegen und w
 - 101 - `101_field_items_allowed_slot_write_guard.md`: Field-Items-only Guard-Entscheidung. Bestehender Gen3 `getFieldItems()` / `setFieldItems(...)`-Pfad schreibt nur allowed Slots; kein UPR-FVX-Codefix, kein Write-/Reload-Smoke ohne explizite Kandidatenfreigabe; `FVX-ITEM-001..004` bleiben `Write modelliert`.
 
 - 102 - `102_field_items_allowed_slot_reload_smoke.md`: Sanitized Field-Items-only `FVX-ITEM-001 Field Items Shuffle` Write-/Reload-Smoke. Save/log/output/reload true, `fieldItemsTotalBefore/After/Reload=339`, Field-Item reload mismatches `0`, visible/hidden mismatches `0`, TM/Non-TM slot mismatches `0`, required TMs preserved, disallowed writes `0`; `FVX-ITEM-001` now `GUI-kompatibel` for the narrow Shuffle scope.
+
+- 103 - `103_field_items_random_reload_smoke.md`: Sanitized Field-Items-only `FVX-ITEM-002 Field Items Random` smoke with `banBadRandomFieldItems=false`. Candidate loaded and Field-Items scope stayed `339`, but save failed with `RandomizationException`; no output/reload, no Feature-Hochstufung. Next: Random TM-pool blocker plan.

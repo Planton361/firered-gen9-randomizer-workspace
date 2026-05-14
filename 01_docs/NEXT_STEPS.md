@@ -1,3 +1,21 @@
+# Next Steps Update - 2026-05-15 - Field Items Random TM-pool blocker next
+
+Aktueller Fokus:
+
+- `FVX-ITEM-001 Field Items Shuffle` bleibt durch Diagnose 102 `GUI-kompatibel` im engen allowed-slot Scope.
+- `FVX-ITEM-002 Field Items Random` ist durch Diagnose 103 blockiert: Save bricht mit `RandomizationException` ab, kein Output-ROM, kein Reload.
+- `FVX-ITEM-003 Field Items Random even distribution` und `FVX-ITEM-004 Ban Bad Items` bleiben `Write modelliert`.
+
+Naechster empfohlener Minimalblock:
+
+- `analysis/upr-fvx-cfru-dpe-field-items-random-tm-pool-blocker-plan`
+
+Ziel des Folgeblocks:
+
+- Read-only den Random-TM-Field-Items-Pool und Required-TM-Policy untersuchen.
+- Klaeren, ob ein spaeterer Fix eng auf `FVX-ITEM-002` Field Items Random begrenzt werden kann.
+- Shops, Pickup, Held Items, TM/HM/Tutor/Learnset, Palette/Graphics, MoveData/MoveNames, TypeChart, Trainer, Wild, Evolution und Text/Menu bleiben ausserhalb.
+
 # Next Steps Update - 2026-05-15 - Field Items Random smoke next
 
 Aktueller Fokus:
