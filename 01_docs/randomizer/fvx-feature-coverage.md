@@ -475,3 +475,11 @@ Diese Matrix soll nicht als 130 Roadmap-Zeilen gepflegt werden. Fuer die Roadmap
 - `FVX-ITEM-003` Field Items Random even distribution: remains `Write modelliert`; next step is Field-Items-only diagnostics.
 - `FVX-ITEM-004` Field Items Ban Bad Items: remains `Write modelliert`; next step is Field-Items-only diagnostics.
 - Shops, Pickup and held-item paths are intentionally outside this Field-Items-only plan.
+
+## 2026-05-14 - Field Items diagnostics blocked
+
+- `FVX-ITEM-001` Field Items Shuffle: remains `Write modelliert`; diagnostics blocked until an explicitly approved candidate is available.
+- `FVX-ITEM-002` Field Items Random: remains `Write modelliert`; diagnostics blocked until an explicitly approved candidate is available.
+- `FVX-ITEM-003` Field Items Random even distribution: remains `Write modelliert`; diagnostics blocked until an explicitly approved candidate is available.
+- `FVX-ITEM-004` Field Items Ban Bad Items: remains `Write modelliert`; diagnostics blocked until an explicitly approved candidate is available.
+- `candidateFilesChecked=0`, `candidateLoaded=false`, `fieldItemScanSuccessful=false`; no fachlicher Field-Item scan was run.

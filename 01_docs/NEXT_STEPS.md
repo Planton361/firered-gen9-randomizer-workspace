@@ -1,3 +1,11 @@
+# Next Steps Update - 2026-05-14 - Field Items diagnostics candidate needed
+
+Recommended next block only after an explicitly approved local CFRU/DPE Gen9-BPRE candidate is available:
+
+`test/upr-fvx-cfru-dpe-field-items-scope-diagnostics-candidate`
+
+Goal: run the sanitized Field-Items-only read-only diagnostic from protocol 098/099 and report only aggregated counters for visible Itemballs, Hidden Items/Signposts, TM/Non-TM slots, Required Field TMs, progression-sensitive items, bad items, modern item IDs and invalid/unloaded item IDs. Keep Shops, Pickup, held items, TM/HM/Tutor/Learnset, Palette/Graphics, MoveData/MoveNames, TypeChart, Trainer/Wild/Evolution and Text/Menu out of scope.
+
 # Next Steps Update - 2026-05-14 - Field Items diagnostics scope
 
 Recommended next block:

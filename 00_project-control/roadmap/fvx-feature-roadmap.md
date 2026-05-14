@@ -120,3 +120,9 @@ Field Items, Shops und Pickup bleiben im Items-Paket, werden aber nicht als geme
 - Field Items are split into their own first item-writer diagnostic branch: `analysis/upr-fvx-cfru-dpe-field-items-scope-diagnostics-plan`.
 - Follow-up should diagnose only Field Items before any fix: visible Itemballs, Hidden Items/Signposts, TM-vs-Non-TM slots, Required Field TMs, progression-sensitive items, bad items, modern item IDs and invalid/unloaded item IDs.
 - Shops and Pickup stay separate; no shared fix block is recommended until each writer has its own sanitized diagnostics.
+
+## 2026-05-14 - Field Items diagnostics candidate needed
+
+- Field-Items-only diagnostics from protocol 099 are blocked until an explicitly approved local CFRU/DPE Gen9-BPRE candidate is available.
+- No Field-Item fix should start before the aggregated diagnostics from 098 can report visible Itemballs, Hidden Items/Signposts, TM/Non-TM slots, Required Field TMs, bad items, modern item IDs and invalid/unloaded item IDs.
+- Shops and Pickup remain separate follow-up tracks.

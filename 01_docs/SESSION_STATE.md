@@ -1,3 +1,14 @@
+# Session State Update - 2026-05-14 - Field Items diagnostics blocked
+
+- Branch: `test/upr-fvx-cfru-dpe-field-items-scope-diagnostics`.
+- Workspace PR #143 was verified as merged before branch creation.
+- New protocol: `08_tests/randomizer/099_field_items_scope_diagnostics.md`.
+- Field-Items-only diagnostics did not run because no explicitly approved local CFRU/DPE Gen9-BPRE candidate was provided in this block.
+- Sanitized preflight: `candidateFilesChecked=0`, `candidateLoaded=false`, `fieldItemScanSuccessful=false`, `exceptionClass=none`, `stacktrace=none`.
+- No code changes, no `02_external/**` changes, no Randomizer write/save, no build, no output ROM, no ROM/private artefact documentation.
+- `FVX-ITEM-001..004` remain `Write modelliert`.
+- Planned next block when a candidate is explicitly approved: `test/upr-fvx-cfru-dpe-field-items-scope-diagnostics-candidate`.
+
 # Session State Update - 2026-05-14 - Field Items diagnostics scope plan
 
 - Branch: `analysis/upr-fvx-cfru-dpe-field-items-scope-diagnostics-plan`.
