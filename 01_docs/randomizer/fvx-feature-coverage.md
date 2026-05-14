@@ -38,6 +38,15 @@ Sie ist die detaillierte Requirements-/Coverage-Ebene. Die Roadmap bleibt bewuss
 | In Arbeit | 0 |
 | **Gesamt** | **130** |
 
+## Aktueller Hinweis zu 070
+
+Diagnose 070 hat die in 069 geplanten BST-/Type-basierten Poolfilter einzeln ausgefuehrt und sanitisiert dokumentiert:
+
+- Trainer Similar Strength ist als Suboption unter `FVX-FOE-001` im Trainer-Species-Carrier-Smoke stabil: Save/Log/Output/Reload true und `writeReloadTrainerPokemonMismatches=0`.
+- `FVX-WILD-011` Wild Similar Strength, `FVX-WILD-004` Wild Type Restrictions / Type Themes / Keep Primary, `FVX-FOE-009` Force Diverse Types / Trainer Type Diversity und `FVX-TRAIT-019` Evolutions Same Typing bleiben trotz vorhandener Planzeilen nicht als getestet freigegeben, weil die 070-Slices vor Output/Reload blockieren.
+- `FVX-TRAIT-018` Evolutions Similar Strength bleibt nicht als getestet freigegeben, weil der 070-Slice zwar speichert und reloadet, aber `writeReloadEvolutionMismatches=24` und einen nicht freigegebenen `Bad Egg`-Marker zeigt.
+- Die Statuswerte in der Matrix bleiben konservativ; blockierte 070-Slices brauchen getrennte Folgeanalyse statt Hochstufung.
+
 ## Coverage nach GUI-Tab
 
 | GUI-Tab | Features | Nicht begonnen | Plan erstellt | Read modelliert | Write modelliert | Getestet | GUI-kompatibel | In Arbeit |

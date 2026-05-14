@@ -2,15 +2,17 @@
 
 ## Aktueller Fokus
 
-CFRU/DPE Similar Strength / Same Type Regression-Smoke-Plan ist read-only dokumentiert. Planprotokoll: `08_tests/randomizer/069_p1_similar_strength_same_type_regression_smoke.md`.
+CFRU/DPE Similar Strength / Same Type Regression-Smoke-Ergebnisse sind sanitisiert dokumentiert. Ergebnisprotokoll: `08_tests/randomizer/070_p1_similar_strength_same_type_regression_smoke_results.md`.
 
 ## Priorisierte naechste Arbeitsbloecke
 
-1. PR fuer `analysis/upr-fvx-cfru-dpe-p1-similar-strength-same-type-regression-smoke`
-   - Read-only Plan fuer BST-/Type-basierte Poolfilter reviewen und mergen.
+1. PR fuer `test/upr-fvx-cfru-dpe-p1-similar-strength-same-type-regression-smoke`
+   - Ergebnisprotokoll 070 reviewen und mergen.
 
-2. `test/upr-fvx-cfru-dpe-p1-similar-strength-same-type-regression-smoke`
-   - Die in 069 geplanten Slices einzeln ausfuehren: Wild Similar Strength, Wild Type Restrictions / Type Themes, Trainer Similar Strength, Trainer Type Diversity / Type Themes, Evolutions Similar Strength und Evolutions Same Typing.
+2. Read-only Folgeanalyse fuer blockierte 070-Slices
+   - Wild Similar Strength und Wild Type Restrictions gegen Wild-Nullslot-/Placeholder-Scope pruefen.
+   - `FVX-FOE-009` gegen Trainer-Type-Diversity-/Null-Type-Scope pruefen.
+   - `FVX-TRAIT-018/019` gegen Evolution-Reload-Mismatches, `Bad Egg` und Null-Evolution-Scope pruefen.
    - Weiter ohne TypeChart, MoveData Write, Palette, Items, Graphics, Text/Menu, Level-Modifier oder Evolution-Methoden-Writer.
 
 3. Spaetere TypeEffectiveness-Kombinationen nur bei Bedarf

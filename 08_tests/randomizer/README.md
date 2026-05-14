@@ -2,10 +2,10 @@
 
 ## Latest
 
-- `069_p1_similar_strength_same_type_regression_smoke.md` plant read-only spaetere Regression-Smokes fuer BST-/Type-basierte Poolfilter.
-- Geplante Slices: `FVX-WILD-011` Wild Similar Strength, `FVX-WILD-004` Wild Type Restrictions / Type Themes / Keep Primary, Trainer Similar Strength unter `FVX-FOE-001`, `FVX-FOE-009` Trainer Type Diversity / Type Themes, `FVX-TRAIT-018` Evolutions Similar Strength und `FVX-TRAIT-019` Evolutions Same Typing.
-- Carrier bleiben Standard/Fallback-Wild, Trainer-Species-Writer und Evolution-Species-Writer.
-- TypeChart/TypeEffectiveness, MoveData, Palette, Items, Graphics, Text/Menu, Level-Modifier, Evolution-Methoden-Writer und Starter Held Items bleiben ausgeschlossen.
+- `070_p1_similar_strength_same_type_regression_smoke_results.md` dokumentiert sanitisiert die ausgefuehrten Regression-Smokes fuer BST-/Type-basierte Poolfilter aus 069.
+- Trainer Similar Strength unter `FVX-FOE-001` ist im Trainer-Species-Carrier-Smoke save-/log-/reload-stabil mit `writeReloadTrainerPokemonMismatches=0`.
+- `FVX-WILD-011`, `FVX-WILD-004`, `FVX-FOE-009` und `FVX-TRAIT-019` blockieren im Smoke vor Output/Reload; `FVX-TRAIT-018` speichert und reloadet, hat aber `writeReloadEvolutionMismatches=24` und einen `Bad Egg`-Marker.
+- TypeChart/TypeEffectiveness, MoveData, Palette, Items, Graphics, Text/Menu, Level-Modifier, Evolution-Methoden-Writer und Starter Held Items blieben ausgeschlossen.
 
 Dieses Verzeichnis enthaelt die dauerhaften Markdown-Protokolle fuer UPR-FVX/CFRU-DPE-Randomizer-Analysen und Smokes. Lokale ROM-, Build-, Log- und Tool-Artefakte bleiben unter `05_builds/**` oder `03_tools/releases/**` und werden nicht committed.
 
@@ -103,18 +103,19 @@ Der neueste bestaetigte Stand wird in Markdown ueber die Spalte `Latest` markier
 | 066 | `066_type_chart_preserve_effectiveness_fix_diagnostics.md` | CFRU/DPE TypeChart Preserve Effectiveness Fix Diagnose | bestaetigt: TypeEffectiveness-only mit Save/Log/Output/Reload true, `writeReloadTypeChartMismatches=0`, Fairy-Reload als raw `0x17`, unsupported/Stellar nicht eingefuehrt oder normalisiert, Foresight-/Endtable-Terminatoren erhalten | lokal/ignored, nicht dokumentiert | nein |
 | 067 | `067_type_effectiveness_followup_smoke_plan.md` | CFRU/DPE TypeEffectiveness-Folgesmoke-Plan | dokumentiert: einzelne spaetere Slices fuer `FVX-TYPE-001` Balanced, Keep Type Identities und Inverse, `FVX-TYPE-002` Add Random Immunities sowie `FVX-TYPE-003` Update Type Effectiveness; keine Ausfuehrung | keiner, read-only Analyse | nein |
 | 068 | `068_type_effectiveness_followup_smoke_results.md` | CFRU/DPE TypeEffectiveness-Folgesmoke-Ergebnisse | bestaetigt sanitisiert: Balanced, Keep Type Identities, Inverse, Add Random Immunities und Update Type Effectiveness jeweils mit Save/Log/Output/Reload true, `writeReloadTypeChartMismatches=0`, erhaltenen Terminatoren, `Bad Egg=false`, `<unknown>=false` und `stacktrace=none` | lokal/ignored, nicht dokumentiert | nein |
-| 069 | `069_p1_similar_strength_same_type_regression_smoke.md` | CFRU/DPE P1 Similar Strength / Same Type Regression-Smoke-Plan | dokumentiert: spaetere Wild-, Trainer- und Evolution-Slices fuer Similar Strength, Same Type, Type Themes und Type Restrictions ueber belegte Species-/BST-/Type-Datenpfade; keine Ausfuehrung | keiner, read-only Analyse | ja |
+| 069 | `069_p1_similar_strength_same_type_regression_smoke.md` | CFRU/DPE P1 Similar Strength / Same Type Regression-Smoke-Plan | dokumentiert: spaetere Wild-, Trainer- und Evolution-Slices fuer Similar Strength, Same Type, Type Themes und Type Restrictions ueber belegte Species-/BST-/Type-Datenpfade; keine Ausfuehrung | keiner, read-only Analyse | nein |
+| 070 | `070_p1_similar_strength_same_type_regression_smoke_results.md` | CFRU/DPE P1 Similar Strength / Same Type Regression-Smoke-Ergebnisse | gemischt: Trainer Similar Strength unter `FVX-FOE-001` bestaetigt mit Save/Log/Output/Reload true und `writeReloadTrainerPokemonMismatches=0`; Wild Similar Strength, Wild Type Restrictions, `FVX-FOE-009` und Evolutions Same Typing blockieren beim Save; Evolutions Similar Strength reloadet mit `writeReloadEvolutionMismatches=24` und `Bad Egg=true` | lokal/ignored, nicht dokumentiert | ja |
 
 ## Aktuell bestaetigter Stand
 
-Latest ist Nr. 069: CFRU/DPE P1 Similar Strength / Same Type Regression-Smoke-Plan.
+Latest ist Nr. 070: CFRU/DPE P1 Similar Strength / Same Type Regression-Smoke-Ergebnisse.
 
 Kernaussagen:
 
-- 069 plant spaetere Regression-Smokes fuer BST-/Type-basierte Poolfilter, ohne Tests auszufuehren.
-- Primaere Carrier sind Standard/Fallback-Wild, Trainer-Species-Writer und Evolution-Species-Writer.
-- `FVX-SST-012` und Starter-Type/BST aus 065 bleiben nur Referenz- oder Vergleichsbelege, nicht primaerer 069-Scope.
-- Same Type, Type Themes und Type Restrictions nutzen Species-Type-Felder aus 051 und beweisen keinen TypeChart-Support.
+- 070 fuehrte die in 069 geplanten Wild-, Trainer- und Evolution-Slices einzeln aus und dokumentiert die Ergebnisse sanitisiert.
+- Trainer Similar Strength unter `FVX-FOE-001` ist im Trainer-Species-Carrier-Smoke stabil.
+- Wild Similar Strength, Wild Type Restrictions, `FVX-FOE-009` und Evolutions Same Typing blockieren vor Output/Reload.
+- Evolutions Similar Strength speichert und reloadet, hat aber `writeReloadEvolutionMismatches=24`; der `Bad Egg`-Marker ist wegen der Mismatches nicht als unkritischer 055-Marker freigegeben.
 - TypeChart/TypeEffectiveness aus 068, MoveData, Palette, Items, Graphics, Text/Menu und Level-/Methoden-Writer bleiben eigene Grenzen.
 
 ## Lokale Artefaktpflege
