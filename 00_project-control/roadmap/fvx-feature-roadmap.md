@@ -1,3 +1,10 @@
+# FVX Feature Roadmap Update - 2026-05-15 - Field Items Shuffle complete
+
+- Field Items Shuffle has a successful allowed-slot Write-/Reload-Smoke in Diagnose 102.
+- `FVX-ITEM-001` can be treated as `GUI-kompatibel` for the narrow Shuffle scope.
+- Continue Field Items in separate slices: Random first, Random Even second, Ban Bad Items third.
+- Do not fold Shops or Pickup into the Field Items Random follow-up.
+
 # FVX Feature Roadmap Update - 2026-05-14 - Field Items allowed-slot guard
 
 - Field Items remain the first active Item-writer track after Palette.
