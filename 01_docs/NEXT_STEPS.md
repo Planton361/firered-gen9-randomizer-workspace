@@ -1,3 +1,21 @@
+# Next Steps Update - 2026-05-15 - Field Items Random smoke next
+
+Aktueller Fokus:
+
+- `FVX-ITEM-001 Field Items Shuffle` ist durch Diagnose 102 im engen allowed-slot Scope `GUI-kompatibel`.
+- `FVX-ITEM-002 Field Items Random`, `FVX-ITEM-003 Field Items Random even distribution` und `FVX-ITEM-004 Ban Bad Items` bleiben `Write modelliert`.
+- Shops, Pickup und Held Items bleiben getrennte Writer-Scope-Bloecke.
+
+Naechster empfohlener Minimalblock:
+
+- `test/upr-fvx-cfru-dpe-field-items-random-reload-smoke`
+
+Ziel des Folgeblocks:
+
+- Nur `FVX-ITEM-002 Field Items Random` testen.
+- `banBadRandomFieldItems=false` lassen; `FVX-ITEM-004` separat spaeter testen.
+- Dieselben allowed-slot-, TM-/Non-TM-, Required-TM- und preserve-only-Metriken wie Diagnose 102 pruefen.
+
 # Next Steps Update - 2026-05-14 - Field Items allowed-slot smoke next
 
 Aktueller Fokus:

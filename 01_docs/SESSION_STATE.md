@@ -1,3 +1,14 @@
+# Session State Update - 2026-05-15 - Field Items allowed-slot reload smoke
+
+- Branch: `test/upr-fvx-cfru-dpe-field-items-allowed-slot-reload-smoke`.
+- Workspace PR #146 was verified as merged before branch creation.
+- New protocol: `08_tests/randomizer/102_field_items_allowed_slot_reload_smoke.md`.
+- A locally approved CFRU/DPE Gen9-BPRE candidate was used for a Field-Items-only `FVX-ITEM-001 Field Items Shuffle` Write-/Reload-Smoke.
+- Sanitized result: `candidateFilesChecked=94`, `candidateLoaded=true`, `smokeExecuted=true`, `saveSuccessful=true`, `logSuccessful=true`, `outputRomExists=true`, `logNonEmpty=true`, `reloadSuccessful=true`, `fieldItemsTotalBefore=339`, `fieldItemsTotalAfter=339`, `fieldItemsTotalReload=339`, `fieldItemReloadMismatches=0`, visible/hidden reload mismatches `0`, TM/Non-TM slot mismatches `0`, `requiredFieldTMMissingAfter=0`, `disallowedFieldItemWrites=0`, `scriptPatternExpansion=0`, `exceptionClass=none`, `stacktrace=none`.
+- `FVX-ITEM-001` is now `GUI-kompatibel` for the tested narrow Shuffle scope.
+- `FVX-ITEM-002`, `FVX-ITEM-003` and `FVX-ITEM-004` remain `Write modelliert` pending separate Random / Random Even / Ban Bad Items smokes.
+- No code changes, no `02_external/**` changes, no submodule pin change, no build, no committed ROM/log/output artefacts, no private artefact documentation.
+
 # Session State Update - 2026-05-14 - Field Items allowed-slot guard decision
 
 - Branch: `compat/upr-fvx-cfru-dpe-field-items-allowed-slot-write-guard`.

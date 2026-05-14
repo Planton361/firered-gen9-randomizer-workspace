@@ -1,3 +1,11 @@
+# Roadmap Status Update - 2026-05-15 - Field Items Shuffle smoke complete
+
+- Field Items: Diagnose 102 completes the first allowed-slot Write-/Reload-Smoke for `FVX-ITEM-001 Field Items Shuffle`.
+- `FVX-ITEM-001` is `GUI-kompatibel` for the tested narrow Shuffle scope.
+- `FVX-ITEM-002`, `FVX-ITEM-003` and `FVX-ITEM-004` remain `Write modelliert` and require separate smokes.
+- Next P1 step: Field Items Random smoke without Ban Bad Items.
+- Shops and Pickup remain separate follow-up scopes.
+
 # Roadmap Status Update - 2026-05-14 - Field Items allowed-slot guard
 
 - Field Items: Diagnose 101 bestaetigt den bestehenden allowed-slot Guard im Gen3 Writer read-only; kein UPR-FVX-Codefix und keine Submodule-Pin-Aenderung.
