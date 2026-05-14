@@ -24,10 +24,10 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Aktueller Branch | `compat/upr-fvx-cfru-dpe-p1-trainer-type-diversity-nulltype-fix` |
-| Nächster Branch | getrennte Evolution-Blocker-Fortsetzung fuer `FVX-TRAIT-018/019` |
-| Aktueller Fokus | CFRU/DPE Trainer Type Diversity Null-Type Fix |
-| ROM-/Build-Arbeit | lokale eng gegatete Trainer-Smokes ausgefuehrt; Artefakte blieben ignored und wurden nicht dokumentiert |
+| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-p1-evolution-same-typing-blocker-diagnostics` |
+| Nächster Branch | eng gegateter Fixbranch fuer `FVX-TRAIT-019` Same-Typing-/Null-Primary-Type-Scope |
+| Aktueller Fokus | CFRU/DPE Evolution Same Typing Code Diagnosis |
+| ROM-/Build-Arbeit | keine Randomizer-Laeufe; read-only Code-/Protokollanalyse |
 | Externe Repos | als Submodule auf Planton361-Forks eingebunden |
 | Forks | Planton361-Forks fuer UPR-FVX, DPE Gen9 und CFRU dokumentiert |
 | Installationen | devkitPro/devkitARM lokal dokumentiert; keine Installation in diesem Analyseblock |
@@ -136,18 +136,19 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | 08 Randomizer-Kompatibilität | CFRU/DPE Wild Filter Carrier Code Diagnosis | Diagnose 074 grenzt die wahrscheinliche Ursache der 070-Wild-`IllegalStateException` auf den `GAME`-Mapping-/InfoMap-Nullslot-Pfad im WildEncounterRandomizer ein |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Wild Filter Carrier Nullslot Fix | UPR-FVX `acaada51` und Diagnose 075 bestaetigen `FVX-WILD-011` und `FVX-WILD-004` mit Save/Log/Output/Reload true, `writeReloadWildPokemonMismatches=0`, `Bad Egg=false`, `<unknown>=false` und `stacktrace=none` |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Trainer Type Diversity Null-Type Fix | UPR-FVX `d89fc64e` und Diagnose 078 bestaetigen `FVX-FOE-009` mit Save/Log/Output/Reload true, `writeReloadTrainerPokemonMismatches=0`, `filterViolations=0`, `Bad Egg=false`, `<unknown>=false` und `stacktrace=none`; Trainer Similar Strength bleibt stabil |
+| 08 Randomizer-Kompatibilität | CFRU/DPE Evolution Same Typing Code Diagnosis | Diagnose 079 grenzt die wahrscheinliche Ursache von `FVX-TRAIT-019` auf `to.hasSharedType(...)` im `EvolutionRandomizer` Same-Typing-Filter mit Null-Primary-Type-Kandidaten ein |
 
 ## In Arbeit
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Trainer Type Diversity Null-Type Fix | UPR-FVX- und Workspace-PRs fuer Diagnose 078 reviewen; Submodule-Pin nach Merge halten |
+| 08 Randomizer-Kompatibilität | Evolution Same Typing Code Diagnosis | PR fuer Diagnose 079 reviewen; danach engen Fixbranch fuer `EvolutionRandomizer` Same-Typing-/Null-Primary-Type-Scope freigeben |
 
 ## Als Nächstes
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Restliche 070-Evolution-Blocker getrennt fortsetzen | `FVX-TRAIT-018` und `FVX-TRAIT-019` separat diagnostizieren oder fixen, ohne offene Writer zu vermischen |
+| 08 Randomizer-Kompatibilität | `FVX-TRAIT-019` Same Typing Fix | Null-Primary-Type-Kandidaten im Evolution-Same-Typing-Pfad defensiv behandeln; kein Wild, Trainer, TypeChart, MoveData, Palette, Items, Text/Menu, Graphics oder Evolution-Methoden-Writer |
 
 ## Noch offen
 
@@ -240,6 +241,7 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | P1bd | `analysis/upr-fvx-cfru-dpe-p1-trainer-type-diversity-blocker-diagnostics` | Trainer Type Diversity Blocker Diagnostics Plan | erledigt; Diagnose 076 plant die read-only Folge-Diagnose fuer `FVX-FOE-009` ohne Codeaenderung, Fix oder Randomizer-Laeufe |
 | P1be | `analysis/upr-fvx-cfru-dpe-p1-trainer-type-diversity-code-diagnosis` | Trainer Type Diversity Code Diagnosis | erledigt; Diagnose 077 grenzt die wahrscheinliche Ursache auf Null-Primary-Type-Species im Force-Diverse-Types-/`EnumSet`-Pfad ein |
 | P1bf | `compat/upr-fvx-cfru-dpe-p1-trainer-type-diversity-nulltype-fix` | Trainer Type Diversity Null-Type Fix | aktueller Fixbranch; UPR-FVX `d89fc64e` und Diagnose 078 bestaetigen `FVX-FOE-009` im `FVX-FOE-001` Carrier |
+| P1bg | `analysis/upr-fvx-cfru-dpe-p1-evolution-same-typing-blocker-diagnostics` | Evolution Same Typing Code Diagnosis | aktueller Analysebranch; Diagnose 079 grenzt `FVX-TRAIT-019` auf Same-Typing-Null-Primary-Type-Kandidaten ein |
 | P2 | `randomizer/cfru-day-night-wild-table-analysis` | CFRU-Custom-Day/Night-Wild-Tabellen separat untersuchen | erst nach P1-Schreibpfad-Diagnose; Route-1-Fallback bleibt stabil |
 | P3 | noch festlegen | Nullslot-`<unknown>` mit `rawInternalSpeciesId=0` klassifizieren | nicht mit GenRestrictions vermischen |
 | P4 | noch festlegen | BizHawk-/Ironmon-Tracker-/RAM-Mapping pruefen | erst nach stabiler ROM-Randomizer-Kompatibilitaet |

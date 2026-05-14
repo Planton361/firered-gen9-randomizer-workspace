@@ -2,10 +2,10 @@
 
 ## Latest
 
-- `078_trainer_type_diversity_nulltype_fix_diagnostics.md` dokumentiert den eng gegateten UPR-FVX-Fix fuer `FVX-FOE-009` Trainer Type Diversity / Type Themes.
-- UPR-FVX `d89fc64e3b0223b03a65466422847dc7df30d03c` behandelt Species mit `primaryType == null` defensiv im Force-Diverse-Types-/`usedTypes`-Pfad von `TrainerPokemonRandomizer`.
-- `FVX-FOE-009` und die Trainer Similar Strength Regression melden Save/Log/Output/Reload true, `writeReloadTrainerPokemonMismatches=0`, `Bad Egg=false`, `<unknown>=false` und `stacktrace=none`.
-- Wild, Evolution, TypeChart, MoveData, Palette, Items, Text/Menu, Graphics und Level-Modifier bleiben ausgeschlossen.
+- `079_p1_evolution_same_typing_code_diagnosis.md` dokumentiert die read-only Codeanalyse fuer den 070-Blocker `FVX-TRAIT-019` Evolutions Same Typing.
+- Wahrscheinlich konkrete Ursache ist der Same-Typing-Filter in `EvolutionRandomizer.findPossibleReplacements(...)`: `to.hasSharedType(...)` dereferenziert bei Kandidaten mit `primaryType == null` ueber `Species.hasSharedType(...)` einen Null-Type.
+- Der allgemeine Evolution-Species-Carrier bleibt von dieser Diagnose getrennt; `FVX-TRAIT-018` Evolutions Similar Strength bleibt ein separater Reload-/Bad-Egg-Scope.
+- Wild, Trainer, TypeChart, MoveData, Palette, Items, Text/Menu, Graphics und Evolution-Methoden-Writer bleiben ausgeschlossen.
 
 Dieses Verzeichnis enthaelt die dauerhaften Markdown-Protokolle fuer UPR-FVX/CFRU-DPE-Randomizer-Analysen und Smokes. Lokale ROM-, Build-, Log- und Tool-Artefakte bleiben unter `05_builds/**` oder `03_tools/releases/**` und werden nicht committed.
 
@@ -112,19 +112,20 @@ Der neueste bestaetigte Stand wird in Markdown ueber die Spalte `Latest` markier
 | 075 | `075_wild_filter_carrier_nullslot_fix_diagnostics.md` | CFRU/DPE Wild Filter Carrier Nullslot Fix Diagnostics | bestaetigt: UPR-FVX-Fix fuer WildEncounterRandomizer Mapping-/InfoMap-Nullslot-Scope; `FVX-WILD-011` und `FVX-WILD-004` jeweils mit Save/Log/Output/Reload true, `writeReloadWildPokemonMismatches=0`, `Bad Egg=false`, `<unknown>=false` und `stacktrace=none` | lokal/ignored, nicht dokumentiert | nein |
 | 076 | `076_p1_trainer_type_diversity_blocker_diagnostics_plan.md` | CFRU/DPE P1 Trainer Type Diversity Blocker Diagnostics Plan | dokumentiert: read-only Diagnoseplan fuer den 070-Blocker `FVX-FOE-009` Trainer Type Diversity / Type Themes; klassifiziert `NullPointerException`, fehlenden Output/Reload und `filterViolations=112` als Vor-Abbruch-Befund; keine Ausfuehrung | keiner, read-only Analyse | nein |
 | 077 | `077_p1_trainer_type_diversity_code_diagnosis.md` | CFRU/DPE P1 Trainer Type Diversity Code Diagnosis | dokumentiert: read-only Codeanalyse fuer `FVX-FOE-009`; wahrscheinlich konkrete Ursache ist `EnumSet.add(null)` im Force-Diverse-Types-/`updateUsedTypes(...)`-Pfad, weil Trainer-Pools Null-Primary-Type-Species nicht ausschliessen; keine Ausfuehrung | keiner, read-only Analyse | nein |
-| 078 | `078_trainer_type_diversity_nulltype_fix_diagnostics.md` | CFRU/DPE Trainer Type Diversity Null-Type Fix Diagnostics | bestaetigt: UPR-FVX-Fix fuer `TrainerPokemonRandomizer` Null-Primary-Type-Scope; `FVX-FOE-009` und Trainer Similar Strength Regression mit Save/Log/Output/Reload true, `writeReloadTrainerPokemonMismatches=0`, `filterViolations=0` fuer Type Diversity, `Bad Egg=false`, `<unknown>=false` und `stacktrace=none` | lokal/ignored, nicht dokumentiert | ja |
+| 078 | `078_trainer_type_diversity_nulltype_fix_diagnostics.md` | CFRU/DPE Trainer Type Diversity Null-Type Fix Diagnostics | bestaetigt: UPR-FVX-Fix fuer `TrainerPokemonRandomizer` Null-Primary-Type-Scope; `FVX-FOE-009` und Trainer Similar Strength Regression mit Save/Log/Output/Reload true, `writeReloadTrainerPokemonMismatches=0`, `filterViolations=0` fuer Type Diversity, `Bad Egg=false`, `<unknown>=false` und `stacktrace=none` | lokal/ignored, nicht dokumentiert | nein |
+| 079 | `079_p1_evolution_same_typing_code_diagnosis.md` | CFRU/DPE P1 Evolution Same Typing Code Diagnosis | dokumentiert: read-only Codeanalyse fuer `FVX-TRAIT-019`; wahrscheinlich konkrete Ursache ist `to.hasSharedType(...)` im Same-Typing-Filter mit Null-Primary-Type-Kandidaten aus dem Evolution-Replacement-Pool; keine Ausfuehrung | keiner, read-only Analyse | ja |
 
 ## Aktuell bestaetigter Stand
 
-Latest ist Nr. 078: CFRU/DPE Trainer Type Diversity Null-Type Fix Diagnostics.
+Latest ist Nr. 079: CFRU/DPE P1 Evolution Same Typing Code Diagnosis.
 
 Kernaussagen:
 
-- `FVX-FOE-009` Trainer Type Diversity / Type Themes ist im eng getesteten Trainer-Type-Diversity-Scope entblockt.
-- UPR-FVX `d89fc64e3b0223b03a65466422847dc7df30d03c` schuetzt `TrainerPokemonRandomizer` vor Null-Primary-Type-Species im Force-Diverse-Types-/`usedTypes`-Pfad.
-- Trainer Similar Strength unter `FVX-FOE-001` bleibt als Regression stabil.
-- Der Nachweis gilt nicht fuer Trainer-Level-, Additional-Pokemon-, Better-Movesets-, Battle-Style-, Names/Class-Names- oder andere offene Trainer-Subpfade.
-- Wild, Evolution, TypeChart/TypeEffectiveness, MoveData, Palette, Items, Text/Menu, Graphics, Level-Modifier und offene Writer bleiben ausgeschlossen.
+- `FVX-TRAIT-019` Evolutions Same Typing blockiert plausibel im Same-Typing-Filter, bevor Save/Output/Reload erreicht werden.
+- `EvolutionRandomizer.findPossibleReplacements(...)` nutzt `to.hasSharedType(...)`; `Species.hasSharedType(...)` dereferenziert den Primary Type des Kandidaten ohne Null-Guard.
+- CFRU/DPE-unsupported Types wie Stellar koennen als `primaryType == null` geladen werden und duerfen in diesem Pfad nicht als valide Same-Typing-Kandidaten behandelt werden.
+- `FVX-TRAIT-018` Evolutions Similar Strength bleibt separat, weil dessen 070-Befund Save/Reload erreicht, aber `writeReloadEvolutionMismatches=24` und `Bad Egg=true` meldet.
+- Wild, Trainer, TypeChart/TypeEffectiveness, MoveData, Palette, Items, Text/Menu, Graphics, Level-Modifier, Evolution-Methoden-Writer und offene Writer bleiben ausgeschlossen.
 
 ## Lokale Artefaktpflege
 
