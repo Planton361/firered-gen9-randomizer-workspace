@@ -32,8 +32,8 @@ Sie ist die detaillierte Requirements-/Coverage-Ebene. Die Roadmap bleibt bewuss
 | Nicht begonnen | 39 |
 | Plan erstellt | 31 |
 | Read modelliert | 0 |
-| Write modelliert | 23 |
-| Getestet | 7 |
+| Write modelliert | 22 |
+| Getestet | 8 |
 | GUI-kompatibel | 30 |
 | In Arbeit | 0 |
 | **Gesamt** | **130** |
@@ -50,7 +50,7 @@ Sie ist die detaillierte Requirements-/Coverage-Ebene. Die Roadmap bleibt bewuss
 | Wild Pokemon | 12 | 3 | 1 | 0 | 0 | 0 | 8 | 0 |
 | TM/HMs & Tutors | 15 | 0 | 9 | 0 | 0 | 0 | 6 | 0 |
 | Items | 10 | 0 | 0 | 0 | 10 | 0 | 0 | 0 |
-| Types | 3 | 0 | 0 | 0 | 3 | 0 | 0 | 0 |
+| Types | 3 | 0 | 0 | 0 | 2 | 1 | 0 | 0 |
 | Graphics | 6 | 2 | 0 | 0 | 4 | 0 | 0 | 0 |
 | Misc Tweaks | 12 | 12 | 0 | 0 | 0 | 0 | 0 | 0 |
 
@@ -191,7 +191,7 @@ Sie ist die detaillierte Requirements-/Coverage-Ebene. Die Roadmap bleibt bewuss
 
 ### Types
 
-- FVX-TYPE-001 | Type Effectiveness Random/Balanced/Keep Identities/Inverse | Write modelliert
+- FVX-TYPE-001 | Type Effectiveness Random/Balanced/Keep Identities/Inverse | Getestet
 - FVX-TYPE-002 | Add Random Immunities | Write modelliert
 - FVX-TYPE-003 | Update Type Effectiveness | Write modelliert
 
@@ -248,6 +248,7 @@ Diese Matrix soll nicht als 130 Roadmap-Zeilen gepflegt werden. Fuer die Roadmap
 - `08_tests/randomizer/060_p1_gui_suboptions_regression_matrix.md` konsolidiert GUI-Suboptionen und empfiehlt einen Regression-Smoke-Plan.
 - `08_tests/randomizer/064_p1_global_species_pool_regression_smoke_results.md` bestaetigt `FVX-GEN-001` und `FVX-GEN-002` im getesteten `FVX-SST-002`-Starter-Carrier-Smoke; das ist keine globale Vollabdeckung fuer Wild-/Trainer-/Evolution-Kombinationen.
 - `08_tests/randomizer/065_p1_starters_suboptions_regression_smoke_results.md` bestaetigt `FVX-SST-003`, `FVX-SST-004`, `FVX-SST-005`, `FVX-SST-006` und `FVX-SST-009` im getesteten Starter-Species-Writer-Smoke; Starter Held Items `FVX-SST-007`/`FVX-SST-008` bleiben separat/offen.
+- `08_tests/randomizer/066_type_chart_preserve_effectiveness_fix_diagnostics.md` bestaetigt `FVX-TYPE-001` im TypeEffectiveness-only Random-Smoke mit Fairy-Reload und `writeReloadTypeChartMismatches=0`; Balanced, Keep Identities und Inverse bleiben als einzelne Folgesmokes sinnvoll.
 
 ## Pflege-Regeln
 

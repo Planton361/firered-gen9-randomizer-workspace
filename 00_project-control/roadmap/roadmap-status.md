@@ -24,9 +24,9 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Aktueller Branch | `test/upr-fvx-cfru-dpe-p1-starters-suboptions-regression-smoke` |
+| Aktueller Branch | `compat/upr-fvx-cfru-dpe-type-chart-preserve-effectiveness` |
 | Nächster Branch | `analysis/upr-fvx-cfru-dpe-p1-similar-strength-same-type-regression-smoke` |
-| Aktueller Fokus | CFRU/DPE Starters Suboptions Regression-Smoke-Ergebnisse |
+| Aktueller Fokus | CFRU/DPE TypeChart Preserve Effectiveness Fix |
 | ROM-/Build-Arbeit | keine neuen ROM-/Build-Artefakte; keine Artefakte committen |
 | Externe Repos | als Submodule auf Planton361-Forks eingebunden |
 | Forks | Planton361-Forks fuer UPR-FVX, DPE Gen9 und CFRU dokumentiert |
@@ -125,12 +125,13 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | 08 Randomizer-Kompatibilität | CFRU/DPE Starters Suboptions Regression-Smoke-Plan | Diagnose 063 plant `FVX-SST-003`, `FVX-SST-004`, `FVX-SST-005`, `FVX-SST-006` und `FVX-SST-009` ueber den belegten `FVX-SST-002`-Starter-Carrier; Starter Held Items und offene Writer bleiben ausgeschlossen |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Global Species Pool Regression-Smoke-Ergebnisse | Diagnose 064 dokumentiert sanitisiert Baseline Carrier, `FVX-GEN-001` Generation Limits, `FVX-GEN-001` related Pokemon und `FVX-GEN-002` No Premature Evolutions im `FVX-SST-002`-Starter-Carrier-Smoke mit Save/Log/Reload true, `Starter-Mismatches=0` und `stacktrace=none` |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Starters Suboptions Regression-Smoke-Ergebnisse | Diagnose 065 dokumentiert sanitisiert `FVX-SST-003`, `FVX-SST-004`, `FVX-SST-005`, `FVX-SST-006` und `FVX-SST-009` im Starter-Species-Writer-Smoke mit Save/Log/Reload true, `Starter-Mismatches=0`, `Filterverletzungen=0` und `stacktrace=none` |
+| 08 Randomizer-Kompatibilität | CFRU/DPE TypeChart Preserve Effectiveness Fix | UPR-FVX `36707e01` und Diagnose 066 bestaetigen TypeEffectiveness-only mit Save/Log/Output/Reload true, `writeReloadTypeChartMismatches=0`, Fairy-Reload als raw `0x17`, unsupported/Stellar-Preserve und erhaltene Foresight-/Endtable-Terminatoren |
 
 ## In Arbeit
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Starters Suboptions Regression-Smoke-Ergebnisse | Diagnose 065 dokumentieren und PR erstellen |
+| 08 Randomizer-Kompatibilität | TypeChart Preserve Effectiveness Fix | UPR-FVX-Fix und Workspace-Submodule-/Diagnoseupdate per PR erstellen |
 
 ## Als Nächstes
 
@@ -215,7 +216,8 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | P1ap | `analysis/upr-fvx-cfru-dpe-p1-global-species-pool-regression-smoke` | Global Species Pool Regression-Smoke-Plan | erledigt; Diagnose 062 plant `FVX-GEN-001` und `FVX-GEN-002` gegen einen stabilen Species-Carrier ohne offene Writer und ohne Testausfuehrung |
 | P1aq | `analysis/upr-fvx-cfru-dpe-p1-starters-suboptions-regression-smoke` | Starters Suboptions Regression-Smoke-Plan | erledigt; Diagnose 063 plant Starter-Poolfilter ueber `FVX-SST-002` ohne Starter Held Items und ohne offene Writer |
 | P1ar | `test/upr-fvx-cfru-dpe-p1-global-species-pool-regression-smoke` | Global Species Pool Regression-Smoke-Ergebnisse | erledigt; Diagnose 064 dokumentiert `FVX-GEN-001/002` im Starter-Carrier-Smoke als getestet, nicht global vollabgedeckt |
-| P1as | `test/upr-fvx-cfru-dpe-p1-starters-suboptions-regression-smoke` | Starters Suboptions Regression-Smoke-Ergebnisse | aktueller Test-/Dokumentationsbranch; Diagnose 065 dokumentiert `FVX-SST-003/004/005/006/009` im Starter-Species-Writer-Smoke als getestet, Starter Held Items bleiben separat |
+| P1as | `test/upr-fvx-cfru-dpe-p1-starters-suboptions-regression-smoke` | Starters Suboptions Regression-Smoke-Ergebnisse | erledigt; Diagnose 065 dokumentiert `FVX-SST-003/004/005/006/009` im Starter-Species-Writer-Smoke als getestet, Starter Held Items bleiben separat |
+| P1at | `compat/upr-fvx-cfru-dpe-type-chart-preserve-effectiveness` | TypeChart Preserve Effectiveness Fix | aktueller Fix-/Dokumentationsbranch; UPR-FVX `36707e01` und Diagnose 066 bestaetigen TypeEffectiveness Random mit Fairy-Reload und `writeReloadTypeChartMismatches=0` |
 | P2 | `randomizer/cfru-day-night-wild-table-analysis` | CFRU-Custom-Day/Night-Wild-Tabellen separat untersuchen | erst nach P1-Schreibpfad-Diagnose; Route-1-Fallback bleibt stabil |
 | P3 | noch festlegen | Nullslot-`<unknown>` mit `rawInternalSpeciesId=0` klassifizieren | nicht mit GenRestrictions vermischen |
 | P4 | noch festlegen | BizHawk-/Ironmon-Tracker-/RAM-Mapping pruefen | erst nach stabiler ROM-Randomizer-Kompatibilitaet |
@@ -264,6 +266,15 @@ analysis/upr-fvx-cfru-dpe-p1-similar-strength-same-type-regression-smoke
 Zweck: BST-/Type-basierte Pooling-Suboptionen planen oder pruefen, ohne TypeChart oder MoveData-Write zu aktivieren.
 
 ## Arbeitsblock-Log
+
+### 2026-05-14 – compat/upr-fvx-cfru-dpe-type-chart-preserve-effectiveness
+
+- UPR-FVX-Branch `compat/upr-fvx-cfru-dpe-type-chart-preserve-effectiveness` verwendet; keine Aenderung direkt auf `main`/`master`.
+- UPR-FVX-Fix `36707e0190d3d9fa587550dfc5631fcaa9abd6b1` erstellt.
+- TypeChart-raw-Type-Mapping wurde vom `gBaseStats`-Type-Mapping getrennt: Fairy `0x17` wird fuer TypeEffectiveness gelesen/geschrieben, Stellar/raw `0x18` bleibt unsupported.
+- Unsupported raw TypeChart-Triplets bleiben preserve-/skip-only; kein STELLAR-Enum, keine Species-Type-, MoveData-, Palette-, Item-, Graphics- oder Text/Menu-Aenderung.
+- TypeEffectiveness-only Smoke bestaetigt `saveSuccessful=true`, `logSuccessful=true`, Output-ROM und nichtleeren Log, Reload, `writeReloadTypeChartMismatches=0`, Fairy-Reload als raw `0x17`, erhaltene Terminatoren und `stacktrace=none`.
+- Neues Protokoll erstellt: `08_tests/randomizer/066_type_chart_preserve_effectiveness_fix_diagnostics.md`.
 
 ### 2026-05-13 – analysis/upr-fvx-cfru-dpe-p1-tm-hm-128-slot-model
 

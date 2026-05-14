@@ -2,9 +2,9 @@
 
 ## Latest
 
-- `065_p1_starters_suboptions_regression_smoke_results.md` dokumentiert sanitisiert den lokal ausgefuehrten Starter-Suboptions-Regression-Smoke aus 063.
-- Die Slices `FVX-SST-002`, `FVX-SST-003`, `FVX-SST-004`, `FVX-SST-005`, `FVX-SST-006` und `FVX-SST-009` liefern Save/Log/Reload true, `Starter-Mismatches=0`, `Filterverletzungen=0` und `stacktrace=none`.
-- Starter Held Items (`FVX-SST-007`/`FVX-SST-008`), Wild-/Trainer-/Evolution-Kombinationen und offene Writer bleiben separat.
+- `066_type_chart_preserve_effectiveness_fix_diagnostics.md` dokumentiert den eng gegateten CFRU/DPE TypeChart-/TypeEffectiveness-Fix.
+- Der TypeEffectiveness-only Smoke liefert Save/Log/Output/Reload true, `writeReloadTypeChartMismatches=0`, Fairy-Reload mit raw `0x17`, erhaltene Foresight-/Endtable-Terminatoren und `stacktrace=none`.
+- `gBaseStats`-Species-Type-Read/Write, Stellar als FVX-Type, MoveData, Palette, Items, Graphics und Text/Menu bleiben getrennt.
 
 Dieses Verzeichnis enthaelt die dauerhaften Markdown-Protokolle fuer UPR-FVX/CFRU-DPE-Randomizer-Analysen und Smokes. Lokale ROM-, Build-, Log- und Tool-Artefakte bleiben unter `05_builds/**` oder `03_tools/releases/**` und werden nicht committed.
 
@@ -98,19 +98,20 @@ Der neueste bestaetigte Stand wird in Markdown ueber die Spalte `Latest` markier
 | 062 | `062_p1_global_species_pool_regression_smoke.md` | CFRU/DPE P1 Global Species Pool Regression-Smoke-Plan | dokumentiert: erster geplanter Smoke fuer `FVX-GEN-001` Limit Pokemon inklusive Generation Limits / related Pokemon und `FVX-GEN-002` No Premature Evolutions gegen einen einzelnen stabilen Species-Carrier; keine Testausfuehrung | keiner, read-only Analyse | nein |
 | 063 | `063_p1_starters_suboptions_regression_smoke.md` | CFRU/DPE P1 Starters Suboptions Regression-Smoke-Plan | dokumentiert: Starter-Suboptionen `FVX-SST-003`, `FVX-SST-004`, `FVX-SST-005`, `FVX-SST-006` und `FVX-SST-009` ueber den belegten `FVX-SST-002`-Carrier; Starter Held Items und offene Writer ausgeschlossen; keine Testausfuehrung | keiner, read-only Analyse | nein |
 | 064 | `064_p1_global_species_pool_regression_smoke_results.md` | CFRU/DPE P1 Global Species Pool Regression-Smoke-Ergebnisse | bestaetigt sanitisiert: Baseline Carrier, `FVX-GEN-001` Generation Limits, `FVX-GEN-001` related Pokemon und `FVX-GEN-002` No Premature Evolutions im `FVX-SST-002`-Starter-Carrier-Smoke mit Save/Log/Reload true, `Starter-Mismatches=0` und `stacktrace=none`; keine offenen Writer | lokal/ignored, nicht dokumentiert | nein |
-| 065 | `065_p1_starters_suboptions_regression_smoke_results.md` | CFRU/DPE P1 Starters Suboptions Regression-Smoke-Ergebnisse | bestaetigt sanitisiert: `FVX-SST-003`, `FVX-SST-004`, `FVX-SST-005`, `FVX-SST-006` und `FVX-SST-009` im Starter-Species-Writer-Smoke mit Save/Log/Reload true, `Starter-Mismatches=0`, `Filterverletzungen=0` und `stacktrace=none`; Starter Held Items und offene Writer bleiben separat | lokal/ignored, nicht dokumentiert | ja |
+| 065 | `065_p1_starters_suboptions_regression_smoke_results.md` | CFRU/DPE P1 Starters Suboptions Regression-Smoke-Ergebnisse | bestaetigt sanitisiert: `FVX-SST-003`, `FVX-SST-004`, `FVX-SST-005`, `FVX-SST-006` und `FVX-SST-009` im Starter-Species-Writer-Smoke mit Save/Log/Reload true, `Starter-Mismatches=0`, `Filterverletzungen=0` und `stacktrace=none`; Starter Held Items und offene Writer bleiben separat | lokal/ignored, nicht dokumentiert | nein |
+| 066 | `066_type_chart_preserve_effectiveness_fix_diagnostics.md` | CFRU/DPE TypeChart Preserve Effectiveness Fix Diagnose | bestaetigt: TypeEffectiveness-only mit Save/Log/Output/Reload true, `writeReloadTypeChartMismatches=0`, Fairy-Reload als raw `0x17`, unsupported/Stellar nicht eingefuehrt oder normalisiert, Foresight-/Endtable-Terminatoren erhalten | lokal/ignored, nicht dokumentiert | ja |
 
 ## Aktuell bestaetigter Stand
 
-Latest ist Nr. 065: CFRU/DPE P1 Starters Suboptions Regression-Smoke-Ergebnisse.
+Latest ist Nr. 066: CFRU/DPE TypeChart Preserve Effectiveness Fix Diagnose.
 
 Kernaussagen:
 
-- 065 dokumentiert nur sanitisiert bereits lokal ausgefuehrte Ergebnisse und fuehrt keine neuen Randomizer-Laeufe aus.
-- `FVX-SST-003`, `FVX-SST-004`, `FVX-SST-005`, `FVX-SST-006` und `FVX-SST-009` sind im getesteten Starter-Species-Writer-Smoke stabil.
-- Save/Log/Reload waren true, der Starter-Write-/Reload-Mismatch-Zaehler war `0`, Filterverletzungen waren `0`, `stacktrace=none`.
-- `Bad Egg=false` und `<unknown>=false` in allen Slice-Logs.
-- Starter Held Items, Wild-/Trainer-/Evolution-Kombinationen und offene Writer bleiben separat.
+- 066 dokumentiert den UPR-FVX-Fix `36707e0190d3d9fa587550dfc5631fcaa9abd6b1`.
+- TypeEffectiveness-only war Save/Log/Output/Reload-stabil und meldete `writeReloadTypeChartMismatches=0`.
+- Fairy-TypeChart-Interaktionen wurden nach Write und Reload als raw `0x17` gezaehlt.
+- Unsupported/Stellar-Triplets wurden nicht eingefuehrt und nicht still normalisiert; Foresight- und Endtable-Terminatoren blieben erhalten.
+- Species-Type-Read/Write aus 051, MoveData, Palette, Items, Graphics und Text/Menu bleiben eigene Grenzen.
 
 ## Lokale Artefaktpflege
 
