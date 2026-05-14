@@ -1,3 +1,10 @@
+# Roadmap Status Update - 2026-05-14 - Field Items allowed-slot guard
+
+- Field Items: Diagnose 101 bestaetigt den bestehenden allowed-slot Guard im Gen3 Writer read-only; kein UPR-FVX-Codefix und keine Submodule-Pin-Aenderung.
+- `FVX-ITEM-001..004` bleiben `Write modelliert`, weil der fachliche Write-/Reload-Smoke ohne explizite Kandidatenfreigabe nicht ausgefuehrt wurde.
+- Naechster P1-Schritt: separater `FVX-ITEM-001 Field Items Shuffle` Write-/Reload-Smoke mit explizit freigegebenem Kandidaten.
+- Shops und Pickup bleiben getrennte Folge-Scope-Bloecke.
+
 # Roadmap Status
 
 Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Codex sollen dieses Dokument bevorzugt nutzen, weil Aenderungen hier sauber per Git-Diff nachvollziehbar sind.

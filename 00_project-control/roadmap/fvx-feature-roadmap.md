@@ -1,3 +1,11 @@
+# FVX Feature Roadmap Update - 2026-05-14 - Field Items allowed-slot guard
+
+- Field Items remain the first active Item-writer track after Palette.
+- Diagnose 101 records that the existing Gen3 Field-Items writer already guards writes to allowed slots.
+- No UPR-FVX code change is planned until a Write-/Reload-Smoke proves a concrete mismatch.
+- Next minimal validation block: `test/upr-fvx-cfru-dpe-field-items-allowed-slot-reload-smoke` for `FVX-ITEM-001 Field Items Shuffle` only.
+- Shops and Pickup stay separate and must not be folded into the first Field-Items smoke.
+
 # FVX Feature Roadmap
 
 Diese Datei ist die feature-orientierte Roadmap fuer Universal Pokemon Randomizer FVX. Sie verdichtet `01_docs/randomizer/fvx-feature-coverage.md` auf planbare Arbeitspakete.

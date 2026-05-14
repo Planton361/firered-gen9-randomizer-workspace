@@ -177,3 +177,5 @@ Wenn ein Artefakt nicht eindeutig Smoke-Output ist, bleibt es lokal liegen und w
 - 099 - `099_field_items_scope_diagnostics.md`: Sanitized blocked Field-Items-only diagnostics block. PR #143 was merged, but no explicitly approved local CFRU/DPE Gen9-BPRE candidate was provided; `candidateFilesChecked=0`, `candidateLoaded=false`, no fachlicher Field-Item scan, `FVX-ITEM-001..004` remain `Write modelliert`.
 
 - 100 - `100_field_items_scope_diagnostics_candidate.md`: Sanitized read-only Field-Items-only candidate diagnostics. `candidateLoaded=true`, `fieldItemScanSuccessful=true`, `fieldItemsTotal=339`, visible `168`, hidden `171`, allowed `280`, disallowed `59`, TM slots `28`, Non-TM slots `311`, `requiredFieldTMMissing=0`, invalid/unloaded `0`; recommends guarded Field-Items write/smoke.
+
+- 101 - `101_field_items_allowed_slot_write_guard.md`: Field-Items-only Guard-Entscheidung. Bestehender Gen3 `getFieldItems()` / `setFieldItems(...)`-Pfad schreibt nur allowed Slots; kein UPR-FVX-Codefix, kein Write-/Reload-Smoke ohne explizite Kandidatenfreigabe; `FVX-ITEM-001..004` bleiben `Write modelliert`.
