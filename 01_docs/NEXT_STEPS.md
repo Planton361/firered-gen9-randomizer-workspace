@@ -6,24 +6,25 @@ CFRU/DPE MoveData Fairy-Type-Byte Fix ist dokumentiert. Diagnose: `08_tests/rand
 
 `FVX-MOVE-004` Randomize Move Types ist nach dem engen CFRU/DPE-MoveData-Fairy-Type-Byte-Fix reload-stabil.
 
-Naechster aktiver Arbeitsblock: UPR-FVX PR #34 und Workspace-PR reviewen und mergen; danach Post-Merge-Doku-Sync.
+UPR-FVX PR #34 und Workspace PR #129 sind gemerged. Der Workspace pinnt `02_external/upr-fvx` auf `fad56f60d6fae9b006290a4d5fd1f0715f3d9dc3`.
+
+Naechster aktiver Arbeitsblock: konservativer Planungsblock fuer `FVX-MOVE-005` Move Names / Move Descriptions als getrennten Text/Menu-Scope.
 
 ## Priorisierte naechste Arbeitsbloecke
 
-1. MoveData Fairy-Type-Byte-Fix reviewen
-   - Empfohlener UPR-FVX-Branch: `compat/upr-fvx-cfru-dpe-move-data-type-fairy-byte`.
-   - Workspace-Branch: `compat/upr-fvx-cfru-dpe-move-data-type-fairy-byte`.
-   - UPR-FVX PR: https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/34
-   - Ziel: Review/Merge des engen `Gen3RomHandler`-Fixes fuer raw `0x17` Fairy im MoveData-Byte `+2`.
-   - Ergebnis aus 087: Save/Log/Output/Reload true, `writeReloadMoveDataMismatches=0`, `typeReloadMismatches=0`, `fairyReloadMismatches=0`, `cfruDpeTypeByteMismatches=0`, `moves.total=992`, `991:PsychicNoise`, Preserve-Bytes `0` Mismatches.
-   - Grenzen: `FVX-MOVE-005` Move Names/Descriptions bleibt out of scope; TypeChart, TypeEffectiveness und Species-Type-Write nicht vermischen; Vanilla/Jambo/andere Gen3-Pfade unveraendert lassen.
+1. Move Names / Descriptions Text/Menu-Scope planen
+   - Empfohlener Branch: `analysis/upr-fvx-cfru-dpe-move-names-text-menu-scope-plan`.
+   - Ziel: read-only entscheiden und dokumentieren, ob `FVX-MOVE-005` Move Names / Move Descriptions als eigener Text/Menu-Scope machbar ist oder vorerst zurueckgestellt bleibt.
+   - Fokus: Move-Namen-Tabellen, Move-Descriptions, Stringlaengen, Pointer-/Text-/Menu-Risiken, CFRU/DPE-Gen9-BPRE-Gates und sichere Reload-Kriterien modellieren.
+   - Grenzen: keine Umsetzung, keine Randomizer-Laeufe, keine Builds, keine ROM-/Log-/Output-Artefakte dokumentieren; nicht mit MoveData `+0..+11`, TypeChart, TypeEffectiveness, Species-Type-Write, TM/HM, Tutor, Egg, Learnsets, Palette, Items, Trainer, Wild, Evolutions oder Graphics vermischen.
 
-2. Post-Merge-Doku-Sync nach MoveData Fairy-Type-Byte-Fix
-   - Empfohlener Branch nach Merge: `docs/post-merge-move-data-fairy-type-byte-sync`.
-   - Ziel: PR-Status fuer UPR-FVX PR #34 und Workspace-PR markieren, `FVX-MOVE-004` als GUI-kompatibel halten und naechsten Scope konservativ bestimmen.
-   - `FVX-MOVE-005` Move Names/Descriptions nicht implizit starten; nur separat planen, wenn explizit freigegeben.
+2. MoveData Fairy-Type-Byte-Fix post-merge halten
+   - UPR-FVX PR #34 ist gemerged.
+   - Workspace PR #129 ist gemerged.
+   - Diagnose 087 bestaetigt `FVX-MOVE-004` mit Save/Log/Output/Reload true, `writeReloadMoveDataMismatches=0`, `typeReloadMismatches=0`, `fairyReloadMismatches=0`, `cfruDpeTypeByteMismatches=0`, `moves.total=992`, `991:PsychicNoise` und Preserve-Bytes `0` Mismatches.
+   - `FVX-MOVE-001/002/003/004/006` sind GUI-kompatibel; `FVX-MOVE-005` bleibt getrennt.
 
-3. MoveData Types Reload-Smoke reviewen
+3. MoveData Types Reload-Smoke historisch einordnen
    - Branch: `test/upr-fvx-cfru-dpe-move-data-types-reload-smoke`.
    - Diagnose 086 dokumentiert den Blocker fuer `FVX-MOVE-004`.
    - Save/Log/Output/Reload sind true; `moves.total=992` und `991:PsychicNoise` bleiben stabil.
