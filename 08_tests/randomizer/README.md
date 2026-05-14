@@ -2,8 +2,8 @@
 
 ## Latest
 
-- `089_move_names_fixed_length_reload_smoke.md` dokumentiert den Versuch eines engen Name-only fixed-length Reload-Smokes fuer `FVX-MOVE-005`.
-- Der fachliche Smoke ist blockiert, weil lokal kein freigegebener CFRU/DPE Gen9-BPRE-ROM-Kandidat mit `moves.total=992` und `991:PsychicNoise` gefunden wurde.
+- `090_move_names_fixed_length_reload_smoke_retry.md` dokumentiert den erneuten Candidate-Preflight fuer den engen Name-only fixed-length Reload-Smoke fuer `FVX-MOVE-005`.
+- Der Retry ist blockiert, weil unter den lokal geprueften freigegebenen privaten/ignored Kandidaten kein CFRU/DPE Gen9-BPRE-ROM-Kandidat mit `moves.total=992` und `991:PsychicNoise` gefunden wurde.
 - `FVX-MOVE-005` wird nicht hochgestuft und bleibt `Write modelliert`.
 - Die MoveData-Fixes aus Diagnose 084 bis 087 bleiben unveraendert: `FVX-MOVE-001/002/003/004/006` sind GUI-kompatibel.
 
@@ -123,11 +123,12 @@ Der neueste bestaetigte Stand wird in Markdown ueber die Spalte `Latest` markier
 | 086 | `086_move_data_types_reload_smoke.md` | CFRU/DPE MoveData Types Reload-Smoke | blockiert: Save/Log/Output/Reload true und Preserve-Bytes stabil, aber `writeReloadMoveDataMismatches=54` durch Fairy-Type-Byte-Mismatches im MoveData-`+2 type`-Writer | lokal/ignored, nicht dokumentiert | nein |
 | 087 | `087_move_data_fairy_type_byte_fix_diagnostics.md` | CFRU/DPE MoveData Fairy-Type-Byte Fix Diagnostics | bestaetigt: UPR-FVX `fad56f60`, Save/Log/Output/Reload true, `writeReloadMoveDataMismatches=0`, `typeReloadMismatches=0`, `fairyReloadMismatches=0`, `cfruDpeTypeByteMismatches=0` und Preserve-Bytes bytegleich | lokal/ignored, nicht dokumentiert | nein |
 | 088 | `088_move_names_text_menu_scope_plan.md` | CFRU/DPE Move Names / Descriptions Text/Menu-Scope Plan | dokumentiert: `FVX-MOVE-005` ist vom MoveData-Byte-Writer getrennt; Name-only fixed-length Smoke ist realistisch, Move Descriptions / Text/Menu-Repointing vorerst zurueckstellen | keiner, read-only Analyse | nein |
-| 089 | `089_move_names_fixed_length_reload_smoke.md` | CFRU/DPE Move Names fixed-length Reload-Smoke | blockiert: lokaler Harness erstellt, aber kein freigegebener lokaler CFRU/DPE Gen9-BPRE-Kandidat mit `moves.total=992` und `991:PsychicNoise` gefunden; `FVX-MOVE-005` bleibt `Write modelliert` | lokal/ignored, nicht dokumentiert | ja |
+| 089 | `089_move_names_fixed_length_reload_smoke.md` | CFRU/DPE Move Names fixed-length Reload-Smoke | blockiert: lokaler Harness erstellt, aber kein freigegebener lokaler CFRU/DPE Gen9-BPRE-Kandidat mit `moves.total=992` und `991:PsychicNoise` gefunden; `FVX-MOVE-005` bleibt `Write modelliert` | lokal/ignored, nicht dokumentiert | nein |
+| 090 | `090_move_names_fixed_length_reload_smoke_retry.md` | CFRU/DPE Move Names fixed-length Reload-Smoke Retry | blockiert: Candidate-Preflight pruefte 94 lokale freigegebene private/ignored Kandidaten, fand aber keinen Stand mit `moves.total=992` und `991:PsychicNoise`; fachlicher Smoke nicht ausgefuehrt; `FVX-MOVE-005` bleibt `Write modelliert` | lokal/ignored, nicht dokumentiert | ja |
 
 ## Aktuell bestaetigter Stand
 
-Latest ist Nr. 089: CFRU/DPE Move Names fixed-length Reload-Smoke.
+Latest ist Nr. 090: CFRU/DPE Move Names fixed-length Reload-Smoke Retry.
 
 Kernaussagen:
 
@@ -140,6 +141,7 @@ Kernaussagen:
 - `Update Moves` und Category-/Split-Reload bleiben durch Diagnose 084 belegt.
 - Diagnose 088 trennt `FVX-MOVE-005` vom MoveData-Byte-Writer und empfiehlt einen Name-only fixed-length Smoke.
 - Diagnose 089 konnte diesen Smoke noch nicht fachlich auswerten, weil lokal kein freigegebener CFRU/DPE Gen9-BPRE-Kandidat mit `moves.total=992` und `991:PsychicNoise` gefunden wurde.
+- Diagnose 090 wiederholte den Candidate-Preflight sanitisiert: `candidateFilesChecked=94`, `candidatePreflightSuccessful=false`, `candidateMovesTotal=not available`, `candidateHighestMove=not available`; der fachliche Smoke wurde erneut nicht ausgefuehrt.
 - `FVX-MOVE-005` bleibt `Write modelliert`; Move Descriptions / Text/Menu-Repointing bleibt zurueckgestellt.
 - Palette, Items, TypeChart/TypeEffectiveness, Trainer, Wild, Evolutions, Text/Menu, Graphics, TM/HM, Tutor, Egg und Learnset-Writer bleiben ausgeschlossen.
 

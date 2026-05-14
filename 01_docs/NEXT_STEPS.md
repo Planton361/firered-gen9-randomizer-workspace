@@ -2,25 +2,26 @@
 
 ## Aktueller Fokus
 
-CFRU/DPE Move Names fixed-length Reload-Smoke wurde versucht. Diagnose: `08_tests/randomizer/089_move_names_fixed_length_reload_smoke.md`.
+CFRU/DPE Move Names fixed-length Reload-Smoke wurde versucht und im Retry erneut vorab geprueft. Aktuelle Diagnose: `08_tests/randomizer/090_move_names_fixed_length_reload_smoke_retry.md`.
 
 `FVX-MOVE-001/002/003/004/006` sind GUI-kompatibel. `FVX-MOVE-005` bleibt getrennt vom MoveData-Byte-Writer-Scope.
 
-Ergebnis aus 089: Der fachliche Smoke ist blockiert, weil lokal kein freigegebener CFRU/DPE Gen9-BPRE-Kandidat mit `moves.total=992` und `991:PsychicNoise` gefunden wurde.
+Ergebnis aus 090: Der erneute Candidate-Preflight ist blockiert. `candidateFilesChecked=94`, `candidatePreflightSuccessful=false`, `candidateMovesTotal=not available`, `candidateHighestMove=not available`.
 
-Naechster aktiver Arbeitsblock: denselben Name-only fixed-length Reload-Smoke erneut ausfuehren, sobald ein passender lokaler Smoke-Kandidat eindeutig verfuegbar ist.
+Naechster aktiver Arbeitsblock: `FVX-MOVE-005` konservativ halten und den Name-only fixed-length Reload-Smoke nur mit einem vorab eindeutig freigegebenen CFRU/DPE Gen9-BPRE-Kandidaten wiederholen.
 
 ## Priorisierte naechste Arbeitsbloecke
 
-1. Move Names fixed-length Reload-Smoke erneut versuchen
-   - Empfohlener Branch: `test/upr-fvx-cfru-dpe-move-names-fixed-length-reload-smoke`.
+1. Move Names fixed-length Reload-Smoke erst mit eindeutigem Kandidaten wiederholen
+   - Empfohlener Branch: `test/upr-fvx-cfru-dpe-move-names-fixed-length-reload-smoke-candidate`.
    - Voraussetzung: freigegebener lokaler CFRU/DPE Gen9-BPRE-Kandidat muss mit `moves.total=992` und `991:PsychicNoise` erkennbar sein.
    - Ziel: `FVX-MOVE-005` Name-only im bestehenden Gen3 fixed-length Move-Namen-Pfad pruefen.
    - Kriterien: Save/Log/Output/Reload true, `moves.total=992`, `991:PsychicNoise`, `moveNameReloadMismatches=0`, `moveNameLengthViolations=0`, `moveNameTerminatorPaddingMismatches=0`, keine Description-/Pointer-Aenderung, `exceptionClass=none`, `stacktrace=none`.
    - Grenzen: keine Move Descriptions, keine Pointer-/Repointing- oder Text/Menu-Umsetzung, keine MoveData-Byte-Writer-Aenderung, keine TypeChart/TypeEffectiveness, keine Species-Type-, TM/HM-, Tutor-, Egg-, Learnset-, Palette-, Items-, Trainer-, Wild-, Evolution- oder Graphics-Arbeit.
 
-2. Move Names fixed-length Reload-Smoke Ergebnis halten
+2. Move Names fixed-length Reload-Smoke Retry-Ergebnis halten
    - Diagnose 089 dokumentiert den blockierten Versuch.
+   - Diagnose 090 dokumentiert den blockierten Retry-Preflight mit 94 geprueften lokalen Kandidatendateien und ohne fachliche Smoke-Auswertung.
    - `FVX-MOVE-005` bleibt `Write modelliert`.
    - Keine Feature-Hochstufung ohne stabilen Name-only Reload.
 

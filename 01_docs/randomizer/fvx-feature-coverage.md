@@ -38,7 +38,22 @@ Sie ist die detaillierte Requirements-/Coverage-Ebene. Die Roadmap bleibt bewuss
 | In Arbeit | 0 |
 | **Gesamt** | **130** |
 
-## Aktueller Hinweis zu 089
+## Aktueller Hinweis zu 090
+
+Diagnose 090 dokumentiert den erneuten Candidate-Preflight fuer den engen Name-only fixed-length Reload-Smoke fuer `FVX-MOVE-005`:
+
+- Der lokale Preflight blieb sanitisiert und dokumentierte keine privaten Pfade, ROM-Namen, Hashes, Logauszuege oder Output-ROMs.
+- `candidateFilesChecked=94`.
+- `candidatePreflightSuccessful=false`.
+- `candidateMovesTotal=not available`.
+- `candidateHighestMove=not available`.
+- Der fachliche Name-only Reload-Smoke wurde nicht ausgefuehrt, weil kein Kandidat gleichzeitig `moves.total=992` und `991:PsychicNoise` meldete.
+- `saveSuccessful`, `logSuccessful`, Output-, Reload-, Name-Length-, Terminator-/Padding-, Description-Pointer- und Name-Reload-Zaehler bleiben nicht fachlich ausgewertet.
+- `FVX-MOVE-005` wird nicht hochgestuft und bleibt `Write modelliert`.
+- Move Descriptions / Text/Menu-Repointing bleibt getrennt und zurueckgestellt.
+- `FVX-MOVE-001`, `FVX-MOVE-002`, `FVX-MOVE-003`, `FVX-MOVE-004` und `FVX-MOVE-006` bleiben GUI-kompatibel.
+
+## Vorheriger Hinweis zu 089
 
 Diagnose 089 dokumentiert den Versuch eines engen Name-only fixed-length Reload-Smokes fuer `FVX-MOVE-005`:
 
