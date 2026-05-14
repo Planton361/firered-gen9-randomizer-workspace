@@ -1,3 +1,22 @@
+# Next Steps Update - 2026-05-14 - Field Items allowed-slot smoke next
+
+Aktueller Fokus:
+
+- `FVX-ITEM-001..004` Field Items bleiben `Write modelliert`.
+- Diagnose 101 bestaetigt read-only, dass der bestehende Gen3 Field-Items-Writer bereits nur allowed Slots schreibt.
+- Ein fachlicher Write-/Reload-Smoke wurde nicht ausgefuehrt, weil fuer diesen Block keine explizite lokale Kandidatenfreigabe fuer einen ROM-Write vorlag.
+
+Naechster empfohlener Minimalblock:
+
+- `test/upr-fvx-cfru-dpe-field-items-allowed-slot-reload-smoke`
+
+Ziel des Folgeblocks:
+
+- Explizit freigegebenen CFRU/DPE Gen9-BPRE-Kandidaten verwenden.
+- Nur `FVX-ITEM-001 Field Items Shuffle` als ersten Field-Items-Carrier pruefen.
+- Erwartet: `fieldItemsTotalBefore=339`, `fieldItemsTotalAfter=339`, `fieldItemsTotalReload=339`, `fieldItemReloadMismatches=0`, TM-/Non-TM-Mismatches `0`, `requiredFieldTMMissingAfter=0`, `disallowedFieldItemWrites=0`, `scriptPatternExpansion=0`.
+- Shops, Pickup, Held Items, TM/HM/Tutor/Learnset, Palette/Graphics, MoveData/MoveNames, TypeChart, Trainer, Wild, Evolution und Text/Menu bleiben ausserhalb.
+
 # Next Steps Update - 2026-05-14 - Field Items guarded write/smoke
 
 Recommended next block:

@@ -1,3 +1,11 @@
+# FVX Feature Coverage Update - 2026-05-14 - Field Items allowed-slot guard
+
+- `FVX-ITEM-001` remains `Write modelliert`: existing allowed-slot writer guard is documented in Diagnose 101, but no Write-/Reload-Smoke ran in this block.
+- `FVX-ITEM-002` remains `Write modelliert`.
+- `FVX-ITEM-003` remains `Write modelliert`.
+- `FVX-ITEM-004` remains `Write modelliert`.
+- Field Items are separate from Shops, Pickup, Held Items, TM/HM/Tutor/Learnset, Palette/Graphics, MoveData/MoveNames and TypeChart.
+
 # UPR FVX Feature Coverage Matrix
 
 ## Zweck

@@ -1,3 +1,14 @@
+# Session State Update - 2026-05-14 - Field Items allowed-slot guard decision
+
+- Branch: `compat/upr-fvx-cfru-dpe-field-items-allowed-slot-write-guard`.
+- Workspace PR #145 was verified as merged before branch creation.
+- New protocol: `08_tests/randomizer/101_field_items_allowed_slot_write_guard.md`.
+- UPR-FVX remains pinned to `2697511da9a97df4c29c00dfda8b40e556020489`; no UPR-FVX code change or submodule pin change was needed.
+- Guard decision: existing `Gen3RomHandler.getFieldItems()` / `setFieldItems(...)` already restricts writes to allowed Field-Item slots and preserves disallowed/progression/key/system/pattern-unmatched slots.
+- No Write-/Reload-Smoke ran in this block because no local CFRU/DPE Gen9-BPRE candidate was explicitly approved for this write block.
+- `FVX-ITEM-001..004` remain `Write modelliert` pending a separate Field-Items-only Write-/Reload-Smoke, preferably starting with `FVX-ITEM-001 Field Items Shuffle`.
+- No code changes, no `02_external/**` changes, no Randomizer write/save, no build, no output ROM, no private artefact documentation.
+
 # Session State Update - 2026-05-14 - Field Items candidate diagnostics
 
 - Branch: `test/upr-fvx-cfru-dpe-field-items-scope-diagnostics-candidate`.
