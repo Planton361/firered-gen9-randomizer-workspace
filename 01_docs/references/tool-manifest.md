@@ -1,3 +1,11 @@
+# Tool Manifest Update - 2026-05-15 - Field Items Random TM-pool fix pin
+
+Dieser Stand dokumentiert den Arbeitsblock `compat/upr-fvx-cfru-dpe-field-items-random-tm-pool-fix`. UPR-FVX wurde im Planton361-Fork-Submodule eng im Field-Items-Random-TM-Pool geaendert; kein ROM-/Randomizer-Reload-Smoke wurde in diesem Block ausgefuehrt. Tool-Binaries, Release-Assets, Secrets und private Pfade wurden nicht dokumentiert.
+
+| Komponente | Rolle | Remote | Lokaler Pfad | Branch | Commit/Pin | Aenderung | Notiz |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| UPR-FVX Fork | Haupt-Randomizer-Fork | `https://github.com/Planton361/universal-pokemon-randomizer-fvx.git` | `02_external/upr-fvx` | `compat/upr-fvx-cfru-dpe-field-items-random-tm-pool-fix` | `7b4fb8ed8bcf00c6e0ac2871459adfeec1503fcd` | ja, nur in diesem Branch | Field-Items-Random-TM-Pool-Fix fuer `FVX-ITEM-002`; Required TMs bleiben Pflicht, Filler-Pool dedupliziert; Reload-Smoke noch offen |
+
 # Tool Manifest
 
 Dieses Manifest dokumentiert Tools, Repos, Forks, Versionen, Pfade und Sicherheitsstatus.

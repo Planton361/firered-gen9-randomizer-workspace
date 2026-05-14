@@ -1,3 +1,11 @@
+# Roadmap Status Update - 2026-05-15 - Field Items Random TM-pool fix prepared
+
+- Field Items: `FVX-ITEM-002` TM-pool fix is prepared in UPR-FVX PR #36 and pinned in this workspace branch.
+- `FVX-ITEM-001` remains `GUI-kompatibel` for the narrow Shuffle allowed-slot scope.
+- `FVX-ITEM-002` remains pending until the dedicated reload smoke passes.
+- `FVX-ITEM-003` and `FVX-ITEM-004` remain `Write modelliert`.
+- Next P1 step: Field-Items-only Random TM-pool reload smoke; Shops and Pickup remain separate.
+
 # Roadmap Status Update - 2026-05-15 - Field Items Random TM-pool blocker planned
 
 - Field Items: Diagnose 104 plans the `FVX-ITEM-002` Random TM-pool blocker read-only.

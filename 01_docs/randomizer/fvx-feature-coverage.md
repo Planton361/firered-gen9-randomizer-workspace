@@ -1,3 +1,11 @@
+# FVX Feature Coverage Update - 2026-05-15 - Field Items Random TM-pool fix prepared
+
+- `FVX-ITEM-001` remains `GUI-kompatibel` for the tested CFRU/DPE Gen9-BPRE Field Items Shuffle allowed-slot scope.
+- `FVX-ITEM-002` remains pending: UPR-FVX PR #36 prepares the TM-pool fix, but no fachlicher Field-Items-Random reload smoke was executed in this block.
+- `FVX-ITEM-003` remains `Write modelliert`.
+- `FVX-ITEM-004` remains `Write modelliert`.
+- Shops, Pickup, Held Items, TM/HM/Tutor/Learnset, Palette/Graphics, MoveData/MoveNames and TypeChart remain outside this scope.
+
 # FVX Feature Coverage Update - 2026-05-15 - Field Items Random TM-pool blocker planned
 
 - `FVX-ITEM-001` remains `GUI-kompatibel` for the tested CFRU/DPE Gen9-BPRE Field Items Shuffle allowed-slot scope.
