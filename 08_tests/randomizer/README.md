@@ -2,9 +2,9 @@
 
 ## Latest
 
-- `072_p1_wild_070_blockers_diagnostics_plan.md` plant read-only die gemeinsame Wild-Diagnose fuer die 070-Blocker `FVX-WILD-011` und `FVX-WILD-004`.
-- Beide Slices blockieren im `FVX-WILD-001` Standard/Fallback-Wild-Carrier mit `IllegalStateException`; 072 trennt BST-/Species-Pool-Filter, Species-Type-Filter und Wild-Nullslot-/Placeholder-Scope.
-- Spaetere Diagnosemetriken sind geplant: Save/Log/Output/Reload, `writeReloadWildPokemonMismatches`, `filterViolations`, sanitisiertes Area-/Placeholder-Counting und 055-Klassifikation fuer `Bad Egg` / `<unknown>`.
+- `073_p1_wild_filter_carrier_diagnostics_plan.md` plant read-only die Code-/Protokollanalyse und ggf. einen separaten Harness-Freigabeschritt fuer den Wild-Filter-Carrier aus 072.
+- Scope bleibt nur `FVX-WILD-011` Wild Similar Strength, `FVX-WILD-004` Wild Type Restrictions / Type Themes / Keep Primary und der gemeinsame `FVX-WILD-001` Standard/Fallback-Wild-Carrier.
+- 073 trennt Carrier-Scope, Area-/Encounter-Slot-Scope, Wild-Nullslot-/Placeholder-Scope, BST-/Species-Pool-Filter und Species-Type-Filter; es enthaelt keine Ausfuehrung, keine Laufwerte und keine Support-Hochstufung.
 - TypeChart/TypeEffectiveness, MoveData, Palette, Items, Encounter Held Items, custom Day/Night-Wild, Catch Em All, Minimum Catch Rate, Level-Modifier, Text/Menu/Graphics und offene Writer bleiben ausgeschlossen.
 
 Dieses Verzeichnis enthaelt die dauerhaften Markdown-Protokolle fuer UPR-FVX/CFRU-DPE-Randomizer-Analysen und Smokes. Lokale ROM-, Build-, Log- und Tool-Artefakte bleiben unter `05_builds/**` oder `03_tools/releases/**` und werden nicht committed.
@@ -106,18 +106,20 @@ Der neueste bestaetigte Stand wird in Markdown ueber die Spalte `Latest` markier
 | 069 | `069_p1_similar_strength_same_type_regression_smoke.md` | CFRU/DPE P1 Similar Strength / Same Type Regression-Smoke-Plan | dokumentiert: spaetere Wild-, Trainer- und Evolution-Slices fuer Similar Strength, Same Type, Type Themes und Type Restrictions ueber belegte Species-/BST-/Type-Datenpfade; keine Ausfuehrung | keiner, read-only Analyse | nein |
 | 070 | `070_p1_similar_strength_same_type_regression_smoke_results.md` | CFRU/DPE P1 Similar Strength / Same Type Regression-Smoke-Ergebnisse | gemischt: Trainer Similar Strength unter `FVX-FOE-001` bestaetigt mit Save/Log/Output/Reload true und `writeReloadTrainerPokemonMismatches=0`; Wild Similar Strength, Wild Type Restrictions, `FVX-FOE-009` und Evolutions Same Typing blockieren beim Save; Evolutions Similar Strength reloadet mit `writeReloadEvolutionMismatches=24` und `Bad Egg=true` | lokal/ignored, nicht dokumentiert | nein |
 | 071 | `071_p1_070_blocked_slices_followup_plan.md` | CFRU/DPE P1 070 Blocked Slices Follow-up Plan | dokumentiert: read-only Folgeanalyse-Plan fuer blockierte 070-Slices, getrennt nach Wild-Carrier-/Placeholder-Scope, Trainer-Type-Diversity, Evolution-Reload-/Bad-Egg-Scope und Evolution-Same-Typing-/Null-Scope; keine Ausfuehrung | keiner, read-only Analyse | nein |
-| 072 | `072_p1_wild_070_blockers_diagnostics_plan.md` | CFRU/DPE P1 Wild 070 Blockers Diagnostics Plan | dokumentiert: read-only Diagnoseplan fuer `FVX-WILD-011` und `FVX-WILD-004` im `FVX-WILD-001` Standard/Fallback-Wild-Carrier, getrennt nach BST-/Species-Pool-Filter, Species-Type-Filter und Wild-Nullslot-/Placeholder-Scope; keine Ausfuehrung | keiner, read-only Analyse | ja |
+| 072 | `072_p1_wild_070_blockers_diagnostics_plan.md` | CFRU/DPE P1 Wild 070 Blockers Diagnostics Plan | dokumentiert: read-only Diagnoseplan fuer `FVX-WILD-011` und `FVX-WILD-004` im `FVX-WILD-001` Standard/Fallback-Wild-Carrier, getrennt nach BST-/Species-Pool-Filter, Species-Type-Filter und Wild-Nullslot-/Placeholder-Scope; keine Ausfuehrung | keiner, read-only Analyse | nein |
+| 073 | `073_p1_wild_filter_carrier_diagnostics_plan.md` | CFRU/DPE P1 Wild Filter Carrier Diagnostics Plan | dokumentiert: read-only Diagnose-/Harness-Plan fuer den Wild-Filter-Carrier aus 072; trennt Carrier-Scope, Area-/Encounter-Slot-Scope, BST-/Species-Pool-Filter und Species-Type-Filter; keine Ausfuehrung | keiner, read-only Analyse | ja |
 
 ## Aktuell bestaetigter Stand
 
-Latest ist Nr. 072: CFRU/DPE P1 Wild 070 Blockers Diagnostics Plan.
+Latest ist Nr. 073: CFRU/DPE P1 Wild Filter Carrier Diagnostics Plan.
 
 Kernaussagen:
 
-- 072 plant nur die gemeinsame Wild-Diagnose fuer die 070-Wild-Blocker und fuehrt keine neuen Laeufe aus.
-- `FVX-WILD-011` bleibt ein BST-/Species-Pool-Filter-Scope.
-- `FVX-WILD-004` bleibt ein Species-Type-Filter-Scope; `filterViolations=0` aus 070 ist nur ein Vor-Abbruch-Befund.
-- Beide Slices teilen `FVX-WILD-001`, `IllegalStateException` und den Verdacht auf Wild-Nullslot-/Placeholder-/Carrier-Grenzen.
+- 073 plant nur die read-only Code-/Protokollanalyse und ggf. einen separaten Harness-Freigabeschritt fuer die 070-Wild-Blocker.
+- `FVX-WILD-011` bleibt ein BST-/Species-Pool-Filter-Scope im `FVX-WILD-001` Carrier.
+- `FVX-WILD-004` bleibt ein Species-Type-Filter-Scope im `FVX-WILD-001` Carrier; `filterViolations=0` aus 070 ist nur ein Vor-Abbruch-Befund.
+- Beide Slices teilen `IllegalStateException` und den Verdacht auf Wild-Nullslot-/Placeholder-/Carrier-Grenzen.
+- Keine Fixumsetzung, keine neuen Laufwerte und keine Support-Hochstufung ohne klare Ursache.
 - TypeChart/TypeEffectiveness aus 068, MoveData, Palette, Items, Encounter Held Items, custom Day/Night-Wild, Catch Em All, Minimum Catch Rate, Level-Modifier, Text/Menu/Graphics und offene Writer bleiben ausgeschlossen.
 
 ## Lokale Artefaktpflege
