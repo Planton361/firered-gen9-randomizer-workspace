@@ -467,3 +467,11 @@ Diese Matrix soll nicht als 130 Roadmap-Zeilen gepflegt werden. Fuer die Roadmap
 - `FVX-ITEM-005` bis `FVX-ITEM-009` bleiben `Write modelliert`; Shops brauchen einen eigenen Terminator-/Repointing-/Preis-Scope.
 - `FVX-ITEM-010` bleibt `Write modelliert`; Pickup braucht einen eigenen Table-/Locator-/Probability-Scope.
 - Encounter Held Items, Trainer Held Items und Starter Held Items bleiben getrennte Datenpfade.
+
+## 2026-05-14 - Field Items diagnostic split
+
+- `FVX-ITEM-001` Field Items Shuffle: remains `Write modelliert`; next step is Field-Items-only diagnostics.
+- `FVX-ITEM-002` Field Items Random: remains `Write modelliert`; next step is Field-Items-only diagnostics.
+- `FVX-ITEM-003` Field Items Random even distribution: remains `Write modelliert`; next step is Field-Items-only diagnostics.
+- `FVX-ITEM-004` Field Items Ban Bad Items: remains `Write modelliert`; next step is Field-Items-only diagnostics.
+- Shops, Pickup and held-item paths are intentionally outside this Field-Items-only plan.

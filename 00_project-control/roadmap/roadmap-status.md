@@ -638,3 +638,10 @@ Zweck: Diagnose 082 reviewen und mergen; danach Evolution-Methoden-Writer und we
 - Pickup: eigener Table-/Locator-/Probability-Scope.
 - Shops: eigener Shoplisten-/Terminator-/DataRewriter-/Repointing-/Preis-Scope.
 - Naechster Block: `analysis/upr-fvx-cfru-dpe-field-items-scope-diagnostics-plan`.
+
+## 2026-05-14 - Field Items diagnostics scope plan
+
+- Added `08_tests/randomizer/098_field_items_scope_diagnostics_plan.md`.
+- Field Items are now the next dedicated P1 item-writer diagnostic track after the combined Field Items / Shops / Pickup scope plan.
+- Shops and Pickup remain separate follow-up tracks.
+- No code, submodule, build, Randomizer, ROM, log or private artefact changes.

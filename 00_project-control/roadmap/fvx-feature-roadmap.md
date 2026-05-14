@@ -114,3 +114,9 @@ Der naechste empfohlene P1-Block ist deshalb kein Palette-Scope-Ausbau, sondern 
 ## 2026-05-14 - Item-P1-Aufteilung nach Diagnose 097
 
 Field Items, Shops und Pickup bleiben im Items-Paket, werden aber nicht als gemeinsamer Fixbranch empfohlen. Reihenfolge: Field Items zuerst, danach Pickup, Shops zuletzt wegen Terminator-/DataRewriter-/Repointing- und Preisrisiken. Gemeinsame Item-Pool-Bans bleiben Querschnitt, aber jeder Writer braucht eigene Reload-Kriterien.
+
+## 2026-05-14 - Field Items diagnostics scope
+
+- Field Items are split into their own first item-writer diagnostic branch: `analysis/upr-fvx-cfru-dpe-field-items-scope-diagnostics-plan`.
+- Follow-up should diagnose only Field Items before any fix: visible Itemballs, Hidden Items/Signposts, TM-vs-Non-TM slots, Required Field TMs, progression-sensitive items, bad items, modern item IDs and invalid/unloaded item IDs.
+- Shops and Pickup stay separate; no shared fix block is recommended until each writer has its own sanitized diagnostics.
