@@ -24,10 +24,10 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Aktueller Branch | `test/upr-fvx-cfru-dpe-move-names-fixed-length-reload-smoke` |
-| Nächster Branch | `test/upr-fvx-cfru-dpe-move-names-fixed-length-reload-smoke` |
-| Aktueller Fokus | CFRU/DPE Move Names fixed-length Reload-Smoke |
-| ROM-/Build-Arbeit | lokaler Smoke-Versuch blockiert: kein freigegebener CFRU/DPE Gen9-BPRE-Kandidat mit `moves.total=992` gefunden; keine Builds |
+| Aktueller Branch | `test/upr-fvx-cfru-dpe-move-names-fixed-length-reload-smoke-retry` |
+| Nächster Branch | `test/upr-fvx-cfru-dpe-move-names-fixed-length-reload-smoke-candidate` |
+| Aktueller Fokus | CFRU/DPE Move Names fixed-length Candidate Preflight und Reload-Smoke Retry |
+| ROM-/Build-Arbeit | lokaler Retry-Preflight blockiert: 94 Kandidatendateien geprueft, kein freigegebener CFRU/DPE Gen9-BPRE-Kandidat mit `moves.total=992` und `991:PsychicNoise`; kein Build und kein fachlicher Smoke |
 | Externe Repos | als Submodule auf Planton361-Forks eingebunden |
 | Forks | Planton361-Forks fuer UPR-FVX, DPE Gen9 und CFRU dokumentiert |
 | Installationen | devkitPro/devkitARM lokal dokumentiert; keine Installation in diesem Analyseblock |
@@ -123,6 +123,7 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | 08 Randomizer-Kompatibilität | CFRU/DPE MoveData Fairy-Type-Byte Fix | UPR-FVX PR #34 und Workspace PR #129 gemerged; UPR-FVX `fad56f60` und Diagnose 087 bestaetigen `FVX-MOVE-004` mit Save/Log/Output/Reload true, `writeReloadMoveDataMismatches=0`, `typeReloadMismatches=0`, `fairyReloadMismatches=0`, `cfruDpeTypeByteMismatches=0` und Preserve-Bytes bytegleich |
 | 08 Randomizer-Kompatibilität | Move Names / Descriptions Text/Menu-Scope Plan | Diagnose 088 dokumentiert `FVX-MOVE-005` als getrennten Text/Menu-Scope; Name-only fixed-length Smoke ist realistisch, Move Descriptions / Text/Menu-Repointing bleibt zurueckgestellt |
 | 08 Randomizer-Kompatibilität | Move Names fixed-length Reload-Smoke Versuch | Diagnose 089 dokumentiert den blockierten Name-only-Smoke: kein freigegebener lokaler CFRU/DPE Gen9-BPRE-Kandidat mit `moves.total=992` und `991:PsychicNoise`; `FVX-MOVE-005` bleibt `Write modelliert` |
+| 08 Randomizer-Kompatibilität | Move Names fixed-length Reload-Smoke Retry | Diagnose 090 dokumentiert den blockierten Retry-Preflight: `candidateFilesChecked=94`, `candidatePreflightSuccessful=false`, kein fachlicher Smoke; `FVX-MOVE-005` bleibt `Write modelliert` |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Field Items/Shops/Pickup-Modell | Diagnose 057 modelliert Field Items, Shops, Pickup und allgemeine Item-Randomization getrennt von Encounter Held Items; eigene Preserve-/Skip-Policy und Reload-Kriterien dokumentiert |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Palette-Randomization-Modell | Diagnose 058 trennt Palette-Safety/Skip-Unchanged-Save von echter geaenderter Palette-Randomization; compressed/shared/repointing risks, Preserve-/Skip-Policy, Reload-Kriterien und Graphics/P2-Abgrenzung dokumentiert |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Type-Chart-Modell | Diagnose 059 trennt Pokemon-Type-Read/Write aus 051 von Type-Chart-/Effectiveness-Randomization; Fairy `0x17`, Stellar/unsupported `0x18`, TypeTable-Risiken, Preserve-/Skip-Policy und Reload-Kriterien dokumentiert |
@@ -152,7 +153,7 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Move Names fixed-length Reload-Smoke wiederholen | naechster Branch `test/upr-fvx-cfru-dpe-move-names-fixed-length-reload-smoke`; sobald ein freigegebener lokaler CFRU/DPE Gen9-BPRE-Kandidat verfuegbar ist, nur `FVX-MOVE-005` Name-only pruefen |
+| 08 Randomizer-Kompatibilität | Move Names fixed-length Reload-Smoke nur mit eindeutigem Kandidaten wiederholen | naechster Branch `test/upr-fvx-cfru-dpe-move-names-fixed-length-reload-smoke-candidate`; nur starten, wenn ein freigegebener lokaler CFRU/DPE Gen9-BPRE-Kandidat vorab `moves.total=992` und `991:PsychicNoise` meldet |
 
 ## Als Nächstes
 

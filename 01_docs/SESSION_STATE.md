@@ -1,5 +1,27 @@
 # Session State
 
+## 2026-05-14 - CFRU/DPE Move Names fixed-length Reload-Smoke Retry
+
+Workspace-Branch: `test/upr-fvx-cfru-dpe-move-names-fixed-length-reload-smoke-retry`
+
+UPR-FVX-Pin: `fad56f60d6fae9b006290a4d5fd1f0715f3d9dc3`
+
+Aktueller Stand:
+
+- Neuer sanitiserter Ergebnisbericht `08_tests/randomizer/090_move_names_fixed_length_reload_smoke_retry.md` erstellt.
+- Ziel war ein erneuter enger Candidate-Preflight fuer `FVX-MOVE-005` Randomize Move Names im bestehenden Gen3 fixed-length `MoveNames`-Pfad.
+- Das lokale Preflight pruefte freigegebene private/ignored Kandidaten, ohne private Pfade, ROM-Namen, Hashes, Logauszuege oder Output-ROMs zu dokumentieren.
+- Ergebnis: `candidateFilesChecked=94`, `candidatePreflightSuccessful=false`, `candidateMovesTotal=not available`, `candidateHighestMove=not available`.
+- Der fachliche Name-only Reload-Smoke wurde nicht ausgefuehrt, weil kein Kandidat die Mindestkriterien `moves.total=992` und `991:PsychicNoise` erfuellte.
+- `saveSuccessful`, `logSuccessful`, Output-, Reload-, Name-Length-, Terminator-/Padding-, Description-Pointer- und Name-Reload-Zaehler bleiben daher nicht fachlich ausgewertet.
+- Keine Move Descriptions, keine Pointer-/Repointing- oder Text/Menu-Umsetzung, keine MoveData-Byte-Writer-Aenderung.
+- Keine Codeaenderung, keine Aenderung an `02_external/**`, keine Submodule-Pin-Aenderung, kein Build und kein Randomizer-Smoke nach blockiertem Preflight.
+- `FVX-MOVE-005` wird nicht hochgestuft und bleibt `Write modelliert`; `FVX-MOVE-001/002/003/004/006` bleiben GUI-kompatibel.
+
+Naechster sinnvoller Schritt:
+
+- `FVX-MOVE-005` vorerst konservativ halten. Den Name-only fixed-length Smoke nur erneut starten, wenn ein lokal freigegebener CFRU/DPE Gen9-BPRE-Kandidat vorab eindeutig `moves.total=992` und `991:PsychicNoise` meldet; ansonsten keinen Smoke ausfuehren.
+
 ## 2026-05-14 - CFRU/DPE Move Names fixed-length Reload-Smoke
 
 Workspace-Branch: `test/upr-fvx-cfru-dpe-move-names-fixed-length-reload-smoke`
