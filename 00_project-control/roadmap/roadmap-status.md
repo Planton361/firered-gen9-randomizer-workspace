@@ -645,3 +645,12 @@ Zweck: Diagnose 082 reviewen und mergen; danach Evolution-Methoden-Writer und we
 - Field Items are now the next dedicated P1 item-writer diagnostic track after the combined Field Items / Shops / Pickup scope plan.
 - Shops and Pickup remain separate follow-up tracks.
 - No code, submodule, build, Randomizer, ROM, log or private artefact changes.
+
+## 2026-05-14 - Field Items diagnostics blocked
+
+- Added `08_tests/randomizer/099_field_items_scope_diagnostics.md`.
+- Workspace PR #143 was verified as merged before starting this branch.
+- Field-Items-only diagnostics are blocked because no explicitly approved local CFRU/DPE Gen9-BPRE candidate was provided in this block.
+- Sanitized preflight: `candidateFilesChecked=0`, `candidateLoaded=false`, `fieldItemScanSuccessful=false`, `exceptionClass=none`, `stacktrace=none`.
+- `FVX-ITEM-001..004` remain `Write modelliert`; no Field-Item fix or smoke evidence was produced.
+- No code, submodule, build, Randomizer, ROM, log, output ROM or private artefact changes.

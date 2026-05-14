@@ -173,3 +173,5 @@ Wenn ein Artefakt nicht eindeutig Smoke-Output ist, bleibt es lokal liegen und w
 | 097 | `097_field_items_shops_pickup_scope_plan.md` | CFRU/DPE Field Items / Shops / Pickup Scope Plan | geplant: Field Items, Shops und Pickup muessen getrennt behandelt werden; Field Items zuerst, Pickup und Shops separat; gemeinsame Item-Pool-/Bad-Item-Policy noetig, aber kein gemeinsamer Fixblock | keiner, read-only Analyse | nein |
 
 - 098 - `098_field_items_scope_diagnostics_plan.md`: Read-only CFRU/DPE Field-Items-only diagnostics plan. Splits visible Itemballs, Hidden Items/Signposts, TM/Non-TM slots, Required Field TMs and item safety policy away from Shops/Pickup.
+
+- 099 - `099_field_items_scope_diagnostics.md`: Sanitized blocked Field-Items-only diagnostics block. PR #143 was merged, but no explicitly approved local CFRU/DPE Gen9-BPRE candidate was provided; `candidateFilesChecked=0`, `candidateLoaded=false`, no fachlicher Field-Item scan, `FVX-ITEM-001..004` remain `Write modelliert`.
