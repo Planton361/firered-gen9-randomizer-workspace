@@ -1,5 +1,30 @@
 # Session State
 
+## 2026-05-14 - CFRU/DPE Palette Normal Single-owner Write Guard Fix
+
+Workspace-Branch: `compat/upr-fvx-cfru-dpe-palette-normal-single-owner-write`
+
+UPR-FVX-Branch: `compat/upr-fvx-cfru-dpe-palette-normal-single-owner-write`
+
+UPR-FVX-Pin: `2697511da9a97df4c29c00dfda8b40e556020489`
+
+Aktueller Stand:
+
+- UPR-FVX-Fix erstellt: `2697511da9a97df4c29c00dfda8b40e556020489`.
+- UPR-FVX PR #35 geoeffnet: `https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/35`.
+- Neues Diagnose-/Fixprotokoll `08_tests/randomizer/095_palette_normal_single_owner_write_guard_fix_diagnostics.md` erstellt.
+- `Gen3RomHandler.savePokemonPalettes()` nutzt im CFRU/DPE-Gen9-BPRE-Gate nun einen Normal-only-Single-owner-Guard.
+- Shiny-, Shared-, Missing-, Invalid-, Decode-failed-, Cross-kind-shared- und unsichere Forme-Faelle werden nicht an `rewriteCompressedPalette()` / `DataRewriter` uebergeben.
+- Vanilla-/Nicht-CFRU-Palette-Pfade bleiben unveraendert.
+- UPR-FVX Checks: `git diff --check` sauber, `./gradlew clean :random:jar` erfolgreich.
+- `./gradlew test` beendet mit Gradle-Status 0, meldet aber bestehende Failures in `PlayerCharacterGraphicsTest` und `Gen1CmpTest`.
+- Kein ROM-/Reload-Smoke wurde in diesem Block ausgefuehrt; `FVX-GFX-001` bleibt bis zu einem separaten Reload-Smoke `Write modelliert`.
+- Workspace pinnt `02_external/upr-fvx` auf den neuen UPR-FVX-Fix-Commit.
+
+Naechster sinnvoller Schritt:
+
+- `test/upr-fvx-cfru-dpe-palette-normal-single-owner-reload-smoke`: den Normal-only-Single-owner-Palette-Guard mit einem sanitisierten Reload-Smoke fachlich bestaetigen. Erwartet: `normalPaletteWriteCandidates=385`, `normalPaletteWriteAttempts <= 385`, `normalPaletteReloadMismatches=0`, ausgeschlossene Kategorien mit `WriteAttempts=0`, `exceptionClass=none`, `stacktrace=none`.
+
 ## 2026-05-14 - CFRU/DPE Palette Single-owner Normal-only Fix-Scope Plan
 
 Workspace-Branch: `analysis/upr-fvx-cfru-dpe-palette-single-owner-normal-only-fix-scope-plan`

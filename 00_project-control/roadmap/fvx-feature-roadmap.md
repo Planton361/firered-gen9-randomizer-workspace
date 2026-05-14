@@ -34,7 +34,7 @@ Die detaillierte Status- und Feature-ID-Matrix bleibt in:
 | TM/HMs & Tutors | 15 | Gemischt | TM/Tutor-Tabellen halten; Preserve-/Filter-/Follow-Evolution-Suboptionen testen |
 | Items | 10 | Write modelliert | Field Items, Shops und Pickup als getrennte Writer implementieren/testen |
 | Types | 3 | Getestet | TypeEffectiveness Random, Balanced, Keep Type Identities, Inverse, Add Immunities und Update Type Effectiveness sind einzeln im TypeChart-Scope getestet |
-| Graphics | 6 | Gemischt | Diagnose 094 begrenzt den naechsten Scope auf normal-palette-only single-owner/decompressible Kandidaten; Shiny/shared/invalid/missing/decode-failed bleiben preserve-only, Custom Player Graphics separat modellieren |
+| Graphics | 6 | Gemischt | Diagnose 095 implementiert den Normal-Palette-Single-owner-Guard; Reload-Smoke steht noch aus, Shiny/shared/invalid/missing/decode-failed bleiben preserve-only, Custom Player Graphics separat modellieren |
 | Misc Tweaks | 12 | Nicht begonnen | jeden Misc-Tweak als eigenen Patch-/Risk-Scope inventarisieren |
 | GUI-Suboptions-Regressionsmatrix | n/a | Erledigt | vorhandene Diagnose 060 als technische Regressionssicht nutzen |
 | Regression-Smoke-Plan | n/a | In Arbeit | konkrete Smoke-/Regression-Laeufe aus Feature-IDs ableiten und sanitisiert dokumentieren |
@@ -67,8 +67,9 @@ Die detaillierte Status- und Feature-ID-Matrix bleibt in:
 | P1.3a | `analysis/upr-fvx-cfru-dpe-palette-pointer-compression-diagnostics-plan` | Graphics | erledigt: Diagnose 092 plant Normal-/Shiny-Palette-Pointer read-only nach dekomprimierbar, single-owner, shared, missing und invalid zu klassifizieren |
 | P1.3b | `test/upr-fvx-cfru-dpe-palette-pointer-compression-diagnostics` | Graphics | erledigt: Diagnose 093 klassifiziert Pointer/Compression; `candidateWritablePalettes=385`, davon `385` Normal und `0` Shiny |
 | P1.3c | `analysis/upr-fvx-cfru-dpe-palette-single-owner-normal-only-fix-scope-plan` | Graphics | erledigt: Diagnose 094 plant den spaeteren Scope nur fuer Normal-Paletten, single-owner, dekomprimierbar, gueltig, non-shared und non-cross-kind; Shiny/shared/invalid/missing/decode-failed preserve-only |
-| P1.3d | `compat/upr-fvx-cfru-dpe-palette-normal-single-owner-write` | Graphics | naechster Schritt: enger `FVX-GFX-001`-Normal-only-Fix mit Writer-Gate, Preserve-Policy und Repoint-/Reload-Nachweis |
-| P1.3e | `compat/upr-fvx-cfru-dpe-palette-randomization-preserve-repoint` | Graphics | wartet: breitere Shared-/Shiny-/Repoint-Policy erst nach Normal-Single-owner-Smoke separat planen |
+| P1.3d | `compat/upr-fvx-cfru-dpe-palette-normal-single-owner-write` | Graphics | Review/Test: UPR-FVX PR #35 implementiert den Normal-only-Single-owner-Guard; kein ROM-/Reload-Smoke in diesem Block |
+| P1.3e | `test/upr-fvx-cfru-dpe-palette-normal-single-owner-reload-smoke` | Graphics | naechster Schritt: sanitisierten Reload-Smoke fuer `FVX-GFX-001` Normal-only-Single-owner-Subset ausfuehren |
+| P1.3f | `compat/upr-fvx-cfru-dpe-palette-randomization-preserve-repoint` | Graphics | wartet: breitere Shared-/Shiny-/Repoint-Policy erst nach Normal-Single-owner-Smoke separat planen |
 | P1.4 | `compat/upr-fvx-cfru-dpe-field-items-shops-pickup-scope-and-write` | Items | Field Items, Shops und Pickup mit getrennten Reload-Kriterien absichern |
 
 ### P2 - Suboptionen der bereits GUI-kompatiblen Pakete

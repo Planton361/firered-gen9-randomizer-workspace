@@ -2,9 +2,9 @@
 
 ## Latest
 
-- `094_palette_single_owner_normal_only_fix_scope_plan.md` plant den engen Normal-Palette-only-Folge-Scope auf Basis von Diagnose 093.
-- Ergebnis: ein spaeterer Fix-/Smoke ist nur fuer Normal-Paletten reviewbar, die single-owner, dekomprimierbar, gueltig, nicht shared, nicht missing, nicht invalid, nicht decode-failed und nicht cross-kind shared sind.
-- Shiny-, Shared-, Invalid-, Missing-, Decode-failed- und unsichere Forme-/Expanded-Mapping-Faelle bleiben preserve-only.
+- `095_palette_normal_single_owner_write_guard_fix_diagnostics.md` dokumentiert den UPR-FVX-Guard-Fix fuer CFRU/DPE Normal-Palette-Single-owner-Writes.
+- Ergebnis: Der Writer gibt nur sichere Normal-Paletten in den komprimierten Rewriter; Shiny/shared/invalid/missing/decode-failed/cross-kind Faelle bleiben preserve-only.
+- Kein ROM-/Reload-Smoke wurde in diesem Block ausgefuehrt; die fachliche Reload-Bestaetigung ist separater Folgeblock.
 - `FVX-GFX-001..004` bleiben aktuell `Write modelliert`.
 - MoveData bleibt unveraendert: `FVX-MOVE-001/002/003/004/006` sind GUI-kompatibel; `FVX-MOVE-005` bleibt blockiert.
 
@@ -129,15 +129,16 @@ Der neueste bestaetigte Stand wird in Markdown ueber die Spalte `Latest` markier
 | 091 | `091_palette_randomization_preserve_repoint_plan.md` | CFRU/DPE Palette Randomization Preserve/Repoint Plan | dokumentiert: echte Palette-Randomization ist ein komprimierter Repointing-/Shared-Pointer-Writer; direkter Fix noch nicht eng genug, zuerst read-only Pointer-/Compression-Diagnose noetig; `FVX-GFX-001..004` bleiben `Write modelliert` | keiner, read-only Analyse | nein |
 | 092 | `092_palette_pointer_compression_diagnostics_plan.md` | CFRU/DPE Palette Pointer / Compression Diagnostics Plan | dokumentiert: spaetere Diagnose soll Normal-/Shiny-Palette-Pointer, Dekomprimierbarkeit, Single-Owner/Shared, missing/invalid und sichere Kandidaten aggregiert klassifizieren; kein Fix, kein Repointing | keiner, read-only Analyse | nein |
 | 093 | `093_palette_pointer_compression_diagnostics.md` | CFRU/DPE Palette Pointer / Compression Diagnostics | bestaetigt sanitisiert: `candidateLoaded=true`, `palettePointerScanSuccessful=true`, `candidateWritablePalettes=385`, `candidateWritableNormalPalettes=385`, `candidateWritableShinyPalettes=0`; shared/invalid/missing/decode-failed bleiben preserve-only | lokal/ignored, nicht dokumentiert | nein |
-| 094 | `094_palette_single_owner_normal_only_fix_scope_plan.md` | CFRU/DPE Palette Single-owner Normal-only Fix-Scope Plan | geplant: spaeterer Scope nur Normal-Paletten, single-owner, dekomprimierbar, gueltig, non-shared, non-cross-kind; Shiny/shared/invalid/missing/decode-failed preserve-only | keiner | ja |
+| 094 | `094_palette_single_owner_normal_only_fix_scope_plan.md` | CFRU/DPE Palette Single-owner Normal-only Fix-Scope Plan | geplant: spaeterer Scope nur Normal-Paletten, single-owner, dekomprimierbar, gueltig, non-shared, non-cross-kind; Shiny/shared/invalid/missing/decode-failed preserve-only | keiner | nein |
+| 095 | `095_palette_normal_single_owner_write_guard_fix_diagnostics.md` | CFRU/DPE Palette Normal Single-owner Write Guard Fix Diagnostics | UPR-FVX-Fix implementiert: Normal-only-Guard fuer sichere single-owner/decode-success/non-shared Paletten; kein Reload-Smoke in diesem Block, `FVX-GFX-001..004` bleiben `Write modelliert` | Build-Artefakte lokal/ignored, nicht dokumentiert | ja |
 
 ## Aktuell bestaetigter Stand
 
-Latest ist Nr. 093: CFRU/DPE Palette Pointer / Compression Diagnostics.
+Latest ist Nr. 095: CFRU/DPE Palette Normal Single-owner Write Guard Fix Diagnostics.
 
 Kernaussagen:
 
-- UPR-FVX `fad56f60d6fae9b006290a4d5fd1f0715f3d9dc3` implementiert zusaetzlich den engen CFRU/DPE MoveData-Fairy-Type-Byte-Fix.
+- UPR-FVX `2697511da9a97df4c29c00dfda8b40e556020489` implementiert zusaetzlich den engen CFRU/DPE Normal-Palette-Single-owner-Write-Guard.
 - `Randomize Move Power`, `Randomize Move Accuracy` und `Randomize Move PP` bleiben durch Diagnose 085 mit `writeReloadMoveDataMismatches=0` belegt.
 - `Randomize Move Types` reloadet in Diagnose 087 mit `saveSuccessful=true`, `logSuccessful=true`, `outputRomExists=true`, `logNonEmpty=true` und `writeReloadMoveDataMismatches=0`.
 - `moves.total=992` und `991:PsychicNoise` bleiben nach Reload stabil.
@@ -151,6 +152,7 @@ Kernaussagen:
 - Diagnose 091 bestaetigt fuer echte Palette-Randomization: `PokemonPalettesMod.RANDOM` faellt in einen komprimierten `rewriteCompressedPalette()`-/`DataRewriter`-Repointing-Pfad; shared/missing/invalid Pointer und Forme-/Mapping-Fragen muessen vor einem Fix read-only inventarisiert werden.
 - Diagnose 092 plant diese Inventarisierung als separaten sanitisierten Diagnose-Lauf: Normal-/Shiny-Palette-Pointer, Decode-Failures, Single-Owner/Shared, missing/invalid und `candidateWritablePalettes` werden nur aggregiert dokumentiert.
 - Diagnose 093 fuehrt diese Inventarisierung read-only aus: `candidateLoaded=true`, `palettePointerScanSuccessful=true`, `candidateWritablePalettes=385`, aber `candidateWritableShinyPalettes=0`; ein spaeterer Fix darf nur normal-palette-only single-owner/decompressible Kandidaten betrachten.
+- Diagnose 095 implementiert den Guard-Fix, fuehrt aber keinen ROM-/Reload-Smoke aus; `FVX-GFX-001` bleibt bis zum separaten Reload-Smoke `Write modelliert`.
 - `FVX-GFX-001`, `FVX-GFX-002`, `FVX-GFX-003` und `FVX-GFX-004` bleiben `Write modelliert`; Custom Player Graphics bleibt separat.
 
 ## Lokale Artefaktpflege
