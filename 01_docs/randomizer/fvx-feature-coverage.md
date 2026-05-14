@@ -483,3 +483,11 @@ Diese Matrix soll nicht als 130 Roadmap-Zeilen gepflegt werden. Fuer die Roadmap
 - `FVX-ITEM-003` Field Items Random even distribution: remains `Write modelliert`; diagnostics blocked until an explicitly approved candidate is available.
 - `FVX-ITEM-004` Field Items Ban Bad Items: remains `Write modelliert`; diagnostics blocked until an explicitly approved candidate is available.
 - `candidateFilesChecked=0`, `candidateLoaded=false`, `fieldItemScanSuccessful=false`; no fachlicher Field-Item scan was run.
+
+## 2026-05-14 - Field Items candidate diagnostics
+
+- `FVX-ITEM-001` Field Items Shuffle: remains `Write modelliert`; candidate diagnostics support a guarded allowed-slot write/smoke.
+- `FVX-ITEM-002` Field Items Random: remains `Write modelliert`; candidate diagnostics support a guarded allowed-slot write/smoke after pool policy is enforced.
+- `FVX-ITEM-003` Field Items Random even distribution: remains `Write modelliert`; candidate diagnostics support a guarded allowed-slot write/smoke after pool policy is enforced.
+- `FVX-ITEM-004` Field Items Ban Bad Items: remains `Write modelliert`; `badFieldItems=75`, so the ban policy must be asserted in the next smoke.
+- Field-Items-only candidate diagnostics: `fieldItemsTotal=339`, allowed `280`, disallowed `59`, TM slots `28`, Non-TM slots `311`, `requiredFieldTMMissing=0`, invalid/unloaded `0`.

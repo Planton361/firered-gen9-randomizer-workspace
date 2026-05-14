@@ -126,3 +126,9 @@ Field Items, Shops und Pickup bleiben im Items-Paket, werden aber nicht als geme
 - Field-Items-only diagnostics from protocol 099 are blocked until an explicitly approved local CFRU/DPE Gen9-BPRE candidate is available.
 - No Field-Item fix should start before the aggregated diagnostics from 098 can report visible Itemballs, Hidden Items/Signposts, TM/Non-TM slots, Required Field TMs, bad items, modern item IDs and invalid/unloaded item IDs.
 - Shops and Pickup remain separate follow-up tracks.
+
+## 2026-05-14 - Field Items candidate diagnostics
+
+- Field-Items-only diagnostics now have sanitized candidate data: `fieldItemsTotal=339`, visible `168`, hidden `171`, allowed `280`, disallowed `59`, TM slots `28`, Non-TM slots `311`, and `requiredFieldTMMissing=0`.
+- The next reviewable scope is a guarded Field-Items write/smoke for allowed slots only; disallowed, progression-sensitive, key/system and script-pattern-unmatched slots stay preserve-only.
+- Shops and Pickup remain separate follow-up tracks.
