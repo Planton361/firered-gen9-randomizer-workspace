@@ -2,10 +2,10 @@
 
 ## Latest
 
-- `071_p1_070_blocked_slices_followup_plan.md` plant read-only die Folgeanalyse fuer die in 070 blockierten Similar Strength / Same Type / Type Themes Slices.
-- Wild Similar Strength und Wild Type Restrictions sollen gemeinsam gegen Wild-Nullslot-/Placeholder-Scope, Species-Pool/BST-Filter, Species-Type-Filter und Standard/Fallback-Wild-Carrier-Grenzen modelliert werden.
-- `FVX-FOE-009`, `FVX-TRAIT-018` und `FVX-TRAIT-019` bleiben getrennte Folgeprobleme fuer Trainer-Type-Diversity, Evolution-Reload-/Bad-Egg-Scope und Evolution-Same-Typing-/Null-Scope.
-- TypeChart/TypeEffectiveness, MoveData, Palette, Items, Graphics, Text/Menu, Level-Modifier, Evolution-Methoden-Writer und offene Writer bleiben ausgeschlossen.
+- `072_p1_wild_070_blockers_diagnostics_plan.md` plant read-only die gemeinsame Wild-Diagnose fuer die 070-Blocker `FVX-WILD-011` und `FVX-WILD-004`.
+- Beide Slices blockieren im `FVX-WILD-001` Standard/Fallback-Wild-Carrier mit `IllegalStateException`; 072 trennt BST-/Species-Pool-Filter, Species-Type-Filter und Wild-Nullslot-/Placeholder-Scope.
+- Spaetere Diagnosemetriken sind geplant: Save/Log/Output/Reload, `writeReloadWildPokemonMismatches`, `filterViolations`, sanitisiertes Area-/Placeholder-Counting und 055-Klassifikation fuer `Bad Egg` / `<unknown>`.
+- TypeChart/TypeEffectiveness, MoveData, Palette, Items, Encounter Held Items, custom Day/Night-Wild, Catch Em All, Minimum Catch Rate, Level-Modifier, Text/Menu/Graphics und offene Writer bleiben ausgeschlossen.
 
 Dieses Verzeichnis enthaelt die dauerhaften Markdown-Protokolle fuer UPR-FVX/CFRU-DPE-Randomizer-Analysen und Smokes. Lokale ROM-, Build-, Log- und Tool-Artefakte bleiben unter `05_builds/**` oder `03_tools/releases/**` und werden nicht committed.
 
@@ -105,20 +105,20 @@ Der neueste bestaetigte Stand wird in Markdown ueber die Spalte `Latest` markier
 | 068 | `068_type_effectiveness_followup_smoke_results.md` | CFRU/DPE TypeEffectiveness-Folgesmoke-Ergebnisse | bestaetigt sanitisiert: Balanced, Keep Type Identities, Inverse, Add Random Immunities und Update Type Effectiveness jeweils mit Save/Log/Output/Reload true, `writeReloadTypeChartMismatches=0`, erhaltenen Terminatoren, `Bad Egg=false`, `<unknown>=false` und `stacktrace=none` | lokal/ignored, nicht dokumentiert | nein |
 | 069 | `069_p1_similar_strength_same_type_regression_smoke.md` | CFRU/DPE P1 Similar Strength / Same Type Regression-Smoke-Plan | dokumentiert: spaetere Wild-, Trainer- und Evolution-Slices fuer Similar Strength, Same Type, Type Themes und Type Restrictions ueber belegte Species-/BST-/Type-Datenpfade; keine Ausfuehrung | keiner, read-only Analyse | nein |
 | 070 | `070_p1_similar_strength_same_type_regression_smoke_results.md` | CFRU/DPE P1 Similar Strength / Same Type Regression-Smoke-Ergebnisse | gemischt: Trainer Similar Strength unter `FVX-FOE-001` bestaetigt mit Save/Log/Output/Reload true und `writeReloadTrainerPokemonMismatches=0`; Wild Similar Strength, Wild Type Restrictions, `FVX-FOE-009` und Evolutions Same Typing blockieren beim Save; Evolutions Similar Strength reloadet mit `writeReloadEvolutionMismatches=24` und `Bad Egg=true` | lokal/ignored, nicht dokumentiert | nein |
-| 071 | `071_p1_070_blocked_slices_followup_plan.md` | CFRU/DPE P1 070 Blocked Slices Follow-up Plan | dokumentiert: read-only Folgeanalyse-Plan fuer blockierte 070-Slices, getrennt nach Wild-Carrier-/Placeholder-Scope, Trainer-Type-Diversity, Evolution-Reload-/Bad-Egg-Scope und Evolution-Same-Typing-/Null-Scope; keine Ausfuehrung | keiner, read-only Analyse | ja |
+| 071 | `071_p1_070_blocked_slices_followup_plan.md` | CFRU/DPE P1 070 Blocked Slices Follow-up Plan | dokumentiert: read-only Folgeanalyse-Plan fuer blockierte 070-Slices, getrennt nach Wild-Carrier-/Placeholder-Scope, Trainer-Type-Diversity, Evolution-Reload-/Bad-Egg-Scope und Evolution-Same-Typing-/Null-Scope; keine Ausfuehrung | keiner, read-only Analyse | nein |
+| 072 | `072_p1_wild_070_blockers_diagnostics_plan.md` | CFRU/DPE P1 Wild 070 Blockers Diagnostics Plan | dokumentiert: read-only Diagnoseplan fuer `FVX-WILD-011` und `FVX-WILD-004` im `FVX-WILD-001` Standard/Fallback-Wild-Carrier, getrennt nach BST-/Species-Pool-Filter, Species-Type-Filter und Wild-Nullslot-/Placeholder-Scope; keine Ausfuehrung | keiner, read-only Analyse | ja |
 
 ## Aktuell bestaetigter Stand
 
-Latest ist Nr. 071: CFRU/DPE P1 070 Blocked Slices Follow-up Plan.
+Latest ist Nr. 072: CFRU/DPE P1 Wild 070 Blockers Diagnostics Plan.
 
 Kernaussagen:
 
-- 071 plant nur die Folgeanalyse fuer die blockierten 070-Slices und fuehrt keine neuen Laeufe aus.
-- Wild Similar Strength und Wild Type Restrictions werden wegen gleichem `FVX-WILD-001` Carrier und gleicher Exception-Klasse gemeinsam modelliert.
-- `FVX-FOE-009` bleibt ein eigener Trainer-Type-Diversity-/Null-Type-Scope.
-- `FVX-TRAIT-018` bleibt ein eigener Evolution-Reload-/Bad-Egg-Scope; `Bad Egg` darf dort solange nicht als reine Log-Hygiene freigegeben werden, wie Mismatches ungleich `0` sind.
-- `FVX-TRAIT-019` bleibt ein eigener Evolution-Same-Typing-/Null-Scope.
-- TypeChart/TypeEffectiveness aus 068, MoveData, Palette, Items, Graphics, Text/Menu und Level-/Methoden-Writer bleiben eigene Grenzen.
+- 072 plant nur die gemeinsame Wild-Diagnose fuer die 070-Wild-Blocker und fuehrt keine neuen Laeufe aus.
+- `FVX-WILD-011` bleibt ein BST-/Species-Pool-Filter-Scope.
+- `FVX-WILD-004` bleibt ein Species-Type-Filter-Scope; `filterViolations=0` aus 070 ist nur ein Vor-Abbruch-Befund.
+- Beide Slices teilen `FVX-WILD-001`, `IllegalStateException` und den Verdacht auf Wild-Nullslot-/Placeholder-/Carrier-Grenzen.
+- TypeChart/TypeEffectiveness aus 068, MoveData, Palette, Items, Encounter Held Items, custom Day/Night-Wild, Catch Em All, Minimum Catch Rate, Level-Modifier, Text/Menu/Graphics und offene Writer bleiben ausgeschlossen.
 
 ## Lokale Artefaktpflege
 
