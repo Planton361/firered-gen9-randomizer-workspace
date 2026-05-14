@@ -30,22 +30,23 @@ Sie ist die detaillierte Requirements-/Coverage-Ebene. Die Roadmap bleibt bewuss
 | Status | Anzahl |
 |---|---:|
 | Nicht begonnen | 39 |
-| Plan erstellt | 29 |
+| Plan erstellt | 28 |
 | Read modelliert | 0 |
 | Write modelliert | 20 |
 | Getestet | 10 |
-| GUI-kompatibel | 32 |
+| GUI-kompatibel | 33 |
 | In Arbeit | 0 |
 | **Gesamt** | **130** |
 
-## Aktueller Hinweis zu 080
+## Aktueller Hinweis zu 082
 
-Diagnose 080 entblockt `FVX-TRAIT-019` aus Diagnose 070:
+Diagnose 082 bestaetigt `FVX-TRAIT-018` nach der 081-Normalisierung:
 
+- `FVX-TRAIT-018` Evolutions Similar Strength ist im `FVX-TRAIT-016` Evolution-Species-Carrier stabil: Save/Log/Output/Reload true, `normalizedWriteReloadEvolutionMismatches=0`, `rawWithFormeWriteReloadEvolutionMismatches=0`, `<unknown>=false`, `exceptionClass=none` und `stacktrace=none`.
+- Der 082-Reload-Vergleich nutzt nur persistierte Gen3-Evolution-Felder: Evolution-Type, ExtraInfo mit Item-ID-Normalisierung und Ziel-Species per interner `SpeciesSet`-Identitaet; `Evolution.forme` ist kein Mismatch-Kriterium.
+- `Bad Egg=true` bleibt nach 055 als bestehender Evolution-Log-/Sonder-Species-Marker klassifiziert, weil der normalisierte Reload stabil ist und der Mismatch-Zaehler `0` bleibt.
 - `FVX-TRAIT-019` Evolutions Same Typing ist nach dem Evolution-Same-Typing-Null-Type-Fix im `FVX-TRAIT-016` Evolution-Species-Carrier stabil: Save/Log/Output/Reload true, `writeReloadEvolutionMismatches=0`, `<unknown>=false`, `exceptionClass=none` und `stacktrace=none`.
 - UPR-FVX `74d88a7ab1d306e1e09ccabb851dffd7f6922b66` bleibt auf `EvolutionRandomizer` und den Same-Typing-/Null-Primary-Type-Scope begrenzt.
-- `Bad Egg=true` bleibt nach 055 als bestehender Evolution-Log-/Sonder-Species-Marker klassifiziert, weil Save/Log/Output/Reload stabil sind und der Reload-Mismatch-Zaehler `0` ist.
-- `FVX-TRAIT-018` Evolutions Similar Strength wurde in 080 nur getrennt als Regression beobachtet und nicht mit dem Same-Typing-Fix vermischt.
 - `FVX-FOE-009` Force Diverse Types / Trainer Type Diversity ist nach dem Trainer-Type-Diversity-Null-Type-Fix im `FVX-FOE-001` Trainer-Pokemon-Carrier stabil: Save/Log/Output/Reload true, `writeReloadTrainerPokemonMismatches=0`, `filterViolations=0`, `Bad Egg=false`, `<unknown>=false` und `stacktrace=none`.
 - UPR-FVX `d89fc64e3b0223b03a65466422847dc7df30d03c` bleibt auf `TrainerPokemonRandomizer` und den Force-Diverse-Types-/`usedTypes`-Pfad begrenzt.
 - `FVX-WILD-011` Wild Similar Strength und `FVX-WILD-004` Wild Type Restrictions / Type Themes / Keep Primary sind seit Diagnose 075 im `FVX-WILD-001` Standard/Fallback-Wild-Carrier stabil.
@@ -57,7 +58,7 @@ Diagnose 080 entblockt `FVX-TRAIT-019` aus Diagnose 070:
 | GUI-Tab | Features | Nicht begonnen | Plan erstellt | Read modelliert | Write modelliert | Getestet | GUI-kompatibel | In Arbeit |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
 | General Options | 4 | 2 | 0 | 0 | 0 | 2 | 0 | 0 |
-| Pokemon Traits | 28 | 7 | 16 | 0 | 0 | 0 | 5 | 0 |
+| Pokemon Traits | 28 | 7 | 15 | 0 | 0 | 0 | 6 | 0 |
 | Starters, Statics & Trades | 15 | 5 | 0 | 0 | 0 | 5 | 5 | 0 |
 | Moves & Movesets | 11 | 0 | 3 | 0 | 6 | 0 | 2 | 0 |
 | Foe Pokemon | 14 | 8 | 0 | 0 | 0 | 0 | 6 | 0 |
@@ -96,7 +97,7 @@ Diagnose 080 entblockt `FVX-TRAIT-019` aus Diagnose 070:
 - FVX-TRAIT-015 | Abilities: Ban Bad Abilities | Plan erstellt
 - FVX-TRAIT-016 | Pokemon Evolutions randomisieren | GUI-kompatibel
 - FVX-TRAIT-017 | Evolutions: Random Every Level | Plan erstellt
-- FVX-TRAIT-018 | Evolutions: Similar Strength | Plan erstellt
+- FVX-TRAIT-018 | Evolutions: Similar Strength | GUI-kompatibel
 - FVX-TRAIT-019 | Evolutions: Same Typing | GUI-kompatibel
 - FVX-TRAIT-020 | Evolutions: Limit to Three Stages | Plan erstellt
 - FVX-TRAIT-021 | Evolutions: No Convergence | Plan erstellt

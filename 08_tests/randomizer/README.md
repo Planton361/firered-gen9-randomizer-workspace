@@ -2,9 +2,10 @@
 
 ## Latest
 
-- `081_p1_evolution_similar_strength_mismatch_diagnostics.md` dokumentiert die read-only Code-/Protokollanalyse fuer den verbliebenen 070-Blocker `FVX-TRAIT-018` Evolutions Similar Strength.
-- Wahrscheinlichste Einordnung: Die 070-Mismatches sind eher ein zu breiter Diagnosevergleich auf nicht persistierte Evolution-Zusatzfelder wie `forme` als ein harter Species-Write-Fehler.
-- `Bad Egg=true` bleibt nach 055 separat zu klassifizieren; 026 und 080 zeigen, dass der Marker bei korrekt normalisiertem Reload-Vergleich mit `0` Mismatches auftreten kann.
+- `082_evolution_similar_strength_normalized_reload_diagnostics.md` dokumentiert den einzelnen lokalen `FVX-TRAIT-018` Evolutions Similar Strength Smoke mit normalisiertem Reload-Vergleich.
+- Der Vergleich nutzt nur persistierte Gen3-Evolution-Felder: Evolution-Type, ExtraInfo mit Item-ID-Normalisierung und Ziel-Species per interner `SpeciesSet`-Identitaet; `Evolution.forme` wird nicht als Mismatch-Kriterium gewertet.
+- Ergebnis: Save/Log/Output/Reload true, `normalizedWriteReloadEvolutionMismatches=0`, `rawWithFormeWriteReloadEvolutionMismatches=0`, `<unknown>=false`, `exceptionClass=none` und `stacktrace=none`.
+- `Bad Egg=true` wird nach 055 als bestehender Evolution-Log-/Sonder-Species-Marker klassifiziert, weil der normalisierte Reload stabil ist.
 - Wild, Trainer, TypeChart, MoveData, Palette, Items, Text/Menu, Graphics, Evolution-Methoden-Writer und `FVX-TRAIT-019` Same Typing bleiben ausgeschlossen.
 
 Dieses Verzeichnis enthaelt die dauerhaften Markdown-Protokolle fuer UPR-FVX/CFRU-DPE-Randomizer-Analysen und Smokes. Lokale ROM-, Build-, Log- und Tool-Artefakte bleiben unter `05_builds/**` oder `03_tools/releases/**` und werden nicht committed.
@@ -115,20 +116,21 @@ Der neueste bestaetigte Stand wird in Markdown ueber die Spalte `Latest` markier
 | 078 | `078_trainer_type_diversity_nulltype_fix_diagnostics.md` | CFRU/DPE Trainer Type Diversity Null-Type Fix Diagnostics | bestaetigt: UPR-FVX-Fix fuer `TrainerPokemonRandomizer` Null-Primary-Type-Scope; `FVX-FOE-009` und Trainer Similar Strength Regression mit Save/Log/Output/Reload true, `writeReloadTrainerPokemonMismatches=0`, `filterViolations=0` fuer Type Diversity, `Bad Egg=false`, `<unknown>=false` und `stacktrace=none` | lokal/ignored, nicht dokumentiert | nein |
 | 079 | `079_p1_evolution_same_typing_code_diagnosis.md` | CFRU/DPE P1 Evolution Same Typing Code Diagnosis | dokumentiert: read-only Codeanalyse fuer `FVX-TRAIT-019`; wahrscheinlich konkrete Ursache ist `to.hasSharedType(...)` im Same-Typing-Filter mit Null-Primary-Type-Kandidaten aus dem Evolution-Replacement-Pool; keine Ausfuehrung | keiner, read-only Analyse | nein |
 | 080 | `080_evolution_same_typing_nulltype_fix_diagnostics.md` | CFRU/DPE Evolution Same Typing Null-Type Fix Diagnostics | bestaetigt: UPR-FVX-Fix fuer `EvolutionRandomizer` Same-Typing-Null-Primary-Type-Scope; `FVX-TRAIT-019` mit Save/Log/Output/Reload true, `writeReloadEvolutionMismatches=0`, `<unknown>=false`, `exceptionClass=none` und `stacktrace=none`; `FVX-TRAIT-018` nur als getrennte Regression | lokal/ignored, nicht dokumentiert | nein |
-| 081 | `081_p1_evolution_similar_strength_mismatch_diagnostics.md` | CFRU/DPE P1 Evolution Similar Strength Mismatch Diagnostics | dokumentiert: read-only Code-/Protokollanalyse fuer `FVX-TRAIT-018`; wahrscheinlich ist der 070-Mismatch-Zaehler durch einen zu breiten Vergleich auf nicht persistierte Forme-/Zusatzfelder entstanden; empfiehlt getrennten normalisierten Diagnose-Smoke vor jedem Fix | keiner, read-only Analyse | ja |
+| 081 | `081_p1_evolution_similar_strength_mismatch_diagnostics.md` | CFRU/DPE P1 Evolution Similar Strength Mismatch Diagnostics | dokumentiert: read-only Code-/Protokollanalyse fuer `FVX-TRAIT-018`; wahrscheinlich ist der 070-Mismatch-Zaehler durch einen zu breiten Vergleich auf nicht persistierte Forme-/Zusatzfelder entstanden; empfiehlt getrennten normalisierten Diagnose-Smoke vor jedem Fix | keiner, read-only Analyse | nein |
+| 082 | `082_evolution_similar_strength_normalized_reload_diagnostics.md` | CFRU/DPE Evolution Similar Strength Normalized Reload Diagnostics | bestaetigt: `FVX-TRAIT-018` mit Save/Log/Output/Reload true, `normalizedWriteReloadEvolutionMismatches=0`, `rawWithFormeWriteReloadEvolutionMismatches=0`, `<unknown>=false`, `exceptionClass=none` und `stacktrace=none`; `Bad Egg=true` nach 055 klassifiziert | lokal/ignored, nicht dokumentiert | ja |
 
 ## Aktuell bestaetigter Stand
 
-Latest ist Nr. 081: CFRU/DPE P1 Evolution Similar Strength Mismatch Diagnostics.
+Latest ist Nr. 082: CFRU/DPE Evolution Similar Strength Normalized Reload Diagnostics.
 
 Kernaussagen:
 
-- `FVX-TRAIT-018` Evolutions Similar Strength nutzt den BST-basierten `getRandomSimilarStrengthSpecies(...)`-Pfad und nicht den Same-Typing-`hasSharedType(...)`-Guard aus 080.
-- `EvolutionRandomizer.prepareNewEvolution(...)` setzt ein kosmetisches `forme`; der Gen3-Evolution-Write-/Reload-Pfad schreibt und liest dieses Feld nicht.
-- Der etablierte 026-Reload-Nachweis vergleicht persistierte Evolution-Felder und Ziel-Species per interner SpeciesSet-Identitaet, nicht kosmetische Forme-Werte.
-- Die 070-Mismatches sind deshalb wahrscheinlich zuerst mit einem normalisierten Diagnose-Smoke zu pruefen, bevor ein UPR-FVX-Fix geplant wird.
-- `Bad Egg=true` bleibt als bestehender Evolution-Log-/Sonder-Species-Marker nach 055 getrennt zu klassifizieren.
-- Wild, Trainer, TypeChart/TypeEffectiveness, MoveData, Palette, Items, Text/Menu, Graphics, Level-Modifier, Evolution-Methoden-Writer und offene Writer bleiben ausgeschlossen.
+- `FVX-TRAIT-018` Evolutions Similar Strength ist im engen normalisierten Reload-Smoke stabil.
+- Der Vergleich nutzt Evolution-Type, ExtraInfo mit Item-ID-Normalisierung und Ziel-Species per interner `SpeciesSet`-Identitaet.
+- `Evolution.forme` wird nicht als Mismatch-Kriterium gewertet; der separate raw/forme-Vergleich meldete ebenfalls `0` Mismatches.
+- `normalizedWriteReloadEvolutionMismatches=0`; Save, Log, Output und Reload sind erfolgreich.
+- `Bad Egg=true` bleibt als bestehender Evolution-Log-/Sonder-Species-Marker nach 055 klassifiziert; `<unknown>=false`, `exceptionClass=none` und `stacktrace=none`.
+- Wild, Trainer, TypeChart/TypeEffectiveness, MoveData, Palette, Items, Text/Menu, Graphics, Level-Modifier, Evolution-Methoden-Writer, `FVX-TRAIT-019` Same Typing und offene Writer bleiben ausgeschlossen.
 
 ## Lokale Artefaktpflege
 

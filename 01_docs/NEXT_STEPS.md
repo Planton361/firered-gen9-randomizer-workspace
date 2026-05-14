@@ -2,7 +2,7 @@
 
 ## Aktueller Fokus
 
-CFRU/DPE Evolution Similar Strength Mismatch Diagnostics ist read-only dokumentiert. Diagnose: `08_tests/randomizer/081_p1_evolution_similar_strength_mismatch_diagnostics.md`.
+CFRU/DPE Evolution Similar Strength Normalized Reload Diagnostics ist sanitisiert dokumentiert. Diagnose: `08_tests/randomizer/082_evolution_similar_strength_normalized_reload_diagnostics.md`.
 
 ## Priorisierte naechste Arbeitsbloecke
 
@@ -23,11 +23,11 @@ CFRU/DPE Evolution Similar Strength Mismatch Diagnostics ist read-only dokumenti
    - Diagnose 080 und Submodule-Pin reviewen und mergen.
    - Der Fix bleibt auf `EvolutionRandomizer` und den Same-Typing-/Null-Primary-Type-Scope begrenzt.
 
-4. `FVX-TRAIT-018` Similar Strength normalisiert diagnostizieren
-   - Diagnose 081 grenzt die 070-Mismatches wahrscheinlich auf einen zu breiten Vergleich gegen nicht persistierte Forme-/Zusatzfelder ein.
-   - Naechster Schritt ist ein separater Test-/Diagnosebranch mit Reload-Vergleich nur auf persistierte Gen3-Evolution-Felder und Ziel-Species per interner `SpeciesSet`-Identitaet.
-   - `Bad Egg` nach 055 getrennt klassifizieren; `Evolution.forme` nicht als Mismatch-Kriterium werten.
-   - Weiter ohne TypeChart, MoveData Write, Palette, Items, Encounter Held Items, custom Day/Night-Wild, Catch Em All, Minimum Catch Rate, Level-Modifier, Evolution-Methoden-Writer, `FVX-TRAIT-019` Same Typing oder Text/Menu/Graphics.
+4. PR fuer `FVX-TRAIT-018` Similar Strength Normalized Reload reviewen
+   - Diagnose 082 bestaetigt den einzelnen Similar-Strength-Smoke mit Save/Log/Output/Reload true und `normalizedWriteReloadEvolutionMismatches=0`.
+   - Der Reload-Vergleich nutzt nur persistierte Gen3-Evolution-Felder und Ziel-Species per interner `SpeciesSet`-Identitaet; `Evolution.forme` ist kein Mismatch-Kriterium.
+   - `Bad Egg=true` ist nach 055 klassifiziert; `<unknown>=false`, `exceptionClass=none` und `stacktrace=none`.
+   - Fuer diesen engen `FVX-TRAIT-018`-Scope ist kein Fixbranch erforderlich. Evolution-Methoden-Writer und weitere Evolution-Suboptionen bleiben getrennt.
 
 5. Wild-Suboptionen konservativ halten
    - `FVX-WILD-011` und `FVX-WILD-004` sind im `FVX-WILD-001` Carrier-Fix-Smoke stabil.
