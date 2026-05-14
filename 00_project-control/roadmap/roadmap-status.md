@@ -1,3 +1,10 @@
+# Roadmap Status Update - 2026-05-15 - Field Items Random API TM-slot blocker
+
+- Field Items: Diagnose 106 keeps `FVX-ITEM-002` blocked after the PR #36 TM-pool fix.
+- Pool metrics are sufficient, but `getFieldItems()` exposes `0` TM slots to the Randomizer while raw diagnostics previously found `28` TM Field Item slots.
+- `FVX-ITEM-001` remains `GUI-kompatibel`; `FVX-ITEM-002`, `FVX-ITEM-003`, and `FVX-ITEM-004` remain `Write modelliert`.
+- Next P1 step: read-only API TM-slot scope plan before any further fix.
+
 # Roadmap Status Update - 2026-05-15 - Field Items Random TM-pool fix prepared
 
 - Field Items: `FVX-ITEM-002` TM-pool fix is prepared in UPR-FVX PR #36 and pinned in this workspace branch.

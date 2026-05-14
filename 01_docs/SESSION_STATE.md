@@ -1,3 +1,15 @@
+# Session State Update - 2026-05-15 - Field Items Random TM-pool reload smoke blocked
+
+- Branch: `test/upr-fvx-cfru-dpe-field-items-random-tm-pool-reload-smoke`.
+- UPR-FVX PR #36 and Workspace PR #150 were verified as merged before branch creation.
+- Workspace pin confirmed: `02_external/upr-fvx` at `7b4fb8ed8bcf00c6e0ac2871459adfeec1503fcd`.
+- New protocol: `08_tests/randomizer/106_field_items_random_tm_pool_reload_smoke.md`.
+- A locally approved CFRU/DPE Gen9-BPRE candidate was used for a Field-Items-only `FVX-ITEM-002 Field Items Random` smoke with `banBadRandomFieldItems=false`.
+- Result remains blocked before output/reload: `saveSuccessful=false`, `outputRomExists=false`, `reloadSuccessful=false`, `exceptionClass=com.uprfvx.random.exceptions.RandomizationException`.
+- The PR #36 pool deficit is no longer the active blocker: `randomTmUniquePoolSize=50`, `randomTmFillerAvailable=26`, `randomTmPoolDeficit=0`.
+- New blocker: API TM-slot scope mismatch. Raw diagnostics established `tmFieldItemSlots=28`, but the Randomizer API path sees `randomTmNeededSlots=0` / `randomTmCurrentSlots=0`, so Required Field TMs (`24`) exceed visible TM slots.
+- `FVX-ITEM-002` remains `Write modelliert`; no GUI-compatible upgrade.
+
 # Session State Update - 2026-05-15 - Field Items Random TM-pool fix
 
 - Branch: `compat/upr-fvx-cfru-dpe-field-items-random-tm-pool-fix`.

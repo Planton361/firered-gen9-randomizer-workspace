@@ -1,3 +1,10 @@
+# FVX Feature Roadmap Update - 2026-05-15 - Field Items Random API TM-slot blocker
+
+- Diagnose 106 shows UPR-FVX PR #36 removes the original Unique-TM-Filler pool deficit for `FVX-ITEM-002`.
+- The remaining blocker is an API TM-slot scope mismatch: raw Field-Item diagnostics found `tmFieldItemSlots=28`, but `ItemRandomizer.randomizeTMFieldItems(...)` receives `0` TM slots through `getFieldItems()`.
+- Keep `FVX-ITEM-002` below GUI-compatible until the API TM-slot scope is understood and a later smoke passes.
+- Do not proceed to `FVX-ITEM-003` or `FVX-ITEM-004` before `FVX-ITEM-002` reloads successfully.
+
 # FVX Feature Roadmap Update - 2026-05-15 - Field Items Random TM-pool fix prepared
 
 - UPR-FVX PR #36 prepares the narrow `FVX-ITEM-002 Field Items Random` TM-pool fix.

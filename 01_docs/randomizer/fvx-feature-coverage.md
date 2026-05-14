@@ -1,3 +1,11 @@
+# FVX Feature Coverage Update - 2026-05-15 - Field Items Random API TM-slot blocker
+
+- `FVX-ITEM-001` remains `GUI-kompatibel` for the tested CFRU/DPE Gen9-BPRE Field Items Shuffle allowed-slot scope.
+- `FVX-ITEM-002` remains `Write modelliert`: Diagnose 106 confirms `randomTmPoolDeficit=0`, but blocks because the Randomizer Field-Items API sees `0` TM slots while raw diagnostics found `28`.
+- `FVX-ITEM-003` remains `Write modelliert`.
+- `FVX-ITEM-004` remains `Write modelliert`.
+- Shops, Pickup, Held Items, TM/HM/Tutor/Learnset, Palette/Graphics, MoveData/MoveNames and TypeChart remain outside this scope.
+
 # FVX Feature Coverage Update - 2026-05-15 - Field Items Random TM-pool fix prepared
 
 - `FVX-ITEM-001` remains `GUI-kompatibel` for the tested CFRU/DPE Gen9-BPRE Field Items Shuffle allowed-slot scope.
