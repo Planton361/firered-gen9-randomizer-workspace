@@ -1,5 +1,25 @@
 # Session State
 
+## 2026-05-14 - CFRU/DPE Wild 070 Blockers Diagnostics Plan
+
+Arbeitsbranch: `analysis/upr-fvx-cfru-dpe-p1-wild-070-blockers-diagnostics`
+
+Aktueller Stand:
+
+- Neues read-only Diagnoseplan-Protokoll `08_tests/randomizer/072_p1_wild_070_blockers_diagnostics_plan.md` erstellt.
+- 072 plant die gemeinsame Folge-Diagnose fuer `FVX-WILD-011` Wild Similar Strength und `FVX-WILD-004` Wild Type Restrictions / Type Themes / Keep Primary.
+- Beide Slices bleiben echte Save-Blocker im `FVX-WILD-001` Standard/Fallback-Wild-Carrier: kein Output/Reload und `IllegalStateException`.
+- `FVX-WILD-011` wird als BST-/Species-Pool-Filter-Scope plus Wild-Nullslot-/Placeholder-Scope eingeordnet.
+- `FVX-WILD-004` wird als Species-Type-Filter-Scope plus Wild-Nullslot-/Placeholder-Scope eingeordnet; `filterViolations=0` aus 070 bleibt nur ein Vor-Abbruch-Befund.
+- Gemeinsame Hypothesen sind dokumentiert: Nullslot-/Placeholder-Wild-Entries, Area-/Encounter-Slot-Scope, leere/ungueltige Pools, Placeholder-/Special-/unsupported-Type-Species und strengere Suboption-Vorauswahl trotz P1-supported `FVX-WILD-001` Carrier.
+- Spaetere Diagnosemetriken, Sanitizing-Regeln und Stop-Regeln sind dokumentiert; keine Diagnosewerte wurden erfunden.
+- TypeChart/TypeEffectiveness, MoveData Write, Palette, Items/Field/Shops/Pickup, Encounter Held Items, custom Day/Night-Wild, Catch Em All / Minimum Catch Rate, Level Modifier und Text/Menu/Graphics bleiben ausgeschlossen.
+- Keine Aenderung an `02_external/**`, kein Tool-Manifest-Update.
+
+Naechster sinnvoller Schritt:
+
+- Separater read-only Diagnose-/Harness-Plan oder freigegebene read-only Diagnose fuer den Wild-Filter-Carrier; kein Fixbranch ohne klare Ursache.
+
 ## 2026-05-14 - CFRU/DPE 070 Blocked Slices Follow-up Plan
 
 Arbeitsbranch: `analysis/upr-fvx-cfru-dpe-p1-070-blocked-slices-followup-plan`

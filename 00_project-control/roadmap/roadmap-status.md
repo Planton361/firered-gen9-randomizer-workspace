@@ -24,9 +24,9 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-p1-070-blocked-slices-followup-plan` |
+| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-p1-wild-070-blockers-diagnostics` |
 | Nächster Branch | noch festlegen |
-| Aktueller Fokus | CFRU/DPE 070 Blocked Slices Follow-up Plan |
+| Aktueller Fokus | CFRU/DPE Wild 070 Blockers Diagnostics Plan |
 | ROM-/Build-Arbeit | keine neuen ROM-/Build-Artefakte; keine Artefakte committen oder dokumentieren |
 | Externe Repos | als Submodule auf Planton361-Forks eingebunden |
 | Forks | Planton361-Forks fuer UPR-FVX, DPE Gen9 und CFRU dokumentiert |
@@ -131,18 +131,19 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | 08 Randomizer-Kompatibilität | CFRU/DPE Similar Strength / Same Type Regression-Smoke-Plan | Diagnose 069 plant Wild-, Trainer- und Evolution-Slices fuer Similar Strength, Same Type, Type Themes und Type Restrictions ohne Testausfuehrung und ohne offene Writer |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Similar Strength / Same Type Regression-Smoke-Ergebnisse | Diagnose 070 dokumentiert sanitisiert: Trainer Similar Strength unter `FVX-FOE-001` stabil; Wild Similar Strength, Wild Type Restrictions, `FVX-FOE-009` und Evolutions Same Typing blockieren; Evolutions Similar Strength reloadet mit Mismatches |
 | 08 Randomizer-Kompatibilität | CFRU/DPE 070 Blocked Slices Follow-up Plan | Diagnose 071 plant read-only getrennte Folgeanalysen fuer Wild-Carrier-/Placeholder-Scope, Trainer-Type-Diversity, Evolution-Reload-/Bad-Egg-Scope und Evolution-Same-Typing-/Null-Scope |
+| 08 Randomizer-Kompatibilität | CFRU/DPE Wild 070 Blockers Diagnostics Plan | Diagnose 072 plant read-only die gemeinsame Wild-Diagnose fuer `FVX-WILD-011` und `FVX-WILD-004` im `FVX-WILD-001` Carrier, getrennt nach BST-/Species-Pool-Filter, Species-Type-Filter und Wild-Nullslot-/Placeholder-Scope |
 
 ## In Arbeit
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | 070 Blocked Slices Follow-up Plan | Planprotokoll 071 per PR reviewen; keine Codeaenderung, kein Fix und keine Randomizer-Laeufe |
+| 08 Randomizer-Kompatibilität | Wild 070 Blockers Diagnostics Plan | Planprotokoll 072 per PR reviewen; keine Codeaenderung, kein Fix und keine Randomizer-Laeufe |
 
 ## Als Nächstes
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Wild 070-Blocker read-only diagnostizieren | Wild Similar Strength und Wild Type Restrictions gemeinsam gegen Wild-Nullslot-/Placeholder-Scope und Carrier-Grenzen pruefen |
+| 08 Randomizer-Kompatibilität | Wild-Filter-Carrier read-only diagnostizieren | Diagnose-/Harness-Plan oder freigegebene read-only Diagnose fuer `FVX-WILD-011` und `FVX-WILD-004` gegen Carrier-, Nullslot-/Placeholder-, BST- und Type-Filter-Grenzen |
 
 ## Noch offen
 
@@ -227,7 +228,8 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | P1av | `test/upr-fvx-cfru-dpe-p1-type-effectiveness-followup-smokes` | TypeEffectiveness-Folgesmoke-Ergebnisse | erledigt; Diagnose 068 bestaetigt alle geplanten TypeEffectiveness-Folgeslices ohne Codeaenderung |
 | P1aw | `analysis/upr-fvx-cfru-dpe-p1-similar-strength-same-type-regression-smoke` | Similar Strength / Same Type Regression-Smoke-Plan | erledigt; Diagnose 069 plant Wild-, Trainer- und Evolution-Slices fuer BST-/Type-basierte Poolfilter ohne Testausfuehrung |
 | P1ax | `test/upr-fvx-cfru-dpe-p1-similar-strength-same-type-regression-smoke` | Similar Strength / Same Type Regression-Smoke-Ergebnisse | erledigt; Diagnose 070 dokumentiert gemischte Ergebnisse und blockierte Folge-Slices |
-| P1ay | `analysis/upr-fvx-cfru-dpe-p1-070-blocked-slices-followup-plan` | 070 Blocked Slices Follow-up Plan | aktueller Analysebranch; Diagnose 071 plant getrennte Folgeanalysen ohne Codeaenderung, Fix oder Randomizer-Laeufe |
+| P1ay | `analysis/upr-fvx-cfru-dpe-p1-070-blocked-slices-followup-plan` | 070 Blocked Slices Follow-up Plan | erledigt; Diagnose 071 plant getrennte Folgeanalysen ohne Codeaenderung, Fix oder Randomizer-Laeufe |
+| P1az | `analysis/upr-fvx-cfru-dpe-p1-wild-070-blockers-diagnostics` | Wild 070 Blockers Diagnostics Plan | aktueller Analysebranch; Diagnose 072 plant die gemeinsame Wild-Diagnose fuer `FVX-WILD-011` und `FVX-WILD-004` ohne Codeaenderung, Fix oder Randomizer-Laeufe |
 | P2 | `randomizer/cfru-day-night-wild-table-analysis` | CFRU-Custom-Day/Night-Wild-Tabellen separat untersuchen | erst nach P1-Schreibpfad-Diagnose; Route-1-Fallback bleibt stabil |
 | P3 | noch festlegen | Nullslot-`<unknown>` mit `rawInternalSpeciesId=0` klassifizieren | nicht mit GenRestrictions vermischen |
 | P4 | noch festlegen | BizHawk-/Ironmon-Tracker-/RAM-Mapping pruefen | erst nach stabiler ROM-Randomizer-Kompatibilitaet |
