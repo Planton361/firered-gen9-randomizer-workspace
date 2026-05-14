@@ -1,3 +1,21 @@
+# Next Steps - 2026-05-14 Field Items / Shops / Pickup Plan
+
+Aktiver Anschlussblock:
+
+- `analysis/upr-fvx-cfru-dpe-field-items-scope-diagnostics-plan`
+
+Ziel: Field Items als ersten getrennten Item-Writer read-only planen/diagnostizieren. Fokus auf sichtbare Itemballs, Hidden Items, TM-Slots, Required Field TMs, Progression-/Key-/System-Item-Preserve, invalid/fallback Items und Reload-Kriterien.
+
+Entscheidung aus Diagnose 097:
+
+- Field Items, Shops und Pickup nicht gemeinsam fixen.
+- Field Items: Map-/Script-/Signpost-Offset-Writer, naechster engster Block.
+- Pickup: separater Table-/Locator-/Probability-Scope.
+- Shops: separater Shoplisten-/Terminator-/DataRewriter-/Repointing-/Preis-Scope.
+- Gemeinsame Item-Pool-Bans sind noetig, aber kein gemeinsamer Writer-Fix.
+
+Grenzen: keine Shops, kein Pickup, keine Encounter Held Items, keine Trainer/Starter Held Items, keine TM/HM/Tutor/Learnset-Ausweitung, keine Palette/Graphics, kein MoveData/MoveNames, kein TypeChart/TypeEffectiveness, keine Trainer/Wild/Evolution/Text/Menu-Umsetzung.
+
 # Next Steps - 2026-05-14 Post-Merge Palette Sync
 
 Aktiver Anschlussblock:

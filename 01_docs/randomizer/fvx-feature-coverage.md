@@ -460,3 +460,10 @@ Diese Matrix soll nicht als 130 Roadmap-Zeilen gepflegt werden. Fuer die Roadmap
 - `FVX-GFX-002` bleibt `Write modelliert`.
 - `FVX-GFX-003` bleibt `Write modelliert`.
 - `FVX-GFX-004` bleibt `Write modelliert`.
+
+## 2026-05-14 - Field Items / Shops / Pickup Scope nach Diagnose 097
+
+- `FVX-ITEM-001` bis `FVX-ITEM-004` bleiben `Write modelliert`; Field Items brauchen einen eigenen Map-/Script-/Hidden-Item-Offset-Smoke.
+- `FVX-ITEM-005` bis `FVX-ITEM-009` bleiben `Write modelliert`; Shops brauchen einen eigenen Terminator-/Repointing-/Preis-Scope.
+- `FVX-ITEM-010` bleibt `Write modelliert`; Pickup braucht einen eigenen Table-/Locator-/Probability-Scope.
+- Encounter Held Items, Trainer Held Items und Starter Held Items bleiben getrennte Datenpfade.

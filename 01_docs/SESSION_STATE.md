@@ -1,3 +1,21 @@
+## 2026-05-14 - CFRU/DPE Field Items / Shops / Pickup Scope Plan
+
+Workspace-Branch: `analysis/upr-fvx-cfru-dpe-field-items-shops-pickup-scope-plan`
+
+Aktueller Stand:
+
+- Neues read-only Planprotokoll `08_tests/randomizer/097_field_items_shops_pickup_scope_plan.md` erstellt.
+- UPR-FVX bleibt auf `2697511da9a97df4c29c00dfda8b40e556020489` gepinnt.
+- Palette Diagnose 096 bleibt blockiert abgeschlossen; `FVX-GFX-001..004` bleiben `Write modelliert`.
+- Field Items, Shops und Pickup wurden gegen `GameRandomizer`, `Settings`, `ItemRandomizer`, `Gen3RomHandler`, `RomHandler`, `Shop`, `PickupItem`, `Item` und GUI-Texte read-only getrennt.
+- Ergebnis: kein gemeinsamer Fixblock. Field Items sind Map-/Script-/Hidden-Item-Offset-Writer, Pickup ist ein begrenzter Table-Writer, Shops sind Terminator-/DataRewriter-/Repointing- und Preis-Scope.
+- Gemeinsame Item-Pool-/Bad-/Banned-Policy ist noetig, aber die Write-/Reload-Risiken muessen getrennt bleiben.
+- Keine Codeaenderung, keine Aenderung an `02_external/**`, keine Submodule-Pin-Aenderung, kein Build, kein Randomizer-Lauf und kein ROM-/Artefaktzugriff.
+
+Naechster sinnvoller Schritt:
+
+- `analysis/upr-fvx-cfru-dpe-field-items-scope-diagnostics-plan`: Field Items zuerst read-only planen/diagnostizieren; Shops und Pickup separat halten.
+
 ## 2026-05-14 - Post-Merge Sync nach blockiertem Palette Normal Single-owner Reload-Smoke
 
 Workspace-Branch: `docs/post-merge-palette-normal-smoke-blocked-sync`
