@@ -2,7 +2,7 @@
 
 ## Aktueller Fokus
 
-CFRU/DPE Wild-Filter-Carrier-Nullslot-Fix ist umgesetzt und sanitisiert dokumentiert. Diagnoseprotokoll: `08_tests/randomizer/075_wild_filter_carrier_nullslot_fix_diagnostics.md`.
+CFRU/DPE Trainer Type Diversity Blocker Diagnostics Plan ist read-only dokumentiert. Diagnoseplan: `08_tests/randomizer/076_p1_trainer_type_diversity_blocker_diagnostics_plan.md`.
 
 ## Priorisierte naechste Arbeitsbloecke
 
@@ -11,26 +11,30 @@ CFRU/DPE Wild-Filter-Carrier-Nullslot-Fix ist umgesetzt und sanitisiert dokument
    - Workspace: `compat/upr-fvx-cfru-dpe-p1-wild-filter-carrier-nullslot-fix`.
    - Diagnose 075 und Submodule-Pin reviewen und mergen.
 
-2. Nach Merge: restliche 070-Blocker getrennt fortsetzen
-   - `FVX-FOE-009` Trainer Type Diversity / Type Themes gegen Trainer-Type-Diversity-/Null-Type-Scope.
+2. `FVX-FOE-009` Trainer Type Diversity / Type Themes getrennt diagnostizieren
+   - Naechster Arbeitsblock: read-only Code-/Protokollanalyse fuer Trainer-Type-Diversity-/Null-Type-Scope.
+   - Pruefen, warum Trainer Similar Strength unter `FVX-FOE-001` stabil ist, `FVX-FOE-009` aber mit `NullPointerException` und fehlendem Output/Reload blockiert.
+   - Weiter ohne Wild, Evolution, TypeChart, MoveData Write, Palette, Items, Text/Menu, Graphics, Level-Modifier oder andere offene Writer.
+
+3. Weitere 070-Blocker getrennt fortsetzen
    - `FVX-TRAIT-018` Evolutions Similar Strength gegen Evolution-Reload-Mismatches, `Bad Egg` und BST-basierte Zielauswahl.
    - `FVX-TRAIT-019` Evolutions Same Typing gegen Evolution-Same-Typing-/Null-Scope.
    - Weiter ohne TypeChart, MoveData Write, Palette, Items, Encounter Held Items, custom Day/Night-Wild, Catch Em All, Minimum Catch Rate, Level-Modifier oder Text/Menu/Graphics.
 
-3. Wild-Suboptionen konservativ halten
+4. Wild-Suboptionen konservativ halten
    - `FVX-WILD-011` und `FVX-WILD-004` sind im `FVX-WILD-001` Carrier-Fix-Smoke stabil.
    - Evolution Restrictions, Catch Em All, Minimum Catch Rate und Level-Balance bleiben getrennte Wild-Scope-Themen.
 
-4. Spaetere TypeEffectiveness-Kombinationen nur bei Bedarf
+5. Spaetere TypeEffectiveness-Kombinationen nur bei Bedarf
    - Nicht mit MoveData, Palette, Items, Graphics, Text/Menu oder Species-Type-Write vermischen.
 
-5. `compat/upr-fvx-cfru-dpe-move-data-write-preserve`
+6. `compat/upr-fvx-cfru-dpe-move-data-write-preserve`
    - Nur nach separater Freigabe: eng gegateten MoveData-Writer mit Preserve-Policy und Reload-Diagnose umsetzen.
 
-6. `compat/upr-fvx-cfru-dpe-palette-randomization-preserve-repoint`
+7. `compat/upr-fvx-cfru-dpe-palette-randomization-preserve-repoint`
    - Nur nach separater Freigabe: echte geaenderte Palette-Randomization mit compressed/shared/repointing Reload-Kriterien absichern.
 
-7. `compat/upr-fvx-cfru-dpe-field-items-shops-pickup-scope-and-write`
+8. `compat/upr-fvx-cfru-dpe-field-items-shops-pickup-scope-and-write`
    - Nur nach separater Freigabe: Field Items, Shops und Pickup mit getrennten Reload-Kriterien absichern.
 
 ## Sicherheitsgrenzen
