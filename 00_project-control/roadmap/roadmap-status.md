@@ -24,10 +24,10 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Aktueller Branch | `test/upr-fvx-cfru-dpe-move-data-power-accuracy-pp-reload-smoke` |
-| Nächster Branch | `test/upr-fvx-cfru-dpe-move-data-types-reload-smoke` |
-| Aktueller Fokus | CFRU/DPE MoveData Power/Accuracy/PP Reload-Smoke |
-| ROM-/Build-Arbeit | enger lokaler MoveData Power/Accuracy/PP Reload-Smoke mit ignored Artefakten unter `05_builds/**`; keine privaten Artefakte dokumentiert |
+| Aktueller Branch | `test/upr-fvx-cfru-dpe-move-data-types-reload-smoke` |
+| Nächster Branch | `compat/upr-fvx-cfru-dpe-move-data-type-fairy-byte` |
+| Aktueller Fokus | CFRU/DPE MoveData Types Reload-Smoke |
+| ROM-/Build-Arbeit | enger lokaler MoveData Types Reload-Smoke mit ignored Artefakten unter `05_builds/**`; keine privaten Artefakte dokumentiert |
 | Externe Repos | als Submodule auf Planton361-Forks eingebunden |
 | Forks | Planton361-Forks fuer UPR-FVX, DPE Gen9 und CFRU dokumentiert |
 | Installationen | devkitPro/devkitARM lokal dokumentiert; keine Installation in diesem Analyseblock |
@@ -119,6 +119,7 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | 08 Randomizer-Kompatibilität | CFRU/DPE MoveData Write Preserve Fix | UPR-FVX `bb5ee119` schreibt klassische MoveData-Bytes `+0..+4` weiter und im CFRU/DPE-Gate `BattleMove.split` bei `+10`; Preserve-Bytes bleiben unangetastet |
 | 08 Randomizer-Kompatibilität | CFRU/DPE MoveData Write Preserve Reload-Smoke | Workspace PR #125 gemerged; Diagnose 084 bestaetigt `Update Moves` mit Save/Log/Output/Reload true, `writeReloadMoveDataMismatches=0`, `moves.total=992`, `991:PsychicNoise`, stabiler category/split-Reload und `preserveByteMismatchesUnchangedMoves=0` |
 | 08 Randomizer-Kompatibilität | CFRU/DPE MoveData Power/Accuracy/PP Reload-Smoke | Diagnose 085 bestaetigt `FVX-MOVE-001/002/003` mit Save/Log/Output/Reload true, `writeReloadMoveDataMismatches=0`, stabilen `+1/+3/+4` Bytes und `preserveByteMismatchesAllMoves=0` |
+| 08 Randomizer-Kompatibilität | CFRU/DPE MoveData Types Reload-Smoke | Diagnose 086 dokumentiert `FVX-MOVE-004` mit Save/Log/Output/Reload true und stabilen Preserve-Bytes, blockiert aber durch Fairy-Type-Byte-Mismatches: `writeReloadMoveDataMismatches=54`, `typeReloadMismatches=54`, `cfruDpeTypeByteMismatches=54` |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Field Items/Shops/Pickup-Modell | Diagnose 057 modelliert Field Items, Shops, Pickup und allgemeine Item-Randomization getrennt von Encounter Held Items; eigene Preserve-/Skip-Policy und Reload-Kriterien dokumentiert |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Palette-Randomization-Modell | Diagnose 058 trennt Palette-Safety/Skip-Unchanged-Save von echter geaenderter Palette-Randomization; compressed/shared/repointing risks, Preserve-/Skip-Policy, Reload-Kriterien und Graphics/P2-Abgrenzung dokumentiert |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Type-Chart-Modell | Diagnose 059 trennt Pokemon-Type-Read/Write aus 051 von Type-Chart-/Effectiveness-Randomization; Fairy `0x17`, Stellar/unsupported `0x18`, TypeTable-Risiken, Preserve-/Skip-Policy und Reload-Kriterien dokumentiert |
@@ -148,7 +149,7 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | MoveData Type Reload-Smoke | naechster Branch `test/upr-fvx-cfru-dpe-move-data-types-reload-smoke`; `FVX-MOVE-004` GUI-nah pruefen, `FVX-MOVE-005` Move Names weiter out of scope halten |
+| 08 Randomizer-Kompatibilität | MoveData Fairy-Type-Byte-Fix | naechster Branch `compat/upr-fvx-cfru-dpe-move-data-type-fairy-byte`; im sicheren CFRU/DPE-MoveData-Gate `FAIRY` fuer Byte `+2 type` als raw `0x17` schreiben, ohne TypeChart/TypeEffectiveness/Species-Type-Write |
 
 ## Als Nächstes
 

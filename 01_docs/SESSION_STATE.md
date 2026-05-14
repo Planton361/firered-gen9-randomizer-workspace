@@ -1,5 +1,29 @@
 # Session State
 
+## 2026-05-14 - CFRU/DPE MoveData Types Reload-Smoke
+
+Workspace-Branch: `test/upr-fvx-cfru-dpe-move-data-types-reload-smoke`
+
+UPR-FVX-Pin: `bb5ee11978e38839979e654ff1c14ba60a0cde93`
+
+Aktueller Stand:
+
+- Neuer sanitiserter Ergebnisbericht `08_tests/randomizer/086_move_data_types_reload_smoke.md` erstellt.
+- Der Smoke blieb eng auf `FVX-MOVE-004` Randomize Move Types und das MoveData-Type-Byte `+2` begrenzt.
+- Ergebnis: `saveSuccessful=true`, `logSuccessful=true`, `outputRomExists=true`, `logNonEmpty=true`, Reload erfolgreich, `moves.total=992`, hoechster Move `991:PsychicNoise`, `exceptionClass=none` und `stacktrace=none`.
+- Der Smoke ist fachlich blockiert: `writeReloadMoveDataMismatches=54`, `typeReloadMismatches=54`, `expectedFairyMoves=54`, `fairyReloadMismatches=54` und `cfruDpeTypeByteMismatches=54`.
+- Preserve-Bytes `+5`, `+6`, `+7`, `+8`, `+9` und `+11` blieben bytegleich: `preserveByteMismatchesAllMoves=0`, `preserveByteMismatchesUnchangedMoves=0`.
+- Einordnung: Die aktuelle Gen3-MoveData-Type-Mappingfunktion schreibt `FAIRY` im MoveData-Pfad faktisch als Fallback `0x00`; fuer den getesteten CFRU/DPE Gen9-BPRE-Stand muss `FAIRY` im sicheren MoveData-Gate als raw `0x17` geschrieben werden.
+- Dies ist kein TypeChart-/TypeEffectiveness-/Species-Type-Write-Befund.
+- `FVX-MOVE-004` bleibt `Write modelliert`; `FVX-MOVE-001`, `FVX-MOVE-002`, `FVX-MOVE-003` und `FVX-MOVE-006` bleiben GUI-kompatibel.
+- Lokale ROM-/Output-/Log-Artefakte blieben ignored unter `05_builds/**`; private Pfade, ROM-Namen, Hashes, Logs und Output-ROMs wurden nicht dokumentiert.
+- Keine Aenderung an `02_external/upr-fvx`; der Submodule-Pin bleibt `bb5ee11978e38839979e654ff1c14ba60a0cde93`.
+- Keine TypeChart-/TypeEffectiveness-, Species-Type-, Name-, Description-, Palette-, Item-, Field-/Shop-/Pickup-, Trainer-, Wild-, Evolution-, Text/Menu-, Graphics-, TM/HM-, Tutor-, Egg- oder Learnset-Write-Aenderung.
+
+Naechster sinnvoller Schritt:
+
+- Enger UPR-FVX-Fixbranch `compat/upr-fvx-cfru-dpe-move-data-type-fairy-byte`: im sicheren CFRU/DPE-Gen9-BPRE-MoveData-Writer-Gate `FAIRY` fuer Byte `+2 type` als raw `0x17` schreiben; Vanilla/Jambo/andere Gen3-Pfade sowie TypeChart/TypeEffectiveness/Species-Type-Write unveraendert lassen.
+
 ## 2026-05-14 - CFRU/DPE MoveData Power/Accuracy/PP Reload-Smoke
 
 Workspace-Branch: `test/upr-fvx-cfru-dpe-move-data-power-accuracy-pp-reload-smoke`
