@@ -1,3 +1,13 @@
+# Session State Update - 2026-05-15 - Field Items API TM-slot scope fix
+
+- UPR-FVX fix commit: `328e4441c2981d37aba9e2707a6f27f779b026e2`.
+- UPR-FVX PR #37 opened: <https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/37>.
+- New protocol: `08_tests/randomizer/108_field_items_api_tm_slot_scope_fix.md`.
+- Fix is limited to Gen3RomHandler Field-Items get/set: CFRU/DPE Field-TM slots are exposed through the Field-Items API while TMs are not made globally allowed.
+- `./gradlew :random:classes` passed in UPR-FVX.
+- No fachlicher ROM Write-/Reload-Smoke ran in this block; `FVX-ITEM-002` remains `Write modelliert` until a separate sanitized reload smoke passes.
+- Workspace now pins `02_external/upr-fvx` to `328e4441c2981d37aba9e2707a6f27f779b026e2`.
+
 # Session State Update - 2026-05-15 - Field Items Random API TM-slot scope plan
 
 - New protocol: `08_tests/randomizer/107_field_items_random_api_tm_slot_scope_plan.md`.

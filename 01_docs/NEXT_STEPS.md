@@ -1,3 +1,20 @@
+# Next Steps Update - 2026-05-15 - Field Items API TM-slot reload smoke next
+
+Aktueller Fokus:
+
+- UPR-FVX PR #37 prepares the narrow CFRU/DPE Field-Items API TM-slot scope fix.
+- Workspace pins `02_external/upr-fvx` to `328e4441c2981d37aba9e2707a6f27f779b026e2`.
+- `FVX-ITEM-002` remains below GUI-compatible until a separate Field-Items-only reload smoke confirms `randomTmNeededSlots=28`, `apiTmFieldItemSlots=28`, and `fieldItemReloadMismatches=0`.
+
+Empfohlener naechster Branch:
+
+- `test/upr-fvx-cfru-dpe-field-items-api-tm-slot-reload-smoke`
+
+Ziel:
+
+- Run a sanitized Field-Items-only `FVX-ITEM-002 Field Items Random` Write-/Reload-Smoke with `banBadRandomFieldItems=false` on UPR-FVX `328e4441c2981d37aba9e2707a6f27f779b026e2`.
+- Keep Random Even, Ban Bad Items, Shops, Pickup, Held Items, TM/HM/Tutor/Learnset, Scriptparser, Palette, MoveData, Trainer, Wild, Evolution and Text/Menu out of scope.
+
 # Next Steps Update - 2026-05-15 - Field Items API TM-slot scope fix next
 
 Aktueller Fokus:

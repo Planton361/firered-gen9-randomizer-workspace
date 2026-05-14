@@ -1,3 +1,10 @@
+# FVX Feature Roadmap Update - 2026-05-15 - Field Items API TM-slot fix prepared
+
+- UPR-FVX PR #37 prepares the narrow `FVX-ITEM-002` API TM-slot scope fix.
+- The fix stays in Gen3RomHandler Field-Items get/set and exposes CFRU/DPE Field-TM slots without making TMs globally allowed.
+- Next step is a separate sanitized reload smoke before any `FVX-ITEM-002` GUI-compatible upgrade.
+- Keep `FVX-ITEM-003` Random Even and `FVX-ITEM-004` Ban Bad Items separate.
+
 # FVX Feature Roadmap Update - 2026-05-15 - Field Items API TM-slot scope plan
 
 - Diagnose 107 explains the post-PR-36 `FVX-ITEM-002` blocker: raw diagnostics find `28` TM Field-Item slots, but `getFieldItems()` exposes none because the API filters on `Item::isAllowed`.

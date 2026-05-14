@@ -1,3 +1,9 @@
+# Tool Manifest Update - 2026-05-15 - UPR-FVX Field Items API TM-slot fix
+
+- `02_external/upr-fvx` pinned to Planton361/universal-pokemon-randomizer-fvx commit `328e4441c2981d37aba9e2707a6f27f779b026e2` on branch `compat/upr-fvx-cfru-dpe-field-items-api-tm-slot-scope-fix`.
+- UPR-FVX PR #37 opened against `compat/firered-gen9-cfru-dpe`: <https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/37>.
+- Scope: CFRU/DPE Field-Items API TM-slot exposure only; no original-upstream PR.
+
 # Tool Manifest Update - 2026-05-15 - Field Items Random TM-pool fix pin
 
 Dieser Stand dokumentiert den Arbeitsblock `compat/upr-fvx-cfru-dpe-field-items-random-tm-pool-fix`. UPR-FVX wurde im Planton361-Fork-Submodule eng im Field-Items-Random-TM-Pool geaendert; kein ROM-/Randomizer-Reload-Smoke wurde in diesem Block ausgefuehrt. Tool-Binaries, Release-Assets, Secrets und private Pfade wurden nicht dokumentiert.

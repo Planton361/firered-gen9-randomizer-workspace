@@ -191,3 +191,5 @@ Wenn ein Artefakt nicht eindeutig Smoke-Output ist, bleibt es lokal liegen und w
 - 106 - `106_field_items_random_tm_pool_reload_smoke.md`: Sanitized Field-Items-only `FVX-ITEM-002 Field Items Random` reload smoke after UPR-FVX PR #36. Candidate loaded, but save still blocks before output/reload. Pool deficit is cleared (`randomTmPoolDeficit=0`); active blocker is API TM-slot scope mismatch (`randomTmNeededSlots=0` vs raw `tmFieldItemSlots=28`).
 
 - 107 - `107_field_items_random_api_tm_slot_scope_plan.md`: Read-only plan for the `FVX-ITEM-002` API TM-slot blocker. Raw diagnostics find `tmFieldItemSlots=28`, but `Gen3RomHandler.getFieldItems()` exposes `0` TM slots because the Field-Items API filters on `Item::isAllowed`; next fix should be CFRU/DPE-gated and must not make TMs globally allowed.
+
+- 108 - `108_field_items_api_tm_slot_scope_fix.md`: UPR-FVX PR #37 prepares the CFRU/DPE Field-Items API TM-slot fix. `Gen3RomHandler.getFieldItems()` / `setFieldItems(...)` expose Field-TM slots in the CFRU/DPE gate without making TMs globally allowed; compile passed, reload smoke remains separate.
