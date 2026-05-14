@@ -24,10 +24,10 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Aktueller Branch | `compat/upr-fvx-cfru-dpe-p1-evolution-same-typing-nulltype-fix` |
-| Nächster Branch | Review/Merge der UPR-FVX- und Workspace-PRs fuer Diagnose 080 |
-| Aktueller Fokus | CFRU/DPE Evolution Same Typing Null-Type Fix |
-| ROM-/Build-Arbeit | lokale eng gegatete Evolution-Smokes ausgefuehrt; Artefakte blieben ignored und wurden nicht dokumentiert |
+| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-p1-evolution-similar-strength-mismatch-diagnostics` |
+| Nächster Branch | separater Test-/Diagnosebranch fuer `FVX-TRAIT-018` mit normalisiertem Reload-Vergleich |
+| Aktueller Fokus | CFRU/DPE Evolution Similar Strength Mismatch Diagnostics |
+| ROM-/Build-Arbeit | keine Randomizer-Laeufe; read-only Code-/Protokollanalyse |
 | Externe Repos | als Submodule auf Planton361-Forks eingebunden |
 | Forks | Planton361-Forks fuer UPR-FVX, DPE Gen9 und CFRU dokumentiert |
 | Installationen | devkitPro/devkitARM lokal dokumentiert; keine Installation in diesem Analyseblock |
@@ -138,18 +138,19 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | 08 Randomizer-Kompatibilität | CFRU/DPE Trainer Type Diversity Null-Type Fix | UPR-FVX `d89fc64e` und Diagnose 078 bestaetigen `FVX-FOE-009` mit Save/Log/Output/Reload true, `writeReloadTrainerPokemonMismatches=0`, `filterViolations=0`, `Bad Egg=false`, `<unknown>=false` und `stacktrace=none`; Trainer Similar Strength bleibt stabil |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Evolution Same Typing Code Diagnosis | Diagnose 079 grenzt die wahrscheinliche Ursache von `FVX-TRAIT-019` auf `to.hasSharedType(...)` im `EvolutionRandomizer` Same-Typing-Filter mit Null-Primary-Type-Kandidaten ein |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Evolution Same Typing Null-Type Fix | UPR-FVX `74d88a7a` und Diagnose 080 bestaetigen `FVX-TRAIT-019` mit Save/Log/Output/Reload true, `writeReloadEvolutionMismatches=0`, `<unknown>=false`, `exceptionClass=none` und `stacktrace=none`; `Bad Egg` bleibt nach 055 klassifiziert |
+| 08 Randomizer-Kompatibilität | CFRU/DPE Evolution Similar Strength Mismatch Diagnostics | Diagnose 081 grenzt `FVX-TRAIT-018` wahrscheinlich auf einen zu breiten Diagnosevergleich gegen nicht persistierte Forme-/Zusatzfelder ein; naechster Schritt ist ein normalisierter Diagnose-Smoke, kein sofortiger Fix |
 
 ## In Arbeit
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Evolution Same Typing Null-Type Fix | UPR-FVX- und Workspace-PRs fuer Diagnose 080 reviewen; Submodule-Pin nach Merge halten |
+| 08 Randomizer-Kompatibilität | Evolution Similar Strength Mismatch Diagnostics | PR fuer Diagnose 081 reviewen; danach separaten normalisierten `FVX-TRAIT-018` Diagnose-Smoke freigeben |
 
 ## Als Nächstes
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Weitere Evolution-Suboptionen getrennt fortsetzen | `FVX-TRAIT-018` und Evolution-Methoden-Writer separat halten; nicht mit TypeChart, MoveData, Palette, Items, Text/Menu oder Graphics vermischen |
+| 08 Randomizer-Kompatibilität | `FVX-TRAIT-018` Similar Strength normalisiert testen | Reload-Vergleich nur auf persistierte Gen3-Evolution-Felder und Ziel-Species per interner `SpeciesSet`-Identitaet; `Evolution.forme` nicht als Mismatch-Kriterium werten |
 
 ## Noch offen
 
@@ -243,7 +244,8 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | P1be | `analysis/upr-fvx-cfru-dpe-p1-trainer-type-diversity-code-diagnosis` | Trainer Type Diversity Code Diagnosis | erledigt; Diagnose 077 grenzt die wahrscheinliche Ursache auf Null-Primary-Type-Species im Force-Diverse-Types-/`EnumSet`-Pfad ein |
 | P1bf | `compat/upr-fvx-cfru-dpe-p1-trainer-type-diversity-nulltype-fix` | Trainer Type Diversity Null-Type Fix | aktueller Fixbranch; UPR-FVX `d89fc64e` und Diagnose 078 bestaetigen `FVX-FOE-009` im `FVX-FOE-001` Carrier |
 | P1bg | `analysis/upr-fvx-cfru-dpe-p1-evolution-same-typing-blocker-diagnostics` | Evolution Same Typing Code Diagnosis | erledigt; Diagnose 079 grenzt `FVX-TRAIT-019` auf Same-Typing-Null-Primary-Type-Kandidaten ein |
-| P1bh | `compat/upr-fvx-cfru-dpe-p1-evolution-same-typing-nulltype-fix` | Evolution Same Typing Null-Type Fix | aktueller Fixbranch; UPR-FVX `74d88a7a` und Diagnose 080 bestaetigen `FVX-TRAIT-019` im `FVX-TRAIT-016` Carrier |
+| P1bh | `compat/upr-fvx-cfru-dpe-p1-evolution-same-typing-nulltype-fix` | Evolution Same Typing Null-Type Fix | Review/Test; UPR-FVX `74d88a7a` und Diagnose 080 bestaetigen `FVX-TRAIT-019` im `FVX-TRAIT-016` Carrier |
+| P1bi | `analysis/upr-fvx-cfru-dpe-p1-evolution-similar-strength-mismatch-diagnostics` | Evolution Similar Strength Mismatch Diagnostics | aktueller Analysebranch; Diagnose 081 grenzt die 070-Mismatches wahrscheinlich auf Diagnosevergleich/Normalisierung statt harten Write-Fehler ein |
 | P2 | `randomizer/cfru-day-night-wild-table-analysis` | CFRU-Custom-Day/Night-Wild-Tabellen separat untersuchen | erst nach P1-Schreibpfad-Diagnose; Route-1-Fallback bleibt stabil |
 | P3 | noch festlegen | Nullslot-`<unknown>` mit `rawInternalSpeciesId=0` klassifizieren | nicht mit GenRestrictions vermischen |
 | P4 | noch festlegen | BizHawk-/Ironmon-Tracker-/RAM-Mapping pruefen | erst nach stabiler ROM-Randomizer-Kompatibilitaet |
