@@ -1,5 +1,27 @@
 # Session State
 
+## 2026-05-14 - CFRU/DPE Palette Randomization Preserve/Repoint Plan
+
+Workspace-Branch: `analysis/upr-fvx-cfru-dpe-palette-randomization-preserve-repoint-plan`
+
+UPR-FVX-Pin: `fad56f60d6fae9b006290a4d5fd1f0715f3d9dc3`
+
+Aktueller Stand:
+
+- Neues read-only Planprotokoll `08_tests/randomizer/091_palette_randomization_preserve_repoint_plan.md` erstellt.
+- Der Plan trennt bestehende Palette-Safety/Skip-Unchanged-Save von echter geaenderter `PokemonPalettesMod.RANDOM`-Randomization.
+- Relevante Codepfade: `GameRandomizer.maybeRandomizePokemonPalettes()`, `Settings.PokemonPalettesMod`, `RandomizerGUI`, `Gen3to5PaletteRandomizer`, `Gen3RomHandler.loadPokemonPalettes()`, `savePokemonPalettes()`, `rewriteCompressedPalette()` und `AbstractGBRomHandler.DataRewriter`.
+- Ergebnis: echte Palette-Randomization ist fuer CFRU/DPE ein komprimierter Repointing-/Shared-Pointer-Writer und noch nicht direkt fixbar.
+- Belegte Safety bleibt: missing/invalid Paletten defensiv laden/skippen und unveraenderte Paletten beim Save nicht neu schreiben.
+- Offene Risiken: compressed decode, FreeSpace/Repointing, Single-Pointer-Annahme, Shared-Palette-Pointer, fehlende/invalid Slots, Forme-/Alt-Species-Zuordnung und `pokedexToInternal`-Grafikpfad.
+- Empfehlung: vor jedem Fix eine read-only Palette-Pointer-/Compression-Diagnose fuer dekomprimierbare, single-owner, shared, missing und invalid Normal-/Shiny-Paletten.
+- `FVX-GFX-001`, `FVX-GFX-002`, `FVX-GFX-003` und `FVX-GFX-004` bleiben `Write modelliert`.
+- Keine Codeaenderung, keine Aenderung an `02_external/**`, keine Submodule-Pin-Aenderung, kein Build, kein Randomizer-Lauf und kein ROM-/Artefaktzugriff.
+
+Naechster sinnvoller Schritt:
+
+- `analysis/upr-fvx-cfru-dpe-palette-pointer-compression-diagnostics-plan`: read-only Diagnoseplan fuer Palette-Pointer-Eigentum, Dekomprimierbarkeit, Shared-Pointer, missing/invalid Slots und moegliche spaetere single-owner Write-Grenzen.
+
 ## 2026-05-14 - Post-Merge-Doku-Sync nach blockiertem Move Names Retry
 
 Workspace-Branch: `docs/post-merge-move-names-retry-blocked-sync`

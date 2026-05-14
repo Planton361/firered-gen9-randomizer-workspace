@@ -24,10 +24,10 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Aktueller Branch | `docs/post-merge-move-names-retry-blocked-sync` |
-| Nächster Branch | `analysis/upr-fvx-cfru-dpe-palette-randomization-preserve-repoint-plan` |
-| Aktueller Fokus | Post-Merge-Doku-Sync nach blockiertem Move Names Retry |
-| ROM-/Build-Arbeit | keine ROM-/Build-Arbeit; Diagnose 090 bleibt blockiert: 94 Kandidatendateien geprueft, kein freigegebener CFRU/DPE Gen9-BPRE-Kandidat mit `moves.total=992` und `991:PsychicNoise` |
+| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-palette-randomization-preserve-repoint-plan` |
+| Nächster Branch | `analysis/upr-fvx-cfru-dpe-palette-pointer-compression-diagnostics-plan` |
+| Aktueller Fokus | CFRU/DPE Palette Randomization Preserve/Repoint Plan |
+| ROM-/Build-Arbeit | keine ROM-/Build-Arbeit; read-only Planblock, keine Randomizer-Laeufe und keine Builds |
 | Externe Repos | als Submodule auf Planton361-Forks eingebunden |
 | Forks | Planton361-Forks fuer UPR-FVX, DPE Gen9 und CFRU dokumentiert |
 | Installationen | devkitPro/devkitARM lokal dokumentiert; keine Installation in diesem Analyseblock |
@@ -127,6 +127,7 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | 08 Randomizer-Kompatibilität | Move Names fixed-length Reload-Smoke Retry | Diagnose 090 dokumentiert den blockierten Retry-Preflight: `candidateFilesChecked=94`, `candidatePreflightSuccessful=false`, kein fachlicher Smoke; `FVX-MOVE-005` bleibt `Write modelliert` |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Field Items/Shops/Pickup-Modell | Diagnose 057 modelliert Field Items, Shops, Pickup und allgemeine Item-Randomization getrennt von Encounter Held Items; eigene Preserve-/Skip-Policy und Reload-Kriterien dokumentiert |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Palette-Randomization-Modell | Diagnose 058 trennt Palette-Safety/Skip-Unchanged-Save von echter geaenderter Palette-Randomization; compressed/shared/repointing risks, Preserve-/Skip-Policy, Reload-Kriterien und Graphics/P2-Abgrenzung dokumentiert |
+| 08 Randomizer-Kompatibilität | CFRU/DPE Palette Randomization Preserve/Repoint Plan | Diagnose 091 dokumentiert echte `PokemonPalettesMod.RANDOM`-Randomization als komprimierten Repointing-/Shared-Pointer-Writer; direkter Fix noch nicht eng genug, zuerst read-only Pointer-/Compression-Diagnose |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Type-Chart-Modell | Diagnose 059 trennt Pokemon-Type-Read/Write aus 051 von Type-Chart-/Effectiveness-Randomization; Fairy `0x17`, Stellar/unsupported `0x18`, TypeTable-Risiken, Preserve-/Skip-Policy und Reload-Kriterien dokumentiert |
 | 08 Randomizer-Kompatibilität | CFRU/DPE GUI-Suboptions-Regressionsmatrix | Diagnose 060 ordnet konkrete FVX-GUI-Hauptoptionen und Suboptionen konservativ nach P1-supported, wahrscheinlich supported, modelliert/open und out-of-scope ein |
 | 08 Randomizer-Kompatibilität | CFRU/DPE P1 Regression-Smoke-Plan | Diagnose 061 plant priorisierte Regression-Smoke-Gruppen aus 060 und der FVX Feature-Coverage-Matrix, ohne Testausfuehrung oder offene Writer zu vermischen |
@@ -154,7 +155,7 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Palette Randomization Preserve/Repoint Plan | naechster Branch `analysis/upr-fvx-cfru-dpe-palette-randomization-preserve-repoint-plan`; echten Palette-Randomization-Scope read-only planen, getrennt von MoveData, Move Names, Items, TypeChart, Trainer, Wild, Evolutions, Text/Menu und Graphics-Umsetzung |
+| 08 Randomizer-Kompatibilität | Palette Pointer / Compression Diagnostics Plan | naechster Branch `analysis/upr-fvx-cfru-dpe-palette-pointer-compression-diagnostics-plan`; read-only klaeren, welche Normal-/Shiny-Paletten dekomprimierbar, single-owner, shared, missing oder invalid sind |
 
 ## Als Nächstes
 

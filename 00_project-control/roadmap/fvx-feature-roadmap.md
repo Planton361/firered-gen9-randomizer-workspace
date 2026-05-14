@@ -34,7 +34,7 @@ Die detaillierte Status- und Feature-ID-Matrix bleibt in:
 | TM/HMs & Tutors | 15 | Gemischt | TM/Tutor-Tabellen halten; Preserve-/Filter-/Follow-Evolution-Suboptionen testen |
 | Items | 10 | Write modelliert | Field Items, Shops und Pickup als getrennte Writer implementieren/testen |
 | Types | 3 | Getestet | TypeEffectiveness Random, Balanced, Keep Type Identities, Inverse, Add Immunities und Update Type Effectiveness sind einzeln im TypeChart-Scope getestet |
-| Graphics | 6 | Gemischt | Palette-Randomization absichern; Custom Player Graphics separat modellieren |
+| Graphics | 6 | Gemischt | Diagnose 091 plant Palette-Randomization als compressed/shared/repointing Scope; vor Fix zuerst Palette-Pointer-/Compression-Diagnose, Custom Player Graphics separat modellieren |
 | Misc Tweaks | 12 | Nicht begonnen | jeden Misc-Tweak als eigenen Patch-/Risk-Scope inventarisieren |
 | GUI-Suboptions-Regressionsmatrix | n/a | Erledigt | vorhandene Diagnose 060 als technische Regressionssicht nutzen |
 | Regression-Smoke-Plan | n/a | In Arbeit | konkrete Smoke-/Regression-Laeufe aus Feature-IDs ableiten und sanitisiert dokumentieren |
@@ -63,8 +63,9 @@ Die detaillierte Status- und Feature-ID-Matrix bleibt in:
 | P1.2d | `analysis/upr-fvx-cfru-dpe-move-names-text-menu-scope-plan` | Moves & Movesets | erledigt: Diagnose 088 klassifiziert `FVX-MOVE-005` als getrennten Text/Menu-Scope; Name-only fixed-length Smoke ist realistisch, Move Descriptions / Text/Menu-Repointing bleibt zurueckgestellt |
 | P1.2e | `test/upr-fvx-cfru-dpe-move-names-fixed-length-reload-smoke` | Moves & Movesets | blockiert: Diagnose 089 fand keinen freigegebenen lokalen CFRU/DPE Gen9-BPRE-Kandidaten mit `moves.total=992` und `991:PsychicNoise`; `FVX-MOVE-005` bleibt `Write modelliert` |
 | P1.2f | `test/upr-fvx-cfru-dpe-move-names-fixed-length-reload-smoke-retry` | Moves & Movesets | abgeschlossen/blockiert: Workspace PR #133 ist gemerged; Diagnose 090 wiederholte den Candidate-Preflight sanitisiert, `candidateFilesChecked=94`, `candidatePreflightSuccessful=false`; kein fachlicher Name-only Smoke, keine Feature-Hochstufung |
-| P1.3 | `analysis/upr-fvx-cfru-dpe-palette-randomization-preserve-repoint-plan` | Graphics | naechster P1-Block: echte geaenderte Palette-Randomization mit compressed/shared/repointing Risiken zunaechst read-only planen; kein Fix und kein Smoke im Planblock |
-| P1.3a | `compat/upr-fvx-cfru-dpe-palette-randomization-preserve-repoint` | Graphics | spaeterer Fix/Smoke nur nach Planfreigabe: echte geaenderte Palette-Randomization mit compressed/shared/repointing Reload-Kriterien absichern |
+| P1.3 | `analysis/upr-fvx-cfru-dpe-palette-randomization-preserve-repoint-plan` | Graphics | erledigt: Diagnose 091 trennt Safety von echter Palette-Randomization und empfiehlt vor Fix eine read-only Pointer-/Compression-Diagnose |
+| P1.3a | `analysis/upr-fvx-cfru-dpe-palette-pointer-compression-diagnostics-plan` | Graphics | naechster Schritt: Normal-/Shiny-Palette-Pointer read-only nach dekomprimierbar, single-owner, shared, missing und invalid klassifizieren |
+| P1.3b | `compat/upr-fvx-cfru-dpe-palette-randomization-preserve-repoint` | Graphics | spaeterer Fix/Smoke nur nach Diagnose: entweder nur single-owner/dekomprimierbare Paletten schreiben oder vollstaendige Secondary-Pointer-/Shared-Pointer-Policy liefern |
 | P1.4 | `compat/upr-fvx-cfru-dpe-field-items-shops-pickup-scope-and-write` | Items | Field Items, Shops und Pickup mit getrennten Reload-Kriterien absichern |
 
 ### P2 - Suboptionen der bereits GUI-kompatiblen Pakete
