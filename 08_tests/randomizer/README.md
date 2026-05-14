@@ -2,9 +2,9 @@
 
 ## Latest
 
-- `074_p1_wild_filter_carrier_code_diagnosis.md` dokumentiert read-only die konkrete Code-/Protokollanalyse fuer die 070-Wild-Blocker.
-- Wahrscheinlich konkrete Ursache: `GAME`-Wild-Mapping baut `areaInformationMap` aus `SpeciesSet`, das `null`-Species ignoriert; ein weiter iterierter Null-/unaufloesbarer Encounter-Slot trifft danach `setupAllowedForReplacementUsingInfoMap()` und `IllegalStateException`.
-- `FVX-WILD-011` und `FVX-WILD-004` treffen wahrscheinlich denselben InfoMap-/Nullslot-Pfad, bevor BST- oder Type-Filter fachlich greifen.
+- `075_wild_filter_carrier_nullslot_fix_diagnostics.md` dokumentiert den UPR-FVX-Fix fuer den Wild-Filter-Carrier-Nullslot-Scope aus 074.
+- `FVX-WILD-011` Wild Similar Strength und `FVX-WILD-004` Wild Type Restrictions / Type Themes / Keep Primary wurden einzeln lokal sanitisiert bestaetigt.
+- Beide Slices melden Save/Log/Output/Reload true, `writeReloadWildPokemonMismatches=0`, `Bad Egg=false`, `<unknown>=false` und `stacktrace=none`; `FVX-WILD-004` meldet `filterViolations=0`.
 - TypeChart/TypeEffectiveness, MoveData, Palette, Items, Encounter Held Items, custom Day/Night-Wild, Catch Em All, Minimum Catch Rate, Level-Modifier, Text/Menu/Graphics und offene Writer bleiben ausgeschlossen.
 
 Dieses Verzeichnis enthaelt die dauerhaften Markdown-Protokolle fuer UPR-FVX/CFRU-DPE-Randomizer-Analysen und Smokes. Lokale ROM-, Build-, Log- und Tool-Artefakte bleiben unter `05_builds/**` oder `03_tools/releases/**` und werden nicht committed.
@@ -108,19 +108,20 @@ Der neueste bestaetigte Stand wird in Markdown ueber die Spalte `Latest` markier
 | 071 | `071_p1_070_blocked_slices_followup_plan.md` | CFRU/DPE P1 070 Blocked Slices Follow-up Plan | dokumentiert: read-only Folgeanalyse-Plan fuer blockierte 070-Slices, getrennt nach Wild-Carrier-/Placeholder-Scope, Trainer-Type-Diversity, Evolution-Reload-/Bad-Egg-Scope und Evolution-Same-Typing-/Null-Scope; keine Ausfuehrung | keiner, read-only Analyse | nein |
 | 072 | `072_p1_wild_070_blockers_diagnostics_plan.md` | CFRU/DPE P1 Wild 070 Blockers Diagnostics Plan | dokumentiert: read-only Diagnoseplan fuer `FVX-WILD-011` und `FVX-WILD-004` im `FVX-WILD-001` Standard/Fallback-Wild-Carrier, getrennt nach BST-/Species-Pool-Filter, Species-Type-Filter und Wild-Nullslot-/Placeholder-Scope; keine Ausfuehrung | keiner, read-only Analyse | nein |
 | 073 | `073_p1_wild_filter_carrier_diagnostics_plan.md` | CFRU/DPE P1 Wild Filter Carrier Diagnostics Plan | dokumentiert: read-only Diagnose-/Harness-Plan fuer den Wild-Filter-Carrier aus 072; trennt Carrier-Scope, Area-/Encounter-Slot-Scope, BST-/Species-Pool-Filter und Species-Type-Filter; keine Ausfuehrung | keiner, read-only Analyse | nein |
-| 074 | `074_p1_wild_filter_carrier_code_diagnosis.md` | CFRU/DPE P1 Wild Filter Carrier Code Diagnosis | dokumentiert: read-only Codeanalyse fuer `FVX-WILD-011` und `FVX-WILD-004`; wahrscheinliche Ursache ist ein `GAME`-Mapping-/InfoMap-Nullslot-Pfad vor BST-/Type-Filterauswahl; keine Ausfuehrung | keiner, read-only Analyse | ja |
+| 074 | `074_p1_wild_filter_carrier_code_diagnosis.md` | CFRU/DPE P1 Wild Filter Carrier Code Diagnosis | dokumentiert: read-only Codeanalyse fuer `FVX-WILD-011` und `FVX-WILD-004`; wahrscheinliche Ursache ist ein `GAME`-Mapping-/InfoMap-Nullslot-Pfad vor BST-/Type-Filterauswahl; keine Ausfuehrung | keiner, read-only Analyse | nein |
+| 075 | `075_wild_filter_carrier_nullslot_fix_diagnostics.md` | CFRU/DPE Wild Filter Carrier Nullslot Fix Diagnostics | bestaetigt: UPR-FVX-Fix fuer WildEncounterRandomizer Mapping-/InfoMap-Nullslot-Scope; `FVX-WILD-011` und `FVX-WILD-004` jeweils mit Save/Log/Output/Reload true, `writeReloadWildPokemonMismatches=0`, `Bad Egg=false`, `<unknown>=false` und `stacktrace=none` | lokal/ignored, nicht dokumentiert | ja |
 
 ## Aktuell bestaetigter Stand
 
-Latest ist Nr. 074: CFRU/DPE P1 Wild Filter Carrier Code Diagnosis.
+Latest ist Nr. 075: CFRU/DPE Wild Filter Carrier Nullslot Fix Diagnostics.
 
 Kernaussagen:
 
-- 074 ist eine konkrete read-only Codeanalyse, kein weiterer reiner Plan und kein Randomizer-Lauf.
-- `FVX-WILD-011` und `FVX-WILD-004` verwenden beide `wildPokemonZoneMod=GAME` und treffen wahrscheinlich denselben Mapping-/InfoMap-Pfad.
-- Wahrscheinlich konkrete Ursache: `EncounterArea.getSpeciesInArea()` baut einen `SpeciesSet`; `SpeciesSet.add(...)` ignoriert `null`; der urspruengliche Encounter-Slot bleibt aber in `randomizeArea()` erhalten und fuehrt in `setupAllowedForReplacementUsingInfoMap()` zur `IllegalStateException`.
-- BST-/Similar-Strength- und Type-Filter sind wahrscheinlich nachgelagerte Risiken, aber nicht die primaere 070-Exception-Stelle.
-- Ein eng gegateter Fixbranch fuer Wild-Mapping-/Nullslot-Scope ist sinnvoll; ein weiterer lokaler Diagnose-Lauf ist nur optional, falls Area-/Slot- oder Exception-Message vorab sanitisiert bestaetigt werden sollen.
+- UPR-FVX behandelt null/unaufloesbare Wild-Encounter-Slots im WildEncounterRandomizer-Mapping-/InfoMap-Pfad defensiv, bevor sie als Mapping-Anker in die Filterlogik laufen.
+- `FVX-WILD-011` Wild Similar Strength ist im `FVX-WILD-001` Carrier nach dem Fix save-/log-/reload-stabil.
+- `FVX-WILD-004` Wild Type Restrictions / Type Themes / Keep Primary ist im `FVX-WILD-001` Carrier nach dem Fix save-/log-/reload-stabil und meldet `filterViolations=0`.
+- Beide Slices melden `writeReloadWildPokemonMismatches=0`, `Bad Egg=false`, `<unknown>=false` und `stacktrace=none`.
+- Die lokalen Fix-Smokes beobachteten keine Nullslots im Teststand; der Codefix bleibt trotzdem auf den in 074 identifizierten defensiven Null-/unaufloesbar-Scope begrenzt.
 - TypeChart/TypeEffectiveness aus 068, MoveData, Palette, Items, Encounter Held Items, custom Day/Night-Wild, Catch Em All, Minimum Catch Rate, Level-Modifier, Text/Menu/Graphics und offene Writer bleiben ausgeschlossen.
 
 ## Lokale Artefaktpflege

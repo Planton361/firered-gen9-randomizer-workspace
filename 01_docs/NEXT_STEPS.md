@@ -2,42 +2,35 @@
 
 ## Aktueller Fokus
 
-CFRU/DPE Wild-Filter-Carrier-Codeanalyse ist read-only dokumentiert. Diagnoseprotokoll: `08_tests/randomizer/074_p1_wild_filter_carrier_code_diagnosis.md`.
+CFRU/DPE Wild-Filter-Carrier-Nullslot-Fix ist umgesetzt und sanitisiert dokumentiert. Diagnoseprotokoll: `08_tests/randomizer/075_wild_filter_carrier_nullslot_fix_diagnostics.md`.
 
 ## Priorisierte naechste Arbeitsbloecke
 
-1. PR fuer `analysis/upr-fvx-cfru-dpe-p1-wild-filter-carrier-code-diagnosis`
-   - Read-only Codeanalyse 074 reviewen und mergen.
+1. PRs fuer Wild-Filter-Carrier-Nullslot-Fix reviewen
+   - UPR-FVX: `compat/upr-fvx-cfru-dpe-p1-wild-filter-carrier-nullslot-fix`.
+   - Workspace: `compat/upr-fvx-cfru-dpe-p1-wild-filter-carrier-nullslot-fix`.
+   - Diagnose 075 und Submodule-Pin reviewen und mergen.
 
-2. Eng gegateter Fixbranch fuer Wild-Mapping-/Nullslot-Scope
-   - Ausgangspunkt: 074 grenzt die wahrscheinliche Ursache auf `WildEncounterRandomizer` GAME-Mapping, `areaInformationMap`, `EncounterArea.getSpeciesInArea()` und `SpeciesSet.add(null)` ein.
-   - Ziel: `FVX-WILD-011` und `FVX-WILD-004` duerfen nicht mehr an einem nicht aufloesbaren/null Wild-Encounter-Slot mit `IllegalStateException` abbrechen.
+2. Nach Merge: restliche 070-Blocker getrennt fortsetzen
+   - `FVX-FOE-009` Trainer Type Diversity / Type Themes gegen Trainer-Type-Diversity-/Null-Type-Scope.
+   - `FVX-TRAIT-018` Evolutions Similar Strength gegen Evolution-Reload-Mismatches, `Bad Egg` und BST-basierte Zielauswahl.
+   - `FVX-TRAIT-019` Evolutions Same Typing gegen Evolution-Same-Typing-/Null-Scope.
    - Weiter ohne TypeChart, MoveData Write, Palette, Items, Encounter Held Items, custom Day/Night-Wild, Catch Em All, Minimum Catch Rate, Level-Modifier oder Text/Menu/Graphics.
 
-3. Optional vor dem Fix: separater lokaler Wild-Carrier-Diagnosebranch
-   - Nur falls ein sanitisiert belegter Area-/Slot- oder Exception-Message-Nachweis vor Fixfreigabe gewuenscht ist.
-   - Keine ROM-/Log-/Output-/Build-Pfade, ROM-Namen, Hashes oder Loginhalte dokumentieren; keine Fixumsetzung in diesem optionalen Diagnosebranch.
+3. Wild-Suboptionen konservativ halten
+   - `FVX-WILD-011` und `FVX-WILD-004` sind im `FVX-WILD-001` Carrier-Fix-Smoke stabil.
+   - Evolution Restrictions, Catch Em All, Minimum Catch Rate und Level-Balance bleiben getrennte Wild-Scope-Themen.
 
-4. Nach Fix: zwei getrennte Sanitized Smokes
-   - `FVX-WILD-011` Wild Similar Strength.
-   - `FVX-WILD-004` Wild Type Restrictions / Type Themes / Keep Primary.
-   - Erfolgskriterien: Save/Log/Output/Reload true, `writeReloadWildPokemonMismatches=0`, `Bad Egg`/`<unknown>` nach 055 klassifiziert und `stacktrace=none`.
-
-5. Danach getrennte Diagnosebloecke fuer die restlichen 070-Blocker
-   - `FVX-FOE-009` gegen Trainer-Type-Diversity-/Null-Type-Scope.
-   - `FVX-TRAIT-018` gegen Evolution-Reload-Mismatches, `Bad Egg` und BST-basierte Zielauswahl.
-   - `FVX-TRAIT-019` gegen Evolution-Same-Typing-/Null-Scope.
-
-6. Spaetere TypeEffectiveness-Kombinationen nur bei Bedarf
+4. Spaetere TypeEffectiveness-Kombinationen nur bei Bedarf
    - Nicht mit MoveData, Palette, Items, Graphics, Text/Menu oder Species-Type-Write vermischen.
 
-7. `compat/upr-fvx-cfru-dpe-move-data-write-preserve`
+5. `compat/upr-fvx-cfru-dpe-move-data-write-preserve`
    - Nur nach separater Freigabe: eng gegateten MoveData-Writer mit Preserve-Policy und Reload-Diagnose umsetzen.
 
-8. `compat/upr-fvx-cfru-dpe-palette-randomization-preserve-repoint`
+6. `compat/upr-fvx-cfru-dpe-palette-randomization-preserve-repoint`
    - Nur nach separater Freigabe: echte geaenderte Palette-Randomization mit compressed/shared/repointing Reload-Kriterien absichern.
 
-9. `compat/upr-fvx-cfru-dpe-field-items-shops-pickup-scope-and-write`
+7. `compat/upr-fvx-cfru-dpe-field-items-shops-pickup-scope-and-write`
    - Nur nach separater Freigabe: Field Items, Shops und Pickup mit getrennten Reload-Kriterien absichern.
 
 ## Sicherheitsgrenzen
