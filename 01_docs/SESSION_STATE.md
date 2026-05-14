@@ -1,5 +1,24 @@
 # Session State
 
+## 2026-05-14 - CFRU/DPE Global Species Pool Regression-Smoke Results
+
+Arbeitsbranch: `test/upr-fvx-cfru-dpe-p1-global-species-pool-regression-smoke`
+
+Aktueller Stand:
+
+- Neues Ergebnisprotokoll `08_tests/randomizer/064_p1_global_species_pool_regression_smoke_results.md` erstellt.
+- Die lokal ausgefuehrten 062-Slices wurden sanitisiert dokumentiert: Baseline Carrier, `FVX-GEN-001` Generation Limits, `FVX-GEN-001` related Pokemon und `FVX-GEN-002` No Premature Evolutions.
+- Alle vier Slices melden Save/Log/Reload true, `Starter-Mismatches=0` und `stacktrace=none`.
+- `Bad Egg` und `<unknown>` traten in den Slice-Logs nicht auf.
+- Aktiv war nur `FVX-SST-002` als Starter-Species-Carrier plus jeweiliger Poolfilter.
+- Held Items, MoveData-Write, Palette-Randomization, TypeChart, Evolution-Methoden-Fixes und Intro/Race Mode blieben aus.
+- `FVX-GEN-001` und `FVX-GEN-002` wurden konservativ als getestet im Starter-Carrier-Smoke dokumentiert, nicht als globale Vollabdeckung fuer Wild-/Trainer-/Evolution-Kombinationen.
+- Keine Codeaenderung, keine Aenderung an `02_external/**`, keine neuen Randomizer-Laeufe im Dokumentationsblock, kein Tool-Manifest-Update.
+
+Naechster sinnvoller Schritt:
+
+- `test/upr-fvx-cfru-dpe-p1-starters-suboptions-regression-smoke`: die in 063 geplanten Starter-Suboptions-Slices lokal ausfuehren, weiter ohne Starter Held Items und ohne offene Writer.
+
 ## 2026-05-14 - CFRU/DPE Starters Suboptions Regression-Smoke-Plan
 
 Arbeitsbranch: `analysis/upr-fvx-cfru-dpe-p1-starters-suboptions-regression-smoke`

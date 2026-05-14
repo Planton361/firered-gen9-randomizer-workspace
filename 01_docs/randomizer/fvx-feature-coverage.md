@@ -30,10 +30,10 @@ Sie ist die detaillierte Requirements-/Coverage-Ebene. Die Roadmap bleibt bewuss
 | Status | Anzahl |
 |---|---:|
 | Nicht begonnen | 40 |
-| Plan erstellt | 35 |
+| Plan erstellt | 33 |
 | Read modelliert | 0 |
 | Write modelliert | 23 |
-| Getestet | 0 |
+| Getestet | 2 |
 | GUI-kompatibel | 32 |
 | In Arbeit | 0 |
 | **Gesamt** | **130** |
@@ -42,7 +42,7 @@ Sie ist die detaillierte Requirements-/Coverage-Ebene. Die Roadmap bleibt bewuss
 
 | GUI-Tab | Features | Nicht begonnen | Plan erstellt | Read modelliert | Write modelliert | Getestet | GUI-kompatibel | In Arbeit |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
-| General Options | 4 | 2 | 2 | 0 | 0 | 0 | 0 | 0 |
+| General Options | 4 | 2 | 0 | 0 | 0 | 2 | 0 | 0 |
 | Pokemon Traits | 28 | 7 | 17 | 0 | 0 | 0 | 4 | 0 |
 | Starters, Statics & Trades | 15 | 6 | 2 | 0 | 0 | 0 | 7 | 0 |
 | Moves & Movesets | 11 | 0 | 3 | 0 | 6 | 0 | 2 | 0 |
@@ -58,8 +58,8 @@ Sie ist die detaillierte Requirements-/Coverage-Ebene. Die Roadmap bleibt bewuss
 
 ### General Options
 
-- FVX-GEN-001 | Limit Pokemon | Plan erstellt
-- FVX-GEN-002 | No Premature Evolutions | Plan erstellt
+- FVX-GEN-001 | Limit Pokemon | Getestet
+- FVX-GEN-002 | No Premature Evolutions | Getestet
 - FVX-GEN-003 | No Random Intro Mon | Nicht begonnen
 - FVX-GEN-004 | Race Mode | Nicht begonnen
 
@@ -246,6 +246,7 @@ Diese Matrix soll nicht als 130 Roadmap-Zeilen gepflegt werden. Fuer die Roadmap
 - `08_tests/randomizer/058_p1_palette_randomization_model.md` modelliert echte Palette-Randomization getrennt von Palette-Safety.
 - `08_tests/randomizer/059_p1_type_chart_model.md` modelliert Type-Chart-/Effectiveness-Randomization.
 - `08_tests/randomizer/060_p1_gui_suboptions_regression_matrix.md` konsolidiert GUI-Suboptionen und empfiehlt einen Regression-Smoke-Plan.
+- `08_tests/randomizer/064_p1_global_species_pool_regression_smoke_results.md` bestaetigt `FVX-GEN-001` und `FVX-GEN-002` im getesteten `FVX-SST-002`-Starter-Carrier-Smoke; das ist keine globale Vollabdeckung fuer Wild-/Trainer-/Evolution-Kombinationen.
 
 ## Pflege-Regeln
 
