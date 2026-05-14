@@ -38,7 +38,22 @@ Sie ist die detaillierte Requirements-/Coverage-Ebene. Die Roadmap bleibt bewuss
 | In Arbeit | 0 |
 | **Gesamt** | **130** |
 
-## Aktueller Hinweis zu 085
+## Aktueller Hinweis zu 086
+
+Diagnose 086 dokumentiert den engen MoveData Types Reload-Smoke fuer `FVX-MOVE-004`:
+
+- UPR-FVX `bb5ee11978e38839979e654ff1c14ba60a0cde93` erreicht fuer `Randomize Move Types` `saveSuccessful=true`, `logSuccessful=true`, `outputRomExists=true`, `logNonEmpty=true` und erfolgreichen Reload.
+- `moves.total=992` und `991:PsychicNoise` bleiben nach Reload stabil.
+- Der Smoke ist blockiert: `writeReloadMoveDataMismatches=54`, `typeReloadMismatches=54`, `expectedFairyMoves=54`, `fairyReloadMismatches=54`, `cfruDpeTypeByteMismatches=54`.
+- `typeByteMismatches=0` beschreibt nur die Uebereinstimmung mit der aktuellen FVX-Writer-Mappingfunktion.
+- Die aktuelle Gen3-MoveData-Type-Mappingfunktion schreibt `FAIRY` im MoveData-Pfad faktisch als Fallback `0x00`; fuer den getesteten CFRU/DPE Gen9-BPRE-Stand muss `FAIRY` im sicheren MoveData-Gate als raw `0x17` geschrieben werden.
+- Preserve-Bytes `+5`, `+6`, `+7`, `+8`, `+9` und `+11` bleiben bytegleich: `preserveByteMismatchesAllMoves=0`, `preserveByteMismatchesUnchangedMoves=0`.
+- `FVX-MOVE-004` bleibt deshalb `Write modelliert`.
+- Der Folgefix darf nicht mit TypeChart, TypeEffectiveness oder Species-Type-Write vermischt werden.
+- `FVX-MOVE-001`, `FVX-MOVE-002`, `FVX-MOVE-003` und `FVX-MOVE-006` bleiben GUI-kompatibel.
+- `FVX-MOVE-005` Move Names bleibt ausserhalb dieses Writer-Preserve-Smokes.
+
+## Vorheriger Hinweis zu 085
 
 Diagnose 085 bestaetigt den engen MoveData Power/Accuracy/PP Reload-Smoke:
 
