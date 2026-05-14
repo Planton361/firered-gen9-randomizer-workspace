@@ -1,5 +1,26 @@
 # Session State
 
+## 2026-05-14 - CFRU/DPE MoveData Write Preserve Reload-Smoke
+
+Workspace-Branch: `test/upr-fvx-cfru-dpe-move-data-write-preserve-reload-smoke`
+
+UPR-FVX-Pin: `bb5ee11978e38839979e654ff1c14ba60a0cde93`
+
+Aktueller Stand:
+
+- Neuer sanitiserter Ergebnisbericht `08_tests/randomizer/084_move_data_write_preserve_reload_smoke.md` erstellt.
+- Der Smoke blieb eng auf MoveData / Update Moves und Preserve-Verhalten begrenzt.
+- Ergebnis: `saveSuccessful=true`, `logSuccessful=true`, `outputRomExists=true`, `logNonEmpty=true`, Reload erfolgreich, `writeReloadMoveDataMismatches=0`, `moves.total=992`, hoechster Move `991:PsychicNoise`, `categorySplitMismatches=0`, `categoryReloadMismatches=0`, `preserveByteMismatchesUnchangedMoves=0`, `exceptionClass=none` und `stacktrace=none`.
+- Der Harness erzwang genau eine Category-Aenderung, weil `Update Moves` in diesem Stand keine Category-Aenderung erzeugte; damit wurde der CFRU/DPE-`BattleMove.split`-Write bei Byte `+10` konkret geprueft.
+- Preserve-Bytes `+5`, `+6`, `+7`, `+8`, `+9` und `+11` blieben fuer unveraenderte Moves bytegleich.
+- Lokale ROM-/Output-/Log-Artefakte blieben ignored unter `05_builds/**`; private Pfade, ROM-Namen, Hashes, Logs und Output-ROMs wurden nicht dokumentiert.
+- Keine Aenderung an `02_external/upr-fvx`; der Submodule-Pin bleibt `bb5ee11978e38839979e654ff1c14ba60a0cde93`.
+- Keine Palette-, Item-, Field-/Shop-/Pickup-, TypeChart-/TypeEffectiveness-, Trainer-, Wild-, Evolution-, Text/Menu-, Graphics-, TM/HM-, Tutor-, Egg- oder Learnset-Write-Aenderung.
+
+Naechster sinnvoller Schritt:
+
+- PR fuer Diagnose 084 reviewen und mergen. Danach MoveData-Power/Accuracy/PP/Types-Suboptionen nur bei Bedarf separat GUI-nah smoken; Move Names/Descriptions bleiben ausserhalb dieses Writer-Preserve-Scopes.
+
 ## 2026-05-14 - CFRU/DPE MoveData Write Preserve Fix
 
 Workspace-Branch: `compat/upr-fvx-cfru-dpe-move-data-write-preserve`
