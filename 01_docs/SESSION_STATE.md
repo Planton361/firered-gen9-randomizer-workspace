@@ -1,5 +1,26 @@
 # Session State
 
+## 2026-05-14 - CFRU/DPE TypeEffectiveness Follow-up Smoke Results
+
+Arbeitsbranch: `test/upr-fvx-cfru-dpe-p1-type-effectiveness-followup-smokes`
+
+Aktueller Stand:
+
+- Neues Ergebnisprotokoll `08_tests/randomizer/068_type_effectiveness_followup_smoke_results.md` erstellt.
+- Die in 067 geplanten TypeEffectiveness-Folgesmokes wurden einzeln lokal ausgefuehrt und sanitisiert dokumentiert: `FVX-TYPE-001` Balanced, Keep Type Identities und Inverse, `FVX-TYPE-002` Add Random Immunities sowie `FVX-TYPE-003` Update Type Effectiveness.
+- Alle fuenf Slices melden `saveSuccessful=true`, `logSuccessful=true`, `outputRomExists=true`, `logNonEmpty=true`, Reload erfolgreich, `writeReloadTypeChartMismatches=0` und `stacktrace=none`.
+- Foresight- und Endtable-Terminatoren blieben in allen Slices erhalten.
+- Unsupported/Stellar wurde in keinem Slice eingefuehrt oder still normalisiert.
+- `Bad Egg=false` und `<unknown>=false` in allen Slice-Logs.
+- Balanced erzeugte Fairy-Rohtriplets und reloadete sie als raw `0x17`; Keep Type Identities, Inverse, Add Random Immunities und Update Type Effectiveness erzeugten keine Fairy-Rohtriplets und kein Fehlmapping.
+- `FVX-TYPE-002` Add Random Immunities wurde getrennt als eigener Risikopunkt getestet.
+- Keine Codeaenderung, keine Aenderung an `02_external/**`, kein Tool-Manifest-Update.
+- Lokale ROM-, Log-, Output-ROM-, Build- und Diagnoseartefakte blieben ignored und werden nicht committed.
+
+Naechster sinnvoller Schritt:
+
+- PR fuer `test/upr-fvx-cfru-dpe-p1-type-effectiveness-followup-smokes` reviewen und mergen; danach zu `analysis/upr-fvx-cfru-dpe-p1-similar-strength-same-type-regression-smoke` zurueckkehren oder einen offenen Writer separat freigeben.
+
 ## 2026-05-14 - CFRU/DPE TypeEffectiveness Follow-up Smoke Plan
 
 Arbeitsbranch: `analysis/upr-fvx-cfru-dpe-p1-type-effectiveness-followup-smokes`

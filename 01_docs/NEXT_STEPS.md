@@ -2,18 +2,18 @@
 
 ## Aktueller Fokus
 
-CFRU/DPE TypeEffectiveness-Folgesmoke-Plan ist read-only dokumentiert. Planprotokoll: `08_tests/randomizer/067_type_effectiveness_followup_smoke_plan.md`.
+CFRU/DPE TypeEffectiveness-Folgesmokes sind einzeln lokal ausgefuehrt und sanitisiert dokumentiert. Ergebnisprotokoll: `08_tests/randomizer/068_type_effectiveness_followup_smoke_results.md`.
 
 ## Priorisierte naechste Arbeitsbloecke
 
-1. PR fuer `analysis/upr-fvx-cfru-dpe-p1-type-effectiveness-followup-smokes`
-   - Read-only Plan fuer Balanced, Keep Type Identities, Inverse, Add Random Immunities und Update Type Effectiveness reviewen und mergen.
+1. PR fuer `test/upr-fvx-cfru-dpe-p1-type-effectiveness-followup-smokes`
+   - Ergebnisse fuer Balanced, Keep Type Identities, Inverse, Add Random Immunities und Update Type Effectiveness reviewen und mergen.
 
 2. `analysis/upr-fvx-cfru-dpe-p1-similar-strength-same-type-regression-smoke`
    - BST-/Type-basierte Pooling-Suboptionen pruefen, ohne TypeChart oder MoveData-Write zu aktivieren.
 
-3. Spaeterer TypeEffectiveness-Folgesmoke-Testbranch
-   - `FVX-TYPE-001` Balanced, Keep Type Identities und Inverse, `FVX-TYPE-002` Add Random Immunities sowie `FVX-TYPE-003` Update Type Effectiveness einzeln ausfuehren und sanitisiert dokumentieren.
+3. Spaetere TypeEffectiveness-Kombinationen nur bei Bedarf
+   - Nicht mit MoveData, Palette, Items, Graphics, Text/Menu oder Species-Type-Write vermischen.
 
 4. `compat/upr-fvx-cfru-dpe-move-data-write-preserve`
    - Nur nach separater Freigabe: eng gegateten MoveData-Writer mit Preserve-Policy und Reload-Diagnose umsetzen.
