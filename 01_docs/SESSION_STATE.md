@@ -1,5 +1,25 @@
 # Session State
 
+## 2026-05-14 - CFRU/DPE 070 Blocked Slices Follow-up Plan
+
+Arbeitsbranch: `analysis/upr-fvx-cfru-dpe-p1-070-blocked-slices-followup-plan`
+
+Aktueller Stand:
+
+- Neues read-only Planprotokoll `08_tests/randomizer/071_p1_070_blocked_slices_followup_plan.md` erstellt.
+- 071 plant die Folgeanalyse fuer die in 070 blockierten Similar Strength / Same Type / Type Themes Slices, ohne Codeaenderung, Fix oder Randomizer-Laeufe.
+- `FVX-WILD-011` Wild Similar Strength und `FVX-WILD-004` Wild Type Restrictions / Type Themes / Keep Primary werden gemeinsam als Wild-Carrier-/Placeholder-Scope modelliert, weil beide `FVX-WILD-001` Carrier und `IllegalStateException` teilen.
+- `FVX-FOE-009` Trainer Type Diversity / Type Themes bleibt ein eigener Trainer-Type-Diversity-/Null-Type-Scope.
+- `FVX-TRAIT-018` Evolutions Similar Strength bleibt ein eigener Evolution-Reload-/Bad-Egg-Scope; `Bad Egg` kann dort nicht als reine 055-Log-Hygiene freigegeben werden, solange `writeReloadEvolutionMismatches` ungleich `0` ist.
+- `FVX-TRAIT-019` Evolutions Same Typing bleibt ein eigener Evolution-Same-Typing-/Null-Scope.
+- Spaetere Diagnosemetriken, Sanitizing-Regeln und Stop-Regeln sind dokumentiert; keine Diagnosewerte wurden erfunden.
+- TypeChart/TypeEffectiveness, MoveData Write, Palette, Items/Field/Shops/Pickup, Graphics/Sprites, Text/Menu, Level Modifier und Evolution-Methoden-Writer bleiben ausgeschlossen.
+- Keine Aenderung an `02_external/**`, kein Tool-Manifest-Update.
+
+Naechster sinnvoller Schritt:
+
+- Separater read-only Diagnoseplan oder Diagnosebranch fuer Wild Similar Strength + Wild Type Restrictions, ohne offene Writer und ohne Fixarbeit.
+
 ## 2026-05-14 - CFRU/DPE Similar Strength / Same Type Regression-Smoke Results
 
 Arbeitsbranch: `test/upr-fvx-cfru-dpe-p1-similar-strength-same-type-regression-smoke`
