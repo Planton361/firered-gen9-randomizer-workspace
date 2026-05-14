@@ -24,9 +24,9 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-p1-type-effectiveness-followup-smokes` |
+| Aktueller Branch | `test/upr-fvx-cfru-dpe-p1-type-effectiveness-followup-smokes` |
 | Nächster Branch | `analysis/upr-fvx-cfru-dpe-p1-similar-strength-same-type-regression-smoke` |
-| Aktueller Fokus | CFRU/DPE TypeEffectiveness Follow-up Smoke Plan |
+| Aktueller Fokus | CFRU/DPE TypeEffectiveness Follow-up Smoke Results |
 | ROM-/Build-Arbeit | keine neuen ROM-/Build-Artefakte; keine Artefakte committen |
 | Externe Repos | als Submodule auf Planton361-Forks eingebunden |
 | Forks | Planton361-Forks fuer UPR-FVX, DPE Gen9 und CFRU dokumentiert |
@@ -127,12 +127,13 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | 08 Randomizer-Kompatibilität | CFRU/DPE Starters Suboptions Regression-Smoke-Ergebnisse | Diagnose 065 dokumentiert sanitisiert `FVX-SST-003`, `FVX-SST-004`, `FVX-SST-005`, `FVX-SST-006` und `FVX-SST-009` im Starter-Species-Writer-Smoke mit Save/Log/Reload true, `Starter-Mismatches=0`, `Filterverletzungen=0` und `stacktrace=none` |
 | 08 Randomizer-Kompatibilität | CFRU/DPE TypeChart Preserve Effectiveness Fix | UPR-FVX `36707e01` und Diagnose 066 bestaetigen TypeEffectiveness-only mit Save/Log/Output/Reload true, `writeReloadTypeChartMismatches=0`, Fairy-Reload als raw `0x17`, unsupported/Stellar-Preserve und erhaltene Foresight-/Endtable-Terminatoren |
 | 08 Randomizer-Kompatibilität | CFRU/DPE TypeEffectiveness-Folgesmoke-Plan | Diagnose 067 plant read-only einzelne Slices fuer `FVX-TYPE-001` Balanced, Keep Type Identities und Inverse, `FVX-TYPE-002` Add Random Immunities sowie `FVX-TYPE-003` Update Type Effectiveness |
+| 08 Randomizer-Kompatibilität | CFRU/DPE TypeEffectiveness-Folgesmoke-Ergebnisse | Diagnose 068 bestaetigt Balanced, Keep Type Identities, Inverse, Add Random Immunities und Update Type Effectiveness jeweils mit Save/Log/Output/Reload true, `writeReloadTypeChartMismatches=0`, erhaltenen Terminatoren und `stacktrace=none` |
 
 ## In Arbeit
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | TypeEffectiveness Follow-up Smoke Plan | Read-only Plan per PR reviewen; keine Randomizer-Laeufe in diesem Block |
+| 08 Randomizer-Kompatibilität | TypeEffectiveness Follow-up Smoke Results | Ergebnisdokumentation per PR reviewen; keine Codeaenderung und kein Fix |
 
 ## Als Nächstes
 
@@ -219,7 +220,8 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | P1ar | `test/upr-fvx-cfru-dpe-p1-global-species-pool-regression-smoke` | Global Species Pool Regression-Smoke-Ergebnisse | erledigt; Diagnose 064 dokumentiert `FVX-GEN-001/002` im Starter-Carrier-Smoke als getestet, nicht global vollabgedeckt |
 | P1as | `test/upr-fvx-cfru-dpe-p1-starters-suboptions-regression-smoke` | Starters Suboptions Regression-Smoke-Ergebnisse | erledigt; Diagnose 065 dokumentiert `FVX-SST-003/004/005/006/009` im Starter-Species-Writer-Smoke als getestet, Starter Held Items bleiben separat |
 | P1at | `compat/upr-fvx-cfru-dpe-type-chart-preserve-effectiveness` | TypeChart Preserve Effectiveness Fix | aktueller Fix-/Dokumentationsbranch; UPR-FVX `36707e01` und Diagnose 066 bestaetigen TypeEffectiveness Random mit Fairy-Reload und `writeReloadTypeChartMismatches=0` |
-| P1au | `analysis/upr-fvx-cfru-dpe-p1-type-effectiveness-followup-smokes` | TypeEffectiveness-Folgesmoke-Plan | aktueller read-only Analysebranch; Diagnose 067 plant einzelne Slices fuer Balanced, Keep Type Identities, Inverse, Add Random Immunities und Update Type Effectiveness ohne Ausfuehrung |
+| P1au | `analysis/upr-fvx-cfru-dpe-p1-type-effectiveness-followup-smokes` | TypeEffectiveness-Folgesmoke-Plan | erledigt; Diagnose 067 plant einzelne Slices fuer Balanced, Keep Type Identities, Inverse, Add Random Immunities und Update Type Effectiveness ohne Ausfuehrung |
+| P1av | `test/upr-fvx-cfru-dpe-p1-type-effectiveness-followup-smokes` | TypeEffectiveness-Folgesmoke-Ergebnisse | aktueller Testbranch; Diagnose 068 bestaetigt alle geplanten TypeEffectiveness-Folgeslices ohne Codeaenderung |
 | P2 | `randomizer/cfru-day-night-wild-table-analysis` | CFRU-Custom-Day/Night-Wild-Tabellen separat untersuchen | erst nach P1-Schreibpfad-Diagnose; Route-1-Fallback bleibt stabil |
 | P3 | noch festlegen | Nullslot-`<unknown>` mit `rawInternalSpeciesId=0` klassifizieren | nicht mit GenRestrictions vermischen |
 | P4 | noch festlegen | BizHawk-/Ironmon-Tracker-/RAM-Mapping pruefen | erst nach stabiler ROM-Randomizer-Kompatibilitaet |
@@ -268,6 +270,14 @@ analysis/upr-fvx-cfru-dpe-p1-similar-strength-same-type-regression-smoke
 Zweck: BST-/Type-basierte Pooling-Suboptionen planen oder pruefen, ohne TypeChart oder MoveData-Write zu aktivieren.
 
 ## Arbeitsblock-Log
+
+### 2026-05-14 – test/upr-fvx-cfru-dpe-p1-type-effectiveness-followup-smokes
+
+- Neuer Ergebnisbericht erstellt: `08_tests/randomizer/068_type_effectiveness_followup_smoke_results.md`.
+- Einzelne TypeEffectiveness-Folgesmokes ausgefuehrt: `FVX-TYPE-001` Balanced, Keep Type Identities und Inverse, `FVX-TYPE-002` Add Random Immunities sowie `FVX-TYPE-003` Update Type Effectiveness.
+- Alle fuenf Slices melden Save/Log/Output/Reload true, `writeReloadTypeChartMismatches=0`, erhaltene Foresight-/Endtable-Terminatoren, `Bad Egg=false`, `<unknown>=false` und `stacktrace=none`.
+- Unsupported/Stellar wurde nicht eingefuehrt oder still normalisiert; Balanced reloadete Fairy-Rohtriplets als raw `0x17`, die anderen Folgeslices erzeugten keine Fairy-Rohtriplets und kein Fehlmapping.
+- Keine Codeaenderung, keine Aenderung an `02_external/**`; lokale Artefakte blieben ignored.
 
 ### 2026-05-14 – analysis/upr-fvx-cfru-dpe-p1-type-effectiveness-followup-smokes
 

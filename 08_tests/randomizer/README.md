@@ -2,9 +2,9 @@
 
 ## Latest
 
-- `067_type_effectiveness_followup_smoke_plan.md` plant read-only die TypeEffectiveness-Folgesmokes nach dem gemergten TypeChart-Fix aus 066.
-- Geplante einzelne Slices: `FVX-TYPE-001` Balanced, Keep Type Identities und Inverse, `FVX-TYPE-002` Add Random Immunities sowie `FVX-TYPE-003` Update Type Effectiveness.
-- 067 fuehrt keine Randomizer-Laeufe aus und erhebt keine neuen Diagnosewerte; der Random-Smoke aus 066 bleibt Referenz, ersetzt aber die Einzelpruefung weiterer TypeEffectiveness-GUI-Modi nicht.
+- `068_type_effectiveness_followup_smoke_results.md` dokumentiert sanitisiert die einzelnen TypeEffectiveness-Folgesmokes nach dem gemergten TypeChart-Fix aus 066.
+- Ausgefuehrte Slices: `FVX-TYPE-001` Balanced, Keep Type Identities und Inverse, `FVX-TYPE-002` Add Random Immunities sowie `FVX-TYPE-003` Update Type Effectiveness.
+- Alle fuenf Slices liefern Save/Log/Output/Reload true, `writeReloadTypeChartMismatches=0`, erhaltene Foresight-/Endtable-Terminatoren, `Bad Egg=false`, `<unknown>=false` und `stacktrace=none`.
 - MoveData, Palette, Items, Graphics, Text/Menu und Species-Type-Write bleiben getrennt.
 
 Dieses Verzeichnis enthaelt die dauerhaften Markdown-Protokolle fuer UPR-FVX/CFRU-DPE-Randomizer-Analysen und Smokes. Lokale ROM-, Build-, Log- und Tool-Artefakte bleiben unter `05_builds/**` oder `03_tools/releases/**` und werden nicht committed.
@@ -101,18 +101,19 @@ Der neueste bestaetigte Stand wird in Markdown ueber die Spalte `Latest` markier
 | 064 | `064_p1_global_species_pool_regression_smoke_results.md` | CFRU/DPE P1 Global Species Pool Regression-Smoke-Ergebnisse | bestaetigt sanitisiert: Baseline Carrier, `FVX-GEN-001` Generation Limits, `FVX-GEN-001` related Pokemon und `FVX-GEN-002` No Premature Evolutions im `FVX-SST-002`-Starter-Carrier-Smoke mit Save/Log/Reload true, `Starter-Mismatches=0` und `stacktrace=none`; keine offenen Writer | lokal/ignored, nicht dokumentiert | nein |
 | 065 | `065_p1_starters_suboptions_regression_smoke_results.md` | CFRU/DPE P1 Starters Suboptions Regression-Smoke-Ergebnisse | bestaetigt sanitisiert: `FVX-SST-003`, `FVX-SST-004`, `FVX-SST-005`, `FVX-SST-006` und `FVX-SST-009` im Starter-Species-Writer-Smoke mit Save/Log/Reload true, `Starter-Mismatches=0`, `Filterverletzungen=0` und `stacktrace=none`; Starter Held Items und offene Writer bleiben separat | lokal/ignored, nicht dokumentiert | nein |
 | 066 | `066_type_chart_preserve_effectiveness_fix_diagnostics.md` | CFRU/DPE TypeChart Preserve Effectiveness Fix Diagnose | bestaetigt: TypeEffectiveness-only mit Save/Log/Output/Reload true, `writeReloadTypeChartMismatches=0`, Fairy-Reload als raw `0x17`, unsupported/Stellar nicht eingefuehrt oder normalisiert, Foresight-/Endtable-Terminatoren erhalten | lokal/ignored, nicht dokumentiert | nein |
-| 067 | `067_type_effectiveness_followup_smoke_plan.md` | CFRU/DPE TypeEffectiveness-Folgesmoke-Plan | dokumentiert: einzelne spaetere Slices fuer `FVX-TYPE-001` Balanced, Keep Type Identities und Inverse, `FVX-TYPE-002` Add Random Immunities sowie `FVX-TYPE-003` Update Type Effectiveness; keine Ausfuehrung | keiner, read-only Analyse | ja |
+| 067 | `067_type_effectiveness_followup_smoke_plan.md` | CFRU/DPE TypeEffectiveness-Folgesmoke-Plan | dokumentiert: einzelne spaetere Slices fuer `FVX-TYPE-001` Balanced, Keep Type Identities und Inverse, `FVX-TYPE-002` Add Random Immunities sowie `FVX-TYPE-003` Update Type Effectiveness; keine Ausfuehrung | keiner, read-only Analyse | nein |
+| 068 | `068_type_effectiveness_followup_smoke_results.md` | CFRU/DPE TypeEffectiveness-Folgesmoke-Ergebnisse | bestaetigt sanitisiert: Balanced, Keep Type Identities, Inverse, Add Random Immunities und Update Type Effectiveness jeweils mit Save/Log/Output/Reload true, `writeReloadTypeChartMismatches=0`, erhaltenen Terminatoren, `Bad Egg=false`, `<unknown>=false` und `stacktrace=none` | lokal/ignored, nicht dokumentiert | ja |
 
 ## Aktuell bestaetigter Stand
 
-Latest ist Nr. 067: CFRU/DPE TypeEffectiveness-Folgesmoke-Plan.
+Latest ist Nr. 068: CFRU/DPE TypeEffectiveness-Folgesmoke-Ergebnisse.
 
 Kernaussagen:
 
-- 067 plant keine Ausfuehrung und erhebt keine neuen Diagnosewerte.
-- Der Random-Smoke aus 066 bleibt Referenz fuer den gemergten TypeChart-Fix.
-- Balanced, Keep Type Identities, Inverse, Add Random Immunities und Update Type Effectiveness sollen einzeln geprueft werden.
-- `FVX-TYPE-002` Add Random Immunities bleibt ein eigener Risikopunkt und wird nicht mit Balanced oder Update Type Effectiveness gebuendelt.
+- 068 bestaetigt Balanced, Keep Type Identities, Inverse, Add Random Immunities und Update Type Effectiveness als einzelne TypeEffectiveness-Slices im getesteten Scope.
+- Alle fuenf Slices waren Save/Log/Output/Reload-stabil und meldeten `writeReloadTypeChartMismatches=0`.
+- Balanced erzeugte Fairy-Rohtriplets und reloadete sie als raw `0x17`; die anderen Folgeslices erzeugten keine Fairy-Rohtriplets und kein Fehlmapping auf unsupported/Stellar.
+- `FVX-TYPE-002` Add Random Immunities wurde separat getestet und nicht mit Balanced oder Update Type Effectiveness gebuendelt.
 - Species-Type-Read/Write aus 051, MoveData, Palette, Items, Graphics und Text/Menu bleiben eigene Grenzen.
 
 ## Lokale Artefaktpflege

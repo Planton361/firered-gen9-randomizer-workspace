@@ -15,8 +15,8 @@ Die detaillierte Status- und Feature-ID-Matrix bleibt in:
 | Nicht begonnen | 39 |
 | Plan erstellt | 31 |
 | Read modelliert | 0 |
-| Write modelliert | 22 |
-| Getestet | 8 |
+| Write modelliert | 20 |
+| Getestet | 10 |
 | GUI-kompatibel | 30 |
 | In Arbeit | 0 |
 | **Gesamt** | **130** |
@@ -33,7 +33,7 @@ Die detaillierte Status- und Feature-ID-Matrix bleibt in:
 | Wild Pokemon | 12 | Gemischt | Standard/Fallback-Wild halten; Level/Catch/Catch-em-all-Suboptionen ergaenzen |
 | TM/HMs & Tutors | 15 | Gemischt | TM/Tutor-Tabellen halten; Preserve-/Filter-/Follow-Evolution-Suboptionen testen |
 | Items | 10 | Write modelliert | Field Items, Shops und Pickup als getrennte Writer implementieren/testen |
-| Types | 3 | Gemischt | TypeEffectiveness Random ist mit Fairy-Reload getestet; Add Immunities und Update Type Effectiveness separat pruefen |
+| Types | 3 | Getestet | TypeEffectiveness Random, Balanced, Keep Type Identities, Inverse, Add Immunities und Update Type Effectiveness sind einzeln im TypeChart-Scope getestet |
 | Graphics | 6 | Gemischt | Palette-Randomization absichern; Custom Player Graphics separat modellieren |
 | Misc Tweaks | 12 | Nicht begonnen | jeden Misc-Tweak als eigenen Patch-/Risk-Scope inventarisieren |
 | GUI-Suboptions-Regressionsmatrix | n/a | Erledigt | vorhandene Diagnose 060 als technische Regressionssicht nutzen |
@@ -54,7 +54,7 @@ Die detaillierte Status- und Feature-ID-Matrix bleibt in:
 
 | Reihenfolge | Branch | Paket | Ziel |
 |---|---|---|---|
-| P1.1 | `compat/upr-fvx-cfru-dpe-type-chart-preserve-effectiveness` | Types | erledigt: TypeEffectiveness Random mit Fairy-Reload, unsupported/Stellar-Preserve und Terminator-/Kapazitaetskriterien abgesichert |
+| P1.1 | `compat/upr-fvx-cfru-dpe-type-chart-preserve-effectiveness` + `test/upr-fvx-cfru-dpe-p1-type-effectiveness-followup-smokes` | Types | erledigt: TypeEffectiveness Random, Balanced, Keep Type Identities, Inverse, Add Immunities und Update Type Effectiveness mit Reload-/Terminator-/Preserve-Kriterien abgesichert |
 | P1.2 | `compat/upr-fvx-cfru-dpe-move-data-write-preserve` | Moves & Movesets | eng gegateten MoveData-Writer mit Preserve-Policy und Reload-Diagnose umsetzen |
 | P1.3 | `compat/upr-fvx-cfru-dpe-palette-randomization-preserve-repoint` | Graphics | echte geaenderte Palette-Randomization mit compressed/shared/repointing Reload-Kriterien absichern |
 | P1.4 | `compat/upr-fvx-cfru-dpe-field-items-shops-pickup-scope-and-write` | Items | Field Items, Shops und Pickup mit getrennten Reload-Kriterien absichern |
