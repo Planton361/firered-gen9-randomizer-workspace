@@ -24,10 +24,10 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-p1-similar-strength-same-type-regression-smoke` |
-| Nächster Branch | `test/upr-fvx-cfru-dpe-p1-similar-strength-same-type-regression-smoke` |
-| Aktueller Fokus | CFRU/DPE Similar Strength / Same Type Regression-Smoke-Plan |
-| ROM-/Build-Arbeit | keine neuen ROM-/Build-Artefakte; keine Artefakte committen |
+| Aktueller Branch | `test/upr-fvx-cfru-dpe-p1-similar-strength-same-type-regression-smoke` |
+| Nächster Branch | noch festlegen |
+| Aktueller Fokus | CFRU/DPE Similar Strength / Same Type Regression-Smoke-Ergebnisse |
+| ROM-/Build-Arbeit | lokale Smoke-Artefakte ignored; keine Artefakte committen oder dokumentieren |
 | Externe Repos | als Submodule auf Planton361-Forks eingebunden |
 | Forks | Planton361-Forks fuer UPR-FVX, DPE Gen9 und CFRU dokumentiert |
 | Installationen | devkitPro/devkitARM lokal dokumentiert; keine Installation in diesem Analyseblock |
@@ -129,18 +129,19 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | 08 Randomizer-Kompatibilität | CFRU/DPE TypeEffectiveness-Folgesmoke-Plan | Diagnose 067 plant read-only einzelne Slices fuer `FVX-TYPE-001` Balanced, Keep Type Identities und Inverse, `FVX-TYPE-002` Add Random Immunities sowie `FVX-TYPE-003` Update Type Effectiveness |
 | 08 Randomizer-Kompatibilität | CFRU/DPE TypeEffectiveness-Folgesmoke-Ergebnisse | Diagnose 068 bestaetigt Balanced, Keep Type Identities, Inverse, Add Random Immunities und Update Type Effectiveness jeweils mit Save/Log/Output/Reload true, `writeReloadTypeChartMismatches=0`, erhaltenen Terminatoren und `stacktrace=none` |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Similar Strength / Same Type Regression-Smoke-Plan | Diagnose 069 plant Wild-, Trainer- und Evolution-Slices fuer Similar Strength, Same Type, Type Themes und Type Restrictions ohne Testausfuehrung und ohne offene Writer |
+| 08 Randomizer-Kompatibilität | CFRU/DPE Similar Strength / Same Type Regression-Smoke-Ergebnisse | Diagnose 070 dokumentiert sanitisiert: Trainer Similar Strength unter `FVX-FOE-001` stabil; Wild Similar Strength, Wild Type Restrictions, `FVX-FOE-009` und Evolutions Same Typing blockieren; Evolutions Similar Strength reloadet mit Mismatches |
 
 ## In Arbeit
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Similar Strength / Same Type Regression-Smoke-Plan | Plan per PR reviewen; keine Codeaenderung, kein Fix und keine Randomizer-Laeufe |
+| 08 Randomizer-Kompatibilität | Similar Strength / Same Type Regression-Smoke Results | Ergebnisprotokoll 070 per PR reviewen; keine Codeaenderung und kein Fix |
 
 ## Als Nächstes
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Similar Strength / Same Type Regression-Smoke Results | Die in 069 geplanten Slices einzeln lokal ausfuehren und sanitisiert dokumentieren, ohne offene Writer zu aktivieren |
+| 08 Randomizer-Kompatibilität | Blockierte 070-Slices read-only analysieren | Wild-, Trainer-Diversity- und Evolution-Folgeprobleme getrennt planen, ohne offene Writer zu vermischen |
 
 ## Noch offen
 
@@ -223,7 +224,8 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | P1at | `compat/upr-fvx-cfru-dpe-type-chart-preserve-effectiveness` | TypeChart Preserve Effectiveness Fix | erledigt; UPR-FVX `36707e01` und Diagnose 066 bestaetigen TypeEffectiveness Random mit Fairy-Reload und `writeReloadTypeChartMismatches=0` |
 | P1au | `analysis/upr-fvx-cfru-dpe-p1-type-effectiveness-followup-smokes` | TypeEffectiveness-Folgesmoke-Plan | erledigt; Diagnose 067 plant einzelne Slices fuer Balanced, Keep Type Identities, Inverse, Add Random Immunities und Update Type Effectiveness ohne Ausfuehrung |
 | P1av | `test/upr-fvx-cfru-dpe-p1-type-effectiveness-followup-smokes` | TypeEffectiveness-Folgesmoke-Ergebnisse | erledigt; Diagnose 068 bestaetigt alle geplanten TypeEffectiveness-Folgeslices ohne Codeaenderung |
-| P1aw | `analysis/upr-fvx-cfru-dpe-p1-similar-strength-same-type-regression-smoke` | Similar Strength / Same Type Regression-Smoke-Plan | aktueller Analysebranch; plant Wild-, Trainer- und Evolution-Slices fuer BST-/Type-basierte Poolfilter ohne Testausfuehrung |
+| P1aw | `analysis/upr-fvx-cfru-dpe-p1-similar-strength-same-type-regression-smoke` | Similar Strength / Same Type Regression-Smoke-Plan | erledigt; Diagnose 069 plant Wild-, Trainer- und Evolution-Slices fuer BST-/Type-basierte Poolfilter ohne Testausfuehrung |
+| P1ax | `test/upr-fvx-cfru-dpe-p1-similar-strength-same-type-regression-smoke` | Similar Strength / Same Type Regression-Smoke-Ergebnisse | aktueller Testbranch; Diagnose 070 dokumentiert gemischte Ergebnisse und blockierte Folge-Slices |
 | P2 | `randomizer/cfru-day-night-wild-table-analysis` | CFRU-Custom-Day/Night-Wild-Tabellen separat untersuchen | erst nach P1-Schreibpfad-Diagnose; Route-1-Fallback bleibt stabil |
 | P3 | noch festlegen | Nullslot-`<unknown>` mit `rawInternalSpeciesId=0` klassifizieren | nicht mit GenRestrictions vermischen |
 | P4 | noch festlegen | BizHawk-/Ironmon-Tracker-/RAM-Mapping pruefen | erst nach stabiler ROM-Randomizer-Kompatibilitaet |

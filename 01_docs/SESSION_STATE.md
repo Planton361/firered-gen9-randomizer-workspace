@@ -1,5 +1,26 @@
 # Session State
 
+## 2026-05-14 - CFRU/DPE Similar Strength / Same Type Regression-Smoke Results
+
+Arbeitsbranch: `test/upr-fvx-cfru-dpe-p1-similar-strength-same-type-regression-smoke`
+
+Aktueller Stand:
+
+- Neues Ergebnisprotokoll `08_tests/randomizer/070_p1_similar_strength_same_type_regression_smoke_results.md` erstellt.
+- Die in 069 geplanten Similar-Strength-/Same-Type-/Type-Theme-/Type-Restriction-Slices wurden einzeln lokal ausgefuehrt und sanitisiert dokumentiert.
+- Trainer Similar Strength unter `FVX-FOE-001` ist im Trainer-Species-Carrier-Smoke stabil: `saveSuccessful=true`, `logSuccessful=true`, `outputRomExists=true`, `logNonEmpty=true`, Reload erfolgreich, `writeReloadTrainerPokemonMismatches=0`, `Bad Egg=false`, `<unknown>=false`, `stacktrace=none`.
+- `FVX-WILD-011` Wild Similar Strength und `FVX-WILD-004` Wild Type Restrictions / Type Themes / Keep Primary blockieren beim Save mit `IllegalStateException`; kein Output/Reload.
+- `FVX-FOE-009` Trainer Type Diversity / Type Themes blockiert beim Save mit `NullPointerException`; kein Output/Reload.
+- `FVX-TRAIT-018` Evolutions Similar Strength speichert und reloadet, meldet aber `writeReloadEvolutionMismatches=24` und `Bad Egg=true`; der Marker wird wegen der Mismatches nicht als unkritischer 055-Marker freigegeben.
+- `FVX-TRAIT-019` Evolutions Same Typing blockiert beim Save mit `NullPointerException`; kein Output/Reload.
+- TypeChart/TypeEffectiveness, MoveData Write, Field Items/Shops/Pickup, Encounter Held Items, Palette/Graphics, Text/Menu, Level-Modifier, Evolution-Methoden-Writer, Starter Held Items, Race Mode / Intro Mon, Better Movesets, Trainer Additional Pokemon, Battle Style, Trainer Names/Class Names, Catch Em All, Minimum Catch Rate, Wild held items und custom Day/Night-Wild blieben ausgeschlossen.
+- Keine Codeaenderung, keine Aenderung an `02_external/**`, kein Tool-Manifest-Update.
+- Lokale ROM-, Log-, Output-ROM-, Build- und Diagnoseartefakte blieben ignored und werden nicht committed oder dokumentiert.
+
+Naechster sinnvoller Schritt:
+
+- Read-only Diagnoseplan fuer die blockierten 070-Slices: Wild Similar Strength/Type Restrictions gegen Wild-Nullslot-/Placeholder-Scope, `FVX-FOE-009` gegen Trainer-Type-Diversity-/Null-Type-Scope und `FVX-TRAIT-018/019` gegen Evolution-Reload-Mismatches, `Bad Egg` und Null-Evolution-Scope.
+
 ## 2026-05-14 - CFRU/DPE Similar Strength / Same Type Regression-Smoke-Plan
 
 Arbeitsbranch: `analysis/upr-fvx-cfru-dpe-p1-similar-strength-same-type-regression-smoke`
