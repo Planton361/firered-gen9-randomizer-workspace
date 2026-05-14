@@ -614,3 +614,10 @@ Zweck: Diagnose 082 reviewen und mergen; danach Evolution-Methoden-Writer und we
 - CFRU/DPE Gen9 BPRE Learnset-Write model documented in `08_tests/randomizer/043_p1_learnset_write_model.md`.
 - `gLevelUpLearnsets` should be treated as an internal Species-ID pointertable via pointer location `0x03EA7C` / `0x0803EA7C`; entries are `u16 move + u8 level` with `{0, 0xFF}` sentinel.
 - Recommended next status: bounded in-place CFRU/DPE `setMovesLearnt()` fix branch; full repointing remains out of scope.
+
+## 2026-05-14 - Diagnose 096 Palette Normal Single-owner Reload-Smoke blockiert
+
+- `FVX-GFX-001` hat den UPR-FVX Write-Guard-Fix aus Diagnose 095, aber der Reload-Smoke 096 ist lokal blockiert.
+- Preflight: `candidateFilesChecked=94`, `candidateLoaded=false`, `candidateOpenFailures=2`, `candidateSpeciesTotalMismatches=92`.
+- Keine Hochstufung auf `Getestet` oder `GUI-kompatibel`.
+- Nächster konservativer Block: `test/upr-fvx-cfru-dpe-palette-normal-single-owner-reload-smoke-retry` mit explizit freigegebenem UPR-FVX-ladbarem `candidateSpeciesTotal=1439` Kandidaten.

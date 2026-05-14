@@ -1,3 +1,20 @@
+## 2026-05-14 - Palette Normal Single-owner Reload-Smoke blockiert
+
+Arbeitsbranch: `test/upr-fvx-cfru-dpe-palette-normal-single-owner-reload-smoke`
+
+Diagnose 096 wurde als sanitisiert blockierter Reload-Smoke dokumentiert. Der lokale Preflight fand 94 BPRE-Kandidaten, aber keinen UPR-FVX-ladbaren CFRU/DPE-Gen9-BPRE-Zielkandidaten mit `candidateSpeciesTotal=1439`.
+
+Aggregierte Zähler:
+
+- `candidateFilesChecked=94`
+- `candidateLoaded=false`
+- `candidateOpenFailures=2`
+- `candidateSpeciesTotalMismatches=92`
+- `exceptionClass=none`
+- `stacktrace=none`
+
+Es wurde kein fachlicher Palette-Write-/Reload-Smoke ausgeführt. `FVX-GFX-001` wird nicht hochgestuft; `FVX-GFX-001..004` bleiben im Palette-Bereich konservativ bewertet. UPR-FVX bleibt auf `2697511da9a97df4c29c00dfda8b40e556020489` gepinnt.
+
 # Session State
 
 ## 2026-05-14 - CFRU/DPE Palette Normal Single-owner Write Guard Fix

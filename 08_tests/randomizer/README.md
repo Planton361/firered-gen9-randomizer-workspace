@@ -168,3 +168,5 @@ Wenn ein Artefakt nicht eindeutig Smoke-Output ist, bleibt es lokal liegen und w
 - TM/Tutor/Egg-Move-Pfade
 - TM/Tutor/Abilities
 - CFRU Day/Night
+
+- `096_palette_normal_single_owner_reload_smoke.md` - Sanitisiert blockierter Reload-Smoke für `FVX-GFX-001` Normal-only Single-owner Palette-Write-Guard; kein UPR-FVX-ladbarer `candidateSpeciesTotal=1439` Zielkandidat verfügbar, daher keine Feature-Hochstufung.

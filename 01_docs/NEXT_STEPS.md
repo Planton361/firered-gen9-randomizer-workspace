@@ -1,3 +1,23 @@
+# Next Steps - 2026-05-14 Update
+
+Aktiver Anschlussblock nach Diagnose 096:
+
+- `test/upr-fvx-cfru-dpe-palette-normal-single-owner-reload-smoke-retry`
+
+Ziel: Den engen `FVX-GFX-001` Normal-only Single-owner Reload-Smoke erst wiederholen, wenn ein explizit freigegebener UPR-FVX-ladbarer CFRU/DPE-Gen9-BPRE-Kandidat verfügbar ist und `candidateSpeciesTotal=1439` erfüllt.
+
+Status aus Diagnose 096:
+
+- `candidateFilesChecked=94`
+- `candidateLoaded=false`
+- `candidateOpenFailures=2`
+- `candidateSpeciesTotalMismatches=92`
+- kein fachlicher Palette-Write-/Reload-Smoke
+- keine Hochstufung für `FVX-GFX-001`
+- `FVX-GFX-002/003/004` bleiben `Write modelliert`
+
+Nicht ausweiten auf Shiny, Shared-Paletten, Graphics/Sprites, TypeChart/TypeEffectiveness, Species-Type-Write, Evolution-Writer, Items, Trainer/Wild, Text/Menu, MoveData oder MoveNames.
+
 # Next Steps
 
 ## Aktueller Fokus
