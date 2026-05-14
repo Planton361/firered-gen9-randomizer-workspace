@@ -1,5 +1,23 @@
 # Session State
 
+## 2026-05-14 - CFRU/DPE Trainer Type Diversity Blocker Diagnostics Plan
+
+Arbeitsbranch: `analysis/upr-fvx-cfru-dpe-p1-trainer-type-diversity-blocker-diagnostics`
+
+Aktueller Stand:
+
+- Neues read-only Diagnoseplan-Protokoll `08_tests/randomizer/076_p1_trainer_type_diversity_blocker_diagnostics_plan.md` erstellt.
+- 076 fokussiert nur den verbliebenen 070-Blocker `FVX-FOE-009` Trainer Type Diversity / Type Themes im Carrier `FVX-FOE-001` Trainer Pokemon.
+- Der Befund aus 070 bleibt als echter Save-Blocker klassifiziert: `saveSuccessful=false`, kein Output/Reload, `NullPointerException` und `filterViolations=112` nur bis Abbruch.
+- Trainer Similar Strength unter `FVX-FOE-001` bleibt bewusst getrennt, weil dieser Slice in 070 mit Save/Log/Output/Reload true und `writeReloadTrainerPokemonMismatches=0` stabil war.
+- Pruefspuren sind Trainer-Type-Diversity-Auswahl gegen Null-Type-, Placeholder-, BST-zero- oder unsupported-Type-Species, Trainer-Pool-Scope, Team-Type-Constraints und fehlende Skip-/Scope-Regeln im Type-Diversity-/Type-Themes-Pfad.
+- Spaetere Diagnosemetriken, Sanitizing-Regeln und Stop-Regeln sind dokumentiert; keine Diagnosewerte wurden erfunden.
+- Keine Codeaenderung, keine Aenderung an `02_external/**`, keine Randomizer-Laeufe, kein Tool-Manifest-Update.
+
+Naechster sinnvoller Schritt:
+
+- Separater read-only Code-/Protokollanalysebranch fuer `FVX-FOE-009`, der Trainer-Randomizer- und Type-Diversity-Codepfade identifiziert und den Unterschied zum stabilen Trainer Similar Strength Slice klaert. Kein Fixbranch ohne klare Ursache.
+
 ## 2026-05-14 - CFRU/DPE Wild Filter Carrier Nullslot Fix
 
 Workspace-Branch: `compat/upr-fvx-cfru-dpe-p1-wild-filter-carrier-nullslot-fix`

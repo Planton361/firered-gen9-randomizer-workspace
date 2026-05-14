@@ -2,10 +2,10 @@
 
 ## Latest
 
-- `075_wild_filter_carrier_nullslot_fix_diagnostics.md` dokumentiert den UPR-FVX-Fix fuer den Wild-Filter-Carrier-Nullslot-Scope aus 074.
-- `FVX-WILD-011` Wild Similar Strength und `FVX-WILD-004` Wild Type Restrictions / Type Themes / Keep Primary wurden einzeln lokal sanitisiert bestaetigt.
-- Beide Slices melden Save/Log/Output/Reload true, `writeReloadWildPokemonMismatches=0`, `Bad Egg=false`, `<unknown>=false` und `stacktrace=none`; `FVX-WILD-004` meldet `filterViolations=0`.
-- TypeChart/TypeEffectiveness, MoveData, Palette, Items, Encounter Held Items, custom Day/Night-Wild, Catch Em All, Minimum Catch Rate, Level-Modifier, Text/Menu/Graphics und offene Writer bleiben ausgeschlossen.
+- `076_p1_trainer_type_diversity_blocker_diagnostics_plan.md` plant die read-only Folge-Diagnose fuer den verbliebenen 070-Blocker `FVX-FOE-009` Trainer Type Diversity / Type Themes.
+- `FVX-FOE-009` bleibt als echter Save-Blocker klassifiziert: `saveSuccessful=false`, kein Output/Reload, `NullPointerException` und `filterViolations=112` nur bis Abbruch.
+- Der Plan trennt den Blocker vom positiven Trainer Similar Strength Slice unter `FVX-FOE-001`.
+- Wild, Evolution, TypeChart/TypeEffectiveness, MoveData, Palette, Items, Text/Menu, Graphics, Level-Modifier und offene Writer bleiben ausgeschlossen.
 
 Dieses Verzeichnis enthaelt die dauerhaften Markdown-Protokolle fuer UPR-FVX/CFRU-DPE-Randomizer-Analysen und Smokes. Lokale ROM-, Build-, Log- und Tool-Artefakte bleiben unter `05_builds/**` oder `03_tools/releases/**` und werden nicht committed.
 
@@ -109,20 +109,20 @@ Der neueste bestaetigte Stand wird in Markdown ueber die Spalte `Latest` markier
 | 072 | `072_p1_wild_070_blockers_diagnostics_plan.md` | CFRU/DPE P1 Wild 070 Blockers Diagnostics Plan | dokumentiert: read-only Diagnoseplan fuer `FVX-WILD-011` und `FVX-WILD-004` im `FVX-WILD-001` Standard/Fallback-Wild-Carrier, getrennt nach BST-/Species-Pool-Filter, Species-Type-Filter und Wild-Nullslot-/Placeholder-Scope; keine Ausfuehrung | keiner, read-only Analyse | nein |
 | 073 | `073_p1_wild_filter_carrier_diagnostics_plan.md` | CFRU/DPE P1 Wild Filter Carrier Diagnostics Plan | dokumentiert: read-only Diagnose-/Harness-Plan fuer den Wild-Filter-Carrier aus 072; trennt Carrier-Scope, Area-/Encounter-Slot-Scope, BST-/Species-Pool-Filter und Species-Type-Filter; keine Ausfuehrung | keiner, read-only Analyse | nein |
 | 074 | `074_p1_wild_filter_carrier_code_diagnosis.md` | CFRU/DPE P1 Wild Filter Carrier Code Diagnosis | dokumentiert: read-only Codeanalyse fuer `FVX-WILD-011` und `FVX-WILD-004`; wahrscheinliche Ursache ist ein `GAME`-Mapping-/InfoMap-Nullslot-Pfad vor BST-/Type-Filterauswahl; keine Ausfuehrung | keiner, read-only Analyse | nein |
-| 075 | `075_wild_filter_carrier_nullslot_fix_diagnostics.md` | CFRU/DPE Wild Filter Carrier Nullslot Fix Diagnostics | bestaetigt: UPR-FVX-Fix fuer WildEncounterRandomizer Mapping-/InfoMap-Nullslot-Scope; `FVX-WILD-011` und `FVX-WILD-004` jeweils mit Save/Log/Output/Reload true, `writeReloadWildPokemonMismatches=0`, `Bad Egg=false`, `<unknown>=false` und `stacktrace=none` | lokal/ignored, nicht dokumentiert | ja |
+| 075 | `075_wild_filter_carrier_nullslot_fix_diagnostics.md` | CFRU/DPE Wild Filter Carrier Nullslot Fix Diagnostics | bestaetigt: UPR-FVX-Fix fuer WildEncounterRandomizer Mapping-/InfoMap-Nullslot-Scope; `FVX-WILD-011` und `FVX-WILD-004` jeweils mit Save/Log/Output/Reload true, `writeReloadWildPokemonMismatches=0`, `Bad Egg=false`, `<unknown>=false` und `stacktrace=none` | lokal/ignored, nicht dokumentiert | nein |
+| 076 | `076_p1_trainer_type_diversity_blocker_diagnostics_plan.md` | CFRU/DPE P1 Trainer Type Diversity Blocker Diagnostics Plan | dokumentiert: read-only Diagnoseplan fuer den 070-Blocker `FVX-FOE-009` Trainer Type Diversity / Type Themes; klassifiziert `NullPointerException`, fehlenden Output/Reload und `filterViolations=112` als Vor-Abbruch-Befund; keine Ausfuehrung | keiner, read-only Analyse | ja |
 
 ## Aktuell bestaetigter Stand
 
-Latest ist Nr. 075: CFRU/DPE Wild Filter Carrier Nullslot Fix Diagnostics.
+Latest ist Nr. 076: CFRU/DPE P1 Trainer Type Diversity Blocker Diagnostics Plan.
 
 Kernaussagen:
 
-- UPR-FVX behandelt null/unaufloesbare Wild-Encounter-Slots im WildEncounterRandomizer-Mapping-/InfoMap-Pfad defensiv, bevor sie als Mapping-Anker in die Filterlogik laufen.
-- `FVX-WILD-011` Wild Similar Strength ist im `FVX-WILD-001` Carrier nach dem Fix save-/log-/reload-stabil.
-- `FVX-WILD-004` Wild Type Restrictions / Type Themes / Keep Primary ist im `FVX-WILD-001` Carrier nach dem Fix save-/log-/reload-stabil und meldet `filterViolations=0`.
-- Beide Slices melden `writeReloadWildPokemonMismatches=0`, `Bad Egg=false`, `<unknown>=false` und `stacktrace=none`.
-- Die lokalen Fix-Smokes beobachteten keine Nullslots im Teststand; der Codefix bleibt trotzdem auf den in 074 identifizierten defensiven Null-/unaufloesbar-Scope begrenzt.
-- TypeChart/TypeEffectiveness aus 068, MoveData, Palette, Items, Encounter Held Items, custom Day/Night-Wild, Catch Em All, Minimum Catch Rate, Level-Modifier, Text/Menu/Graphics und offene Writer bleiben ausgeschlossen.
+- `FVX-FOE-009` Trainer Type Diversity / Type Themes bleibt ein echter 070-Save-Blocker und ist getrennt von Trainer Similar Strength unter `FVX-FOE-001`.
+- Die geplante Folge-Diagnose prueft Trainer-Type-Diversity-Auswahl, Team-Type-Constraints und Poolbildung gegen Null-Type-, Placeholder-, BST-zero- oder unsupported-Type-Species.
+- `filterViolations=112` aus 070 bleibt ein Vor-Abbruch-Symptom und wird nicht als Endmetrik gewertet.
+- Wild-Fixes aus 075 bleiben Referenz, aber nicht Scope von 076.
+- Wild, Evolution, TypeChart/TypeEffectiveness, MoveData, Palette, Items, Text/Menu, Graphics, Level-Modifier und offene Writer bleiben ausgeschlossen.
 
 ## Lokale Artefaktpflege
 
