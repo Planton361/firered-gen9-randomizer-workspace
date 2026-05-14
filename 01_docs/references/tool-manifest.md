@@ -4,15 +4,15 @@ Dieses Manifest dokumentiert Tools, Repos, Forks, Versionen, Pfade und Sicherhei
 
 ## Sicherheitsstatus
 
-Dieser Stand dokumentiert den Arbeitsblock `compat/upr-fvx-cfru-dpe-move-data-write-preserve`. UPR-FVX wurde im Planton361-Fork-Submodule gezielt geaendert und gebaut; keine ROM-/Randomizer-Reload-Laeufe wurden ausgefuehrt. Tool-Binaries, Release-Assets, Secrets und private Pfade wurden nicht dokumentiert.
+Dieser Stand dokumentiert den Arbeitsblock `compat/upr-fvx-cfru-dpe-palette-normal-single-owner-write`. UPR-FVX wurde im Planton361-Fork-Submodule gezielt geaendert und gebaut; kein ROM-/Randomizer-Reload-Smoke wurde ausgefuehrt. Tool-Binaries, Release-Assets, Secrets und private Pfade wurden nicht dokumentiert.
 
 Linux/CachyOS ist die primaere lokale Umgebung. Windows-Toolchain-Befunde bleiben historischer Referenzstand und duerfen nicht als Linux-Ist-Stand verwendet werden.
 
-Der aktuelle Arbeitsblock pinnt den Workspace auf den UPR-FVX-MoveData-Write-Preserve-Fix-Commit fuer CFRU/DPE.
+Der aktuelle Arbeitsblock pinnt den Workspace auf den UPR-FVX-Normal-Palette-Single-owner-Write-Guard-Fix-Commit fuer CFRU/DPE.
 
 | Tool/Repo | Zweck | Upstream | Fork/Origin | Lokaler Pfad | Branch | Commit | Codex darf ändern | Status |
 |---|---|---|---|---|---|---|---|---|
-| Workspace Repo | Source of Truth | n/a | git@github.com:Planton361/firered-gen9-randomizer-workspace.git | Workspace-Root | `compat/upr-fvx-cfru-dpe-move-data-write-preserve` | offen | ja, nur Branches | aktiv |
+| Workspace Repo | Source of Truth | n/a | git@github.com:Planton361/firered-gen9-randomizer-workspace.git | Workspace-Root | `compat/upr-fvx-cfru-dpe-palette-normal-single-owner-write` | offen | ja, nur Branches | aktiv |
 | Git | Versionierung | n/a | n/a | `/usr/bin/git` | n/a | n/a | nein | gefunden: 2.54.0 |
 | GitHub CLI (`gh`) | PRs und GitHub-Checks automatisieren | https://cli.github.com/ | n/a | `/usr/bin/gh` | n/a | n/a | nein | gefunden: 2.92.0; Auth via Keyring aktiv |
 | POSIX Shell | Terminal-Standard | n/a | n/a | `/bin/fish` laut `$SHELL` | n/a | n/a | nein | primär |
@@ -42,6 +42,19 @@ Der aktuelle Arbeitsblock pinnt den Workspace auf den UPR-FVX-MoveData-Write-Pre
 | Ironmon Tracker | Tracker | https://github.com/besteon/Ironmon-Tracker | offen | `02_external/Ironmon-Tracker` | offen | offen | nur nach Freigabe | read-only geprüft; nicht geklont |
 
 ## Lokale Submodule-Pins 2026-05-14
+
+Arbeitsblock: `compat/upr-fvx-cfru-dpe-palette-normal-single-owner-write`.
+
+| Repo | Zweck | Origin | Lokaler Pfad | Branch | Commit | Codex darf aendern | Status |
+|---|---|---|---|---|---|---|---|
+| UPR-FVX Fork | Haupt-Randomizer-Fork | `https://github.com/Planton361/universal-pokemon-randomizer-fvx.git` | `02_external/upr-fvx` | `compat/upr-fvx-cfru-dpe-palette-normal-single-owner-write` | `2697511da9a97df4c29c00dfda8b40e556020489` | ja, nur in diesem Branch | Normal-Palette-Single-owner-Write-Guard fuer CFRU/DPE; Shiny/shared/invalid/missing/decode-failed/cross-kind Faelle werden nicht an den Palette-Rewriter uebergeben; Reload-Smoke noch offen |
+| CFRU-expansion Fork | CFRU/Gen9-Basis | `https://github.com/Planton361/CFRU-expansion.git` | `02_external/CFRU-expansion` | `compat/firered-gen9-randomizer` | `b885d7a974375c6c722e5698914963b82e8cdad6` | nein in diesem Block | read-only, unveraendert |
+| DPE Gen9 Fork | DPE/Gen9-Basis | `https://github.com/Planton361/Dynamic-Pokemon-Expansion-Gen-9.git` | `02_external/Dynamic-Pokemon-Expansion-Gen-9` | `compat/firered-gen9-randomizer` | `5906aa4d4904e41393fd9184a16951c961e96263` | nein in diesem Block | read-only, unveraendert |
+| CyanSMP64 UPR-ZX NatDex | NatDex-Randomizer-Referenz | `https://github.com/CyanSMP64/universal-pokemon-randomizer-zx.git` | `02_external/references/cyansmp64-upr-zx-natdex` | `natdex` | `9b63eb2876d901dc2e5af49855ae41ac255e1a72` | nein | read-only Referenz |
+| CyanSMP64 FireRed NatDex | NatDex-FireRed-Referenz | `https://github.com/CyanSMP64/pokefirered.git` | `02_external/references/cyansmp64-pokefirered-natdex` | `natdex` | `16b8b9ffd77607debe7ce332cd50d3615f47e125` | nein | read-only Referenz |
+| UPR-FVX upstream | FVX-Upstream-Vergleich | `https://github.com/upr-fvx/universal-pokemon-randomizer-fvx.git` | `02_external/references/upr-fvx-upstream` | `master` | `e0788edc6529c2605f201996e4807ff30165354c` | nein | read-only Referenz |
+| Ajarmar UPR-ZX | UPR-ZX-Basisvergleich | `https://github.com/Ajarmar/universal-pokemon-randomizer-zx.git` | `02_external/references/upr-zx-ajarmar` | `master` | `7f00eb866ed35c8fe3963f078b6a2e0979dc2b8c` | nein | read-only Referenz |
+| pret FireRed | Vanilla-BPRE-Decomp | `https://github.com/pret/pokefirered.git` | `02_external/references/pret-pokefirered` | `master` | `e060ab955b5dc9ac1c4904c2cd141683615cf477` | nein | read-only Referenz |
 
 Arbeitsblock: `compat/upr-fvx-cfru-dpe-move-data-type-fairy-byte`.
 
@@ -127,8 +140,8 @@ Bestehende unnummerierte Protokolle unter `08_tests/randomizer/` bleiben vorerst
 | Lokaler Pfad | `02_external/upr-fvx` |
 | Einbindung | Git-Submodule auf `Planton361/universal-pokemon-randomizer-fvx` |
 | Upstream | `upr-fvx/universal-pokemon-randomizer-fvx` |
-| Arbeitsbranch | `compat/upr-fvx-cfru-dpe-move-data-type-fairy-byte` |
-| Gepinnter Workspace-Stand | `fad56f60d6fae9b006290a4d5fd1f0715f3d9dc3` auf `compat/upr-fvx-cfru-dpe-move-data-type-fairy-byte`; enthaelt den CFRU/DPE-MoveData-Fairy-Type-Byte-Fix auf Basis der bisherigen MoveData-Write-Preserve-Fixkette |
+| Arbeitsbranch | `compat/upr-fvx-cfru-dpe-palette-normal-single-owner-write` |
+| Gepinnter Workspace-Stand | `2697511da9a97df4c29c00dfda8b40e556020489` auf `compat/upr-fvx-cfru-dpe-palette-normal-single-owner-write`; enthaelt den CFRU/DPE-Normal-Palette-Single-owner-Write-Guard-Fix auf Basis der bisherigen MoveData-Fairy-Type-Byte-Fixkette |
 | Buildsystem | Gradle Wrapper |
 | Java | JDK 25 |
 | JAR-Build | `./gradlew :random:jar` |

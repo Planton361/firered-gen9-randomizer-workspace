@@ -2,7 +2,7 @@
 
 ## Aktueller Fokus
 
-CFRU/DPE Palette Single-owner Normal-only Fix-Scope Plan ist dokumentiert. Aktuelle Diagnose: `08_tests/randomizer/094_palette_single_owner_normal_only_fix_scope_plan.md`.
+CFRU/DPE Palette Normal Single-owner Write Guard Fix ist dokumentiert. Aktuelle Diagnose: `08_tests/randomizer/095_palette_normal_single_owner_write_guard_fix_diagnostics.md`.
 
 `FVX-MOVE-001/002/003/004/006` sind GUI-kompatibel. `FVX-MOVE-005` bleibt getrennt vom MoveData-Byte-Writer-Scope.
 
@@ -14,15 +14,17 @@ Diagnoseergebnis aus 093: der sanitisierten read-only Lauf findet `candidateWrit
 
 Planergebnis aus 094: ein spaeterer Fix-/Smoke-Scope ist reviewbar, aber nur fuer Normal-Paletten, die single-owner, dekomprimierbar, gueltig, nicht shared, nicht missing, nicht invalid, nicht decode-failed und nicht cross-kind shared sind. Repointing muss bewusst abgesichert werden.
 
-Naechster aktiver Arbeitsblock: `compat/upr-fvx-cfru-dpe-palette-normal-single-owner-write`.
+Fixstand aus 095: UPR-FVX `2697511da9a97df4c29c00dfda8b40e556020489` implementiert den Normal-only-Single-owner-Guard. Kein ROM-/Reload-Smoke wurde in diesem Block ausgefuehrt; `FVX-GFX-001` bleibt bis zum separaten Reload-Smoke `Write modelliert`.
+
+Naechster aktiver Arbeitsblock: `test/upr-fvx-cfru-dpe-palette-normal-single-owner-reload-smoke`.
 
 ## Priorisierte naechste Arbeitsbloecke
 
-1. Palette Normal Single-owner Write Guard Fix vorbereiten
-   - Empfohlener Branch: `compat/upr-fvx-cfru-dpe-palette-normal-single-owner-write`.
-   - Ziel: enger UPR-FVX-Fix fuer `FVX-GFX-001` als Normal-only-Farbtraeger mit Writer-Gate fuer single-owner/dekomprimierbare/gueltige/non-shared Normal-Paletten.
-   - Grundlage: Diagnose 058, 091, 092, 093 und 094.
-   - Grenzen: Shiny preserve-only, shared/invalid/missing/decode-failed/cross-kind shared preserve-only, keine breite Palette-Randomization, kein Repointing ohne Free-Space-/Pointer-/Reload-Nachweis.
+1. Palette Normal Single-owner Reload-Smoke ausfuehren
+   - Empfohlener Branch: `test/upr-fvx-cfru-dpe-palette-normal-single-owner-reload-smoke`.
+   - Ziel: den UPR-FVX-Guard-Fix aus 095 fachlich mit einem sanitisierten Reload-Smoke bestaetigen.
+   - Erwartet: `normalPaletteWriteCandidates=385`, `normalPaletteWriteAttempts <= 385`, `normalPaletteReloadMismatches=0`, `shinyPaletteWriteAttempts=0`, `sharedPaletteWriteAttempts=0`, `invalidPaletteWriteAttempts=0`, `missingPaletteWriteAttempts=0`, `decodeFailedPaletteWriteAttempts=0`, `crossKindSharedWriteAttempts=0`, `exceptionClass=none`, `stacktrace=none`.
+   - Grenzen: keine Shiny-/Shared-/Graphics-/Sprite-, TypeChart-, Species-Type-, Evolution-, Items-, Trainer-, Wild-, Text/Menu- oder MoveData-Arbeit.
 
 2. Palette Randomization Preserve/Repoint Plan halten
    - Diagnose 091 dokumentiert: direkter Fix noch nicht eng genug.

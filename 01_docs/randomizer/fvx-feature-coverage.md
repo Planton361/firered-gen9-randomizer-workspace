@@ -38,7 +38,17 @@ Sie ist die detaillierte Requirements-/Coverage-Ebene. Die Roadmap bleibt bewuss
 | In Arbeit | 0 |
 | **Gesamt** | **130** |
 
-## Aktueller Hinweis zu 094
+## Aktueller Hinweis zu 095
+
+Diagnose 095 dokumentiert den UPR-FVX-Guard-Fix fuer den spaeteren Normal-Palette-only-Smoke:
+
+- UPR-FVX `2697511da9a97df4c29c00dfda8b40e556020489` schreibt im CFRU/DPE-Gate nur sichere Normal-Paletten.
+- Shiny-, Shared-, Invalid-, Missing-, Decode-failed-, Cross-kind-shared- und unsichere Forme-Faelle werden nicht an den komprimierten Rewriter uebergeben.
+- Kein ROM-/Reload-Smoke wurde in diesem Block ausgefuehrt.
+- `FVX-GFX-001` bleibt bis zum separaten Reload-Smoke `Write modelliert`.
+- `FVX-GFX-002`, `FVX-GFX-003` und `FVX-GFX-004` bleiben `Write modelliert`.
+
+## Vorheriger Hinweis zu 094
 
 Diagnose 094 plant den naechsten engen Palette-Fix-/Smoke-Scope auf Basis von Diagnose 093:
 
