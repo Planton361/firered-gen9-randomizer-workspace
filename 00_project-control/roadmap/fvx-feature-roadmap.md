@@ -13,10 +13,10 @@ Die detaillierte Status- und Feature-ID-Matrix bleibt in:
 | Status | Anzahl |
 |---|---:|
 | Nicht begonnen | 40 |
-| Plan erstellt | 35 |
+| Plan erstellt | 33 |
 | Read modelliert | 0 |
 | Write modelliert | 23 |
-| Getestet | 0 |
+| Getestet | 2 |
 | GUI-kompatibel | 32 |
 | In Arbeit | 0 |
 | **Gesamt** | **130** |
@@ -25,7 +25,7 @@ Die detaillierte Status- und Feature-ID-Matrix bleibt in:
 
 | Paket | Feature-Zeilen | Leitstatus | Ziel |
 |---|---:|---|---|
-| General Options | 4 | Gemischt | Race Mode, Intro-Mon und globale Settings reproduzierbar pruefen |
+| General Options | 4 | Gemischt | `FVX-GEN-001/002` sind im Starter-Carrier-Smoke getestet; Race Mode und Intro-Mon separat pruefen |
 | Pokemon Traits | 28 | Gemischt | Base Stats, Types, Abilities, Evolutions, EXP Curves und Suboptionen systematisch absichern |
 | Starters, Statics & Trades | 15 | Gemischt | Starter und Statics halten; Trades und Held-Item-Subpfade ergaenzen |
 | Moves & Movesets | 11 | Gemischt | Learnset-/Moveset-GUI halten; Move-Data-Writer fertig absichern |
@@ -37,7 +37,7 @@ Die detaillierte Status- und Feature-ID-Matrix bleibt in:
 | Graphics | 6 | Gemischt | Palette-Randomization absichern; Custom Player Graphics separat modellieren |
 | Misc Tweaks | 12 | Nicht begonnen | jeden Misc-Tweak als eigenen Patch-/Risk-Scope inventarisieren |
 | GUI-Suboptions-Regressionsmatrix | n/a | Erledigt | vorhandene Diagnose 060 als technische Regressionssicht nutzen |
-| Regression-Smoke-Plan | n/a | Als Naechstes | konkrete Smoke-/Regression-Laeufe aus Feature-IDs ableiten |
+| Regression-Smoke-Plan | n/a | In Arbeit | konkrete Smoke-/Regression-Laeufe aus Feature-IDs ableiten und sanitisiert dokumentieren |
 
 ## Priorisierte Roadmap ab jetzt
 
@@ -46,7 +46,8 @@ Die detaillierte Status- und Feature-ID-Matrix bleibt in:
 | Reihenfolge | Branch | Ziel | Status |
 |---|---|---|---|
 | P0.1 | `docs/fvx-feature-coverage-matrix` | FVX-GUI-Features als Requirements-/Coverage-Matrix dokumentieren | In Arbeit |
-| P0.2 | `analysis/upr-fvx-cfru-dpe-p1-regression-smoke-plan` | Smoke-/Regression-Plan fuer priorisierte GUI-Suboptionen erstellen, ohne neue Randomizer-Laeufe im Planblock | Als Naechstes |
+| P0.2 | `analysis/upr-fvx-cfru-dpe-p1-regression-smoke-plan` | Smoke-/Regression-Plan fuer priorisierte GUI-Suboptionen erstellen, ohne neue Randomizer-Laeufe im Planblock | Erledigt |
+| P0.3 | `test/upr-fvx-cfru-dpe-p1-global-species-pool-regression-smoke` | Global-Species-Pool-Smoke fuer `FVX-GEN-001/002` im Starter-Carrier-Scope sanitisiert dokumentieren | In Arbeit |
 
 ### P1 - Offene Writer mit vorhandenen Modellen
 
@@ -71,7 +72,7 @@ Die detaillierte Status- und Feature-ID-Matrix bleibt in:
 
 | Paket | Ziel |
 |---|---|
-| General Options | Limit Pokemon, No Premature Evolutions, No Random Intro Mon und Race Mode pruefen |
+| General Options | Limit Pokemon und No Premature Evolutions ausserhalb des Starter-Carrier-Smokes weiter pruefen; No Random Intro Mon und Race Mode separat inventarisieren |
 | Misc Tweaks | alle 12 Misc Tweaks inventarisieren und pro Tweak Risiko/Writer bestimmen |
 | Custom Player Graphics | getrennt von Pokemon-Palette-Randomization modellieren |
 | In-Game Trades Text/Items/IVs | Spezies-, Text-, Item- und IV-Writer getrennt pruefen |
