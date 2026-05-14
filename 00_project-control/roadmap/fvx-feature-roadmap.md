@@ -13,11 +13,11 @@ Die detaillierte Status- und Feature-ID-Matrix bleibt in:
 | Status | Anzahl |
 |---|---:|
 | Nicht begonnen | 39 |
-| Plan erstellt | 30 |
+| Plan erstellt | 28 |
 | Read modelliert | 0 |
 | Write modelliert | 20 |
 | Getestet | 10 |
-| GUI-kompatibel | 31 |
+| GUI-kompatibel | 33 |
 | In Arbeit | 0 |
 | **Gesamt** | **130** |
 
@@ -26,7 +26,7 @@ Die detaillierte Status- und Feature-ID-Matrix bleibt in:
 | Paket | Feature-Zeilen | Leitstatus | Ziel |
 |---|---:|---|---|
 | General Options | 4 | Gemischt | `FVX-GEN-001/002` sind im Starter-Carrier-Smoke getestet; Race Mode und Intro-Mon separat pruefen |
-| Pokemon Traits | 28 | Gemischt | Base Stats, Types, Abilities, Evolutions, EXP Curves und Suboptionen systematisch absichern; Evolution Same Typing ist nach 080 im engen Scope stabil, weitere Evolution-Suboptionen getrennt halten |
+| Pokemon Traits | 28 | Gemischt | Base Stats, Types, Abilities, Evolutions, EXP Curves und Suboptionen systematisch absichern; Evolution Similar Strength und Same Typing sind im engen `FVX-TRAIT-016`-Scope stabil, weitere Evolution-Suboptionen getrennt halten |
 | Starters, Statics & Trades | 15 | Gemischt | Starter-Filter sind im Starter-Species-Writer-Smoke getestet; Starter-Held-Items, Trades und Level-Subpfade ergaenzen |
 | Moves & Movesets | 11 | Gemischt | Learnset-/Moveset-GUI halten; Move-Data-Writer fertig absichern |
 | Foe Pokemon | 14 | Gemischt | Trainer-Species/-Movesets/-Held-Items halten; Trainer Similar Strength und `FVX-FOE-009` sind im `FVX-FOE-001` Carrier stabil |
@@ -64,7 +64,7 @@ Die detaillierte Status- und Feature-ID-Matrix bleibt in:
 
 | Paket | Ziel |
 |---|---|
-| Pokemon Traits | Follow Evolutions, Force Dual Types, Ability-Ban-/Allow-Filter, EXP Curves testen; `FVX-TRAIT-019` aus 080 halten, `FVX-TRAIT-018` und Evolution-Methoden weiter getrennt behandeln |
+| Pokemon Traits | Follow Evolutions, Force Dual Types, Ability-Ban-/Allow-Filter, EXP Curves testen; `FVX-TRAIT-018` aus 082 und `FVX-TRAIT-019` aus 080 halten, Evolution-Methoden weiter getrennt behandeln |
 | Starters, Statics & Trades | Starter-Held-Items und In-Game-Trades absichern; Starter-Type-/Legendary-/BST-Filter ausserhalb des Starter-Species-Writer-Smokes nur separat hochstufen |
 | Foe Pokemon | Additional Pokemon, League-Unique, Battle Style, Rival Carry, Trainer Names/Class Names absichern; Force Diverse Types / `FVX-FOE-009` aus 078 im `FVX-FOE-001` Carrier halten |
 | Wild Pokemon | Evolution Restrictions, Catch Rate, Catch-em-all und Level-Balance absichern; Wild Similar Strength und Type Restrictions aus 075 im `FVX-WILD-001` Carrier halten |

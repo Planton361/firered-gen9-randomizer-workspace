@@ -1,5 +1,24 @@
 # Session State
 
+## 2026-05-14 - CFRU/DPE Evolution Similar Strength Normalized Reload Diagnostics
+
+Arbeitsbranch: `test/upr-fvx-cfru-dpe-p1-evolution-similar-strength-normalized-reload`
+
+Aktueller Stand:
+
+- Neuer sanitiserter Ergebnisbericht `08_tests/randomizer/082_evolution_similar_strength_normalized_reload_diagnostics.md` erstellt.
+- Es wurde nur `FVX-TRAIT-018` Evolutions Similar Strength im Carrier `FVX-TRAIT-016` Evolution-Species-Writer lokal ausgefuehrt.
+- Der Reload-Vergleich wurde auf persistierte Gen3-Evolution-Felder normalisiert: Evolution-Type, ExtraInfo mit Item-ID-Normalisierung und Ziel-Species per interner `SpeciesSet`-Identitaet.
+- `Evolution.forme` wurde nicht als Mismatch-Kriterium gewertet.
+- Ergebnis: `saveSuccessful=true`, `logSuccessful=true`, `outputRomExists=true`, `logNonEmpty=true`, Reload erfolgreich, `normalizedWriteReloadEvolutionMismatches=0`, `rawWithFormeWriteReloadEvolutionMismatches=0`, `<unknown>=false`, `exceptionClass=none` und `stacktrace=none`.
+- `Bad Egg=true` bleibt nach 055 als bestehender Evolution-Log-/Sonder-Species-Marker klassifiziert, weil der normalisierte Reload stabil ist und der Mismatch-Zaehler `0` bleibt.
+- Keine Codeaenderung, kein Fix, keine Aenderung an `02_external/**`, kein Tool-Manifest-Update.
+- `FVX-TRAIT-019`, Wild, Trainer, TypeChart, MoveData, Palette, Items, Text/Menu, Graphics und Evolution-Methoden-Writer blieben ausgeschlossen.
+
+Naechster sinnvoller Schritt:
+
+- PR fuer Diagnose 082 reviewen und mergen. Danach Evolution-Methoden-Writer und weitere Evolution-Suboptionen getrennt planen; fuer `FVX-TRAIT-018` ist in diesem engen Similar-Strength-Scope kein Fixbranch erforderlich.
+
 ## 2026-05-14 - CFRU/DPE Evolution Similar Strength Mismatch Diagnostics
 
 Arbeitsbranch: `analysis/upr-fvx-cfru-dpe-p1-evolution-similar-strength-mismatch-diagnostics`
