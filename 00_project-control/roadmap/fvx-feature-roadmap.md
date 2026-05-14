@@ -1,3 +1,10 @@
+# FVX Feature Roadmap Update - 2026-05-15 - Field Items API TM-slot scope plan
+
+- Diagnose 107 explains the post-PR-36 `FVX-ITEM-002` blocker: raw diagnostics find `28` TM Field-Item slots, but `getFieldItems()` exposes none because the API filters on `Item::isAllowed`.
+- Next fix should stay in the CFRU/DPE Field-Items API TM-slot scope and must not make TMs globally allowed.
+- Keep `FVX-ITEM-002` below GUI-compatible until a narrow API-scope fix and reload smoke pass.
+- Keep `FVX-ITEM-003` Random Even and `FVX-ITEM-004` Ban Bad Items separate.
+
 # FVX Feature Roadmap Update - 2026-05-15 - Field Items Random API TM-slot blocker
 
 - Diagnose 106 shows UPR-FVX PR #36 removes the original Unique-TM-Filler pool deficit for `FVX-ITEM-002`.

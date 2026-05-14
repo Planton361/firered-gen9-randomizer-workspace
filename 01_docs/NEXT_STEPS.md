@@ -1,3 +1,20 @@
+# Next Steps Update - 2026-05-15 - Field Items API TM-slot scope fix next
+
+Aktueller Fokus:
+
+- Diagnose 107 narrows the `FVX-ITEM-002 Field Items Random` blocker to the Field-Items API TM-slot scope.
+- Raw diagnostics show `tmFieldItemSlots=28` and `requiredFieldTMsTotal=24`; `getFieldItems()` currently exposes `0` TM slots because it filters on `Item::isAllowed`.
+- Do not proceed to `FVX-ITEM-003` or `FVX-ITEM-004` until `FVX-ITEM-002` reloads successfully.
+
+Empfohlener naechster Branch:
+
+- `compat/upr-fvx-cfru-dpe-field-items-api-tm-slot-scope-fix`
+
+Ziel:
+
+- Prepare a minimal CFRU/DPE-gated Field-Items API TM-slot scope fix for `FVX-ITEM-002` with `banBadRandomFieldItems=false`.
+- Do not make TMs globally allowed and do not expand Shops, Pickup, Held Items, TM/HM/Tutor/Learnset, Random Even, Ban Bad Items, Scriptparser, Palette, MoveData, Trainer, Wild, Evolution or Text/Menu.
+
 # Next Steps Update - 2026-05-15 - Field Items Random API TM-slot scope plan next
 
 Aktueller Fokus:

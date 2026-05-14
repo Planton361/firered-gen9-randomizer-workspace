@@ -1,3 +1,10 @@
+# Session State Update - 2026-05-15 - Field Items Random API TM-slot scope plan
+
+- New protocol: `08_tests/randomizer/107_field_items_random_api_tm_slot_scope_plan.md`.
+- Read-only UPR-FVX analysis confirms the active `FVX-ITEM-002` blocker is not the PR #36 TM-filler pool anymore: raw Field-Item diagnostics see `tmFieldItemSlots=28`, while `Gen3RomHandler.getFieldItems()` exposes `0` TM slots because the Field-Items API only includes slots whose current item is `isAllowed()`.
+- TMs are loaded and classified as TMs, but the existing allowed-slot API scope filters them before `ItemRandomizer.randomizeTMFieldItems(...)`.
+- `FVX-ITEM-001` remains `GUI-kompatibel`; `FVX-ITEM-002` remains `Write modelliert` until a CFRU/DPE-gated API TM-slot scope fix and reload smoke pass; `FVX-ITEM-003` and `FVX-ITEM-004` remain `Write modelliert`.
+
 # Session State Update - 2026-05-15 - Field Items Random TM-pool reload smoke blocked
 
 - Branch: `test/upr-fvx-cfru-dpe-field-items-random-tm-pool-reload-smoke`.
