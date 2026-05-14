@@ -1,3 +1,11 @@
+# Roadmap Status Update - 2026-05-15 - Field Items Ban Bad scope plan
+
+- Added `08_tests/randomizer/111_field_items_ban_bad_scope_plan.md`.
+- Field Items: `FVX-ITEM-004` is planned as a Non-TM random-pool filter, not a separate writer.
+- Ban Bad should be smoked first with `FieldItemsMod.RANDOM` and `banBadRandomFieldItems=true`; Random Even + Ban Bad remains a second smoke.
+- `FVX-ITEM-001`, `FVX-ITEM-002`, and `FVX-ITEM-003` keep their documented narrow GUI-compatible statuses; `FVX-ITEM-004` remains `Write modelliert`.
+- Next P1 step: Field-Items-only Random Ban-Bad reload smoke.
+
 # Roadmap Status Update - 2026-05-15 - Field Items Random Even reload smoke
 
 - Added `08_tests/randomizer/110_field_items_random_even_reload_smoke.md`.
