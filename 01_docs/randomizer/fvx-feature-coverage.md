@@ -447,3 +447,9 @@ Diese Matrix soll nicht als 130 Roadmap-Zeilen gepflegt werden. Fuer die Roadmap
 - `00_project-control/roadmap/roadmap-status.md` verweist nur auf grobe Arbeitspakete und grosse Statusaenderungen.
 - Neue Tests sollen ihre Feature-IDs nennen, damit Ergebnisse rueckverfolgbar bleiben.
 - Keine ROMs, Saves, Builds, Tool-Binaries, privaten Pfade oder Secrets in diese Datei aufnehmen.
+
+## 2026-05-14 - Palette Normal-only Single-owner Smoke blockiert
+
+- `FVX-GFX-001`: UPR-FVX Write-Guard-Fix vorhanden, aber Diagnose 096 konnte keinen fachlichen Reload-Smoke ausführen, weil kein UPR-FVX-ladbarer CFRU/DPE-Gen9-BPRE-Zielkandidat mit `candidateSpeciesTotal=1439` verfügbar war.
+- Status bleibt konservativ: nicht `GUI-kompatibel`; maximal Fix vorbereitet, Smoke blockiert.
+- `FVX-GFX-002`, `FVX-GFX-003`, `FVX-GFX-004` bleiben `Write modelliert`.
