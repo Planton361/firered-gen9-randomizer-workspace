@@ -1,5 +1,24 @@
 # Session State
 
+## 2026-05-14 - CFRU/DPE Evolution Similar Strength Mismatch Diagnostics
+
+Arbeitsbranch: `analysis/upr-fvx-cfru-dpe-p1-evolution-similar-strength-mismatch-diagnostics`
+
+Aktueller Stand:
+
+- Neues read-only Code-/Protokollanalyse-Protokoll `08_tests/randomizer/081_p1_evolution_similar_strength_mismatch_diagnostics.md` erstellt.
+- 081 untersucht den verbliebenen 070-Blocker `FVX-TRAIT-018` Evolutions Similar Strength im Carrier `FVX-TRAIT-016` Evolution-Species-Writer.
+- Relevante Codepfade sind `EvolutionRandomizer.randomizeEvolutionsInner()`, `findPossibleReplacements(...)`, `prepareNewEvolution(...)`, `SpeciesSet.getRandomSimilarStrengthSpecies(...)`, `Gen3RomHandler.loadEvolutions()`, `writeEvolutions()` und `Evolution.toString()/equals(...)`.
+- Wahrscheinlichste Einordnung: `writeReloadEvolutionMismatches=24` aus 070 ist eher ein zu breiter Diagnosevergleich auf nicht persistierte Forme-/Zusatzfelder als ein harter Evolution-Species-Write-Fehler.
+- `prepareNewEvolution(...)` setzt `Evolution.forme`, aber der Gen3-Evolution-Write-/Reload-Pfad persistiert dieses Feld nicht; 026 definiert den Reload-Erfolg ueber persistierte Evolution-Felder und Ziel-Species per interner `SpeciesSet`-Identitaet.
+- `Bad Egg=true` korreliert nicht zwingend mit den 070-Mismatches: 026 und 080 zeigen `Bad Egg` im Evolution-Scope bei `0` Reload-Mismatches.
+- Der Same-Typing-Fix aus 080 bleibt getrennt; `FVX-TRAIT-018` nutzt den BST-/Similar-Strength-Pfad und nicht den Same-Typing-`hasSharedType(...)`-Guard.
+- Keine Codeaenderung, kein Fix, keine Randomizer-Laeufe, keine Aenderung an `02_external/**`, kein Tool-Manifest-Update.
+
+Naechster sinnvoller Schritt:
+
+- Separater, eng freigegebener Diagnose-Smoke fuer `FVX-TRAIT-018` mit normalisiertem Reload-Vergleich auf persistierte Gen3-Evolution-Felder und interne Ziel-Species-Identitaet. `Evolution.forme` nicht als Mismatch-Kriterium werten; `Bad Egg` nach 055 separat klassifizieren.
+
 ## 2026-05-14 - CFRU/DPE Evolution Same Typing Null-Type Fix
 
 Workspace-Branch: `compat/upr-fvx-cfru-dpe-p1-evolution-same-typing-nulltype-fix`

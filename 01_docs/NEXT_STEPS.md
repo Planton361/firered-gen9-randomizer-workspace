@@ -2,7 +2,7 @@
 
 ## Aktueller Fokus
 
-CFRU/DPE Evolution Same Typing Null-Type Fix ist umgesetzt und sanitisiert dokumentiert. Diagnose: `08_tests/randomizer/080_evolution_same_typing_nulltype_fix_diagnostics.md`.
+CFRU/DPE Evolution Similar Strength Mismatch Diagnostics ist read-only dokumentiert. Diagnose: `08_tests/randomizer/081_p1_evolution_similar_strength_mismatch_diagnostics.md`.
 
 ## Priorisierte naechste Arbeitsbloecke
 
@@ -23,10 +23,11 @@ CFRU/DPE Evolution Same Typing Null-Type Fix ist umgesetzt und sanitisiert dokum
    - Diagnose 080 und Submodule-Pin reviewen und mergen.
    - Der Fix bleibt auf `EvolutionRandomizer` und den Same-Typing-/Null-Primary-Type-Scope begrenzt.
 
-4. Weitere 070-Evolution-Blocker getrennt fortsetzen
-   - `FVX-TRAIT-019` ist im eng getesteten Same-Typing-Scope entblockt.
-   - `FVX-TRAIT-018` wurde in 080 nur getrennt als Regression beobachtet und bleibt fachlich separat.
-   - Weiter ohne TypeChart, MoveData Write, Palette, Items, Encounter Held Items, custom Day/Night-Wild, Catch Em All, Minimum Catch Rate, Level-Modifier, Evolution-Methoden-Writer oder Text/Menu/Graphics.
+4. `FVX-TRAIT-018` Similar Strength normalisiert diagnostizieren
+   - Diagnose 081 grenzt die 070-Mismatches wahrscheinlich auf einen zu breiten Vergleich gegen nicht persistierte Forme-/Zusatzfelder ein.
+   - Naechster Schritt ist ein separater Test-/Diagnosebranch mit Reload-Vergleich nur auf persistierte Gen3-Evolution-Felder und Ziel-Species per interner `SpeciesSet`-Identitaet.
+   - `Bad Egg` nach 055 getrennt klassifizieren; `Evolution.forme` nicht als Mismatch-Kriterium werten.
+   - Weiter ohne TypeChart, MoveData Write, Palette, Items, Encounter Held Items, custom Day/Night-Wild, Catch Em All, Minimum Catch Rate, Level-Modifier, Evolution-Methoden-Writer, `FVX-TRAIT-019` Same Typing oder Text/Menu/Graphics.
 
 5. Wild-Suboptionen konservativ halten
    - `FVX-WILD-011` und `FVX-WILD-004` sind im `FVX-WILD-001` Carrier-Fix-Smoke stabil.
