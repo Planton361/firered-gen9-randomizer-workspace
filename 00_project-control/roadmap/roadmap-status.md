@@ -1,3 +1,11 @@
+# Roadmap Status Update - 2026-05-15 - Field Items Random blocked
+
+- Field Items: Diagnose 103 blocks `FVX-ITEM-002 Field Items Random` with `RandomizationException` before output/reload.
+- `FVX-ITEM-001` remains `GUI-kompatibel` for the narrow Shuffle scope.
+- `FVX-ITEM-002`, `FVX-ITEM-003` and `FVX-ITEM-004` remain `Write modelliert`.
+- Next P1 step: read-only Random TM-pool blocker plan before any codefix.
+- Shops and Pickup remain separate follow-up scopes.
+
 # Roadmap Status Update - 2026-05-15 - Field Items Shuffle smoke complete
 
 - Field Items: Diagnose 102 completes the first allowed-slot Write-/Reload-Smoke for `FVX-ITEM-001 Field Items Shuffle`.

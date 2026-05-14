@@ -1,3 +1,10 @@
+# FVX Feature Roadmap Update - 2026-05-15 - Field Items Random blocked
+
+- Field Items Random has a blocked smoke in Diagnose 103: candidate loaded, but save fails with `RandomizationException` before output/reload.
+- Keep `FVX-ITEM-002` as `Write modelliert` until the Random TM-pool blocker is planned and fixed.
+- Do not proceed to Random Even or Ban Bad Items until the Random carrier is stable.
+- Do not fold Shops or Pickup into the Field Items Random blocker work.
+
 # FVX Feature Roadmap Update - 2026-05-15 - Field Items Shuffle complete
 
 - Field Items Shuffle has a successful allowed-slot Write-/Reload-Smoke in Diagnose 102.

@@ -1,3 +1,11 @@
+# FVX Feature Coverage Update - 2026-05-15 - Field Items Random blocked
+
+- `FVX-ITEM-001` remains `GUI-kompatibel` for the tested CFRU/DPE Gen9-BPRE Field Items Shuffle allowed-slot scope.
+- `FVX-ITEM-002` remains `Write modelliert`: Diagnose 103 blocks with `RandomizationException` before output/reload.
+- `FVX-ITEM-003` remains `Write modelliert`.
+- `FVX-ITEM-004` remains `Write modelliert`.
+- Shops, Pickup, Held Items, TM/HM/Tutor/Learnset, Palette/Graphics, MoveData/MoveNames and TypeChart remain outside Diagnose 103.
+
 # FVX Feature Coverage Update - 2026-05-15 - Field Items Shuffle GUI-compatible
 
 - `FVX-ITEM-001` is `GUI-kompatibel` for the tested CFRU/DPE Gen9-BPRE Field Items Shuffle allowed-slot scope after Diagnose 102.
