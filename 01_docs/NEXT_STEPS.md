@@ -2,24 +2,26 @@
 
 ## Aktueller Fokus
 
-CFRU/DPE Wild-Filter-Carrier-Diagnose-/Harness-Plan ist read-only dokumentiert. Planprotokoll: `08_tests/randomizer/073_p1_wild_filter_carrier_diagnostics_plan.md`.
+CFRU/DPE Wild-Filter-Carrier-Codeanalyse ist read-only dokumentiert. Diagnoseprotokoll: `08_tests/randomizer/074_p1_wild_filter_carrier_code_diagnosis.md`.
 
 ## Priorisierte naechste Arbeitsbloecke
 
-1. PR fuer `analysis/upr-fvx-cfru-dpe-p1-wild-filter-carrier-diagnostics`
-   - Read-only Wild-Filter-Carrier-Diagnoseplan 073 reviewen und mergen.
+1. PR fuer `analysis/upr-fvx-cfru-dpe-p1-wild-filter-carrier-code-diagnosis`
+   - Read-only Codeanalyse 074 reviewen und mergen.
 
-2. Read-only Code-/Protokollanalyse fuer den Wild-Filter-Carrier
-   - `FVX-WILD-011` und `FVX-WILD-004` gemeinsam gegen Carrier-Scope, Wild-Nullslot-/Placeholder-Scope, Area-/Encounter-Slot-Scope, Species-Pool/BST-Filter und Species-Type-Filter trennen.
-   - Pruefen, ob vorhandene Dokumente und Codepfade reichen, bevor lokale Diagnose-Laeufe freigegeben werden.
+2. Eng gegateter Fixbranch fuer Wild-Mapping-/Nullslot-Scope
+   - Ausgangspunkt: 074 grenzt die wahrscheinliche Ursache auf `WildEncounterRandomizer` GAME-Mapping, `areaInformationMap`, `EncounterArea.getSpeciesInArea()` und `SpeciesSet.add(null)` ein.
+   - Ziel: `FVX-WILD-011` und `FVX-WILD-004` duerfen nicht mehr an einem nicht aufloesbaren/null Wild-Encounter-Slot mit `IllegalStateException` abbrechen.
    - Weiter ohne TypeChart, MoveData Write, Palette, Items, Encounter Held Items, custom Day/Night-Wild, Catch Em All, Minimum Catch Rate, Level-Modifier oder Text/Menu/Graphics.
 
-3. Falls read-only nicht ausreicht: separater lokaler Wild-Carrier-Diagnosebranch
-   - Nur mit expliziter Freigabe, sanitisierten Metriken und ohne Fixumsetzung.
-   - Keine ROM-/Log-/Output-/Build-Pfade, ROM-Namen, Hashes oder Loginhalte dokumentieren.
+3. Optional vor dem Fix: separater lokaler Wild-Carrier-Diagnosebranch
+   - Nur falls ein sanitisiert belegter Area-/Slot- oder Exception-Message-Nachweis vor Fixfreigabe gewuenscht ist.
+   - Keine ROM-/Log-/Output-/Build-Pfade, ROM-Namen, Hashes oder Loginhalte dokumentieren; keine Fixumsetzung in diesem optionalen Diagnosebranch.
 
-4. Danach ggf. eng gegateter Wild-Pool-/Placeholder-Scope-Fix
-   - Nur nach klarer Ursache; kein Fixbranch, solange Carrier-Scope, BST-Poolfilter und Species-Type-Filter nicht getrennt sind.
+4. Nach Fix: zwei getrennte Sanitized Smokes
+   - `FVX-WILD-011` Wild Similar Strength.
+   - `FVX-WILD-004` Wild Type Restrictions / Type Themes / Keep Primary.
+   - Erfolgskriterien: Save/Log/Output/Reload true, `writeReloadWildPokemonMismatches=0`, `Bad Egg`/`<unknown>` nach 055 klassifiziert und `stacktrace=none`.
 
 5. Danach getrennte Diagnosebloecke fuer die restlichen 070-Blocker
    - `FVX-FOE-009` gegen Trainer-Type-Diversity-/Null-Type-Scope.
