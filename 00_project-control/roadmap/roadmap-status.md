@@ -629,3 +629,12 @@ Zweck: Diagnose 082 reviewen und mergen; danach Evolution-Methoden-Writer und we
 - Blockerwerte: `candidateFilesChecked=94`, `candidateLoaded=false`, `candidateOpenFailures=2`, `candidateSpeciesTotalMismatches=92`, `candidateSpeciesTotal=0`.
 - `FVX-GFX-001`, `FVX-GFX-002`, `FVX-GFX-003` und `FVX-GFX-004` bleiben `Write modelliert` und nicht GUI-kompatibel.
 - Naechster P1-Analyseblock: `analysis/upr-fvx-cfru-dpe-field-items-shops-pickup-scope-plan`.
+
+## 2026-05-14 - Diagnose 097 Field Items / Shops / Pickup Scope Plan
+
+- Diagnose 097 plant den naechsten Item-P1-Scope read-only.
+- Ergebnis: Field Items, Shops und Pickup nicht gemeinsam fixen; unterschiedliche Writer-Risiken.
+- Field Items: Map-/Script-/Hidden-Item-Offset-Writer mit TM-/Required-/Progression-Policy.
+- Pickup: eigener Table-/Locator-/Probability-Scope.
+- Shops: eigener Shoplisten-/Terminator-/DataRewriter-/Repointing-/Preis-Scope.
+- Naechster Block: `analysis/upr-fvx-cfru-dpe-field-items-scope-diagnostics-plan`.

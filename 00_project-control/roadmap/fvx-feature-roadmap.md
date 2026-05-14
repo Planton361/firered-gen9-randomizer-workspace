@@ -110,3 +110,7 @@ Nicht in den Retry aufnehmen: Shiny-Palette-Writes, Shared-Palette-Writes, Graph
 Nach Diagnose 096 bleibt Palette konservativ: `FVX-GFX-001` hat einen Guard-Fix, aber keinen erfolgreichen Reload-Smoke; `FVX-GFX-001..004` bleiben `Write modelliert`. Ein Palette-Retry wird erst mit explizit freigegebenem UPR-FVX-ladbarem `candidateSpeciesTotal=1439` Kandidaten sinnvoll.
 
 Der naechste empfohlene P1-Block ist deshalb kein Palette-Scope-Ausbau, sondern `analysis/upr-fvx-cfru-dpe-field-items-shops-pickup-scope-plan` als read-only Planung fuer Field Items, Shops und Pickup.
+
+## 2026-05-14 - Item-P1-Aufteilung nach Diagnose 097
+
+Field Items, Shops und Pickup bleiben im Items-Paket, werden aber nicht als gemeinsamer Fixbranch empfohlen. Reihenfolge: Field Items zuerst, danach Pickup, Shops zuletzt wegen Terminator-/DataRewriter-/Repointing- und Preisrisiken. Gemeinsame Item-Pool-Bans bleiben Querschnitt, aber jeder Writer braucht eigene Reload-Kriterien.
