@@ -24,9 +24,9 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Aktueller Branch | `test/upr-fvx-cfru-dpe-p1-global-species-pool-regression-smoke` |
-| Nächster Branch | `test/upr-fvx-cfru-dpe-p1-starters-suboptions-regression-smoke` |
-| Aktueller Fokus | CFRU/DPE Global Species Pool Regression-Smoke-Ergebnisse |
+| Aktueller Branch | `test/upr-fvx-cfru-dpe-p1-starters-suboptions-regression-smoke` |
+| Nächster Branch | `analysis/upr-fvx-cfru-dpe-p1-similar-strength-same-type-regression-smoke` |
+| Aktueller Fokus | CFRU/DPE Starters Suboptions Regression-Smoke-Ergebnisse |
 | ROM-/Build-Arbeit | keine neuen ROM-/Build-Artefakte; keine Artefakte committen |
 | Externe Repos | als Submodule auf Planton361-Forks eingebunden |
 | Forks | Planton361-Forks fuer UPR-FVX, DPE Gen9 und CFRU dokumentiert |
@@ -124,18 +124,19 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | 08 Randomizer-Kompatibilität | CFRU/DPE Global Species Pool Regression-Smoke-Plan | Diagnose 062 plant `FVX-GEN-001` Limit Pokemon inklusive Generation Limits / related Pokemon und `FVX-GEN-002` No Premature Evolutions gegen einen einzelnen stabilen Species-Carrier, ohne offene Writer und ohne Testausfuehrung |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Starters Suboptions Regression-Smoke-Plan | Diagnose 063 plant `FVX-SST-003`, `FVX-SST-004`, `FVX-SST-005`, `FVX-SST-006` und `FVX-SST-009` ueber den belegten `FVX-SST-002`-Starter-Carrier; Starter Held Items und offene Writer bleiben ausgeschlossen |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Global Species Pool Regression-Smoke-Ergebnisse | Diagnose 064 dokumentiert sanitisiert Baseline Carrier, `FVX-GEN-001` Generation Limits, `FVX-GEN-001` related Pokemon und `FVX-GEN-002` No Premature Evolutions im `FVX-SST-002`-Starter-Carrier-Smoke mit Save/Log/Reload true, `Starter-Mismatches=0` und `stacktrace=none` |
+| 08 Randomizer-Kompatibilität | CFRU/DPE Starters Suboptions Regression-Smoke-Ergebnisse | Diagnose 065 dokumentiert sanitisiert `FVX-SST-003`, `FVX-SST-004`, `FVX-SST-005`, `FVX-SST-006` und `FVX-SST-009` im Starter-Species-Writer-Smoke mit Save/Log/Reload true, `Starter-Mismatches=0`, `Filterverletzungen=0` und `stacktrace=none` |
 
 ## In Arbeit
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Global Species Pool Regression-Smoke-Ergebnisse | Diagnose 064 dokumentieren und PR erstellen |
+| 08 Randomizer-Kompatibilität | Starters Suboptions Regression-Smoke-Ergebnisse | Diagnose 065 dokumentieren und PR erstellen |
 
 ## Als Nächstes
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Starters Suboptions Regression-Smoke | Die in 063 geplanten Starter-Suboptions-Slices lokal ausfuehren, ohne Starter Held Items und offene Writer |
+| 08 Randomizer-Kompatibilität | Similar Strength / Same Type Regression-Smoke | BST-/Type-basierte Pooling-Suboptionen ohne TypeChart oder MoveData-Write pruefen |
 
 ## Noch offen
 
@@ -213,7 +214,8 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | P1ao | `analysis/upr-fvx-cfru-dpe-p1-regression-smoke-plan` | P1 Regression-Smoke-Plan | erledigt; Diagnose 061 plant Smoke-Gruppen aus 060 und der FVX Feature-Coverage-Matrix ohne Testausfuehrung |
 | P1ap | `analysis/upr-fvx-cfru-dpe-p1-global-species-pool-regression-smoke` | Global Species Pool Regression-Smoke-Plan | erledigt; Diagnose 062 plant `FVX-GEN-001` und `FVX-GEN-002` gegen einen stabilen Species-Carrier ohne offene Writer und ohne Testausfuehrung |
 | P1aq | `analysis/upr-fvx-cfru-dpe-p1-starters-suboptions-regression-smoke` | Starters Suboptions Regression-Smoke-Plan | erledigt; Diagnose 063 plant Starter-Poolfilter ueber `FVX-SST-002` ohne Starter Held Items und ohne offene Writer |
-| P1ar | `test/upr-fvx-cfru-dpe-p1-global-species-pool-regression-smoke` | Global Species Pool Regression-Smoke-Ergebnisse | aktueller Test-/Dokumentationsbranch; Diagnose 064 dokumentiert `FVX-GEN-001/002` im Starter-Carrier-Smoke als getestet, nicht global vollabgedeckt |
+| P1ar | `test/upr-fvx-cfru-dpe-p1-global-species-pool-regression-smoke` | Global Species Pool Regression-Smoke-Ergebnisse | erledigt; Diagnose 064 dokumentiert `FVX-GEN-001/002` im Starter-Carrier-Smoke als getestet, nicht global vollabgedeckt |
+| P1as | `test/upr-fvx-cfru-dpe-p1-starters-suboptions-regression-smoke` | Starters Suboptions Regression-Smoke-Ergebnisse | aktueller Test-/Dokumentationsbranch; Diagnose 065 dokumentiert `FVX-SST-003/004/005/006/009` im Starter-Species-Writer-Smoke als getestet, Starter Held Items bleiben separat |
 | P2 | `randomizer/cfru-day-night-wild-table-analysis` | CFRU-Custom-Day/Night-Wild-Tabellen separat untersuchen | erst nach P1-Schreibpfad-Diagnose; Route-1-Fallback bleibt stabil |
 | P3 | noch festlegen | Nullslot-`<unknown>` mit `rawInternalSpeciesId=0` klassifizieren | nicht mit GenRestrictions vermischen |
 | P4 | noch festlegen | BizHawk-/Ironmon-Tracker-/RAM-Mapping pruefen | erst nach stabiler ROM-Randomizer-Kompatibilitaet |
@@ -256,10 +258,10 @@ Excel-Roadmap:
 ## Nächster empfohlener Branch
 
 ```text
-test/upr-fvx-cfru-dpe-p1-starters-suboptions-regression-smoke
+analysis/upr-fvx-cfru-dpe-p1-similar-strength-same-type-regression-smoke
 ```
 
-Zweck: Die in 063 geplanten Starter-Suboptions-Slices lokal ausfuehren, ohne Starter Held Items und ohne offene Writer.
+Zweck: BST-/Type-basierte Pooling-Suboptionen planen oder pruefen, ohne TypeChart oder MoveData-Write zu aktivieren.
 
 ## Arbeitsblock-Log
 

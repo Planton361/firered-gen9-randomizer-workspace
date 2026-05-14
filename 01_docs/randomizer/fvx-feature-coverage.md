@@ -29,12 +29,12 @@ Sie ist die detaillierte Requirements-/Coverage-Ebene. Die Roadmap bleibt bewuss
 
 | Status | Anzahl |
 |---|---:|
-| Nicht begonnen | 40 |
-| Plan erstellt | 33 |
+| Nicht begonnen | 39 |
+| Plan erstellt | 31 |
 | Read modelliert | 0 |
 | Write modelliert | 23 |
-| Getestet | 2 |
-| GUI-kompatibel | 32 |
+| Getestet | 7 |
+| GUI-kompatibel | 30 |
 | In Arbeit | 0 |
 | **Gesamt** | **130** |
 
@@ -44,7 +44,7 @@ Sie ist die detaillierte Requirements-/Coverage-Ebene. Die Roadmap bleibt bewuss
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
 | General Options | 4 | 2 | 0 | 0 | 0 | 2 | 0 | 0 |
 | Pokemon Traits | 28 | 7 | 17 | 0 | 0 | 0 | 4 | 0 |
-| Starters, Statics & Trades | 15 | 6 | 2 | 0 | 0 | 0 | 7 | 0 |
+| Starters, Statics & Trades | 15 | 5 | 0 | 0 | 0 | 5 | 5 | 0 |
 | Moves & Movesets | 11 | 0 | 3 | 0 | 6 | 0 | 2 | 0 |
 | Foe Pokemon | 14 | 8 | 1 | 0 | 0 | 0 | 5 | 0 |
 | Wild Pokemon | 12 | 3 | 1 | 0 | 0 | 0 | 8 | 0 |
@@ -98,13 +98,13 @@ Sie ist die detaillierte Requirements-/Coverage-Ebene. Die Roadmap bleibt bewuss
 
 - FVX-SST-001 | Starter Pokemon: Custom | GUI-kompatibel
 - FVX-SST-002 | Starter Pokemon: Random completely | GUI-kompatibel
-- FVX-SST-003 | Starter Pokemon: Random basic with 2 evolutions | GUI-kompatibel
-- FVX-SST-004 | Starter Pokemon: Random any basic | GUI-kompatibel
-- FVX-SST-005 | Starter Type Restrictions | Plan erstellt
-- FVX-SST-006 | Starter: Don't Use Legendaries | Plan erstellt
+- FVX-SST-003 | Starter Pokemon: Random basic with 2 evolutions | Getestet
+- FVX-SST-004 | Starter Pokemon: Random any basic | Getestet
+- FVX-SST-005 | Starter Type Restrictions | Getestet
+- FVX-SST-006 | Starter: Don't Use Legendaries | Getestet
 - FVX-SST-007 | Starter Held Items randomisieren | Nicht begonnen
 - FVX-SST-008 | Starter Held Items: Ban Bad Items | Nicht begonnen
-- FVX-SST-009 | Starter BST-Min/Max | Nicht begonnen
+- FVX-SST-009 | Starter BST-Min/Max | Getestet
 - FVX-SST-010 | Static Pokemon: Swap Legendaries & Standards | GUI-kompatibel
 - FVX-SST-011 | Static Pokemon: Random completely | GUI-kompatibel
 - FVX-SST-012 | Static Pokemon: Random similar strength | GUI-kompatibel
@@ -247,6 +247,7 @@ Diese Matrix soll nicht als 130 Roadmap-Zeilen gepflegt werden. Fuer die Roadmap
 - `08_tests/randomizer/059_p1_type_chart_model.md` modelliert Type-Chart-/Effectiveness-Randomization.
 - `08_tests/randomizer/060_p1_gui_suboptions_regression_matrix.md` konsolidiert GUI-Suboptionen und empfiehlt einen Regression-Smoke-Plan.
 - `08_tests/randomizer/064_p1_global_species_pool_regression_smoke_results.md` bestaetigt `FVX-GEN-001` und `FVX-GEN-002` im getesteten `FVX-SST-002`-Starter-Carrier-Smoke; das ist keine globale Vollabdeckung fuer Wild-/Trainer-/Evolution-Kombinationen.
+- `08_tests/randomizer/065_p1_starters_suboptions_regression_smoke_results.md` bestaetigt `FVX-SST-003`, `FVX-SST-004`, `FVX-SST-005`, `FVX-SST-006` und `FVX-SST-009` im getesteten Starter-Species-Writer-Smoke; Starter Held Items `FVX-SST-007`/`FVX-SST-008` bleiben separat/offen.
 
 ## Pflege-Regeln
 

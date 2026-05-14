@@ -1,5 +1,23 @@
 # Session State
 
+## 2026-05-14 - CFRU/DPE Starters Suboptions Regression-Smoke Results
+
+Arbeitsbranch: `test/upr-fvx-cfru-dpe-p1-starters-suboptions-regression-smoke`
+
+Aktueller Stand:
+
+- Neues Ergebnisprotokoll `08_tests/randomizer/065_p1_starters_suboptions_regression_smoke_results.md` erstellt.
+- Die lokal ausgefuehrten 063-Slices wurden sanitisiert dokumentiert: Baseline `FVX-SST-002`, `FVX-SST-003` basic with 2 evolutions, `FVX-SST-004` any basic, `FVX-SST-005` type restrictions, `FVX-SST-006` no legendaries und `FVX-SST-009` BST min/max.
+- Alle sechs Slices melden Save/Log/Reload true, `Starter-Mismatches=0`, `Filterverletzungen=0` und `stacktrace=none`.
+- `Bad Egg=false` und `<unknown>=false` in allen Slice-Logs.
+- Starter Held Items `FVX-SST-007`/`FVX-SST-008`, MoveData Write, Field Items/Shops/Pickup, Palette-Randomization, TypeChart und Text/Menu/Graphics blieben aus.
+- `FVX-SST-003`, `FVX-SST-004`, `FVX-SST-005`, `FVX-SST-006` und `FVX-SST-009` wurden konservativ als getestet im Starter-Species-Writer-Smoke dokumentiert, nicht als globale Vollabdeckung fuer Wild-/Trainer-/Evolution-Kombinationen.
+- Keine Codeaenderung, keine Aenderung an `02_external/**`, keine neuen Randomizer-Laeufe im Dokumentationsblock, kein Tool-Manifest-Update.
+
+Naechster sinnvoller Schritt:
+
+- `analysis/upr-fvx-cfru-dpe-p1-similar-strength-same-type-regression-smoke`: BST-/Type-basierte Pooling-Suboptionen pruefen, ohne TypeChart oder MoveData-Write zu aktivieren.
+
 ## 2026-05-14 - CFRU/DPE Global Species Pool Regression-Smoke Results
 
 Arbeitsbranch: `test/upr-fvx-cfru-dpe-p1-global-species-pool-regression-smoke`
