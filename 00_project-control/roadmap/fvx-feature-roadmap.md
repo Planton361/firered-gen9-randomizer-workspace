@@ -1,3 +1,9 @@
+# FVX Feature Roadmap Update - 2026-05-15 - Field Items Random TM-pool blocker planned
+
+- Diagnose 104 narrows `FVX-ITEM-002 Field Items Random` to a TM-pool / Required-TM algorithm blocker.
+- Next fix should stay inside Field Items Random TM-pool handling and avoid Shops, Pickup, Held Items, TM/HM/Tutor/Learnset, Random Even and Ban Bad Items.
+- Do not proceed to `FVX-ITEM-003` or `FVX-ITEM-004` until `FVX-ITEM-002` has a successful reload smoke.
+
 # FVX Feature Roadmap Update - 2026-05-15 - Field Items Random blocked
 
 - Field Items Random has a blocked smoke in Diagnose 103: candidate loaded, but save fails with `RandomizationException` before output/reload.

@@ -1,3 +1,13 @@
+# Session State Update - 2026-05-15 - Field Items Random TM-pool blocker plan
+
+- Branch: `analysis/upr-fvx-cfru-dpe-field-items-random-tm-pool-blocker-plan`.
+- Workspace PR #148 was verified as merged before branch creation.
+- New protocol: `08_tests/randomizer/104_field_items_random_tm_pool_blocker_plan.md`.
+- Read-only analysis confirms the likely blocker for `FVX-ITEM-002 Field Items Random`: `ItemRandomizer.randomizeTMFieldItems(...)` requires the generated unique TM set size to exactly match the current TM Field Item slot count and throws `RandomizationException` otherwise.
+- Relevant data: `tmFieldItemSlots=28`, `requiredFieldTMsTotal=24`, `requiredFieldTMPresent=24`, `requiredFieldTMMissing=0`; Diagnose 103 failed before output/reload but preserve counters stayed stable.
+- `FVX-ITEM-001` remains `GUI-kompatibel`; `FVX-ITEM-002`, `FVX-ITEM-003`, and `FVX-ITEM-004` remain `Write modelliert`.
+- No code changes, no `02_external/**` changes, no submodule pin change, no build, no Randomizer run, no private artefact documentation.
+
 # Session State Update - 2026-05-15 - Field Items Random reload smoke blocked
 
 - Branch: `test/upr-fvx-cfru-dpe-field-items-random-reload-smoke`.

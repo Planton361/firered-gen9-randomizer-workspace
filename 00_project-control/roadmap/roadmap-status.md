@@ -1,3 +1,11 @@
+# Roadmap Status Update - 2026-05-15 - Field Items Random TM-pool blocker planned
+
+- Field Items: Diagnose 104 plans the `FVX-ITEM-002` Random TM-pool blocker read-only.
+- `FVX-ITEM-001` remains `GUI-kompatibel` for the narrow Shuffle scope.
+- `FVX-ITEM-002`, `FVX-ITEM-003`, and `FVX-ITEM-004` remain `Write modelliert`.
+- Next P1 step: narrow UPR-FVX Field-Items-Random TM-pool fix branch.
+- Shops and Pickup remain separate follow-up scopes.
+
 # Roadmap Status Update - 2026-05-15 - Field Items Random blocked
 
 - Field Items: Diagnose 103 blocks `FVX-ITEM-002 Field Items Random` with `RandomizationException` before output/reload.
