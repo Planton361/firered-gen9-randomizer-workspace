@@ -183,6 +183,16 @@ Es wurde kein fachlicher Palette-Write-/Reload-Smoke ausgeführt. `FVX-GFX-001` 
 
 # Session State
 
+# Session State Update - 2026-05-15 - Field Items API TM-slot reload smoke
+
+- New protocol: `08_tests/randomizer/109_field_items_api_tm_slot_reload_smoke.md`.
+- A locally approved CFRU/DPE Gen9-BPRE candidate was used for a Field-Items-only `FVX-ITEM-002 Field Items Random` Write-/Reload-Smoke with `banBadRandomFieldItems=false` on UPR-FVX `328e4441c2981d37aba9e2707a6f27f779b026e2`.
+- Save/log/output/reload succeeded. Field Items remained stable: `fieldItemsTotalBefore=339`, `fieldItemsTotalAfter=339`, `fieldItemsTotalReload=339`, `fieldItemReloadMismatches=0`.
+- API TM-slot scope is confirmed: `apiTmFieldItemSlots=28`, `rawTmFieldItemSlots=28`, `rawApiTmSlotAlignmentMismatches=0`, `tmGloballyAllowedChanged=false`.
+- Random-TM pool is stable: `randomTmNeededSlots=28`, `randomTmCurrentSlots=28`, `randomTmRequiredTotal=24`, `randomTmFillerNeeded=4`, `randomTmFillerAvailable=26`, `randomTmPoolDeficit=0`, `randomTmResultUniqueSize=28`.
+- Preserve counters stayed stable: `disallowedFieldItemWrites=0`, `invalidFieldItemWrites=0`, `unloadedFieldItemWrites=0`, `fallbackFieldItemWrites=0`, `placeholderFieldItemWrites=0`, `scriptPatternExpansion=0`.
+- `FVX-ITEM-002` is now `GUI-kompatibel` only for the narrow Field-Items Random scope with `banBadRandomFieldItems=false`; `FVX-ITEM-003` Random Even and `FVX-ITEM-004` Ban Bad Items remain `Write modelliert`.
+
 ## 2026-05-14 - CFRU/DPE Palette Normal Single-owner Write Guard Fix
 
 Workspace-Branch: `compat/upr-fvx-cfru-dpe-palette-normal-single-owner-write`
