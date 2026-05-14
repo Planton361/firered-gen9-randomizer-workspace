@@ -10,7 +10,9 @@ UPR-FVX-Pin: `fad56f60d6fae9b006290a4d5fd1f0715f3d9dc3`
 
 Aktueller Stand:
 
-- UPR-FVX PR #34 ist geoeffnet: https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/34
+- UPR-FVX PR #34 ist gemerged.
+- Workspace PR #129 ist gemerged.
+- Diagnose 087 ist abgeschlossen und auf `main`.
 - UPR-FVX-Fix `fad56f60d6fae9b006290a4d5fd1f0715f3d9dc3` erstellt.
 - Der Fix bleibt auf `Gen3RomHandler` und das MoveData-Type-Byte `+2` begrenzt.
 - Im sicheren CFRU/DPE-Gen9-BPRE-Gate liest `typeFromMoveData(...)` raw `0x17` als `Type.FAIRY`.
@@ -27,7 +29,7 @@ Aktueller Stand:
 
 Naechster sinnvoller Schritt:
 
-- UPR-FVX PR #34 und Workspace-PR reviewen und mergen. Danach Post-Merge-Doku-Sync; `FVX-MOVE-005` Move Names/Descriptions nur in einem separaten, explizit freigegebenen Scope behandeln.
+- Separater Planungsbranch `analysis/upr-fvx-cfru-dpe-move-names-text-menu-scope-plan`: nur entscheiden und modellieren, ob `FVX-MOVE-005` Move Names / Move Descriptions als eigener Text/Menu-Scope machbar ist oder vorerst zurueckgestellt bleibt. Keine Umsetzung in diesem Sync-Block.
 
 ## 2026-05-14 - CFRU/DPE MoveData Types Reload-Smoke
 
