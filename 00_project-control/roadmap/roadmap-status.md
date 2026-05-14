@@ -24,10 +24,10 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-move-names-text-menu-scope-plan` |
+| Aktueller Branch | `test/upr-fvx-cfru-dpe-move-names-fixed-length-reload-smoke` |
 | Nächster Branch | `test/upr-fvx-cfru-dpe-move-names-fixed-length-reload-smoke` |
-| Aktueller Fokus | CFRU/DPE Move Names / Descriptions Text/Menu-Scope Plan |
-| ROM-/Build-Arbeit | keine ROM-/Build-Arbeit in diesem Planblock; keine Randomizer-Laeufe |
+| Aktueller Fokus | CFRU/DPE Move Names fixed-length Reload-Smoke |
+| ROM-/Build-Arbeit | lokaler Smoke-Versuch blockiert: kein freigegebener CFRU/DPE Gen9-BPRE-Kandidat mit `moves.total=992` gefunden; keine Builds |
 | Externe Repos | als Submodule auf Planton361-Forks eingebunden |
 | Forks | Planton361-Forks fuer UPR-FVX, DPE Gen9 und CFRU dokumentiert |
 | Installationen | devkitPro/devkitARM lokal dokumentiert; keine Installation in diesem Analyseblock |
@@ -122,6 +122,7 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | 08 Randomizer-Kompatibilität | CFRU/DPE MoveData Types Reload-Smoke | Diagnose 086 dokumentiert `FVX-MOVE-004` mit Save/Log/Output/Reload true und stabilen Preserve-Bytes, blockiert aber durch Fairy-Type-Byte-Mismatches: `writeReloadMoveDataMismatches=54`, `typeReloadMismatches=54`, `cfruDpeTypeByteMismatches=54` |
 | 08 Randomizer-Kompatibilität | CFRU/DPE MoveData Fairy-Type-Byte Fix | UPR-FVX PR #34 und Workspace PR #129 gemerged; UPR-FVX `fad56f60` und Diagnose 087 bestaetigen `FVX-MOVE-004` mit Save/Log/Output/Reload true, `writeReloadMoveDataMismatches=0`, `typeReloadMismatches=0`, `fairyReloadMismatches=0`, `cfruDpeTypeByteMismatches=0` und Preserve-Bytes bytegleich |
 | 08 Randomizer-Kompatibilität | Move Names / Descriptions Text/Menu-Scope Plan | Diagnose 088 dokumentiert `FVX-MOVE-005` als getrennten Text/Menu-Scope; Name-only fixed-length Smoke ist realistisch, Move Descriptions / Text/Menu-Repointing bleibt zurueckgestellt |
+| 08 Randomizer-Kompatibilität | Move Names fixed-length Reload-Smoke Versuch | Diagnose 089 dokumentiert den blockierten Name-only-Smoke: kein freigegebener lokaler CFRU/DPE Gen9-BPRE-Kandidat mit `moves.total=992` und `991:PsychicNoise`; `FVX-MOVE-005` bleibt `Write modelliert` |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Field Items/Shops/Pickup-Modell | Diagnose 057 modelliert Field Items, Shops, Pickup und allgemeine Item-Randomization getrennt von Encounter Held Items; eigene Preserve-/Skip-Policy und Reload-Kriterien dokumentiert |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Palette-Randomization-Modell | Diagnose 058 trennt Palette-Safety/Skip-Unchanged-Save von echter geaenderter Palette-Randomization; compressed/shared/repointing risks, Preserve-/Skip-Policy, Reload-Kriterien und Graphics/P2-Abgrenzung dokumentiert |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Type-Chart-Modell | Diagnose 059 trennt Pokemon-Type-Read/Write aus 051 von Type-Chart-/Effectiveness-Randomization; Fairy `0x17`, Stellar/unsupported `0x18`, TypeTable-Risiken, Preserve-/Skip-Policy und Reload-Kriterien dokumentiert |
@@ -151,7 +152,7 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Move Names fixed-length Reload-Smoke | naechster Branch `test/upr-fvx-cfru-dpe-move-names-fixed-length-reload-smoke`; nur `FVX-MOVE-005` Name-only pruefen, ohne Description-, Pointer-, Repointing- oder Text/Menu-Umsetzung |
+| 08 Randomizer-Kompatibilität | Move Names fixed-length Reload-Smoke wiederholen | naechster Branch `test/upr-fvx-cfru-dpe-move-names-fixed-length-reload-smoke`; sobald ein freigegebener lokaler CFRU/DPE Gen9-BPRE-Kandidat verfuegbar ist, nur `FVX-MOVE-005` Name-only pruefen |
 
 ## Als Nächstes
 
