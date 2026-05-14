@@ -1,3 +1,20 @@
+# Next Steps Update - 2026-05-15 - Field Items Random API TM-slot scope plan next
+
+Aktueller Fokus:
+
+- Diagnose 106 blocks `FVX-ITEM-002 Field Items Random` after PR #36.
+- The Unique-TM-Filler pool is sufficient: `randomTmUniquePoolSize=50`, `randomTmFillerAvailable=26`, `randomTmPoolDeficit=0`.
+- Active blocker is now the `getFieldItems()` API TM-slot scope: raw diagnostics show `tmFieldItemSlots=28`, but Randomizer API metrics show `randomTmNeededSlots=0` / `randomTmCurrentSlots=0`.
+
+Naechster empfohlener Minimalblock:
+
+- `analysis/upr-fvx-cfru-dpe-field-items-random-api-tm-slot-scope-plan`
+
+Ziel des Folgeblocks:
+
+- Read-only klaeren, warum der Gen3/CFRU-DPE Field-Items-API-Scope keine TM-Field-Item-Slots an `ItemRandomizer.randomizeTMFieldItems(...)` uebergibt.
+- Weiterhin keine Shops, kein Pickup, keine Held Items, keine TM/HM/Tutor/Learnset-Ausweitung, keine Random Even Distribution und keine Ban-Bad-Items-Umsetzung.
+
 # Next Steps Update - 2026-05-15 - Field Items Random TM-pool reload smoke next
 
 Aktueller Fokus:

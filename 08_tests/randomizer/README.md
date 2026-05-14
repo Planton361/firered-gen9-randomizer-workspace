@@ -187,3 +187,5 @@ Wenn ein Artefakt nicht eindeutig Smoke-Output ist, bleibt es lokal liegen und w
 - 104 - `104_field_items_random_tm_pool_blocker_plan.md`: Read-only Plan fuer den `FVX-ITEM-002` Random-TM-Pool-Blocker. Ursache liegt wahrscheinlich in `ItemRandomizer.randomizeTMFieldItems(...)`: benoetigte TM-Field-Slots `28`, Required Field TMs `24`, Unique-TM-Pool muss exakt passen; naechster Schritt ist ein enger TM-Pool-Fixbranch.
 
 - 105 - `105_field_items_random_tm_pool_fix.md`: UPR-FVX-Fix fuer den `FVX-ITEM-002 Field Items Random` TM-Pool vorbereitet. Required Field TMs bleiben Pflicht, Filler-TMs werden dedupliziert aus geladenen TMs plus aktuellen Field-TM-Slots gebaut; kein fachlicher ROM-Reload-Smoke in diesem Block, daher keine Feature-Hochstufung.
+
+- 106 - `106_field_items_random_tm_pool_reload_smoke.md`: Sanitized Field-Items-only `FVX-ITEM-002 Field Items Random` reload smoke after UPR-FVX PR #36. Candidate loaded, but save still blocks before output/reload. Pool deficit is cleared (`randomTmPoolDeficit=0`); active blocker is API TM-slot scope mismatch (`randomTmNeededSlots=0` vs raw `tmFieldItemSlots=28`).
