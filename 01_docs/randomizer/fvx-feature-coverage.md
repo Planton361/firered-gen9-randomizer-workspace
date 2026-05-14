@@ -453,3 +453,10 @@ Diese Matrix soll nicht als 130 Roadmap-Zeilen gepflegt werden. Fuer die Roadmap
 - `FVX-GFX-001`: UPR-FVX Write-Guard-Fix vorhanden, aber Diagnose 096 konnte keinen fachlichen Reload-Smoke ausführen, weil kein UPR-FVX-ladbarer CFRU/DPE-Gen9-BPRE-Zielkandidat mit `candidateSpeciesTotal=1439` verfügbar war.
 - Status bleibt konservativ: nicht `GUI-kompatibel`; maximal Fix vorbereitet, Smoke blockiert.
 - `FVX-GFX-002`, `FVX-GFX-003`, `FVX-GFX-004` bleiben `Write modelliert`.
+
+## 2026-05-14 - Post-Merge Status nach Diagnose 096
+
+- `FVX-GFX-001` bleibt `Write modelliert`: Guard-Fix vorhanden, aber Reload-Smoke blockiert, weil kein UPR-FVX-ladbarer CFRU/DPE Gen9-BPRE-Kandidat mit `candidateSpeciesTotal=1439` verfuegbar war.
+- `FVX-GFX-002` bleibt `Write modelliert`.
+- `FVX-GFX-003` bleibt `Write modelliert`.
+- `FVX-GFX-004` bleibt `Write modelliert`.

@@ -621,3 +621,11 @@ Zweck: Diagnose 082 reviewen und mergen; danach Evolution-Methoden-Writer und we
 - Preflight: `candidateFilesChecked=94`, `candidateLoaded=false`, `candidateOpenFailures=2`, `candidateSpeciesTotalMismatches=92`.
 - Keine Hochstufung auf `Getestet` oder `GUI-kompatibel`.
 - Nächster konservativer Block: `test/upr-fvx-cfru-dpe-palette-normal-single-owner-reload-smoke-retry` mit explizit freigegebenem UPR-FVX-ladbarem `candidateSpeciesTotal=1439` Kandidaten.
+
+## 2026-05-14 - Post-Merge Sync Palette Normal Single-owner Smoke blockiert
+
+- Workspace PR #140 ist gemerged; Diagnose 096 ist als blockierter Reload-Smoke abgeschlossen.
+- Palette Normal-only Guard ist in UPR-FVX `2697511da9a97df4c29c00dfda8b40e556020489` implementiert, aber nicht per fachlichem Reload-Smoke bestaetigt.
+- Blockerwerte: `candidateFilesChecked=94`, `candidateLoaded=false`, `candidateOpenFailures=2`, `candidateSpeciesTotalMismatches=92`, `candidateSpeciesTotal=0`.
+- `FVX-GFX-001`, `FVX-GFX-002`, `FVX-GFX-003` und `FVX-GFX-004` bleiben `Write modelliert` und nicht GUI-kompatibel.
+- Naechster P1-Analyseblock: `analysis/upr-fvx-cfru-dpe-field-items-shops-pickup-scope-plan`.

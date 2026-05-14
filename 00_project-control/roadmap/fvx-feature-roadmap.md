@@ -104,3 +104,9 @@ Die detaillierte Status- und Feature-ID-Matrix bleibt in:
 Diagnose 096 blockiert den `FVX-GFX-001` Normal-only Single-owner Reload-Smoke mangels UPR-FVX-ladbarem `candidateSpeciesTotal=1439` Kandidaten. Der nächste Palette-Schritt ist kein Scope-Ausbau, sondern ein Retry desselben engen Smoke-Scope nach expliziter Kandidatenfreigabe.
 
 Nicht in den Retry aufnehmen: Shiny-Palette-Writes, Shared-Palette-Writes, Graphics/Sprites, TypeChart/TypeEffectiveness, Species-Type-Write, Evolution-Writer, Items, Trainer/Wild, Text/Menu, MoveData oder MoveNames.
+
+## 2026-05-14 - P1-Reihenfolge nach blockiertem Palette-Smoke
+
+Nach Diagnose 096 bleibt Palette konservativ: `FVX-GFX-001` hat einen Guard-Fix, aber keinen erfolgreichen Reload-Smoke; `FVX-GFX-001..004` bleiben `Write modelliert`. Ein Palette-Retry wird erst mit explizit freigegebenem UPR-FVX-ladbarem `candidateSpeciesTotal=1439` Kandidaten sinnvoll.
+
+Der naechste empfohlene P1-Block ist deshalb kein Palette-Scope-Ausbau, sondern `analysis/upr-fvx-cfru-dpe-field-items-shops-pickup-scope-plan` als read-only Planung fuer Field Items, Shops und Pickup.
