@@ -24,10 +24,10 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Aktueller Branch | `test/upr-fvx-cfru-dpe-p1-evolution-similar-strength-normalized-reload` |
-| Nächster Branch | Review/Merge von Diagnose 082; danach Evolution-Methoden-Writer und weitere Evolution-Suboptionen getrennt |
-| Aktueller Fokus | CFRU/DPE Evolution Similar Strength Normalized Reload Diagnostics |
-| ROM-/Build-Arbeit | einzelner lokaler `FVX-TRAIT-018` Smoke; Artefakte ignored und nicht dokumentiert |
+| Aktueller Branch | `compat/upr-fvx-cfru-dpe-move-data-write-preserve` |
+| Nächster Branch | Review/Merge des MoveData-Write-Preserve-Fix; danach separater MoveData-Reload-Smoke |
+| Aktueller Fokus | CFRU/DPE MoveData Write Preserve Fix |
+| ROM-/Build-Arbeit | kein Randomizer-/ROM-Lauf; UPR-FVX Build/Test ohne ROM-Zugriff |
 | Externe Repos | als Submodule auf Planton361-Forks eingebunden |
 | Forks | Planton361-Forks fuer UPR-FVX, DPE Gen9 und CFRU dokumentiert |
 | Installationen | devkitPro/devkitARM lokal dokumentiert; keine Installation in diesem Analyseblock |
@@ -116,6 +116,7 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | 08 Randomizer-Kompatibilität | CFRU/DPE Encounter Held Items Scope-and-Write-Fix | UPR-FVX Commit `5c7170b6`; Diagnose 054 bestaetigt Item-Scope bis `778`, moderne Bad-/Banned-Filter und Encounter Held Items-only sowie Kombinationen mit Base Stats, Abilities und Types mit Save/Log/Reload und `writeReloadEncounterHeldItemMismatches=0` |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Type-Log-/Placeholder-Hygiene | Diagnose 055 klassifiziert `Bad Egg`, `<unknown>`, Unknown-Type-/Ability-/Item-Fallbacks und Null-/BST-zero-/all-zero-Ability-Species aus bestehenden Protokollen; Marker aus 051/052/054 blockieren P1-Support nicht bei stabilen Save/Log/Output/Reload-Kriterien und `0` Mismatches |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Move-Data-Write-Modell | Diagnose 056 modelliert `moves.total=992`, `991:PsychicNoise`, `BattleMove.split`, aktuelle `saveMoves()`-Teilfeldwrites, Preserve-Policy und Reload-Kriterien fuer spaeteren Fix |
+| 08 Randomizer-Kompatibilität | CFRU/DPE MoveData Write Preserve Fix | UPR-FVX `bb5ee119` schreibt klassische MoveData-Bytes `+0..+4` weiter und im CFRU/DPE-Gate `BattleMove.split` bei `+10`; Preserve-Bytes bleiben unangetastet, Reload-Smoke noch offen |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Field Items/Shops/Pickup-Modell | Diagnose 057 modelliert Field Items, Shops, Pickup und allgemeine Item-Randomization getrennt von Encounter Held Items; eigene Preserve-/Skip-Policy und Reload-Kriterien dokumentiert |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Palette-Randomization-Modell | Diagnose 058 trennt Palette-Safety/Skip-Unchanged-Save von echter geaenderter Palette-Randomization; compressed/shared/repointing risks, Preserve-/Skip-Policy, Reload-Kriterien und Graphics/P2-Abgrenzung dokumentiert |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Type-Chart-Modell | Diagnose 059 trennt Pokemon-Type-Read/Write aus 051 von Type-Chart-/Effectiveness-Randomization; Fairy `0x17`, Stellar/unsupported `0x18`, TypeTable-Risiken, Preserve-/Skip-Policy und Reload-Kriterien dokumentiert |
@@ -222,6 +223,7 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | P1ah | `compat/upr-fvx-cfru-dpe-encounter-held-items-scope-and-write` | Encounter Held Items Scope-and-Write | erledigt; UPR-FVX `5c7170b6` und Diagnose 054 bestaetigen Save/Log/Reload ohne Encounter-Held-Item-Mismatches |
 | P1ai | `analysis/upr-fvx-cfru-dpe-p1-type-log-placeholder-hygiene` | Type-Log-/Placeholder-Hygiene | erledigt; Diagnose 055 klassifiziert bestehende `Bad Egg`-/Unknown-/Fallback-/Null-Species-Marker read-only und trennt sie von Fix- und Text-/Name-Scope |
 | P1aj | `analysis/upr-fvx-cfru-dpe-p1-move-data-write-model` | Move-Data-Write-Modell | erledigt; Diagnose 056 dokumentiert 992-Move-Scope, `BattleMove.split`, Preserve-Policy und Reload-Kriterien |
+| P1aj-fix | `compat/upr-fvx-cfru-dpe-move-data-write-preserve` | MoveData Write Preserve Fix | Review/Test; UPR-FVX `bb5ee119` implementiert klassischen MoveData-Write plus CFRU/DPE `BattleMove.split`-Write, Reload-Smoke noch offen |
 | P1ak | `analysis/upr-fvx-cfru-dpe-p1-field-items-shops-pickup-model` | Field Items/Shops/Pickup-Modell | erledigt; Diagnose 057 trennt Field Items, Shops, Pickup und allgemeine Item-Randomization von Encounter Held Items |
 | P1al | `analysis/upr-fvx-cfru-dpe-p1-palette-randomization-model` | Palette-Randomization-Modell | erledigt; Diagnose 058 trennt Palette-Safety von echter geaenderter Palette-Randomization und Graphics/Sprites |
 | P1am | `analysis/upr-fvx-cfru-dpe-p1-type-chart-model` | Type-Chart-Modell | erledigt; Diagnose 059 trennt `gBaseStats`-Type-Read/Write aus 051 von Type-Chart-/Effectiveness-Randomization |

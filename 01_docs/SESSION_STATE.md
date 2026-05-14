@@ -1,5 +1,28 @@
 # Session State
 
+## 2026-05-14 - CFRU/DPE MoveData Write Preserve Fix
+
+Workspace-Branch: `compat/upr-fvx-cfru-dpe-move-data-write-preserve`
+
+UPR-FVX-Branch: `compat/upr-fvx-cfru-dpe-move-data-write-preserve`
+
+Aktueller Stand:
+
+- UPR-FVX-Fix `bb5ee11978e38839979e654ff1c14ba60a0cde93` erstellt.
+- Der Fix bleibt auf `Gen3RomHandler.saveMoves()` begrenzt.
+- Klassische MoveData-Felder werden weiter geschrieben: `+0 effect`, `+1 power`, `+2 type`, `+3 accuracy`, `+4 pp`.
+- Im bestehenden CFRU/DPE-Gen9-BPRE-Gate wird zusaetzlich `BattleMove.split` bei Byte `+10` geschrieben: `PHYSICAL -> 0`, `SPECIAL -> 1`, `STATUS -> 2`.
+- Nicht modellierte Bytes `+5 secondaryEffectChance`, `+6 target`, `+7 priority`, `+8 flags`, `+9 z_move_power` und `+11 z_move_effect` bleiben bytegleich erhalten.
+- `./gradlew clean :random:jar` war erfolgreich.
+- `./gradlew test` endete mit `BUILD SUCCESSFUL`, meldete aber bestehende Failures ausserhalb des MoveData-Scopes in `PlayerCharacterGraphicsTest` und `Gen1CmpTest`.
+- Kein lokaler Randomizer-/ROM-Reload-Smoke wurde ausgefuehrt; die MoveData-Reload-Kriterien bleiben offen.
+- Workspace pinnt `02_external/upr-fvx` auf den neuen UPR-FVX-Fix-Commit und dokumentiert Diagnose 083.
+- Keine Palette-, Item-, Field-/Shop-/Pickup-, TypeChart-/TypeEffectiveness-, Trainer-, Wild-, Evolution-, Text/Menu-, Graphics-, TM/HM-, Tutor-, Egg- oder Learnset-Write-Aenderung.
+
+Naechster sinnvoller Schritt:
+
+- UPR-FVX PR #33 und Workspace-PR reviewen. Danach separat freigegebenen MoveData-Reload-Smoke fuer `saveSuccessful=true`, `logSuccessful=true`, `outputRomExists=true`, `logNonEmpty=true`, Reload erfolgreich, `writeReloadMoveDataMismatches=0`, `moves.total=992`, `991:PsychicNoise`, stabile category/split-Werte und bytegleich erhaltene Preserve-Bytes ausfuehren.
+
 ## 2026-05-14 - CFRU/DPE Evolution Similar Strength Normalized Reload Diagnostics
 
 Arbeitsbranch: `test/upr-fvx-cfru-dpe-p1-evolution-similar-strength-normalized-reload`

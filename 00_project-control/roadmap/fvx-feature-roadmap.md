@@ -56,7 +56,7 @@ Die detaillierte Status- und Feature-ID-Matrix bleibt in:
 | Reihenfolge | Branch | Paket | Ziel |
 |---|---|---|---|
 | P1.1 | `compat/upr-fvx-cfru-dpe-type-chart-preserve-effectiveness` + `test/upr-fvx-cfru-dpe-p1-type-effectiveness-followup-smokes` | Types | erledigt: TypeEffectiveness Random, Balanced, Keep Type Identities, Inverse, Add Immunities und Update Type Effectiveness mit Reload-/Terminator-/Preserve-Kriterien abgesichert |
-| P1.2 | `compat/upr-fvx-cfru-dpe-move-data-write-preserve` | Moves & Movesets | eng gegateten MoveData-Writer mit Preserve-Policy und Reload-Diagnose umsetzen |
+| P1.2 | `compat/upr-fvx-cfru-dpe-move-data-write-preserve` | Moves & Movesets | UPR-FVX-Fix umgesetzt; Reload-Diagnose fuer MoveData-Mismatches und Preserve-Bytes noch separat offen |
 | P1.3 | `compat/upr-fvx-cfru-dpe-palette-randomization-preserve-repoint` | Graphics | echte geaenderte Palette-Randomization mit compressed/shared/repointing Reload-Kriterien absichern |
 | P1.4 | `compat/upr-fvx-cfru-dpe-field-items-shops-pickup-scope-and-write` | Items | Field Items, Shops und Pickup mit getrennten Reload-Kriterien absichern |
 

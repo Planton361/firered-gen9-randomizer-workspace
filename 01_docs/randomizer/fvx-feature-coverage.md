@@ -38,7 +38,17 @@ Sie ist die detaillierte Requirements-/Coverage-Ebene. Die Roadmap bleibt bewuss
 | In Arbeit | 0 |
 | **Gesamt** | **130** |
 
-## Aktueller Hinweis zu 082
+## Aktueller Hinweis zu 083
+
+Diagnose 083 dokumentiert den engen MoveData-Write-Preserve-Fix:
+
+- UPR-FVX `bb5ee11978e38839979e654ff1c14ba60a0cde93` bleibt auf `Gen3RomHandler.saveMoves()` begrenzt.
+- Klassische MoveData-Bytes `+0 effect`, `+1 power`, `+2 type`, `+3 accuracy` und `+4 pp` werden weiter geschrieben.
+- Im bestehenden CFRU/DPE-Gen9-BPRE-Gate wird `BattleMove.split` bei Byte `+10` geschrieben: `PHYSICAL -> 0`, `SPECIAL -> 1`, `STATUS -> 2`.
+- Nicht modellierte Bytes `+5`, `+6`, `+7`, `+8`, `+9` und `+11` bleiben bytegleich erhalten.
+- Kein lokaler Randomizer-/ROM-Reload-Smoke wurde ausgefuehrt; `FVX-MOVE-001` bis `FVX-MOVE-006` bleiben bis `writeReloadMoveDataMismatches=0` konservativ auf Write-Modell-/Fix-offen-Status.
+
+## Vorheriger Hinweis zu 082
 
 Diagnose 082 bestaetigt `FVX-TRAIT-018` nach der 081-Normalisierung:
 
@@ -257,6 +267,7 @@ Diese Matrix soll nicht als 130 Roadmap-Zeilen gepflegt werden. Fuer die Roadmap
 - `08_tests/randomizer/047_fvx_gui_options_compatibility_matrix.md` ist die bisherige technische GUI-Kompatibilitaetsmatrix.
 - `08_tests/randomizer/055_type_log_placeholder_hygiene.md` trennt Log-/Fallback-Marker von echten Blockern.
 - `08_tests/randomizer/056_p1_move_data_write_model.md` modelliert MoveData-Write-Risiken.
+- `08_tests/randomizer/083_move_data_write_preserve_diagnostics.md` dokumentiert den UPR-FVX-Fix fuer klassischen MoveData-Write plus CFRU/DPE `BattleMove.split`-Write; Reload-Smoke bleibt offen.
 - `08_tests/randomizer/057_p1_field_items_shops_pickup_model.md` modelliert Field Items, Shops und Pickup.
 - `08_tests/randomizer/058_p1_palette_randomization_model.md` modelliert echte Palette-Randomization getrennt von Palette-Safety.
 - `08_tests/randomizer/059_p1_type_chart_model.md` modelliert Type-Chart-/Effectiveness-Randomization.
