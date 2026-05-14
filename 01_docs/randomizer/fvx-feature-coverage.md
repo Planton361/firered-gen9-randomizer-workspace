@@ -38,7 +38,18 @@ Sie ist die detaillierte Requirements-/Coverage-Ebene. Die Roadmap bleibt bewuss
 | In Arbeit | 0 |
 | **Gesamt** | **130** |
 
-## Aktueller Hinweis zu 087
+## Aktueller Hinweis zu 088
+
+Diagnose 088 plant den getrennten Text/Menu-Scope fuer `FVX-MOVE-005`:
+
+- `FVX-MOVE-005` ist kein sauberer MoveData-Byte-Writer im `BattleMove`-Scope `+0..+11`.
+- Der direkte Gen3/CFRU/DPE-Pfad fuer Randomize Move Names ist die fixed-length Move-Namen-Tabelle aus `MoveNames` und `MoveNameLength`.
+- `MoveNameRandomizer` veraendert `Move.name`; `Gen3RomHandler.saveMoves()` schreibt Namen ueber `writeFixedLengthString(...)`.
+- Ein enger Name-only Reload-Smoke ist realistisch, solange generierte Namen innerhalb der sichtbaren 12-Zeichen-Grenze bleiben und Terminator/Padding stabil reloaden.
+- Move Descriptions / Text/Menu-Repointing bleibt getrennt und vorerst zurueckgestellt.
+- `FVX-MOVE-001`, `FVX-MOVE-002`, `FVX-MOVE-003`, `FVX-MOVE-004` und `FVX-MOVE-006` bleiben GUI-kompatibel.
+
+## Vorheriger Hinweis zu 087
 
 Diagnose 087 bestaetigt den engen MoveData Fairy-Type-Byte-Fix fuer `FVX-MOVE-004`:
 
@@ -325,6 +336,7 @@ Diese Matrix soll nicht als 130 Roadmap-Zeilen gepflegt werden. Fuer die Roadmap
 - `08_tests/randomizer/055_type_log_placeholder_hygiene.md` trennt Log-/Fallback-Marker von echten Blockern.
 - `08_tests/randomizer/056_p1_move_data_write_model.md` modelliert MoveData-Write-Risiken.
 - `08_tests/randomizer/083_move_data_write_preserve_diagnostics.md` dokumentiert den UPR-FVX-Fix fuer klassischen MoveData-Write plus CFRU/DPE `BattleMove.split`-Write; Reload-Smoke bleibt offen.
+- `08_tests/randomizer/088_move_names_text_menu_scope_plan.md` dokumentiert `FVX-MOVE-005` als getrennten Text/Menu-Scope; ein Name-only fixed-length Smoke ist realistisch, Move Descriptions / Repointing bleibt zurueckgestellt.
 - `08_tests/randomizer/057_p1_field_items_shops_pickup_model.md` modelliert Field Items, Shops und Pickup.
 - `08_tests/randomizer/058_p1_palette_randomization_model.md` modelliert echte Palette-Randomization getrennt von Palette-Safety.
 - `08_tests/randomizer/059_p1_type_chart_model.md` modelliert Type-Chart-/Effectiveness-Randomization.

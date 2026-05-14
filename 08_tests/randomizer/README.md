@@ -2,12 +2,10 @@
 
 ## Latest
 
-- `087_move_data_fairy_type_byte_fix_diagnostics.md` dokumentiert den engen CFRU/DPE MoveData Fairy-Type-Byte-Fix fuer `FVX-MOVE-004`.
-- UPR-FVX `fad56f60d6fae9b006290a4d5fd1f0715f3d9dc3` reloadet `Randomize Move Types` mit `writeReloadMoveDataMismatches=0`.
-- `moves.total=992` und `991:PsychicNoise` bleiben stabil.
-- Fairy-Type-Bytes reloaden stabil: `typeReloadMismatches=0`, `fairyReloadMismatches=0`, `cfruDpeTypeByteMismatches=0`.
-- Preserve-Bytes `+5`, `+6`, `+7`, `+8`, `+9` und `+11` bleiben bytegleich: `preserveByteMismatchesAllMoves=0`, `preserveByteMismatchesUnchangedMoves=0`.
-- `FVX-MOVE-004` ist damit GUI-kompatibel; `FVX-MOVE-005` Move Names bleibt out of scope.
+- `088_move_names_text_menu_scope_plan.md` dokumentiert read-only den Text/Menu-Scope fuer `FVX-MOVE-005` Move Names / Move Descriptions.
+- `FVX-MOVE-005` ist kein sauberer MoveData-Byte-Writer, sondern fuer Gen3/CFRU/DPE primaer ein fixed-length Move-Namen-Textpfad.
+- Ein enger Name-only Reload-Smoke ist realistisch; Move Descriptions / Text/Menu-Repointing bleibt vorerst zurueckgestellt.
+- Die MoveData-Fixes aus Diagnose 084 bis 087 bleiben unveraendert: `FVX-MOVE-001/002/003/004/006` sind GUI-kompatibel.
 
 Dieses Verzeichnis enthaelt die dauerhaften Markdown-Protokolle fuer UPR-FVX/CFRU-DPE-Randomizer-Analysen und Smokes. Lokale ROM-, Build-, Log- und Tool-Artefakte bleiben unter `05_builds/**` oder `03_tools/releases/**` und werden nicht committed.
 
@@ -123,11 +121,12 @@ Der neueste bestaetigte Stand wird in Markdown ueber die Spalte `Latest` markier
 | 084 | `084_move_data_write_preserve_reload_smoke.md` | CFRU/DPE MoveData Write Preserve Reload-Smoke | bestaetigt: Save/Log/Output/Reload true, `writeReloadMoveDataMismatches=0`, `moves.total=992`, `991:PsychicNoise`, category/split reload stabil und Preserve-Bytes fuer unveraenderte Moves bytegleich | lokal/ignored, nicht dokumentiert | nein |
 | 085 | `085_move_data_power_accuracy_pp_reload_smoke.md` | CFRU/DPE MoveData Power/Accuracy/PP Reload-Smoke | bestaetigt: Save/Log/Output/Reload true, `writeReloadMoveDataMismatches=0`, `powerReloadMismatches=0`, `accuracyReloadMismatches=0`, `ppReloadMismatches=0`, rohe `+1/+3/+4` Bytes stabil und Preserve-Bytes bytegleich | lokal/ignored, nicht dokumentiert | nein |
 | 086 | `086_move_data_types_reload_smoke.md` | CFRU/DPE MoveData Types Reload-Smoke | blockiert: Save/Log/Output/Reload true und Preserve-Bytes stabil, aber `writeReloadMoveDataMismatches=54` durch Fairy-Type-Byte-Mismatches im MoveData-`+2 type`-Writer | lokal/ignored, nicht dokumentiert | nein |
-| 087 | `087_move_data_fairy_type_byte_fix_diagnostics.md` | CFRU/DPE MoveData Fairy-Type-Byte Fix Diagnostics | bestaetigt: UPR-FVX `fad56f60`, Save/Log/Output/Reload true, `writeReloadMoveDataMismatches=0`, `typeReloadMismatches=0`, `fairyReloadMismatches=0`, `cfruDpeTypeByteMismatches=0` und Preserve-Bytes bytegleich | lokal/ignored, nicht dokumentiert | ja |
+| 087 | `087_move_data_fairy_type_byte_fix_diagnostics.md` | CFRU/DPE MoveData Fairy-Type-Byte Fix Diagnostics | bestaetigt: UPR-FVX `fad56f60`, Save/Log/Output/Reload true, `writeReloadMoveDataMismatches=0`, `typeReloadMismatches=0`, `fairyReloadMismatches=0`, `cfruDpeTypeByteMismatches=0` und Preserve-Bytes bytegleich | lokal/ignored, nicht dokumentiert | nein |
+| 088 | `088_move_names_text_menu_scope_plan.md` | CFRU/DPE Move Names / Descriptions Text/Menu-Scope Plan | dokumentiert: `FVX-MOVE-005` ist vom MoveData-Byte-Writer getrennt; Name-only fixed-length Smoke ist realistisch, Move Descriptions / Text/Menu-Repointing vorerst zurueckstellen | keiner, read-only Analyse | ja |
 
 ## Aktuell bestaetigter Stand
 
-Latest ist Nr. 087: CFRU/DPE MoveData Fairy-Type-Byte Fix Diagnostics.
+Latest ist Nr. 088: CFRU/DPE Move Names / Descriptions Text/Menu-Scope Plan.
 
 Kernaussagen:
 
@@ -138,6 +137,7 @@ Kernaussagen:
 - Fairy im MoveData-`+2 type`-Byte reloadet stabil: `typeReloadMismatches=0`, `fairyReloadMismatches=0`, `cfruDpeTypeByteMismatches=0`.
 - Nicht modellierte Bytes `+5`, `+6`, `+7`, `+8`, `+9` und `+11` bleiben bytegleich erhalten.
 - `Update Moves` und Category-/Split-Reload bleiben durch Diagnose 084 belegt.
+- `FVX-MOVE-005` bleibt getrennt vom MoveData-Byte-Writer; ein Name-only fixed-length Smoke ist realistisch, Move Descriptions / Text/Menu-Repointing bleibt zurueckgestellt.
 - Palette, Items, TypeChart/TypeEffectiveness, Trainer, Wild, Evolutions, Text/Menu, Graphics, TM/HM, Tutor, Egg und Learnset-Writer bleiben ausgeschlossen.
 
 ## Lokale Artefaktpflege
