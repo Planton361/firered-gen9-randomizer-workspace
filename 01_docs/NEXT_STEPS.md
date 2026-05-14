@@ -1,3 +1,11 @@
+# Next Steps Update - 2026-05-14 - Field Items diagnostics scope
+
+Recommended next block:
+
+`test/upr-fvx-cfru-dpe-field-items-scope-diagnostics`
+
+Goal: run a sanitized Field-Items-only diagnostic that reports aggregated visible Itemball, Hidden Item/Signpost, TM-slot, Non-TM-slot, Required Field TM, bad-item, modern-item and invalid-item counters. Keep Shops, Pickup, held items, TM/HM/Tutor/Learnset, Palette/Graphics, MoveData/MoveNames, TypeChart, Trainer/Wild/Evolution and Text/Menu out of scope.
+
 # Next Steps - 2026-05-14 Field Items / Shops / Pickup Plan
 
 Aktiver Anschlussblock:

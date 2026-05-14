@@ -1,3 +1,11 @@
+# Session State Update - 2026-05-14 - Field Items diagnostics scope plan
+
+- Branch: `analysis/upr-fvx-cfru-dpe-field-items-scope-diagnostics-plan`.
+- New protocol: `08_tests/randomizer/098_field_items_scope_diagnostics_plan.md`.
+- Field Items were split from the combined Field Items / Shops / Pickup planning track as the first dedicated item-writer diagnostic scope.
+- Scope remains read-only: no code changes, no `02_external/**` changes, no Randomizer run, no build, no ROM or private artefact documentation.
+- Planned next block: `test/upr-fvx-cfru-dpe-field-items-scope-diagnostics` for an aggregated Field-Items-only diagnostic run.
+
 ## 2026-05-14 - CFRU/DPE Field Items / Shops / Pickup Scope Plan
 
 Workspace-Branch: `analysis/upr-fvx-cfru-dpe-field-items-shops-pickup-scope-plan`

@@ -171,3 +171,5 @@ Wenn ein Artefakt nicht eindeutig Smoke-Output ist, bleibt es lokal liegen und w
 
 - `096_palette_normal_single_owner_reload_smoke.md` - Sanitisiert blockierter Reload-Smoke für `FVX-GFX-001` Normal-only Single-owner Palette-Write-Guard; kein UPR-FVX-ladbarer `candidateSpeciesTotal=1439` Zielkandidat verfügbar, daher keine Feature-Hochstufung.
 | 097 | `097_field_items_shops_pickup_scope_plan.md` | CFRU/DPE Field Items / Shops / Pickup Scope Plan | geplant: Field Items, Shops und Pickup muessen getrennt behandelt werden; Field Items zuerst, Pickup und Shops separat; gemeinsame Item-Pool-/Bad-Item-Policy noetig, aber kein gemeinsamer Fixblock | keiner, read-only Analyse | nein |
+
+- 098 - `098_field_items_scope_diagnostics_plan.md`: Read-only CFRU/DPE Field-Items-only diagnostics plan. Splits visible Itemballs, Hidden Items/Signposts, TM/Non-TM slots, Required Field TMs and item safety policy away from Shops/Pickup.
