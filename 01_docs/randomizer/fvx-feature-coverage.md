@@ -32,13 +32,27 @@ Sie ist die detaillierte Requirements-/Coverage-Ebene. Die Roadmap bleibt bewuss
 | Nicht begonnen | 39 |
 | Plan erstellt | 28 |
 | Read modelliert | 0 |
-| Write modelliert | 19 |
+| Write modelliert | 16 |
 | Getestet | 10 |
-| GUI-kompatibel | 34 |
+| GUI-kompatibel | 37 |
 | In Arbeit | 0 |
 | **Gesamt** | **130** |
 
-## Aktueller Hinweis zu 084
+## Aktueller Hinweis zu 085
+
+Diagnose 085 bestaetigt den engen MoveData Power/Accuracy/PP Reload-Smoke:
+
+- UPR-FVX `bb5ee11978e38839979e654ff1c14ba60a0cde93` reloadet `FVX-MOVE-001`, `FVX-MOVE-002` und `FVX-MOVE-003` mit `saveSuccessful=true`, `logSuccessful=true`, `outputRomExists=true` und `logNonEmpty=true`.
+- `writeReloadMoveDataMismatches=0`.
+- `moves.total=992` und `991:PsychicNoise` bleiben nach Reload stabil.
+- Power/Accuracy/PP reloaden stabil: `powerReloadMismatches=0`, `accuracyReloadMismatches=0`, `ppReloadMismatches=0`.
+- Rohbytes fuer `+1 power`, `+3 accuracy` und `+4 pp` stimmen mit den erwarteten Move-Werten ueberein: `powerByteMismatches=0`, `accuracyByteMismatches=0`, `ppByteMismatches=0`.
+- Preserve-Bytes `+5`, `+6`, `+7`, `+8`, `+9` und `+11` bleiben bytegleich: `preserveByteMismatchesAllMoves=0`, `preserveByteMismatchesUnchangedMoves=0`.
+- `FVX-MOVE-001`, `FVX-MOVE-002` und `FVX-MOVE-003` werden damit als GUI-kompatibel gefuehrt.
+- `FVX-MOVE-004` Randomize Move Types bleibt konservativ auf `Write modelliert`, bis ein eigener Type-Byte-Smoke vorliegt.
+- `FVX-MOVE-005` Move Names bleibt ausserhalb dieses Writer-Preserve-Smokes.
+
+## Vorheriger Hinweis zu 084
 
 Diagnose 084 bestaetigt den engen MoveData Write Preserve Reload-Smoke:
 
@@ -83,7 +97,7 @@ Diagnose 082 bestaetigt `FVX-TRAIT-018` nach der 081-Normalisierung:
 | General Options | 4 | 2 | 0 | 0 | 0 | 2 | 0 | 0 |
 | Pokemon Traits | 28 | 7 | 15 | 0 | 0 | 0 | 6 | 0 |
 | Starters, Statics & Trades | 15 | 5 | 0 | 0 | 0 | 5 | 5 | 0 |
-| Moves & Movesets | 11 | 0 | 3 | 0 | 5 | 0 | 3 | 0 |
+| Moves & Movesets | 11 | 0 | 3 | 0 | 2 | 0 | 6 | 0 |
 | Foe Pokemon | 14 | 8 | 0 | 0 | 0 | 0 | 6 | 0 |
 | Wild Pokemon | 12 | 3 | 1 | 0 | 0 | 0 | 8 | 0 |
 | TM/HMs & Tutors | 15 | 0 | 9 | 0 | 0 | 0 | 6 | 0 |
@@ -152,9 +166,9 @@ Diagnose 082 bestaetigt `FVX-TRAIT-018` nach der 081-Normalisierung:
 
 ### Moves & Movesets
 
-- FVX-MOVE-001 | Randomize Move Power | Write modelliert
-- FVX-MOVE-002 | Randomize Move Accuracy | Write modelliert
-- FVX-MOVE-003 | Randomize Move PP | Write modelliert
+- FVX-MOVE-001 | Randomize Move Power | GUI-kompatibel
+- FVX-MOVE-002 | Randomize Move Accuracy | GUI-kompatibel
+- FVX-MOVE-003 | Randomize Move PP | GUI-kompatibel
 - FVX-MOVE-004 | Randomize Move Types | Write modelliert
 - FVX-MOVE-005 | Randomize Move Names | Write modelliert
 - FVX-MOVE-006 | Update Moves to Generation | GUI-kompatibel
