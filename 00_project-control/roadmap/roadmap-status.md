@@ -24,10 +24,10 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Aktueller Branch | `test/upr-fvx-cfru-dpe-palette-pointer-compression-diagnostics` |
-| Nächster Branch | `analysis/upr-fvx-cfru-dpe-palette-single-owner-normal-only-fix-scope-plan` |
-| Aktueller Fokus | CFRU/DPE Palette Pointer / Compression Diagnostics Run |
-| ROM-/Build-Arbeit | read-only lokaler Diagnose-Load; keine Randomizer-Writes, keine Output-ROMs und keine Builds |
+| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-palette-single-owner-normal-only-fix-scope-plan` |
+| Nächster Branch | `compat/upr-fvx-cfru-dpe-palette-normal-single-owner-write` |
+| Aktueller Fokus | CFRU/DPE Palette Single-owner Normal-only Fix-Scope Plan |
+| ROM-/Build-Arbeit | read-only Planblock; keine Randomizer-Writes, keine Output-ROMs und keine Builds |
 | Externe Repos | als Submodule auf Planton361-Forks eingebunden |
 | Forks | Planton361-Forks fuer UPR-FVX, DPE Gen9 und CFRU dokumentiert |
 | Installationen | devkitPro/devkitARM lokal dokumentiert; keine Installation in diesem Analyseblock |

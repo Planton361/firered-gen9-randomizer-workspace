@@ -38,7 +38,18 @@ Sie ist die detaillierte Requirements-/Coverage-Ebene. Die Roadmap bleibt bewuss
 | In Arbeit | 0 |
 | **Gesamt** | **130** |
 
-## Aktueller Hinweis zu 093
+## Aktueller Hinweis zu 094
+
+Diagnose 094 plant den naechsten engen Palette-Fix-/Smoke-Scope auf Basis von Diagnose 093:
+
+- Reviewbar ist nur ein Normal-Palette-only-Scope fuer die `candidateWritableNormalPalettes=385`.
+- Spaeterer Writer darf nur Normal-Paletten schreiben, die single-owner, dekomprimierbar, gueltig, nicht shared, nicht missing, nicht invalid, nicht decode-failed und nicht cross-kind shared sind.
+- Alle Shiny-, Shared-, Invalid-, Missing-, Decode-failed- und unsicheren Forme-/Expanded-Mapping-Faelle bleiben preserve-only.
+- Der bestehende komprimierte Palette-Pfad kann Repointing erfordern; ein spaeterer Smoke muss Pointer-/Free-Space-/Reload-Kriterien explizit nachweisen.
+- `FVX-GFX-001` kann spaeter hoechstens als Normal-only-Single-owner-Subset getestet werden.
+- `FVX-GFX-002`, `FVX-GFX-003` und `FVX-GFX-004` bleiben getrennt und aktuell `Write modelliert`.
+
+## Vorheriger Hinweis zu 093
 
 Diagnose 093 fuehrt die read-only Palette-Pointer-/Compression-Diagnose sanitisiert aus:
 

@@ -2,9 +2,10 @@
 
 ## Latest
 
-- `093_palette_pointer_compression_diagnostics.md` dokumentiert den sanitisierten read-only Palette-Pointer-/Compression-Diagnose-Lauf.
-- Ergebnis: `candidateWritablePalettes=385`, aber nur fuer Normal-Paletten; Shiny hat keine direkt writable Kandidaten.
-- `FVX-GFX-001..004` bleiben `Write modelliert`.
+- `094_palette_single_owner_normal_only_fix_scope_plan.md` plant den engen Normal-Palette-only-Folge-Scope auf Basis von Diagnose 093.
+- Ergebnis: ein spaeterer Fix-/Smoke ist nur fuer Normal-Paletten reviewbar, die single-owner, dekomprimierbar, gueltig, nicht shared, nicht missing, nicht invalid, nicht decode-failed und nicht cross-kind shared sind.
+- Shiny-, Shared-, Invalid-, Missing-, Decode-failed- und unsichere Forme-/Expanded-Mapping-Faelle bleiben preserve-only.
+- `FVX-GFX-001..004` bleiben aktuell `Write modelliert`.
 - MoveData bleibt unveraendert: `FVX-MOVE-001/002/003/004/006` sind GUI-kompatibel; `FVX-MOVE-005` bleibt blockiert.
 
 Dieses Verzeichnis enthaelt die dauerhaften Markdown-Protokolle fuer UPR-FVX/CFRU-DPE-Randomizer-Analysen und Smokes. Lokale ROM-, Build-, Log- und Tool-Artefakte bleiben unter `05_builds/**` oder `03_tools/releases/**` und werden nicht committed.
@@ -127,7 +128,8 @@ Der neueste bestaetigte Stand wird in Markdown ueber die Spalte `Latest` markier
 | 090 | `090_move_names_fixed_length_reload_smoke_retry.md` | CFRU/DPE Move Names fixed-length Reload-Smoke Retry | blockiert: Candidate-Preflight pruefte 94 lokale freigegebene private/ignored Kandidaten, fand aber keinen Stand mit `moves.total=992` und `991:PsychicNoise`; fachlicher Smoke nicht ausgefuehrt; `FVX-MOVE-005` bleibt `Write modelliert` | lokal/ignored, nicht dokumentiert | nein |
 | 091 | `091_palette_randomization_preserve_repoint_plan.md` | CFRU/DPE Palette Randomization Preserve/Repoint Plan | dokumentiert: echte Palette-Randomization ist ein komprimierter Repointing-/Shared-Pointer-Writer; direkter Fix noch nicht eng genug, zuerst read-only Pointer-/Compression-Diagnose noetig; `FVX-GFX-001..004` bleiben `Write modelliert` | keiner, read-only Analyse | nein |
 | 092 | `092_palette_pointer_compression_diagnostics_plan.md` | CFRU/DPE Palette Pointer / Compression Diagnostics Plan | dokumentiert: spaetere Diagnose soll Normal-/Shiny-Palette-Pointer, Dekomprimierbarkeit, Single-Owner/Shared, missing/invalid und sichere Kandidaten aggregiert klassifizieren; kein Fix, kein Repointing | keiner, read-only Analyse | nein |
-| 093 | `093_palette_pointer_compression_diagnostics.md` | CFRU/DPE Palette Pointer / Compression Diagnostics | bestaetigt sanitisiert: `candidateLoaded=true`, `palettePointerScanSuccessful=true`, `candidateWritablePalettes=385`, `candidateWritableNormalPalettes=385`, `candidateWritableShinyPalettes=0`; shared/invalid/missing/decode-failed bleiben preserve-only | lokal/ignored, nicht dokumentiert | ja |
+| 093 | `093_palette_pointer_compression_diagnostics.md` | CFRU/DPE Palette Pointer / Compression Diagnostics | bestaetigt sanitisiert: `candidateLoaded=true`, `palettePointerScanSuccessful=true`, `candidateWritablePalettes=385`, `candidateWritableNormalPalettes=385`, `candidateWritableShinyPalettes=0`; shared/invalid/missing/decode-failed bleiben preserve-only | lokal/ignored, nicht dokumentiert | nein |
+| 094 | `094_palette_single_owner_normal_only_fix_scope_plan.md` | CFRU/DPE Palette Single-owner Normal-only Fix-Scope Plan | geplant: spaeterer Scope nur Normal-Paletten, single-owner, dekomprimierbar, gueltig, non-shared, non-cross-kind; Shiny/shared/invalid/missing/decode-failed preserve-only | keiner | ja |
 
 ## Aktuell bestaetigter Stand
 

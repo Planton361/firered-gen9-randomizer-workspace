@@ -2,7 +2,7 @@
 
 ## Aktueller Fokus
 
-CFRU/DPE Palette Pointer / Compression Diagnostics Run ist dokumentiert. Aktuelle Diagnose: `08_tests/randomizer/093_palette_pointer_compression_diagnostics.md`.
+CFRU/DPE Palette Single-owner Normal-only Fix-Scope Plan ist dokumentiert. Aktuelle Diagnose: `08_tests/randomizer/094_palette_single_owner_normal_only_fix_scope_plan.md`.
 
 `FVX-MOVE-001/002/003/004/006` sind GUI-kompatibel. `FVX-MOVE-005` bleibt getrennt vom MoveData-Byte-Writer-Scope.
 
@@ -12,15 +12,17 @@ Planergebnis aus 091: echte `PokemonPalettesMod.RANDOM`-Randomization ist wegen 
 
 Diagnoseergebnis aus 093: der sanitisierten read-only Lauf findet `candidateWritablePalettes=385`, aber nur `candidateWritableNormalPalettes=385` und `candidateWritableShinyPalettes=0`. Shared/invalid/missing/decode-failed Paletten bleiben preserve-only.
 
-Naechster aktiver Arbeitsblock: `analysis/upr-fvx-cfru-dpe-palette-single-owner-normal-only-fix-scope-plan`.
+Planergebnis aus 094: ein spaeterer Fix-/Smoke-Scope ist reviewbar, aber nur fuer Normal-Paletten, die single-owner, dekomprimierbar, gueltig, nicht shared, nicht missing, nicht invalid, nicht decode-failed und nicht cross-kind shared sind. Repointing muss bewusst abgesichert werden.
+
+Naechster aktiver Arbeitsblock: `compat/upr-fvx-cfru-dpe-palette-normal-single-owner-write`.
 
 ## Priorisierte naechste Arbeitsbloecke
 
-1. Palette Single-owner Normal-only Fix-Scope planen
-   - Empfohlener Branch: `analysis/upr-fvx-cfru-dpe-palette-single-owner-normal-only-fix-scope-plan`.
-   - Ziel: read-only klaeren, ob ein normal-palette-only Fix-/Smoke-Scope fuer die `385` dekomprimierbaren Single-owner-Kandidaten reviewbar eng genug ist.
-   - Grundlage: Diagnose 058, 091, 092 und 093.
-   - Grenzen: Shiny preserve-only, shared/invalid/missing/decode-failed preserve-only, keine breite Palette-Randomization, kein Repointing ohne eigene Free-Space-/Reload-Policy.
+1. Palette Normal Single-owner Write Guard Fix vorbereiten
+   - Empfohlener Branch: `compat/upr-fvx-cfru-dpe-palette-normal-single-owner-write`.
+   - Ziel: enger UPR-FVX-Fix fuer `FVX-GFX-001` als Normal-only-Farbtraeger mit Writer-Gate fuer single-owner/dekomprimierbare/gueltige/non-shared Normal-Paletten.
+   - Grundlage: Diagnose 058, 091, 092, 093 und 094.
+   - Grenzen: Shiny preserve-only, shared/invalid/missing/decode-failed/cross-kind shared preserve-only, keine breite Palette-Randomization, kein Repointing ohne Free-Space-/Pointer-/Reload-Nachweis.
 
 2. Palette Randomization Preserve/Repoint Plan halten
    - Diagnose 091 dokumentiert: direkter Fix noch nicht eng genug.
@@ -95,7 +97,7 @@ Naechster aktiver Arbeitsblock: `analysis/upr-fvx-cfru-dpe-palette-single-owner-
    - Nicht mit MoveData, Palette, Items, Graphics, Text/Menu oder Species-Type-Write vermischen.
 
 15. `analysis/upr-fvx-cfru-dpe-palette-single-owner-normal-only-fix-scope-plan`
-   - Naechster empfohlener P1-Folgeblock: normal-palette-only, single-owner/decompressible Fix-/Smoke-Scope planen; kein Shiny-Write, kein shared-pointer Write, kein Repointing ohne eigene Policy.
+   - Abgeschlossen: Diagnose 094 plant den normal-palette-only, single-owner/decompressible Fix-/Smoke-Scope; kein Shiny-Write, kein shared-pointer Write, kein Repointing ohne eigene Policy.
 
 16. `compat/upr-fvx-cfru-dpe-field-items-shops-pickup-scope-and-write`
    - Nur nach separater Freigabe: Field Items, Shops und Pickup mit getrennten Reload-Kriterien absichern.
