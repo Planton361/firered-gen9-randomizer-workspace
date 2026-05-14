@@ -1,3 +1,20 @@
+# Next Steps Update - 2026-05-15 - Field Items Random Even smoke next
+
+Aktueller Fokus:
+
+- Diagnose 109 confirms `FVX-ITEM-002 Field Items Random` as `GUI-kompatibel` in the narrow Field-Items-only scope with `banBadRandomFieldItems=false`.
+- Confirmed counters include `fieldItemReloadMismatches=0`, `apiTmFieldItemSlots=28`, `rawApiTmSlotAlignmentMismatches=0`, `randomTmPoolDeficit=0`, and `requiredFieldTMMissingAfter=0`.
+- `FVX-ITEM-003 Field Items Random even distribution` remains `Write modelliert` and should be tested separately next.
+- `FVX-ITEM-004 Ban Bad Items` remains separate and inactive.
+
+Nicht ausweiten:
+
+- No Shops, Pickup, Held Items, TM/HM/Tutor/Learnset, Palette/Graphics, MoveData/MoveNames, TypeChart, Trainer/Wild/Evolution, Text/Menu or Scriptparser work.
+
+Naechster Block:
+
+- `test/upr-fvx-cfru-dpe-field-items-random-even-reload-smoke`: sanitized Field-Items-only smoke for `FVX-ITEM-003` without Ban Bad Items, preserving the same allowed-slot, TM/Non-TM, Required-TM and API-TM-slot criteria.
+
 # Next Steps Update - 2026-05-15 - Field Items API TM-slot reload smoke next
 
 Aktueller Fokus:
