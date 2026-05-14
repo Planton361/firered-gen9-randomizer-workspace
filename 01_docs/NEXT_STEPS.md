@@ -2,7 +2,7 @@
 
 ## Aktueller Fokus
 
-CFRU/DPE Evolution Same Typing Code Diagnosis ist read-only dokumentiert. Diagnose: `08_tests/randomizer/079_p1_evolution_same_typing_code_diagnosis.md`.
+CFRU/DPE Evolution Same Typing Null-Type Fix ist umgesetzt und sanitisiert dokumentiert. Diagnose: `08_tests/randomizer/080_evolution_same_typing_nulltype_fix_diagnostics.md`.
 
 ## Priorisierte naechste Arbeitsbloecke
 
@@ -17,16 +17,16 @@ CFRU/DPE Evolution Same Typing Code Diagnosis ist read-only dokumentiert. Diagno
    - Diagnose 078 und Submodule-Pin reviewen und mergen.
    - Der Fix bleibt auf `TrainerPokemonRandomizer` und den Force-Diverse-Types-/`usedTypes`-Pfad begrenzt.
 
-3. `FVX-TRAIT-019` Evolutions Same Typing eng gegatet fixen
-   - `FVX-FOE-009` ist im eng getesteten Trainer-Type-Diversity-Scope entblockt.
-   - Wahrscheinlich konkrete Ursache aus 079: `EvolutionRandomizer` Same-Typing-Filter ruft `to.hasSharedType(...)` auf Kandidaten mit `primaryType == null` auf.
-   - Fix nur fuer Same-Typing-/Null-Primary-Type-Scope in `EvolutionRandomizer`.
-   - Kein Wild, Trainer, TypeChart, MoveData Write, Palette, Items, Text/Menu, Graphics oder Evolution-Methoden-Writer.
+3. PRs fuer Evolution Same Typing Null-Type Fix reviewen
+   - UPR-FVX: `compat/upr-fvx-cfru-dpe-p1-evolution-same-typing-nulltype-fix`.
+   - Workspace: `compat/upr-fvx-cfru-dpe-p1-evolution-same-typing-nulltype-fix`.
+   - Diagnose 080 und Submodule-Pin reviewen und mergen.
+   - Der Fix bleibt auf `EvolutionRandomizer` und den Same-Typing-/Null-Primary-Type-Scope begrenzt.
 
 4. Weitere 070-Evolution-Blocker getrennt fortsetzen
-   - `FVX-TRAIT-018` Evolutions Similar Strength gegen Evolution-Reload-Mismatches, `Bad Egg` und BST-basierte Zielauswahl.
-   - `FVX-TRAIT-019` nach Fix separat mit Save/Log/Output/Reload und `writeReloadEvolutionMismatches=0` pruefen.
-   - Weiter ohne TypeChart, MoveData Write, Palette, Items, Encounter Held Items, custom Day/Night-Wild, Catch Em All, Minimum Catch Rate, Level-Modifier oder Text/Menu/Graphics.
+   - `FVX-TRAIT-019` ist im eng getesteten Same-Typing-Scope entblockt.
+   - `FVX-TRAIT-018` wurde in 080 nur getrennt als Regression beobachtet und bleibt fachlich separat.
+   - Weiter ohne TypeChart, MoveData Write, Palette, Items, Encounter Held Items, custom Day/Night-Wild, Catch Em All, Minimum Catch Rate, Level-Modifier, Evolution-Methoden-Writer oder Text/Menu/Graphics.
 
 5. Wild-Suboptionen konservativ halten
    - `FVX-WILD-011` und `FVX-WILD-004` sind im `FVX-WILD-001` Carrier-Fix-Smoke stabil.
