@@ -38,7 +38,18 @@ Sie ist die detaillierte Requirements-/Coverage-Ebene. Die Roadmap bleibt bewuss
 | In Arbeit | 0 |
 | **Gesamt** | **130** |
 
-## Aktueller Hinweis zu 091
+## Aktueller Hinweis zu 092
+
+Diagnose 092 plant die read-only Palette-Pointer-/Compression-Diagnose als naechsten Schritt vor jedem Palette-Fix:
+
+- Normal- und Shiny-Palette-Pointer sollen getrennt und aggregiert klassifiziert werden.
+- Metriken umfassen dekomprimierbare, nicht dekomprimierbare, single-owner, shared, missing/null, invalid/out-of-ROM, duplicate und candidateWritable Paletten.
+- Shared, missing, invalid und decode-failed Paletten bleiben preserve-only.
+- Ein spaeterer Fix ist nur fuer dekomprimierbare single-owner Kandidaten eng genug, solange keine explizite Secondary-Pointer-/Shared-Pointer-Policy existiert.
+- Raw Pointer, Offsets, ROM-Namen, Hashes, lokale Pfade, Logs und Output-ROMs duerfen nicht dokumentiert werden.
+- `FVX-GFX-001..004` bleiben `Write modelliert`.
+
+## Vorheriger Hinweis zu 091
 
 Diagnose 091 plant den Preserve-/Repoint-Scope fuer echte CFRU/DPE Pokemon-Palette-Randomization:
 

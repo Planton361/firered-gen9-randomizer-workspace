@@ -1,5 +1,26 @@
 # Session State
 
+## 2026-05-14 - CFRU/DPE Palette Pointer / Compression Diagnostics Plan
+
+Workspace-Branch: `analysis/upr-fvx-cfru-dpe-palette-pointer-compression-diagnostics-plan`
+
+UPR-FVX-Pin: `fad56f60d6fae9b006290a4d5fd1f0715f3d9dc3`
+
+Aktueller Stand:
+
+- Neues read-only Planprotokoll `08_tests/randomizer/092_palette_pointer_compression_diagnostics_plan.md` erstellt.
+- Der Plan konkretisiert die von Diagnose 091 geforderte Palette-Pointer-/Compression-Diagnose.
+- Relevante Codepfade: `Gen3RomHandler` mit `PokemonNormalPalettes`, `PokemonShinyPalettes`, `loadPokemonPalettes()`, `savePokemonPalettes()`, `rewriteCompressedPalette(...)`, `pokedexToInternal[...]`, `AbstractGBRomHandler.DataRewriter`, `GameRandomizer`, `Settings.PokemonPalettesMod` und `Gen3to5PaletteRandomizer`.
+- Die spaetere Diagnose soll Normal-/Shiny-Palette-Pointer aggregiert klassifizieren: dekomprimierbar, nicht dekomprimierbar, single-owner, shared, missing/null, invalid/out-of-ROM, duplicate und candidateWritable.
+- Raw Pointer, Offsets, ROM-Namen, Hashes, lokale Pfade, Logauszuege und Output-ROMs duerfen nicht dokumentiert werden.
+- Policy: shared, missing, invalid und decode-failed Paletten bleiben preserve-only; nur dekomprimierbare single-owner Kandidaten kommen fuer einen spaeteren engen Fix-/Smoke-Scope in Frage.
+- `FVX-GFX-001`, `FVX-GFX-002`, `FVX-GFX-003` und `FVX-GFX-004` bleiben `Write modelliert`.
+- Keine Codeaenderung, keine Aenderung an `02_external/**`, keine Submodule-Pin-Aenderung, kein Build, kein Randomizer-Lauf und kein ROM-/Artefaktzugriff.
+
+Naechster sinnvoller Schritt:
+
+- `test/upr-fvx-cfru-dpe-palette-pointer-compression-diagnostics`: nur bei expliziter lokaler Freigabe einen sanitisierten read-only Diagnose-Lauf fuer Palette-Pointer, Compression, Owner-Counts und sichere Kandidaten ausfuehren. Kein Palette-Fix, kein Repointing.
+
 ## 2026-05-14 - CFRU/DPE Palette Randomization Preserve/Repoint Plan
 
 Workspace-Branch: `analysis/upr-fvx-cfru-dpe-palette-randomization-preserve-repoint-plan`

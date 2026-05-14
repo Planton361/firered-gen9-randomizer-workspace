@@ -2,8 +2,8 @@
 
 ## Latest
 
-- `091_palette_randomization_preserve_repoint_plan.md` plant read-only den engen Scope fuer echte geaenderte CFRU/DPE Pokemon-Palette-Randomization.
-- Ergebnis: kein direkter Fix; zuerst ist eine read-only Palette-Pointer-/Compression-Diagnose noetig.
+- `092_palette_pointer_compression_diagnostics_plan.md` plant read-only die CFRU/DPE Palette-Pointer-/Compression-Diagnose fuer Normal- und Shiny-Paletten.
+- Ergebnis: kein direkter Fix; zuerst muessen Pointer, Compression, Single-Owner/Shared, missing/invalid und sichere Kandidaten aggregiert klassifiziert werden.
 - `FVX-GFX-001..004` bleiben `Write modelliert`.
 - MoveData bleibt unveraendert: `FVX-MOVE-001/002/003/004/006` sind GUI-kompatibel; `FVX-MOVE-005` bleibt blockiert.
 
@@ -125,11 +125,12 @@ Der neueste bestaetigte Stand wird in Markdown ueber die Spalte `Latest` markier
 | 088 | `088_move_names_text_menu_scope_plan.md` | CFRU/DPE Move Names / Descriptions Text/Menu-Scope Plan | dokumentiert: `FVX-MOVE-005` ist vom MoveData-Byte-Writer getrennt; Name-only fixed-length Smoke ist realistisch, Move Descriptions / Text/Menu-Repointing vorerst zurueckstellen | keiner, read-only Analyse | nein |
 | 089 | `089_move_names_fixed_length_reload_smoke.md` | CFRU/DPE Move Names fixed-length Reload-Smoke | blockiert: lokaler Harness erstellt, aber kein freigegebener lokaler CFRU/DPE Gen9-BPRE-Kandidat mit `moves.total=992` und `991:PsychicNoise` gefunden; `FVX-MOVE-005` bleibt `Write modelliert` | lokal/ignored, nicht dokumentiert | nein |
 | 090 | `090_move_names_fixed_length_reload_smoke_retry.md` | CFRU/DPE Move Names fixed-length Reload-Smoke Retry | blockiert: Candidate-Preflight pruefte 94 lokale freigegebene private/ignored Kandidaten, fand aber keinen Stand mit `moves.total=992` und `991:PsychicNoise`; fachlicher Smoke nicht ausgefuehrt; `FVX-MOVE-005` bleibt `Write modelliert` | lokal/ignored, nicht dokumentiert | nein |
-| 091 | `091_palette_randomization_preserve_repoint_plan.md` | CFRU/DPE Palette Randomization Preserve/Repoint Plan | dokumentiert: echte Palette-Randomization ist ein komprimierter Repointing-/Shared-Pointer-Writer; direkter Fix noch nicht eng genug, zuerst read-only Pointer-/Compression-Diagnose noetig; `FVX-GFX-001..004` bleiben `Write modelliert` | keiner, read-only Analyse | ja |
+| 091 | `091_palette_randomization_preserve_repoint_plan.md` | CFRU/DPE Palette Randomization Preserve/Repoint Plan | dokumentiert: echte Palette-Randomization ist ein komprimierter Repointing-/Shared-Pointer-Writer; direkter Fix noch nicht eng genug, zuerst read-only Pointer-/Compression-Diagnose noetig; `FVX-GFX-001..004` bleiben `Write modelliert` | keiner, read-only Analyse | nein |
+| 092 | `092_palette_pointer_compression_diagnostics_plan.md` | CFRU/DPE Palette Pointer / Compression Diagnostics Plan | dokumentiert: spaetere Diagnose soll Normal-/Shiny-Palette-Pointer, Dekomprimierbarkeit, Single-Owner/Shared, missing/invalid und sichere Kandidaten aggregiert klassifizieren; kein Fix, kein Repointing | keiner, read-only Analyse | ja |
 
 ## Aktuell bestaetigter Stand
 
-Latest ist Nr. 091: CFRU/DPE Palette Randomization Preserve/Repoint Plan.
+Latest ist Nr. 092: CFRU/DPE Palette Pointer / Compression Diagnostics Plan.
 
 Kernaussagen:
 
@@ -145,6 +146,7 @@ Kernaussagen:
 - Diagnose 090 wiederholte den Candidate-Preflight sanitisiert: `candidateFilesChecked=94`, `candidatePreflightSuccessful=false`, `candidateMovesTotal=not available`, `candidateHighestMove=not available`; der fachliche Smoke wurde erneut nicht ausgefuehrt.
 - `FVX-MOVE-005` bleibt `Write modelliert`; Move Descriptions / Text/Menu-Repointing bleibt zurueckgestellt.
 - Diagnose 091 bestaetigt fuer echte Palette-Randomization: `PokemonPalettesMod.RANDOM` faellt in einen komprimierten `rewriteCompressedPalette()`-/`DataRewriter`-Repointing-Pfad; shared/missing/invalid Pointer und Forme-/Mapping-Fragen muessen vor einem Fix read-only inventarisiert werden.
+- Diagnose 092 plant diese Inventarisierung als separaten sanitisierten Diagnose-Lauf: Normal-/Shiny-Palette-Pointer, Decode-Failures, Single-Owner/Shared, missing/invalid und `candidateWritablePalettes` werden nur aggregiert dokumentiert.
 - `FVX-GFX-001`, `FVX-GFX-002`, `FVX-GFX-003` und `FVX-GFX-004` bleiben `Write modelliert`; Custom Player Graphics bleibt separat.
 
 ## Lokale Artefaktpflege
