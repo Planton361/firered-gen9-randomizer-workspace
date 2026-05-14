@@ -1,3 +1,11 @@
+# FVX Feature Coverage Update - 2026-05-15 - Field Items API TM-slot scope planned
+
+- `FVX-ITEM-001` remains `GUI-kompatibel` for the tested CFRU/DPE Gen9-BPRE Field Items Shuffle allowed-slot scope.
+- `FVX-ITEM-002` remains `Write modelliert`: Diagnose 107 identifies the remaining blocker as the Field-Items API TM-slot scope (`getFieldItems()` exposes `0` TM slots while raw diagnostics found `28`).
+- `FVX-ITEM-003` remains `Write modelliert`.
+- `FVX-ITEM-004` remains `Write modelliert`.
+- A later fix must not make TMs globally allowed and must not expand Shops, Pickup, Held Items, TM/HM/Tutor/Learnset, Random Even or Ban Bad Items.
+
 # FVX Feature Coverage Update - 2026-05-15 - Field Items Random API TM-slot blocker
 
 - `FVX-ITEM-001` remains `GUI-kompatibel` for the tested CFRU/DPE Gen9-BPRE Field Items Shuffle allowed-slot scope.
@@ -411,8 +419,8 @@ Diagnose 082 bestaetigt `FVX-TRAIT-018` nach der 081-Normalisierung:
 
 ### Items
 
-- FVX-ITEM-001 | Field Items Shuffle | Write modelliert
-- FVX-ITEM-002 | Field Items Random | Write modelliert
+- FVX-ITEM-001 | Field Items Shuffle | GUI-kompatibel im engen allowed-slot Scope
+- FVX-ITEM-002 | Field Items Random | Write modelliert; blockiert durch API-TM-Slot-Scope
 - FVX-ITEM-003 | Field Items Random even distribution | Write modelliert
 - FVX-ITEM-004 | Field Items Ban Bad Items | Write modelliert
 - FVX-ITEM-005 | Shop Items Shuffle | Write modelliert

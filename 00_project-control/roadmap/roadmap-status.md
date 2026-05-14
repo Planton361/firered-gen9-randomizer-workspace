@@ -1,3 +1,10 @@
+# Roadmap Status Update - 2026-05-15 - Field Items API TM-slot scope plan
+
+- Added `08_tests/randomizer/107_field_items_random_api_tm_slot_scope_plan.md`.
+- Field Items Random remains blocked after the TM-pool fix because the existing Gen3 Field-Items API filters TM slots through `Item::isAllowed`.
+- Current recommendation: `compat/upr-fvx-cfru-dpe-field-items-api-tm-slot-scope-fix`, limited to `FVX-ITEM-002` and the CFRU/DPE Field-Items API TM-slot scope.
+- `FVX-ITEM-001` remains GUI-compatible for Shuffle; `FVX-ITEM-002..004` remain below GUI-compatible except for their documented narrow statuses.
+
 # Roadmap Status Update - 2026-05-15 - Field Items Random API TM-slot blocker
 
 - Field Items: Diagnose 106 keeps `FVX-ITEM-002` blocked after the PR #36 TM-pool fix.
