@@ -1,3 +1,10 @@
+# Roadmap Status Update - 2026-05-15 - Field Items API TM-slot fix prepared
+
+- Added `08_tests/randomizer/108_field_items_api_tm_slot_scope_fix.md`.
+- UPR-FVX PR #37 is open for the CFRU/DPE Field-Items API TM-slot scope fix.
+- Workspace now pins `02_external/upr-fvx` to `328e4441c2981d37aba9e2707a6f27f779b026e2`.
+- `FVX-ITEM-002` remains below GUI-compatible until a separate reload smoke passes.
+
 # Roadmap Status Update - 2026-05-15 - Field Items API TM-slot scope plan
 
 - Added `08_tests/randomizer/107_field_items_random_api_tm_slot_scope_plan.md`.

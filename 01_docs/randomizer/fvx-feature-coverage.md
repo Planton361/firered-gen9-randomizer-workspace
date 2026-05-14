@@ -1,3 +1,11 @@
+# FVX Feature Coverage Update - 2026-05-15 - Field Items API TM-slot fix prepared
+
+- `FVX-ITEM-001` remains `GUI-kompatibel` for the tested CFRU/DPE Gen9-BPRE Field Items Shuffle allowed-slot scope.
+- `FVX-ITEM-002` remains `Write modelliert`: UPR-FVX PR #37 prepares the API TM-slot scope fix, but no fachlicher reload smoke has passed yet.
+- `FVX-ITEM-003` remains `Write modelliert`.
+- `FVX-ITEM-004` remains `Write modelliert`.
+- The fix does not make TMs globally allowed and does not expand Shops, Pickup, Held Items, TM/HM/Tutor/Learnset, Random Even or Ban Bad Items.
+
 # FVX Feature Coverage Update - 2026-05-15 - Field Items API TM-slot scope planned
 
 - `FVX-ITEM-001` remains `GUI-kompatibel` for the tested CFRU/DPE Gen9-BPRE Field Items Shuffle allowed-slot scope.
