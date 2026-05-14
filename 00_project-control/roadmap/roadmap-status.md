@@ -654,3 +654,12 @@ Zweck: Diagnose 082 reviewen und mergen; danach Evolution-Methoden-Writer und we
 - Sanitized preflight: `candidateFilesChecked=0`, `candidateLoaded=false`, `fieldItemScanSuccessful=false`, `exceptionClass=none`, `stacktrace=none`.
 - `FVX-ITEM-001..004` remain `Write modelliert`; no Field-Item fix or smoke evidence was produced.
 - No code, submodule, build, Randomizer, ROM, log, output ROM or private artefact changes.
+
+## 2026-05-14 - Field Items candidate diagnostics
+
+- Added `08_tests/randomizer/100_field_items_scope_diagnostics_candidate.md`.
+- Workspace PR #144 was verified as merged before branch creation.
+- A locally approved CFRU/DPE Gen9-BPRE candidate was scanned read-only for Field Items only.
+- Sanitized result: `candidateLoaded=true`, `fieldItemScanSuccessful=true`, `fieldItemsTotal=339`, `visibleFieldItemSlots=168`, `hiddenFieldItemSlots=171`, `allowedFieldItemSlots=280`, `disallowedFieldItemSlots=59`, `tmFieldItemSlots=28`, `nonTmFieldItemSlots=311`, `requiredFieldTMMissing=0`, `invalidFieldItemIds=0`, `unloadedFieldItemIds=0`, `scriptPatternUnmatchedItemBalls=10`.
+- `FVX-ITEM-001..004` remain `Write modelliert`; next step is a guarded Field-Items write/smoke branch.
+- No code, submodule, build, Randomizer write/save, ROM output, log or private artefact changes.

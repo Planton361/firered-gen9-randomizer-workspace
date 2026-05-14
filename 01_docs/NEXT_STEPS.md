@@ -1,3 +1,11 @@
+# Next Steps Update - 2026-05-14 - Field Items guarded write/smoke
+
+Recommended next block:
+
+`compat/upr-fvx-cfru-dpe-field-items-allowed-slot-write-guard`
+
+Goal: implement and smoke a narrow Field-Items-only guard for allowed slots, preserving disallowed/progression-sensitive/key-system slots, keeping TM slots as TMs and Non-TM slots as Non-TMs, and maintaining `requiredFieldTMMissingAfter=0`. Keep Shops, Pickup, held items, TM/HM/Tutor/Learnset, Palette/Graphics, MoveData/MoveNames, TypeChart, Trainer/Wild/Evolution and Text/Menu out of scope.
+
 # Next Steps Update - 2026-05-14 - Field Items diagnostics candidate needed
 
 Recommended next block only after an explicitly approved local CFRU/DPE Gen9-BPRE candidate is available:
