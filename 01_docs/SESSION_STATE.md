@@ -1,5 +1,23 @@
 # Session State
 
+## 2026-05-14 - CFRU/DPE Starters Suboptions Regression-Smoke-Plan
+
+Arbeitsbranch: `analysis/upr-fvx-cfru-dpe-p1-starters-suboptions-regression-smoke`
+
+Aktueller Stand:
+
+- Neues read-only Analyseprotokoll `08_tests/randomizer/063_p1_starters_suboptions_regression_smoke.md` erstellt.
+- Starter-Suboptionen aus Diagnose 061/062 ueber den belegten Starter-Species-Writer geplant.
+- `FVX-SST-002` bleibt nur belegter Basis-/Carrier-Pfad.
+- Geplante Slices dokumentiert: `FVX-SST-003`/`FVX-SST-004` Basic-/Evolution-Filter, `FVX-SST-005` Type Restrictions, `FVX-SST-006` Legendary Filter und `FVX-SST-009` BST-Min/Max separat.
+- Starter Held Items `FVX-SST-007`/`FVX-SST-008`, Field Items/Shops/Pickup, Encounter Held Items, MoveData Write, Palette/Graphics, TypeChart, Text/Menu, Level Modifier und Evolution-Methoden-Writer bleiben ausgeschlossen.
+- Erwartete spaetere Metriken, Artefaktregeln und Stop-Regeln dokumentiert; keine Hochstufung der Starter-Suboptionen auf P1-supported ohne separaten spaeteren Lauf.
+- Keine Codeaenderung, keine Aenderung an `02_external/**`, keine Randomizer-Laeufe, kein Tool-Manifest-Update.
+
+Naechster sinnvoller Schritt:
+
+- `analysis/upr-fvx-cfru-dpe-p1-similar-strength-same-type-regression-smoke`: BST-/Type-basierte Pooling-Suboptionen planen, ohne TypeChart oder MoveData-Write zu aktivieren.
+
 ## 2026-05-14 - CFRU/DPE Global Species Pool Regression-Smoke-Plan
 
 Arbeitsbranch: `analysis/upr-fvx-cfru-dpe-p1-global-species-pool-regression-smoke`
