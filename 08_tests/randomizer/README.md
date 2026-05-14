@@ -2,11 +2,11 @@
 
 ## Latest
 
-- `083_move_data_write_preserve_diagnostics.md` dokumentiert den engen UPR-FVX MoveData-Write-Preserve-Fix fuer CFRU/DPE Gen9-BPRE.
-- UPR-FVX `bb5ee11978e38839979e654ff1c14ba60a0cde93` schreibt weiterhin die klassischen MoveData-Bytes `+0..+4` und im CFRU/DPE-Gate zusaetzlich `BattleMove.split` bei `+10`.
-- Nicht modellierte Bytes `+5`, `+6`, `+7`, `+8`, `+9` und `+11` bleiben bytegleich erhalten.
-- `./gradlew clean :random:jar` war erfolgreich; `./gradlew test` endete mit `BUILD SUCCESSFUL`, meldete aber bestehende Failures ausserhalb des MoveData-Scopes.
-- Kein Randomizer-/ROM-Reload-Smoke wurde ausgefuehrt; MoveData-Write bleibt bis zum sanitisierten Reload-Smoke konservativ nicht hochgestuft.
+- `084_move_data_write_preserve_reload_smoke.md` dokumentiert den engen CFRU/DPE MoveData Write Preserve Reload-Smoke.
+- UPR-FVX `bb5ee11978e38839979e654ff1c14ba60a0cde93` reloadet `Update Moves` mit `writeReloadMoveDataMismatches=0`.
+- `moves.total=992` und `991:PsychicNoise` bleiben stabil.
+- Category-/Split-Reload bleibt stabil: `categorySplitMismatches=0`, `categoryReloadMismatches=0`.
+- Preserve-Bytes `+5`, `+6`, `+7`, `+8`, `+9` und `+11` bleiben fuer unveraenderte Moves bytegleich: `preserveByteMismatchesUnchangedMoves=0`.
 
 Dieses Verzeichnis enthaelt die dauerhaften Markdown-Protokolle fuer UPR-FVX/CFRU-DPE-Randomizer-Analysen und Smokes. Lokale ROM-, Build-, Log- und Tool-Artefakte bleiben unter `05_builds/**` oder `03_tools/releases/**` und werden nicht committed.
 
@@ -118,19 +118,20 @@ Der neueste bestaetigte Stand wird in Markdown ueber die Spalte `Latest` markier
 | 080 | `080_evolution_same_typing_nulltype_fix_diagnostics.md` | CFRU/DPE Evolution Same Typing Null-Type Fix Diagnostics | bestaetigt: UPR-FVX-Fix fuer `EvolutionRandomizer` Same-Typing-Null-Primary-Type-Scope; `FVX-TRAIT-019` mit Save/Log/Output/Reload true, `writeReloadEvolutionMismatches=0`, `<unknown>=false`, `exceptionClass=none` und `stacktrace=none`; `FVX-TRAIT-018` nur als getrennte Regression | lokal/ignored, nicht dokumentiert | nein |
 | 081 | `081_p1_evolution_similar_strength_mismatch_diagnostics.md` | CFRU/DPE P1 Evolution Similar Strength Mismatch Diagnostics | dokumentiert: read-only Code-/Protokollanalyse fuer `FVX-TRAIT-018`; wahrscheinlich ist der 070-Mismatch-Zaehler durch einen zu breiten Vergleich auf nicht persistierte Forme-/Zusatzfelder entstanden; empfiehlt getrennten normalisierten Diagnose-Smoke vor jedem Fix | keiner, read-only Analyse | nein |
 | 082 | `082_evolution_similar_strength_normalized_reload_diagnostics.md` | CFRU/DPE Evolution Similar Strength Normalized Reload Diagnostics | bestaetigt: `FVX-TRAIT-018` mit Save/Log/Output/Reload true, `normalizedWriteReloadEvolutionMismatches=0`, `rawWithFormeWriteReloadEvolutionMismatches=0`, `<unknown>=false`, `exceptionClass=none` und `stacktrace=none`; `Bad Egg=true` nach 055 klassifiziert | lokal/ignored, nicht dokumentiert | nein |
-| 083 | `083_move_data_write_preserve_diagnostics.md` | CFRU/DPE MoveData Write Preserve Diagnostics | UPR-FVX-Fix implementiert: klassische MoveData-Bytes `+0..+4` bleiben geschrieben, CFRU/DPE `BattleMove.split` wird im Gate bei `+10` geschrieben, nicht modellierte Bytes bleiben erhalten; Reload-Smoke noch offen | keiner | ja |
+| 083 | `083_move_data_write_preserve_diagnostics.md` | CFRU/DPE MoveData Write Preserve Diagnostics | UPR-FVX-Fix implementiert: klassische MoveData-Bytes `+0..+4` bleiben geschrieben, CFRU/DPE `BattleMove.split` wird im Gate bei `+10` geschrieben, nicht modellierte Bytes bleiben erhalten; Reload-Smoke separat in 084 | keiner | nein |
+| 084 | `084_move_data_write_preserve_reload_smoke.md` | CFRU/DPE MoveData Write Preserve Reload-Smoke | bestaetigt: Save/Log/Output/Reload true, `writeReloadMoveDataMismatches=0`, `moves.total=992`, `991:PsychicNoise`, category/split reload stabil und Preserve-Bytes fuer unveraenderte Moves bytegleich | lokal/ignored, nicht dokumentiert | ja |
 
 ## Aktuell bestaetigter Stand
 
-Latest ist Nr. 083: CFRU/DPE MoveData Write Preserve Diagnostics.
+Latest ist Nr. 084: CFRU/DPE MoveData Write Preserve Reload-Smoke.
 
 Kernaussagen:
 
-- UPR-FVX PR #33 implementiert den engen CFRU/DPE MoveData-Writer-Preserve-Fix.
-- Klassische MoveData-Bytes `+0..+4` bleiben geschrieben.
-- CFRU/DPE `BattleMove.split` wird nur im bestehenden CFRU/DPE-Gen9-BPRE-Gate bei `+10` geschrieben.
+- UPR-FVX `bb5ee11978e38839979e654ff1c14ba60a0cde93` implementiert den engen CFRU/DPE MoveData-Writer-Preserve-Fix.
+- `Update Moves` reloadet mit `saveSuccessful=true`, `logSuccessful=true`, `outputRomExists=true`, `logNonEmpty=true` und `writeReloadMoveDataMismatches=0`.
+- `moves.total=992` und `991:PsychicNoise` bleiben nach Reload stabil.
+- CFRU/DPE `BattleMove.split` wird im bestehenden CFRU/DPE-Gen9-BPRE-Gate bei `+10` geschrieben und reloadet stabil.
 - Nicht modellierte Bytes `+5`, `+6`, `+7`, `+8`, `+9` und `+11` bleiben bytegleich erhalten.
-- Kein Randomizer-/ROM-Reload-Smoke wurde in diesem Arbeitsblock ausgefuehrt; die fachliche Hochstufung bleibt bis `writeReloadMoveDataMismatches=0` konservativ offen.
 - Palette, Items, TypeChart/TypeEffectiveness, Trainer, Wild, Evolutions, Text/Menu, Graphics, TM/HM, Tutor, Egg und Learnset-Writer bleiben ausgeschlossen.
 
 ## Lokale Artefaktpflege
