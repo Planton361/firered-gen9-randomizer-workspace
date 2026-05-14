@@ -1,5 +1,24 @@
 # Session State
 
+## 2026-05-14 - CFRU/DPE Wild Filter Carrier Code Diagnosis
+
+Arbeitsbranch: `analysis/upr-fvx-cfru-dpe-p1-wild-filter-carrier-code-diagnosis`
+
+Aktueller Stand:
+
+- Neues read-only Codeanalyse-Protokoll `08_tests/randomizer/074_p1_wild_filter_carrier_code_diagnosis.md` erstellt.
+- 074 untersucht konkret die 070-Wild-Blocker `FVX-WILD-011` und `FVX-WILD-004` im gemeinsamen `FVX-WILD-001` Standard/Fallback-Wild-Carrier.
+- Beide Slices nutzen `wildPokemonZoneMod=GAME` und laufen daher durch `WildEncounterRandomizer.InnerRandomizer.game1to1Encounters()` mit `useMapping=true`.
+- Wahrscheinlich konkrete Ursache: `setupAreaInfoMap()` baut seine Infos aus `EncounterArea.getSpeciesInArea()`, dieses nutzt `SpeciesSet`, und `SpeciesSet.add(...)` ignoriert `null`; ein nicht aufloesbarer/null Encounter-Slot bleibt aber in `randomizeArea()` erhalten und trifft danach `setupAllowedForReplacementUsingInfoMap()`, das `IllegalStateException("Info was null for encounter's species!")` wirft.
+- Damit treffen `FVX-WILD-011` und `FVX-WILD-004` wahrscheinlich denselben InfoMap-/Nullslot-Pfad, bevor Similar-Strength-BST- oder Keep-Primary-Type-Filter fachlich greifen.
+- Ein lokaler Diagnose-Lauf ist fuer die Fixplanung nicht zwingend noetig; optional waere er nur fuer sanitisierten Area-/Slot- oder Exception-Message-Beleg.
+- Empfohlen ist ein eng gegateter Fixbranch fuer Wild-Mapping-/Nullslot-Scope, ohne TypeChart, MoveData, Palette, Items, Encounter Held Items, custom Day/Night-Wild, Catch Em All, Minimum Catch Rate, Level Modifier, Text/Menu oder Graphics.
+- Keine Codeaenderung, kein Fix, keine Randomizer-Laeufe, keine Aenderung an `02_external/**`, kein Tool-Manifest-Update.
+
+Naechster sinnvoller Schritt:
+
+- PR fuer 074 reviewen und mergen; danach Fixbranch fuer defensiven Wild-Filter-Carrier-/Nullslot-Scope vorbereiten oder optional einen separat freigegebenen lokalen Diagnosebranch fuer sanitisierten Exception-/Area-Beleg starten.
+
 ## 2026-05-14 - CFRU/DPE Wild Filter Carrier Diagnostics Plan
 
 Arbeitsbranch: `analysis/upr-fvx-cfru-dpe-p1-wild-filter-carrier-diagnostics`
