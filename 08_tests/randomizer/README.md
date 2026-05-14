@@ -2,11 +2,11 @@
 
 ## Latest
 
-- `082_evolution_similar_strength_normalized_reload_diagnostics.md` dokumentiert den einzelnen lokalen `FVX-TRAIT-018` Evolutions Similar Strength Smoke mit normalisiertem Reload-Vergleich.
-- Der Vergleich nutzt nur persistierte Gen3-Evolution-Felder: Evolution-Type, ExtraInfo mit Item-ID-Normalisierung und Ziel-Species per interner `SpeciesSet`-Identitaet; `Evolution.forme` wird nicht als Mismatch-Kriterium gewertet.
-- Ergebnis: Save/Log/Output/Reload true, `normalizedWriteReloadEvolutionMismatches=0`, `rawWithFormeWriteReloadEvolutionMismatches=0`, `<unknown>=false`, `exceptionClass=none` und `stacktrace=none`.
-- `Bad Egg=true` wird nach 055 als bestehender Evolution-Log-/Sonder-Species-Marker klassifiziert, weil der normalisierte Reload stabil ist.
-- Wild, Trainer, TypeChart, MoveData, Palette, Items, Text/Menu, Graphics, Evolution-Methoden-Writer und `FVX-TRAIT-019` Same Typing bleiben ausgeschlossen.
+- `083_move_data_write_preserve_diagnostics.md` dokumentiert den engen UPR-FVX MoveData-Write-Preserve-Fix fuer CFRU/DPE Gen9-BPRE.
+- UPR-FVX `bb5ee11978e38839979e654ff1c14ba60a0cde93` schreibt weiterhin die klassischen MoveData-Bytes `+0..+4` und im CFRU/DPE-Gate zusaetzlich `BattleMove.split` bei `+10`.
+- Nicht modellierte Bytes `+5`, `+6`, `+7`, `+8`, `+9` und `+11` bleiben bytegleich erhalten.
+- `./gradlew clean :random:jar` war erfolgreich; `./gradlew test` endete mit `BUILD SUCCESSFUL`, meldete aber bestehende Failures ausserhalb des MoveData-Scopes.
+- Kein Randomizer-/ROM-Reload-Smoke wurde ausgefuehrt; MoveData-Write bleibt bis zum sanitisierten Reload-Smoke konservativ nicht hochgestuft.
 
 Dieses Verzeichnis enthaelt die dauerhaften Markdown-Protokolle fuer UPR-FVX/CFRU-DPE-Randomizer-Analysen und Smokes. Lokale ROM-, Build-, Log- und Tool-Artefakte bleiben unter `05_builds/**` oder `03_tools/releases/**` und werden nicht committed.
 
@@ -117,20 +117,21 @@ Der neueste bestaetigte Stand wird in Markdown ueber die Spalte `Latest` markier
 | 079 | `079_p1_evolution_same_typing_code_diagnosis.md` | CFRU/DPE P1 Evolution Same Typing Code Diagnosis | dokumentiert: read-only Codeanalyse fuer `FVX-TRAIT-019`; wahrscheinlich konkrete Ursache ist `to.hasSharedType(...)` im Same-Typing-Filter mit Null-Primary-Type-Kandidaten aus dem Evolution-Replacement-Pool; keine Ausfuehrung | keiner, read-only Analyse | nein |
 | 080 | `080_evolution_same_typing_nulltype_fix_diagnostics.md` | CFRU/DPE Evolution Same Typing Null-Type Fix Diagnostics | bestaetigt: UPR-FVX-Fix fuer `EvolutionRandomizer` Same-Typing-Null-Primary-Type-Scope; `FVX-TRAIT-019` mit Save/Log/Output/Reload true, `writeReloadEvolutionMismatches=0`, `<unknown>=false`, `exceptionClass=none` und `stacktrace=none`; `FVX-TRAIT-018` nur als getrennte Regression | lokal/ignored, nicht dokumentiert | nein |
 | 081 | `081_p1_evolution_similar_strength_mismatch_diagnostics.md` | CFRU/DPE P1 Evolution Similar Strength Mismatch Diagnostics | dokumentiert: read-only Code-/Protokollanalyse fuer `FVX-TRAIT-018`; wahrscheinlich ist der 070-Mismatch-Zaehler durch einen zu breiten Vergleich auf nicht persistierte Forme-/Zusatzfelder entstanden; empfiehlt getrennten normalisierten Diagnose-Smoke vor jedem Fix | keiner, read-only Analyse | nein |
-| 082 | `082_evolution_similar_strength_normalized_reload_diagnostics.md` | CFRU/DPE Evolution Similar Strength Normalized Reload Diagnostics | bestaetigt: `FVX-TRAIT-018` mit Save/Log/Output/Reload true, `normalizedWriteReloadEvolutionMismatches=0`, `rawWithFormeWriteReloadEvolutionMismatches=0`, `<unknown>=false`, `exceptionClass=none` und `stacktrace=none`; `Bad Egg=true` nach 055 klassifiziert | lokal/ignored, nicht dokumentiert | ja |
+| 082 | `082_evolution_similar_strength_normalized_reload_diagnostics.md` | CFRU/DPE Evolution Similar Strength Normalized Reload Diagnostics | bestaetigt: `FVX-TRAIT-018` mit Save/Log/Output/Reload true, `normalizedWriteReloadEvolutionMismatches=0`, `rawWithFormeWriteReloadEvolutionMismatches=0`, `<unknown>=false`, `exceptionClass=none` und `stacktrace=none`; `Bad Egg=true` nach 055 klassifiziert | lokal/ignored, nicht dokumentiert | nein |
+| 083 | `083_move_data_write_preserve_diagnostics.md` | CFRU/DPE MoveData Write Preserve Diagnostics | UPR-FVX-Fix implementiert: klassische MoveData-Bytes `+0..+4` bleiben geschrieben, CFRU/DPE `BattleMove.split` wird im Gate bei `+10` geschrieben, nicht modellierte Bytes bleiben erhalten; Reload-Smoke noch offen | keiner | ja |
 
 ## Aktuell bestaetigter Stand
 
-Latest ist Nr. 082: CFRU/DPE Evolution Similar Strength Normalized Reload Diagnostics.
+Latest ist Nr. 083: CFRU/DPE MoveData Write Preserve Diagnostics.
 
 Kernaussagen:
 
-- `FVX-TRAIT-018` Evolutions Similar Strength ist im engen normalisierten Reload-Smoke stabil.
-- Der Vergleich nutzt Evolution-Type, ExtraInfo mit Item-ID-Normalisierung und Ziel-Species per interner `SpeciesSet`-Identitaet.
-- `Evolution.forme` wird nicht als Mismatch-Kriterium gewertet; der separate raw/forme-Vergleich meldete ebenfalls `0` Mismatches.
-- `normalizedWriteReloadEvolutionMismatches=0`; Save, Log, Output und Reload sind erfolgreich.
-- `Bad Egg=true` bleibt als bestehender Evolution-Log-/Sonder-Species-Marker nach 055 klassifiziert; `<unknown>=false`, `exceptionClass=none` und `stacktrace=none`.
-- Wild, Trainer, TypeChart/TypeEffectiveness, MoveData, Palette, Items, Text/Menu, Graphics, Level-Modifier, Evolution-Methoden-Writer, `FVX-TRAIT-019` Same Typing und offene Writer bleiben ausgeschlossen.
+- UPR-FVX PR #33 implementiert den engen CFRU/DPE MoveData-Writer-Preserve-Fix.
+- Klassische MoveData-Bytes `+0..+4` bleiben geschrieben.
+- CFRU/DPE `BattleMove.split` wird nur im bestehenden CFRU/DPE-Gen9-BPRE-Gate bei `+10` geschrieben.
+- Nicht modellierte Bytes `+5`, `+6`, `+7`, `+8`, `+9` und `+11` bleiben bytegleich erhalten.
+- Kein Randomizer-/ROM-Reload-Smoke wurde in diesem Arbeitsblock ausgefuehrt; die fachliche Hochstufung bleibt bis `writeReloadMoveDataMismatches=0` konservativ offen.
+- Palette, Items, TypeChart/TypeEffectiveness, Trainer, Wild, Evolutions, Text/Menu, Graphics, TM/HM, Tutor, Egg und Learnset-Writer bleiben ausgeschlossen.
 
 ## Lokale Artefaktpflege
 
