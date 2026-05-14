@@ -1,3 +1,19 @@
+# Next Steps Update - 2026-05-15 - Field Items Ban Bad scope plan next
+
+Aktueller Fokus:
+
+- Diagnose 110 confirms `FVX-ITEM-003 Field Items Random even distribution` as `GUI-kompatibel` in the narrow Field-Items-only scope with `banBadRandomFieldItems=false`.
+- Confirmed counters include `fieldItemReloadMismatches=0`, `apiTmFieldItemSlots=28`, `rawApiTmSlotAlignmentMismatches=0`, `randomTmPoolDeficit=0`, and `requiredFieldTMMissingAfter=0`.
+- `FVX-ITEM-004 Field Items Ban Bad Items` remains `Write modelliert` and should be planned separately before activation.
+
+Nicht ausweiten:
+
+- No Shops, Pickup, Held Items, TM/HM/Tutor/Learnset, Palette/Graphics, MoveData/MoveNames, TypeChart, Trainer/Wild/Evolution, Text/Menu or Scriptparser work.
+
+Naechster Block:
+
+- `analysis/upr-fvx-cfru-dpe-field-items-ban-bad-scope-plan`: read-only plan for `FVX-ITEM-004 Field Items Ban Bad Items`, preserving the same allowed-slot, TM/Non-TM, Required-TM and API-TM-slot criteria.
+
 # Next Steps Update - 2026-05-15 - Field Items Random Even smoke next
 
 Aktueller Fokus:

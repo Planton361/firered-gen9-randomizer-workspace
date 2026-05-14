@@ -1,3 +1,11 @@
+# Roadmap Status Update - 2026-05-15 - Field Items Random Even reload smoke
+
+- Added `08_tests/randomizer/110_field_items_random_even_reload_smoke.md`.
+- Field Items: `FVX-ITEM-003` now has a successful CFRU/DPE Field-Items-only Random-Even Write-/Reload-Smoke with `banBadRandomFieldItems=false`.
+- API/raw TM-slot alignment remains stable: `apiTmFieldItemSlots=28`, `rawTmFieldItemSlots=28`, `rawApiTmSlotAlignmentMismatches=0`; TMs were not made globally allowed.
+- `FVX-ITEM-001`, `FVX-ITEM-002`, and `FVX-ITEM-003` are `GUI-kompatibel` in their documented narrow Field-Items scopes; `FVX-ITEM-004` remains `Write modelliert`.
+- Next P1 step: separate Ban-Bad-Items scope plan before enabling the option.
+
 # Roadmap Status Update - 2026-05-15 - Field Items API TM-slot reload smoke
 
 - Added `08_tests/randomizer/109_field_items_api_tm_slot_reload_smoke.md`.

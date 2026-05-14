@@ -195,3 +195,5 @@ Wenn ein Artefakt nicht eindeutig Smoke-Output ist, bleibt es lokal liegen und w
 - 108 - `108_field_items_api_tm_slot_scope_fix.md`: UPR-FVX PR #37 prepares the CFRU/DPE Field-Items API TM-slot fix. `Gen3RomHandler.getFieldItems()` / `setFieldItems(...)` expose Field-TM slots in the CFRU/DPE gate without making TMs globally allowed; compile passed, reload smoke remains separate.
 
 - 109 - `109_field_items_api_tm_slot_reload_smoke.md`: Sanitized Field-Items-only `FVX-ITEM-002 Field Items Random` reload smoke after UPR-FVX PR #37. Save/log/output/reload true, Field-Item reload mismatches `0`, API/raw TM-slot alignment `28/28`, Required Field TMs preserved, no global TM allowed change; `FVX-ITEM-002` is now `GUI-kompatibel` only for `banBadRandomFieldItems=false`.
+
+- 110 - `110_field_items_random_even_reload_smoke.md`: Sanitized Field-Items-only `FVX-ITEM-003 Field Items Random even distribution` reload smoke. Save/log/output/reload true, Field-Item reload mismatches `0`, API/raw TM-slot alignment `28/28`, Required Field TMs preserved, no global TM allowed change; `FVX-ITEM-003` is now `GUI-kompatibel` only for `banBadRandomFieldItems=false`.

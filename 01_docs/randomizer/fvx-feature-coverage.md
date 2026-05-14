@@ -1,3 +1,11 @@
+# FVX Feature Coverage Update - 2026-05-15 - Field Items Random Even reload smoke
+
+- `FVX-ITEM-001` remains `GUI-kompatibel` for the tested Shuffle allowed-slot scope.
+- `FVX-ITEM-002` remains `GUI-kompatibel` in the narrow Field-Items Random scope with `banBadRandomFieldItems=false`.
+- `FVX-ITEM-003` is `GUI-kompatibel` in the narrow Field-Items Random-Even scope with `banBadRandomFieldItems=false` after Diagnose 110.
+- `FVX-ITEM-004` remains `Write modelliert`; Ban Bad Items stays separate.
+- Shops, Pickup, Held Items, TM/HM/Tutor/Learnset, Palette/Graphics, MoveData/MoveNames, TypeChart, Trainer/Wild/Evolution, Text/Menu and Scriptparser work remain outside Diagnose 110.
+
 # FVX Feature Coverage Update - 2026-05-15 - Field Items API TM-slot reload smoke
 
 - `FVX-ITEM-001` remains `GUI-kompatibel` for the tested Shuffle allowed-slot scope.
