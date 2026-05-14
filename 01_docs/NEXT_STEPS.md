@@ -2,23 +2,25 @@
 
 ## Aktueller Fokus
 
-CFRU/DPE Palette Randomization Preserve/Repoint Plan ist erstellt. Aktuelle Diagnose: `08_tests/randomizer/091_palette_randomization_preserve_repoint_plan.md`.
+CFRU/DPE Palette Pointer / Compression Diagnostics Plan ist erstellt. Aktuelle Diagnose: `08_tests/randomizer/092_palette_pointer_compression_diagnostics_plan.md`.
 
 `FVX-MOVE-001/002/003/004/006` sind GUI-kompatibel. `FVX-MOVE-005` bleibt getrennt vom MoveData-Byte-Writer-Scope.
 
 Ergebnis aus 090: Der erneute Candidate-Preflight ist blockiert. `candidateFilesChecked=94`, `candidatePreflightSuccessful=false`, `candidateMovesTotal=not available`, `candidateHighestMove=not available`. Es gab keinen fachlichen Name-only fixed-length Reload-Smoke.
 
-Planergebnis aus 091: echte `PokemonPalettesMod.RANDOM`-Randomization ist wegen compressed-data-, shared-pointer-, missing/invalid-pointer-, FreeSpace-/Repointing- und Forme-/Mapping-Risiken noch nicht direkt fixbar. Zuerst ist eine read-only Palette-Pointer-/Compression-Diagnose noetig.
+Planergebnis aus 091: echte `PokemonPalettesMod.RANDOM`-Randomization ist wegen compressed-data-, shared-pointer-, missing/invalid-pointer-, FreeSpace-/Repointing- und Forme-/Mapping-Risiken noch nicht direkt fixbar.
 
-Naechster aktiver Arbeitsblock: `analysis/upr-fvx-cfru-dpe-palette-pointer-compression-diagnostics-plan`.
+Planergebnis aus 092: die naechste sinnvolle Arbeit ist ein separater sanitisierten Diagnose-Lauf, der Normal-/Shiny-Palette-Pointer, Dekomprimierbarkeit, Single-Owner/Shared, missing/invalid und sichere Kandidaten aggregiert klassifiziert.
+
+Naechster aktiver Arbeitsblock: `test/upr-fvx-cfru-dpe-palette-pointer-compression-diagnostics`.
 
 ## Priorisierte naechste Arbeitsbloecke
 
-1. Palette Pointer / Compression Diagnostics planen
-   - Empfohlener Branch: `analysis/upr-fvx-cfru-dpe-palette-pointer-compression-diagnostics-plan`.
-   - Ziel: read-only klaeren, welche CFRU/DPE Normal-/Shiny-Paletten dekomprimierbar, single-owner, shared, missing oder invalid sind.
-   - Grundlage: Diagnose 058 und 091.
-   - Grenzen: keine Codeaenderung, keine Randomizer-Laeufe, keine Builds, keine ROM-/Output-Artefakte dokumentieren.
+1. Palette Pointer / Compression Diagnostics ausfuehren
+   - Empfohlener Branch: `test/upr-fvx-cfru-dpe-palette-pointer-compression-diagnostics`.
+   - Ziel: nur bei expliziter lokaler Freigabe sanitisiert klaeren, welche CFRU/DPE Normal-/Shiny-Paletten dekomprimierbar, single-owner, shared, missing oder invalid sind.
+   - Grundlage: Diagnose 058, 091 und 092.
+   - Grenzen: keine Palette-Randomization, kein Writer-Fix, kein Repointing, keine Builds, keine privaten Artefaktwerte dokumentieren.
 
 2. Palette Randomization Preserve/Repoint Plan halten
    - Diagnose 091 dokumentiert: direkter Fix noch nicht eng genug.
@@ -92,8 +94,8 @@ Naechster aktiver Arbeitsblock: `analysis/upr-fvx-cfru-dpe-palette-pointer-compr
 14. Spaetere TypeEffectiveness-Kombinationen nur bei Bedarf
    - Nicht mit MoveData, Palette, Items, Graphics, Text/Menu oder Species-Type-Write vermischen.
 
-15. `analysis/upr-fvx-cfru-dpe-palette-pointer-compression-diagnostics-plan`
-   - Naechster empfohlener P1-Folgeblock: read-only Palette-Pointer-/Compression-Diagnose planen, bevor ein Palette-Randomization-Fix versucht wird.
+15. `test/upr-fvx-cfru-dpe-palette-pointer-compression-diagnostics`
+   - Naechster empfohlener P1-Folgeblock: sanitisierten read-only Palette-Pointer-/Compression-Diagnose-Lauf ausfuehren, bevor ein Palette-Randomization-Fix versucht wird.
 
 16. `compat/upr-fvx-cfru-dpe-field-items-shops-pickup-scope-and-write`
    - Nur nach separater Freigabe: Field Items, Shops und Pickup mit getrennten Reload-Kriterien absichern.
