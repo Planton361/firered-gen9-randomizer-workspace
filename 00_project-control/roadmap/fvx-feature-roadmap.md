@@ -1,3 +1,10 @@
+# FVX Feature Roadmap Update - 2026-05-15 - Field Items Ban Bad scope plan
+
+- Diagnose 111 plans `FVX-ITEM-004 Field Items Ban Bad Items` as a Field-Items Non-TM pool-filter validation.
+- First smoke should use `FVX-ITEM-002 Field Items Random` with `banBadRandomFieldItems=true`; Random Even + Ban Bad should follow separately.
+- Keep Shops, Pickup and Held Items separate from Field Items Ban Bad.
+- Next step is `test/upr-fvx-cfru-dpe-field-items-random-ban-bad-reload-smoke`.
+
 # FVX Feature Roadmap Update - 2026-05-15 - Field Items Random Even reload smoke
 
 - Diagnose 110 confirms `FVX-ITEM-003 Field Items Random even distribution` with a successful CFRU/DPE Field-Items-only reload smoke.

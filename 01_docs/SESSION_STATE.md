@@ -183,6 +183,15 @@ Es wurde kein fachlicher Palette-Write-/Reload-Smoke ausgeführt. `FVX-GFX-001` 
 
 # Session State
 
+# Session State Update - 2026-05-15 - Field Items Ban Bad scope plan
+
+- New protocol: `08_tests/randomizer/111_field_items_ban_bad_scope_plan.md`.
+- Read-only UPR-FVX analysis confirms `banBadRandomFieldItems` affects only `ItemRandomizer.randomizeNonTMFieldItems(...)`: it switches the Non-TM pool from `getAllowedItems()` to `getNonBadItems()` and removes TMs afterward.
+- `randomizeTMFieldItems(...)` does not read `banBadRandomFieldItems`; Required Field TMs remain a separate TM-pool requirement.
+- Diagnose 100 provides the key Ban-Bad baseline: `badFieldItems=75`, `badItemBanCandidates=75`, `badItemBanRemovalsNeeded=75`.
+- Recommended first smoke: `test/upr-fvx-cfru-dpe-field-items-random-ban-bad-reload-smoke` for `FVX-ITEM-002 Field Items Random` with `banBadRandomFieldItems=true`; Random Even + Ban Bad stays separate afterward.
+- `FVX-ITEM-004` remains `Write modelliert`; no code change, no Randomizer run, no build, no `02_external/**` change and no private artifact documentation.
+
 # Session State Update - 2026-05-15 - Field Items Random Even reload smoke
 
 - New protocol: `08_tests/randomizer/110_field_items_random_even_reload_smoke.md`.

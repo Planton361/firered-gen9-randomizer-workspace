@@ -1,3 +1,20 @@
+# Next Steps Update - 2026-05-15 - Field Items Random Ban Bad smoke next
+
+Aktueller Fokus:
+
+- Diagnose 111 plans `FVX-ITEM-004 Field Items Ban Bad Items` read-only.
+- `banBadRandomFieldItems` affects the Non-TM Field-Items random pool only; TM slots and Required Field TMs stay in the separate TM path.
+- Baseline Ban-Bad count from Diagnose 100: `badFieldItems=75` / `badItemBanCandidates=75`.
+- `FVX-ITEM-004` remains `Write modelliert` until at least the first Ban-Bad reload smoke passes.
+
+Nicht ausweiten:
+
+- No Shops, Pickup, Held Items, TM/HM/Tutor/Learnset, Palette/Graphics, MoveData/MoveNames, TypeChart, Trainer/Wild/Evolution, Text/Menu or Scriptparser work.
+
+Naechster Block:
+
+- `test/upr-fvx-cfru-dpe-field-items-random-ban-bad-reload-smoke`: sanitized Field-Items-only smoke for `FVX-ITEM-002 Field Items Random` with `banBadRandomFieldItems=true`; keep Random Even + Ban Bad separate afterward.
+
 # Next Steps Update - 2026-05-15 - Field Items Ban Bad scope plan next
 
 Aktueller Fokus:
