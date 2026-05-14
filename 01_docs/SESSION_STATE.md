@@ -1,5 +1,24 @@
 # Session State
 
+## 2026-05-14 - CFRU/DPE Evolution Same Typing Code Diagnosis
+
+Arbeitsbranch: `analysis/upr-fvx-cfru-dpe-p1-evolution-same-typing-blocker-diagnostics`
+
+Aktueller Stand:
+
+- Neues read-only Codeanalyse-Protokoll `08_tests/randomizer/079_p1_evolution_same_typing_code_diagnosis.md` erstellt.
+- 079 untersucht konkret den 070-Blocker `FVX-TRAIT-019` Evolutions Same Typing im Carrier `FVX-TRAIT-016` Evolution-Species-Writer.
+- Relevante Codepfade sind `GameRandomizer.maybeRandomizeEvolutions()`, `EvolutionRandomizer.randomizeEvolutions()`, `findPossibleReplacements(...)`, `SpeciesSet.filter(...)`, `Species.hasSharedType(...)` und der Gen3 Base-Stats-Type-Read-Scope.
+- Wahrscheinlich konkrete Ursache: Der Same-Typing-Filter ruft `to.hasSharedType(...)` auf. Wenn ein Kandidat aus dem Evolution-Replacement-Pool `primaryType == null` hat, dereferenziert `Species.hasSharedType(...)` diesen Null-Type und wirft eine `NullPointerException`.
+- Der allgemeine Evolution-Species-Carrier bleibt abgegrenzt: `FVX-TRAIT-016` ist belegt, aber Same Typing nutzt einen zusaetzlichen Species-Type-Filter vor der Zielauswahl.
+- `FVX-TRAIT-018` Evolutions Similar Strength bleibt getrennt, weil es nicht denselben `hasSharedType(...)`-Pfad nutzt und in 070 stattdessen Save/Reload mit `writeReloadEvolutionMismatches=24` und `Bad Egg=true` erreichte.
+- Ein lokaler Diagnose-Lauf ist fuer die Fixplanung nicht zwingend noetig; ein spaeterer Fix-Smoke fuer `FVX-TRAIT-019` bleibt erforderlich.
+- Keine Codeaenderung, kein Fix, keine Randomizer-Laeufe, keine Aenderung an `02_external/**`, kein Tool-Manifest-Update.
+
+Naechster sinnvoller Schritt:
+
+- Eng gegateten UPR-FVX-Fixbranch fuer `EvolutionRandomizer` Same-Typing-/Null-Primary-Type-Scope vorbereiten. `FVX-TRAIT-018` separat halten und nicht durch denselben Fix als supported hochstufen.
+
 ## 2026-05-14 - CFRU/DPE Trainer Type Diversity Null-Type Fix
 
 Workspace-Branch: `compat/upr-fvx-cfru-dpe-p1-trainer-type-diversity-nulltype-fix`
