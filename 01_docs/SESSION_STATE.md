@@ -1,5 +1,27 @@
 # Session State
 
+## 2026-05-14 - CFRU/DPE Move Names fixed-length Reload-Smoke
+
+Workspace-Branch: `test/upr-fvx-cfru-dpe-move-names-fixed-length-reload-smoke`
+
+UPR-FVX-Pin: `fad56f60d6fae9b006290a4d5fd1f0715f3d9dc3`
+
+Aktueller Stand:
+
+- Neuer sanitiserter Ergebnisbericht `08_tests/randomizer/089_move_names_fixed_length_reload_smoke.md` erstellt.
+- Ziel war ein enger Name-only Reload-Smoke fuer `FVX-MOVE-005` Randomize Move Names im bestehenden Gen3 fixed-length `MoveNames`-Pfad.
+- Ein lokaler, nicht committeter Harness unter ignored `05_builds/**` wurde erstellt.
+- Der fachliche Smoke konnte nicht ausgewertet werden, weil lokal kein freigegebener CFRU/DPE Gen9-BPRE-Kandidat mit `moves.total=992` und hoechstem Move `991:PsychicNoise` gefunden wurde.
+- Ein automatisch gefundener erster Kandidat war kein CFRU/DPE-Gen9-Stand und wurde verworfen; danach fand die stumme Kandidatensuche keinen passenden 992-Move-Kandidaten.
+- `saveSuccessful`, `logSuccessful`, Reload-, Name-Length-, Terminator-/Padding-, Description-Pointer- und Name-Reload-Zaehler bleiben daher nicht fachlich ausgewertet.
+- Keine Move Descriptions, keine Pointer-/Repointing- oder Text/Menu-Umsetzung, keine MoveData-Byte-Writer-Aenderung.
+- Keine Codeaenderung, keine Aenderung an `02_external/**`, keine Submodule-Pin-Aenderung, kein Build.
+- `FVX-MOVE-005` wird nicht hochgestuft und bleibt `Write modelliert`; `FVX-MOVE-001/002/003/004/006` bleiben GUI-kompatibel.
+
+Naechster sinnvoller Schritt:
+
+- Den gleichen Name-only fixed-length Smoke erneut ausfuehren, sobald ein freigegebener lokaler CFRU/DPE Gen9-BPRE-ROM-Kandidat fuer den Smoke eindeutig verfuegbar ist. Scope unveraendert eng halten: keine Move Descriptions, kein Pointer-/Repointing, keine Text/Menu-Umsetzung.
+
 ## 2026-05-14 - CFRU/DPE Move Names / Descriptions Text/Menu-Scope Plan
 
 Workspace-Branch: `analysis/upr-fvx-cfru-dpe-move-names-text-menu-scope-plan`
