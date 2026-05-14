@@ -42,6 +42,7 @@ Sie ist die detaillierte Requirements-/Coverage-Ebene. Die Roadmap bleibt bewuss
 
 Diagnose 090 dokumentiert den erneuten Candidate-Preflight fuer den engen Name-only fixed-length Reload-Smoke fuer `FVX-MOVE-005`:
 
+- Workspace PR #133 ist gemerged; der blockierte Retry ist damit im aktuellen Arbeitsblock abgeschlossen.
 - Der lokale Preflight blieb sanitisiert und dokumentierte keine privaten Pfade, ROM-Namen, Hashes, Logauszuege oder Output-ROMs.
 - `candidateFilesChecked=94`.
 - `candidatePreflightSuccessful=false`.
@@ -50,6 +51,7 @@ Diagnose 090 dokumentiert den erneuten Candidate-Preflight fuer den engen Name-o
 - Der fachliche Name-only Reload-Smoke wurde nicht ausgefuehrt, weil kein Kandidat gleichzeitig `moves.total=992` und `991:PsychicNoise` meldete.
 - `saveSuccessful`, `logSuccessful`, Output-, Reload-, Name-Length-, Terminator-/Padding-, Description-Pointer- und Name-Reload-Zaehler bleiben nicht fachlich ausgewertet.
 - `FVX-MOVE-005` wird nicht hochgestuft und bleibt `Write modelliert`.
+- Weitere Name-only-Smokes warten auf einen explizit freigegebenen lokalen CFRU/DPE Gen9-BPRE-Kandidaten mit `moves.total=992` und `991:PsychicNoise`.
 - Move Descriptions / Text/Menu-Repointing bleibt getrennt und zurueckgestellt.
 - `FVX-MOVE-001`, `FVX-MOVE-002`, `FVX-MOVE-003`, `FVX-MOVE-004` und `FVX-MOVE-006` bleiben GUI-kompatibel.
 

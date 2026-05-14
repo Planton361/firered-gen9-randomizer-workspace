@@ -24,10 +24,10 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Aktueller Branch | `test/upr-fvx-cfru-dpe-move-names-fixed-length-reload-smoke-retry` |
-| Nächster Branch | `test/upr-fvx-cfru-dpe-move-names-fixed-length-reload-smoke-candidate` |
-| Aktueller Fokus | CFRU/DPE Move Names fixed-length Candidate Preflight und Reload-Smoke Retry |
-| ROM-/Build-Arbeit | lokaler Retry-Preflight blockiert: 94 Kandidatendateien geprueft, kein freigegebener CFRU/DPE Gen9-BPRE-Kandidat mit `moves.total=992` und `991:PsychicNoise`; kein Build und kein fachlicher Smoke |
+| Aktueller Branch | `docs/post-merge-move-names-retry-blocked-sync` |
+| Nächster Branch | `analysis/upr-fvx-cfru-dpe-palette-randomization-preserve-repoint-plan` |
+| Aktueller Fokus | Post-Merge-Doku-Sync nach blockiertem Move Names Retry |
+| ROM-/Build-Arbeit | keine ROM-/Build-Arbeit; Diagnose 090 bleibt blockiert: 94 Kandidatendateien geprueft, kein freigegebener CFRU/DPE Gen9-BPRE-Kandidat mit `moves.total=992` und `991:PsychicNoise` |
 | Externe Repos | als Submodule auf Planton361-Forks eingebunden |
 | Forks | Planton361-Forks fuer UPR-FVX, DPE Gen9 und CFRU dokumentiert |
 | Installationen | devkitPro/devkitARM lokal dokumentiert; keine Installation in diesem Analyseblock |
@@ -121,6 +121,7 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | 08 Randomizer-Kompatibilität | CFRU/DPE MoveData Power/Accuracy/PP Reload-Smoke | Diagnose 085 bestaetigt `FVX-MOVE-001/002/003` mit Save/Log/Output/Reload true, `writeReloadMoveDataMismatches=0`, stabilen `+1/+3/+4` Bytes und `preserveByteMismatchesAllMoves=0` |
 | 08 Randomizer-Kompatibilität | CFRU/DPE MoveData Types Reload-Smoke | Diagnose 086 dokumentiert `FVX-MOVE-004` mit Save/Log/Output/Reload true und stabilen Preserve-Bytes, blockiert aber durch Fairy-Type-Byte-Mismatches: `writeReloadMoveDataMismatches=54`, `typeReloadMismatches=54`, `cfruDpeTypeByteMismatches=54` |
 | 08 Randomizer-Kompatibilität | CFRU/DPE MoveData Fairy-Type-Byte Fix | UPR-FVX PR #34 und Workspace PR #129 gemerged; UPR-FVX `fad56f60` und Diagnose 087 bestaetigen `FVX-MOVE-004` mit Save/Log/Output/Reload true, `writeReloadMoveDataMismatches=0`, `typeReloadMismatches=0`, `fairyReloadMismatches=0`, `cfruDpeTypeByteMismatches=0` und Preserve-Bytes bytegleich |
+| 08 Randomizer-Kompatibilität | MoveData Writer / Update Moves / Power / Accuracy / PP / Types | `FVX-MOVE-001/002/003/004/006` sind GUI-kompatibel; MoveData-Writer-Preserve, Split, Power, Accuracy, PP und Fairy-Type-Byte sind im CFRU/DPE Gen9-BPRE-Scope belegt |
 | 08 Randomizer-Kompatibilität | Move Names / Descriptions Text/Menu-Scope Plan | Diagnose 088 dokumentiert `FVX-MOVE-005` als getrennten Text/Menu-Scope; Name-only fixed-length Smoke ist realistisch, Move Descriptions / Text/Menu-Repointing bleibt zurueckgestellt |
 | 08 Randomizer-Kompatibilität | Move Names fixed-length Reload-Smoke Versuch | Diagnose 089 dokumentiert den blockierten Name-only-Smoke: kein freigegebener lokaler CFRU/DPE Gen9-BPRE-Kandidat mit `moves.total=992` und `991:PsychicNoise`; `FVX-MOVE-005` bleibt `Write modelliert` |
 | 08 Randomizer-Kompatibilität | Move Names fixed-length Reload-Smoke Retry | Diagnose 090 dokumentiert den blockierten Retry-Preflight: `candidateFilesChecked=94`, `candidatePreflightSuccessful=false`, kein fachlicher Smoke; `FVX-MOVE-005` bleibt `Write modelliert` |
@@ -153,13 +154,14 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Move Names fixed-length Reload-Smoke nur mit eindeutigem Kandidaten wiederholen | naechster Branch `test/upr-fvx-cfru-dpe-move-names-fixed-length-reload-smoke-candidate`; nur starten, wenn ein freigegebener lokaler CFRU/DPE Gen9-BPRE-Kandidat vorab `moves.total=992` und `991:PsychicNoise` meldet |
+| 08 Randomizer-Kompatibilität | Palette Randomization Preserve/Repoint Plan | naechster Branch `analysis/upr-fvx-cfru-dpe-palette-randomization-preserve-repoint-plan`; echten Palette-Randomization-Scope read-only planen, getrennt von MoveData, Move Names, Items, TypeChart, Trainer, Wild, Evolutions, Text/Menu und Graphics-Umsetzung |
 
 ## Als Nächstes
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
 | 08 Randomizer-Kompatibilität | Evolution-Methoden-Writer und weitere Evolution-Suboptionen getrennt planen | Nicht aus Diagnose 082 ableiten; getrennte Scope- und Reload-Kriterien definieren |
+| 08 Randomizer-Kompatibilität | Move Names fixed-length Reload-Smoke nur mit eindeutigem Kandidaten wiederholen | warten, bis ein freigegebener lokaler CFRU/DPE Gen9-BPRE-Kandidat vorab `moves.total=992` und `991:PsychicNoise` meldet; `FVX-MOVE-005` bleibt `Write modelliert` |
 
 ## Noch offen
 

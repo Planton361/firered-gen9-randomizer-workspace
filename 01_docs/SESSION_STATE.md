@@ -1,5 +1,27 @@
 # Session State
 
+## 2026-05-14 - Post-Merge-Doku-Sync nach blockiertem Move Names Retry
+
+Workspace-Branch: `docs/post-merge-move-names-retry-blocked-sync`
+
+UPR-FVX-Pin: `fad56f60d6fae9b006290a4d5fd1f0715f3d9dc3`
+
+Aktueller Stand:
+
+- Workspace PR #133 ist gemerged.
+- Diagnose 090 ist als blockierter Retry abgeschlossen.
+- `candidateFilesChecked=94`.
+- `candidatePreflightSuccessful=false`.
+- Es gab keinen fachlichen Name-only fixed-length Reload-Smoke, weil kein explizit freigegebener CFRU/DPE Gen9-BPRE-Kandidat mit `moves.total=992` und `991:PsychicNoise` verfuegbar war.
+- `FVX-MOVE-005` wird nicht hochgestuft und bleibt `Write modelliert`.
+- `FVX-MOVE-001`, `FVX-MOVE-002`, `FVX-MOVE-003`, `FVX-MOVE-004` und `FVX-MOVE-006` bleiben GUI-kompatibel.
+- UPR-FVX PR #34 ist weiterhin als gemerged dokumentiert; der Workspace-Pin bleibt `fad56f60d6fae9b006290a4d5fd1f0715f3d9dc3`.
+- Keine Codeaenderung, keine Aenderung an `02_external/**`, keine Submodule-Pin-Aenderung, kein Build und kein Randomizer-Lauf.
+
+Naechster sinnvoller Schritt:
+
+- P1-Arbeit auf `analysis/upr-fvx-cfru-dpe-palette-randomization-preserve-repoint-plan` verschieben. `FVX-MOVE-005` bleibt wartend, bis ein explizit freigegebener 992-/`991:PsychicNoise`-Kandidat verfuegbar ist.
+
 ## 2026-05-14 - CFRU/DPE Move Names fixed-length Reload-Smoke Retry
 
 Workspace-Branch: `test/upr-fvx-cfru-dpe-move-names-fixed-length-reload-smoke-retry`
