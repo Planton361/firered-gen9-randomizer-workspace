@@ -2,7 +2,7 @@
 
 ## Aktueller Fokus
 
-CFRU/DPE Trainer Type Diversity Code Diagnosis ist read-only dokumentiert. Diagnose: `08_tests/randomizer/077_p1_trainer_type_diversity_code_diagnosis.md`.
+CFRU/DPE Trainer Type Diversity Null-Type Fix ist umgesetzt und sanitisiert dokumentiert. Diagnose: `08_tests/randomizer/078_trainer_type_diversity_nulltype_fix_diagnostics.md`.
 
 ## Priorisierte naechste Arbeitsbloecke
 
@@ -11,13 +11,14 @@ CFRU/DPE Trainer Type Diversity Code Diagnosis ist read-only dokumentiert. Diagn
    - Workspace: `compat/upr-fvx-cfru-dpe-p1-wild-filter-carrier-nullslot-fix`.
    - Diagnose 075 und Submodule-Pin reviewen und mergen.
 
-2. `FVX-FOE-009` Trainer Type Diversity / Type Themes eng gegatet fixen
-   - Naechster Arbeitsblock: UPR-FVX-Fix fuer defensiven Trainer-Type-Diversity-Null-Type-Scope in `TrainerPokemonRandomizer`.
-   - Wahrscheinliche Ursache aus 077: `updateUsedTypes(...)` schreibt `primaryType == null` in ein `EnumSet<Type>`.
-   - Trainer Similar Strength unter `FVX-FOE-001` als Regression getrennt halten, weil dieser Pfad stabil war.
-   - Weiter ohne Wild, Evolution, TypeChart, MoveData Write, Palette, Items, Text/Menu, Graphics, Level-Modifier oder andere offene Writer.
+2. PRs fuer Trainer Type Diversity Null-Type Fix reviewen
+   - UPR-FVX: `compat/upr-fvx-cfru-dpe-p1-trainer-type-diversity-nulltype-fix`.
+   - Workspace: `compat/upr-fvx-cfru-dpe-p1-trainer-type-diversity-nulltype-fix`.
+   - Diagnose 078 und Submodule-Pin reviewen und mergen.
+   - Der Fix bleibt auf `TrainerPokemonRandomizer` und den Force-Diverse-Types-/`usedTypes`-Pfad begrenzt.
 
 3. Weitere 070-Blocker getrennt fortsetzen
+   - `FVX-FOE-009` ist im eng getesteten Trainer-Type-Diversity-Scope entblockt.
    - `FVX-TRAIT-018` Evolutions Similar Strength gegen Evolution-Reload-Mismatches, `Bad Egg` und BST-basierte Zielauswahl.
    - `FVX-TRAIT-019` Evolutions Same Typing gegen Evolution-Same-Typing-/Null-Scope.
    - Weiter ohne TypeChart, MoveData Write, Palette, Items, Encounter Held Items, custom Day/Night-Wild, Catch Em All, Minimum Catch Rate, Level-Modifier oder Text/Menu/Graphics.

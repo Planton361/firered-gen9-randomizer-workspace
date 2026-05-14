@@ -1,5 +1,27 @@
 # Session State
 
+## 2026-05-14 - CFRU/DPE Trainer Type Diversity Null-Type Fix
+
+Workspace-Branch: `compat/upr-fvx-cfru-dpe-p1-trainer-type-diversity-nulltype-fix`
+
+UPR-FVX-Branch: `compat/upr-fvx-cfru-dpe-p1-trainer-type-diversity-nulltype-fix`
+
+Aktueller Stand:
+
+- UPR-FVX-Fix `d89fc64e3b0223b03a65466422847dc7df30d03c` erstellt.
+- Der Fix bleibt auf `TrainerPokemonRandomizer` begrenzt und behandelt Species mit `primaryType == null` defensiv im Force-Diverse-Types-/`usedTypes`-Pfad.
+- Null-Primary-Type-Species werden im erweiterten BPRE-Hack nicht mehr als valide Type-Diversity-/Type-Themes-Replacements genutzt; `EnumSet<Type>` erhaelt keine `null`-Eintraege.
+- Bestehende BST-zero-, all-zero-Ability- und Placeholder-/Special-Species-Grenzen bleiben unveraendert.
+- `FVX-FOE-009` Trainer Type Diversity / Type Themes wurde lokal sanitisiert ausgefuehrt: `saveSuccessful=true`, `logSuccessful=true`, `outputRomExists=true`, `logNonEmpty=true`, Reload erfolgreich, `writeReloadTrainerPokemonMismatches=0`, `filterViolations=0`, `Bad Egg=false`, `<unknown>=false`, `exceptionClass=none` und `stacktrace=none`.
+- Trainer Similar Strength unter `FVX-FOE-001` wurde als Regression lokal sanitisiert ausgefuehrt und bleibt mit Save/Log/Output/Reload true sowie `writeReloadTrainerPokemonMismatches=0` stabil.
+- Neues Diagnoseprotokoll `08_tests/randomizer/078_trainer_type_diversity_nulltype_fix_diagnostics.md` erstellt.
+- Workspace pinnt `02_external/upr-fvx` auf den neuen UPR-FVX-Fix-Commit und aktualisiert README, Session, Next Steps, Roadmap, Feature-Coverage und Tool-Manifest.
+- Keine Wild-, Evolution-, TypeChart-, MoveData-, Palette-, Item-, Text/Menu-, Graphics-, Trainer-Level-, Additional-Pokemon-, Better-Movesets-, Battle-Style- oder Trainer-Names/Class-Names-Aenderung.
+
+Naechster sinnvoller Schritt:
+
+- UPR-FVX-PR und Workspace-PR reviewen und mergen. Danach die verbleibenden 070-Evolution-Blocker `FVX-TRAIT-018` und `FVX-TRAIT-019` getrennt fortsetzen.
+
 ## 2026-05-14 - CFRU/DPE Trainer Type Diversity Code Diagnosis
 
 Arbeitsbranch: `analysis/upr-fvx-cfru-dpe-p1-trainer-type-diversity-code-diagnosis`

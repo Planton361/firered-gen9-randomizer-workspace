@@ -13,11 +13,11 @@ Die detaillierte Status- und Feature-ID-Matrix bleibt in:
 | Status | Anzahl |
 |---|---:|
 | Nicht begonnen | 39 |
-| Plan erstellt | 31 |
+| Plan erstellt | 30 |
 | Read modelliert | 0 |
 | Write modelliert | 20 |
 | Getestet | 10 |
-| GUI-kompatibel | 30 |
+| GUI-kompatibel | 31 |
 | In Arbeit | 0 |
 | **Gesamt** | **130** |
 
@@ -29,7 +29,7 @@ Die detaillierte Status- und Feature-ID-Matrix bleibt in:
 | Pokemon Traits | 28 | Gemischt | Base Stats, Types, Abilities, Evolutions, EXP Curves und Suboptionen systematisch absichern; Evolution Similar Strength / Same Typing aus 070 bleiben blockiert |
 | Starters, Statics & Trades | 15 | Gemischt | Starter-Filter sind im Starter-Species-Writer-Smoke getestet; Starter-Held-Items, Trades und Level-Subpfade ergaenzen |
 | Moves & Movesets | 11 | Gemischt | Learnset-/Moveset-GUI halten; Move-Data-Writer fertig absichern |
-| Foe Pokemon | 14 | Gemischt | Trainer-Species/-Movesets/-Held-Items halten; Trainer Similar Strength ist im Carrier-Smoke stabil, `FVX-FOE-009` bleibt blockiert |
+| Foe Pokemon | 14 | Gemischt | Trainer-Species/-Movesets/-Held-Items halten; Trainer Similar Strength und `FVX-FOE-009` sind im `FVX-FOE-001` Carrier stabil |
 | Wild Pokemon | 12 | Gemischt | Standard/Fallback-Wild halten; Similar Strength und Type Restrictions sind nach Diagnose 075 im `FVX-WILD-001` Carrier wieder stabil |
 | TM/HMs & Tutors | 15 | Gemischt | TM/Tutor-Tabellen halten; Preserve-/Filter-/Follow-Evolution-Suboptionen testen |
 | Items | 10 | Write modelliert | Field Items, Shops und Pickup als getrennte Writer implementieren/testen |
@@ -66,7 +66,7 @@ Die detaillierte Status- und Feature-ID-Matrix bleibt in:
 |---|---|
 | Pokemon Traits | Follow Evolutions, Force Dual Types, Ability-Ban-/Allow-Filter, EXP Curves testen; `FVX-TRAIT-018/019` aus 070 zuerst getrennt diagnostizieren |
 | Starters, Statics & Trades | Starter-Held-Items und In-Game-Trades absichern; Starter-Type-/Legendary-/BST-Filter ausserhalb des Starter-Species-Writer-Smokes nur separat hochstufen |
-| Foe Pokemon | Additional Pokemon, Force Diverse Types, League-Unique, Battle Style, Rival Carry, Trainer Names/Class Names absichern; `FVX-FOE-009` aus 070 getrennt diagnostizieren |
+| Foe Pokemon | Additional Pokemon, League-Unique, Battle Style, Rival Carry, Trainer Names/Class Names absichern; Force Diverse Types / `FVX-FOE-009` aus 078 im `FVX-FOE-001` Carrier halten |
 | Wild Pokemon | Evolution Restrictions, Catch Rate, Catch-em-all und Level-Balance absichern; Wild Similar Strength und Type Restrictions aus 075 im `FVX-WILD-001` Carrier halten |
 | TM/HMs & Tutors | Keep Field Moves, No Game-Breaking, Good-Damaging-%, Follow-Evolutions und Full-HM-Kompatibilitaet absichern |
 
