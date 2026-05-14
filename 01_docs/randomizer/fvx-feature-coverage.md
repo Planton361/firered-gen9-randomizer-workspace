@@ -38,7 +38,25 @@ Sie ist die detaillierte Requirements-/Coverage-Ebene. Die Roadmap bleibt bewuss
 | In Arbeit | 0 |
 | **Gesamt** | **130** |
 
-## Aktueller Hinweis zu 092
+## Aktueller Hinweis zu 093
+
+Diagnose 093 fuehrt die read-only Palette-Pointer-/Compression-Diagnose sanitisiert aus:
+
+- `candidateLoaded=true`
+- `palettePointerScanSuccessful=true`
+- `normalPalettePointersTotal=1439`
+- `shinyPalettePointersTotal=1439`
+- `candidateWritablePalettes=385`
+- `candidateWritableNormalPalettes=385`
+- `candidateWritableShinyPalettes=0`
+- `skipPaletteEntries=2493`
+- `crossKindSharedPalettePointers=1809`
+- `sharedPointerGroups=775`
+- `largestSharedPointerGroupSize=156`
+- Ergebnis: ein spaeterer Fix-/Smoke-Scope kann hoechstens normal-palette-only, single-owner/decompressible sein. Shiny, shared, invalid, missing und decode-failed Paletten bleiben preserve-only.
+- `FVX-GFX-001..004` bleiben `Write modelliert`; keine GUI-Kompatibilitaets-Hochstufung.
+
+## Vorheriger Hinweis zu 092
 
 Diagnose 092 plant die read-only Palette-Pointer-/Compression-Diagnose als naechsten Schritt vor jedem Palette-Fix:
 

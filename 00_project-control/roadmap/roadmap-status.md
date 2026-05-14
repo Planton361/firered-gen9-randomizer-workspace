@@ -24,10 +24,10 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-palette-pointer-compression-diagnostics-plan` |
-| Nächster Branch | `test/upr-fvx-cfru-dpe-palette-pointer-compression-diagnostics` |
-| Aktueller Fokus | CFRU/DPE Palette Pointer / Compression Diagnostics Plan |
-| ROM-/Build-Arbeit | keine ROM-/Build-Arbeit; read-only Planblock, keine Randomizer-Laeufe und keine Builds |
+| Aktueller Branch | `test/upr-fvx-cfru-dpe-palette-pointer-compression-diagnostics` |
+| Nächster Branch | `analysis/upr-fvx-cfru-dpe-palette-single-owner-normal-only-fix-scope-plan` |
+| Aktueller Fokus | CFRU/DPE Palette Pointer / Compression Diagnostics Run |
+| ROM-/Build-Arbeit | read-only lokaler Diagnose-Load; keine Randomizer-Writes, keine Output-ROMs und keine Builds |
 | Externe Repos | als Submodule auf Planton361-Forks eingebunden |
 | Forks | Planton361-Forks fuer UPR-FVX, DPE Gen9 und CFRU dokumentiert |
 | Installationen | devkitPro/devkitARM lokal dokumentiert; keine Installation in diesem Analyseblock |
@@ -129,6 +129,7 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | 08 Randomizer-Kompatibilität | CFRU/DPE Palette-Randomization-Modell | Diagnose 058 trennt Palette-Safety/Skip-Unchanged-Save von echter geaenderter Palette-Randomization; compressed/shared/repointing risks, Preserve-/Skip-Policy, Reload-Kriterien und Graphics/P2-Abgrenzung dokumentiert |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Palette Randomization Preserve/Repoint Plan | Diagnose 091 dokumentiert echte `PokemonPalettesMod.RANDOM`-Randomization als komprimierten Repointing-/Shared-Pointer-Writer; direkter Fix noch nicht eng genug, zuerst read-only Pointer-/Compression-Diagnose |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Palette Pointer / Compression Diagnostics Plan | Diagnose 092 plant die read-only Klassifikation von Normal-/Shiny-Palette-Pointern, Dekomprimierbarkeit, Single-Owner/Shared, missing/invalid und sicheren Kandidaten; kein Fix, kein Repointing |
+| 08 Randomizer-Kompatibilität | CFRU/DPE Palette Pointer / Compression Diagnostics Run | Diagnose 093 bestaetigt sanitisiert `candidateLoaded=true`, `candidateWritablePalettes=385`, aber `candidateWritableShinyPalettes=0`; naechster Scope nur normal-palette-only single-owner/decompressible |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Type-Chart-Modell | Diagnose 059 trennt Pokemon-Type-Read/Write aus 051 von Type-Chart-/Effectiveness-Randomization; Fairy `0x17`, Stellar/unsupported `0x18`, TypeTable-Risiken, Preserve-/Skip-Policy und Reload-Kriterien dokumentiert |
 | 08 Randomizer-Kompatibilität | CFRU/DPE GUI-Suboptions-Regressionsmatrix | Diagnose 060 ordnet konkrete FVX-GUI-Hauptoptionen und Suboptionen konservativ nach P1-supported, wahrscheinlich supported, modelliert/open und out-of-scope ein |
 | 08 Randomizer-Kompatibilität | CFRU/DPE P1 Regression-Smoke-Plan | Diagnose 061 plant priorisierte Regression-Smoke-Gruppen aus 060 und der FVX Feature-Coverage-Matrix, ohne Testausfuehrung oder offene Writer zu vermischen |
@@ -156,13 +157,13 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Palette Pointer / Compression Diagnostics Plan | Branch `analysis/upr-fvx-cfru-dpe-palette-pointer-compression-diagnostics-plan`; Diagnose 092 dokumentieren und PR vorbereiten |
+| 08 Randomizer-Kompatibilität | Palette Pointer / Compression Diagnostics Run | Branch `test/upr-fvx-cfru-dpe-palette-pointer-compression-diagnostics`; Diagnose 093 dokumentieren und PR vorbereiten |
 
 ## Als Nächstes
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Palette Pointer / Compression Diagnostics Run | nur bei expliziter lokaler Freigabe sanitisiert klaeren, welche Normal-/Shiny-Paletten dekomprimierbar, single-owner, shared, missing oder invalid sind |
+| 08 Randomizer-Kompatibilität | Palette Single-owner Normal-only Fix-Scope Plan | read-only klaeren, ob ein Fix-/Smoke-Scope fuer `candidateWritableNormalPalettes=385` eng genug ist; Shiny/shared/invalid/missing/decode-failed preserve-only |
 | 08 Randomizer-Kompatibilität | Evolution-Methoden-Writer und weitere Evolution-Suboptionen getrennt planen | Nicht aus Diagnose 082 ableiten; getrennte Scope- und Reload-Kriterien definieren |
 | 08 Randomizer-Kompatibilität | Move Names fixed-length Reload-Smoke nur mit eindeutigem Kandidaten wiederholen | warten, bis ein freigegebener lokaler CFRU/DPE Gen9-BPRE-Kandidat vorab `moves.total=992` und `991:PsychicNoise` meldet; `FVX-MOVE-005` bleibt `Write modelliert` |
 

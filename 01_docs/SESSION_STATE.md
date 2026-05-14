@@ -1,5 +1,28 @@
 # Session State
 
+## 2026-05-14 - CFRU/DPE Palette Pointer / Compression Diagnostics Run
+
+Workspace-Branch: `test/upr-fvx-cfru-dpe-palette-pointer-compression-diagnostics`
+
+UPR-FVX-Pin: `fad56f60d6fae9b006290a4d5fd1f0715f3d9dc3`
+
+Aktueller Stand:
+
+- Neuer sanitiserter Diagnosebericht `08_tests/randomizer/093_palette_pointer_compression_diagnostics.md` erstellt.
+- Der lokale Diagnose-Harness blieb ignored unter `05_builds/**` und wurde nicht committed.
+- Der Lauf blieb read-only: keine Palette-Randomization, kein Writer-Fix, kein Repointing, kein Build, keine Output-ROM.
+- Kandidaten-Preflight: `candidateFilesChecked=94`, `candidateLoaded=true`, `palettePointerScanSuccessful=true`, `candidateSpeciesTotal=1439`, `exceptionClass=none`, `stacktrace=none`.
+- Pointer-/Compression-Ergebnis: `candidateWritablePalettes=385`, `candidateWritableNormalPalettes=385`, `candidateWritableShinyPalettes=0`.
+- Skip-/Preserve-Scope: `skipPaletteEntries=2493`, `skippedSharedPalettes=329`, `skippedInvalidPalettes=592`, `skippedMissingPalettes=38`, `skippedDecodeFailedPalettes=625`.
+- Risikobefund: `crossKindSharedPalettePointers=1809`, `sharedPointerGroups=775`, `largestSharedPointerGroupSize=156`, `singleOwnerBothNormalAndShinySpecies=0`.
+- Ergebnis: ein spaeterer enger Fix-/Smoke-Scope ist nur normal-palette-only, single-owner/decompressible realistisch; Shiny und alle shared/invalid/missing/decode-failed Paletten bleiben preserve-only.
+- `FVX-GFX-001`, `FVX-GFX-002`, `FVX-GFX-003` und `FVX-GFX-004` bleiben `Write modelliert`.
+- Keine privaten Pfade, ROM-Namen, Hashes, Raw Pointer, Offsets, Logs oder Output-ROM-Pfade dokumentiert.
+
+Naechster sinnvoller Schritt:
+
+- `analysis/upr-fvx-cfru-dpe-palette-single-owner-normal-only-fix-scope-plan`: read-only planen, ob ein normal-palette-only Single-owner/decompressible Fix-/Smoke-Scope reviewbar eng genug ist. Shiny, shared, invalid, missing und decode-failed Paletten preserve-only lassen.
+
 ## 2026-05-14 - CFRU/DPE Palette Pointer / Compression Diagnostics Plan
 
 Workspace-Branch: `analysis/upr-fvx-cfru-dpe-palette-pointer-compression-diagnostics-plan`
