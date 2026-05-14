@@ -38,7 +38,21 @@ Sie ist die detaillierte Requirements-/Coverage-Ebene. Die Roadmap bleibt bewuss
 | In Arbeit | 0 |
 | **Gesamt** | **130** |
 
-## Aktueller Hinweis zu 090
+## Aktueller Hinweis zu 091
+
+Diagnose 091 plant den Preserve-/Repoint-Scope fuer echte CFRU/DPE Pokemon-Palette-Randomization:
+
+- `PokemonPalettesMod.RANDOM` aktiviert `Gen3to5PaletteRandomizer` und fuehrt bei geaenderten Paletten in `Gen3RomHandler.savePokemonPalettes()`.
+- Der Save-Pfad schreibt geaenderte Normal-/Shiny-Paletten ueber komprimierte `rewriteCompressedPalette()`-/`DataRewriter`-Repointing-Logik.
+- Die bestehenden Safety-Fixes belegen nur defensive missing/invalid Palette Loads und Skip-Unchanged-Saves.
+- Direkter Fix ist noch nicht eng genug, weil Compression, FreeSpace, Single-Pointer-Annahme, Shared-Pointer, missing/invalid Slots und Forme-/Mapping-Fragen vorab inventarisiert werden muessen.
+- `FVX-GFX-001` Pokemon Palettes Random bleibt `Write modelliert`.
+- `FVX-GFX-002` Palettes: Follow Types bleibt `Write modelliert` und ist kein TypeChart-/TypeEffectiveness-Scope.
+- `FVX-GFX-003` Palettes: Follow Evolutions bleibt `Write modelliert` und ist kein Evolution-Writer-Scope.
+- `FVX-GFX-004` Palettes: Shiny From Normal bleibt `Write modelliert` und braucht sichere Normal-Palette-Inputs.
+- Custom Player Graphics bleibt getrennt.
+
+## Vorheriger Hinweis zu 090
 
 Diagnose 090 dokumentiert den erneuten Candidate-Preflight fuer den engen Name-only fixed-length Reload-Smoke fuer `FVX-MOVE-005`:
 
