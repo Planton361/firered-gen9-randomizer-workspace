@@ -1,5 +1,27 @@
 # Session State
 
+## 2026-05-14 - CFRU/DPE TypeChart Preserve Effectiveness Fix
+
+Workspace-Branch: `compat/upr-fvx-cfru-dpe-type-chart-preserve-effectiveness`
+
+UPR-FVX-Branch: `compat/upr-fvx-cfru-dpe-type-chart-preserve-effectiveness`
+
+Aktueller Stand:
+
+- UPR-FVX-Fix `36707e0190d3d9fa587550dfc5631fcaa9abd6b1` erstellt.
+- Der Fix trennt TypeChart-raw-Type-Mapping von `gBaseStats`-Type-Mapping: Fairy `0x17` wird im CFRU/DPE-TypeChart gelesen und geschrieben, waehrend Stellar/raw `0x18` unsupported bleibt.
+- Unsupported raw TypeChart-Triplets werden preserve-/skip-only behandelt und nicht still auf Normal, Fairy oder null normalisiert.
+- Foresight-Block und Endtable-Terminator bleiben erhalten; die CFRU/DPE-Kapazitaetspruefung nutzt den vorhandenen TypeChart-Bereich.
+- Neues Diagnoseprotokoll `08_tests/randomizer/066_type_chart_preserve_effectiveness_fix_diagnostics.md` erstellt.
+- TypeEffectiveness-only Smoke: `saveSuccessful=true`, `logSuccessful=true`, `outputRomExists=true`, `logNonEmpty=true`, Reload erfolgreich, `writeReloadTypeChartMismatches=0`, `fairyNonNeutralReload=13`, `rawFairyEntriesReload=13`, `unsupportedRawEntriesPreserved=true`, Terminatoren erhalten und `stacktrace=none`.
+- `Bad Egg=false` und `<unknown>=false` im TypeEffectiveness-only Log.
+- Keine Species-Type-Write-Aenderung aus 051, kein STELLAR-Enum, keine MoveData-, Palette-, Item-, Graphics- oder Text/Menu-Aenderung.
+- Workspace dokumentiert den neuen UPR-FVX-Submodule-Pin; lokale Diagnoseartefakte bleiben ignored und werden nicht committed.
+
+Naechster sinnvoller Schritt:
+
+- PRs fuer UPR-FVX-Fix und Workspace-Submodule-/Diagnoseupdate pruefen; danach optional einzelne TypeEffectiveness-Folgesmokes fuer Balanced, Keep Identities, Inverse/Add Immunities und Update Type Effectiveness planen.
+
 ## 2026-05-14 - CFRU/DPE Starters Suboptions Regression-Smoke Results
 
 Arbeitsbranch: `test/upr-fvx-cfru-dpe-p1-starters-suboptions-regression-smoke`
