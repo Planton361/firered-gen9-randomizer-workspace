@@ -1,5 +1,24 @@
 # Session State
 
+## 2026-05-14 - CFRU/DPE Wild Filter Carrier Diagnostics Plan
+
+Arbeitsbranch: `analysis/upr-fvx-cfru-dpe-p1-wild-filter-carrier-diagnostics`
+
+Aktueller Stand:
+
+- Neues read-only Diagnose-/Harness-Planprotokoll `08_tests/randomizer/073_p1_wild_filter_carrier_diagnostics_plan.md` erstellt.
+- 073 fokussiert nur `FVX-WILD-011` Wild Similar Strength, `FVX-WILD-004` Wild Type Restrictions / Type Themes / Keep Primary und den gemeinsamen `FVX-WILD-001` Standard/Fallback-Wild-Carrier.
+- Ausgangsbefunde aus 070 bleiben: beide Wild-Slices sind echte Save-Blocker mit `saveSuccessful=false`, keinem Output/Reload und `IllegalStateException`; `FVX-WILD-004` hatte `filterViolations=0` nur bis Abbruch.
+- 073 plant zuerst read-only Code-/Protokollanalyse, um Carrier-Scope von Similar-Strength- und Type-Restriction-Filter-Scope zu trennen.
+- Falls vorhandene Dokumente und Codepfade nicht ausreichen, soll eine spaetere lokale Diagnose nur als separater Freigabeschritt erfolgen.
+- Hypothesen zu Wild-Nullslot-/Placeholder-Eintraegen, Area-/Encounter-Slot-Scope, leeren oder ungueltigen BST-/Species-Pools, Species-Type-Filtern und strengeren Suboption-Grenzen sind dokumentiert.
+- Spaetere Metriken, Sanitizing-Regeln und Stop-Regeln sind dokumentiert; keine Diagnosewerte wurden erfunden.
+- Keine Codeaenderung, kein Fix, keine Randomizer-Laeufe, keine Aenderung an `02_external/**`, kein Tool-Manifest-Update.
+
+Naechster sinnvoller Schritt:
+
+- PR fuer 073 reviewen und mergen; danach read-only Code-/Protokollanalyse fuer den Wild-Filter-Carrier oder, falls nicht ausreichend, ein separat freigegebener lokaler Diagnosebranch.
+
 ## 2026-05-14 - CFRU/DPE Wild 070 Blockers Diagnostics Plan
 
 Arbeitsbranch: `analysis/upr-fvx-cfru-dpe-p1-wild-070-blockers-diagnostics`
