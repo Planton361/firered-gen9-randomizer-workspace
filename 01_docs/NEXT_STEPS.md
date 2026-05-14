@@ -2,15 +2,16 @@
 
 ## Aktueller Fokus
 
-CFRU/DPE TypeEffectiveness-Folgesmokes sind einzeln lokal ausgefuehrt und sanitisiert dokumentiert. Ergebnisprotokoll: `08_tests/randomizer/068_type_effectiveness_followup_smoke_results.md`.
+CFRU/DPE Similar Strength / Same Type Regression-Smoke-Plan ist read-only dokumentiert. Planprotokoll: `08_tests/randomizer/069_p1_similar_strength_same_type_regression_smoke.md`.
 
 ## Priorisierte naechste Arbeitsbloecke
 
-1. PR fuer `test/upr-fvx-cfru-dpe-p1-type-effectiveness-followup-smokes`
-   - Ergebnisse fuer Balanced, Keep Type Identities, Inverse, Add Random Immunities und Update Type Effectiveness reviewen und mergen.
+1. PR fuer `analysis/upr-fvx-cfru-dpe-p1-similar-strength-same-type-regression-smoke`
+   - Read-only Plan fuer BST-/Type-basierte Poolfilter reviewen und mergen.
 
-2. `analysis/upr-fvx-cfru-dpe-p1-similar-strength-same-type-regression-smoke`
-   - BST-/Type-basierte Pooling-Suboptionen pruefen, ohne TypeChart oder MoveData-Write zu aktivieren.
+2. `test/upr-fvx-cfru-dpe-p1-similar-strength-same-type-regression-smoke`
+   - Die in 069 geplanten Slices einzeln ausfuehren: Wild Similar Strength, Wild Type Restrictions / Type Themes, Trainer Similar Strength, Trainer Type Diversity / Type Themes, Evolutions Similar Strength und Evolutions Same Typing.
+   - Weiter ohne TypeChart, MoveData Write, Palette, Items, Graphics, Text/Menu, Level-Modifier oder Evolution-Methoden-Writer.
 
 3. Spaetere TypeEffectiveness-Kombinationen nur bei Bedarf
    - Nicht mit MoveData, Palette, Items, Graphics, Text/Menu oder Species-Type-Write vermischen.

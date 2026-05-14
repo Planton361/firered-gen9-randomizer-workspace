@@ -1,5 +1,24 @@
 # Session State
 
+## 2026-05-14 - CFRU/DPE Similar Strength / Same Type Regression-Smoke-Plan
+
+Arbeitsbranch: `analysis/upr-fvx-cfru-dpe-p1-similar-strength-same-type-regression-smoke`
+
+Aktueller Stand:
+
+- Neues read-only Analyseprotokoll `08_tests/randomizer/069_p1_similar_strength_same_type_regression_smoke.md` erstellt.
+- 069 plant spaetere Regression-Smokes fuer BST-/Type-basierte Poolfilter: Similar Strength, Same Type / Same Typing, Type Themes und Type Restrictions.
+- Geplante Slices: `FVX-WILD-011` Wild Similar Strength, `FVX-WILD-004` Wild Type Restrictions / Type Themes / Keep Primary, Trainer Similar Strength konservativ als Suboption unter `FVX-FOE-001`, `FVX-FOE-009` Trainer Type Diversity / Type Themes, `FVX-TRAIT-018` Evolutions Similar Strength und `FVX-TRAIT-019` Evolutions Same Typing.
+- Geeignete Carrier sind `FVX-WILD-001` Standard/Fallback Wild, `FVX-FOE-001` Trainer Pokemon und `FVX-TRAIT-016` Evolution Randomization.
+- 069 nutzt Species-Pools, BaseStats/BST und Species-Type-Felder aus belegten Datenpfaden; Same Type / Type Themes beweisen keinen TypeChart- oder TypeEffectiveness-Support.
+- Starter-Type/BST aus 065 und `FVX-SST-012` Static Similar Strength bleiben nur Referenz-/Vergleichsbelege, nicht primaerer Scope.
+- TypeChart/TypeEffectiveness, MoveData Write, Field Items/Shops/Pickup, Encounter Held Items, Palette/Graphics, Text/Menu, Level-Modifier, Evolution-Methoden-Writer, Starter Held Items, Race Mode / Intro Mon, Better Movesets, Trainer Additional Pokemon, Battle Style, Trainer Names/Class Names, Catch Em All, Minimum Catch Rate, Wild held items und custom Day/Night-Wild bleiben ausgeschlossen.
+- Keine Codeaenderung, keine Aenderung an `02_external/**`, keine Randomizer-Laeufe, kein Tool-Manifest-Update.
+
+Naechster sinnvoller Schritt:
+
+- `test/upr-fvx-cfru-dpe-p1-similar-strength-same-type-regression-smoke`: die in 069 geplanten Wild-, Trainer- und Evolution-Slices einzeln lokal ausfuehren und sanitisiert dokumentieren, weiter ohne offene Writer.
+
 ## 2026-05-14 - CFRU/DPE TypeEffectiveness Follow-up Smoke Results
 
 Arbeitsbranch: `test/upr-fvx-cfru-dpe-p1-type-effectiveness-followup-smokes`
