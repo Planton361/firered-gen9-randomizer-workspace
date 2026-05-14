@@ -1,5 +1,26 @@
 # Session State
 
+## 2026-05-14 - CFRU/DPE Move Names / Descriptions Text/Menu-Scope Plan
+
+Workspace-Branch: `analysis/upr-fvx-cfru-dpe-move-names-text-menu-scope-plan`
+
+UPR-FVX-Pin: `fad56f60d6fae9b006290a4d5fd1f0715f3d9dc3`
+
+Aktueller Stand:
+
+- Neuer read-only Planbericht `08_tests/randomizer/088_move_names_text_menu_scope_plan.md` erstellt.
+- `FVX-MOVE-001`, `FVX-MOVE-002`, `FVX-MOVE-003`, `FVX-MOVE-004` und `FVX-MOVE-006` bleiben GUI-kompatibel.
+- `FVX-MOVE-005` Randomize Move Names / Move Descriptions bleibt getrennt vom MoveData-Byte-Writer-Scope `+0..+11`.
+- UPR-FVX-Codepfad: GUI/Settings aktivieren `randomizeMoveNames`, `GameRandomizer` ruft `MoveNameRandomizer.randomizeMoveNames()` auf, und `Gen3RomHandler.saveMoves()` schreibt `Move.name` ueber `writeFixedLengthString(...)` in die fixed-length Move-Namen-Tabelle.
+- Fuer Gen3/CFRU/DPE ist der direkte Name-Writer kein Pointer-/Repointing-Pfad, sondern ein in-place fixed-length Textpfad mit `MoveNameLength` und sichtbarer `getMaxMoveNameLength() = 12`.
+- Move Descriptions werden durch `FVX-MOVE-005` nicht als eigener Randomizer-Pfad geschrieben; sichtbare `MoveDescriptions`-Nutzung gehoert zu getrennten TM-/Item-Textpfaden.
+- Planentscheidung: enger Name-only Reload-Smoke ist realistisch; Move Descriptions / Text/Menu-Repointing bleibt vorerst zurueckgestellt, bis ein eigener Description-/Pointer-Befund vorliegt.
+- Keine Codeaenderung, keine Aenderung an `02_external/**`, keine Submodule-Pin-Aenderung, kein Randomizer-Lauf, kein Build und kein ROM-/Artefaktzugriff.
+
+Naechster sinnvoller Schritt:
+
+- Separater Smoke-Branch `test/upr-fvx-cfru-dpe-move-names-fixed-length-reload-smoke`: nur `FVX-MOVE-005` Name-only pruefen, Move-Descriptions nicht schreiben, keine Pointer-/Repointing- oder Text/Menu-Umsetzung.
+
 ## 2026-05-14 - CFRU/DPE MoveData Fairy-Type-Byte Fix
 
 Workspace-Branch: `compat/upr-fvx-cfru-dpe-move-data-type-fairy-byte`
