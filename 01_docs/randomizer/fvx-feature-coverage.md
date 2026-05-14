@@ -30,23 +30,25 @@ Sie ist die detaillierte Requirements-/Coverage-Ebene. Die Roadmap bleibt bewuss
 | Status | Anzahl |
 |---|---:|
 | Nicht begonnen | 39 |
-| Plan erstellt | 31 |
+| Plan erstellt | 30 |
 | Read modelliert | 0 |
 | Write modelliert | 20 |
 | Getestet | 10 |
-| GUI-kompatibel | 30 |
+| GUI-kompatibel | 31 |
 | In Arbeit | 0 |
 | **Gesamt** | **130** |
 
-## Aktueller Hinweis zu 075
+## Aktueller Hinweis zu 078
 
-Diagnose 075 entblockt die Wild-Slices aus Diagnose 070:
+Diagnose 078 entblockt `FVX-FOE-009` aus Diagnose 070:
 
-- `FVX-WILD-011` Wild Similar Strength und `FVX-WILD-004` Wild Type Restrictions / Type Themes / Keep Primary sind nach dem Wild-Filter-Carrier-Nullslot-Fix im `FVX-WILD-001` Standard/Fallback-Wild-Carrier stabil: Save/Log/Output/Reload true, `writeReloadWildPokemonMismatches=0`, `Bad Egg=false`, `<unknown>=false` und `stacktrace=none`.
+- `FVX-FOE-009` Force Diverse Types / Trainer Type Diversity ist nach dem Trainer-Type-Diversity-Null-Type-Fix im `FVX-FOE-001` Trainer-Pokemon-Carrier stabil: Save/Log/Output/Reload true, `writeReloadTrainerPokemonMismatches=0`, `filterViolations=0`, `Bad Egg=false`, `<unknown>=false` und `stacktrace=none`.
+- UPR-FVX `d89fc64e3b0223b03a65466422847dc7df30d03c` bleibt auf `TrainerPokemonRandomizer` und den Force-Diverse-Types-/`usedTypes`-Pfad begrenzt.
+- `FVX-WILD-011` Wild Similar Strength und `FVX-WILD-004` Wild Type Restrictions / Type Themes / Keep Primary sind seit Diagnose 075 im `FVX-WILD-001` Standard/Fallback-Wild-Carrier stabil.
 - Trainer Similar Strength ist weiterhin als Suboption unter `FVX-FOE-001` im Trainer-Species-Carrier-Smoke stabil: Save/Log/Output/Reload true und `writeReloadTrainerPokemonMismatches=0`.
-- `FVX-FOE-009` Force Diverse Types / Trainer Type Diversity und `FVX-TRAIT-019` Evolutions Same Typing bleiben trotz vorhandener Planzeilen nicht als getestet freigegeben, weil die 070-Slices vor Output/Reload blockieren.
+- `FVX-TRAIT-019` Evolutions Same Typing bleibt trotz vorhandener Planzeile nicht als getestet freigegeben, weil der 070-Slice vor Output/Reload blockiert.
 - `FVX-TRAIT-018` Evolutions Similar Strength bleibt nicht als getestet freigegeben, weil der 070-Slice zwar speichert und reloadet, aber `writeReloadEvolutionMismatches=24` und einen nicht freigegebenen `Bad Egg`-Marker zeigt.
-- Die Statuswerte in der Matrix bleiben konservativ fuer die restlichen blockierten 070-Slices; Wild Similar Strength und Wild Type Restrictions bleiben im Wild-Carrier-Scope GUI-kompatibel.
+- Die Statuswerte in der Matrix bleiben konservativ fuer die restlichen blockierten 070-Evolution-Slices.
 
 ## Coverage nach GUI-Tab
 
@@ -56,7 +58,7 @@ Diagnose 075 entblockt die Wild-Slices aus Diagnose 070:
 | Pokemon Traits | 28 | 7 | 17 | 0 | 0 | 0 | 4 | 0 |
 | Starters, Statics & Trades | 15 | 5 | 0 | 0 | 0 | 5 | 5 | 0 |
 | Moves & Movesets | 11 | 0 | 3 | 0 | 6 | 0 | 2 | 0 |
-| Foe Pokemon | 14 | 8 | 1 | 0 | 0 | 0 | 5 | 0 |
+| Foe Pokemon | 14 | 8 | 0 | 0 | 0 | 0 | 6 | 0 |
 | Wild Pokemon | 12 | 3 | 1 | 0 | 0 | 0 | 8 | 0 |
 | TM/HMs & Tutors | 15 | 0 | 9 | 0 | 0 | 0 | 6 | 0 |
 | Items | 10 | 0 | 0 | 0 | 10 | 0 | 0 | 0 |
@@ -146,7 +148,7 @@ Diagnose 075 entblockt die Wild-Slices aus Diagnose 070:
 - FVX-FOE-006 | Additional Pokemon: Important Trainers | Nicht begonnen
 - FVX-FOE-007 | Additional Pokemon: Regular Trainers | Nicht begonnen
 - FVX-FOE-008 | Trainer Held Items | GUI-kompatibel
-- FVX-FOE-009 | Force Diverse Types | Plan erstellt
+- FVX-FOE-009 | Force Diverse Types | GUI-kompatibel
 - FVX-FOE-010 | Pokemon League Has Unique Pokemon | Nicht begonnen
 - FVX-FOE-011 | Battle Style randomisieren | Nicht begonnen
 - FVX-FOE-012 | Rival Carries Starter Through Game | Nicht begonnen
@@ -260,6 +262,7 @@ Diese Matrix soll nicht als 130 Roadmap-Zeilen gepflegt werden. Fuer die Roadmap
 - `08_tests/randomizer/065_p1_starters_suboptions_regression_smoke_results.md` bestaetigt `FVX-SST-003`, `FVX-SST-004`, `FVX-SST-005`, `FVX-SST-006` und `FVX-SST-009` im getesteten Starter-Species-Writer-Smoke; Starter Held Items `FVX-SST-007`/`FVX-SST-008` bleiben separat/offen.
 - `08_tests/randomizer/066_type_chart_preserve_effectiveness_fix_diagnostics.md` bestaetigt `FVX-TYPE-001` im TypeEffectiveness-only Random-Smoke mit Fairy-Reload und `writeReloadTypeChartMismatches=0`; Balanced, Keep Identities und Inverse bleiben als einzelne Folgesmokes sinnvoll.
 - `08_tests/randomizer/068_type_effectiveness_followup_smoke_results.md` bestaetigt `FVX-TYPE-001` Balanced, Keep Type Identities und Inverse sowie `FVX-TYPE-002` Add Random Immunities und `FVX-TYPE-003` Update Type Effectiveness einzeln mit Save/Log/Output/Reload true und `writeReloadTypeChartMismatches=0`.
+- `08_tests/randomizer/078_trainer_type_diversity_nulltype_fix_diagnostics.md` bestaetigt `FVX-FOE-009` Trainer Type Diversity / Type Themes im `FVX-FOE-001` Trainer-Pokemon-Carrier mit Save/Log/Output/Reload true, `writeReloadTrainerPokemonMismatches=0` und `filterViolations=0`.
 
 ## Pflege-Regeln
 
