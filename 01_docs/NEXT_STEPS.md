@@ -1,3 +1,26 @@
+# Next Steps - 2026-05-14 Post-Merge Palette Sync
+
+Aktiver Anschlussblock:
+
+- `analysis/upr-fvx-cfru-dpe-field-items-shops-pickup-scope-plan`
+
+Ziel: Field Items, Shops und Pickup read-only als eigenen P1-Scope planen. Keine Umsetzung, kein Randomizer-Lauf, kein Build und keine Vermischung mit Palette, Graphics, TypeChart, Trainer, Wild, Evolution, Text/Menu, MoveData oder MoveNames.
+
+Post-Merge-Status aus Diagnose 096:
+
+- Workspace PR #140 ist gemerged.
+- `FVX-GFX-001` hat den UPR-FVX Guard-Fix aus PR #35/#139, aber der Reload-Smoke ist blockiert.
+- `candidateFilesChecked=94`
+- `candidateLoaded=false`
+- `candidateOpenFailures=2`
+- `candidateSpeciesTotalMismatches=92`
+- `candidateSpeciesTotal=0`
+- kein fachlicher Palette-Write-/Reload-Smoke
+- keine Hochstufung fuer `FVX-GFX-001`
+- `FVX-GFX-001`, `FVX-GFX-002`, `FVX-GFX-003` und `FVX-GFX-004` bleiben `Write modelliert`.
+
+`FVX-GFX-001` wartet auf einen explizit freigegebenen UPR-FVX-ladbaren CFRU/DPE Gen9-BPRE-Kandidaten mit `candidateSpeciesTotal=1439`, bevor ein gleicher Normal-only Single-owner Reload-Smoke erneut sinnvoll ist.
+
 # Next Steps - 2026-05-14 Update
 
 Aktiver Anschlussblock nach Diagnose 096:

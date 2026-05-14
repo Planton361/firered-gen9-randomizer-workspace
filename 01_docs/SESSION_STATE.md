@@ -1,3 +1,38 @@
+## 2026-05-14 - Post-Merge Sync nach blockiertem Palette Normal Single-owner Reload-Smoke
+
+Workspace-Branch: `docs/post-merge-palette-normal-smoke-blocked-sync`
+
+Post-Merge-Stand:
+
+- UPR-FVX PR #35 ist gemerged.
+- Workspace PR #139 ist gemerged.
+- Workspace PR #140 ist gemerged.
+- Workspace pinnt `02_external/upr-fvx` weiter auf `2697511da9a97df4c29c00dfda8b40e556020489`.
+- Diagnose 096 ist auf `main` verfuegbar und als blockierter Reload-Smoke abgeschlossen.
+
+Diagnose 096 bleibt blockiert:
+
+- `candidateFilesChecked=94`
+- `candidateLoaded=false`
+- `candidateOpenFailures=2`
+- `candidateSpeciesTotalMismatches=92`
+- `candidateSpeciesTotal=0`
+- kein fachlicher Palette-Write-/Reload-Smoke
+- keine Hochstufung fuer `FVX-GFX-001`
+
+Feature-Status:
+
+- `FVX-GFX-001` bleibt `Write modelliert`: Guard-Fix vorhanden, Reload-Smoke blockiert bis ein UPR-FVX-ladbarer CFRU/DPE Gen9-BPRE-Kandidat mit `candidateSpeciesTotal=1439` verfuegbar ist.
+- `FVX-GFX-002` bleibt `Write modelliert`.
+- `FVX-GFX-003` bleibt `Write modelliert`.
+- `FVX-GFX-004` bleibt `Write modelliert`.
+
+Naechster empfohlener P1-Block:
+
+- `analysis/upr-fvx-cfru-dpe-field-items-shops-pickup-scope-plan`
+
+Keine Codeaenderung, keine Aenderung an `02_external/**`, keine Submodule-Pin-Aenderung, kein Build, kein Randomizer-Lauf und kein ROM-/Artefaktzugriff.
+
 ## 2026-05-14 - Palette Normal Single-owner Reload-Smoke blockiert
 
 Arbeitsbranch: `test/upr-fvx-cfru-dpe-palette-normal-single-owner-reload-smoke`
