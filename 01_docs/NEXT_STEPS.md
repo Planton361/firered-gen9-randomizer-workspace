@@ -2,7 +2,7 @@
 
 ## Aktueller Fokus
 
-CFRU/DPE Trainer Type Diversity Blocker Diagnostics Plan ist read-only dokumentiert. Diagnoseplan: `08_tests/randomizer/076_p1_trainer_type_diversity_blocker_diagnostics_plan.md`.
+CFRU/DPE Trainer Type Diversity Code Diagnosis ist read-only dokumentiert. Diagnose: `08_tests/randomizer/077_p1_trainer_type_diversity_code_diagnosis.md`.
 
 ## Priorisierte naechste Arbeitsbloecke
 
@@ -11,9 +11,10 @@ CFRU/DPE Trainer Type Diversity Blocker Diagnostics Plan ist read-only dokumenti
    - Workspace: `compat/upr-fvx-cfru-dpe-p1-wild-filter-carrier-nullslot-fix`.
    - Diagnose 075 und Submodule-Pin reviewen und mergen.
 
-2. `FVX-FOE-009` Trainer Type Diversity / Type Themes getrennt diagnostizieren
-   - Naechster Arbeitsblock: read-only Code-/Protokollanalyse fuer Trainer-Type-Diversity-/Null-Type-Scope.
-   - Pruefen, warum Trainer Similar Strength unter `FVX-FOE-001` stabil ist, `FVX-FOE-009` aber mit `NullPointerException` und fehlendem Output/Reload blockiert.
+2. `FVX-FOE-009` Trainer Type Diversity / Type Themes eng gegatet fixen
+   - Naechster Arbeitsblock: UPR-FVX-Fix fuer defensiven Trainer-Type-Diversity-Null-Type-Scope in `TrainerPokemonRandomizer`.
+   - Wahrscheinliche Ursache aus 077: `updateUsedTypes(...)` schreibt `primaryType == null` in ein `EnumSet<Type>`.
+   - Trainer Similar Strength unter `FVX-FOE-001` als Regression getrennt halten, weil dieser Pfad stabil war.
    - Weiter ohne Wild, Evolution, TypeChart, MoveData Write, Palette, Items, Text/Menu, Graphics, Level-Modifier oder andere offene Writer.
 
 3. Weitere 070-Blocker getrennt fortsetzen

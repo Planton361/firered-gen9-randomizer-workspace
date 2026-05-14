@@ -1,5 +1,25 @@
 # Session State
 
+## 2026-05-14 - CFRU/DPE Trainer Type Diversity Code Diagnosis
+
+Arbeitsbranch: `analysis/upr-fvx-cfru-dpe-p1-trainer-type-diversity-code-diagnosis`
+
+Aktueller Stand:
+
+- Neues read-only Codeanalyse-Protokoll `08_tests/randomizer/077_p1_trainer_type_diversity_code_diagnosis.md` erstellt.
+- 077 untersucht konkret den 070/076-Blocker `FVX-FOE-009` Trainer Type Diversity / Type Themes im Carrier `FVX-FOE-001` Trainer Pokemon.
+- Relevante Codepfade sind `GameRandomizer.maybeRandomizeTrainerPokemon()`, `TrainerPokemonRandomizer.randomizeTrainerPokes()`, `pickTrainerPokeReplacement(...)` und `updateUsedTypes(...)`.
+- Wahrscheinlich konkrete Ursache: Der Force-Diverse-Types-Pfad schreibt `sp.getPrimaryType(false)` in ein `EnumSet<Type>`. Wenn eine Replacement-Species `primaryType == null` hat, wirft `EnumSet.add(null)` eine `NullPointerException`.
+- Der Trainer-Species-Pool filtert im erweiterten BPRE-Hack bereits `BST == 0` und all-zero Ability Species, aber keinen Null-Primary-Type-/unsupported-Type-Scope.
+- Trainer Similar Strength ist abgegrenzt: Der stabile 070-Slice nutzt `getRandomSimilarStrengthSpecies(...)`, aktiviert aber nicht den Force-Diverse-Types-/`usedTypes`-Pfad.
+- Ein lokaler Diagnose-Lauf ist fuer die Fixplanung nicht zwingend noetig; optional waere er nur fuer sanitisierten Stacktrace-/Null-Primary-Type-Zaehler-Beleg.
+- Empfohlen ist ein eng gegateter UPR-FVX-Fixbranch fuer Trainer-Type-Diversity-Null-Type-Scope in `TrainerPokemonRandomizer`, ohne Wild, Evolution, TypeChart, MoveData, Palette, Items, Text/Menu, Graphics oder Level-Modifier.
+- Keine Codeaenderung, kein Fix, keine Randomizer-Laeufe, keine Aenderung an `02_external/**`, kein Tool-Manifest-Update.
+
+Naechster sinnvoller Schritt:
+
+- Fixbranch fuer defensiven Trainer-Type-Diversity-Null-Type-Scope vorbereiten. Danach nur `FVX-FOE-009` und optional Trainer Similar Strength als Regression lokal sanitisiert pruefen.
+
 ## 2026-05-14 - CFRU/DPE Trainer Type Diversity Blocker Diagnostics Plan
 
 Arbeitsbranch: `analysis/upr-fvx-cfru-dpe-p1-trainer-type-diversity-blocker-diagnostics`
