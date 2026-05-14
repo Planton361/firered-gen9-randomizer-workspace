@@ -1,5 +1,24 @@
 # Session State
 
+## 2026-05-14 - CFRU/DPE TypeEffectiveness Follow-up Smoke Plan
+
+Arbeitsbranch: `analysis/upr-fvx-cfru-dpe-p1-type-effectiveness-followup-smokes`
+
+Aktueller Stand:
+
+- Neues read-only Analyseprotokoll `08_tests/randomizer/067_type_effectiveness_followup_smoke_plan.md` erstellt.
+- Der gemergte TypeChart-Fix aus Diagnose 066 bleibt Referenz: TypeEffectiveness-only Random war Save/Log/Output/Reload-stabil, `writeReloadTypeChartMismatches=0`, Fairy reloadete als raw `0x17`, unsupported/Stellar wurde nicht eingefuehrt oder still normalisiert und Terminatoren blieben erhalten.
+- 067 stellt klar, dass der Random-Smoke aus 066 die Einzelpruefung weiterer TypeEffectiveness-GUI-Modi nicht ersetzt.
+- Geplante spaetere Slices: `FVX-TYPE-001` Balanced, `FVX-TYPE-001` Keep Type Identities, `FVX-TYPE-001` Inverse, `FVX-TYPE-002` Add Random Immunities und `FVX-TYPE-003` Update Type Effectiveness.
+- `FVX-TYPE-002` Add Random Immunities bleibt als eigener Risikopunkt getrennt geplant.
+- Gemeinsame spaetere Erfolgskriterien dokumentiert: Save/Log/Output/Reload true, `writeReloadTypeChartMismatches=0`, Fairy raw `0x17`, unsupported/Stellar nicht eingefuehrt oder normalisiert, Foresight-/Endtable-Terminatoren erhalten, `Bad Egg=false`, `<unknown>=false` und `stacktrace=none`.
+- MoveData, Palette-Randomization, Items/Field Items/Shops/Pickup, Graphics/Sprites, Text/Menu und Species-Type-Write bleiben ausgeschlossen.
+- Keine Codeaenderung, keine Aenderung an `02_external/**`, keine Randomizer-Laeufe, kein Tool-Manifest-Update.
+
+Naechster sinnvoller Schritt:
+
+- Spaeterer Test-/Diagnosebranch fuer die geplanten TypeEffectiveness-Folgesmokes, der die Slices einzeln ausfuehrt und sanitisiert dokumentiert, oder Rueckkehr zu `analysis/upr-fvx-cfru-dpe-p1-similar-strength-same-type-regression-smoke`.
+
 ## 2026-05-14 - CFRU/DPE TypeChart Preserve Effectiveness Fix
 
 Workspace-Branch: `compat/upr-fvx-cfru-dpe-type-chart-preserve-effectiveness`
