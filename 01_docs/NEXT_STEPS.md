@@ -1,3 +1,22 @@
+# Next Steps Update - 2026-05-15 - Field Items Random TM-pool reload smoke next
+
+Aktueller Fokus:
+
+- UPR-FVX PR #36 contains the narrow `FVX-ITEM-002 Field Items Random` TM-pool fix.
+- Workspace pins `02_external/upr-fvx` to `7b4fb8ed8bcf00c6e0ac2871459adfeec1503fcd` in this branch.
+- `FVX-ITEM-002` remains pending until a Field-Items-only Write-/Reload-Smoke confirms the fix.
+
+Naechster empfohlener Minimalblock nach Merge:
+
+- `test/upr-fvx-cfru-dpe-field-items-random-tm-pool-reload-smoke`
+
+Ziel des Folgeblocks:
+
+- `FVX-ITEM-002 Field Items Random` mit `banBadRandomFieldItems=false` fachlich erneut testen.
+- Erwartete TM-Pool-Metriken: `randomTmNeededSlots=28`, `randomTmRequiredTotal=24`, `randomTmFillerNeeded=4`, `randomTmPoolDeficit=0`, `randomTmResultSize=28`, `randomTmResultUniqueSize=28`.
+- Erwartete Reload-Metriken: `saveSuccessful=true`, `reloadSuccessful=true`, `fieldItemReloadMismatches=0`, `requiredFieldTMMissingAfter=0`, `disallowedFieldItemWrites=0`, `scriptPatternExpansion=0`.
+- Weiterhin keine Shops, kein Pickup, keine Held Items, keine TM/HM/Tutor/Learnset-Ausweitung, keine Random Even Distribution und keine Ban-Bad-Items-Umsetzung.
+
 # Next Steps Update - 2026-05-15 - Field Items Random TM-pool fix next
 
 Aktueller Fokus:

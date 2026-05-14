@@ -185,3 +185,5 @@ Wenn ein Artefakt nicht eindeutig Smoke-Output ist, bleibt es lokal liegen und w
 - 103 - `103_field_items_random_reload_smoke.md`: Sanitized Field-Items-only `FVX-ITEM-002 Field Items Random` smoke with `banBadRandomFieldItems=false`. Candidate loaded and Field-Items scope stayed `339`, but save failed with `RandomizationException`; no output/reload, no Feature-Hochstufung. Next: Random TM-pool blocker plan.
 
 - 104 - `104_field_items_random_tm_pool_blocker_plan.md`: Read-only Plan fuer den `FVX-ITEM-002` Random-TM-Pool-Blocker. Ursache liegt wahrscheinlich in `ItemRandomizer.randomizeTMFieldItems(...)`: benoetigte TM-Field-Slots `28`, Required Field TMs `24`, Unique-TM-Pool muss exakt passen; naechster Schritt ist ein enger TM-Pool-Fixbranch.
+
+- 105 - `105_field_items_random_tm_pool_fix.md`: UPR-FVX-Fix fuer den `FVX-ITEM-002 Field Items Random` TM-Pool vorbereitet. Required Field TMs bleiben Pflicht, Filler-TMs werden dedupliziert aus geladenen TMs plus aktuellen Field-TM-Slots gebaut; kein fachlicher ROM-Reload-Smoke in diesem Block, daher keine Feature-Hochstufung.

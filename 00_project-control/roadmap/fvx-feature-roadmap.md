@@ -1,3 +1,10 @@
+# FVX Feature Roadmap Update - 2026-05-15 - Field Items Random TM-pool fix prepared
+
+- UPR-FVX PR #36 prepares the narrow `FVX-ITEM-002 Field Items Random` TM-pool fix.
+- The fix is limited to the TM Field Items randomization pool and does not expand Shops, Pickup, Held Items, TM/HM/Tutor/Learnset, Random Even or Ban Bad Items.
+- `FVX-ITEM-002` should only be upgraded after a separate sanitized reload smoke confirms `randomTmPoolDeficit=0`, `fieldItemReloadMismatches=0`, and `requiredFieldTMMissingAfter=0`.
+- Do not proceed to `FVX-ITEM-003` or `FVX-ITEM-004` before this `FVX-ITEM-002` reload smoke passes.
+
 # FVX Feature Roadmap Update - 2026-05-15 - Field Items Random TM-pool blocker planned
 
 - Diagnose 104 narrows `FVX-ITEM-002 Field Items Random` to a TM-pool / Required-TM algorithm blocker.

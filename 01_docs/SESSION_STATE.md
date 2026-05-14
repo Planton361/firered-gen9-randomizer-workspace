@@ -1,3 +1,15 @@
+# Session State Update - 2026-05-15 - Field Items Random TM-pool fix
+
+- Branch: `compat/upr-fvx-cfru-dpe-field-items-random-tm-pool-fix`.
+- Workspace PR #149 was verified as merged before branch creation.
+- UPR-FVX fix commit: `7b4fb8ed8bcf00c6e0ac2871459adfeec1503fcd`.
+- UPR-FVX PR #36 opened: <https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/36>.
+- New protocol: `08_tests/randomizer/105_field_items_random_tm_pool_fix.md`.
+- Fix is limited to `ItemRandomizer.randomizeTMFieldItems(...)`: Required Field TMs stay mandatory, the filler pool is deduplicated from loaded TM items plus current Field-TM slots, and pool deficits now fail with a clear `RandomizationException`.
+- No ROM Write-/Reload-Smoke was executed in this block; `FVX-ITEM-002` is not upgraded until a separate sanitized Field-Items-only reload smoke passes.
+- Workspace now pins `02_external/upr-fvx` to `7b4fb8ed8bcf00c6e0ac2871459adfeec1503fcd`.
+- No Shops, Pickup, Held Items, TM/HM/Tutor/Learnset, Scriptparser, Palette/Graphics, MoveData/MoveNames, TypeChart, Trainer, Wild, Evolution or Text/Menu work was done.
+
 # Session State Update - 2026-05-15 - Field Items Random TM-pool blocker plan
 
 - Branch: `analysis/upr-fvx-cfru-dpe-field-items-random-tm-pool-blocker-plan`.
