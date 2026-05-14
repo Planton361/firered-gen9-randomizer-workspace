@@ -1,5 +1,28 @@
 # Session State
 
+## 2026-05-14 - CFRU/DPE Wild Filter Carrier Nullslot Fix
+
+Workspace-Branch: `compat/upr-fvx-cfru-dpe-p1-wild-filter-carrier-nullslot-fix`
+
+UPR-FVX-Branch: `compat/upr-fvx-cfru-dpe-p1-wild-filter-carrier-nullslot-fix`
+
+Aktueller Stand:
+
+- UPR-FVX-Fix `acaada514d04b1d306581ce872d2d77fe1b4c5b3` erstellt.
+- Der Fix bleibt auf `WildEncounterRandomizer` begrenzt und behandelt `Encounter`-Slots mit `species == null` defensiv vor der Mapping-/InfoMap-Auswahl.
+- Null/unaufloesbare Wild-Encounter-Slots werden nicht als `zoneMap`-/InfoMap-Anker genutzt; sie erhalten ein Replacement aus bestehenden `remaining`-/`allowed`-Pools, mit vorhandener Theme-Grenze und Area-Bans.
+- `FVX-WILD-011` Wild Similar Strength und `FVX-WILD-004` Wild Type Restrictions / Type Themes / Keep Primary wurden einzeln lokal sanitisiert ausgefuehrt.
+- Beide Slices melden `saveSuccessful=true`, `logSuccessful=true`, `outputRomExists=true`, `logNonEmpty=true`, Reload erfolgreich, `writeReloadWildPokemonMismatches=0`, `Bad Egg=false`, `<unknown>=false` und `stacktrace=none`.
+- `FVX-WILD-004` meldet `filterViolations=0`; fuer `FVX-WILD-011` wurde kein eigener Filterverletzungszaehler behauptet.
+- Die lokalen Fix-Smokes beobachteten `nullSlotsBefore=0` und `nullSlotsAfter=0`; der Fix bleibt trotzdem auf den in 074 identifizierten defensiven Null-/unaufloesbar-Scope begrenzt.
+- Neues Diagnoseprotokoll `08_tests/randomizer/075_wild_filter_carrier_nullslot_fix_diagnostics.md` erstellt.
+- Workspace pinnt `02_external/upr-fvx` auf den neuen UPR-FVX-Fix-Commit und aktualisiert README, Session, Next Steps, Roadmap, Feature-Coverage und Tool-Manifest.
+- Keine TypeChart-, MoveData-, Palette-, Item-, Encounter-Held-Item-, custom-Day/Night-Wild-, Catch-Em-All-, Minimum-Catch-Rate-, Level-Modifier-, Text/Menu- oder Graphics-Aenderung.
+
+Naechster sinnvoller Schritt:
+
+- UPR-FVX-PR und Workspace-PR reviewen und mergen. Danach die restlichen 070-Blocker getrennt fortsetzen: `FVX-FOE-009` Trainer Type Diversity sowie `FVX-TRAIT-018/019` Evolution-Slices.
+
 ## 2026-05-14 - CFRU/DPE Wild Filter Carrier Code Diagnosis
 
 Arbeitsbranch: `analysis/upr-fvx-cfru-dpe-p1-wild-filter-carrier-code-diagnosis`

@@ -24,10 +24,10 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Aktueller Branch | `analysis/upr-fvx-cfru-dpe-p1-wild-filter-carrier-code-diagnosis` |
+| Aktueller Branch | `compat/upr-fvx-cfru-dpe-p1-wild-filter-carrier-nullslot-fix` |
 | Nächster Branch | noch festlegen |
-| Aktueller Fokus | CFRU/DPE Wild Filter Carrier Code Diagnosis |
-| ROM-/Build-Arbeit | keine neuen ROM-/Build-Artefakte; keine Artefakte committen oder dokumentieren |
+| Aktueller Fokus | CFRU/DPE Wild Filter Carrier Nullslot Fix |
+| ROM-/Build-Arbeit | lokale Fix-Smokes ausgefuehrt; Artefakte bleiben ignored und werden nicht committed oder dokumentiert |
 | Externe Repos | als Submodule auf Planton361-Forks eingebunden |
 | Forks | Planton361-Forks fuer UPR-FVX, DPE Gen9 und CFRU dokumentiert |
 | Installationen | devkitPro/devkitARM lokal dokumentiert; keine Installation in diesem Analyseblock |
@@ -134,18 +134,19 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | 08 Randomizer-Kompatibilität | CFRU/DPE Wild 070 Blockers Diagnostics Plan | Diagnose 072 plant read-only die gemeinsame Wild-Diagnose fuer `FVX-WILD-011` und `FVX-WILD-004` im `FVX-WILD-001` Carrier, getrennt nach BST-/Species-Pool-Filter, Species-Type-Filter und Wild-Nullslot-/Placeholder-Scope |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Wild Filter Carrier Diagnostics Plan | Diagnose 073 plant read-only Code-/Protokollanalyse und ggf. einen separaten Freigabeschritt fuer lokale Wild-Carrier-Diagnose, um Carrier-Scope von BST-/Type-Filter-Scope zu trennen |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Wild Filter Carrier Code Diagnosis | Diagnose 074 grenzt die wahrscheinliche Ursache der 070-Wild-`IllegalStateException` auf den `GAME`-Mapping-/InfoMap-Nullslot-Pfad im WildEncounterRandomizer ein |
+| 08 Randomizer-Kompatibilität | CFRU/DPE Wild Filter Carrier Nullslot Fix | UPR-FVX `acaada51` und Diagnose 075 bestaetigen `FVX-WILD-011` und `FVX-WILD-004` mit Save/Log/Output/Reload true, `writeReloadWildPokemonMismatches=0`, `Bad Egg=false`, `<unknown>=false` und `stacktrace=none` |
 
 ## In Arbeit
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Wild Filter Carrier Code Diagnosis | Diagnose 074 per PR reviewen; keine Codeaenderung, kein Fix und keine Randomizer-Laeufe |
+| 08 Randomizer-Kompatibilität | Wild Filter Carrier Nullslot Fix | UPR-FVX- und Workspace-PRs fuer Diagnose 075 reviewen; Submodule-Pin nach Merge halten |
 
 ## Als Nächstes
 
 | Paket | Aufgabe | Ziel |
 |---|---|---|
-| 08 Randomizer-Kompatibilität | Wild-Mapping-/Nullslot-Fix planen | Eng gegateten Fixbranch fuer `FVX-WILD-011` und `FVX-WILD-004` vorbereiten; optional vorher separaten lokalen Diagnosebranch fuer sanitisierten Area-/Slot-Beleg |
+| 08 Randomizer-Kompatibilität | Restliche 070-Blocker getrennt fortsetzen | `FVX-FOE-009`, `FVX-TRAIT-018` und `FVX-TRAIT-019` separat diagnostizieren oder fixen, ohne offene Writer zu vermischen |
 
 ## Noch offen
 
@@ -233,7 +234,8 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | P1ay | `analysis/upr-fvx-cfru-dpe-p1-070-blocked-slices-followup-plan` | 070 Blocked Slices Follow-up Plan | erledigt; Diagnose 071 plant getrennte Folgeanalysen ohne Codeaenderung, Fix oder Randomizer-Laeufe |
 | P1az | `analysis/upr-fvx-cfru-dpe-p1-wild-070-blockers-diagnostics` | Wild 070 Blockers Diagnostics Plan | erledigt; Diagnose 072 plant die gemeinsame Wild-Diagnose fuer `FVX-WILD-011` und `FVX-WILD-004` ohne Codeaenderung, Fix oder Randomizer-Laeufe |
 | P1ba | `analysis/upr-fvx-cfru-dpe-p1-wild-filter-carrier-diagnostics` | Wild Filter Carrier Diagnostics Plan | erledigt; Diagnose 073 plant read-only Code-/Protokollanalyse und ggf. einen separaten Harness-Freigabeschritt fuer den Wild-Filter-Carrier |
-| P1bb | `analysis/upr-fvx-cfru-dpe-p1-wild-filter-carrier-code-diagnosis` | Wild Filter Carrier Code Diagnosis | aktueller Analysebranch; Diagnose 074 grenzt die wahrscheinliche Ursache auf `GAME`-Mapping, `areaInformationMap` und Null-/unaufloesbare Encounter-Slots ein |
+| P1bb | `analysis/upr-fvx-cfru-dpe-p1-wild-filter-carrier-code-diagnosis` | Wild Filter Carrier Code Diagnosis | erledigt; Diagnose 074 grenzt die wahrscheinliche Ursache auf `GAME`-Mapping, `areaInformationMap` und Null-/unaufloesbare Encounter-Slots ein |
+| P1bc | `compat/upr-fvx-cfru-dpe-p1-wild-filter-carrier-nullslot-fix` | Wild Filter Carrier Nullslot Fix | aktueller Fixbranch; UPR-FVX `acaada51` und Diagnose 075 bestaetigen `FVX-WILD-011` und `FVX-WILD-004` im `FVX-WILD-001` Carrier |
 | P2 | `randomizer/cfru-day-night-wild-table-analysis` | CFRU-Custom-Day/Night-Wild-Tabellen separat untersuchen | erst nach P1-Schreibpfad-Diagnose; Route-1-Fallback bleibt stabil |
 | P3 | noch festlegen | Nullslot-`<unknown>` mit `rawInternalSpeciesId=0` klassifizieren | nicht mit GenRestrictions vermischen |
 | P4 | noch festlegen | BizHawk-/Ironmon-Tracker-/RAM-Mapping pruefen | erst nach stabiler ROM-Randomizer-Kompatibilitaet |

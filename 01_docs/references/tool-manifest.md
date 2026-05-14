@@ -4,15 +4,15 @@ Dieses Manifest dokumentiert Tools, Repos, Forks, Versionen, Pfade und Sicherhei
 
 ## Sicherheitsstatus
 
-Dieser Stand dokumentiert den Arbeitsblock `compat/upr-fvx-cfru-dpe-type-chart-preserve-effectiveness`. UPR-FVX wurde im Planton361-Fork-Submodule gezielt geaendert und gebaut; lokale ROM-/Log-/Output-Artefakte blieben ignored unter `05_builds/**` und wurden nicht committed. Tool-Binaries, Release-Assets, Secrets und private Pfade wurden nicht dokumentiert.
+Dieser Stand dokumentiert den Arbeitsblock `compat/upr-fvx-cfru-dpe-p1-wild-filter-carrier-nullslot-fix`. UPR-FVX wurde im Planton361-Fork-Submodule gezielt geaendert und gebaut; lokale ROM-/Log-/Output-Artefakte blieben ignored unter `05_builds/**` und wurden nicht committed. Tool-Binaries, Release-Assets, Secrets und private Pfade wurden nicht dokumentiert.
 
 Linux/CachyOS ist die primaere lokale Umgebung. Windows-Toolchain-Befunde bleiben historischer Referenzstand und duerfen nicht als Linux-Ist-Stand verwendet werden.
 
-Der aktuelle Arbeitsblock pinnt den Workspace auf den UPR-FVX-TypeChart-Preserve-Effectiveness-Fix-Commit fuer CFRU/DPE.
+Der aktuelle Arbeitsblock pinnt den Workspace auf den UPR-FVX-Wild-Filter-Carrier-Nullslot-Fix-Commit fuer CFRU/DPE.
 
 | Tool/Repo | Zweck | Upstream | Fork/Origin | Lokaler Pfad | Branch | Commit | Codex darf ändern | Status |
 |---|---|---|---|---|---|---|---|---|
-| Workspace Repo | Source of Truth | n/a | git@github.com:Planton361/firered-gen9-randomizer-workspace.git | Workspace-Root | `compat/upr-fvx-cfru-dpe-type-chart-preserve-effectiveness` | offen | ja, nur Branches | aktiv |
+| Workspace Repo | Source of Truth | n/a | git@github.com:Planton361/firered-gen9-randomizer-workspace.git | Workspace-Root | `compat/upr-fvx-cfru-dpe-p1-wild-filter-carrier-nullslot-fix` | offen | ja, nur Branches | aktiv |
 | Git | Versionierung | n/a | n/a | `/usr/bin/git` | n/a | n/a | nein | gefunden: 2.54.0 |
 | GitHub CLI (`gh`) | PRs und GitHub-Checks automatisieren | https://cli.github.com/ | n/a | `/usr/bin/gh` | n/a | n/a | nein | gefunden: 2.92.0; Auth via Keyring aktiv |
 | POSIX Shell | Terminal-Standard | n/a | n/a | `/bin/fish` laut `$SHELL` | n/a | n/a | nein | primär |
@@ -43,11 +43,11 @@ Der aktuelle Arbeitsblock pinnt den Workspace auf den UPR-FVX-TypeChart-Preserve
 
 ## Lokale Submodule-Pins 2026-05-14
 
-Arbeitsblock: `compat/upr-fvx-cfru-dpe-type-chart-preserve-effectiveness`.
+Arbeitsblock: `compat/upr-fvx-cfru-dpe-p1-wild-filter-carrier-nullslot-fix`.
 
 | Repo | Zweck | Origin | Lokaler Pfad | Branch | Commit | Codex darf aendern | Status |
 |---|---|---|---|---|---|---|---|
-| UPR-FVX Fork | Haupt-Randomizer-Fork | `https://github.com/Planton361/universal-pokemon-randomizer-fvx.git` | `02_external/upr-fvx` | `compat/upr-fvx-cfru-dpe-type-chart-preserve-effectiveness` | `36707e0190d3d9fa587550dfc5631fcaa9abd6b1` | ja, nur in diesem Branch | TypeChart-/TypeEffectiveness-Fix fuer CFRU/DPE; Fairy raw `0x17` Read/Write, unsupported/Stellar preserve/skip, Terminator-/Kapazitaetskriterien |
+| UPR-FVX Fork | Haupt-Randomizer-Fork | `https://github.com/Planton361/universal-pokemon-randomizer-fvx.git` | `02_external/upr-fvx` | `compat/upr-fvx-cfru-dpe-p1-wild-filter-carrier-nullslot-fix` | `acaada514d04b1d306581ce872d2d77fe1b4c5b3` | ja, nur in diesem Branch | Wild-Filter-Carrier-Nullslot-Fix fuer CFRU/DPE; `FVX-WILD-011` und `FVX-WILD-004` im `FVX-WILD-001` Carrier mit Save/Log/Output/Reload und `writeReloadWildPokemonMismatches=0` bestaetigt |
 | CFRU-expansion Fork | CFRU/Gen9-Basis | `https://github.com/Planton361/CFRU-expansion.git` | `02_external/CFRU-expansion` | `compat/firered-gen9-randomizer` | `b885d7a974375c6c722e5698914963b82e8cdad6` | nein in diesem Block | read-only analysiert |
 | DPE Gen9 Fork | DPE/Gen9-Basis | `https://github.com/Planton361/Dynamic-Pokemon-Expansion-Gen-9.git` | `02_external/Dynamic-Pokemon-Expansion-Gen-9` | `compat/firered-gen9-randomizer` | `5906aa4d4904e41393fd9184a16951c961e96263` | nein in diesem Block | read-only analysiert |
 | CyanSMP64 UPR-ZX NatDex | NatDex-Randomizer-Referenz | `https://github.com/CyanSMP64/universal-pokemon-randomizer-zx.git` | `02_external/references/cyansmp64-upr-zx-natdex` | `natdex` | `9b63eb2876d901dc2e5af49855ae41ac255e1a72` | nein | read-only Referenz |
@@ -101,8 +101,8 @@ Bestehende unnummerierte Protokolle unter `08_tests/randomizer/` bleiben vorerst
 | Lokaler Pfad | `02_external/upr-fvx` |
 | Einbindung | Git-Submodule auf `Planton361/universal-pokemon-randomizer-fvx` |
 | Upstream | `upr-fvx/universal-pokemon-randomizer-fvx` |
-| Arbeitsbranch | `compat/upr-fvx-cfru-dpe-type-chart-preserve-effectiveness` |
-| Gepinnter Workspace-Stand | `36707e0190d3d9fa587550dfc5631fcaa9abd6b1` auf `compat/upr-fvx-cfru-dpe-type-chart-preserve-effectiveness`; enthaelt den CFRU/DPE-TypeChart-/TypeEffectiveness-Fix auf Basis der bisherigen P1-Fixkette |
+| Arbeitsbranch | `compat/upr-fvx-cfru-dpe-p1-wild-filter-carrier-nullslot-fix` |
+| Gepinnter Workspace-Stand | `acaada514d04b1d306581ce872d2d77fe1b4c5b3` auf `compat/upr-fvx-cfru-dpe-p1-wild-filter-carrier-nullslot-fix`; enthaelt den CFRU/DPE-Wild-Filter-Carrier-Nullslot-Fix auf Basis der bisherigen P1-Fixkette |
 | Buildsystem | Gradle Wrapper |
 | Java | JDK 25 |
 | JAR-Build | `./gradlew :random:jar` |
