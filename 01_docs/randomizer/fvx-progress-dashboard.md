@@ -4,7 +4,7 @@
 
 Dieses Dashboard ist die schnelle Lesedatei fuer den aktuellen Universal Pokemon Randomizer FVX-Kompatibilitaetsstand im FireRed Gen9 Randomizer Workspace.
 
-Es ersetzt keine Detaildiagnosen. Es verdichtet die Detailquellen auf eine Statusuebersicht:
+Es ersetzt keine Detaildiagnosen. Es verdichtet die Detailquellen auf eine Statusuebersicht und listet zusaetzlich alle aktuell erfassten FVX-Features einmal kompakt auf.
 
 - Was ist P1-supported?
 - Was ist nur in einem Carrier getestet?
@@ -12,6 +12,7 @@ Es ersetzt keine Detaildiagnosen. Es verdichtet die Detailquellen auf eine Statu
 - Was ist blockiert?
 - Was ist als Naechstes dran?
 - Welche Diagnoseprotokolle belegen den Stand?
+- Welche konkreten Features existieren aktuell in der Matrix?
 
 ## Detailquellen
 
@@ -99,6 +100,143 @@ Es ersetzt keine Detaildiagnosen. Es verdichtet die Detailquellen auf eine Statu
 | Graphics/Sprites | P2 / Nicht begonnen | - | - | Custom Player Graphics, Sprites | P2 |
 | Misc Tweaks | Nicht begonnen | - | - | 12 Tweaks offen | Inventar |
 
+## Vollstaendige Feature-Liste
+
+Diese Tabelle listet alle aktuell erfassten FVX-Features einmal kompakt auf. Sie ist bewusst nicht nach Unterabschnitten getrennt, damit der gesamte Scope in einer einzigen Liste sichtbar ist.
+
+| Nr. | Feature-ID | Bereich | Feature | Dashboard-Status | Scope |
+|---:|---|---|---|---|---|
+| 1 | `FVX-GEN-001` | General Options | Limit Pokemon | Getestet im Carrier | Carrier |
+| 2 | `FVX-GEN-002` | General Options | No Premature Evolutions | Getestet im Carrier | Carrier |
+| 3 | `FVX-GEN-003` | General Options | No Random Intro Mon | Nicht begonnen | No-write / P2 offen |
+| 4 | `FVX-GEN-004` | General Options | Race Mode | Nicht begonnen | No-write |
+| 5 | `FVX-TRAIT-001` | Pokemon Traits | Base Stats: Shuffle / Random | P1-supported | Global |
+| 6 | `FVX-TRAIT-002` | Pokemon Traits | Base Stats: Follow Evolutions | Plan erstellt | Carrier / Filter |
+| 7 | `FVX-TRAIT-003` | Pokemon Traits | Randomize Added Stats on Evolution | Plan erstellt | Carrier / Filter |
+| 8 | `FVX-TRAIT-004` | Pokemon Traits | Update Base Stats to Generation | Nicht begonnen | Writer |
+| 9 | `FVX-TRAIT-005` | Pokemon Traits | Standardize EXP Curves | Nicht begonnen | Writer |
+| 10 | `FVX-TRAIT-006` | Pokemon Traits | Pokemon Types randomisieren | P1-supported | Global |
+| 11 | `FVX-TRAIT-007` | Pokemon Traits | Force Dual Types | Plan erstellt | Carrier / Filter |
+| 12 | `FVX-TRAIT-008` | Pokemon Traits | Pokemon Abilities randomisieren | P1-supported | Global |
+| 13 | `FVX-TRAIT-009` | Pokemon Traits | Abilities: Follow Evolutions | Plan erstellt | Carrier / Filter |
+| 14 | `FVX-TRAIT-010` | Pokemon Traits | Abilities: Allow Wonder Guard | Plan erstellt | Filter |
+| 15 | `FVX-TRAIT-011` | Pokemon Traits | Abilities: Combine Duplicate Abilities | Plan erstellt | Filter |
+| 16 | `FVX-TRAIT-012` | Pokemon Traits | Abilities: Ensure Two Abilities | Plan erstellt | Filter |
+| 17 | `FVX-TRAIT-013` | Pokemon Traits | Abilities: Ban Trapping Abilities | Plan erstellt | Filter |
+| 18 | `FVX-TRAIT-014` | Pokemon Traits | Abilities: Ban Negative Abilities | Plan erstellt | Filter |
+| 19 | `FVX-TRAIT-015` | Pokemon Traits | Abilities: Ban Bad Abilities | Plan erstellt | Filter |
+| 20 | `FVX-TRAIT-016` | Pokemon Traits | Pokemon Evolutions randomisieren | P1-supported | Global |
+| 21 | `FVX-TRAIT-017` | Pokemon Traits | Evolutions: Random Every Level | Plan erstellt | Carrier / Filter |
+| 22 | `FVX-TRAIT-018` | Pokemon Traits | Evolutions: Similar Strength | Blockiert | Writer / Filter |
+| 23 | `FVX-TRAIT-019` | Pokemon Traits | Evolutions: Same Typing | Blockiert | Writer / Filter |
+| 24 | `FVX-TRAIT-020` | Pokemon Traits | Evolutions: Limit to Three Stages | Plan erstellt | Filter |
+| 25 | `FVX-TRAIT-021` | Pokemon Traits | Evolutions: No Convergence | Plan erstellt | Filter |
+| 26 | `FVX-TRAIT-022` | Pokemon Traits | Evolutions: Force Change | Plan erstellt | Filter |
+| 27 | `FVX-TRAIT-023` | Pokemon Traits | Evolutions: Force Growth | Plan erstellt | Filter |
+| 28 | `FVX-TRAIT-024` | Pokemon Traits | Change Impossible Evolutions | Nicht begonnen | Writer |
+| 29 | `FVX-TRAIT-025` | Pokemon Traits | Make Evolutions Easier | Nicht begonnen | Writer |
+| 30 | `FVX-TRAIT-026` | Pokemon Traits | Use Estimated Evolution Levels | Nicht begonnen | Writer |
+| 31 | `FVX-TRAIT-027` | Pokemon Traits | Remove Time-Based Evolutions | Nicht begonnen | Writer |
+| 32 | `FVX-TRAIT-028` | Pokemon Traits | EXP-/Legendary-Kurven-Sonderfaelle | Nicht begonnen | Writer / Filter |
+| 33 | `FVX-SST-001` | Starters, Statics & Trades | Starter Pokemon: Custom | P1-supported | Global |
+| 34 | `FVX-SST-002` | Starters, Statics & Trades | Starter Pokemon: Random completely | P1-supported | Global |
+| 35 | `FVX-SST-003` | Starters, Statics & Trades | Starter Pokemon: Random basic with 2 evolutions | Getestet im Carrier | Carrier |
+| 36 | `FVX-SST-004` | Starters, Statics & Trades | Starter Pokemon: Random any basic | Getestet im Carrier | Carrier |
+| 37 | `FVX-SST-005` | Starters, Statics & Trades | Starter Type Restrictions | Getestet im Carrier | Carrier |
+| 38 | `FVX-SST-006` | Starters, Statics & Trades | Starter: Don't Use Legendaries | Getestet im Carrier | Carrier |
+| 39 | `FVX-SST-007` | Starters, Statics & Trades | Starter Held Items randomisieren | Nicht begonnen | Writer |
+| 40 | `FVX-SST-008` | Starters, Statics & Trades | Starter Held Items: Ban Bad Items | Nicht begonnen | Writer / Filter |
+| 41 | `FVX-SST-009` | Starters, Statics & Trades | Starter BST-Min/Max | Getestet im Carrier | Carrier |
+| 42 | `FVX-SST-010` | Starters, Statics & Trades | Static Pokemon: Swap Legendaries & Standards | P1-supported | Global |
+| 43 | `FVX-SST-011` | Starters, Statics & Trades | Static Pokemon: Random completely | P1-supported | Global |
+| 44 | `FVX-SST-012` | Starters, Statics & Trades | Static Pokemon: Random similar strength | P1-supported | Global |
+| 45 | `FVX-SST-013` | Starters, Statics & Trades | Static Pokemon: Level Modifier / Fix Music | Nicht begonnen | Writer |
+| 46 | `FVX-SST-014` | Starters, Statics & Trades | In-Game Trades: Given/Requested species | Nicht begonnen | Writer |
+| 47 | `FVX-SST-015` | Starters, Statics & Trades | In-Game Trades: Nickname/OT/IV/Item | Nicht begonnen | Writer / Text |
+| 48 | `FVX-MOVE-001` | Moves & Movesets | Randomize Move Power | Write modelliert / Fix offen | Writer |
+| 49 | `FVX-MOVE-002` | Moves & Movesets | Randomize Move Accuracy | Write modelliert / Fix offen | Writer |
+| 50 | `FVX-MOVE-003` | Moves & Movesets | Randomize Move PP | Write modelliert / Fix offen | Writer |
+| 51 | `FVX-MOVE-004` | Moves & Movesets | Randomize Move Types | Write modelliert / Fix offen | Writer |
+| 52 | `FVX-MOVE-005` | Moves & Movesets | Randomize Move Names | Write modelliert / Fix offen | Writer / Text |
+| 53 | `FVX-MOVE-006` | Moves & Movesets | Update Moves to Generation | Write modelliert / Fix offen | Writer |
+| 54 | `FVX-MOVE-007` | Moves & Movesets | Pokemon Movesets randomisieren | P1-supported | Global |
+| 55 | `FVX-MOVE-008` | Moves & Movesets | Guaranteed Level 1 Moves | Plan erstellt | Carrier / Filter |
+| 56 | `FVX-MOVE-009` | Moves & Movesets | Reorder Damaging Moves | P1-supported | Global |
+| 57 | `FVX-MOVE-010` | Moves & Movesets | No Game-Breaking Moves | Plan erstellt | Filter |
+| 58 | `FVX-MOVE-011` | Moves & Movesets | Force % Good Damaging Moves | Plan erstellt | Filter |
+| 59 | `FVX-FOE-001` | Foe Pokemon | Trainer Pokemon randomisieren | P1-supported | Global |
+| 60 | `FVX-FOE-002` | Foe Pokemon | Better Movesets: Boss Trainers | P1-supported | Global |
+| 61 | `FVX-FOE-003` | Foe Pokemon | Better Movesets: Important Trainers | P1-supported | Global |
+| 62 | `FVX-FOE-004` | Foe Pokemon | Better Movesets: Regular Trainers | P1-supported | Global |
+| 63 | `FVX-FOE-005` | Foe Pokemon | Additional Pokemon: Boss Trainers | Nicht begonnen | Writer |
+| 64 | `FVX-FOE-006` | Foe Pokemon | Additional Pokemon: Important Trainers | Nicht begonnen | Writer |
+| 65 | `FVX-FOE-007` | Foe Pokemon | Additional Pokemon: Regular Trainers | Nicht begonnen | Writer |
+| 66 | `FVX-FOE-008` | Foe Pokemon | Trainer Held Items | P1-supported | Global |
+| 67 | `FVX-FOE-009` | Foe Pokemon | Force Diverse Types / Type Themes | Blockiert | Carrier / Filter |
+| 68 | `FVX-FOE-010` | Foe Pokemon | Pokemon League Has Unique Pokemon | Nicht begonnen | Filter |
+| 69 | `FVX-FOE-011` | Foe Pokemon | Battle Style randomisieren | Nicht begonnen | Writer |
+| 70 | `FVX-FOE-012` | Foe Pokemon | Rival Carries Starter Through Game | Nicht begonnen | Carrier |
+| 71 | `FVX-FOE-013` | Foe Pokemon | Randomize Trainer Names / Class Names | Nicht begonnen | Text |
+| 72 | `FVX-FOE-014` | Foe Pokemon | Trainers Evolve Their Pokemon + Level Modifier | Nicht begonnen | Writer |
+| 73 | `FVX-WILD-001` | Wild Pokemon | Randomize Wild Pokemon | P1-supported | Global |
+| 74 | `FVX-WILD-002` | Wild Pokemon | Replacements Per Species | P1-supported | Global |
+| 75 | `FVX-WILD-003` | Wild Pokemon | Split by Encounter Types | P1-supported | Global |
+| 76 | `FVX-WILD-004` | Wild Pokemon | Type Restrictions | Getestet im Carrier | Carrier |
+| 77 | `FVX-WILD-005` | Wild Pokemon | Evolution Restrictions | Plan erstellt | Filter |
+| 78 | `FVX-WILD-006` | Wild Pokemon | Don't Use Legendaries | P1-supported | Global |
+| 79 | `FVX-WILD-007` | Wild Pokemon | Set Minimum Catch Rate | Nicht begonnen | Writer |
+| 80 | `FVX-WILD-008` | Wild Pokemon | Randomize Wild Held Items | P1-supported | Global |
+| 81 | `FVX-WILD-009` | Wild Pokemon | Ban Bad Held Items | P1-supported | Global |
+| 82 | `FVX-WILD-010` | Wild Pokemon | Catch Em All Mode | Nicht begonnen | Filter / Writer |
+| 83 | `FVX-WILD-011` | Wild Pokemon | Similar Strength | Getestet im Carrier | Carrier |
+| 84 | `FVX-WILD-012` | Wild Pokemon | Balance Low Level Encounters + Level Modifier | Nicht begonnen | Writer |
+| 85 | `FVX-TM-001` | TM/HMs & Tutors | TM Moves randomisieren | P1-supported | Global |
+| 86 | `FVX-TM-002` | TM/HMs & Tutors | Keep Field Move TMs | Plan erstellt | Filter |
+| 87 | `FVX-TM-003` | TM/HMs & Tutors | TM No Game-Breaking Moves | Plan erstellt | Filter |
+| 88 | `FVX-TM-004` | TM/HMs & Tutors | TM Force % Good Damaging Moves | Plan erstellt | Filter |
+| 89 | `FVX-TM-005` | TM/HMs & Tutors | TM/HM Compatibility randomisieren | P1-supported | Global |
+| 90 | `FVX-TM-006` | TM/HMs & Tutors | TM/Levelup Move Sanity | P1-supported | Global |
+| 91 | `FVX-TM-007` | TM/HMs & Tutors | TM Compatibility Follow Evolutions | Plan erstellt | Filter |
+| 92 | `FVX-TM-008` | TM/HMs & Tutors | Full HM Compatibility | Plan erstellt | Filter |
+| 93 | `FVX-TM-009` | TM/HMs & Tutors | Move Tutor Moves randomisieren | P1-supported | Global |
+| 94 | `FVX-TM-010` | TM/HMs & Tutors | Keep Field Move Tutors | Plan erstellt | Filter |
+| 95 | `FVX-TM-011` | TM/HMs & Tutors | Tutor No Game-Breaking Moves | Plan erstellt | Filter |
+| 96 | `FVX-TM-012` | TM/HMs & Tutors | Tutor Force % Good Damaging Moves | Plan erstellt | Filter |
+| 97 | `FVX-TM-013` | TM/HMs & Tutors | Tutor Compatibility randomisieren | P1-supported | Global |
+| 98 | `FVX-TM-014` | TM/HMs & Tutors | Tutor/Levelup Sanity | P1-supported | Global |
+| 99 | `FVX-TM-015` | TM/HMs & Tutors | Tutor Compatibility Follow Evolutions | Plan erstellt | Filter |
+| 100 | `FVX-ITEM-001` | Items | Field Items Shuffle | Write modelliert / Fix offen | Writer |
+| 101 | `FVX-ITEM-002` | Items | Field Items Random | Write modelliert / Fix offen | Writer |
+| 102 | `FVX-ITEM-003` | Items | Field Items Random even distribution | Write modelliert / Fix offen | Writer |
+| 103 | `FVX-ITEM-004` | Items | Field Items Ban Bad Items | Write modelliert / Fix offen | Writer / Filter |
+| 104 | `FVX-ITEM-005` | Items | Shop Items Shuffle | Write modelliert / Fix offen | Writer |
+| 105 | `FVX-ITEM-006` | Items | Shop Items Random | Write modelliert / Fix offen | Writer |
+| 106 | `FVX-ITEM-007` | Items | Shop Item Bans | Write modelliert / Fix offen | Writer / Filter |
+| 107 | `FVX-ITEM-008` | Items | Guarantee Evolution/X Items | Write modelliert / Fix offen | Writer / Filter |
+| 108 | `FVX-ITEM-009` | Items | Balance Shop Prices / Cheap Rare Candies | Write modelliert / Fix offen | Writer |
+| 109 | `FVX-ITEM-010` | Items | Pickup Items Random / Ban Bad Items | Write modelliert / Fix offen | Writer |
+| 110 | `FVX-TYPE-001` | Types | Type Effectiveness Random/Balanced/Keep Identities/Inverse | Getestet | Writer |
+| 111 | `FVX-TYPE-002` | Types | Add Random Immunities | Getestet | Writer |
+| 112 | `FVX-TYPE-003` | Types | Update Type Effectiveness | Getestet | Writer |
+| 113 | `FVX-GFX-001` | Graphics | Pokemon Palettes Random | Write modelliert / Fix offen | Writer |
+| 114 | `FVX-GFX-002` | Graphics | Palettes: Follow Types | Write modelliert / Fix offen | Writer / Filter |
+| 115 | `FVX-GFX-003` | Graphics | Palettes: Follow Evolutions | Write modelliert / Fix offen | Writer / Filter |
+| 116 | `FVX-GFX-004` | Graphics | Palettes: Shiny From Normal | Write modelliert / Fix offen | Writer |
+| 117 | `FVX-GFX-005` | Graphics | Custom Player Graphics | P2 / Nicht begonnen | P2 |
+| 118 | `FVX-GFX-006` | Graphics | Character to Replace | P2 / Nicht begonnen | P2 |
+| 119 | `FVX-MISC-001` | Misc Tweaks | Fastest Text | Nicht begonnen | Writer / Patch |
+| 120 | `FVX-MISC-002` | Misc Tweaks | Running Shoes Indoors | Nicht begonnen | Writer / Patch |
+| 121 | `FVX-MISC-003` | Misc Tweaks | Randomize PC Potion | Nicht begonnen | Writer / Patch |
+| 122 | `FVX-MISC-004` | Misc Tweaks | Give National Dex at Start | Nicht begonnen | Writer / Patch |
+| 123 | `FVX-MISC-005` | Misc Tweaks | Fast Egg Hatching | Nicht begonnen | Writer / Patch |
+| 124 | `FVX-MISC-006` | Misc Tweaks | Lower Case Pokemon Names | Nicht begonnen | Writer / Patch |
+| 125 | `FVX-MISC-007` | Misc Tweaks | Randomize Catching Tutorial | Nicht begonnen | Writer / Patch |
+| 126 | `FVX-MISC-008` | Misc Tweaks | Ban Lucky Egg | Nicht begonnen | Writer / Patch |
+| 127 | `FVX-MISC-009` | Misc Tweaks | Balance Static Pokemon Levels | Nicht begonnen | Writer / Patch |
+| 128 | `FVX-MISC-010` | Misc Tweaks | Run Without Running Shoes | Nicht begonnen | Writer / Patch |
+| 129 | `FVX-MISC-011` | Misc Tweaks | Reusable TMs | Nicht begonnen | Writer / Patch |
+| 130 | `FVX-MISC-012` | Misc Tweaks | Forgettable HMs | Nicht begonnen | Writer / Patch |
+
 ## Offene Blocker
 
 | Prioritaet | Blocker | Status | Betroffene Feature-IDs | Ursache / Symptom | Naechster Schritt | Belege |
@@ -159,11 +297,12 @@ Nach jedem Randomizer-Arbeitsblock maximal diese Stellen aktualisieren:
 
 1. `Snapshot` aktualisieren.
 2. Eine betroffene Zeile in `Gesamtfortschritt nach Feature-Paketen` aktualisieren.
-3. `Offene Blocker` aktualisieren.
-4. `Zuletzt abgeschlossene PRs / Diagnosen` um eine Zeile ergaenzen.
-5. `Carrier-tested, aber nicht global` aktualisieren, falls ein Smoke nur Carrier-Scope hat.
+3. Die betroffene Zeile in `Vollstaendige Feature-Liste` aktualisieren.
+4. `Offene Blocker` aktualisieren.
+5. `Zuletzt abgeschlossene PRs / Diagnosen` um eine Zeile ergaenzen.
+6. `Carrier-tested, aber nicht global` aktualisieren, falls ein Smoke nur Carrier-Scope hat.
 
-Dieses Dashboard bleibt kurz. Details gehoeren in die Diagnoseprotokolle unter `08_tests/randomizer/` und in die Feature-Matrix `01_docs/randomizer/fvx-feature-coverage.md`.
+Dieses Dashboard bleibt die schnelle Lesedatei. Details gehoeren in die Diagnoseprotokolle unter `08_tests/randomizer/` und in die Feature-Matrix `01_docs/randomizer/fvx-feature-coverage.md`.
 
 ## Sicherheitsregeln
 
