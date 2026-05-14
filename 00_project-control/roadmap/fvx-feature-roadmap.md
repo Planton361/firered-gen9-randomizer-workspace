@@ -12,12 +12,12 @@ Die detaillierte Status- und Feature-ID-Matrix bleibt in:
 
 | Status | Anzahl |
 |---|---:|
-| Nicht begonnen | 40 |
-| Plan erstellt | 33 |
+| Nicht begonnen | 39 |
+| Plan erstellt | 31 |
 | Read modelliert | 0 |
 | Write modelliert | 23 |
-| Getestet | 2 |
-| GUI-kompatibel | 32 |
+| Getestet | 7 |
+| GUI-kompatibel | 30 |
 | In Arbeit | 0 |
 | **Gesamt** | **130** |
 
@@ -27,7 +27,7 @@ Die detaillierte Status- und Feature-ID-Matrix bleibt in:
 |---|---:|---|---|
 | General Options | 4 | Gemischt | `FVX-GEN-001/002` sind im Starter-Carrier-Smoke getestet; Race Mode und Intro-Mon separat pruefen |
 | Pokemon Traits | 28 | Gemischt | Base Stats, Types, Abilities, Evolutions, EXP Curves und Suboptionen systematisch absichern |
-| Starters, Statics & Trades | 15 | Gemischt | Starter und Statics halten; Trades und Held-Item-Subpfade ergaenzen |
+| Starters, Statics & Trades | 15 | Gemischt | Starter-Filter sind im Starter-Species-Writer-Smoke getestet; Starter-Held-Items, Trades und Level-Subpfade ergaenzen |
 | Moves & Movesets | 11 | Gemischt | Learnset-/Moveset-GUI halten; Move-Data-Writer fertig absichern |
 | Foe Pokemon | 14 | Gemischt | Trainer-Species/-Movesets/-Held-Items halten; Trainer-Suboptionen ergaenzen |
 | Wild Pokemon | 12 | Gemischt | Standard/Fallback-Wild halten; Level/Catch/Catch-em-all-Suboptionen ergaenzen |
@@ -47,7 +47,8 @@ Die detaillierte Status- und Feature-ID-Matrix bleibt in:
 |---|---|---|---|
 | P0.1 | `docs/fvx-feature-coverage-matrix` | FVX-GUI-Features als Requirements-/Coverage-Matrix dokumentieren | In Arbeit |
 | P0.2 | `analysis/upr-fvx-cfru-dpe-p1-regression-smoke-plan` | Smoke-/Regression-Plan fuer priorisierte GUI-Suboptionen erstellen, ohne neue Randomizer-Laeufe im Planblock | Erledigt |
-| P0.3 | `test/upr-fvx-cfru-dpe-p1-global-species-pool-regression-smoke` | Global-Species-Pool-Smoke fuer `FVX-GEN-001/002` im Starter-Carrier-Scope sanitisiert dokumentieren | In Arbeit |
+| P0.3 | `test/upr-fvx-cfru-dpe-p1-global-species-pool-regression-smoke` | Global-Species-Pool-Smoke fuer `FVX-GEN-001/002` im Starter-Carrier-Scope sanitisiert dokumentieren | Erledigt |
+| P0.4 | `test/upr-fvx-cfru-dpe-p1-starters-suboptions-regression-smoke` | Starter-Suboptions-Smoke fuer `FVX-SST-003/004/005/006/009` sanitisiert dokumentieren | In Arbeit |
 
 ### P1 - Offene Writer mit vorhandenen Modellen
 
@@ -63,7 +64,7 @@ Die detaillierte Status- und Feature-ID-Matrix bleibt in:
 | Paket | Ziel |
 |---|---|
 | Pokemon Traits | Follow Evolutions, Force Dual Types, Ability-Ban-/Allow-Filter, Evolution-Filter, EXP Curves testen |
-| Starters, Statics & Trades | Starter-Type-/Legendary-/BST-Filter, Starter-Held-Items und In-Game-Trades absichern |
+| Starters, Statics & Trades | Starter-Held-Items und In-Game-Trades absichern; Starter-Type-/Legendary-/BST-Filter ausserhalb des Starter-Species-Writer-Smokes nur separat hochstufen |
 | Foe Pokemon | Additional Pokemon, Force Diverse Types, League-Unique, Battle Style, Rival Carry, Trainer Names/Class Names absichern |
 | Wild Pokemon | Evolution Restrictions, Catch Rate, Catch-em-all und Level-Balance absichern |
 | TM/HMs & Tutors | Keep Field Moves, No Game-Breaking, Good-Damaging-%, Follow-Evolutions und Full-HM-Kompatibilitaet absichern |
