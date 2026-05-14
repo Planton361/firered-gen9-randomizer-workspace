@@ -1,5 +1,26 @@
 # Session State
 
+## 2026-05-14 - CFRU/DPE Evolution Same Typing Null-Type Fix
+
+Workspace-Branch: `compat/upr-fvx-cfru-dpe-p1-evolution-same-typing-nulltype-fix`
+
+UPR-FVX-Branch: `compat/upr-fvx-cfru-dpe-p1-evolution-same-typing-nulltype-fix`
+
+Aktueller Stand:
+
+- UPR-FVX-Fix `74d88a7ab1d306e1e09ccabb851dffd7f6922b66` erstellt.
+- Der Fix bleibt auf `EvolutionRandomizer` begrenzt und behandelt Species mit `primaryType == null` defensiv im Evolutions-Same-Typing-Filter.
+- `FVX-TRAIT-019` Evolutions Same Typing wurde lokal sanitisiert ausgefuehrt: `saveSuccessful=true`, `logSuccessful=true`, `outputRomExists=true`, `logNonEmpty=true`, Reload erfolgreich, `writeReloadEvolutionMismatches=0`, `<unknown>=false`, `exceptionClass=none` und `stacktrace=none`.
+- `Bad Egg=true` bleibt nach 055 als bestehender Evolution-Log-/Sonder-Species-Marker klassifiziert, weil Save/Log/Output/Reload stabil sind und der Reload-Mismatch-Zaehler `0` ist.
+- `FVX-TRAIT-018` Evolutions Similar Strength wurde nur getrennt als Regression ausgefuehrt und bleibt nicht mit dem Same-Typing-Fix vermischt.
+- Neues Diagnoseprotokoll `08_tests/randomizer/080_evolution_same_typing_nulltype_fix_diagnostics.md` erstellt.
+- Workspace pinnt `02_external/upr-fvx` auf den neuen UPR-FVX-Fix-Commit und aktualisiert README, Session, Next Steps, Roadmap, Feature-Coverage und Tool-Manifest.
+- Keine Wild-, Trainer-, TypeChart-, MoveData-, Palette-, Item-, Text/Menu-, Graphics- oder Evolution-Methoden-Writer-Aenderung.
+
+Naechster sinnvoller Schritt:
+
+- UPR-FVX-PR und Workspace-PR reviewen und mergen. Danach verbleibende Evolution-Suboptionen weiter getrennt behandeln, insbesondere Evolution-Methoden-Writer und weitere Poolfilter.
+
 ## 2026-05-14 - CFRU/DPE Evolution Same Typing Code Diagnosis
 
 Arbeitsbranch: `analysis/upr-fvx-cfru-dpe-p1-evolution-same-typing-blocker-diagnostics`

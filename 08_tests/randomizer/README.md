@@ -2,9 +2,9 @@
 
 ## Latest
 
-- `079_p1_evolution_same_typing_code_diagnosis.md` dokumentiert die read-only Codeanalyse fuer den 070-Blocker `FVX-TRAIT-019` Evolutions Same Typing.
-- Wahrscheinlich konkrete Ursache ist der Same-Typing-Filter in `EvolutionRandomizer.findPossibleReplacements(...)`: `to.hasSharedType(...)` dereferenziert bei Kandidaten mit `primaryType == null` ueber `Species.hasSharedType(...)` einen Null-Type.
-- Der allgemeine Evolution-Species-Carrier bleibt von dieser Diagnose getrennt; `FVX-TRAIT-018` Evolutions Similar Strength bleibt ein separater Reload-/Bad-Egg-Scope.
+- `080_evolution_same_typing_nulltype_fix_diagnostics.md` dokumentiert den eng gegateten UPR-FVX-Fix fuer `FVX-TRAIT-019` Evolutions Same Typing.
+- UPR-FVX `74d88a7ab1d306e1e09ccabb851dffd7f6922b66` behandelt Null-Primary-Type-Kandidaten defensiv im Same-Typing-Filter von `EvolutionRandomizer`.
+- `FVX-TRAIT-019` meldet Save/Log/Output/Reload true, `writeReloadEvolutionMismatches=0`, `<unknown>=false`, `exceptionClass=none` und `stacktrace=none`; `Bad Egg=true` ist nach 055 als bestehender Evolution-Log-/Sonder-Species-Marker klassifiziert.
 - Wild, Trainer, TypeChart, MoveData, Palette, Items, Text/Menu, Graphics und Evolution-Methoden-Writer bleiben ausgeschlossen.
 
 Dieses Verzeichnis enthaelt die dauerhaften Markdown-Protokolle fuer UPR-FVX/CFRU-DPE-Randomizer-Analysen und Smokes. Lokale ROM-, Build-, Log- und Tool-Artefakte bleiben unter `05_builds/**` oder `03_tools/releases/**` und werden nicht committed.
@@ -113,18 +113,20 @@ Der neueste bestaetigte Stand wird in Markdown ueber die Spalte `Latest` markier
 | 076 | `076_p1_trainer_type_diversity_blocker_diagnostics_plan.md` | CFRU/DPE P1 Trainer Type Diversity Blocker Diagnostics Plan | dokumentiert: read-only Diagnoseplan fuer den 070-Blocker `FVX-FOE-009` Trainer Type Diversity / Type Themes; klassifiziert `NullPointerException`, fehlenden Output/Reload und `filterViolations=112` als Vor-Abbruch-Befund; keine Ausfuehrung | keiner, read-only Analyse | nein |
 | 077 | `077_p1_trainer_type_diversity_code_diagnosis.md` | CFRU/DPE P1 Trainer Type Diversity Code Diagnosis | dokumentiert: read-only Codeanalyse fuer `FVX-FOE-009`; wahrscheinlich konkrete Ursache ist `EnumSet.add(null)` im Force-Diverse-Types-/`updateUsedTypes(...)`-Pfad, weil Trainer-Pools Null-Primary-Type-Species nicht ausschliessen; keine Ausfuehrung | keiner, read-only Analyse | nein |
 | 078 | `078_trainer_type_diversity_nulltype_fix_diagnostics.md` | CFRU/DPE Trainer Type Diversity Null-Type Fix Diagnostics | bestaetigt: UPR-FVX-Fix fuer `TrainerPokemonRandomizer` Null-Primary-Type-Scope; `FVX-FOE-009` und Trainer Similar Strength Regression mit Save/Log/Output/Reload true, `writeReloadTrainerPokemonMismatches=0`, `filterViolations=0` fuer Type Diversity, `Bad Egg=false`, `<unknown>=false` und `stacktrace=none` | lokal/ignored, nicht dokumentiert | nein |
-| 079 | `079_p1_evolution_same_typing_code_diagnosis.md` | CFRU/DPE P1 Evolution Same Typing Code Diagnosis | dokumentiert: read-only Codeanalyse fuer `FVX-TRAIT-019`; wahrscheinlich konkrete Ursache ist `to.hasSharedType(...)` im Same-Typing-Filter mit Null-Primary-Type-Kandidaten aus dem Evolution-Replacement-Pool; keine Ausfuehrung | keiner, read-only Analyse | ja |
+| 079 | `079_p1_evolution_same_typing_code_diagnosis.md` | CFRU/DPE P1 Evolution Same Typing Code Diagnosis | dokumentiert: read-only Codeanalyse fuer `FVX-TRAIT-019`; wahrscheinlich konkrete Ursache ist `to.hasSharedType(...)` im Same-Typing-Filter mit Null-Primary-Type-Kandidaten aus dem Evolution-Replacement-Pool; keine Ausfuehrung | keiner, read-only Analyse | nein |
+| 080 | `080_evolution_same_typing_nulltype_fix_diagnostics.md` | CFRU/DPE Evolution Same Typing Null-Type Fix Diagnostics | bestaetigt: UPR-FVX-Fix fuer `EvolutionRandomizer` Same-Typing-Null-Primary-Type-Scope; `FVX-TRAIT-019` mit Save/Log/Output/Reload true, `writeReloadEvolutionMismatches=0`, `<unknown>=false`, `exceptionClass=none` und `stacktrace=none`; `FVX-TRAIT-018` nur als getrennte Regression | lokal/ignored, nicht dokumentiert | ja |
 
 ## Aktuell bestaetigter Stand
 
-Latest ist Nr. 079: CFRU/DPE P1 Evolution Same Typing Code Diagnosis.
+Latest ist Nr. 080: CFRU/DPE Evolution Same Typing Null-Type Fix Diagnostics.
 
 Kernaussagen:
 
-- `FVX-TRAIT-019` Evolutions Same Typing blockiert plausibel im Same-Typing-Filter, bevor Save/Output/Reload erreicht werden.
-- `EvolutionRandomizer.findPossibleReplacements(...)` nutzt `to.hasSharedType(...)`; `Species.hasSharedType(...)` dereferenziert den Primary Type des Kandidaten ohne Null-Guard.
-- CFRU/DPE-unsupported Types wie Stellar koennen als `primaryType == null` geladen werden und duerfen in diesem Pfad nicht als valide Same-Typing-Kandidaten behandelt werden.
-- `FVX-TRAIT-018` Evolutions Similar Strength bleibt separat, weil dessen 070-Befund Save/Reload erreicht, aber `writeReloadEvolutionMismatches=24` und `Bad Egg=true` meldet.
+- `FVX-TRAIT-019` Evolutions Same Typing ist im eng getesteten Same-Typing-Scope entblockt.
+- `EvolutionRandomizer` filtert Same-Typing-Kandidaten mit `primaryType == null`, bevor `hasSharedType(...)` ausgewertet wird.
+- `FVX-TRAIT-019` meldet Save/Log/Output/Reload true und `writeReloadEvolutionMismatches=0`.
+- `Bad Egg=true` bleibt als bestehender Evolution-Log-/Sonder-Species-Marker nach 055 klassifiziert, nicht als Write-/Reload-Fehler im 080-Scope.
+- `FVX-TRAIT-018` Evolutions Similar Strength wurde nur getrennt als Regression beobachtet und bleibt fachlich separat.
 - Wild, Trainer, TypeChart/TypeEffectiveness, MoveData, Palette, Items, Text/Menu, Graphics, Level-Modifier, Evolution-Methoden-Writer und offene Writer bleiben ausgeschlossen.
 
 ## Lokale Artefaktpflege
