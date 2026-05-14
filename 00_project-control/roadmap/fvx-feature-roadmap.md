@@ -1,3 +1,10 @@
+# FVX Feature Roadmap Update - 2026-05-15 - Field Items Random Even reload smoke
+
+- Diagnose 110 confirms `FVX-ITEM-003 Field Items Random even distribution` with a successful CFRU/DPE Field-Items-only reload smoke.
+- `FVX-ITEM-003` can move to `GUI-kompatibel` only for the narrow Field-Items Random-Even scope with `banBadRandomFieldItems=false`.
+- Keep `FVX-ITEM-004` Ban Bad Items as a separate follow-up block.
+- Next step is `analysis/upr-fvx-cfru-dpe-field-items-ban-bad-scope-plan`; do not fold Shops or Pickup into that work.
+
 # FVX Feature Roadmap Update - 2026-05-15 - Field Items API TM-slot reload smoke
 
 - Diagnose 109 confirms the UPR-FVX PR #37 Field-Items API TM-slot fix with a successful `FVX-ITEM-002 Field Items Random` reload smoke.
