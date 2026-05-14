@@ -1,5 +1,34 @@
 # Session State
 
+## 2026-05-14 - CFRU/DPE MoveData Fairy-Type-Byte Fix
+
+Workspace-Branch: `compat/upr-fvx-cfru-dpe-move-data-type-fairy-byte`
+
+UPR-FVX-Branch: `compat/upr-fvx-cfru-dpe-move-data-type-fairy-byte`
+
+UPR-FVX-Pin: `fad56f60d6fae9b006290a4d5fd1f0715f3d9dc3`
+
+Aktueller Stand:
+
+- UPR-FVX PR #34 ist geoeffnet: https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/34
+- UPR-FVX-Fix `fad56f60d6fae9b006290a4d5fd1f0715f3d9dc3` erstellt.
+- Der Fix bleibt auf `Gen3RomHandler` und das MoveData-Type-Byte `+2` begrenzt.
+- Im sicheren CFRU/DPE-Gen9-BPRE-Gate liest `typeFromMoveData(...)` raw `0x17` als `Type.FAIRY`.
+- Im selben Gate schreibt `moveDataTypeToByte(...)` `Type.FAIRY` als raw `0x17`.
+- Vanilla-, Jambo- und andere Gen3-Pfade bleiben beim bestehenden Mapping.
+- Neuer sanitiserter Ergebnisbericht `08_tests/randomizer/087_move_data_fairy_type_byte_fix_diagnostics.md` erstellt.
+- Ergebnis: `saveSuccessful=true`, `logSuccessful=true`, `outputRomExists=true`, `logNonEmpty=true`, Reload erfolgreich, `writeReloadMoveDataMismatches=0`, `moves.total=992`, hoechster Move `991:PsychicNoise`, `typeReloadMismatches=0`, `fairyReloadMismatches=0`, `cfruDpeTypeByteMismatches=0`, `preserveByteMismatchesAllMoves=0`, `preserveByteMismatchesUnchangedMoves=0`, `exceptionClass=none` und `stacktrace=none`.
+- `typeByteMismatches=54` bleibt als Legacy-Mapping-Vergleich gegen `Gen3Constants.typeToByte(...)` sichtbar und ist in diesem Fix-Smoke kein CFRU/DPE-Reload-Fehler.
+- `FVX-MOVE-004` Randomize Move Types ist damit GUI-kompatibel.
+- `FVX-MOVE-005` Move Names/Descriptions bleibt ausserhalb dieses Scopes.
+- Workspace pinnt `02_external/upr-fvx` auf den neuen UPR-FVX-Fix-Commit.
+- Keine TypeChart-/TypeEffectiveness-, Species-Type-, Stellar-/Typenmodell-, Name-, Description-, Palette-, Item-, Field-/Shop-/Pickup-, Trainer-, Wild-, Evolution-, Text/Menu-, Graphics-, TM/HM-, Tutor-, Egg- oder Learnset-Write-Aenderung.
+- Lokale ROM-/Output-/Log-Artefakte blieben ignored unter `05_builds/**`; private Pfade, ROM-Namen, Hashes, Logs und Output-ROMs wurden nicht dokumentiert.
+
+Naechster sinnvoller Schritt:
+
+- UPR-FVX PR #34 und Workspace-PR reviewen und mergen. Danach Post-Merge-Doku-Sync; `FVX-MOVE-005` Move Names/Descriptions nur in einem separaten, explizit freigegebenen Scope behandeln.
+
 ## 2026-05-14 - CFRU/DPE MoveData Types Reload-Smoke
 
 Workspace-Branch: `test/upr-fvx-cfru-dpe-move-data-types-reload-smoke`

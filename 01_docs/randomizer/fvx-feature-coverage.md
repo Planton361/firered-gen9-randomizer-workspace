@@ -32,13 +32,28 @@ Sie ist die detaillierte Requirements-/Coverage-Ebene. Die Roadmap bleibt bewuss
 | Nicht begonnen | 39 |
 | Plan erstellt | 28 |
 | Read modelliert | 0 |
-| Write modelliert | 16 |
+| Write modelliert | 15 |
 | Getestet | 10 |
-| GUI-kompatibel | 37 |
+| GUI-kompatibel | 38 |
 | In Arbeit | 0 |
 | **Gesamt** | **130** |
 
-## Aktueller Hinweis zu 086
+## Aktueller Hinweis zu 087
+
+Diagnose 087 bestaetigt den engen MoveData Fairy-Type-Byte-Fix fuer `FVX-MOVE-004`:
+
+- UPR-FVX `fad56f60d6fae9b006290a4d5fd1f0715f3d9dc3` liest und schreibt im sicheren CFRU/DPE-Gen9-BPRE-MoveData-Gate Fairy als raw `0x17`.
+- `Randomize Move Types` erreicht `saveSuccessful=true`, `logSuccessful=true`, `outputRomExists=true`, `logNonEmpty=true` und erfolgreichen Reload.
+- `writeReloadMoveDataMismatches=0`.
+- `typeReloadMismatches=0`, `fairyReloadMismatches=0`, `cfruDpeTypeByteMismatches=0`.
+- `moves.total=992` und `991:PsychicNoise` bleiben nach Reload stabil.
+- Preserve-Bytes `+5`, `+6`, `+7`, `+8`, `+9` und `+11` bleiben bytegleich: `preserveByteMismatchesAllMoves=0`, `preserveByteMismatchesUnchangedMoves=0`.
+- `typeByteMismatches=54` ist nur der erwartete Legacy-Mapping-Vergleich gegen `Gen3Constants.typeToByte(...)` und kein CFRU/DPE-Reload-Fehler.
+- `FVX-MOVE-004` wird damit als GUI-kompatibel gefuehrt.
+- Der Fix beruehrt nicht TypeChart, TypeEffectiveness oder Species-Type-Write.
+- `FVX-MOVE-005` Move Names bleibt ausserhalb dieses Writer-Preserve-Smokes.
+
+## Vorheriger Hinweis zu 086
 
 Diagnose 086 dokumentiert den engen MoveData Types Reload-Smoke fuer `FVX-MOVE-004`:
 
@@ -112,7 +127,7 @@ Diagnose 082 bestaetigt `FVX-TRAIT-018` nach der 081-Normalisierung:
 | General Options | 4 | 2 | 0 | 0 | 0 | 2 | 0 | 0 |
 | Pokemon Traits | 28 | 7 | 15 | 0 | 0 | 0 | 6 | 0 |
 | Starters, Statics & Trades | 15 | 5 | 0 | 0 | 0 | 5 | 5 | 0 |
-| Moves & Movesets | 11 | 0 | 3 | 0 | 2 | 0 | 6 | 0 |
+| Moves & Movesets | 11 | 0 | 3 | 0 | 1 | 0 | 7 | 0 |
 | Foe Pokemon | 14 | 8 | 0 | 0 | 0 | 0 | 6 | 0 |
 | Wild Pokemon | 12 | 3 | 1 | 0 | 0 | 0 | 8 | 0 |
 | TM/HMs & Tutors | 15 | 0 | 9 | 0 | 0 | 0 | 6 | 0 |
@@ -184,7 +199,7 @@ Diagnose 082 bestaetigt `FVX-TRAIT-018` nach der 081-Normalisierung:
 - FVX-MOVE-001 | Randomize Move Power | GUI-kompatibel
 - FVX-MOVE-002 | Randomize Move Accuracy | GUI-kompatibel
 - FVX-MOVE-003 | Randomize Move PP | GUI-kompatibel
-- FVX-MOVE-004 | Randomize Move Types | Write modelliert
+- FVX-MOVE-004 | Randomize Move Types | GUI-kompatibel
 - FVX-MOVE-005 | Randomize Move Names | Write modelliert
 - FVX-MOVE-006 | Update Moves to Generation | GUI-kompatibel
 - FVX-MOVE-007 | Pokemon Movesets randomisieren | GUI-kompatibel

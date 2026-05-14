@@ -2,12 +2,12 @@
 
 ## Latest
 
-- `086_move_data_types_reload_smoke.md` dokumentiert den engen CFRU/DPE MoveData Types Reload-Smoke fuer `FVX-MOVE-004`.
-- UPR-FVX `bb5ee11978e38839979e654ff1c14ba60a0cde93` bleibt fuer Save/Log/Output/Reload stabil, aber `Randomize Move Types` blockiert durch Fairy-Type-Byte-Mismatches.
+- `087_move_data_fairy_type_byte_fix_diagnostics.md` dokumentiert den engen CFRU/DPE MoveData Fairy-Type-Byte-Fix fuer `FVX-MOVE-004`.
+- UPR-FVX `fad56f60d6fae9b006290a4d5fd1f0715f3d9dc3` reloadet `Randomize Move Types` mit `writeReloadMoveDataMismatches=0`.
 - `moves.total=992` und `991:PsychicNoise` bleiben stabil.
-- Ergebnis: `writeReloadMoveDataMismatches=54`, `typeReloadMismatches=54`, `expectedFairyMoves=54`, `fairyReloadMismatches=54`, `cfruDpeTypeByteMismatches=54`.
+- Fairy-Type-Bytes reloaden stabil: `typeReloadMismatches=0`, `fairyReloadMismatches=0`, `cfruDpeTypeByteMismatches=0`.
 - Preserve-Bytes `+5`, `+6`, `+7`, `+8`, `+9` und `+11` bleiben bytegleich: `preserveByteMismatchesAllMoves=0`, `preserveByteMismatchesUnchangedMoves=0`.
-- `FVX-MOVE-004` bleibt `Write modelliert`; Folgefix ist ein enger CFRU/DPE-MoveData-Fairy-Byte-Writer-Fix, kein TypeChart-/TypeEffectiveness-/Species-Type-Write-Scope.
+- `FVX-MOVE-004` ist damit GUI-kompatibel; `FVX-MOVE-005` Move Names bleibt out of scope.
 
 Dieses Verzeichnis enthaelt die dauerhaften Markdown-Protokolle fuer UPR-FVX/CFRU-DPE-Randomizer-Analysen und Smokes. Lokale ROM-, Build-, Log- und Tool-Artefakte bleiben unter `05_builds/**` oder `03_tools/releases/**` und werden nicht committed.
 
@@ -122,20 +122,20 @@ Der neueste bestaetigte Stand wird in Markdown ueber die Spalte `Latest` markier
 | 083 | `083_move_data_write_preserve_diagnostics.md` | CFRU/DPE MoveData Write Preserve Diagnostics | UPR-FVX-Fix implementiert: klassische MoveData-Bytes `+0..+4` bleiben geschrieben, CFRU/DPE `BattleMove.split` wird im Gate bei `+10` geschrieben, nicht modellierte Bytes bleiben erhalten; Reload-Smoke separat in 084 | keiner | nein |
 | 084 | `084_move_data_write_preserve_reload_smoke.md` | CFRU/DPE MoveData Write Preserve Reload-Smoke | bestaetigt: Save/Log/Output/Reload true, `writeReloadMoveDataMismatches=0`, `moves.total=992`, `991:PsychicNoise`, category/split reload stabil und Preserve-Bytes fuer unveraenderte Moves bytegleich | lokal/ignored, nicht dokumentiert | nein |
 | 085 | `085_move_data_power_accuracy_pp_reload_smoke.md` | CFRU/DPE MoveData Power/Accuracy/PP Reload-Smoke | bestaetigt: Save/Log/Output/Reload true, `writeReloadMoveDataMismatches=0`, `powerReloadMismatches=0`, `accuracyReloadMismatches=0`, `ppReloadMismatches=0`, rohe `+1/+3/+4` Bytes stabil und Preserve-Bytes bytegleich | lokal/ignored, nicht dokumentiert | nein |
-| 086 | `086_move_data_types_reload_smoke.md` | CFRU/DPE MoveData Types Reload-Smoke | blockiert: Save/Log/Output/Reload true und Preserve-Bytes stabil, aber `writeReloadMoveDataMismatches=54` durch Fairy-Type-Byte-Mismatches im MoveData-`+2 type`-Writer | lokal/ignored, nicht dokumentiert | ja |
+| 086 | `086_move_data_types_reload_smoke.md` | CFRU/DPE MoveData Types Reload-Smoke | blockiert: Save/Log/Output/Reload true und Preserve-Bytes stabil, aber `writeReloadMoveDataMismatches=54` durch Fairy-Type-Byte-Mismatches im MoveData-`+2 type`-Writer | lokal/ignored, nicht dokumentiert | nein |
+| 087 | `087_move_data_fairy_type_byte_fix_diagnostics.md` | CFRU/DPE MoveData Fairy-Type-Byte Fix Diagnostics | bestaetigt: UPR-FVX `fad56f60`, Save/Log/Output/Reload true, `writeReloadMoveDataMismatches=0`, `typeReloadMismatches=0`, `fairyReloadMismatches=0`, `cfruDpeTypeByteMismatches=0` und Preserve-Bytes bytegleich | lokal/ignored, nicht dokumentiert | ja |
 
 ## Aktuell bestaetigter Stand
 
-Latest ist Nr. 086: CFRU/DPE MoveData Types Reload-Smoke.
+Latest ist Nr. 087: CFRU/DPE MoveData Fairy-Type-Byte Fix Diagnostics.
 
 Kernaussagen:
 
-- UPR-FVX `bb5ee11978e38839979e654ff1c14ba60a0cde93` implementiert den engen CFRU/DPE MoveData-Writer-Preserve-Fix.
+- UPR-FVX `fad56f60d6fae9b006290a4d5fd1f0715f3d9dc3` implementiert zusaetzlich den engen CFRU/DPE MoveData-Fairy-Type-Byte-Fix.
 - `Randomize Move Power`, `Randomize Move Accuracy` und `Randomize Move PP` bleiben durch Diagnose 085 mit `writeReloadMoveDataMismatches=0` belegt.
-- `Randomize Move Types` erreicht in Diagnose 086 `saveSuccessful=true`, `logSuccessful=true`, `outputRomExists=true`, `logNonEmpty=true` und erfolgreichen Reload, blockiert aber mit `writeReloadMoveDataMismatches=54`.
+- `Randomize Move Types` reloadet in Diagnose 087 mit `saveSuccessful=true`, `logSuccessful=true`, `outputRomExists=true`, `logNonEmpty=true` und `writeReloadMoveDataMismatches=0`.
 - `moves.total=992` und `991:PsychicNoise` bleiben nach Reload stabil.
-- Der Blocker ist auf Fairy im MoveData-Type-Byte begrenzt: `typeReloadMismatches=54`, `expectedFairyMoves=54`, `fairyReloadMismatches=54`, `cfruDpeTypeByteMismatches=54`.
-- `typeByteMismatches=0` beschreibt nur die Uebereinstimmung mit der aktuellen FVX-Writer-Mappingfunktion; fuer CFRU/DPE muss Fairy im MoveData-`+2 type`-Byte als `0x17` geschrieben werden.
+- Fairy im MoveData-`+2 type`-Byte reloadet stabil: `typeReloadMismatches=0`, `fairyReloadMismatches=0`, `cfruDpeTypeByteMismatches=0`.
 - Nicht modellierte Bytes `+5`, `+6`, `+7`, `+8`, `+9` und `+11` bleiben bytegleich erhalten.
 - `Update Moves` und Category-/Split-Reload bleiben durch Diagnose 084 belegt.
 - Palette, Items, TypeChart/TypeEffectiveness, Trainer, Wild, Evolutions, Text/Menu, Graphics, TM/HM, Tutor, Egg und Learnset-Writer bleiben ausgeschlossen.

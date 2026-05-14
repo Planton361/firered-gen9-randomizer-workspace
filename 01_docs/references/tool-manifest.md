@@ -43,6 +43,19 @@ Der aktuelle Arbeitsblock pinnt den Workspace auf den UPR-FVX-MoveData-Write-Pre
 
 ## Lokale Submodule-Pins 2026-05-14
 
+Arbeitsblock: `compat/upr-fvx-cfru-dpe-move-data-type-fairy-byte`.
+
+| Repo | Zweck | Origin | Lokaler Pfad | Branch | Commit | Codex darf aendern | Status |
+|---|---|---|---|---|---|---|---|
+| UPR-FVX Fork | Haupt-Randomizer-Fork | `https://github.com/Planton361/universal-pokemon-randomizer-fvx.git` | `02_external/upr-fvx` | `compat/upr-fvx-cfru-dpe-move-data-type-fairy-byte` | `fad56f60d6fae9b006290a4d5fd1f0715f3d9dc3` | ja, nur in diesem Branch | MoveData-Fairy-Type-Byte-Fix fuer CFRU/DPE; `Type.FAIRY` wird im sicheren MoveData-Gate als raw `0x17` gelesen/geschrieben; `FVX-MOVE-004` reloadet mit `writeReloadMoveDataMismatches=0`; kein TypeChart/TypeEffectiveness/Species-Type-Write |
+| CFRU-expansion Fork | CFRU/Gen9-Basis | `https://github.com/Planton361/CFRU-expansion.git` | `02_external/CFRU-expansion` | `compat/firered-gen9-randomizer` | `b885d7a974375c6c722e5698914963b82e8cdad6` | nein in diesem Block | read-only, unveraendert |
+| DPE Gen9 Fork | DPE/Gen9-Basis | `https://github.com/Planton361/Dynamic-Pokemon-Expansion-Gen-9.git` | `02_external/Dynamic-Pokemon-Expansion-Gen-9` | `compat/firered-gen9-randomizer` | `5906aa4d4904e41393fd9184a16951c961e96263` | nein in diesem Block | read-only, unveraendert |
+| CyanSMP64 UPR-ZX NatDex | NatDex-Randomizer-Referenz | `https://github.com/CyanSMP64/universal-pokemon-randomizer-zx.git` | `02_external/references/cyansmp64-upr-zx-natdex` | `natdex` | `9b63eb2876d901dc2e5af49855ae41ac255e1a72` | nein | read-only Referenz |
+| CyanSMP64 FireRed NatDex | NatDex-FireRed-Referenz | `https://github.com/CyanSMP64/pokefirered.git` | `02_external/references/cyansmp64-pokefirered-natdex` | `natdex` | `16b8b9ffd77607debe7ce332cd50d3615f47e125` | nein | read-only Referenz |
+| UPR-FVX upstream | FVX-Upstream-Vergleich | `https://github.com/upr-fvx/universal-pokemon-randomizer-fvx.git` | `02_external/references/upr-fvx-upstream` | `master` | `e0788edc6529c2605f201996e4807ff30165354c` | nein | read-only Referenz |
+| Ajarmar UPR-ZX | UPR-ZX-Basisvergleich | `https://github.com/Ajarmar/universal-pokemon-randomizer-zx.git` | `02_external/references/upr-zx-ajarmar` | `master` | `7f00eb866ed35c8fe3963f078b6a2e0979dc2b8c` | nein | read-only Referenz |
+| pret FireRed | Vanilla-BPRE-Decomp | `https://github.com/pret/pokefirered.git` | `02_external/references/pret-pokefirered` | `master` | `e060ab955b5dc9ac1c4904c2cd141683615cf477` | nein | read-only Referenz |
+
 Arbeitsblock: `compat/upr-fvx-cfru-dpe-move-data-write-preserve`.
 
 | Repo | Zweck | Origin | Lokaler Pfad | Branch | Commit | Codex darf aendern | Status |
@@ -114,8 +127,8 @@ Bestehende unnummerierte Protokolle unter `08_tests/randomizer/` bleiben vorerst
 | Lokaler Pfad | `02_external/upr-fvx` |
 | Einbindung | Git-Submodule auf `Planton361/universal-pokemon-randomizer-fvx` |
 | Upstream | `upr-fvx/universal-pokemon-randomizer-fvx` |
-| Arbeitsbranch | `compat/upr-fvx-cfru-dpe-p1-evolution-same-typing-nulltype-fix` |
-| Gepinnter Workspace-Stand | `74d88a7ab1d306e1e09ccabb851dffd7f6922b66` auf `compat/upr-fvx-cfru-dpe-p1-evolution-same-typing-nulltype-fix`; enthaelt den CFRU/DPE-Evolution-Same-Typing-Null-Type-Fix auf Basis der bisherigen P1-Fixkette |
+| Arbeitsbranch | `compat/upr-fvx-cfru-dpe-move-data-type-fairy-byte` |
+| Gepinnter Workspace-Stand | `fad56f60d6fae9b006290a4d5fd1f0715f3d9dc3` auf `compat/upr-fvx-cfru-dpe-move-data-type-fairy-byte`; enthaelt den CFRU/DPE-MoveData-Fairy-Type-Byte-Fix auf Basis der bisherigen MoveData-Write-Preserve-Fixkette |
 | Buildsystem | Gradle Wrapper |
 | Java | JDK 25 |
 | JAR-Build | `./gradlew :random:jar` |
