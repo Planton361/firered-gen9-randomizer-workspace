@@ -1,5 +1,28 @@
 # Session State
 
+## 2026-05-14 - CFRU/DPE Palette Single-owner Normal-only Fix-Scope Plan
+
+Workspace-Branch: `analysis/upr-fvx-cfru-dpe-palette-single-owner-normal-only-fix-scope-plan`
+
+UPR-FVX-Pin: `fad56f60d6fae9b006290a4d5fd1f0715f3d9dc3`
+
+Aktueller Stand:
+
+- Neues read-only Planprotokoll `08_tests/randomizer/094_palette_single_owner_normal_only_fix_scope_plan.md` erstellt.
+- Diagnose 093 bleibt die Datenbasis: `candidateWritablePalettes=385`, `candidateWritableNormalPalettes=385`, `candidateWritableShinyPalettes=0`, `skipPaletteEntries=2493`, `crossKindSharedPalettePointers=1809`.
+- Planergebnis: ein spaeterer Fix-/Smoke-Scope ist reviewbar, aber nur fuer Normal-Paletten, die single-owner, dekomprimierbar, gueltig, nicht shared, nicht missing, nicht invalid, nicht decode-failed und nicht cross-kind shared sind.
+- Shiny-, Shared-, Invalid-, Missing-, Decode-failed- und unsichere Forme-/Expanded-Mapping-Faelle bleiben preserve-only.
+- Der bestehende komprimierte Palette-Writer laeuft ueber `rewriteCompressedPalette()`/`DataRewriter`; ein echter Write-Smoke muss Repointing entweder bewusst zulassen und nachweisen oder den Fix zurueckstellen.
+- Fuer den ersten spaeteren Smoke ist nur `FVX-GFX-001 Pokemon Palettes Random` als Normal-only-Farbtraeger geeignet.
+- `FVX-GFX-002 Follow Types` bleibt ein separater spaeterer Normal-only-Smoke ohne TypeChart-/Species-Type-Scope.
+- `FVX-GFX-003 Follow Evolutions` und `FVX-GFX-004 Shiny From Normal` bleiben ausserhalb des ersten Fix-Smokes.
+- `FVX-GFX-001..004` bleiben aktuell `Write modelliert`.
+- Keine Codeaenderung, kein Build, kein Randomizer-Lauf, kein ROM-Zugriff, keine Submodule-Pin-Aenderung.
+
+Naechster sinnvoller Schritt:
+
+- `compat/upr-fvx-cfru-dpe-palette-normal-single-owner-write`: engen UPR-FVX-Writer-Gate-Fix fuer sichere Normal-Palette-Single-owner-Kandidaten vorbereiten und mit sanitisiertem Reload-Smoke dokumentieren.
+
 ## 2026-05-14 - CFRU/DPE Palette Pointer / Compression Diagnostics Run
 
 Workspace-Branch: `test/upr-fvx-cfru-dpe-palette-pointer-compression-diagnostics`
