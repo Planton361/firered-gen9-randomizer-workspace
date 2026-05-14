@@ -1,5 +1,27 @@
 # Session State
 
+## 2026-05-14 - CFRU/DPE MoveData Power/Accuracy/PP Reload-Smoke
+
+Workspace-Branch: `test/upr-fvx-cfru-dpe-move-data-power-accuracy-pp-reload-smoke`
+
+UPR-FVX-Pin: `bb5ee11978e38839979e654ff1c14ba60a0cde93`
+
+Aktueller Stand:
+
+- Neuer sanitiserter Ergebnisbericht `08_tests/randomizer/085_move_data_power_accuracy_pp_reload_smoke.md` erstellt.
+- Der Smoke blieb eng auf MoveData Power / Accuracy / PP begrenzt.
+- Aktiviert wurden nur `FVX-MOVE-001` Randomize Move Power, `FVX-MOVE-002` Randomize Move Accuracy und `FVX-MOVE-003` Randomize Move PP.
+- Ergebnis: `saveSuccessful=true`, `logSuccessful=true`, `outputRomExists=true`, `logNonEmpty=true`, Reload erfolgreich, `writeReloadMoveDataMismatches=0`, `moves.total=992`, hoechster Move `991:PsychicNoise`, `powerReloadMismatches=0`, `accuracyReloadMismatches=0`, `ppReloadMismatches=0`, `preserveByteMismatchesAllMoves=0`, `preserveByteMismatchesUnchangedMoves=0`, `exceptionClass=none` und `stacktrace=none`.
+- Rohbytes fuer `+1 power`, `+3 accuracy` und `+4 pp` reloadeten stabil: `powerByteMismatches=0`, `accuracyByteMismatches=0`, `ppByteMismatches=0`.
+- Preserve-Bytes `+5`, `+6`, `+7`, `+8`, `+9` und `+11` blieben bytegleich.
+- Lokale ROM-/Output-/Log-Artefakte blieben ignored unter `05_builds/**`; private Pfade, ROM-Namen, Hashes, Logs und Output-ROMs wurden nicht dokumentiert.
+- Keine Aenderung an `02_external/upr-fvx`; der Submodule-Pin bleibt `bb5ee11978e38839979e654ff1c14ba60a0cde93`.
+- Keine Type-, Name-, Description-, Palette-, Item-, Field-/Shop-/Pickup-, TypeChart-/TypeEffectiveness-, Trainer-, Wild-, Evolution-, Text/Menu-, Graphics-, TM/HM-, Tutor-, Egg- oder Learnset-Write-Aenderung.
+
+Naechster sinnvoller Schritt:
+
+- Separater Folgebranch fuer `FVX-MOVE-004` Randomize Move Types. `FVX-MOVE-005` Move Names/Descriptions bleibt out of scope.
+
 ## 2026-05-14 - CFRU/DPE MoveData Write Preserve Reload-Smoke
 
 Workspace-Branch: `test/upr-fvx-cfru-dpe-move-data-write-preserve-reload-smoke`
