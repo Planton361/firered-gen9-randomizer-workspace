@@ -1,5 +1,11 @@
 # 2026-05-15 - FVX Shop coverage update
 
+- FVX-ITEM-009 Balance Shop Prices / Cheap Rare Candies remains Write modelliert after Diagnose 133.
+- Planned split: Balance Shop Prices first as a price-only smoke; Cheap Rare Candies second as Shop-list-growth plus Rare-Candy-price smoke.
+- FVX-ITEM-005..008 keep their existing individual GUI-compatible evidence; Ban combinations and Evolution+X combination remain unpromoted.
+
+# 2026-05-15 - FVX Shop coverage update
+
 - FVX-ITEM-008 Guarantee X Items is covered as GUI-compatible for Shop Random + `guaranteeXItems=true` only.
 - Evidence: Diagnose 132, `saveSuccessful=true`, `reloadSuccessful=true`, `guaranteedXItemsMissing=0`, `guaranteedXItemsReloadMissing=0`, `shopItemReloadMismatches=0`.
 - FVX-ITEM-008 individual Guarantee Evolution and X subscopes are covered, but the combined Evolution+X configuration remains unpromoted; FVX-ITEM-009 remains unpromoted.

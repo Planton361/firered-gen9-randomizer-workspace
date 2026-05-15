@@ -1,5 +1,11 @@
 # Next step - 2026-05-15
 
+- Recommended next branch: `test/upr-fvx-cfru-dpe-shop-balance-prices-reload-smoke`.
+- Scope: Shop-only Balance Shop Prices with `ShopItemsMod.UNCHANGED`, no Cheap Rare Candies, no Ban combinations, no Guarantee combination, no Field/Pickup/Held Items.
+- Measure price table read/write/reload stability before any Rare-Candy Shop-list growth smoke.
+
+# Next step - 2026-05-15
+
 - Minimal decision: either run a narrow Evolution+X combination smoke for FVX-ITEM-008 or move to the FVX-ITEM-009 prices/Cheap Rare Candies scope plan.
 - Do not treat the individual Guarantee Evolution and Guarantee X passes as automatic combination coverage.
 - Keep Ban combinations and price/Rare-Candy logic separate unless explicitly scoped.

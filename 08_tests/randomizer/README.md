@@ -1,3 +1,10 @@
+# 2026-05-15 - Diagnose 133 Shop Prices / Cheap Rare Candies Scope Plan
+
+- Neues Protokoll: `133_shop_prices_cheap_rare_candies_scope_plan.md`.
+- `FVX-ITEM-009` ist als separater Shop-only Preis-/Rare-Candy-Subscope geplant.
+- Balance Shop Prices schreibt unabhaengig von `ShopItemsMod` ueber `getShopPrices()`/`setShopPrices()`; erster Smoke soll preis-only mit `ShopItemsMod.UNCHANGED` laufen.
+- Cheap Rare Candies erweitert Shoplisten um Rare Candies und setzt den Rare-Candy-Preis; dieser Pfad bleibt ein zweiter separater Smoke.
+
 # 2026-05-15 - Diagnose 132 Shop Guarantee X Items Reload Smoke
 
 - Added `08_tests/randomizer/132_shop_guarantee_x_items_reload_smoke.md`.
