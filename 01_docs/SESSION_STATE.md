@@ -1,3 +1,11 @@
+# 2026-05-15 - Diagnose 140
+
+- Current branch records Wild/Encounter Held Items + Ban Bad Write/Reload-Smoke.
+- Smoke result: PASS; `saveSuccessful=true`, `logSuccessful=true`, `outputRomExists=true`, `reloadSuccessful=true`, `wildHeldItemReloadMismatches=0`.
+- Ban Bad result: `badWildHeldItemWrites=0`, `wildHeldItemsBadBefore/After/Reload=174/0/0`, `badWildHeldItemPoolCandidates=51`, `badWildHeldItemPoolExcluded=51`.
+- Safety metrics: invalid/unloaded/fallback/placeholder Wild-Held-Item writes all `0`; Trainer, Starter, Field, Pickup and Shop scopes stayed unchanged.
+- Wild/Encounter Held Items are now covered with and without Ban Bad in the tested scope; Trainer Held Items and Starter Held Items remain open.
+
 # 2026-05-15 - Diagnose 139
 
 - Current branch records Wild/Encounter Held Items Write/Reload-Smoke without Ban Bad.

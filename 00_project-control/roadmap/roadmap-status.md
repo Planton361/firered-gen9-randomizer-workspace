@@ -1,3 +1,9 @@
+# 2026-05-15 - Wild Held Items Ban Bad smoke update
+
+- Diagnose 140 records Wild/Encounter Held Items + Ban Bad Write/Reload-Smoke.
+- Result: PASS with save/log/output/reload successful, `wildHeldItemReloadMismatches=0`, `badWildHeldItemWrites=0`, and no invalid/unloaded/fallback/placeholder writes.
+- Wild/Encounter Held Items are covered with and without Ban Bad; Trainer Held Items are the next separate scope.
+
 # 2026-05-15 - Wild Held Items smoke update
 
 - Diagnose 139 records Wild/Encounter Held Items Write/Reload-Smoke without Ban Bad.

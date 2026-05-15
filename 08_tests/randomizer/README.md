@@ -1,3 +1,7 @@
+# Latest - Diagnose 140
+
+- `140_wild_held_items_ban_bad_reload_smoke.md`: Wild/Encounter Held Items + Ban Bad Write/Reload-Smoke; PASS with reload-stable Species/BaseStats held items, non-bad pool enforcement and Trainer/Starter/Field/Pickup/Shop isolation.
+
 # Latest - Diagnose 139
 
 - `139_wild_held_items_reload_smoke.md`: Wild/Encounter Held Items Write/Reload-Smoke without Ban Bad; PASS with reload-stable Species/BaseStats held items and Trainer/Starter/Field/Pickup/Shop isolation.

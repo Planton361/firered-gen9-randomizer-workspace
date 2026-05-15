@@ -1,5 +1,11 @@
 # 2026-05-15 - FVX Held Items coverage update
 
+- Wild/Encounter Held Items + Ban Bad are covered as GUI-compatible in the tested CFRU/DPE Gen9-BPRE scope after Diagnose 140.
+- Evidence: save/log/output/reload successful, `wildHeldItemReloadMismatches=0`, `badWildHeldItemWrites=0`, bad held items `174/0/0`, and Trainer/Starter/Field/Pickup/Shop scopes unchanged.
+- Trainer Held Items and Starter Held Items remain unpromoted.
+
+# 2026-05-15 - FVX Held Items coverage update
+
 - Wild/Encounter Held Items without Ban Bad are covered as GUI-compatible in the tested CFRU/DPE Gen9-BPRE scope after Diagnose 139.
 - Evidence: save/log/output/reload successful, `wildHeldItemReloadMismatches=0`, invalid/unloaded/fallback/placeholder writes `0`, and Trainer/Starter/Field/Pickup/Shop scopes unchanged.
 - Wild/Encounter Ban Bad, Trainer Held Items and Starter Held Items remain unpromoted.
