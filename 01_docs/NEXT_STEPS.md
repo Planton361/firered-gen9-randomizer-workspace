@@ -1,3 +1,11 @@
+# Next steps update - Diagnose 170
+
+- Treat `FVX-TRAIT-024` through `FVX-TRAIT-027` as `methods-plan-ready`, not tested or P1-supported.
+- Next minimal Evolution work, if continued, should be a read-only UPR-FVX code-review / Non-ROM test-plan for `FVX-TRAIT-024` and `FVX-TRAIT-027` method-mapping decisions.
+- Split `FVX-TRAIT-025` into ROM-free `condenseLevelEvolutions(...)` evidence and separate Gen3 happiness-byte writer/reload risk.
+- Keep `FVX-TRAIT-026` attached to `024/025`; do not promote it as standalone.
+- Do not run ROM-Smoke, Randomizer runs, builds, Gen3 writer/reload tests or output-ROM generation without a separate explicit scope.
+
 # Next steps update - Diagnose 169B
 
 - Treat `FVX-TRAIT-017` and `FVX-TRAIT-020` through `FVX-TRAIT-023` as `tested-non-rom` after merged UPR-FVX PR #42.

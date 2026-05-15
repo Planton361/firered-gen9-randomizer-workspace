@@ -1,3 +1,14 @@
+# Session update - Diagnose 170
+
+- New branch: `test/upr-fvx-cfru-dpe-evolution-methods-scope-plan`.
+- PR #218 / Follow-up 169B was verified as merged into `main` before this block.
+- UPR-FVX submodule remains clean and pinned at `587e857088cac4fba41c6559d3a6f6e2a7aad71f`.
+- Diagnose 170 plans the separate Evolution methods/improvement slices `FVX-TRAIT-024` through `FVX-TRAIT-027`.
+- Result: `methods-plan-ready`.
+- Finding: `GameRandomizer.maybeApplyEvolutionImprovements()` dispatches `024`, `025` and `027` through `RomHandler` improvement methods, while `026` is an estimated-level helper flag for `024/025`.
+- `FVX-TRAIT-024` and `FVX-TRAIT-027` need method-mapping decision evidence before any writer/reload scope; `FVX-TRAIT-025` splits into ROM-free condense-level logic and Gen3 happiness-byte patch risk; `FVX-TRAIT-026` should not be promoted standalone.
+- No ROM-Smoke, Randomizer run, build, code change, submodule change, ROM/save/output/log access or external download was performed.
+
 # Session update - Diagnose 169B
 
 - New branch: `test/upr-fvx-cfru-dpe-evolution-filter-non-rom-harness-followup`.

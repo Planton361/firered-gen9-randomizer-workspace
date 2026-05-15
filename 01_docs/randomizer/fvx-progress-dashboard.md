@@ -33,12 +33,12 @@ Markdown bleibt Source of Truth.
 
 | Feld | Aktueller Stand |
 |---|---|
-| Stand | Nach Follow-up 169B |
-| Aktueller enger Blocker | Kein Evolution-Species-Carrier-Fixblock; Filter-Slices sind Non-ROM getestet |
+| Stand | Nach Diagnose 170 |
+| Aktueller enger Blocker | Kein Evolution-Species-Carrier-Fixblock; Methoden-Slices sind geplant, aber nicht getestet |
 | Zuletzt entblockt | Evolution Similar Strength und Same Typing bleiben aus aktivem Blockerstatus genommen |
-| Zuletzt validiert | UPR-FVX PR #42: `EvolutionFilterOptionsTest` fuer `FVX-TRAIT-017` und `020-023` als `tested-non-rom` |
+| Zuletzt validiert | Diagnose 170: `FVX-TRAIT-024` bis `027` als `methods-plan-ready`, ohne Test-/P1-Promotion |
 | Carrier-Smokes bestanden | Global Species Pool, Starter-Suboptions, Trainer Similar Strength, Wild Similar Strength/Type Restrictions |
-| Danach | separater Methodenplan fuer `FVX-TRAIT-024` bis `027` oder explizit freigegebener ROM-Smoke fuer `017/020-023` |
+| Danach | read-only Code-Review/Non-ROM-Testplan fuer `024/027`, `025` splitten, `026` nur mit `024/025` fuehren |
 | Grosse offene Writer | MoveData Write, Palette Randomization, Evolution-Improvement-/Methoden-Slices |
 | Spaeter / P2 | Special Tutors/Text/Menu, Graphics/Sprites, Misc Tweaks |
 
@@ -50,6 +50,7 @@ Markdown bleibt Source of Truth.
 | Supported im getesteten Scope | Praktisch freigegeben fuer den konkret getesteten CFRU/DPE Gen9-BPRE-Scope, aber nicht automatisch fuer alle ROM-Hack-Varianten. |
 | Getestet im Carrier | Suboption wurde in einem bestimmten stabilen Hauptpfad getestet, aber nicht global fuer alle Kombinationen freigegeben. |
 | tested-non-rom | ROM-frei per Unit-/Harness-Test belegt, aber ohne ROM-Smoke/Reload noch nicht P1-supported. |
+| methods-plan-ready | Methoden-/Improvement-Scope ist read-only geplant, aber noch nicht per Non-ROM-Test, Writer oder Reload belegt. |
 | Gefixt, Folgesmokes offen | Fix existiert, aber noch nicht durch vollstaendige Folgesmokes abgesichert. |
 | Guarded / Preserve-only | Unsichere Writes werden defensiv uebersprungen, aber das Feature ist fachlich nicht als kompatibel freigegeben. |
 | Read-only modelliert | Datenmodell/Risiken sind dokumentiert, aber kein Writer-Fix oder Smoke-Nachweis. |
@@ -74,7 +75,7 @@ Markdown bleibt Source of Truth.
 | Paket | Leitstatus | Stabil belegt | Carrier-tested | Blocker / Luecke | Naechster Schritt | Belege |
 |---|---|---|---|---|---|---|
 | General Options | Gemischt | - | Limit Pokemon, No Premature Evolutions im Starter-Carrier | Race Mode, Intro Mon offen | separater General-Smoke | 064 |
-| Pokemon Traits | Gemischt | Base Stats, Species Types, Abilities, Evolution Species-only | Evolution Similar Strength und Evolution Same Typing diagnosis-ready; `017/020-023` tested-non-rom | `024-027` Methoden-Scope | Evolution-Suboptionen nach 169B getrennt halten | 051, 052, 059, 070, 075, 026, 079-082, 165-169 |
+| Pokemon Traits | Gemischt | Base Stats, Species Types, Abilities, Evolution Species-only | Evolution Similar Strength und Evolution Same Typing diagnosis-ready; `017/020-023` tested-non-rom; `024-027` methods-plan-ready | Writer-/Reload-Evidenz fuer Methoden-Scope fehlt | Evolution-Suboptionen nach 170 getrennt halten | 051, 052, 059, 070, 075, 026, 079-082, 165-170 |
 | Starters, Statics & Trades | Gemischt | Starter Species, Static/Gift Species | Starter-Filter | Starter Held Items offen; In-Game Trades guarded/preserve-only, not supported | naechster Nicht-Trades-Scope oder Reopen-Evidenz | 065, 152-164 |
 | Moves & Movesets | Gemischt | Movesets/Learnsets, Reorder Damaging | einige Filter-/Sanity-Optionen | MoveData Write offen | MoveData Write Preserve | 049, 056 |
 | Foe Pokemon / Trainer | Teilweise blockiert | Trainer Species, Movesets, Held Items, Similar Strength | Similar Strength im Trainer-Carrier | Type Diversity / Type Themes, Additional Pokemon, Textnamen | Trainer-Suboptionen spaeter | 070, 075, 077 |
@@ -93,7 +94,7 @@ Markdown bleibt Source of Truth.
 | Pokemon Base Stats | P1-supported | Random/Shuffle Base Stats | Follow Evolutions nur geplant | EXP Curves, Gen Update offen | Suboptionen spaeter |
 | Pokemon Types | P1-supported fuer Species Types | Type Read/Write | Force Dual Types geplant | TypeChart separat, inzwischen getestet | keine enge Luecke |
 | Pokemon Abilities | P1-supported | Ability1/2 + Hidden Ability | Ban-/Filter-Suboptionen geplant | - | Suboption-Smoke spaeter |
-| Evolutions | Konsolidiert, Suboptionen offen | normale Evolution Randomization / Species-only | Similar Strength und Same Typing diagnosis-ready; `017/020-023` tested-non-rom | `024-027` getrennte Methoden-/Improvement-Slices | Methodenplan oder explizit freigegebener ROM-Smoke |
+| Evolutions | Konsolidiert, Suboptionen offen | normale Evolution Randomization / Species-only | Similar Strength und Same Typing diagnosis-ready; `017/020-023` tested-non-rom; `024-027` methods-plan-ready | Writer-/Reload-Evidenz fuer Methoden-Slices fehlt | Code-Review/Non-ROM-Testplan fuer Methoden-Decisions |
 | Starters | Stark / Carrier-tested | Starter Species | Basic/Type/BST/Legendary Filter | Starter Held Items | spaeter Held Items |
 | Static/Gift | P1-supported fuer Species | Static/Gift Species | Similar Strength im Scope | Level Modifier/Fix Music offen | spaeter |
 | In-Game Trades | Guarded / Preserve-only, not supported | Null-/Invalid-Species Guard, Non-ROM TradeRandomizerTest, ROM-freier Gen3 Writer-Preserve-Test | - | keine validen aktiven Rows, kein Species-Write-Smoke, kein Text/Nickname/OT/IV/Item | nur mit Reopen-Evidenz |
@@ -142,10 +143,10 @@ Diese Tabelle listet alle aktuell erfassten FVX-Features einmal kompakt auf. Sie
 | 25 | `FVX-TRAIT-021` | Pokemon Traits | Evolutions: No Convergence | tested-non-rom | Evolution-Species-Carrier / Graph filter |
 | 26 | `FVX-TRAIT-022` | Pokemon Traits | Evolutions: Force Change | tested-non-rom | Evolution-Species-Carrier / Target filter |
 | 27 | `FVX-TRAIT-023` | Pokemon Traits | Evolutions: Force Growth | tested-non-rom | Evolution-Species-Carrier / BST filter |
-| 28 | `FVX-TRAIT-024` | Pokemon Traits | Change Impossible Evolutions | Nicht begonnen | Evolution improvement / Methoden |
-| 29 | `FVX-TRAIT-025` | Pokemon Traits | Make Evolutions Easier | Nicht begonnen | Evolution improvement / Level-Methoden |
-| 30 | `FVX-TRAIT-026` | Pokemon Traits | Use Estimated Evolution Levels | Nicht begonnen | Evolution improvement Zusatzflag |
-| 31 | `FVX-TRAIT-027` | Pokemon Traits | Remove Time-Based Evolutions | Nicht begonnen | Evolution improvement / Time methods |
+| 28 | `FVX-TRAIT-024` | Pokemon Traits | Change Impossible Evolutions | methods-plan-ready | Evolution improvement / Methoden |
+| 29 | `FVX-TRAIT-025` | Pokemon Traits | Make Evolutions Easier | methods-plan-ready | Evolution improvement / Level-Methoden |
+| 30 | `FVX-TRAIT-026` | Pokemon Traits | Use Estimated Evolution Levels | methods-plan-ready | Evolution improvement Zusatzflag |
+| 31 | `FVX-TRAIT-027` | Pokemon Traits | Remove Time-Based Evolutions | methods-plan-ready | Evolution improvement / Time methods |
 | 32 | `FVX-TRAIT-028` | Pokemon Traits | EXP-/Legendary-Kurven-Sonderfaelle | Nicht begonnen | Writer / Filter |
 | 33 | `FVX-SST-001` | Starters, Statics & Trades | Starter Pokemon: Custom | P1-supported | Global |
 | 34 | `FVX-SST-002` | Starters, Statics & Trades | Starter Pokemon: Random completely | P1-supported | Global |
@@ -292,17 +293,19 @@ Diese Tabelle listet alle aktuell erfassten FVX-Features einmal kompakt auf. Sie
 
 | Reihenfolge | Arbeitspaket | Ziel | Warum jetzt? | Erwartetes Ergebnis |
 |---:|---|---|---|---|
-| 1 | Evolution-Methoden-/Improvement-Slices | `FVX-TRAIT-024` bis `027` getrennt halten | 169B schliesst sie weiter aus dem Filter-Harness aus | separater Scope-Plan |
-| 2 | Evolution Carrier-Filter ROM-Smoke-Entscheidung | `FVX-TRAIT-017` und `020-023` nur bei Bedarf ROM-facing pruefen | 169B liefert Non-ROM-Evidenz, aber keine P1-Freigabe | nur explizit freigegebener Smoke |
-| 3 | MoveData Write | Power/Accuracy/PP/Type/Update Moves absichern | grosser offener Moves-Tab-Writer | `FVX-MOVE-001` bis `FVX-MOVE-006` hochstufen |
-| 4 | Palette Randomization | echte Palettenaenderungen absichern | grosser Graphics/Palette-Writer | `FVX-GFX-001` bis `FVX-GFX-004` hochstufen |
-| 5 | Special Tutors/Text/Menu | P2-Sonderpfade modellieren | nicht normaler Tutor-Tabellenpfad | P2-Entscheidung |
-| 6 | Graphics/Sprites | Custom Player Graphics/Sprites modellieren | getrennt von Paletten | P2-Entscheidung |
+| 1 | Evolution Methods Code-Review/Testplan | `FVX-TRAIT-024` und `027` Method-Mapping-Decision-Seams pruefen | 170 macht Methoden-Scope planbar, aber nicht getestet | read-only Review oder Non-ROM-Testplan |
+| 2 | Evolution Easier Split | `FVX-TRAIT-025` in Condense-Logik und Happiness-Byte-Patch trennen; `026` nur mit `024/025` fuehren | 170 trennt Datenmodell und Gen3-Writer-Risiko | separater enger Plan |
+| 3 | Evolution Carrier-Filter ROM-Smoke-Entscheidung | `FVX-TRAIT-017` und `020-023` nur bei Bedarf ROM-facing pruefen | 169B liefert Non-ROM-Evidenz, aber keine P1-Freigabe | nur explizit freigegebener Smoke |
+| 4 | MoveData Write | Power/Accuracy/PP/Type/Update Moves absichern | grosser offener Moves-Tab-Writer | `FVX-MOVE-001` bis `FVX-MOVE-006` hochstufen |
+| 5 | Palette Randomization | echte Palettenaenderungen absichern | grosser Graphics/Palette-Writer | `FVX-GFX-001` bis `FVX-GFX-004` hochstufen |
+| 6 | Special Tutors/Text/Menu | P2-Sonderpfade modellieren | nicht normaler Tutor-Tabellenpfad | P2-Entscheidung |
+| 7 | Graphics/Sprites | Custom Player Graphics/Sprites modellieren | getrennt von Paletten | P2-Entscheidung |
 
 ## Zuletzt abgeschlossene PRs / Diagnosen
 
 | Diagnose / PR | Bereich | Ergebnis | Statuswirkung |
 |---|---|---|---|
+| 170 | Evolution Methods Scope Plan | `methods-plan-ready` | `FVX-TRAIT-024` bis `027` geplant, keine Test-/P1-Promotion |
 | 169B / UPR-FVX PR #42 | Evolution Filter Non-ROM Harness Follow-up | UPR-FVX PR #42 gepinnt; `EvolutionFilterOptionsTest` vorhanden | `FVX-TRAIT-017` und `020-023` `tested-non-rom`, keine P1-Freigabe ohne ROM-Smoke/Reload |
 | 168 | Evolution Filter Harness Plan | `harness-plan-ready` | `FVX-TRAIT-017` und `020-023` ROM-frei testbar mit synthetischen Species/Evolution-Daten und `RomHandler`-Proxy/Fake |
 | 167 | Evolution Suboptions Consolidation | `evolution-scope-consolidated` | `FVX-TRAIT-016` bis `027` konsolidiert: `016` P1, `018/019` diagnosis-ready, `017/020-023` plan-only, `024-027` separat |
