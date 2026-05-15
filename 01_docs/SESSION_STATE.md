@@ -1,3 +1,15 @@
+# Session update - Diagnose 175B
+
+- New branch: `test/upr-fvx-cfru-dpe-movedata-write-followup`.
+- UPR-FVX PR #45 was verified as merged into `compat/firered-gen9-cfru-dpe`.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX commit `1be6f51779906af017f6177f264e41f8c7902d8e`.
+- Original UPR-FVX test commit: `60996b166113d40f4ff848d8063e98661415a599`.
+- Follow-up 175B records the Non-ROM `Gen3MoveDataWriterTest` and `MoveUpdateDecisionTest` harnesses for MoveData writer/updater decisions.
+- Statuswirkung: `FVX-MOVE-001`, `FVX-MOVE-002`, `FVX-MOVE-003`, `FVX-MOVE-004` and `FVX-MOVE-006` move to `tested-non-rom`, not P1-supported.
+- `FVX-MOVE-005` Move Names/Text remains out of scope.
+- Checks from PR #45 are recorded as focused `:romio:test --tests '*Move*'`, focused `:random:test --tests '*Move*'`, full `:romio:test` and full `:random:test`, all `BUILD SUCCESSFUL`; the known existing `PlayerCharacterGraphicsTest.fromSheetGiveSameImagesAndPalsAsFromSeparate_RSE()` report failure line remains a risk/assumption.
+- No ROM, save, emulator state, output ROM, log, Randomizer JAR, tool binary, build artifact, private path, hash, secret, token or `.env` file was committed.
+
 # Session update - Diagnose 174B
 
 - New branch: `test/upr-fvx-cfru-dpe-make-evolutions-easier-followup`.

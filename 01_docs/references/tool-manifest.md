@@ -1,3 +1,15 @@
+# Tool Manifest Update - 2026-05-15 - MoveData write follow-up
+
+- Workspace branch: `test/upr-fvx-cfru-dpe-movedata-write-followup`.
+- UPR-FVX fork base branch: `compat/firered-gen9-cfru-dpe`.
+- UPR-FVX PR #45: <https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/45>.
+- Original UPR-FVX test commit: `60996b166113d40f4ff848d8063e98661415a599`.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX commit `1be6f51779906af017f6177f264e41f8c7902d8e`.
+- Previous workspace pin was `85b282112322f8991dd11b14cc98d6dd68fd3fd4`.
+- Scope: Non-ROM `Gen3MoveDataWriterTest` and `MoveUpdateDecisionTest`; synthetic MoveData bytes and synthetic `Move` data cover `FVX-MOVE-001`, `FVX-MOVE-002`, `FVX-MOVE-003`, `FVX-MOVE-004` and `FVX-MOVE-006`.
+- Checks recorded from UPR-FVX PR #45: focused `./gradlew --offline :romio:test --tests '*Move*'`, focused `./gradlew --offline :random:test --tests '*Move*'`, full `./gradlew --offline :romio:test` and full `./gradlew --offline :random:test`, all `BUILD SUCCESSFUL`; known existing `PlayerCharacterGraphicsTest.fromSheetGiveSameImagesAndPalsAsFromSeparate_RSE()` report failure line remains a risk/assumption.
+- Safety: no Workspace code changes, no UPR-FVX code changes in this block, no ROM/save/output/log/build artifacts committed, no Move Names/Text scope, no ROM-Smoke, no Writer-/Reload-ROM test, no P1-promotion and no Original-Upstream PR.
+
 # Tool Manifest Update - 2026-05-15 - Evolution make easier follow-up
 
 - Workspace branch: `test/upr-fvx-cfru-dpe-make-evolutions-easier-followup`.

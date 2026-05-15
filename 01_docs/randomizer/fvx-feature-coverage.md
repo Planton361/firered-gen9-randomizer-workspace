@@ -1,3 +1,12 @@
+# Coverage update - Diagnose 175B
+
+- UPR-FVX PR #45 is merged and the workspace submodule is pinned at `1be6f51779906af017f6177f264e41f8c7902d8e`.
+- `Gen3MoveDataWriterTest` provides Non-ROM `:romio:test` coverage for Gen3 MoveData core byte writer decisions.
+- `MoveUpdateDecisionTest` provides Non-ROM `:random:test` coverage for `Update Moves to Generation` apply decisions.
+- `FVX-MOVE-001`, `FVX-MOVE-002`, `FVX-MOVE-003`, `FVX-MOVE-004` and `FVX-MOVE-006` move to `tested-non-rom`.
+- This is not a P1-supported promotion: no ROM-/Reload-Evidenz, ROM-Smoke, output-ROM or Randomizer run is included.
+- `FVX-MOVE-005` Move Names/Text remains out of scope.
+
 # Coverage update - Diagnose 174B
 
 - UPR-FVX PR #44 is merged and the workspace submodule is pinned at `85b282112322f8991dd11b14cc98d6dd68fd3fd4`.
@@ -771,12 +780,12 @@ Diagnose 082 bestaetigt `FVX-TRAIT-018` nach der 081-Normalisierung:
 
 ### Moves & Movesets
 
-- FVX-MOVE-001 | Randomize Move Power | GUI-kompatibel
-- FVX-MOVE-002 | Randomize Move Accuracy | GUI-kompatibel
-- FVX-MOVE-003 | Randomize Move PP | GUI-kompatibel
-- FVX-MOVE-004 | Randomize Move Types | GUI-kompatibel
+- FVX-MOVE-001 | Randomize Move Power | tested-non-rom
+- FVX-MOVE-002 | Randomize Move Accuracy | tested-non-rom
+- FVX-MOVE-003 | Randomize Move PP | tested-non-rom
+- FVX-MOVE-004 | Randomize Move Types | tested-non-rom
 - FVX-MOVE-005 | Randomize Move Names | Write modelliert
-- FVX-MOVE-006 | Update Moves to Generation | GUI-kompatibel
+- FVX-MOVE-006 | Update Moves to Generation | tested-non-rom
 - FVX-MOVE-007 | Pokemon Movesets randomisieren | GUI-kompatibel
 - FVX-MOVE-008 | Guaranteed Level 1 Moves | Plan erstellt
 - FVX-MOVE-009 | Reorder Damaging Moves | GUI-kompatibel

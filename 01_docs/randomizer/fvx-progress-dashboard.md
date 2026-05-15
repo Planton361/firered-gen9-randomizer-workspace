@@ -33,13 +33,13 @@ Markdown bleibt Source of Truth.
 
 | Feld | Aktueller Stand |
 |---|---|
-| Stand | Nach Diagnose 174B |
-| Aktueller enger Blocker | Kein Evolution-Species-Carrier-Fixblock; `025A` ist tested-non-rom, `025B` bleibt Happiness-Byte-Patch-/Writer-Risiko |
+| Stand | Nach Diagnose 175B |
+| Aktueller enger Blocker | Kein MoveData-P1-Fixblock; `FVX-MOVE-001/002/003/004/006` sind tested-non-rom, `FVX-MOVE-005` bleibt Move Names/Text out of scope |
 | Zuletzt entblockt | Evolution Similar Strength und Same Typing bleiben aus aktivem Blockerstatus genommen |
-| Zuletzt validiert | Follow-up 174B: UPR-FVX PR #44 `EvolutionMakeEasierDecisionTest` fuer `FVX-TRAIT-025A`; `026` helper-only |
+| Zuletzt validiert | Follow-up 175B: UPR-FVX PR #45 `Gen3MoveDataWriterTest` und `MoveUpdateDecisionTest` fuer MoveData Writer-/Updater-Entscheidungen |
 | Carrier-Smokes bestanden | Global Species Pool, Starter-Suboptions, Trainer Similar Strength, Wild Similar Strength/Type Restrictions |
-| Danach | `FVX-TRAIT-025B` Happiness-Byte-Patch separat planen oder Evolution-Writer-/Reload-Evidenz explizit freigeben |
-| Grosse offene Writer | MoveData Write, Palette Randomization, Evolution-Improvement-/Methoden-Slices |
+| Danach | Move Names/Text nur separat oeffnen; sonst `FVX-TRAIT-025B` Happiness-Byte-Patch planen oder Writer-/Reload-Evidenz explizit freigeben |
+| Grosse offene Writer | Palette Randomization, Evolution-Improvement-/Methoden-Slices, Move Names/Text |
 | Spaeter / P2 | Special Tutors/Text/Menu, Graphics/Sprites, Misc Tweaks |
 
 ## Statusmodell
@@ -79,7 +79,7 @@ Markdown bleibt Source of Truth.
 | General Options | Gemischt | - | Limit Pokemon, No Premature Evolutions im Starter-Carrier | Race Mode, Intro Mon offen | separater General-Smoke | 064 |
 | Pokemon Traits | Gemischt | Base Stats, Species Types, Abilities, Evolution Species-only | Evolution Similar Strength und Evolution Same Typing diagnosis-ready; `017/020-023` tested-non-rom; `024/027` tested-non-rom; `025A` tested-non-rom; `026` helper-only | Writer-/Reload-Evidenz fuer Methoden-Scope und `025B` fehlt | `FVX-TRAIT-025B` Plan oder separat freigegebener Writer-/Reload-Scope | 051, 052, 059, 070, 075, 026, 079-082, 165-174 |
 | Starters, Statics & Trades | Gemischt | Starter Species, Static/Gift Species | Starter-Filter | Starter Held Items offen; In-Game Trades guarded/preserve-only, not supported | naechster Nicht-Trades-Scope oder Reopen-Evidenz | 065, 152-164 |
-| Moves & Movesets | Gemischt | Movesets/Learnsets, Reorder Damaging | einige Filter-/Sanity-Optionen | MoveData Write offen | MoveData Write Preserve | 049, 056 |
+| Moves & Movesets | Gemischt | Movesets/Learnsets, Reorder Damaging | MoveData Power/Accuracy/PP/Type/Update tested-non-rom; einige Filter-/Sanity-Optionen | Move Names/Text offen; keine neue P1-Promotion | Move Names/Text nur separat oder ROM-/Reload-Evidenz explizit freigeben | 049, 056, 083-090, 175 |
 | Foe Pokemon / Trainer | Teilweise blockiert | Trainer Species, Movesets, Held Items, Similar Strength | Similar Strength im Trainer-Carrier | Type Diversity / Type Themes, Additional Pokemon, Textnamen | Trainer-Suboptionen spaeter | 070, 075, 077 |
 | Wild Pokemon | Stark | Standard/Fallback Wild, Surfing, Fishing, Rock Smash, Wild Held Items | Similar Strength, Type Restrictions im Wild-Carrier | Catch Rate, Catch Em All, Level Modifier offen | spaeter Wild-Level/Catch | 075 |
 | TM/HMs & Tutors | Stark, Suboptionen offen | TM/HM 128-Slot, Tutor 152-Slot, Compatibility, Sanity | Filter-/Follow-Suboptionen teilweise Carrier | Special Tutors/Text/Menu out of scope | normale Suboptionen spaeter testen | 038, 040, 049 |
@@ -103,7 +103,7 @@ Markdown bleibt Source of Truth.
 | Trainer | Teilweise blockiert | Species, Movesets, Held Items, Similar Strength | Similar Strength | Type Diversity / Type Themes | spaeter enger Blocker |
 | Wild | Stark | Standard/Fallback Wild, Surfing, Fishing, Rock Smash, Held Items | Similar Strength, Type Restrictions | Catch Rate, Catch Em All, Level Modifier | spaeter |
 | Movesets | P1-supported | Learnsets/Movesets/Reorder/Sanity | Filter-Suboptionen | - | Regression spaeter |
-| MoveData | Write modelliert | Read vorhanden | - | Power/Accuracy/PP/Type/Names/Update Write offen | MoveData Writer |
+| MoveData | tested-non-rom | Power/Accuracy/PP/Type/Update Writer-/Updater-Entscheidungen ROM-frei getestet | - | Move Names/Text bleibt getrennt; keine P1-Promotion ohne ROM-/Reload-Evidenz | optionaler Reload-Scope nur separat |
 | TM/HM | P1-supported, Suboptionen offen | TM/HM moves + compatibility | Field/Filter/Follow-Suboptionen | - | spaeter |
 | Tutors | P1-supported normal, P2 Special | normal tutor moves + compatibility | filter/follow-suboptions | Special Tutors/Text/Menu | P2 |
 | Items | Supported im getesteten Scope | Field Items, Pickup Items, Shop Items, Held Items | - | weitere Sonderoptionen nur bei neuer Evidenz | Regression/Statuspflege |
@@ -165,12 +165,12 @@ Diese Tabelle listet alle aktuell erfassten FVX-Features einmal kompakt auf. Sie
 | 45 | `FVX-SST-013` | Starters, Statics & Trades | Static Pokemon: Level Modifier / Fix Music | Nicht begonnen | Writer |
 | 46 | `FVX-SST-014` | Starters, Statics & Trades | In-Game Trades: Given/Requested species | Guarded / Preserve-only | Guard / Writer |
 | 47 | `FVX-SST-015` | Starters, Statics & Trades | In-Game Trades: Nickname/OT/IV/Item | Blockiert / nicht freigegeben | Writer / Text |
-| 48 | `FVX-MOVE-001` | Moves & Movesets | Randomize Move Power | Write modelliert / Fix offen | Writer |
-| 49 | `FVX-MOVE-002` | Moves & Movesets | Randomize Move Accuracy | Write modelliert / Fix offen | Writer |
-| 50 | `FVX-MOVE-003` | Moves & Movesets | Randomize Move PP | Write modelliert / Fix offen | Writer |
-| 51 | `FVX-MOVE-004` | Moves & Movesets | Randomize Move Types | Write modelliert / Fix offen | Writer |
-| 52 | `FVX-MOVE-005` | Moves & Movesets | Randomize Move Names | Write modelliert / Fix offen | Writer / Text |
-| 53 | `FVX-MOVE-006` | Moves & Movesets | Update Moves to Generation | Write modelliert / Fix offen | Writer |
+| 48 | `FVX-MOVE-001` | Moves & Movesets | Randomize Move Power | tested-non-rom | Writer |
+| 49 | `FVX-MOVE-002` | Moves & Movesets | Randomize Move Accuracy | tested-non-rom | Writer |
+| 50 | `FVX-MOVE-003` | Moves & Movesets | Randomize Move PP | tested-non-rom | Writer |
+| 51 | `FVX-MOVE-004` | Moves & Movesets | Randomize Move Types | tested-non-rom | Writer |
+| 52 | `FVX-MOVE-005` | Moves & Movesets | Randomize Move Names | Write modelliert / Text out of scope | Writer / Text |
+| 53 | `FVX-MOVE-006` | Moves & Movesets | Update Moves to Generation | tested-non-rom | Writer |
 | 54 | `FVX-MOVE-007` | Moves & Movesets | Pokemon Movesets randomisieren | P1-supported | Global |
 | 55 | `FVX-MOVE-008` | Moves & Movesets | Guaranteed Level 1 Moves | Plan erstellt | Carrier / Filter |
 | 56 | `FVX-MOVE-009` | Moves & Movesets | Reorder Damaging Moves | P1-supported | Global |
@@ -284,7 +284,7 @@ Diese Tabelle listet alle aktuell erfassten FVX-Features einmal kompakt auf. Sie
 | Prioritaet | Blocker | Status | Betroffene Feature-IDs | Ursache / Symptom | Naechster Schritt | Belege |
 |---|---|---|---|---|---|---|
 | P0/P1 | In-Game Trades | Guarded / Preserve-only, not supported | `FVX-SST-014`, `FVX-SST-015` | keine validen aktiven Rows; Guard und Non-ROM-Tests vorhanden, aber kein Species-Write-Smoke | nur mit Reopen-Evidenz | 152-164 |
-| P1 | MoveData Write | Write modelliert / Fix offen | `FVX-MOVE-001` bis `FVX-MOVE-006` | Writer fuer moderne MoveData-Felder offen | MoveData Preserve Writer | 056 |
+| P1 | MoveData Write | tested-non-rom fuer Core-Bytes / Text offen | `FVX-MOVE-001` bis `FVX-MOVE-006` | Power/Accuracy/PP/Type/Update haben Non-ROM-Evidenz; Move Names/Text bleibt offen | Move Names/Text oder ROM-/Reload-Evidenz separat planen | 056, 083-090, 175 |
 | P1 | Trainer Type Diversity / Type Themes | Blockiert / gegen neue Roadmap pruefen | `FVX-FOE-009` | Diagnose 077 isoliert `primaryType == null` in `EnumSet<Type>` bei `updateUsedTypes(...)` als wahrscheinliche Ursache | bei Trainer-Fortsetzung eng gegateter Fixblock | 070, 075, 077 |
 | P1 | Palette Randomization | Write modelliert / Fix offen | `FVX-GFX-001` bis `FVX-GFX-004` | compressed/shared/repointing risks | Palette Preserve/Repoint Fix | 058 |
 | P2 | Special Tutors/Text/Menu | P2 / Out of scope | Tutor-Sonderpfade | Text/Menu/Special-Tutor-Logik ist nicht normaler Tutor-Scope | spaeter P2-Modell | 047, 060 |
@@ -298,7 +298,7 @@ Diese Tabelle listet alle aktuell erfassten FVX-Features einmal kompakt auf. Sie
 | 1 | Evolution Make Easier 025B Byte-Patch-Plan | Happiness-Byte-Patch nur separat writer-like planen | 174B deckt 025A Non-ROM ab; 025B bleibt Gen3-Byte-Patch-Risiko | read-only Plan oder separater Byte-Seam |
 | 2 | Evolution Methods Writer-/Reload-Entscheidung | `FVX-TRAIT-024`, `025A` und `027` nur bei separater Freigabe writer-/reload-seitig pruefen | Non-ROM-Evidenz liegt vor, aber keine Evolution-Table-Write-/Reload-Evidenz | nur explizit freigegebener Scope |
 | 3 | Evolution Make Easier 025A Harness | abgeschlossen: `FVX-TRAIT-025A` ROM-frei mit synthetischen Species/Evolution-Ketten getestet | UPR-FVX PR #44 ist gemerged und gepinnt | erledigt als 174B Follow-up |
-| 4 | MoveData Write | Power/Accuracy/PP/Type/Update Moves absichern | grosser offener Moves-Tab-Writer | `FVX-MOVE-001` bis `FVX-MOVE-006` hochstufen |
+| 4 | MoveData Write | Move Names/Text getrennt halten; optional ROM-/Reload-Evidenz fuer Core-Bytes separat planen | Core-Bytes sind tested-non-rom, nicht P1 | `FVX-MOVE-005` separat, `FVX-MOVE-001/002/003/004/006` nicht automatisch P1 |
 | 5 | Palette Randomization | echte Palettenaenderungen absichern | grosser Graphics/Palette-Writer | `FVX-GFX-001` bis `FVX-GFX-004` hochstufen |
 | 6 | Special Tutors/Text/Menu | P2-Sonderpfade modellieren | nicht normaler Tutor-Tabellenpfad | P2-Entscheidung |
 | 7 | Graphics/Sprites | Custom Player Graphics/Sprites modellieren | getrennt von Paletten | P2-Entscheidung |

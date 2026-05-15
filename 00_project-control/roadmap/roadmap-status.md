@@ -1,3 +1,12 @@
+# Roadmap status update - Diagnose 175B
+
+- MoveData write follow-up is recorded.
+- UPR-FVX PR #45 is merged and workspace-pinned at `1be6f51779906af017f6177f264e41f8c7902d8e`.
+- The pinned `Gen3MoveDataWriterTest` covers Gen3 MoveData writer decisions for Power, Accuracy, PP, Type, CFRU/DPE Fairy type byte and preserve behavior with synthetic bytes.
+- The pinned `MoveUpdateDecisionTest` covers `Update Moves to Generation` apply decisions with synthetic Move data.
+- Statuswirkung: `FVX-MOVE-001`, `FVX-MOVE-002`, `FVX-MOVE-003`, `FVX-MOVE-004` and `FVX-MOVE-006` are now `tested-non-rom`, not P1-supported; no ROM-/Reload-Evidenz, ROM-Smoke, output-ROM or Randomizer run was executed.
+- `FVX-MOVE-005` remains a separate Move Names/Text scope.
+
 # Roadmap status update - Diagnose 174B
 
 - Evolution Make Evolutions Easier Non-ROM harness follow-up is recorded.
@@ -623,7 +632,7 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | 08 Randomizer-Kompatibilität | CFRU/DPE MoveData Power/Accuracy/PP Reload-Smoke | Diagnose 085 bestaetigt `FVX-MOVE-001/002/003` mit Save/Log/Output/Reload true, `writeReloadMoveDataMismatches=0`, stabilen `+1/+3/+4` Bytes und `preserveByteMismatchesAllMoves=0` |
 | 08 Randomizer-Kompatibilität | CFRU/DPE MoveData Types Reload-Smoke | Diagnose 086 dokumentiert `FVX-MOVE-004` mit Save/Log/Output/Reload true und stabilen Preserve-Bytes, blockiert aber durch Fairy-Type-Byte-Mismatches: `writeReloadMoveDataMismatches=54`, `typeReloadMismatches=54`, `cfruDpeTypeByteMismatches=54` |
 | 08 Randomizer-Kompatibilität | CFRU/DPE MoveData Fairy-Type-Byte Fix | UPR-FVX PR #34 und Workspace PR #129 gemerged; UPR-FVX `fad56f60` und Diagnose 087 bestaetigen `FVX-MOVE-004` mit Save/Log/Output/Reload true, `writeReloadMoveDataMismatches=0`, `typeReloadMismatches=0`, `fairyReloadMismatches=0`, `cfruDpeTypeByteMismatches=0` und Preserve-Bytes bytegleich |
-| 08 Randomizer-Kompatibilität | MoveData Writer / Update Moves / Power / Accuracy / PP / Types | `FVX-MOVE-001/002/003/004/006` sind GUI-kompatibel; MoveData-Writer-Preserve, Split, Power, Accuracy, PP und Fairy-Type-Byte sind im CFRU/DPE Gen9-BPRE-Scope belegt |
+| 08 Randomizer-Kompatibilität | MoveData Writer / Update Moves / Power / Accuracy / PP / Types | `FVX-MOVE-001/002/003/004/006` sind zusaetzlich `tested-non-rom`; UPR-FVX PR #45 belegt MoveData-Writer-/Updater-Entscheidungen mit synthetischen Daten, ohne P1-Promotion |
 | 08 Randomizer-Kompatibilität | Move Names / Descriptions Text/Menu-Scope Plan | Diagnose 088 dokumentiert `FVX-MOVE-005` als getrennten Text/Menu-Scope; Name-only fixed-length Smoke ist realistisch, Move Descriptions / Text/Menu-Repointing bleibt zurueckgestellt |
 | 08 Randomizer-Kompatibilität | Move Names fixed-length Reload-Smoke Versuch | Diagnose 089 dokumentiert den blockierten Name-only-Smoke: kein freigegebener lokaler CFRU/DPE Gen9-BPRE-Kandidat mit `moves.total=992` und `991:PsychicNoise`; `FVX-MOVE-005` bleibt `Write modelliert` |
 | 08 Randomizer-Kompatibilität | Move Names fixed-length Reload-Smoke Retry | Diagnose 090 dokumentiert den blockierten Retry-Preflight: `candidateFilesChecked=94`, `candidatePreflightSuccessful=false`, kein fachlicher Smoke; `FVX-MOVE-005` bleibt `Write modelliert` |
