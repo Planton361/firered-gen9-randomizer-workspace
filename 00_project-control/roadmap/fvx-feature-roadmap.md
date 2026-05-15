@@ -1,3 +1,9 @@
+# 2026-05-15 - Wild Encounters roadmap start
+
+- Wild Encounters/Wild Pokemon Randomization becomes the next major Randomizer feature scope in Diagnose 148.
+- The first step is read-only candidate diagnostics for Gen3 encounter tables and CFRU/DPE Gen9 SpeciesSet mapping.
+- No Wild Encounter feature is promoted until diagnostics and later write/reload smokes pass.
+
 # 2026-05-15 - Held Items roadmap closure
 
 - Starter Held Items + Ban Bad passed in Diagnose 147.

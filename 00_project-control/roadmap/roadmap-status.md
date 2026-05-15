@@ -1,3 +1,9 @@
+# 2026-05-15 - Wild Encounters plan update
+
+- Diagnose 148 opens Wild Encounters/Wild Pokemon Randomization as the next separate feature scope after Held Items closure.
+- Plan requires read-only candidate diagnostics before any Wild Encounter write/reload smoke.
+- Key risks: SpeciesSet/Gen9 mapping, fixed slot counts, level/rate mismatches, encounter type grouping and cross-scope isolation.
+
 # 2026-05-15 - Held Items scope closure update
 
 - Diagnose 147 records a PASS for Starter Held Items + Ban Bad.
