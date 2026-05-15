@@ -1,3 +1,9 @@
+# FVX Feature Roadmap Update - 2026-05-15 - Shop Items Random reload smoke
+
+- `FVX-ITEM-006 Shop Items Random` is now GUI-compatible in the tested Shop-only CFRU/DPE Gen9-BPRE scope.
+- The next roadmap step is a narrow `FVX-ITEM-007 Shop Item Bans` scope plan or smoke split.
+- `FVX-ITEM-008..009` remain separate Shop sub-scopes; Field Items, Pickup and Held Items are unchanged.
+
 # FVX Feature Roadmap Update - 2026-05-15 - Shop Items Shuffle reload smoke
 
 - `FVX-ITEM-005 Shop Items Shuffle` is now GUI-compatible in the tested Shop-only CFRU/DPE Gen9-BPRE scope.
@@ -150,9 +156,9 @@ Die detaillierte Status- und Feature-ID-Matrix bleibt in:
 | Nicht begonnen | 39 |
 | Plan erstellt | 28 |
 | Read modelliert | 0 |
-| Write modelliert | 14 |
+| Write modelliert | 13 |
 | Getestet | 10 |
-| GUI-kompatibel | 39 |
+| GUI-kompatibel | 40 |
 | In Arbeit | 0 |
 | **Gesamt** | **130** |
 

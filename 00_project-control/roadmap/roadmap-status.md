@@ -1,3 +1,12 @@
+# Roadmap Status Update - 2026-05-15 - Shop Items Random reload smoke
+
+- Neuer Befund: `08_tests/randomizer/125_shop_items_random_reload_smoke.md`.
+- `FVX-ITEM-006 Shop Items Random` ist im getesteten Shop-only CFRU/DPE Gen9-BPRE Scope `GUI-kompatibel`.
+- Smoke-Ergebnis: Save/Log/Output/Reload true, `shopCountBefore/After/Reload=23`, `shopItemsTotalBefore/After/Reload=157`, `shopItemReloadMismatches=0`, Laengen-/Skip-/Special-Policy-Mismatches `0`.
+- Pool-Befund: aktiver no-ban/no-TM Shop-Random-Pool `allowedShopItemPoolSize=536`, Vergleichspool `nonBadShopItemPoolSize=485`, invalid/unloaded/fallback/placeholder Writes `0`.
+- Preise, Field Items, Pickup und Held Items blieben unveraendert: `priceTableTouched=false`, `priceReloadMismatches=0`, Fremdscope-Flags `false`.
+- `FVX-ITEM-007..009` bleiben `Write modelliert`; naechster Minimalblock ist ein Shop Item Bans Scope-Plan.
+
 # Roadmap Status Update - 2026-05-15 - Shop Items Shuffle reload smoke
 
 - Neuer Befund: `08_tests/randomizer/124_shop_items_shuffle_reload_smoke.md`.

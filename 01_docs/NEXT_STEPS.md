@@ -1,3 +1,21 @@
+# Next Steps Update - 2026-05-15 - Shop Item Bans next
+
+Aktueller Fokus:
+
+- Diagnose 125 confirms `FVX-ITEM-006 Shop Items Random` as reload-stable in the Shop-only CFRU/DPE Gen9-BPRE scope.
+- Stable criteria: `saveSuccessful=true`, `logSuccessful=true`, `outputRomExists=true`, `reloadSuccessful=true`, `shopItemReloadMismatches=0`, skipped-shop mismatches `0`, price reload mismatches `0`, and Field/Pickup/Held scope changes `false`.
+- `FVX-ITEM-007..009` remain separate and are not upgraded by the Random smoke.
+
+Naechster empfohlener Minimalblock:
+
+- `analysis/upr-fvx-cfru-dpe-shop-item-bans-scope-plan`
+
+Ziel des Folgeblocks:
+
+- Plan `FVX-ITEM-007 Shop Item Bans` as the next Shop-only sub-scope.
+- Keep Guarantee Evolution/X Items, Balance Prices, Cheap Rare Candies, Field Items, Pickup and Held Items out of scope.
+- Decide whether the next executable smoke should test Ban Bad first, or split Bad/Regular/OP ban policies into separate smokes.
+
 # Next Steps Update - 2026-05-15 - Shop Random smoke next
 
 Aktueller Fokus:
