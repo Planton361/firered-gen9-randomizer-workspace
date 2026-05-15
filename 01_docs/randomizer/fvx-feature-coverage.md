@@ -1,3 +1,9 @@
+# FVX Feature Coverage Update - 2026-05-15 - Pickup Ban Bad plan
+
+- `FVX-ITEM-010 Pickup Items Random`: `GUI-kompatibel` for the narrow `banBadRandomPickupItems=false` Pickup-only scope from Diagnose 118.
+- `FVX-ITEM-010 Pickup Ban Bad`: planned next as a separate Pickup-only smoke with `banBadRandomPickupItems=true`; not yet upgraded by Diagnose 119.
+- Field Items, Shops and Held Items are not affected by this Pickup Ban Bad plan.
+
 # FVX Feature Coverage Update - 2026-05-15 - Pickup reload locator fix
 
 - `FVX-ITEM-010 Pickup Items Random` is GUI-compatible for the narrow Pickup-only `banBadRandomPickupItems=false` scope after Diagnose 118.
