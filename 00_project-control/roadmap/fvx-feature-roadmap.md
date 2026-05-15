@@ -1,3 +1,9 @@
+# 2026-05-15 - Held Items roadmap closure
+
+- Starter Held Items + Ban Bad passed in Diagnose 147.
+- Held Items coverage now includes Wild, Wild Ban Bad, Trainer Boss/Important/Regular, Regular Trainer filters, Starter no-Ban-Bad and Starter Ban Bad in separate tested scopes.
+- Next roadmap step is the next major Randomizer feature scope.
+
 # 2026-05-15 - Held Items roadmap starter update
 
 - Starter Held Items without Ban Bad passed in Diagnose 146.

@@ -1,3 +1,7 @@
+# Latest - Diagnose 147
+
+- `147_starter_held_items_ban_bad_reload_smoke.md`: Starter Held Items + Ban Bad Write/Reload-Smoke; PASS with non-bad pool writes, reload stability and Wild/Trainer/Field/Pickup/Shop isolation. Tested Held Items scope is closed.
+
 # Latest - Diagnose 146
 
 - `146_starter_held_items_reload_smoke.md`: Starter Held Items Write/Reload-Smoke without Ban Bad; PASS with one shared Gen3/FRLG Starter Held Item slot, reload stability and Wild/Trainer/Field/Pickup/Shop isolation.

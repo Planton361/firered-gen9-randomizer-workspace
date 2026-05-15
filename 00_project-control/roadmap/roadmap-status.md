@@ -1,3 +1,10 @@
+# 2026-05-15 - Held Items scope closure update
+
+- Diagnose 147 records a PASS for Starter Held Items + Ban Bad.
+- Save/log/output/reload succeeded; `starterHeldItemReloadMismatches=0`; `badStarterHeldItemWrites=0`; invalid/unloaded/fallback/placeholder writes were `0`.
+- Wild/Trainer/Field/Pickup/Shop scopes stayed unchanged.
+- Tested Held Items scope is closed for CFRU/DPE Gen9-BPRE.
+
 # 2026-05-15 - Starter Held Items smoke update
 
 - Diagnose 146 records a PASS for Starter Held Items without Ban Bad.
