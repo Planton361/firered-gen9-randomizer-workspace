@@ -1,3 +1,9 @@
+# Next steps update - Diagnose 176B
+
+- Treat `FVX-WILD-007`, `FVX-WILD-010` and `FVX-WILD-012` as `tested-non-rom`, not P1-supported.
+- The merged UPR-FVX PR #46 harness covers ROM-free Wild minimum Catch Rate, Catch Em All and Level Modifier / Balance Low Level decisions with synthetic data.
+- Do not run ROM-Smoke, Writer-/Reload-ROM tests, output-ROM generation, Randomizer runs or P1-promotion work without a separate explicit scope.
+
 # Next steps update - Diagnose 175B
 
 - Treat `FVX-MOVE-001`, `FVX-MOVE-002`, `FVX-MOVE-003`, `FVX-MOVE-004` and `FVX-MOVE-006` as `tested-non-rom`, not P1-supported.

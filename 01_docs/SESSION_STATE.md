@@ -1,3 +1,14 @@
+# Session update - Diagnose 176B
+
+- New branch: `test/upr-fvx-cfru-dpe-wild-catch-level-followup`.
+- UPR-FVX PR #46 was verified as merged into `compat/firered-gen9-cfru-dpe`.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX commit `c86221d758bece06b216b1f4fb23dd8e4a6c8ec0`.
+- Original UPR-FVX test commit: `8665eb4f070567fd908327b272c7f1da5abdef68`.
+- Follow-up 176B records the Non-ROM `WildCatchLevelDecisionTest` harness for Wild catch/level decision paths.
+- Statuswirkung: `FVX-WILD-007`, `FVX-WILD-010` and `FVX-WILD-012` move to `tested-non-rom`, not P1-supported.
+- Checks from PR #46 are recorded as focused `:random:test --tests com.uprfvx.random.randomizers.WildCatchLevelDecisionTest`, broader `:random:test --tests '*Wild*'` and full `:random:test`, all `BUILD SUCCESSFUL`.
+- No ROM, save, emulator state, output ROM, log, Randomizer JAR, tool binary, build artifact, private path, hash, secret, token or `.env` file was committed.
+
 # Session update - Diagnose 175B
 
 - New branch: `test/upr-fvx-cfru-dpe-movedata-write-followup`.

@@ -1,5 +1,11 @@
 # Current update
 
+- `176_wild_catch_level_followup.md`: records merged UPR-FVX PR #46 and pins `02_external/upr-fvx` to `c86221d758bece06b216b1f4fb23dd8e4a6c8ec0`.
+- The pinned `WildCatchLevelDecisionTest` covers `FVX-WILD-007` Set Minimum Catch Rate, `FVX-WILD-010` Catch Em All Mode and `FVX-WILD-012` Balance Low Level Encounters + Level Modifier with synthetic Non-ROM data.
+- Statuswirkung: `FVX-WILD-007`, `FVX-WILD-010` and `FVX-WILD-012` are now `tested-non-rom`, not P1-supported; no ROM-Smoke, Writer-/Reload-ROM evidence, output-ROM or Randomizer run was performed.
+
+# Current update
+
 - Diagnose 175B records merged UPR-FVX PR #45 for the Non-ROM `Gen3MoveDataWriterTest` and `MoveUpdateDecisionTest` harnesses and pins `02_external/upr-fvx` to `1be6f51779906af017f6177f264e41f8c7902d8e`. `FVX-MOVE-001`, `FVX-MOVE-002`, `FVX-MOVE-003`, `FVX-MOVE-004` and `FVX-MOVE-006` are now `tested-non-rom`; `FVX-MOVE-005` Move Names/Text remains out of scope and no P1-promotion is made.
 
 # Current update
