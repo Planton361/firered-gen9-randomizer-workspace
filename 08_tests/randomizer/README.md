@@ -1,3 +1,10 @@
+# 2026-05-15 - Diagnose 130 Shop Guarantee Items Scope Plan
+
+- Neues Protokoll: `130_shop_guarantee_items_scope_plan.md`.
+- Ergebnis: `FVX-ITEM-008 Guarantee Evolution/X Items` ist als separater Shop-only Subscope nach `FVX-ITEM-007` geplant.
+- Guarantee-Flags wirken nur im `ShopItemsMod.RANDOM`-Pfad; Shuffle und Unchanged liefern keinen Guarantee-Nachweis.
+- Empfohlen: zuerst Guarantee Evolution Items Smoke, danach Guarantee X Items Smoke; Preise, Cheap Rare Candies, Field Items, Pickup und Held Items bleiben aus Scope.
+
 # 2026-05-15 - Diagnose 129 Shop Items Random + Ban OP Reload Smoke
 
 - Neues Protokoll: `129_shop_items_random_ban_op_reload_smoke.md`.

@@ -1,3 +1,9 @@
+# 2026-05-15 - Shop Guarantee Items Roadmap Update
+
+- Diagnose 130 plant `FVX-ITEM-008 Guarantee Evolution/X Items` als naechsten Shop-only Subscope.
+- Erste empfohlene Ausfuehrung: Guarantee Evolution Items Smoke, danach Guarantee X Items Smoke, Kombination nur nach stabilen Einzel-Smokes.
+- Keine Hochstufung fuer Ban-Kombinationen, Shop-Preise, Cheap Rare Candies, Field Items, Pickup oder Held Items.
+
 # 2026-05-15 - Shop Item Bans Ban OP Roadmap Update
 
 - Diagnose 129 stuft den Ban-OP-Subscope von `FVX-ITEM-007` hoch: Shop Random mit `banOPShopItems=true` ist im getesteten Shop-only Scope GUI-kompatibel.
