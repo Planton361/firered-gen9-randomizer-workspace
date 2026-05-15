@@ -230,3 +230,13 @@ Naechste Item-Reihenfolge:
 1. Pickup Items separat read-only planen und diagnostizieren.
 2. Shops separat planen, weil Terminatoren, Shoplisten-Laengen, Preise und Repointing ein eigener Scope sind.
 3. Held Items bleiben getrennt von Field Items / Shops / Pickup.
+
+## 2026-05-15 - Pickup Items diagnostics scope planned
+
+Pickup folgt nach Field Items als separater Item-Writer-Scope:
+
+- `FVX-ITEM-010` bleibt `Write modelliert`, bis eine Pickup-only Kandidatendiagnose und danach eigene Reload-Smokes vorliegen.
+- Der Gen3-Pfad nutzt `PickupTableStartLocator`, `PickupItemCount`, `PickupItem.PROBABILITY_SLOTS=10` und schreibt nur Item-ID-Felder.
+- CFRU/DPE-Risiken: falscher Locator, abweichende Common/Rare-Struktur, Probability-Semantik, moderne/fallback/bad Items und TM-Holdability-/Reusable-Policy.
+- Reihenfolge: read-only Diagnose, Random ohne Ban Bad, Random mit Ban Bad.
+- Shops bleiben wegen Terminator-/Repointing-/Preis-Scope separat.

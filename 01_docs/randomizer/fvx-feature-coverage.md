@@ -595,3 +595,10 @@ Diese Matrix soll nicht als 130 Roadmap-Zeilen gepflegt werden. Fuer die Roadmap
 - `FVX-ITEM-003 Field Items Random even distribution`: `GUI-kompatibel` im getesteten Field-Items-only Scope, inklusive `banBadRandomFieldItems=true` fuer `FieldItemsMod.RANDOM_EVEN`.
 - `FVX-ITEM-004 Field Items Ban Bad Items`: `GUI-kompatibel` fuer Field Items Random und Random Even.
 - Nicht enthalten: Shops, Pickup, Encounter Held Items, Trainer Held Items, Starter Held Items, TM/HM/Tutor/Learnset, Scriptparser, Palette/Graphics, MoveData/MoveNames, TypeChart/TypeEffectiveness, Trainer/Wild/Evolution/Text/Menu.
+
+## 2026-05-15 - Pickup Items planning after Diagnose 114
+
+- `FVX-ITEM-010 Pickup Items Random / Ban Bad Items`: bleibt `Write modelliert`.
+- Pickup ist als eigener Table-/Locator-/Probability-Writer geplant und nicht durch die Field-Items-Smokes 102/109/110/112/113 abgedeckt.
+- Naechster Schritt ist eine read-only Pickup-only Kandidatendiagnose fuer Locator, Tabellenlaenge, Entry-Size, Probability-Modell, Common/Rare-Hinweise und Item-Pool-Sicherheit.
+- Keine Hochstufung fuer Shops, Encounter Held Items, Trainer Held Items oder Starter Held Items.
