@@ -1,3 +1,24 @@
+# Next Steps Update - 2026-05-15 - Pickup reload locator fix next
+
+Aktueller Fokus:
+
+- Diagnose 116 blocks `FVX-ITEM-010 Pickup Items Random` after successful save/log/output/reopen because fresh reload cannot locate the Pickup table.
+- Diagnose 117 narrows the likely cause to the content-based `PickupTableStartLocator`: the current handler keeps a cached table offset after write, but a fresh handler searches for the old item-ID pattern, which Pickup Random has changed.
+- `FVX-ITEM-010` remains `Write modelliert` / reload-blocked.
+- Pickup Ban Bad remains blocked until Random without Ban Bad reloads stably.
+
+Naechster empfohlener Minimalblock:
+
+- `compat/upr-fvx-cfru-dpe-pickup-items-reload-locator-fix`
+
+Ziel des Folgeblocks:
+
+- Minimalen UPR-FVX-Fix fuer eine reloadstabile Pickup-Table-Lokalisierung vorbereiten.
+- Bevorzugt eine stabile ROM-Entry-Adresse oder nicht item-inhaltsabhaengige Referenz im sicheren CFRU/DPE-/FRLG-Gate nutzen.
+- Den bestehenden `PickupTableStartLocator` nur als klassischen Fallback erhalten.
+- Danach Pickup-only Random-Smoke mit `banBadRandomPickupItems=false` wiederholen.
+- Keine Pickup Ban Bad, Field Items, Shops, Held Items, TM/HM/Tutor/Learnset, Palette/Graphics, MoveData/MoveNames, TypeChart, Trainer/Wild/Evolution, Text/Menu oder Scriptparser-Arbeit.
+
 # Next Steps Update - 2026-05-15 - Pickup Items reload locator blocker
 
 Aktueller Fokus:

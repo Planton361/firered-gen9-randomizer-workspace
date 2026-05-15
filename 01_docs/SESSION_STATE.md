@@ -1,3 +1,15 @@
+# Session State Update - 2026-05-15 - Pickup Items reload locator blocker plan
+
+- Branch: `analysis/upr-fvx-cfru-dpe-pickup-items-reload-locator-blocker-plan`.
+- Workspace PR #161 was verified as merged before branch creation.
+- UPR-FVX pin remains `02_external/upr-fvx` at `328e4441c2981d37aba9e2707a6f27f779b026e2`.
+- New protocol: `08_tests/randomizer/117_pickup_items_reload_locator_blocker_plan.md`.
+- Read-only UPR-FVX analysis narrows the Pickup Random reload blocker to table localization, not to the direct item write: `getPickupItems()` finds `PickupTableStartLocator` by content pattern and caches the offset only within the handler instance; `setPickupItems(...)` then changes the item ID words that are part of that pattern.
+- This explains Diagnose 116: same-handler `pickupItemsTotalAfter=16`, but fresh reload has no cache and reports `pickupLocatorSuccessful=false` / `pickupItemsTotalReload=0`.
+- Recommended next branch: `compat/upr-fvx-cfru-dpe-pickup-items-reload-locator-fix`.
+- Pickup Ban Bad remains blocked until Pickup Random without Ban Bad is reload-stable.
+- No code changes, no `02_external/**` changes, no submodule pin change, no build, no Randomizer run, no private artefact documentation.
+
 # Session State Update - 2026-05-15 - Pickup Items Random reload smoke blocked
 
 - Branch: `test/upr-fvx-cfru-dpe-pickup-items-random-reload-smoke`.
