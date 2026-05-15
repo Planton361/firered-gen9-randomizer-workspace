@@ -1,3 +1,16 @@
+# Session State Update - 2026-05-15 - Pickup Items Random reload smoke blocked
+
+- Branch: `test/upr-fvx-cfru-dpe-pickup-items-random-reload-smoke`.
+- Workspace PR #160 was verified as merged before branch creation.
+- UPR-FVX pin remains `02_external/upr-fvx` at `328e4441c2981d37aba9e2707a6f27f779b026e2`.
+- New protocol: `08_tests/randomizer/116_pickup_items_random_reload_smoke.md`.
+- A locally approved CFRU/DPE Gen9-BPRE candidate was used for a Pickup-only `FVX-ITEM-010 Pickup Items Random` smoke with `banBadRandomPickupItems=false`.
+- Sanitized result: `candidateLoaded=true`, `smokeExecuted=true`, `saveSuccessful=true`, `logSuccessful=true`, `outputRomExists=true`, `logNonEmpty=true`, `reloadSuccessful=true`.
+- Blocker: after write, fresh reload cannot locate the Pickup table: `pickupLocatorSuccessful=false`, `pickupItemsTotalReload=0`, `pickupItemReloadMismatches=16`, `pickupTableLengthMismatches=1`, `pickupProbabilityMismatches=16`.
+- Direct write-scope safety remained clean: `pickupItemsTotalBefore=16`, `pickupItemsTotalAfter=16`, `invalidPickupItemWrites=0`, `unloadedPickupItemWrites=0`, `fallbackPickupItemWrites=0`, `placeholderPickupItemWrites=0`, `fieldItemScopeChanged=false`, `shopItemScopeChanged=false`, `heldItemScopeChanged=false`.
+- `FVX-ITEM-010` remains `Write modelliert` / reload-blocked. Pickup Ban Bad remains untested.
+- No code changes, no `02_external/**` changes, no submodule pin change, no build, no committed ROM/log/output artefacts, no private artefact documentation.
+
 # Session State Update - 2026-05-15 - Pickup Items scope diagnostics
 
 - Branch: `test/upr-fvx-cfru-dpe-pickup-items-scope-diagnostics`.

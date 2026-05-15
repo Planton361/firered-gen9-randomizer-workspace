@@ -250,3 +250,12 @@ Pickup read-only diagnostics are complete for the next Item writer slice:
 - Invalid/unloaded/fallback/placeholder Pickup IDs were not found in the current table.
 - Ban Bad remains a separate follow-up because `pickupBadItemPoolCandidates=51` and `pickupBadItemPoolExcluded=51` must be validated through the Pickup poolfilter.
 - Reihenfolge: Pickup Random ohne Ban Bad, danach Pickup Random mit Ban Bad.
+
+## 2026-05-15 - Pickup Items Random reload blocker
+
+Pickup Random reached save/log/output but is not reload-stable:
+
+- `FVX-ITEM-010` remains `Write modelliert`.
+- Diagnose 116 shows `pickupItemsTotalBefore=16` and `pickupItemsTotalAfter=16`, but fresh reload reports `pickupLocatorSuccessful=false` and `pickupItemsTotalReload=0`.
+- The likely narrow issue is the content-based `PickupTableStartLocator` no longer matching after item IDs are randomized.
+- Next step: read-only locator-blocker plan before any codefix or Ban-Bad smoke.

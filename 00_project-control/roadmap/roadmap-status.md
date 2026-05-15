@@ -780,3 +780,11 @@ Zweck: Diagnose 082 reviewen und mergen; danach Evolution-Methoden-Writer und we
 - Item-ID safety is clean for invalid/unloaded/fallback/placeholder values, but Ban Bad remains a separate poolfilter concern: `pickupBadItems=7`, `pickupBadItemPoolCandidates=51`, `pickupBadItemPoolExcluded=51`.
 - `FVX-ITEM-010` remains `Write modelliert` until a Pickup Random Write-/Reload-Smoke passes.
 - Next recommended block: `test/upr-fvx-cfru-dpe-pickup-items-random-reload-smoke` with `banBadRandomPickupItems=false`.
+
+## 2026-05-15 - Pickup Items Random Reload-Smoke blocked
+
+- Diagnose 116 ran the Pickup-only Random smoke with `banBadRandomPickupItems=false`.
+- Save/log/output/reopen succeeded, but Pickup reload is blocked: `pickupLocatorSuccessful=false`, `pickupItemsTotalReload=0`, `pickupItemReloadMismatches=16`, `pickupTableLengthMismatches=1`, `pickupProbabilityMismatches=16`.
+- Direct write-scope safety stayed clean: `invalidPickupItemWrites=0`, `unloadedPickupItemWrites=0`, `fallbackPickupItemWrites=0`, `placeholderPickupItemWrites=0`; Field Items, Shops and Held Items were unchanged.
+- `FVX-ITEM-010` remains `Write modelliert` until the Pickup reload-locator blocker is fixed and re-smoked.
+- Next recommended block: `analysis/upr-fvx-cfru-dpe-pickup-items-reload-locator-blocker-plan`.
