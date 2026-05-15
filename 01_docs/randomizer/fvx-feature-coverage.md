@@ -1,3 +1,11 @@
+# FVX Feature Coverage Update - 2026-05-15 - Shop Item Bans scope plan
+
+- `FVX-ITEM-007 Shop Item Bans` remains `Write modelliert` after Diagnose 126; this block is read-only planning only.
+- Ban flags are confirmed as Shop Random pool filters: `banBadRandomShopItems` switches from allowed to non-bad items, `banRegularShopItems` removes regular shop items, and `banOPShopItems` removes OP shop items after TM removal.
+- They act under `ShopItemsMod.RANDOM`, not under Shuffle or Unchanged.
+- `FVX-ITEM-005` and `FVX-ITEM-006` remain `GUI-kompatibel` in their tested Shop-only scopes.
+- `FVX-ITEM-008..009`, Field Items, Pickup and Held Items are not affected.
+
 # FVX Feature Coverage Update - 2026-05-15 - Shop Items Random reload smoke
 
 - `FVX-ITEM-006 Shop Items Random`: `GUI-kompatibel` in the tested Shop-only CFRU/DPE Gen9-BPRE scope after Diagnose 125.

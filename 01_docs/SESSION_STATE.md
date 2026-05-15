@@ -1,3 +1,15 @@
+# Session State Update - 2026-05-15 - Shop Item Bans scope plan
+
+- Branch: `analysis/upr-fvx-cfru-dpe-shop-item-bans-scope-plan`.
+- Workspace PR #170 was verified as merged before branch creation.
+- New protocol: `08_tests/randomizer/126_shop_item_bans_scope_plan.md`.
+- Read-only UPR-FVX analysis confirms `FVX-ITEM-007 Shop Item Bans` as a Shop-only sub-scope after `FVX-ITEM-006`.
+- The Ban flags affect `ItemRandomizer.randomizeShopItems()` through `setupPossible()` and therefore require `ShopItemsMod.RANDOM`; they do not affect `ShopItemsMod.SHUFFLE` or `UNCHANGED`.
+- Baseline from Diagnose 125 remains the pool anchor: `allowedShopItemPoolSize=536`, `nonBadShopItemPoolSize=485`, with `badShopItemsBefore/After/Reload=36` treated as existing inventory, not a Ban result.
+- Recommended first executable smoke: Shop Random + Ban Bad only, with `banBadRandomShopItems=true` and Regular/OP/Guarantee/Price/Rare-Candy options disabled.
+- `FVX-ITEM-005` and `FVX-ITEM-006` remain `GUI-kompatibel` in their tested Shop-only scopes. `FVX-ITEM-007` remains `Write modelliert`; `FVX-ITEM-008..009`, Field Items, Pickup and Held Items are not upgraded.
+- No code changes, no `02_external/**` changes, no submodule pin change, no build, no Randomizer run, no ROM/log/output artefacts and no private artefact documentation.
+
 # Session State Update - 2026-05-15 - Shop Items Random reload smoke
 
 - Branch: `test/upr-fvx-cfru-dpe-shop-items-random-reload-smoke`.

@@ -1,3 +1,21 @@
+# Next Steps Update - 2026-05-15 - Shop Random Ban Bad smoke next
+
+Aktueller Fokus:
+
+- Diagnose 126 plans `FVX-ITEM-007 Shop Item Bans` as a Shop-only sub-scope.
+- Ban flags act only in `ShopItemsMod.RANDOM` through `ItemRandomizer.randomizeShopItems()` / `setupPossible()`.
+- First recommended Ban test is Ban Bad only because Diagnose 125 already provides `allowedShopItemPoolSize=536` and `nonBadShopItemPoolSize=485`.
+
+Naechster empfohlener Minimalblock:
+
+- `test/upr-fvx-cfru-dpe-shop-items-random-ban-bad-reload-smoke`
+
+Ziel des Folgeblocks:
+
+- Run only Shop Random + `banBadRandomShopItems=true`.
+- Keep `banRegularShopItems=false`, `banOPShopItems=false`, Guarantee Evolution/X Items, Balance Prices, Cheap Rare Candies, Field Items, Pickup and Held Items out of scope.
+- Required focus metrics: save/log/output/reload, `shopItemReloadMismatches=0`, skipped-shop preservation, `badShopItemWrites=0`, `banBadShopItemPoolCandidates=51`, price unchanged and foreign scopes unchanged.
+
 # Next Steps Update - 2026-05-15 - Shop Item Bans next
 
 Aktueller Fokus:
