@@ -1,3 +1,7 @@
+# Latest - Diagnose 143
+
+- `143_trainer_held_items_regular_reload_smoke.md`: Regular Trainer Held Items Write/Reload-Smoke; PASS with reload-stable `TrainerPokemon.heldItem`, class preserve-policy and Wild/Starter/Field/Pickup/Shop isolation.
+
 # Latest - Diagnose 142
 
 - `142_trainer_held_items_important_reload_smoke.md`: Important Trainer Held Items Write/Reload-Smoke; PASS with reload-stable `TrainerPokemon.heldItem`, class preserve-policy and Wild/Starter/Field/Pickup/Shop isolation.

@@ -1,3 +1,13 @@
+# 2026-05-15 - Next: Trainer Held Item filters or Starter Held Items
+
+Recommended next branch: `analysis/upr-fvx-cfru-dpe-trainer-held-items-filters-scope-plan` if filter coverage is required, or `test/upr-fvx-cfru-dpe-starter-held-items-reload-smoke` to move to Starter Held Items.
+
+Goal: decide whether Consumable/Sensible/Highest-Level Trainer Held Item filter options need separate coverage before moving to Starter Held Items.
+
+Keep out of scope: Wild Held Items, Field Items, Pickup, Shops and all non-Held-Item randomizer work.
+
+Required checks for any next smoke: save/log/output/reload success, class/preserve counters `0`, no invalid/unloaded/fallback/placeholder writes, and cross-scope isolation.
+
 # 2026-05-15 - Next: Regular Trainer Held Items smoke
 
 Recommended next branch: `test/upr-fvx-cfru-dpe-trainer-held-items-regular-reload-smoke`.

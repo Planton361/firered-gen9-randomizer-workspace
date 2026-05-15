@@ -1,5 +1,11 @@
 # 2026-05-15 - Held Items roadmap update
 
+- Regular Trainer Held Items are now GUI-compatible in the tested CFRU/DPE Gen9-BPRE no-filter scope after Diagnose 143.
+- Boss, Important and Regular Trainer Held Items are covered separately without Consumable/Sensible/Highest-Level filters.
+- Trainer pool filters and Starter Held Items remain follow-up scopes.
+
+# 2026-05-15 - Held Items roadmap update
+
 - Important Trainer Held Items are now GUI-compatible in the tested CFRU/DPE Gen9-BPRE scope after Diagnose 142.
 - Boss Trainer Held Items remain covered separately; Regular Trainer Held Items, Trainer pool filters and Starter Held Items remain follow-up scopes.
 - Wild/Encounter Held Items remain covered with and without Ban Bad.

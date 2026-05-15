@@ -1,3 +1,9 @@
+# 2026-05-15 - Regular Trainer Held Items smoke update
+
+- Diagnose 143 records Regular Trainer Held Items Write/Reload-Smoke.
+- Result: PASS with save/log/output/reload successful, `regularTrainerHeldItemReloadMismatches=0`, preserve counters for Boss/Important/shouldNotGetBuffs all `0`, and no invalid/unloaded/fallback/placeholder writes.
+- Trainer Held Items class coverage is complete for Boss, Important and Regular in separate no-filter scopes; filter options and Starter Held Items remain open.
+
 # 2026-05-15 - Important Trainer Held Items smoke update
 
 - Diagnose 142 records Important Trainer Held Items Write/Reload-Smoke.
