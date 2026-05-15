@@ -1,3 +1,14 @@
+# Session State Update - 2026-05-15 - Pickup Items Ban Bad scope plan
+
+- Branch: `analysis/upr-fvx-cfru-dpe-pickup-items-ban-bad-scope-plan`.
+- UPR-FVX PR #38 and Workspace PR #163 were verified as merged before branch creation.
+- UPR-FVX pin remains `02_external/upr-fvx` at `a2373888ad17145f270ebf6ff17303af41aa86eb`.
+- New protocol: `08_tests/randomizer/119_pickup_items_ban_bad_scope_plan.md`.
+- Read-only UPR-FVX analysis confirms `banBadRandomPickupItems=true` only switches the Pickup candidate pool from `getAllowedItems()` to `getNonBadItems()` inside `ItemRandomizer.randomizePickupItems()`.
+- Baseline from 115/118 remains valid: Pickup table count `16`, entry size `4`, probability slots `10`, allowed pool `536`, non-bad pool `485`, bad pool candidates `51`, TMs allowed for Pickup because `canTMsBeHeld=true` and `isTMsReusable=false`.
+- Recommendation: run a direct Pickup-only Random Ban-Bad reload smoke next; no code fix is planned before that smoke.
+- No code changes, no `02_external/**` changes, no submodule pin change, no build, no Randomizer run, no private artefact documentation.
+
 # Session State Update - 2026-05-15 - Pickup Items reload locator fix
 
 - Branch: `compat/upr-fvx-cfru-dpe-pickup-items-reload-locator-fix`.

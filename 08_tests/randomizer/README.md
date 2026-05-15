@@ -215,3 +215,5 @@ Wenn ein Artefakt nicht eindeutig Smoke-Output ist, bleibt es lokal liegen und w
 - 116 - `116_pickup_items_random_reload_smoke.md`: Sanitized Pickup-only `FVX-ITEM-010 Pickup Items Random` smoke with `banBadRandomPickupItems=false`. Save/log/output/reopen true, but blocked because fresh reload cannot locate the Pickup table after random write (`pickupLocatorSuccessful=false`, `pickupItemsTotalReload=0`, reload mismatches `16`); no feature upgrade.
 
 - 118 - `118_pickup_items_reload_locator_fix.md`: UPR-FVX-Fix fuer reloadstabile Pickup-Table-Lokalisierung im CFRU/DPE Gen9-BPRE-Gate; Pickup-only Random-Smoke mit `banBadRandomPickupItems=false` reloadet stabil mit `pickupItemReloadMismatches=0`; Pickup Ban Bad bleibt separat.
+
+- 119 - `119_pickup_items_ban_bad_scope_plan.md`: Read-only plan for `FVX-ITEM-010 Pickup Items Random` with `banBadRandomPickupItems=true`. Confirms Ban Bad only swaps the Pickup candidate pool from allowed to non-bad allowed items; recommends a direct Pickup-only Ban-Bad reload smoke next, with Field Items, Shops and Held Items kept separate.

@@ -1,3 +1,10 @@
+# FVX Feature Roadmap Update - 2026-05-15 - Pickup Ban Bad next
+
+- Pickup Random without Ban Bad is reload-stable after UPR-FVX PR #38 and Diagnose 118.
+- Pickup Ban Bad is the next narrow Item sub-scope; it should be tested directly before Shops or Held Items.
+- Recommended branch: `test/upr-fvx-cfru-dpe-pickup-items-random-ban-bad-reload-smoke`.
+- Preserve separation from Field Items, Shops, Encounter Held Items, Trainer Held Items and Starter Held Items.
+
 # Roadmap Note - 2026-05-15 - Pickup reload locator fix
 
 - Diagnose 118 closes the Pickup Random reload-locator blocker for `banBadRandomPickupItems=false`.

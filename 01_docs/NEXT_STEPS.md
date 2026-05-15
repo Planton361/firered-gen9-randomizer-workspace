@@ -1,3 +1,21 @@
+# Next Steps Update - 2026-05-15 - Pickup Items Ban Bad smoke next
+
+Current recommended branch:
+
+- `test/upr-fvx-cfru-dpe-pickup-items-random-ban-bad-reload-smoke`
+
+Goal:
+
+- Run a sanitized Pickup-only Write/Reload-Smoke for `FVX-ITEM-010 Pickup Items Random` with `Settings.PickupItemsMod.RANDOM` and `banBadRandomPickupItems=true`.
+- Reuse UPR-FVX `a2373888ad17145f270ebf6ff17303af41aa86eb`.
+- Keep scope limited to Pickup Items; no Field Items, Shops, Held Items, TM/HM/Tutor/Learnset, Scriptparser, Palette/Graphics, MoveData/MoveNames, TypeChart, Trainer, Wild, Evolution or Text/Menu work.
+
+Expected focus metrics:
+
+- Preserve Diagnose 118 reload baseline: `pickupItemsTotalReload=16`, `pickupItemReloadMismatches=0`, `pickupProbabilityMismatches=0`, `pickupReloadLocatorRegression=false`.
+- Add Ban-Bad assertions: `badPickupItemWrites=0`, `pickupBadItemPoolCandidates=51`, `pickupBadItemPoolExcluded=51`, `pickupPoolNonBadSize=485`.
+- Confirm `fieldItemScopeChanged=false`, `shopItemScopeChanged=false`, and `heldItemScopeChanged=false`.
+
 # Next Steps Update - 2026-05-15 - Pickup Ban Bad next
 
 Aktueller Fokus:

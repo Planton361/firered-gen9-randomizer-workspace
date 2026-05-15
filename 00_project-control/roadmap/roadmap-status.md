@@ -1,3 +1,11 @@
+# Roadmap Status Update - 2026-05-15 - Pickup Ban Bad planning
+
+- `FVX-ITEM-010 Pickup Items Random` is reload-stable and GUI-compatible for `banBadRandomPickupItems=false` after Diagnose 118.
+- Diagnose 119 plans the remaining Pickup Ban Bad sub-scope.
+- No fix is recommended before the next smoke because Ban Bad only swaps the Pickup candidate pool to `getNonBadItems()`.
+- Next active P1 block: `test/upr-fvx-cfru-dpe-pickup-items-random-ban-bad-reload-smoke`.
+- Field Items remain at their documented status; Shops and Held Items remain separate scopes.
+
 # Roadmap Status Update - 2026-05-15 - Pickup reload locator fix
 
 - Added `08_tests/randomizer/118_pickup_items_reload_locator_fix.md`.
