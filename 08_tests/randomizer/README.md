@@ -1,5 +1,8 @@
 # Randomizer Testprotokolle
 
+- 123 - `123_shop_items_scope_diagnostics_candidate.md`: Sanitized read-only Shop-only candidate diagnostics. `candidateFilesChecked=3`, `candidateLoaded=true`, `shopScanSuccessful=true`, `shopCount=23`, `mainGameShopCount=3`, `skippedShopCount=20`, `specialShopCount=3`, `shopItemsTotal=157`, `terminatorModelStable=true`, `shopLengthMismatch=0`, invalid/unloaded/fallback/placeholder Shop items `0`; recommends a Shop Shuffle smoke next.
+
+
 - 122 - `122_shop_items_scope_diagnostics.md`: Blocked/Preflight fuer die read-only CFRU/DPE Shop-Items-Kandidatendiagnose. Keine explizit freigegebene lokale Kandidatenquelle im Block, daher `candidateFilesChecked=0`, `candidateLoaded=false`, `shopScanSuccessful=false`; Codepfadmodell mit `ShopPointerOffsets`, `MainGameShops`, `SkipShops`, `Shop` und `DataRewriter<Shop>` bleibt dokumentiert.
 
 

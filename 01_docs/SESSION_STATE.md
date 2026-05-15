@@ -1,3 +1,15 @@
+# Session State Update - 2026-05-15 - Shop Items candidate diagnostics
+
+- Branch: `test/upr-fvx-cfru-dpe-shop-items-scope-diagnostics-candidate`.
+- Workspace PR #167 was verified as merged before branch creation.
+- UPR-FVX pin remains `02_external/upr-fvx` at `a2373888ad17145f270ebf6ff17303af41aa86eb`.
+- New protocol: `08_tests/randomizer/123_shop_items_scope_diagnostics_candidate.md`.
+- An explicitly approved local CFRU/DPE Gen9-BPRE candidate source was used read-only for Shop diagnostics only; no private paths, ROM names, hashes, pointers, offsets, raw bytes or script data are documented.
+- Sanitized result: `candidateFilesChecked=3`, `candidateLoaded=true`, `shopScanSuccessful=true`, `shopCount=23`, `mainGameShopCount=3`, `skippedShopCount=20`, `specialShopCount=3`, `emptyShopCount=0`, `shopItemsTotal=157`, `minShopLength=2`, `maxShopLength=9`.
+- Structure/safety result: `terminatorModelStable=true`, `shopLengthMismatch=0`, `invalidShopItemIds=0`, `unloadedShopItemIds=0`, `fallbackShopItems=0`, `placeholderShopItems=0`, `badShopItems=36`, `tmShopItems=6`.
+- Scope result: `shopPointerModelObserved=true`, `dataRewriterOrRepointingRisk=true`, `skipShopsPreserved=true`, `fieldItemScopeChanged=false`, `pickupScopeChanged=false`, `heldItemScopeChanged=false`, `priceTableTouched=false`, `priceTableReadable=true`, `exceptionClass=none`, `stacktrace=none`.
+- `FVX-ITEM-005..009` are not upgraded. Diagnose 123 only clears the prerequisite for a Shop-only Shuffle smoke. No code changes, no `02_external/**` changes, no submodule pin change, no build, no Randomizer write/save and no committed artefacts.
+
 # Session State Update - 2026-05-15 - Shop Items scope diagnostics preflight
 
 - Branch: `test/upr-fvx-cfru-dpe-shop-items-scope-diagnostics`.

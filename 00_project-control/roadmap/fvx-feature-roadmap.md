@@ -1,3 +1,9 @@
+# FVX Feature Roadmap Update - 2026-05-15 - Shop Items candidate diagnostics
+
+- Shop Items advance from blocked preflight to a stable read-only candidate diagnostic.
+- The next roadmap step is a narrow `FVX-ITEM-005 Shop Items Shuffle` Write/Reload-Smoke.
+- `FVX-ITEM-005..009` remain `Write modelliert` until Shop-only smokes pass; Diagnose 123 does not upgrade GUI compatibility.
+
 # FVX Feature Roadmap Update - 2026-05-15 - Shop Items diagnostics preflight
 
 - Shop Items remain the active next Item package, but Diagnose 122 blocks before a candidate scan because no explicitly approved local CFRU/DPE Gen9-BPRE candidate source was provided.
