@@ -1,3 +1,10 @@
+# Session update - Diagnose 154
+
+- New branch: `test/upr-fvx-cfru-dpe-ingame-trades-table-model-diagnostics`.
+- Diagnose 154 documents the UPR-FVX Gen3/FireRed In-Game Trades locator/table model using read-only source and documentation inspection.
+- Result: blocked. The model expects ROM-entry `TradeTableOffset`, `TradeTableSize`, `TradesUnused` and 60-byte rows, but Diagnose 152 remains unresolved with null/invalid/placeholder Species fields.
+- No code changes, no build, no Randomizer run, no ROM/save/output access, no write smoke and no text randomization were performed.
+
 # Session update - Diagnose 153
 
 - New branch: `analysis/upr-fvx-cfru-dpe-ingame-trades-table-model-blocker-plan`.

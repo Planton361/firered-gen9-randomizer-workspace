@@ -1,3 +1,9 @@
+# Next steps update - Diagnose 154
+
+- Keep In-Game Trades Species-Write-Smoke blocked.
+- Next minimal step remains a read-only locator/table-model candidate diagnostic with valid-active-row confirmation or an unsupported/dummy-row decision.
+- Do not include Nickname/OT text, Trade Held Items or IV extras in the first write path.
+
 # Next steps update - Diagnose 153
 
 - Next minimal step: run a read-only In-Game Trades locator/table-model diagnostic.

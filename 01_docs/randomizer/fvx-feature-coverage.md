@@ -1,3 +1,9 @@
+# Coverage update - Diagnose 154
+
+- In-Game Trades remain not compatible / blocked.
+- No Given Species, Requested Species, Trade Held Item, IV or Nickname/OT subfeature is promoted.
+- Existing completed scopes remain unchanged.
+
 # Coverage update - Diagnose 153
 
 - In-Game Trades remain open/blocked.
