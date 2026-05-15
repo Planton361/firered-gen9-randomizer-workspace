@@ -1,3 +1,9 @@
+# Roadmap update - Diagnose 157
+
+- In-Game Trades defensive null-request guard is planned read-only, not implemented.
+- Current classification remains `blocked-pending-evidence`.
+- A future `compat/...` branch may add a narrow skip/preserve guard for null requested Species and invalid/placeholder Species rows, with explicit status reporting and no Species-Write-Smoke, text, IV or Trade Held Item writes.
+
 # Roadmap update - Diagnose 156
 
 - In-Game Trades move from active-row candidate blocker to explicit Preserve/Skip policy.

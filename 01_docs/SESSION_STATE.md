@@ -1,3 +1,11 @@
+# Session update - Diagnose 157
+
+- New branch: `test/upr-fvx-cfru-dpe-ingame-trades-null-request-guard-plan`.
+- PR #201 / Diagnose 156 is contained in `main` before this block.
+- Diagnose 157 documents a read-only defensive Null-Requested-Species Skip/Guard plan for In-Game Trades.
+- Result: In-Game Trades remain `blocked-pending-evidence`; the later minimal fix would skip/preserve rows with `requestedSpecies == null` or invalid/placeholder Species before mutation/write and report skipped/preserved rows clearly.
+- No code, build, Randomizer run, Species-Write-Smoke, text randomization, ROM/save/output/log access or external download was performed.
+
 # Session update - Diagnose 156
 
 - New branch: `test/upr-fvx-cfru-dpe-ingame-trades-preserve-skip-policy`.

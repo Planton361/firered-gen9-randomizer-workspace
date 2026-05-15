@@ -1,3 +1,9 @@
+# Coverage update - Diagnose 157
+
+- In-Game Trades remain not compatible / blocked.
+- Diagnose 157 adds only a future defensive guard plan: null-request and invalid/placeholder Species rows would be skipped/preserved before mutation/write.
+- No Given Species, Requested Species, Trade Held Item, IV or Nickname/OT subfeature is promoted; coverage remains `blocked-pending-evidence`.
+
 # Coverage update - Diagnose 156
 
 - In-Game Trades remain not compatible / blocked.
