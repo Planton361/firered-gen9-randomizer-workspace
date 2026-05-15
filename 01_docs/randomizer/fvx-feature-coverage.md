@@ -1,3 +1,11 @@
+# Coverage update - Diagnose 170
+
+- Evolution methods/improvement slices `FVX-TRAIT-024` through `FVX-TRAIT-027` are now planned as `methods-plan-ready`.
+- `FVX-TRAIT-024` and `FVX-TRAIT-027` need method-mapping decision evidence before any writer/reload scope.
+- `FVX-TRAIT-025` splits into ROM-free `condenseLevelEvolutions(...)` logic and Gen3 happiness-byte patch risk.
+- `FVX-TRAIT-026` remains a helper flag for `024/025`, not a standalone support claim.
+- No slice is promoted to `tested-non-rom`, `Getestet`, `Getestet im Carrier` or P1-supported by this plan.
+
 # Coverage update - Diagnose 169B
 
 - UPR-FVX PR #42 is merged and the workspace submodule is pinned at `587e857088cac4fba41c6559d3a6f6e2a7aad71f`.
@@ -705,10 +713,10 @@ Diagnose 082 bestaetigt `FVX-TRAIT-018` nach der 081-Normalisierung:
 - FVX-TRAIT-021 | Evolutions: No Convergence | tested-non-rom
 - FVX-TRAIT-022 | Evolutions: Force Change | tested-non-rom
 - FVX-TRAIT-023 | Evolutions: Force Growth | tested-non-rom
-- FVX-TRAIT-024 | Change Impossible Evolutions | Nicht begonnen
-- FVX-TRAIT-025 | Make Evolutions Easier | Nicht begonnen
-- FVX-TRAIT-026 | Use Estimated Evolution Levels | Nicht begonnen
-- FVX-TRAIT-027 | Remove Time-Based Evolutions | Nicht begonnen
+- FVX-TRAIT-024 | Change Impossible Evolutions | methods-plan-ready
+- FVX-TRAIT-025 | Make Evolutions Easier | methods-plan-ready
+- FVX-TRAIT-026 | Use Estimated Evolution Levels | methods-plan-ready
+- FVX-TRAIT-027 | Remove Time-Based Evolutions | methods-plan-ready
 - FVX-TRAIT-028 | EXP-/Legendary-Kurven-Sonderfaelle | Nicht begonnen
 
 ### Starters, Statics & Trades

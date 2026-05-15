@@ -1,3 +1,12 @@
+# Roadmap status update - Diagnose 170
+
+- Evolution methods/improvement scope planning is complete for `FVX-TRAIT-024` through `FVX-TRAIT-027`.
+- Result: `methods-plan-ready`.
+- `FVX-TRAIT-024` and `FVX-TRAIT-027` need method-mapping decision evidence before any writer/reload scope.
+- `FVX-TRAIT-025` splits into ROM-free `condenseLevelEvolutions(...)` logic and Gen3 happiness-byte patch risk.
+- `FVX-TRAIT-026` remains a helper flag for `024/025`, not a standalone promotion.
+- No ROM-Smoke, Randomizer run, build, code change or submodule change was performed.
+
 # Roadmap status update - Diagnose 169B
 
 - Evolution filter Non-ROM harness follow-up is recorded.
@@ -616,6 +625,7 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | 08 Randomizer-Kompatibilität | CFRU/DPE Evolution Suboptions Consolidation | Diagnose 167 konsolidiert `FVX-TRAIT-016` bis `FVX-TRAIT-027`: `016` P1-supported, `018/019` diagnosis-ready, `017/020-023` plan-only, `024-027` separate nicht begonnene Improvement-/Methoden-Slices |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Evolution Filter Harness Plan | Diagnose 168 plant `FVX-TRAIT-017` und `020-023` als ROM-freien `EvolutionRandomizer`-Harness mit synthetischem Species-/Evolution-Graph und kleinem `RomHandler`-Proxy/Fake; Ergebnis `harness-plan-ready` |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Evolution Filter Non-ROM Harness Follow-up | Diagnose 169B pinnt UPR-FVX PR #42; `EvolutionFilterOptionsTest` deckt `FVX-TRAIT-017` und `020-023` ROM-frei ab, Status `tested-non-rom`, keine P1-Freigabe ohne ROM-Smoke/Reload |
+| 08 Randomizer-Kompatibilität | CFRU/DPE Evolution Methods Scope Plan | Diagnose 170 plant `FVX-TRAIT-024` bis `027` als getrennte Methoden-/Improvement-Slices; Ergebnis `methods-plan-ready`, keine Test-/P1-Promotion |
 
 ## In Arbeit
 
