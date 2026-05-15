@@ -1,3 +1,9 @@
+# 2026-05-15 - FVX Shop coverage update
+
+- FVX-ITEM-008 Guarantee Evolution Items is covered as GUI-compatible for Shop Random + `guaranteeEvolutionItems=true` only.
+- Evidence: Diagnose 131, `saveSuccessful=true`, `reloadSuccessful=true`, `guaranteedEvolutionItemsMissing=0`, `guaranteedEvolutionItemsReloadMissing=0`, `shopItemReloadMismatches=0`.
+- Guarantee X Items, combined guarantees, FVX-ITEM-007 Ban combinations, and FVX-ITEM-009 remain unpromoted.
+
 # 2026-05-15 - Shop Guarantee Items Coverage Plan
 
 - `FVX-ITEM-008 Guarantee Evolution/X Items` bleibt `Write modelliert`; Diagnose 130 ist read-only Planung.

@@ -1,3 +1,9 @@
+# Next step - 2026-05-15
+
+- Minimal next step: run a Shop-only Guarantee X Items Write/Reload-Smoke for FVX-ITEM-008 if the same candidate source and safety constraints are explicitly released.
+- Do not combine Guarantee Evolution + X until both single-feature smokes are reload-stable.
+- Keep FVX-ITEM-009 Balance Shop Prices/Cheap Rare Candies separate.
+
 # 2026-05-15 - Naechster Schritt nach Diagnose 130
 
 - Empfohlen: `test/upr-fvx-cfru-dpe-shop-guarantee-evolution-items-reload-smoke`.
