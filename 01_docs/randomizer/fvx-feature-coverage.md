@@ -1,3 +1,10 @@
+# 2026-05-15 - FVX Trainer Held Item filter coverage update
+
+- Boss, Important and Regular Trainer Held Items remain GUI-compatible in tested no-filter scopes.
+- Trainer Held Item filters are now planned as a separate unpromoted sub-scope: Consumable Only, Sensible Items and Highest Level Only.
+- No separate Trainer Held Item Ban Bad setting was identified in the searched paths.
+- Starter Held Items remain unpromoted.
+
 # 2026-05-15 - FVX Held Items coverage update
 
 - Regular Trainer Held Items are covered as GUI-compatible in the tested CFRU/DPE Gen9-BPRE no-filter scope after Diagnose 143.

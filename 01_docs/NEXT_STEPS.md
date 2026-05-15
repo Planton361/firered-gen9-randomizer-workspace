@@ -1,3 +1,11 @@
+# 2026-05-15 - Next: Trainer Held Item filter smoke
+
+Recommended next branch: `test/upr-fvx-cfru-dpe-trainer-held-items-regular-filters-reload-smoke`.
+
+Goal: test Regular Trainer Held Items with `Consumable Only`, `Sensible Items` and `Highest Level Only` enabled, while preserving Boss, Important, `shouldNotGetBuffs`, Wild, Starter, Field, Pickup and Shop scopes.
+
+Fallback: if the combined filter smoke is too broad, split into Consumable-only, Sensible-only and Highest-Level-only smokes.
+
 # 2026-05-15 - Next: Trainer Held Item filters or Starter Held Items
 
 Recommended next branch: `analysis/upr-fvx-cfru-dpe-trainer-held-items-filters-scope-plan` if filter coverage is required, or `test/upr-fvx-cfru-dpe-starter-held-items-reload-smoke` to move to Starter Held Items.
