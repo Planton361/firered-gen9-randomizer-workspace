@@ -1,3 +1,11 @@
+# Roadmap Status Update - 2026-05-15 - Pickup Ban Bad complete
+
+- `FVX-ITEM-010 Pickup Items Random / Ban Bad Items` is now `GUI-kompatibel` in the Pickup-only Random scope after Diagnose 118 and 120.
+- Diagnose 120 confirms Ban Bad with `badPickupItemWrites=0`, non-bad pool `485`, and reload mismatches `0`.
+- Field Items retain their documented GUI-compatible sub-scope status.
+- Shops and Held Items remain separate and are not upgraded by Pickup results.
+- Next active P1 block: `analysis/upr-fvx-cfru-dpe-shop-items-scope-diagnostics-plan`.
+
 # Roadmap Status Update - 2026-05-15 - Pickup Ban Bad planning
 
 - `FVX-ITEM-010 Pickup Items Random` is reload-stable and GUI-compatible for `banBadRandomPickupItems=false` after Diagnose 118.

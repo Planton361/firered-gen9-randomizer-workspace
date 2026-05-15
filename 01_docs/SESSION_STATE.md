@@ -1,3 +1,16 @@
+# Session State Update - 2026-05-15 - Pickup Items Random Ban Bad reload smoke
+
+- Branch: `test/upr-fvx-cfru-dpe-pickup-items-random-ban-bad-reload-smoke`.
+- Workspace PR #164 was verified as merged before branch creation.
+- UPR-FVX pin remains `02_external/upr-fvx` at `a2373888ad17145f270ebf6ff17303af41aa86eb`.
+- New protocol: `08_tests/randomizer/120_pickup_items_random_ban_bad_reload_smoke.md`.
+- A locally approved CFRU/DPE Gen9-BPRE candidate was used for a Pickup-only `FVX-ITEM-010 Pickup Items Random` smoke with `banBadRandomPickupItems=true`.
+- Sanitized result: `candidateFilesChecked=101`, `candidateLoaded=true`, `smokeExecuted=true`, `saveSuccessful=true`, `logSuccessful=true`, `outputRomExists=true`, `logNonEmpty=true`, `reloadSuccessful=true`.
+- Pickup reload stayed stable: `pickupItemsTotalBefore=16`, `pickupItemsTotalAfter=16`, `pickupItemsTotalReload=16`, `pickupItemReloadMismatches=0`, `pickupTableLengthMismatches=0`, `pickupProbabilityMismatches=0`, `pickupReloadLocatorRegression=false`.
+- Ban-Bad result: `badPickupItemWrites=0`, `pickupBadItemPoolCandidates=51`, `pickupBadItemPoolExcluded=51`, `pickupPoolNonBadSize=485`.
+- `FVX-ITEM-010 Pickup Items Random / Ban Bad Items` is now `GUI-kompatibel` in the tested Pickup-only scope. Field Items, Shops and Held Items remain separate scopes and are not upgraded by this block.
+- No code changes, no `02_external/**` changes, no submodule pin change, no committed ROM/log/output artefacts, no private artefact documentation.
+
 # Session State Update - 2026-05-15 - Pickup Items Ban Bad scope plan
 
 - Branch: `analysis/upr-fvx-cfru-dpe-pickup-items-ban-bad-scope-plan`.
