@@ -1,3 +1,10 @@
+# FVX Feature Coverage Update - 2026-05-15 - Shop Items Shuffle reload smoke
+
+- `FVX-ITEM-005 Shop Items Shuffle`: `GUI-kompatibel` in the tested Shop-only CFRU/DPE Gen9-BPRE scope after Diagnose 124.
+- Evidence: save/log/output/reload successful, `shopItemReloadMismatches=0`, shop counts/lengths stable, skipped shops preserved, prices untouched and Field/Pickup/Held scopes unchanged.
+- `FVX-ITEM-006..009` remain `Write modelliert`; Shop Random, Shop Bans, Guarantee Evolution/X Items and Balance Prices / Cheap Rare Candies need separate smokes.
+- Field Items, Pickup and Held Items are not affected.
+
 # FVX Feature Coverage Update - 2026-05-15 - Shop Items candidate diagnostics
 
 - Diagnose 123 confirms the read-only Shop candidate structure for the CFRU/DPE Gen9-BPRE scope: `candidateLoaded=true`, `shopScanSuccessful=true`, `shopCount=23`, `shopItemsTotal=157`, `terminatorModelStable=true`, `shopLengthMismatch=0`.
@@ -175,9 +182,9 @@ Sie ist die detaillierte Requirements-/Coverage-Ebene. Die Roadmap bleibt bewuss
 | Nicht begonnen | 39 |
 | Plan erstellt | 28 |
 | Read modelliert | 0 |
-| Write modelliert | 15 |
+| Write modelliert | 14 |
 | Getestet | 10 |
-| GUI-kompatibel | 38 |
+| GUI-kompatibel | 39 |
 | In Arbeit | 0 |
 | **Gesamt** | **130** |
 
@@ -510,7 +517,7 @@ Diagnose 082 bestaetigt `FVX-TRAIT-018` nach der 081-Normalisierung:
 - FVX-ITEM-002 | Field Items Random | GUI-kompatibel im engen Field-Items-Random-Scope; Ban Bad fuer RANDOM getestet
 - FVX-ITEM-003 | Field Items Random even distribution | GUI-kompatibel im engen Random-Even-Scope ohne Ban Bad
 - FVX-ITEM-004 | Field Items Ban Bad Items | Getestet fuer FieldItemsMod.RANDOM; Random Even + Ban Bad ausstehend
-- FVX-ITEM-005 | Shop Items Shuffle | Write modelliert | Diagnose 121 plant den separaten Shoplisten-, Terminator-, Laengen- und Repointing-Scope; kein Smoke.
+- FVX-ITEM-005 | Shop Items Shuffle | GUI-kompatibel | Diagnose 124 bestaetigt Shop-only Shuffle mit Save/Log/Output/Reload, stabilen Counts/Laengen/Terminatoren, preserved Skip-Shops, unveraenderten Preisen und `shopItemReloadMismatches=0`.
 - FVX-ITEM-006 | Shop Items Random | Write modelliert | Diagnose 121 plant Pool-, Terminator-, Laengen- und Reload-Kriterien; kein Smoke.
 - FVX-ITEM-007 | Shop Item Bans | Write modelliert | Diagnose 121 trennt Bad/Regular/OP-Bans als Shop-only Pool-Scope; kein Smoke.
 - FVX-ITEM-008 | Guarantee Evolution/X Items | Write modelliert | Diagnose 121 trennt MainGameShop-Placement als spaeteren Shop-only Scope; kein Smoke.

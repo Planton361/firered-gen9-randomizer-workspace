@@ -1,3 +1,15 @@
+# Session State Update - 2026-05-15 - Shop Items Shuffle reload smoke
+
+- Branch: `test/upr-fvx-cfru-dpe-shop-items-shuffle-reload-smoke`.
+- Workspace PR #168 was verified as merged before branch creation.
+- New protocol: `08_tests/randomizer/124_shop_items_shuffle_reload_smoke.md`.
+- A locally approved CFRU/DPE Gen9-BPRE candidate was used for a Shop-only `FVX-ITEM-005 Shop Items Shuffle` Write/Reload-Smoke.
+- Sanitized result: `candidateFilesChecked=3`, `candidateLoaded=true`, `smokeExecuted=true`, `saveSuccessful=true`, `logSuccessful=true`, `outputRomExists=true`, `logNonEmpty=true`, `reloadSuccessful=true`.
+- Shop reload stayed stable: `shopCountBefore=23`, `shopCountAfter=23`, `shopCountReload=23`, `shopItemsTotalBefore=157`, `shopItemsTotalAfter=157`, `shopItemsTotalReload=157`, `shopItemReloadMismatches=0`, `shopLengthMismatchesAfter=0`, `shopLengthMismatchesReload=0`.
+- Preserve/scope result: `skippedShopItemMismatchesAfter=0`, `skippedShopItemMismatchesReload=0`, `specialShopPolicyMismatches=0`, `priceTableTouched=false`, `priceReloadMismatches=0`, `fieldItemScopeChanged=false`, `pickupScopeChanged=false`, `heldItemScopeChanged=false`.
+- `FVX-ITEM-005 Shop Items Shuffle` is now `GUI-kompatibel` in the tested Shop-only scope. `FVX-ITEM-006..009`, Field Items, Pickup and Held Items are not upgraded by this block.
+- No code changes, no `02_external/**` changes, no submodule pin change, no build, no committed ROM/log/output artefacts, no private artefact documentation.
+
 # Session State Update - 2026-05-15 - Shop Items candidate diagnostics
 
 - Branch: `test/upr-fvx-cfru-dpe-shop-items-scope-diagnostics-candidate`.
