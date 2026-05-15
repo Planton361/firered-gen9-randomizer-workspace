@@ -1,3 +1,10 @@
+# 2026-05-15 - Diagnose 132 Shop Guarantee X Items Reload Smoke
+
+- Added `08_tests/randomizer/132_shop_guarantee_x_items_reload_smoke.md`.
+- Result: PASS for FVX-ITEM-008 Guarantee X Items with Shop Random only.
+- All 7 expected X Items were present after write and reload; Shop counts, lengths, terminators, skipped Shops, prices, Field Items, Pickup, and Held Items stayed stable.
+- Evolution+X combination, FVX-ITEM-007 Ban combinations, and FVX-ITEM-009 prices/Cheap Rare Candies remain out of scope.
+
 # 2026-05-15 - Diagnose 131 Shop Guarantee Evolution Items Reload Smoke
 
 - Added `08_tests/randomizer/131_shop_guarantee_evolution_items_reload_smoke.md`.

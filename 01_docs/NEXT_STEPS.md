@@ -1,5 +1,11 @@
 # Next step - 2026-05-15
 
+- Minimal decision: either run a narrow Evolution+X combination smoke for FVX-ITEM-008 or move to the FVX-ITEM-009 prices/Cheap Rare Candies scope plan.
+- Do not treat the individual Guarantee Evolution and Guarantee X passes as automatic combination coverage.
+- Keep Ban combinations and price/Rare-Candy logic separate unless explicitly scoped.
+
+# Next step - 2026-05-15
+
 - Minimal next step: run a Shop-only Guarantee X Items Write/Reload-Smoke for FVX-ITEM-008 if the same candidate source and safety constraints are explicitly released.
 - Do not combine Guarantee Evolution + X until both single-feature smokes are reload-stable.
 - Keep FVX-ITEM-009 Balance Shop Prices/Cheap Rare Candies separate.

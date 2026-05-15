@@ -1,3 +1,9 @@
+# 2026-05-15 - Roadmap note: Shop Guarantee X Items
+
+- Completed Shop-only FVX-ITEM-008 Guarantee X Items reload smoke.
+- Promote only the tested Guarantee X Items subscope to GUI-compatible alongside the prior Guarantee Evolution Items subscope.
+- Decide next between Evolution+X combination coverage and the separate FVX-ITEM-009 price/Cheap Rare Candy scope plan.
+
 # 2026-05-15 - Roadmap note: Shop Guarantee Evolution Items
 
 - Completed Shop-only FVX-ITEM-008 Guarantee Evolution Items reload smoke.
