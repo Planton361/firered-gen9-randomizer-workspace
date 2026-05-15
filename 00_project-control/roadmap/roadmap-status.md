@@ -1,3 +1,11 @@
+# Roadmap status update - Diagnose 168
+
+- Evolution filter harness planning is complete for `FVX-TRAIT-017` and `FVX-TRAIT-020` through `FVX-TRAIT-023`.
+- Result: `harness-plan-ready`.
+- All five slices are ROM-free testable with synthetic `Species` / `Evolution` data and a small `RomHandler` proxy/fake.
+- Expected UPR-FVX test scope: `random/src/test/java/com/uprfvx/random/randomizers/EvolutionRandomizerTest.java` or a new `EvolutionFilterRandomizerTest.java`.
+- `FVX-TRAIT-024` through `FVX-TRAIT-027` stay separate not-started Evolution-improvement/method slices.
+
 # Roadmap status update - Diagnose 167
 
 - Evolution suboptions `FVX-TRAIT-016` through `FVX-TRAIT-027` are consolidated read-only.
@@ -598,6 +606,7 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | 08 Randomizer-Kompatibilität | CFRU/DPE Evolution Similar Strength Diagnostics | Diagnose 165 ordnet `FVX-TRAIT-018` read-only als `diagnosis-ready` neu ein: 070 ist durch 081/082 normalisierte Reload-Evidenz ueberholt; kein unmittelbarer Fixblock, optional nur Code-Review oder Non-ROM-Harness-Plan |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Evolution Same Typing Diagnostics | Diagnose 166 ordnet `FVX-TRAIT-019` read-only als `diagnosis-ready` neu ein: 070 ist durch 079/080 Same-Typing-Null-Type-Fix und Reload-Evidenz ueberholt; kein unmittelbarer Fixblock, optional nur Code-Review oder Non-ROM-Harness-Plan |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Evolution Suboptions Consolidation | Diagnose 167 konsolidiert `FVX-TRAIT-016` bis `FVX-TRAIT-027`: `016` P1-supported, `018/019` diagnosis-ready, `017/020-023` plan-only, `024-027` separate nicht begonnene Improvement-/Methoden-Slices |
+| 08 Randomizer-Kompatibilität | CFRU/DPE Evolution Filter Harness Plan | Diagnose 168 plant `FVX-TRAIT-017` und `020-023` als ROM-freien `EvolutionRandomizer`-Harness mit synthetischem Species-/Evolution-Graph und kleinem `RomHandler`-Proxy/Fake; Ergebnis `harness-plan-ready` |
 
 ## In Arbeit
 
