@@ -1,3 +1,11 @@
+# 2026-05-15 - Next: special Wild Encounter systems
+
+Recommended next branch: `analysis/upr-fvx-cfru-dpe-special-wild-encounter-systems-scope-plan`.
+
+Goal: plan read-only diagnostics for CFRU Day/Night Wild, Swarms, Roamers, DexNav, Raids and special encounter tables without retesting already covered Standard Wild P0.
+
+Keep out of scope: Held Items, Trainer Pokemon, Starters, Static/Gift, Field Items, Pickup, Shops, code changes, builds, Randomizer runs and ROM writes.
+
 # 2026-05-15 - Next: Wild Encounters read-only candidate diagnostic
 
 Recommended next branch: `test/upr-fvx-cfru-dpe-wild-encounters-scope-diagnostics`.

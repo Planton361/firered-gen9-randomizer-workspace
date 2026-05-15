@@ -1,3 +1,9 @@
+# 2026-05-15 - Roadmap reconciliation
+
+- Diagnose 149 reconciles completed Randomizer scopes against remaining major gaps.
+- Held Items are closed; Standard Wild P0 should not be retested as the next major scope.
+- Next recommended roadmap item is CFRU Day/Night and special Wild Encounter systems read-only planning/diagnostics.
+
 # 2026-05-15 - Wild Encounters roadmap start
 
 - Wild Encounters/Wild Pokemon Randomization becomes the next major Randomizer feature scope in Diagnose 148.

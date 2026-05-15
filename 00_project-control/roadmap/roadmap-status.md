@@ -1,3 +1,9 @@
+# 2026-05-15 - Coverage reconciliation update
+
+- Diagnose 149 reconciles completed and open Randomizer feature scopes.
+- Completed major tested scopes include Standard Wild P0, Starter/Static/Trainer/Evolution Species, Base Stats/Types/Abilities, documented Learnsets/Movesets/MoveData, Field Items, Pickup, Shop Items and Held Items.
+- Open major scope recommendation: CFRU Day/Night and special Wild Encounter systems, not a Standard Wild retest.
+
 # 2026-05-15 - Wild Encounters plan update
 
 - Diagnose 148 opens Wild Encounters/Wild Pokemon Randomization as the next separate feature scope after Held Items closure.
