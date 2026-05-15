@@ -1,4 +1,19 @@
-# Next Steps Update - 2026-05-15 - Field Items Random Ban Bad smoke next
+# Next Steps Update - 2026-05-15 - Field Items Random Even Ban Bad smoke next
+
+Aktueller Fokus:
+
+- Diagnose 112 confirms a Field-Items-only `FVX-ITEM-002 Field Items Random` Write-/Reload-Smoke with `banBadRandomFieldItems=true`.
+- Save/log/output/reload succeeded, `fieldItemReloadMismatches=0`, Required Field TMs stayed complete, and `badFieldItemWrites=0`.
+- `FVX-ITEM-004` is tested for `FieldItemsMod.RANDOM`, but not fully GUI-compatible because Random Even + Ban Bad remains unsmoked and the 75er Ban-Bad baseline from Diagnose 111 was not reproduced in this run.
+
+Nicht ausweiten:
+
+- No Shops, Pickup, Held Items, TM/HM/Tutor/Learnset, Palette/Graphics, MoveData/MoveNames, TypeChart, Trainer/Wild/Evolution, Text/Menu or Scriptparser work.
+
+Naechster Block:
+
+- `test/upr-fvx-cfru-dpe-field-items-random-even-ban-bad-reload-smoke`: sanitized Field-Items-only smoke for `FVX-ITEM-003 Field Items Random even distribution` with `banBadRandomFieldItems=true`.
+
 
 Aktueller Fokus:
 

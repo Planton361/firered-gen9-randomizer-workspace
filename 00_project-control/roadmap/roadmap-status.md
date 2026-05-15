@@ -1,3 +1,10 @@
+# Roadmap Status Update - 2026-05-15 - Field Items Random Ban Bad reload smoke
+
+- Added `08_tests/randomizer/112_field_items_random_ban_bad_reload_smoke.md`.
+- Field Items: `FVX-ITEM-002` with `banBadRandomFieldItems=true` saves, logs, reloads and preserves Field-Item slot policy with `fieldItemReloadMismatches=0` and `badFieldItemWrites=0`.
+- `FVX-ITEM-004` is tested for `FieldItemsMod.RANDOM`, but remains not fully GUI-compatible until Random Even + Ban Bad is smoked separately.
+- Next P1 step: `test/upr-fvx-cfru-dpe-field-items-random-even-ban-bad-reload-smoke`.
+
 # Roadmap Status Update - 2026-05-15 - Field Items Ban Bad scope plan
 
 - Added `08_tests/randomizer/111_field_items_ban_bad_scope_plan.md`.

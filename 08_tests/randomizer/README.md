@@ -2,11 +2,9 @@
 
 ## Latest
 
-- `095_palette_normal_single_owner_write_guard_fix_diagnostics.md` dokumentiert den UPR-FVX-Guard-Fix fuer CFRU/DPE Normal-Palette-Single-owner-Writes.
-- Ergebnis: Der Writer gibt nur sichere Normal-Paletten in den komprimierten Rewriter; Shiny/shared/invalid/missing/decode-failed/cross-kind Faelle bleiben preserve-only.
-- Kein ROM-/Reload-Smoke wurde in diesem Block ausgefuehrt; die fachliche Reload-Bestaetigung ist separater Folgeblock.
-- `FVX-GFX-001..004` bleiben aktuell `Write modelliert`.
-- MoveData bleibt unveraendert: `FVX-MOVE-001/002/003/004/006` sind GUI-kompatibel; `FVX-MOVE-005` bleibt blockiert.
+- `112_field_items_random_ban_bad_reload_smoke.md` dokumentiert den Field-Items-only `FVX-ITEM-002 Field Items Random` Write-/Reload-Smoke mit `banBadRandomFieldItems=true`.
+- Ergebnis: Save/Log/Output/Reload erfolgreich, Field-Item Reload-Mismatches `0`, Required Field TMs erhalten, `badFieldItemWrites=0`, keine Shop-/Pickup-/Held-Item-Scope-Aenderung.
+- Einschraenkung: Der Lauf misst `badFieldItemPoolCandidates=47` statt der in Diagnose 111 erwarteten 75er-Baseline; `FVX-ITEM-004` ist damit fuer `FieldItemsMod.RANDOM` getestet, aber Random Even + Ban Bad bleibt separat.
 
 Dieses Verzeichnis enthaelt die dauerhaften Markdown-Protokolle fuer UPR-FVX/CFRU-DPE-Randomizer-Analysen und Smokes. Lokale ROM-, Build-, Log- und Tool-Artefakte bleiben unter `05_builds/**` oder `03_tools/releases/**` und werden nicht committed.
 
@@ -199,3 +197,5 @@ Wenn ein Artefakt nicht eindeutig Smoke-Output ist, bleibt es lokal liegen und w
 - 110 - `110_field_items_random_even_reload_smoke.md`: Sanitized Field-Items-only `FVX-ITEM-003 Field Items Random even distribution` reload smoke. Save/log/output/reload true, Field-Item reload mismatches `0`, API/raw TM-slot alignment `28/28`, Required Field TMs preserved, no global TM allowed change; `FVX-ITEM-003` is now `GUI-kompatibel` only for `banBadRandomFieldItems=false`.
 
 - 111 - `111_field_items_ban_bad_scope_plan.md`: Read-only plan for `FVX-ITEM-004 Field Items Ban Bad Items`. Confirms Ban Bad affects only the Non-TM Field-Items pool via `getNonBadItems()`, keeps TM/Required-TM handling separate, and recommends first smoke as `FieldItemsMod.RANDOM` with `banBadRandomFieldItems=true`.
+
+- 112 - `112_field_items_random_ban_bad_reload_smoke.md`: Sanitized Field-Items-only `FVX-ITEM-002 Field Items Random` smoke with `banBadRandomFieldItems=true`. Save/log/output/reload true, Field-Item reload mismatches `0`, Required Field TMs preserved, `badFieldItemWrites=0`; `FVX-ITEM-004` is tested for `FieldItemsMod.RANDOM`, while Random Even + Ban Bad remains separate.

@@ -1,3 +1,11 @@
+# FVX Feature Coverage Update - 2026-05-15 - Field Items Random Ban Bad reload smoke
+
+- `FVX-ITEM-001` remains `GUI-kompatibel` for the tested Shuffle allowed-slot scope.
+- `FVX-ITEM-002` remains `GUI-kompatibel` in the narrow Field-Items Random scope; Diagnose 112 additionally confirms `banBadRandomFieldItems=true` for `FieldItemsMod.RANDOM`.
+- `FVX-ITEM-003` remains `GUI-kompatibel` only for `banBadRandomFieldItems=false`; Random Even + Ban Bad remains separate.
+- `FVX-ITEM-004` is tested for `FieldItemsMod.RANDOM`, but not fully GUI-compatible until Random Even + Ban Bad is smoked.
+- Shops, Pickup, Held Items, TM/HM/Tutor/Learnset, Palette/Graphics, MoveData/MoveNames, TypeChart, Trainer/Wild/Evolution, Text/Menu and Scriptparser work remain outside Diagnose 112.
+
 # FVX Feature Coverage Update - 2026-05-15 - Field Items Ban Bad scope plan
 
 - `FVX-ITEM-001` remains `GUI-kompatibel` for the tested Shuffle allowed-slot scope.
@@ -452,9 +460,9 @@ Diagnose 082 bestaetigt `FVX-TRAIT-018` nach der 081-Normalisierung:
 ### Items
 
 - FVX-ITEM-001 | Field Items Shuffle | GUI-kompatibel im engen allowed-slot Scope
-- FVX-ITEM-002 | Field Items Random | Write modelliert; blockiert durch API-TM-Slot-Scope
-- FVX-ITEM-003 | Field Items Random even distribution | Write modelliert
-- FVX-ITEM-004 | Field Items Ban Bad Items | Write modelliert
+- FVX-ITEM-002 | Field Items Random | GUI-kompatibel im engen Field-Items-Random-Scope; Ban Bad fuer RANDOM getestet
+- FVX-ITEM-003 | Field Items Random even distribution | GUI-kompatibel im engen Random-Even-Scope ohne Ban Bad
+- FVX-ITEM-004 | Field Items Ban Bad Items | Getestet fuer FieldItemsMod.RANDOM; Random Even + Ban Bad ausstehend
 - FVX-ITEM-005 | Shop Items Shuffle | Write modelliert
 - FVX-ITEM-006 | Shop Items Random | Write modelliert
 - FVX-ITEM-007 | Shop Item Bans | Write modelliert

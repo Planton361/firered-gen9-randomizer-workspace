@@ -183,6 +183,16 @@ Es wurde kein fachlicher Palette-Write-/Reload-Smoke ausgeführt. `FVX-GFX-001` 
 
 # Session State
 
+# Session State Update - 2026-05-15 - Field Items Random Ban Bad reload smoke
+
+- New protocol: `08_tests/randomizer/112_field_items_random_ban_bad_reload_smoke.md`.
+- A locally approved CFRU/DPE Gen9-BPRE candidate was used for a Field-Items-only `FVX-ITEM-002 Field Items Random` Write-/Reload-Smoke with `banBadRandomFieldItems=true` on UPR-FVX `328e4441c2981d37aba9e2707a6f27f779b026e2`.
+- Save/log/output/reload succeeded with `fieldItemsTotalBefore=339`, `fieldItemsTotalAfter=339`, `fieldItemsTotalReload=339`, and `fieldItemReloadMismatches=0`.
+- Required Field TMs remained complete, TM/Non-TM slot mismatches stayed `0`, `badFieldItemWrites=0`, and no Shop/Pickup/Held-Item scope change was observed.
+- The smoke measured `badFieldItemPoolCandidates=47` and `badFieldItemPoolExcluded=47`, not the 75er baseline expected by Diagnose 111; therefore `FVX-ITEM-004` is only tested for `FieldItemsMod.RANDOM`, not fully GUI-compatible.
+- Recommended next block: `test/upr-fvx-cfru-dpe-field-items-random-even-ban-bad-reload-smoke`.
+
+
 # Session State Update - 2026-05-15 - Field Items Ban Bad scope plan
 
 - New protocol: `08_tests/randomizer/111_field_items_ban_bad_scope_plan.md`.
