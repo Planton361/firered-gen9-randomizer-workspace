@@ -1,5 +1,11 @@
 # Next step - 2026-05-15
 
+- Minimal decision: either run a narrow Balance Prices + Cheap Rare Candies combination smoke or close the current Shop Items scope.
+- Do not treat the two individual FVX-ITEM-009 passes as automatic combination coverage.
+- Keep Ban combinations, Evolution+X combination, Field Items, Pickup and Held Items separate unless explicitly scoped.
+
+# Next step - 2026-05-15
+
 - Minimal next branch: `test/upr-fvx-cfru-dpe-shop-cheap-rare-candies-reload-smoke`.
 - Scope: Shop-only Cheap Rare Candies with `ShopItemsMod.UNCHANGED`, `balanceShopPrices=false`, `addCheapRareCandiesToShops=true`; no Bans, no Guarantees, no Field/Pickup/Held Items.
 - Measure Shop-list growth, Rare Candy price reload, terminators, skipped-Shop policy, and foreign-scope stability.

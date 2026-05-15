@@ -1,3 +1,9 @@
+# 2026-05-15 - Diagnose 135 status
+
+- FVX-ITEM-009 Cheap Rare Candies: GUI-compatible in tested Shop-only scope.
+- Evidence: `rareCandyWrites=23`, `rareCandyReloadPresent=true`, `rareCandyPriceReloadStable=true`, `shopItemReloadMismatches=0`.
+- Balance Prices + Cheap Rare Candies combination remains untested.
+
 # 2026-05-15 - Diagnose 134 status
 
 - FVX-ITEM-009 Balance Shop Prices: GUI-compatible in tested Shop-only scope.

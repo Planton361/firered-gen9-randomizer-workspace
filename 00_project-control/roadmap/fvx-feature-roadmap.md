@@ -1,3 +1,9 @@
+# 2026-05-15 - Roadmap note: Shop Cheap Rare Candies
+
+- Completed Shop-only FVX-ITEM-009 Cheap Rare Candies reload smoke.
+- Promote only the tested Cheap Rare Candies subscope to GUI-compatible alongside Balance Shop Prices.
+- Decide next whether Balance Prices + Cheap Rare Candies combination coverage is needed or close the Shop Items scope.
+
 # 2026-05-15 - Roadmap note: Shop Balance Prices
 
 - Completed Shop-only FVX-ITEM-009 Balance Shop Prices reload smoke.

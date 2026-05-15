@@ -1,3 +1,10 @@
+# 2026-05-15 - Diagnose 135 Shop Cheap Rare Candies Reload Smoke
+
+- Added `08_tests/randomizer/135_shop_cheap_rare_candies_reload_smoke.md`.
+- Result: PASS for FVX-ITEM-009 Cheap Rare Candies with `ShopItemsMod.UNCHANGED`.
+- Shop item total grew from 157 to 180 and reload stayed stable; `rareCandyWrites=23`, `skippedShopRareCandyWrites=20`, `shopItemReloadMismatches=0`.
+- Rare Candy price write was reload-stable; Balance Prices + Cheap Rare Candies combination remains out of scope.
+
 # 2026-05-15 - Diagnose 134 Shop Balance Prices Reload Smoke
 
 - Added `08_tests/randomizer/134_shop_balance_prices_reload_smoke.md`.
