@@ -1,3 +1,10 @@
+# Roadmap Note - 2026-05-15 - Pickup reload locator blocker
+
+- Diagnose 117 keeps Pickup as the active separated Item-writer track after Field Items.
+- Next recommended implementation branch is `compat/upr-fvx-cfru-dpe-pickup-items-reload-locator-fix`.
+- The intended fix stays below Pickup pool policy: make the Pickup table locator reload-stable after `PickupItemsMod.RANDOM` changes item IDs.
+- Pickup Ban Bad, Shops and Held Items remain blocked/separate until Pickup Random without Ban Bad reloads stably.
+
 # FVX Feature Roadmap Update - 2026-05-15 - Field Items Random Ban Bad reload smoke
 
 - Diagnose 112 confirms the Field-Items Random Ban-Bad carrier: `FVX-ITEM-002` with `banBadRandomFieldItems=true` has a successful CFRU/DPE Field-Items-only reload smoke.

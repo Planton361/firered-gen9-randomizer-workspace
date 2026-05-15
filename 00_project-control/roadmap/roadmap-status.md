@@ -1,3 +1,11 @@
+# Roadmap Status Update - 2026-05-15 - Pickup reload locator blocker planned
+
+- Added `08_tests/randomizer/117_pickup_items_reload_locator_blocker_plan.md`.
+- `FVX-ITEM-010 Pickup Items Random` remains `Write modelliert`: save/log/output/reopen works, but fresh reload cannot locate the Pickup table after random write.
+- Likely root cause: the Gen3 pickup table locator is content-based and searches for the pre-randomization item sequence; the same handler succeeds only because it caches the found table offset.
+- Next recommended block: `compat/upr-fvx-cfru-dpe-pickup-items-reload-locator-fix`.
+- Pickup Ban Bad, Shops and Held Items remain separate and are not upgraded.
+
 # Roadmap Status Update - 2026-05-15 - Field Items Random Ban Bad reload smoke
 
 - Added `08_tests/randomizer/112_field_items_random_ban_bad_reload_smoke.md`.
