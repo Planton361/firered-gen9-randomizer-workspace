@@ -1,3 +1,14 @@
+# Tool Manifest Update - 2026-05-15 - In-Game Trades non-ROM harness follow-up
+
+- Workspace branch: `test/upr-fvx-cfru-dpe-ingame-trades-non-rom-harness-followup`.
+- UPR-FVX fork base branch: `compat/firered-gen9-cfru-dpe`.
+- UPR-FVX PR #40: <https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/40>.
+- Original UPR-FVX test commit: `8b7d0846 test: cover ingame trade skip guard`.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX commit `1eaee2873cd69682335223f817b124bf36d004f2`.
+- Previous workspace pin was `a86315e8d82e0854e0fd59549f50e2c49f523c40`.
+- Scope: non-ROM `TradeRandomizerTest` harness only; synthetic `InGameTrade` rows and a minimal `RomHandler` proxy/fake cover null-request and placeholder/unsafe Species skips, all-skipped no `setInGameTrades(...)`, `isChangesMade=false`, skip counters and `hasSkippedTrades()`.
+- Safety: no Workspace code changes, no UPR-FVX code changes in this block, no ROM/save/output/log/build artifacts, no Gen3 writer test, no ROM-Smoke, no Species-Write-Smoke, no text, Nickname/OT, IV or Trade Held Item randomization, and no Original-Upstream PR.
+
 # Tool Manifest Update - 2026-05-15 - In-Game Trades null-request guard follow-up
 
 - Workspace branch: `test/upr-fvx-cfru-dpe-ingame-trades-null-request-guard-followup`.

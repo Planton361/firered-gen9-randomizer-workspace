@@ -1,3 +1,11 @@
+# Roadmap status update - Diagnose 161B
+
+- In-Game Trades non-ROM harness follow-up is recorded.
+- UPR-FVX PR #40 is merged and workspace-pinned at `1eaee2873cd69682335223f817b124bf36d004f2`.
+- The pinned `TradeRandomizerTest` covers synthetic null-request and placeholder/unsafe Species skips, all-skipped no `setInGameTrades(...)`, `isChangesMade=false`, skip counters and `hasSkippedTrades()`.
+- Status remains `blocked-pending-evidence`; no GUI-compatible In-Game Trade subfeature is promoted and Species-Write-Smoke remains blocked.
+- Next status target is either a separate read-only writer-preserve-test plan or continued guarded/preserve-only tracking.
+
 # Roadmap status update - Diagnose 160
 
 - In-Game Trades non-ROM harness plan result: `harness-plan-ready`.

@@ -1,3 +1,10 @@
+# Next steps update - Diagnose 161B
+
+- Keep In-Game Trades closed as `blocked-pending-evidence`.
+- The non-ROM `TradeRandomizer` harness is merged and pinned, so the immediate mutation-guard test gap is reduced.
+- Next allowed step, if explicitly requested, is a read-only Gen3 writer-preserve-test plan or continued guarded/preserve-only tracking.
+- Do not run ROM-Smoke, Species-Write-Smoke, Randomizer runs, Text/Nickname/OT, IV or Trade Held Item randomization.
+
 # Next steps update - Diagnose 160
 
 - Keep In-Game Trades closed as `blocked-pending-evidence`.
