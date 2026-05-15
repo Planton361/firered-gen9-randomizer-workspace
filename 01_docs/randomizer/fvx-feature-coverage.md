@@ -1,3 +1,10 @@
+# Coverage update - Diagnose 160
+
+- In-Game Trades remain not compatible / blocked.
+- Diagnose 160 classifies a non-ROM guard harness plan as `harness-plan-ready`; it recommends synthetic `TradeRandomizer` unit coverage for null-request and unsafe Species skip behavior.
+- No Given Species, Requested Species, Trade Held Item, IV or Nickname/OT subfeature is promoted; Species-Write-Smoke remains blocked.
+- The plan adds evidence direction only, not code, build, ROM smoke or Randomizer execution.
+
 # Coverage update - Diagnose 159
 
 - In-Game Trades remain not compatible / blocked.

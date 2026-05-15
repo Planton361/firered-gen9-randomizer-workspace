@@ -1,3 +1,11 @@
+# Next steps update - Diagnose 160
+
+- Keep In-Game Trades closed as `blocked-pending-evidence`.
+- Next allowed implementation step, if explicitly requested, is a small UPR-FVX non-ROM `TradeRandomizer` harness/unit-test for synthetic unsafe `InGameTrade` rows.
+- First test scope should prove skipped null-request rows, skipped unsafe/placeholder Species rows, all-skipped `setInGameTrades(...)` avoidance, `changesMade=false`, and skip counter visibility.
+- Defer Gen3 writer preserve testing unless it can be done without ROM bytes, generated artifacts, broad refactor or private fixtures.
+- Do not run Species-Write-Smoke, ROM smoke, Randomizer runs, Text/Nickname/OT, IV or Trade Held Item randomization.
+
 # Next steps update - Diagnose 159
 
 - Keep In-Game Trades closed as `blocked-pending-evidence`.

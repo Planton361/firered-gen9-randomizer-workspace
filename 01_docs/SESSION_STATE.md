@@ -1,3 +1,13 @@
+# Session update - Diagnose 160
+
+- New branch: `test/upr-fvx-cfru-dpe-ingame-trades-non-rom-harness-plan`.
+- PR #204 / Diagnose 159 was verified as merged before this block.
+- UPR-FVX submodule remains pinned at `a86315e8d82e0854e0fd59549f50e2c49f523c40`.
+- Diagnose 160 plans a small non-ROM harness for the In-Game Trades guard. Result: `harness-plan-ready`.
+- Recommended first scope: `TradeRandomizer` unit tests with synthetic `InGameTrade` rows and a fake/test `RomHandler`, proving null-request and unsafe Species rows skip before mutation, all-skipped input avoids `setInGameTrades(...)`, and skip counters stay observable.
+- Optional Gen3 writer preserve coverage is useful only if it can be done without ROM bytes, broad refactor or generated artifacts.
+- In-Game Trades remain `blocked-pending-evidence`; no Species-Write-Smoke, ROM smoke, build, Randomizer run, code change, submodule change, text, Nickname/OT, IV or Trade Held Item scope was performed.
+
 # Session update - Diagnose 159
 
 - New branch: `test/upr-fvx-cfru-dpe-ingame-trades-guard-code-review`.
