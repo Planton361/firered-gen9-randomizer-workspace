@@ -1,3 +1,7 @@
+# Latest - Diagnose 149
+
+- `149_coverage_reconciliation.md`: Coverage/roadmap reconciliation after Held Items closure and Wild Encounters plan; identifies special Wild Encounter systems, not Standard Wild retest, as the next genuinely open major scope.
+
 # Latest - Diagnose 148
 
 - `148_wild_encounters_scope_diagnostics_plan.md`: Wild Encounters scope diagnostics plan; starts a new Wild Pokemon/Encounter scope after Held Items closure and requires read-only candidate diagnostics before any write/reload smoke.

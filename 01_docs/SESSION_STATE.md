@@ -1,3 +1,10 @@
+# 2026-05-15 - Diagnose 149
+
+- Current branch reconciles Randomizer feature coverage after Held Items closure and the merged Wild Encounters plan.
+- Assessment: Standard Wild/Surfing/Fishing/Rock Smash P0 is already covered; do not spend the next block retesting Standard Wild.
+- Genuinely open major scope: CFRU Day/Night and special Wild Encounter systems such as Swarms, Roamers, DexNav, Raids and Altering Cave/Tanoby-style cases.
+- No code, build, Randomizer run, ROM access or tool-manifest change was made.
+
 # 2026-05-15 - Diagnose 148
 
 - Current branch plans Wild Encounters/Wild Pokemon Randomization as the next separate CFRU/DPE Gen9-BPRE scope after Held Items closure.

@@ -1,3 +1,10 @@
+# 2026-05-15 - FVX coverage reconciliation update
+
+- Diagnose 149 consolidates current coverage after Held Items closure.
+- Standard Wild/Surfing/Fishing/Rock Smash P0 remains treated as covered in the documented standard scope.
+- Wild special systems remain open: CFRU Day/Night, Swarms, Roamers, DexNav, Raids and special-case encounter tables.
+- Next coverage should target special encounter systems read-only before any write smoke.
+
 # 2026-05-15 - FVX Wild Encounters coverage update
 
 - Wild Encounters/Wild Pokemon Randomization is now planned as a separate unpromoted scope after Held Items closure.
