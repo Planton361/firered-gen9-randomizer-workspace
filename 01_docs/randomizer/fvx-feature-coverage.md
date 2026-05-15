@@ -1,3 +1,9 @@
+# 2026-05-15 - FVX Special Wild triggerability update
+
+- Diagnose 150 classifies Special Wild systems without new Randomizer runs.
+- Day/Night is dormant in the tracked state; Swarms/Roamers/Wild Double/`gWildDataSwitch` are runtime-state driven; DexNav is partial/future; Raids are future parser/write scope.
+- UPR-FVX does not need to randomize these systems now for the current compatibility target.
+
 # 2026-05-15 - FVX coverage reconciliation update
 
 - Diagnose 149 consolidates current coverage after Held Items closure.

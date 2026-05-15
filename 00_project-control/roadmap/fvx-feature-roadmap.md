@@ -1,3 +1,9 @@
+# 2026-05-15 - Special Wild roadmap update
+
+- Diagnose 150 closes the immediate Special Wild triggerability question for the current tracked state.
+- No active Special Wild writer scope is recommended now.
+- Roadmap can move to the next major Randomizer feature unless explicit product goals require Day/Night, Swarm, Raid, DexNav or Wild Double support.
+
 # 2026-05-15 - Roadmap reconciliation
 
 - Diagnose 149 reconciles completed Randomizer scopes against remaining major gaps.

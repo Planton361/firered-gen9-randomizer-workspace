@@ -1,3 +1,10 @@
+# 2026-05-15 - Diagnose 150
+
+- Current branch documents CFRU/DPE Special Wild triggerability read-only.
+- Result: no Special Wild system currently requires immediate UPR-FVX randomization for the tracked compatibility state.
+- Day/Night headers exist but are sentinel-only/dormant; Swarms, Roamers, Wild Double and `gWildDataSwitch` are runtime-state driven; DexNav is partial/future; Raids need a separate future parser/write scope if required.
+- Standard Wild remains P0-supported and was not retested.
+
 # 2026-05-15 - Diagnose 149
 
 - Current branch reconciles Randomizer feature coverage after Held Items closure and the merged Wild Encounters plan.

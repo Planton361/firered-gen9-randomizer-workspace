@@ -1,3 +1,11 @@
+# 2026-05-15 - Next: move past Special Wild unless requirements change
+
+Special Wild triggerability is documented in Diagnose 150 and does not require immediate UPR-FVX writer work in the tracked state.
+
+Recommended next step: choose the next major Randomizer feature scope outside already closed Standard Wild, Items, Shops and Held Items.
+
+Only reopen Special Wild if non-empty Day/Night headers, Swarm runtime requirements, Raid support or DexNav/Wild-Double gameplay tests become explicit product goals.
+
 # 2026-05-15 - Next: special Wild Encounter systems
 
 Recommended next branch: `analysis/upr-fvx-cfru-dpe-special-wild-encounter-systems-scope-plan`.
