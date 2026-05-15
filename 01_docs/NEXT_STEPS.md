@@ -1,3 +1,13 @@
+# 2026-05-15 - Next: Wild Held Items Ban Bad smoke
+
+Recommended next branch: `test/upr-fvx-cfru-dpe-wild-held-items-ban-bad-reload-smoke`.
+
+Goal: test Wild/Encounter Held Items with `banBadRandomWildPokemonHeldItems=true` only, after Diagnose 139 confirmed the no-Ban-Bad Wild/Encounter writer reloads with `wildHeldItemReloadMismatches=0`.
+
+Keep out of scope: Trainer Held Items, Starter Held Items, Field Items, Pickup, Shops and all non-Held-Item randomizer work.
+
+Required checks remain: save/log/output/reload success, no invalid/unloaded/fallback/placeholder writes, `badWildHeldItemWrites=0`, and scope isolation for Trainer/Starter/Field/Pickup/Shop.
+
 # Next Steps Update - 2026-05-15 - Wild/Encounter Held Items smoke next
 
 Aktueller Fokus:

@@ -1,3 +1,7 @@
+# Latest - Diagnose 139
+
+- `139_wild_held_items_reload_smoke.md`: Wild/Encounter Held Items Write/Reload-Smoke without Ban Bad; PASS with reload-stable Species/BaseStats held items and Trainer/Starter/Field/Pickup/Shop isolation.
+
 # Latest - Diagnose 138
 
 - `138_held_items_scope_diagnostics.md`: PASS for read-only CFRU/DPE Held Items candidate diagnostics; Wild/Encounter, Trainer and Starter paths are readable, with no Field/Pickup/Shop scope changes.
