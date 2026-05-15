@@ -1,3 +1,9 @@
+# Coverage update - Diagnose 156
+
+- In-Game Trades remain not compatible / blocked.
+- Coverage status is `blocked-pending-evidence` with an explicit preserve/skip policy: no trade rows are written and no Species, Held Item, IV or Nickname/OT subfeature is promoted.
+- `unsupported-dummy` is not promoted as final status until dummy/script-replaced/disabled structure is proven read-only.
+
 # Coverage update - Diagnose 155
 
 - In-Game Trades remain not compatible / blocked.

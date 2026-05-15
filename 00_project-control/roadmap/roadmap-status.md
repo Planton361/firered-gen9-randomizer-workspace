@@ -1,3 +1,9 @@
+# Roadmap status update - Diagnose 156
+
+- In-Game Trades policy status: `blocked-pending-evidence`.
+- Preserve/Skip policy is now explicit: write no modeled trade rows, do not run Species-Write-Smoke, and do not randomize Nickname/OT, IVs or Trade Held Items.
+- `unsupported-dummy` remains plausible but not proven; reopen requires valid active-row evidence, corrected locator/row-shape evidence, explicit unsupported/dummy proof, or a separate defensive null-requested-species plan.
+
 # Roadmap status update - Diagnose 155
 
 - In-Game Trades active-row candidate status: blocked.

@@ -1,3 +1,9 @@
+# Next steps update - Diagnose 156
+
+- Keep In-Game Trades closed as `blocked-pending-evidence`.
+- Preserve/Skip policy: write no trade rows, leave dummy/placeholder/null-request structures unchanged, and do not prepare Species-Write-Smoke, Nickname/OT randomization, IV randomization or Trade Held Item randomization.
+- Reopen only with explicit valid active-row evidence, corrected locator/row-shape evidence, an unsupported/dummy proof, or a separate defensive null-requested-species skip/guard plan.
+
 # Next steps update - Diagnose 155
 
 - Keep In-Game Trades Species-Write-Smoke blocked.

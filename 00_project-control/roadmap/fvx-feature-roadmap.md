@@ -1,3 +1,9 @@
+# Roadmap update - Diagnose 156
+
+- In-Game Trades move from active-row candidate blocker to explicit Preserve/Skip policy.
+- Current classification: `blocked-pending-evidence`; no trade row writes, Species-Write-Smoke, Trade Held Item, IV or Nickname/OT randomization are allowed.
+- Future reopening requires valid active-row evidence, corrected locator/row-shape evidence, explicit unsupported/dummy proof, or a separate defensive null-requested-species skip/guard plan.
+
 # Roadmap update - Diagnose 155
 
 - Keep the In-Game Trades blocker lane active after active-row candidate diagnosis.
