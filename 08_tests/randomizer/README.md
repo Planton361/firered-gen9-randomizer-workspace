@@ -1,5 +1,9 @@
 # Current update
 
+- Diagnose 155 checks In-Game Trades active-row candidates from UPR-FVX `TradeTableOffset`, `TradeTableSize`, `TradesUnused` and the documented 60-byte Gen3 row model. Result: blocked; no valid active row is confirmed and `unsupported-dummy` is not proven strongly enough for a final unsupported decision.
+
+# Current update
+
 - Diagnose 154 documents the In-Game Trades locator/table-model from source and prior diagnostics. Result: blocked; valid active trade rows are still not read-only confirmed, so Species-Write-Smoke remains disallowed.
 
 # Current update

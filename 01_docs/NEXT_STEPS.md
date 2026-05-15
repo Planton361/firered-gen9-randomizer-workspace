@@ -1,3 +1,9 @@
+# Next steps update - Diagnose 155
+
+- Keep In-Game Trades Species-Write-Smoke blocked.
+- Next minimal step: decide read-only between corrected locator evidence, explicit active-row evidence, content-based dummy-row skip policy, defensive null-requested-species handling, or unsupported/dummy scope.
+- Do not prepare Species writes, Nickname/OT randomization, Trade Held Item randomization, IV randomization or other feature-scope work until valid active rows are confirmed.
+
 # Next steps update - Diagnose 154
 
 - Keep In-Game Trades Species-Write-Smoke blocked.
