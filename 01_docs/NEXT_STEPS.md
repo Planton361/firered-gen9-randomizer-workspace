@@ -1,3 +1,9 @@
+# Next steps update - Diagnose 159
+
+- Keep In-Game Trades closed as `blocked-pending-evidence`.
+- Recommended next step: a small explicitly scoped non-ROM harness for unsafe-row skip/preserve behavior, especially skip counters, no writer call when all rows skip, and `changesMade=false`.
+- Do not run Species-Write-Smoke, ROM smoke, Text/Nickname/OT, IV or Trade Held Item randomization until valid active rows are separately proven and authorized.
+
 # Next steps update - Diagnose 158B
 
 - Keep In-Game Trades closed as `blocked-pending-evidence` even after the merged UPR-FVX PR #39 guard.

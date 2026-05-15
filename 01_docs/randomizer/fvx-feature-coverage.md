@@ -1,3 +1,10 @@
+# Coverage update - Diagnose 159
+
+- In-Game Trades remain not compatible / blocked.
+- Diagnose 159 statically reviews the merged guard as `review-pass-with-risks`: unsafe rows skip before mutation and preserve before Gen3 byte writes.
+- No Given Species, Requested Species, Trade Held Item, IV or Nickname/OT subfeature is promoted; Species-Write-Smoke remains blocked.
+- A later non-ROM harness is recommended before any ROM-facing smoke is considered.
+
 # Coverage update - Diagnose 158B
 
 - In-Game Trades remain not compatible / blocked.

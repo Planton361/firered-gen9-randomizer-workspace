@@ -1,3 +1,10 @@
+# Roadmap update - Diagnose 159
+
+- In-Game Trades guard code review is complete as `review-pass-with-risks`.
+- The UPR-FVX guard satisfies the narrow Preserve/Skip policy for unsafe rows: skip before mutation and preserve/skip before Gen3 byte writes.
+- Roadmap classification remains `blocked-pending-evidence`; valid active rows are still unproven and Species-Write-Smoke remains unauthorized.
+- Next roadmap step is a small non-ROM harness if implementation evidence is needed, or further read-only active-row/locator evidence.
+
 # Roadmap update - Diagnose 158B
 
 - UPR-FVX PR #39 is merged and the workspace submodule is pinned to `a86315e8d82e0854e0fd59549f50e2c49f523c40`.
