@@ -1,3 +1,10 @@
+# Roadmap update - Diagnose 162
+
+- In-Game Trades now have a ready ROM-free Gen3 writer-preserve test plan after the non-ROM `TradeRandomizer` harness follow-up.
+- Recommended next implementation, only if explicitly scoped, is a UPR-FVX test-only branch for `Gen3RomHandler` unsafe-row preserve behavior using a narrow row-write decision seam and synthetic bytes.
+- Roadmap classification remains `blocked-pending-evidence`; valid active rows are still unproven and Species-Write-Smoke remains unauthorized.
+- If the writer test requires ROM fixtures, reflection-heavy private state setup or broad handler refactor, leave the scope blocked/preserve-only.
+
 # Roadmap update - Diagnose 161B
 
 - UPR-FVX PR #40 is merged and the workspace submodule is pinned to `1eaee2873cd69682335223f817b124bf36d004f2`.

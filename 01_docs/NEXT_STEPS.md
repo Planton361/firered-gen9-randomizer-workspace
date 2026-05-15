@@ -1,3 +1,10 @@
+# Next steps update - Diagnose 162
+
+- Keep In-Game Trades closed as `blocked-pending-evidence`.
+- Next allowed implementation step, if explicitly requested, is a small UPR-FVX `:romio:test` writer-preserve unit test with a narrow Gen3 In-Game-Trade row-write decision seam.
+- The later test should prove unsafe/null-request rows skip before byte writes and leave synthetic bytes unchanged; it should not test or promote valid active row writes.
+- Do not run ROM-Smoke, Species-Write-Smoke, Randomizer runs, Text/Nickname/OT, IV or Trade Held Item randomization.
+
 # Next steps update - Diagnose 161B
 
 - Keep In-Game Trades closed as `blocked-pending-evidence`.

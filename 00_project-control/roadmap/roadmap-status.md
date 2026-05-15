@@ -1,3 +1,10 @@
+# Roadmap status update - Diagnose 162
+
+- In-Game Trades writer-preserve test plan result: `writer-test-plan-ready`.
+- Status remains `blocked-pending-evidence`; no GUI-compatible In-Game Trade subfeature is promoted and Species-Write-Smoke remains blocked.
+- Read-only review confirms the Gen3 writer guard is ordered before all row byte writes, but a later ROM-free `:romio:test` should use a small seam instead of ROM-backed handler construction.
+- Next status target: explicitly scoped UPR-FVX test-only branch for unsafe-row writer preserve behavior, or continued guarded/preserve-only tracking.
+
 # Roadmap status update - Diagnose 161B
 
 - In-Game Trades non-ROM harness follow-up is recorded.

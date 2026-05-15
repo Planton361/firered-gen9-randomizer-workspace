@@ -1,3 +1,10 @@
+# Coverage update - Diagnose 162
+
+- In-Game Trades remain not compatible / blocked.
+- Diagnose 162 classifies a ROM-free Gen3 writer preserve test plan as `writer-test-plan-ready`; it recommends a narrow `:romio:test` seam for unsafe-row skip-before-byte-write behavior.
+- No Given Species, Requested Species, Trade Held Item, IV or Nickname/OT subfeature is promoted; Species-Write-Smoke and ROM-Smoke remain blocked.
+- The plan adds evidence direction only, not code, build, ROM smoke, Randomizer execution or writer implementation.
+
 # Coverage update - Diagnose 161B
 
 - In-Game Trades remain not compatible / blocked.

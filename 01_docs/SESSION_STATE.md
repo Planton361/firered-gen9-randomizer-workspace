@@ -1,3 +1,13 @@
+# Session update - Diagnose 162
+
+- New branch: `test/upr-fvx-cfru-dpe-ingame-trades-writer-preserve-test-plan`.
+- PR #206 / Follow-up 161B was verified as merged before this block.
+- UPR-FVX submodule remains pinned at `1eaee2873cd69682335223f817b124bf36d004f2`.
+- Diagnose 162 plans a ROM-free Gen3 In-Game Trades writer-preserve test. Result: `writer-test-plan-ready`.
+- Read-only finding: `Gen3RomHandler.setInGameTrades(...)` checks `canWriteInGameTrade(...)` before nickname, Species, IV, OT ID, held-item, OT-name and requested-Species byte writes, so unsafe rows are preserve/skipped before row mutation.
+- A later test should add only a narrow `:romio:test` seam around the Gen3 row-write decision or eligibility helper; direct construction of a ROM-backed handler is not recommended.
+- In-Game Trades remain `blocked-pending-evidence`; no code, build, Randomizer run, ROM-Smoke, Species-Write-Smoke, text, Nickname/OT, IV or Trade Held Item scope was performed.
+
 # Session update - Diagnose 161B
 
 - New branch: `test/upr-fvx-cfru-dpe-ingame-trades-non-rom-harness-followup`.

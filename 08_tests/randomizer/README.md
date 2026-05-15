@@ -1,5 +1,9 @@
 # Current update
 
+- Diagnose 162 plans a small ROM-free Gen3 In-Game Trades writer-preserve test. Result: `writer-test-plan-ready`; the recommended later scope is a `:romio:test` unit test with a narrow Gen3 row-write decision seam proving unsafe/null-request rows skip before byte writes. Species-Write-Smoke, ROM-Smoke, Gen3 writer implementation, and text/Nickname/OT/IV/Held-Item scopes remain blocked.
+
+# Current update
+
 - Diagnose 161B records merged UPR-FVX PR #40 for the non-ROM `TradeRandomizerTest` In-Game Trades guard harness and pins `02_external/upr-fvx` to `1eaee2873cd69682335223f817b124bf36d004f2`. The harness covers null-request and placeholder/unsafe Species skips, all-skipped no `setInGameTrades(...)`, `isChangesMade=false`, and skip counters; Species-Write-Smoke, ROM-Smoke and Gen3 writer testing remain blocked.
 
 # Current update
