@@ -1,3 +1,10 @@
+# Roadmap status update - Diagnose 160
+
+- In-Game Trades non-ROM harness plan result: `harness-plan-ready`.
+- Status remains `blocked-pending-evidence`; no GUI-compatible In-Game Trade subfeature is promoted and Species-Write-Smoke remains blocked.
+- Next status target: explicitly scoped UPR-FVX test-only branch for `TradeRandomizer` skip/preserve behavior using synthetic `InGameTrade` rows and no ROM files.
+- Gen3 writer preserve coverage remains optional and must stay non-ROM or be planned separately.
+
 # Roadmap status update - Diagnose 159
 
 - In-Game Trades guard code review result: `review-pass-with-risks`.

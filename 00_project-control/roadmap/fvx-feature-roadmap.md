@@ -1,3 +1,10 @@
+# Roadmap update - Diagnose 160
+
+- In-Game Trades have a ready non-ROM harness plan after the guard code review.
+- Recommended next implementation, only if explicitly scoped, is a UPR-FVX test-only branch for `TradeRandomizer` with synthetic unsafe `InGameTrade` rows and a fake/test `RomHandler`.
+- Roadmap classification remains `blocked-pending-evidence`; valid active rows are still unproven and Species-Write-Smoke remains unauthorized.
+- Writer preserve testing is a secondary target only if it stays ROM-free and small.
+
 # Roadmap update - Diagnose 159
 
 - In-Game Trades guard code review is complete as `review-pass-with-risks`.

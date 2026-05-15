@@ -1,5 +1,9 @@
 # Current update
 
+- Diagnose 160 plans a small non-ROM In-Game Trades guard harness. Result: `harness-plan-ready`; the recommended first scope is a `TradeRandomizer` unit test with synthetic `InGameTrade` rows and a fake/test `RomHandler`, while Species-Write-Smoke and all text/Nickname/OT/IV/Held-Item scopes remain blocked.
+
+# Current update
+
 - Diagnose 159 reviews the merged UPR-FVX In-Game Trades guard code read-only. Result: `review-pass-with-risks`; unsafe rows skip before mutation and preserve before Gen3 byte writes, but Species-Write-Smoke stays blocked and a later non-ROM harness is recommended.
 
 # Current update
