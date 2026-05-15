@@ -1,3 +1,10 @@
+# Roadmap status update - Diagnose 159
+
+- In-Game Trades guard code review result: `review-pass-with-risks`.
+- Static review confirms unsafe rows skip before mutation in `TradeRandomizer.java` and preserve/skip before byte writes in `Gen3RomHandler.java`.
+- Status remains `blocked-pending-evidence`; no GUI-compatible In-Game Trade subfeature is promoted and Species-Write-Smoke remains blocked.
+- Next status target: explicitly scoped non-ROM harness or further read-only active-row evidence.
+
 # Roadmap status update - Diagnose 158B
 
 - UPR-FVX PR #39 is merged and workspace-pinned at `a86315e8d82e0854e0fd59549f50e2c49f523c40`.

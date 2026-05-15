@@ -1,3 +1,13 @@
+# Session update - Diagnose 159
+
+- New branch: `test/upr-fvx-cfru-dpe-ingame-trades-guard-code-review`.
+- PR #203 / Follow-up 158B was verified as merged before this block.
+- UPR-FVX submodule remains pinned at `a86315e8d82e0854e0fd59549f50e2c49f523c40`.
+- Diagnose 159 reviews `TradeRandomizer.java` and `Gen3RomHandler.java` read-only against the Diagnose 156 Preserve/Skip policy.
+- Result: `review-pass-with-risks`. Unsafe In-Game Trade rows are skipped before mutation and preserved/skipped before Gen3 byte writes; no text, Nickname/OT, IV or Trade Held Item path was expanded.
+- In-Game Trades remain `blocked-pending-evidence`; Species-Write-Smoke remains blocked. A later non-ROM harness is useful before any ROM-facing smoke is considered.
+- No code, build, Randomizer run, ROM/save/output/log access, submodule change or external download was performed.
+
 # Session update - Diagnose 158B
 
 - New branch: `test/upr-fvx-cfru-dpe-ingame-trades-null-request-guard-followup`.

@@ -1,5 +1,9 @@
 # Current update
 
+- Diagnose 159 reviews the merged UPR-FVX In-Game Trades guard code read-only. Result: `review-pass-with-risks`; unsafe rows skip before mutation and preserve before Gen3 byte writes, but Species-Write-Smoke stays blocked and a later non-ROM harness is recommended.
+
+# Current update
+
 - Diagnose 158B records merged UPR-FVX PR #39 for the In-Game Trades null/invalid Species guard and pins `02_external/upr-fvx` to `a86315e8d82e0854e0fd59549f50e2c49f523c40`. In-Game Trades remain `blocked-pending-evidence`; Species-Write-Smoke, text, Nickname/OT, IV and Trade Held Item scopes stay blocked.
 
 # Current update
