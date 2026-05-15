@@ -1,3 +1,16 @@
+# Session update - Diagnose 171
+
+- New branch: `test/upr-fvx-cfru-dpe-evolution-methods-decision-review`.
+- PR #219 / Diagnose 170 was verified as merged into `main` before this block.
+- UPR-FVX submodule remains clean and pinned at `587e857088cac4fba41c6559d3a6f6e2a7aad71f`.
+- Diagnose 171 reviews the Evolution method decision paths for `FVX-TRAIT-024` Change Impossible Evolutions and `FVX-TRAIT-027` Remove Time-Based Evolutions.
+- Result: `decision-review-ready`.
+- Finding for `024`: Gen3 `removeImpossibleEvolutions(...)` maps FRLG happiness/beauty, Trade and Trade-Item branches to deterministic Stone or Level methods, with `extraInfo` carrying standard Item IDs or levels and `useEstimatedLevels` affecting Level targets only.
+- Finding for `027`: `removeTimeBasedEvolutions()` maps `LEVEL_DUSK` to Dusk Stone, paired day/night time evolutions to Sun/Moon Stone, and unpaired time evolutions to `EvolutionType.timeless()` while preserving `extraInfo`.
+- Recommended next minimal scope is a small ROM-free UPR-FVX `:romio:test` decision harness for `024/027`; writer/reload and ROM-Smoke remain separate.
+- `FVX-TRAIT-025` remains split into condense-level logic and Gen3 happiness-byte patch risk; `FVX-TRAIT-026` remains a helper flag for `024/025`.
+- No ROM-Smoke, Randomizer run, build, code change, submodule change, ROM/save/output/log access or external download was performed.
+
 # Session update - Diagnose 170
 
 - New branch: `test/upr-fvx-cfru-dpe-evolution-methods-scope-plan`.

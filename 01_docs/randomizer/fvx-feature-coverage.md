@@ -1,3 +1,11 @@
+# Coverage update - Diagnose 171
+
+- Evolution method decision review for `FVX-TRAIT-024` and `FVX-TRAIT-027` is complete as `decision-review-ready`.
+- `FVX-TRAIT-024` now has read-only method-mapping evidence for Change Impossible Evolutions: FRLG happiness/beauty, Trade, Trade-Item source-species branches, Clamperl item branches and `useEstimatedLevels`.
+- `FVX-TRAIT-027` now has read-only method-mapping evidence for Remove Time-Based Evolutions: timeless conversion, paired Day/Night Sun/Moon Stone split and `LEVEL_DUSK` to Dusk Stone.
+- Both slices still need a later ROM-free `:romio:test` before any test promotion; writer/reload and ROM-Smoke stay separate.
+- `FVX-TRAIT-025` stays split and `FVX-TRAIT-026` stays helper-only.
+
 # Coverage update - Diagnose 170
 
 - Evolution methods/improvement slices `FVX-TRAIT-024` through `FVX-TRAIT-027` are now planned as `methods-plan-ready`.
@@ -713,10 +721,10 @@ Diagnose 082 bestaetigt `FVX-TRAIT-018` nach der 081-Normalisierung:
 - FVX-TRAIT-021 | Evolutions: No Convergence | tested-non-rom
 - FVX-TRAIT-022 | Evolutions: Force Change | tested-non-rom
 - FVX-TRAIT-023 | Evolutions: Force Growth | tested-non-rom
-- FVX-TRAIT-024 | Change Impossible Evolutions | methods-plan-ready
-- FVX-TRAIT-025 | Make Evolutions Easier | methods-plan-ready
-- FVX-TRAIT-026 | Use Estimated Evolution Levels | methods-plan-ready
-- FVX-TRAIT-027 | Remove Time-Based Evolutions | methods-plan-ready
+- FVX-TRAIT-024 | Change Impossible Evolutions | decision-review-ready
+- FVX-TRAIT-025 | Make Evolutions Easier | methods-plan-ready / split planned
+- FVX-TRAIT-026 | Use Estimated Evolution Levels | methods-plan-ready / Helper-Flag
+- FVX-TRAIT-027 | Remove Time-Based Evolutions | decision-review-ready
 - FVX-TRAIT-028 | EXP-/Legendary-Kurven-Sonderfaelle | Nicht begonnen
 
 ### Starters, Statics & Trades
