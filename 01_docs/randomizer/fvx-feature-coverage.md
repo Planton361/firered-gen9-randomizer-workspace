@@ -1,5 +1,8 @@
 # Coverage update - Diagnose 164
 
+- Diagnose 165 reclassifies `FVX-TRAIT-018` Evolution Similar Strength as `diagnosis-ready` for the narrow `FVX-TRAIT-016` Evolution-Species-Carrier scope.
+- The old 070 mismatch blocker is superseded by 081/082 normalized reload evidence; no immediate UPR-FVX fixblock is recommended unless new normalized mismatch evidence appears.
+
 - In-Game Trades final coverage classification: `guarded/preserve-only, not supported`.
 - `FVX-SST-014` is guarded/preserve-only for unsafe Given/Requested Species rows, but not GUI-compatible.
 - `FVX-SST-015` remains blocked / not released; Nickname/OT, IV and Trade Held Item randomization are not authorized.
