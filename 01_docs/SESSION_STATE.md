@@ -1,3 +1,11 @@
+# Session update - 2026-05-15 - Diagnose 132
+
+- Current branch records Shop-only FVX-ITEM-008 Guarantee X Items Write/Reload-Smoke.
+- Smoke result: PASS; `guaranteedXItemsExpected=7`, `guaranteedXItemsPresent=7`, `guaranteedXItemsReloadPresent=7`, missing counts stay 0.
+- Stable metrics: `shopCount=23`, `mainGameShopCount=3`, `skippedShopCount=20`, `specialShopCount=3`, `shopItemsTotal=157`, `minShopLength=2`, `maxShopLength=9`, reload mismatches 0.
+- Foreign scopes stayed false: `fieldItemScopeChanged=false`, `pickupScopeChanged=false`, `heldItemScopeChanged=false`; prices stayed untouched.
+- FVX-ITEM-008 now has separate GUI-compatible evidence for Guarantee Evolution Items and Guarantee X Items; the Evolution+X combination and FVX-ITEM-009 remain open.
+
 # Session update - 2026-05-15 - Diagnose 131
 
 - Current branch records Shop-only FVX-ITEM-008 Guarantee Evolution Items Write/Reload-Smoke.

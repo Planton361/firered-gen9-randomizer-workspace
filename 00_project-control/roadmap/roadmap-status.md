@@ -1,3 +1,9 @@
+# 2026-05-15 - Diagnose 132 status
+
+- FVX-ITEM-008 Guarantee X Items: GUI-compatible in tested Shop-only Random scope after reload-stable smoke.
+- FVX-ITEM-008 has separate individual passes for Guarantee Evolution Items and Guarantee X Items; combined Evolution+X remains untested.
+- FVX-ITEM-009 Balance Shop Prices/Cheap Rare Candies: still pending separate scope.
+
 # 2026-05-15 - Diagnose 131 status
 
 - FVX-ITEM-008 Guarantee Evolution Items: GUI-compatible in tested Shop-only Random scope after reload-stable smoke.
