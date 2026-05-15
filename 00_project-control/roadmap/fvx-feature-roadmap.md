@@ -1,3 +1,9 @@
+# Roadmap update - Diagnose 153
+
+- Insert an In-Game Trades locator/table-model diagnostic before any species-only smoke.
+- Possible follow-up outcomes: ROM-entry/locator correction plan, dummy-row skip plan, defensive null-request plan, or unsupported-scope decision.
+- Text fields, Trade Held Items and IV extras remain later subscopes.
+
 # Roadmap update - Diagnose 152
 
 - Pause In-Game Trade write smokes.

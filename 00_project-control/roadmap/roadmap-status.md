@@ -1,3 +1,9 @@
+# Roadmap status update - Diagnose 153
+
+- In-Game Trades remain blocked before write smokes.
+- Blocker category: locator/table-model safety for CFRU/DPE Gen9-BPRE active trade rows.
+- Next status target: read-only locator/table-model diagnostic, not implementation.
+
 # Roadmap status update - Diagnose 152
 
 - In-Game Trades candidate diagnostic is blocked/preflight.

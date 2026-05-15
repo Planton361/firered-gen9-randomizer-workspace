@@ -1,5 +1,9 @@
 # Current update
 
+- Diagnose 153 adds the In-Game Trades table-model blocker plan. It explains why Diagnose 152 does not permit a species-only smoke yet and requires a read-only locator/table-model diagnostic before any In-Game Trade write work.
+
+# Current update
+
 - Diagnose 152 records a read-only In-Game Trades candidate diagnostic. Result: blocked/preflight because the current Gen3 BPRE trade-table model does not classify valid active trade Species fields for the CFRU/DPE Gen9-BPRE candidate; no write/reload smoke is recommended yet.
 
 # Current update
