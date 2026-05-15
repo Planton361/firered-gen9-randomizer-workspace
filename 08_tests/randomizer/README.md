@@ -1,3 +1,10 @@
+# 2026-05-15 - Diagnose 129 Shop Items Random + Ban OP Reload Smoke
+
+- Neues Protokoll: `129_shop_items_random_ban_op_reload_smoke.md`.
+- Ergebnis: `ShopItemsMod.RANDOM + banOPShopItems=true` besteht den Shop-only Write/Reload-Smoke.
+- `opShopSetClassifiable=true`, `opShopItemBannedWrites=0`; Counts, Terminatoren, Laengen, Skip-Shops, Preise und Fremdscopes bleiben stabil.
+- `FVX-ITEM-007` ist nun fuer Ban Bad, Ban Regular und Ban OP jeweils einzeln GUI-kompatibel; Ban-Kombinationen bleiben separat ausstehend.
+
 # 2026-05-15 - Diagnose 128 Shop Items Random + Ban Regular Reload Smoke
 
 - Neues Protokoll: `128_shop_items_random_ban_regular_reload_smoke.md`.

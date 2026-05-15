@@ -1,3 +1,9 @@
+# 2026-05-15 - Shop Item Bans Ban OP Roadmap Update
+
+- Diagnose 129 stuft den Ban-OP-Subscope von `FVX-ITEM-007` hoch: Shop Random mit `banOPShopItems=true` ist im getesteten Shop-only Scope GUI-kompatibel.
+- Ban Bad und Ban Regular bleiben aus Diagnose 127/128 belegt; keine Hochstufung fuer Ban-Kombinationen, Guarantee Evolution/X Items, Shop-Preise oder Cheap Rare Candies.
+- Naechster minimaler Roadmap-Schritt: Entscheidung Ban-Kombinationen vs. `FVX-ITEM-008`.
+
 # 2026-05-15 - Shop Item Bans Ban Regular Roadmap Update
 
 - Diagnose 128 stuft den Ban-Regular-Subscope von `FVX-ITEM-007` hoch: Shop Random mit `banRegularShopItems=true` ist im getesteten Shop-only Scope GUI-kompatibel.
