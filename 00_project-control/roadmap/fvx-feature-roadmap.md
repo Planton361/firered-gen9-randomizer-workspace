@@ -1,3 +1,10 @@
+# Roadmap update - Diagnose 171
+
+- `FVX-TRAIT-024` and `FVX-TRAIT-027` are now `decision-review-ready`.
+- Recommended next implementation, if approved, is a small ROM-free UPR-FVX `:romio:test` decision harness for Change Impossible Evolutions and Remove Time-Based Evolutions.
+- Keep the harness at mapping-decision level: synthetic `Species` / `Evolution` objects, no ROM file, no Gen3 writer, no reload, no Randomizer run and no output-ROM.
+- `FVX-TRAIT-025` remains a separate split plan and `FVX-TRAIT-026` remains a helper flag for `024/025`.
+
 # Roadmap update - Diagnose 170
 
 - Evolution methods/improvement slices `FVX-TRAIT-024` through `FVX-TRAIT-027` now have a `methods-plan-ready` path.

@@ -1,3 +1,11 @@
+# Next steps update - Diagnose 171
+
+- Treat `FVX-TRAIT-024` and `FVX-TRAIT-027` as `decision-review-ready`, not tested or P1-supported.
+- Next minimal Evolution work, if continued, should be a small UPR-FVX ROM-free `:romio:test` decision harness for Change Impossible Evolutions and Remove Time-Based Evolutions.
+- Test only synthetic `Species` / `Evolution` mapping decisions: Trade/Trade-Item/FRLG happiness/beauty for `024`, and timeless/paired Day-Night/Dusk mappings for `027`.
+- Keep `FVX-TRAIT-025` split and keep `FVX-TRAIT-026` attached to `024/025`; do not promote either as standalone.
+- Do not run ROM-Smoke, Randomizer runs, builds, Gen3 writer/reload tests or output-ROM generation without a separate explicit scope.
+
 # Next steps update - Diagnose 170
 
 - Treat `FVX-TRAIT-024` through `FVX-TRAIT-027` as `methods-plan-ready`, not tested or P1-supported.

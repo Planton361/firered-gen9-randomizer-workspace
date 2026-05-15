@@ -1,3 +1,12 @@
+# Roadmap status update - Diagnose 171
+
+- Evolution method decision review is complete for `FVX-TRAIT-024` and `FVX-TRAIT-027`.
+- Result: `decision-review-ready`.
+- `FVX-TRAIT-024` Change Impossible Evolutions has deterministic ROM-free decision cases for FRLG happiness/beauty, Trade, Trade-Item species branches, Clamperl item branches and `useEstimatedLevels`.
+- `FVX-TRAIT-027` Remove Time-Based Evolutions has deterministic ROM-free decision cases for timeless conversion, paired Day/Night split handling and `LEVEL_DUSK` to Dusk Stone.
+- `FVX-TRAIT-025` remains split into condense-level logic and Gen3 happiness-byte patch risk; `FVX-TRAIT-026` remains a helper flag for `024/025`.
+- No ROM-Smoke, Randomizer run, build, code change or submodule change was performed.
+
 # Roadmap status update - Diagnose 170
 
 - Evolution methods/improvement scope planning is complete for `FVX-TRAIT-024` through `FVX-TRAIT-027`.
@@ -626,6 +635,7 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | 08 Randomizer-Kompatibilität | CFRU/DPE Evolution Filter Harness Plan | Diagnose 168 plant `FVX-TRAIT-017` und `020-023` als ROM-freien `EvolutionRandomizer`-Harness mit synthetischem Species-/Evolution-Graph und kleinem `RomHandler`-Proxy/Fake; Ergebnis `harness-plan-ready` |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Evolution Filter Non-ROM Harness Follow-up | Diagnose 169B pinnt UPR-FVX PR #42; `EvolutionFilterOptionsTest` deckt `FVX-TRAIT-017` und `020-023` ROM-frei ab, Status `tested-non-rom`, keine P1-Freigabe ohne ROM-Smoke/Reload |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Evolution Methods Scope Plan | Diagnose 170 plant `FVX-TRAIT-024` bis `027` als getrennte Methoden-/Improvement-Slices; Ergebnis `methods-plan-ready`, keine Test-/P1-Promotion |
+| 08 Randomizer-Kompatibilität | CFRU/DPE Evolution Methods Decision Review | Diagnose 171 reviewt `FVX-TRAIT-024` und `027` als `decision-review-ready`; naechster Schritt ist ein kleiner ROM-freier Decision-Harness, keine Writer-/Reload- oder P1-Promotion |
 
 ## In Arbeit
 
