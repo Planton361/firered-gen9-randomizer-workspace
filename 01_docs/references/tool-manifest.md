@@ -1,3 +1,11 @@
+# Tool Manifest Update - 2026-05-15 - Pickup reload locator fix
+
+- Workspace branch: `compat/upr-fvx-cfru-dpe-pickup-items-reload-locator-fix`.
+- UPR-FVX fork branch: `compat/upr-fvx-cfru-dpe-pickup-items-reload-locator-fix`.
+- UPR-FVX PR #38: <https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/38>.
+- Workspace submodule `02_external/upr-fvx` now pins `a2373888ad17145f270ebf6ff17303af41aa86eb` for the Pickup table reload locator fix.
+- Previous pin was `328e4441c2981d37aba9e2707a6f27f779b026e2`.
+
 # Tool Manifest Update - 2026-05-15 - UPR-FVX Field Items API TM-slot fix
 
 - `02_external/upr-fvx` pinned to Planton361/universal-pokemon-randomizer-fvx commit `328e4441c2981d37aba9e2707a6f27f779b026e2` on branch `compat/upr-fvx-cfru-dpe-field-items-api-tm-slot-scope-fix`.

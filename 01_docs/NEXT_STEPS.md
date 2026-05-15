@@ -1,3 +1,21 @@
+# Next Steps Update - 2026-05-15 - Pickup Ban Bad next
+
+Aktueller Fokus:
+
+- Diagnose 118 fixes and verifies the Pickup reload locator for `FVX-ITEM-010 Pickup Items Random` with `banBadRandomPickupItems=false`.
+- `FVX-ITEM-010 Pickup Items Random` is now GUI-compatible only in that narrow no-Ban-Bad Pickup-only scope.
+- Pickup Ban Bad remains untested and separate.
+
+Naechster empfohlener Minimalblock:
+
+- `analysis/upr-fvx-cfru-dpe-pickup-items-ban-bad-scope-plan`
+
+Ziel des Folgeblocks:
+
+- Read-only planen, wie Pickup Ban Bad fuer `FVX-ITEM-010` getestet werden soll.
+- Danach erst einen Pickup-only Random smoke mit `banBadRandomPickupItems=true` vorbereiten.
+- Keine Field Items, Shops, Held Items, TM/HM/Tutor/Learnset, Palette/Graphics, MoveData/MoveNames, TypeChart, Trainer/Wild/Evolution, Text/Menu oder Scriptparser-Arbeit.
+
 # Next Steps Update - 2026-05-15 - Pickup reload locator fix next
 
 Aktueller Fokus:

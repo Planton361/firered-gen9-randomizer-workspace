@@ -1,3 +1,11 @@
+# Roadmap Status Update - 2026-05-15 - Pickup reload locator fix
+
+- Added `08_tests/randomizer/118_pickup_items_reload_locator_fix.md`.
+- UPR-FVX PR #38 fixes the Pickup table reload locator in the CFRU/DPE Gen9-BPRE gate without changing Pickup pool policy.
+- Pickup Random with `banBadRandomPickupItems=false` now saves, logs, outputs and reloads with `pickupItemReloadMismatches=0`.
+- `FVX-ITEM-010 Pickup Items Random` is GUI-compatible only for the no-Ban-Bad Pickup-only scope.
+- Pickup Ban Bad, Shops and Held Items remain separate.
+
 # Roadmap Status Update - 2026-05-15 - Pickup reload locator blocker planned
 
 - Added `08_tests/randomizer/117_pickup_items_reload_locator_blocker_plan.md`.

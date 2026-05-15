@@ -1,6 +1,8 @@
 # Randomizer Testprotokolle
 
 ## Latest
+- `118_pickup_items_reload_locator_fix.md` dokumentiert den engen UPR-FVX-Fix fuer den Pickup-Reload-Locator und den erfolgreichen Pickup-only Random-Smoke mit `banBadRandomPickupItems=false`.
+- Ergebnis: Save/Log/Output/Reload true, `pickupItemsTotalReload=16`, `pickupItemReloadMismatches=0`; Pickup Ban Bad bleibt separat.
 - `117_pickup_items_reload_locator_blocker_plan.md` dokumentiert read-only den Pickup-Reload-Locator-Blocker nach `PickupItemsMod.RANDOM`.
 - Ergebnis: Der bestehende `PickupTableStartLocator` ist inhaltsbasiert und wird durch den Random-Write veraendert; empfohlen ist ein enger reloadstabiler Locator-Fix vor Pickup Ban Bad.
 
@@ -211,3 +213,5 @@ Wenn ein Artefakt nicht eindeutig Smoke-Output ist, bleibt es lokal liegen und w
 - 117 - `117_pickup_items_reload_locator_blocker_plan.md`: Read-only Plan fuer den Pickup-Reload-Locator-Blocker nach `PickupItemsMod.RANDOM`. Diagnose 116 spricht fuer einen inhaltsbasierten `PickupTableStartLocator`, der nach Random-Write nicht mehr passt; empfiehlt einen engen reloadstabilen Pickup-Table-Locator-Fix vor Pickup Ban Bad.
 
 - 116 - `116_pickup_items_random_reload_smoke.md`: Sanitized Pickup-only `FVX-ITEM-010 Pickup Items Random` smoke with `banBadRandomPickupItems=false`. Save/log/output/reopen true, but blocked because fresh reload cannot locate the Pickup table after random write (`pickupLocatorSuccessful=false`, `pickupItemsTotalReload=0`, reload mismatches `16`); no feature upgrade.
+
+- 118 - `118_pickup_items_reload_locator_fix.md`: UPR-FVX-Fix fuer reloadstabile Pickup-Table-Lokalisierung im CFRU/DPE Gen9-BPRE-Gate; Pickup-only Random-Smoke mit `banBadRandomPickupItems=false` reloadet stabil mit `pickupItemReloadMismatches=0`; Pickup Ban Bad bleibt separat.
