@@ -764,3 +764,11 @@ Zweck: Diagnose 082 reviewen und mergen; danach Evolution-Methoden-Writer und we
 - `FVX-ITEM-001..004` sind fuer Field Items im getesteten engen Scope `GUI-kompatibel`.
 - Shops, Pickup und Held Items bleiben separate Writer-Scope-Bloecke ohne Hochstufung.
 - Naechster empfohlener P1-Block: `analysis/upr-fvx-cfru-dpe-pickup-items-scope-diagnostics-plan`.
+
+## 2026-05-15 - Pickup Items Scope Diagnostics Plan
+
+- Diagnose 114 plant Pickup Items als separaten Item-Writer-Scope nach Abschluss der Field-Items-Smokes.
+- Relevante Pfade: `Settings.PickupItemsMod`, `GameRandomizer.maybeRandomizePickupItems()`, `ItemRandomizer.randomizePickupItems()`, `Gen3RomHandler.getPickupItems()` / `setPickupItems(...)`.
+- Pickup bleibt ein Table-/Locator-/Probability-Scope; vor jedem Write-Smoke muss `PickupTableStartLocator`, `PickupItemCount`, Tabellenlaenge und Item-ID-Validitaet read-only gegen den CFRU/DPE Gen9-BPRE-Kandidaten geprueft werden.
+- Empfohlene Reihenfolge: Pickup read-only Kandidatendiagnose, danach Pickup Random ohne Ban Bad, danach Pickup Random mit Ban Bad.
+- Field Items bleiben abgeschlossen; Shops und Held Items bleiben ohne Hochstufung getrennte Scopes.

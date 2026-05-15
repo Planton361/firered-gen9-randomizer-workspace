@@ -1,3 +1,21 @@
+# Next Steps Update - 2026-05-15 - Pickup Items diagnostics next
+
+Aktueller Fokus:
+
+- Field Items `FVX-ITEM-001..004` sind im getesteten engen Field-Items-only Scope abgeschlossen.
+- Pickup Items sind als naechster getrennter Item-Writer-Scope geplant.
+- Diagnose 114 empfiehlt zuerst eine read-only Pickup-Kandidatendiagnose, bevor ein Write-/Reload-Smoke gestartet wird.
+
+Naechster empfohlener Minimalblock:
+
+- `test/upr-fvx-cfru-dpe-pickup-items-scope-diagnostics`
+
+Ziel des Folgeblocks:
+
+- Nur Pickup Items read-only klassifizieren: Locator, Tabellenlaenge, Entry-Size, Probability-Modell, Common/Rare-Hinweise, valide/geladene Item-IDs, Bad-/Fallback-/Placeholder-/TM-Pool-Sicherheit.
+- Keine Pickup-Write-/Randomizer-Ausfuehrung, kein Build, keine Codeaenderung.
+- Keine Field-Items-Arbeit, keine Shops, keine Held Items, keine TM/HM/Tutor/Learnset-Ausweitung, keine Palette/Graphics, kein MoveData/MoveNames, kein TypeChart/TypeEffectiveness, keine Trainer/Wild/Evolution/Text/Menu-Arbeit.
+
 # Next Steps Update - 2026-05-15 - Field Items complete in tested scope
 
 Aktueller Fokus:

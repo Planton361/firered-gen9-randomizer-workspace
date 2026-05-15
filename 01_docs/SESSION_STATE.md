@@ -1,3 +1,14 @@
+# Session State Update - 2026-05-15 - Pickup Items diagnostics scope plan
+
+- Branch: `analysis/upr-fvx-cfru-dpe-pickup-items-scope-diagnostics-plan`.
+- Workspace PR #158 was verified as merged before branch creation.
+- UPR-FVX pin remains `02_external/upr-fvx` at `328e4441c2981d37aba9e2707a6f27f779b026e2`.
+- New protocol: `08_tests/randomizer/114_pickup_items_scope_diagnostics_plan.md`.
+- Pickup was split as the next separate Item writer scope after Field Items.
+- Read-only UPR-FVX analysis identifies the active paths: `Settings.PickupItemsMod`, `GameRandomizer.maybeRandomizePickupItems()`, `ItemRandomizer.randomizePickupItems()`, `Gen3RomHandler.getPickupItems()` and `setPickupItems(...)`, plus `PickupItem.PROBABILITY_SLOTS=10`.
+- Plan result: do a Pickup-only read-only candidate diagnostic before any write smoke, because `PickupTableStartLocator`, `PickupItemCount`, table length, Common/Rare/probability semantics and Item-ID pool safety must be confirmed for CFRU/DPE Gen9-BPRE.
+- No code changes, no `02_external/**` changes, no submodule pin change, no build, no Randomizer run, no ROM/output/log/private artefact documentation.
+
 # Session State Update - 2026-05-15 - Field Items Random Even Ban Bad reload smoke
 
 - Branch: `test/upr-fvx-cfru-dpe-field-items-random-even-ban-bad-reload-smoke`.
