@@ -1,5 +1,9 @@
 # Current update
 
+- Diagnose 154 documents the In-Game Trades locator/table-model from source and prior diagnostics. Result: blocked; valid active trade rows are still not read-only confirmed, so Species-Write-Smoke remains disallowed.
+
+# Current update
+
 - Diagnose 153 adds the In-Game Trades table-model blocker plan. It explains why Diagnose 152 does not permit a species-only smoke yet and requires a read-only locator/table-model diagnostic before any In-Game Trade write work.
 
 # Current update

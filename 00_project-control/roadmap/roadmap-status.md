@@ -1,3 +1,9 @@
+# Roadmap status update - Diagnose 154
+
+- In-Game Trades table-model status: blocked.
+- Source model is documented, but valid active CFRU/DPE Gen9-BPRE trade rows are not confirmed.
+- Species-Write-Smoke remains gated on `tradeScanSuccessful=true` and valid active rows.
+
 # Roadmap status update - Diagnose 153
 
 - In-Game Trades remain blocked before write smokes.

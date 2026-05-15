@@ -1,3 +1,9 @@
+# Roadmap update - Diagnose 154
+
+- Preserve the In-Game Trades blocker lane before any write smoke.
+- Required next evidence: valid active trade rows or explicit unsupported/dummy-row classification.
+- Text/Menu work remains out of scope.
+
 # Roadmap update - Diagnose 153
 
 - Insert an In-Game Trades locator/table-model diagnostic before any species-only smoke.
