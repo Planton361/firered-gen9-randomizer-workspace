@@ -1,3 +1,15 @@
+# Session update - Diagnose 169B
+
+- New branch: `test/upr-fvx-cfru-dpe-evolution-filter-non-rom-harness-followup`.
+- UPR-FVX PR #42 was verified as merged into `compat/firered-gen9-cfru-dpe`.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX commit `587e857088cac4fba41c6559d3a6f6e2a7aad71f`.
+- Original UPR-FVX test commit: `e71a126c test: cover evolution filter options`.
+- Follow-up 169B records the Non-ROM `EvolutionFilterOptionsTest` harness for `FVX-TRAIT-017` and `FVX-TRAIT-020` through `FVX-TRAIT-023`.
+- Statuswirkung: these slices move from `harness-plan-ready` to `tested-non-rom`, but not to P1-supported because there was no ROM-Smoke, Gen3 writer test, reload or output-ROM scope.
+- 169A checks are recorded as `./gradlew --offline :random:test --tests com.uprfvx.random.randomizers.EvolutionFilterOptionsTest` and `./gradlew --offline :random:test`, both `BUILD SUCCESSFUL`.
+- `FVX-TRAIT-024` through `FVX-TRAIT-027` remain separate not-started Evolution-improvement/method slices.
+- No ROM, save, emulator state, output ROM, log, Randomizer JAR, tool binary, build artifact, private path, hash, secret, token or `.env` file was touched.
+
 # Session update - Diagnose 168
 
 - New branch: `test/upr-fvx-cfru-dpe-evolution-filter-harness-plan`.
