@@ -6,6 +6,12 @@
 - Status remains `blocked-pending-evidence`; no GUI-compatible In-Game Trade subfeature is promoted, no valid active rows are proven and Species-Write-Smoke remains blocked.
 - Next status target is a guarded/preserve-only closure decision or additional read-only active-row evidence, not ROM smoke.
 
+# Roadmap status update - FVX dashboard XLSX export
+
+- Added a small standard-library XLSX exporter for `01_docs/randomizer/fvx-progress-dashboard.md`.
+- The Markdown dashboard remains Source of Truth; the generated workbook is a local filterable view and is not versioned by default.
+- Export safety gate: the complete feature list must contain 130 data rows.
+
 # Roadmap status update - Diagnose 162
 
 - In-Game Trades writer-preserve test plan result: `writer-test-plan-ready`.

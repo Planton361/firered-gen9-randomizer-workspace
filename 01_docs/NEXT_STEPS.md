@@ -1,3 +1,9 @@
+# Next steps update - FVX dashboard XLSX export script
+
+- Markdown remains the source of truth for `01_docs/randomizer/fvx-progress-dashboard.md`.
+- Use `python 07_scripts/randomizer/export_fvx_progress_dashboard_xlsx.py --input 01_docs/randomizer/fvx-progress-dashboard.md --output /tmp/fvx-progress-dashboard.xlsx` when a local filterable workbook is needed.
+- Do not commit generated `.xlsx` output unless a later review explicitly decides to version that visual dashboard artifact.
+
 # Next steps update - Diagnose 163B
 
 - Keep In-Game Trades closed as `blocked-pending-evidence`.

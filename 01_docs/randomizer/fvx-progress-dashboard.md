@@ -6,6 +6,10 @@ Dieses Dashboard ist die schnelle Lesedatei fuer den aktuellen Universal Pokemon
 
 Es ersetzt keine Detaildiagnosen. Es verdichtet die Detailquellen auf eine Statusuebersicht und listet zusaetzlich alle aktuell erfassten FVX-Features einmal kompakt auf.
 
+Optionaler XLSX-Export fuer filterbare Tabellen:
+`python 07_scripts/randomizer/export_fvx_progress_dashboard_xlsx.py --input 01_docs/randomizer/fvx-progress-dashboard.md --output /tmp/fvx-progress-dashboard.xlsx`.
+Markdown bleibt Source of Truth.
+
 - Was ist P1-supported?
 - Was ist nur in einem Carrier getestet?
 - Was ist read-only oder write-only modelliert?

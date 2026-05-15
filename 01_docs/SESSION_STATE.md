@@ -1,3 +1,11 @@
+# Session update - FVX dashboard XLSX export script
+
+- New branch: `docs/fvx-dashboard-xlsx-export-script`.
+- Added `07_scripts/randomizer/export_fvx_progress_dashboard_xlsx.py`, a Python standard-library exporter for selected Markdown tables from `01_docs/randomizer/fvx-progress-dashboard.md`.
+- Exported sheets include Summary, Gesamtfortschritt, GUI-Feature-Gruppen, Vollstaendige Feature-Liste, Offene Blocker, Naechste Arbeitspakete, Zuletzt PRs Diagnosen and Carrier-tested nicht global.
+- The exporter refuses to write if the complete feature list is shortened from 130 data rows.
+- No external dependency, dependency installation, ROM/save/build/tool-binary/private path/hash/secret/`.env` access, UPR-FVX code change or generated dashboard workbook commit is required.
+
 # Session update - Diagnose 163B
 
 - New branch: `test/upr-fvx-cfru-dpe-ingame-trades-writer-preserve-followup`.
