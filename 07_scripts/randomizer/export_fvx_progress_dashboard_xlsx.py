@@ -39,6 +39,23 @@ SHEET_NAMES = {
     "Carrier-tested, aber nicht global": "Carrier-tested nicht global",
 }
 
+STATUS_SORT = {
+    "Nicht begonnen": 10,
+    "Plan erstellt": 20,
+    "Read-only modelliert": 30,
+    "Write modelliert / Fix offen": 40,
+    "Gefixt, Folgesmokes offen": 50,
+    "Getestet": 60,
+    "Getestet im Carrier": 70,
+    "Supported im getesteten Scope": 80,
+    "P1-supported": 90,
+    "Guarded / blocked-pending-evidence": 100,
+    "Guarded / Preserve-only": 101,
+    "Blockiert": 110,
+    "P2 / Nicht begonnen": 120,
+    "P2 / Out of scope": 130,
+}
+
 
 @dataclass(frozen=True)
 class MarkdownTable:
@@ -134,9 +151,12 @@ def col_name(index: int) -> str:
 
 def cell_xml(row_index: int, col_index: int, value: object, style: int | None = None) -> str:
     ref = f"{col_name(col_index)}{row_index}"
-    attrs = f' r="{ref}" t="inlineStr"'
+    attrs = f' r="{ref}"'
     if style is not None:
         attrs += f' s="{style}"'
+    if isinstance(value, int | float):
+        return f"<c{attrs}><v>{value}</v></c>"
+    attrs += ' t="inlineStr"'
     text = escape(str(value), {'"': "&quot;"})
     return f"<c{attrs}><is><t>{text}</t></is></c>"
 
@@ -268,6 +288,22 @@ def rows_for_table(table: MarkdownTable) -> list[list[object]]:
     return [table.headers, *table.rows]
 
 
+def rows_with_status_sort(table: MarkdownTable) -> list[list[object]]:
+    try:
+        status_index = table.headers.index("Dashboard-Status")
+    except ValueError as exc:
+        raise SystemExit("Missing Dashboard-Status column in Vollstaendige Feature-Liste.") from exc
+
+    insert_index = status_index + 1
+    headers: list[object] = [*table.headers[:insert_index], "StatusSort", *table.headers[insert_index:]]
+    rows: list[list[object]] = [headers]
+    for row in table.rows:
+        status = row[status_index]
+        sort_value = STATUS_SORT.get(status, 999)
+        rows.append([*row[:insert_index], sort_value, *row[insert_index:]])
+    return rows
+
+
 def summary_rows(input_path: Path, export_time: str, feature_count: int, blocker_count: int) -> list[list[object]]:
     return [
         ["Feld", "Wert"],
@@ -302,7 +338,11 @@ def export_dashboard(input_path: Path, output_path: Path) -> None:
         ("Summary", summary_rows(input_path, export_time, feature_count, blocker_count), False)
     ]
     for table in required_tables:
-        sheets.append((SHEET_NAMES[table.title], rows_for_table(table), True))
+        if table.title == "Vollstaendige Feature-Liste":
+            rows = rows_with_status_sort(table)
+        else:
+            rows = rows_for_table(table)
+        sheets.append((SHEET_NAMES[table.title], rows, True))
 
     write_xlsx(output_path, sheets)
     print(f"Wrote {output_path}")
