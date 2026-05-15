@@ -1,3 +1,11 @@
+# 2026-05-15 - Diagnose 147
+
+- Current branch records Starter Held Items + Ban Bad Write/Reload-Smoke.
+- Smoke result: PASS; save/log/output/reload succeeded and `starterHeldItemReloadMismatches=0`.
+- Ban Bad result: `badStarterHeldItemWrites=0`, `heldItemPoolAllowedSize=212`, `heldItemPoolNonBadSize=161`, `badStarterHeldItemPoolExcluded=51`.
+- Safety metrics: invalid/unloaded/fallback/placeholder writes all `0`; Wild, Trainer, Field, Pickup and Shop scopes stayed unchanged.
+- The tested Held Items scope is closed.
+
 # 2026-05-15 - Diagnose 146
 
 - Current branch records Starter Held Items Write/Reload-Smoke without Ban Bad.

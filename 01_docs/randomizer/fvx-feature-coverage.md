@@ -1,3 +1,9 @@
+# 2026-05-15 - FVX Held Items scope closure update
+
+- Starter Held Items + Ban Bad are covered as GUI-compatible in the tested CFRU/DPE Gen9-BPRE scope after Diagnose 147.
+- Evidence: save/log/output/reload successful, `starterHeldItemReloadMismatches=0`, `badStarterHeldItemWrites=0`, no invalid/unloaded/fallback/placeholder writes, and Wild/Trainer/Field/Pickup/Shop isolation preserved.
+- Tested Held Items scope is closed.
+
 # 2026-05-15 - FVX Starter Held Items coverage update
 
 - Starter Held Items without Ban Bad are covered as GUI-compatible in the tested CFRU/DPE Gen9-BPRE scope after Diagnose 146.

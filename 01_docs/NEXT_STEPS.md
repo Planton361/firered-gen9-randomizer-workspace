@@ -1,3 +1,11 @@
+# 2026-05-15 - Next: next major Randomizer feature scope
+
+Held Items scope is closed in the tested CFRU/DPE Gen9-BPRE scope after Diagnose 147.
+
+Recommended next branch: create a new analysis branch for the next major Randomizer feature scope.
+
+Keep out of scope unless explicitly reopened: Wild Held Items, Trainer Held Items, Starter Held Items, Field Items, Pickup, Shops and prior completed item scopes.
+
 # 2026-05-15 - Next: Starter Held Items + Ban Bad
 
 Recommended next branch: `test/upr-fvx-cfru-dpe-starter-held-items-ban-bad-reload-smoke`.
