@@ -1,3 +1,7 @@
+# Latest - Diagnose 136
+
+- `136_shop_balance_prices_cheap_rare_candies_reload_smoke.md`: PASS for Shop-only FVX-ITEM-009 Balance Shop Prices + Cheap Rare Candies combination; Shop Items scope closed for tested CFRU/DPE Gen9-BPRE GUI-compatible paths.
+
 # 2026-05-15 - Diagnose 135 Shop Cheap Rare Candies Reload Smoke
 
 - Added `08_tests/randomizer/135_shop_cheap_rare_candies_reload_smoke.md`.

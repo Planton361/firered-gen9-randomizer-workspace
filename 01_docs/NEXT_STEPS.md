@@ -1,3 +1,20 @@
+# Next Steps Update - 2026-05-15 - Shop Items scope closed
+
+Aktueller Fokus:
+
+- Diagnose 136 closes the tested Shop Items scope after the Balance Prices + Cheap Rare Candies combination passed reload.
+- FVX-ITEM-005, FVX-ITEM-006, the individually tested FVX-ITEM-007 Ban flags, the individually tested FVX-ITEM-008 Guarantee flags, and FVX-ITEM-009 individual plus combination price/Rare-Candy paths are GUI-compatible in the tested Shop-only CFRU/DPE Gen9-BPRE scope.
+- Ban combinations and Evolution+X combination remain optional regression follow-ups, not blockers for closing the tested Shop scope.
+
+Naechster empfohlener Minimalblock:
+
+- `analysis/upr-fvx-cfru-dpe-held-items-scope-diagnostics-plan`
+
+Ziel des Folgeblocks:
+
+- Held Items als naechsten separaten Item-writer Scope read-only planen.
+- Keine Shops, Field Items, Pickup, Encounter/Trainer/Starter Held Items-Ausweitung ohne eigene Scope-Trennung, keine TM/HM/Tutor/Learnset-, Wild-, Trainer-, Evolution-, Text/Menu-, Palette/Graphics-, MoveData/MoveNames- oder TypeChart-Arbeit.
+
 # Next step - 2026-05-15
 
 - Minimal decision: either run a narrow Balance Prices + Cheap Rare Candies combination smoke or close the current Shop Items scope.

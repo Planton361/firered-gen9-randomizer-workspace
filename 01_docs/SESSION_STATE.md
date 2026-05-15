@@ -1,3 +1,11 @@
+# 2026-05-15 - Diagnose 136
+
+- Current branch records Shop-only FVX-ITEM-009 Balance Prices + Cheap Rare Candies Write/Reload-Smoke.
+- Smoke result: PASS with `ShopItemsMod.UNCHANGED`, `balanceShopPrices=true`, `addCheapRareCandiesToShops=true`.
+- Shop-list result: `shopItemsTotal=157/180/180`, deltas `+23/+23`, `rareCandyWrites=23`, `skippedShopRareCandyWrites=20`, `shopItemReloadMismatches=0`.
+- Price result: `balancedPriceWrites=132`, `rareCandyPriceTouched=true`, `rareCandyPriceReloadStable=true`, `priceReloadMismatches=0`.
+- Shop Items scope is closed for the tested CFRU/DPE Gen9-BPRE GUI-compatible paths; Held Items diagnostics plan is the next major scope.
+
 # Session update - 2026-05-15 - Diagnose 135
 
 - Current branch records Shop-only FVX-ITEM-009 Cheap Rare Candies Write/Reload-Smoke.
