@@ -1,3 +1,9 @@
+# 2026-05-15 - Roadmap note: Shop Prices / Cheap Rare Candies
+
+- Planned FVX-ITEM-009 as the next separate Shop-only subscope after individual Shop Guarantee smokes.
+- Run Balance Shop Prices before Cheap Rare Candies because price-only writes are narrower than Shop-list growth plus price writes.
+- Keep Evolution+X combination and Ban combinations optional separate follow-ups.
+
 # 2026-05-15 - Roadmap note: Shop Guarantee X Items
 
 - Completed Shop-only FVX-ITEM-008 Guarantee X Items reload smoke.

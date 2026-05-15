@@ -1,3 +1,9 @@
+# 2026-05-15 - Diagnose 133 status
+
+- FVX-ITEM-009 Balance Shop Prices / Cheap Rare Candies: planned as separate Shop-only subscope.
+- Balance Shop Prices and Cheap Rare Candies are split into individual follow-up smokes.
+- FVX-ITEM-009 remains Write modelliert until a reload-stable smoke passes.
+
 # 2026-05-15 - Diagnose 132 status
 
 - FVX-ITEM-008 Guarantee X Items: GUI-compatible in tested Shop-only Random scope after reload-stable smoke.

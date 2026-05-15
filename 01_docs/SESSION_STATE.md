@@ -1,3 +1,11 @@
+# Session update - 2026-05-15 - Diagnose 133
+
+- Current branch plans `FVX-ITEM-009 Balance Shop Prices / Cheap Rare Candies` as a separate Shop-only subscope.
+- Read-only codepath finding: Balance Shop Prices runs after the `ShopItemsMod` switch and can write prices independently of Shop item shuffle/random.
+- Cheap Rare Candies appends one Rare Candy to each Shop via `setShops(...)` and sets the Rare-Candy price via `setShopPrices(...)`, so it combines Shop-list growth with price writes.
+- Recommended order: Balance Shop Prices smoke first, Cheap Rare Candies smoke second, combination only after both individual smokes are reload-stable.
+- FVX-ITEM-005..008 stay GUI-compatible only in their documented individual scopes; FVX-ITEM-009 remains Write modelliert until smoke.
+
 # Session update - 2026-05-15 - Diagnose 132
 
 - Current branch records Shop-only FVX-ITEM-008 Guarantee X Items Write/Reload-Smoke.
