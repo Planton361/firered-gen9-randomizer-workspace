@@ -1,3 +1,9 @@
+# 2026-05-15 - Diagnose 127 Shop Items Ban Bad
+
+- `FVX-ITEM-007` ist fuer `ShopItemsMod.RANDOM + banBadRandomShopItems=true` im Shop-only Write/Reload-Smoke GUI-kompatibel.
+- `badShopItemWrites=0`; Reload, Skip-Shops, Preis- und Fremdscopes bleiben stabil.
+- Regular-Ban und OP-Ban bleiben eigene ausstehende Subscopes; `FVX-ITEM-008` und `FVX-ITEM-009` bleiben nicht hochgestuft.
+
 # Roadmap Status Update - 2026-05-15 - Shop Item Bans scope plan
 
 - Neuer Plan: `08_tests/randomizer/126_shop_item_bans_scope_plan.md`.

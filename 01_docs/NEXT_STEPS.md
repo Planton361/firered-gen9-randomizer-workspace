@@ -1,3 +1,9 @@
+# 2026-05-15 - Naechster Schritt nach Diagnose 127
+
+- Empfohlen: Shop Random + Ban Regular als separaten Subscope planen oder smoken.
+- Voraussetzung: Regular-Shop-Item-Pool bleibt klar getrennt von Ban Bad und OP-Ban.
+- Nicht ausweiten auf OP-Ban-Kombinationen, Guarantee Evolution/X Items, Preise, Cheap Rare Candies, Field Items, Pickup oder Held Items.
+
 # Next Steps Update - 2026-05-15 - Shop Random Ban Bad smoke next
 
 Aktueller Fokus:

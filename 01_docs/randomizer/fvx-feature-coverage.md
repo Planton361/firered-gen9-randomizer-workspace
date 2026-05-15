@@ -1,3 +1,9 @@
+# 2026-05-15 - Shop Item Bans Teilstatus
+
+- `FVX-ITEM-007` hat einen GUI-kompatiblen Teilnachweis fuer `ShopItemsMod.RANDOM + banBadRandomShopItems=true`.
+- `allowedShopItemPoolSize=536`, `nonBadShopItemPoolSize=485`, `banBadShopItemPoolExcluded=51`, `badShopItemWrites=0`.
+- Der Gesamt-Scope Shop Item Bans bleibt partiell: `banRegularShopItems` und `banOPShopItems` sind noch nicht hochgestuft.
+
 # FVX Feature Coverage Update - 2026-05-15 - Shop Item Bans scope plan
 
 - `FVX-ITEM-007 Shop Item Bans` remains `Write modelliert` after Diagnose 126; this block is read-only planning only.

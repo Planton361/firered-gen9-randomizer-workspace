@@ -1,3 +1,10 @@
+# 2026-05-15 - Diagnose 127 Shop Items Random + Ban Bad Reload Smoke
+
+- Neues Protokoll: `127_shop_items_random_ban_bad_reload_smoke.md`.
+- Ergebnis: `ShopItemsMod.RANDOM + banBadRandomShopItems=true` besteht den Shop-only Write/Reload-Smoke.
+- `badShopItemWrites=0`; Counts, Terminatoren, Laengen, Skip-Shops, Preise und Fremdscopes bleiben stabil.
+- `FVX-ITEM-007` ist nur fuer den Ban-Bad-Subscope GUI-kompatibel; Regular- und OP-Bans bleiben separat ausstehend.
+
 # Randomizer Testprotokolle
 
 - 126 - `126_shop_item_bans_scope_plan.md`: Read-only plan for `FVX-ITEM-007 Shop Item Bans`. Confirms Shop bans only affect `ItemRandomizer.randomizeShopItems()` under `ShopItemsMod.RANDOM`, splits `banBadRandomShopItems`, `banRegularShopItems` and `banOPShopItems`, keeps Guarantee Evolution/X Items, prices, Cheap Rare Candies, Field Items, Pickup and Held Items out of scope, and recommends Shop Random + Ban Bad as the first ban smoke.
