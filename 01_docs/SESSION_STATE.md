@@ -1,3 +1,10 @@
+# Session update - Diagnose 152
+
+- New branch: `test/upr-fvx-cfru-dpe-ingame-trades-scope-diagnostics`.
+- PR #196 was merged; `main` was fast-forwarded before the diagnostic.
+- Read-only In-Game Trades candidate diagnostic completed as blocked/preflight. The candidate loaded, but the current UPR-FVX Gen3 BPRE trade-table model produced null/invalid Species fields and unstable fixed-length text terminator classification.
+- No code changes, no build, no Randomizer run, no write/save, no output ROM and no private paths, ROM names, hashes, offsets or raw bytes were documented.
+
 # Session update - Diagnose 151
 
 - New branch: `analysis/upr-fvx-cfru-dpe-ingame-trades-scope-plan`.

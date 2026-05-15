@@ -1,5 +1,9 @@
 # Current update
 
+- Diagnose 152 records a read-only In-Game Trades candidate diagnostic. Result: blocked/preflight because the current Gen3 BPRE trade-table model does not classify valid active trade Species fields for the CFRU/DPE Gen9-BPRE candidate; no write/reload smoke is recommended yet.
+
+# Current update
+
 - Diagnose 151 plans In-Game Trades as the next open CFRU/DPE Gen9-BPRE Randomizer scope. The plan splits trade species, held items, IVs and fixed-length nickname/OT fields into separate follow-up diagnostics and keeps Standard Wild, Special Wild, Starters, Statics, Trainer Pokemon, Held Items and Text/Menu work out of scope.
 
 # Latest - Diagnose 150

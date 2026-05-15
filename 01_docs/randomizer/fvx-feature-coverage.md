@@ -1,3 +1,9 @@
+# Coverage update - Diagnose 152
+
+- In-Game Trades remain open/blocked after read-only candidate diagnostics.
+- Species, held item, IV and fixed-length text subfeatures are not GUI-compatible yet because the active trade table model is not confirmed for CFRU/DPE Gen9-BPRE.
+- No coverage changes for Starters, Statics, Trainers, Wild, Held Items or item scopes.
+
 # Coverage update - Diagnose 151
 
 - In-Game Trades remain open but now have a dedicated diagnostics plan.
