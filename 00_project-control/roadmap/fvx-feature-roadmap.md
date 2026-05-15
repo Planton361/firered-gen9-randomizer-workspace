@@ -1,3 +1,9 @@
+# Roadmap update - Diagnose 151
+
+- Add In-Game Trades as the recommended next Randomizer scope after Special Wild triggerability analysis.
+- Recommended sequence: read-only trade candidate diagnostic, species-only smoke, held-item-only smoke, fixed-length nickname/OT text smoke, IV/extras smoke.
+- Keep Text/Menu repointing, Static/Gift, Starter, Trainer, Wild and Held Item scopes separate.
+
 # 2026-05-15 - Special Wild roadmap update
 
 - Diagnose 150 closes the immediate Special Wild triggerability question for the current tracked state.

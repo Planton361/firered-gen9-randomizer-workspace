@@ -1,3 +1,9 @@
+# Roadmap status update - Diagnose 151
+
+- In-Game Trades are now planned as the next open CFRU/DPE Gen9-BPRE GUI scope.
+- Status: planned / needs read-only candidate diagnostic; no promotion yet.
+- Standard Wild, Special Wild triggerability, Field/Pickup/Shop/Held Items and earlier Species scopes remain out of this plan block.
+
 # 2026-05-15 - Special Wild triggerability update
 
 - Diagnose 150 documents Special Wild systems read-only.

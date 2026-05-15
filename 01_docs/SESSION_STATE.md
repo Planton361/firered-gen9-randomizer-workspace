@@ -1,3 +1,11 @@
+# Session update - Diagnose 151
+
+- New branch: `analysis/upr-fvx-cfru-dpe-ingame-trades-scope-plan`.
+- PR #195 was merged; `main` was fast-forwarded before planning.
+- Diagnose 151 adds the In-Game Trades diagnostics scope plan as the next genuinely open GUI scope after Standard Wild, Special Wild documentation, item scopes and Held Items.
+- Codepath finding: `GameRandomizer.maybeRandomizeInGameTrades()` dispatches to `TradeRandomizer.randomizeIngameTrades()`, which mutates `InGameTrade` records and writes through `RomHandler.setInGameTrades(...)`; Gen3 uses fixed-size trade table entries with Species, IV, held-item, nickname and OT fields.
+- No code changes, no build, no Randomizer run, no ROM/artifact access and no `02_external/**` edits were made.
+
 # 2026-05-15 - Diagnose 150
 
 - Current branch documents CFRU/DPE Special Wild triggerability read-only.
