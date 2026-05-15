@@ -1,3 +1,10 @@
+# Roadmap status update - Diagnose 176B
+
+- Wild catch/level follow-up is recorded.
+- UPR-FVX PR #46 is merged and workspace-pinned at `c86221d758bece06b216b1f4fb23dd8e4a6c8ec0`.
+- The pinned `WildCatchLevelDecisionTest` covers Set Minimum Catch Rate, Catch Em All Mode and Balance Low Level Encounters + Level Modifier with synthetic Non-ROM data.
+- Statuswirkung: `FVX-WILD-007`, `FVX-WILD-010` and `FVX-WILD-012` are now `tested-non-rom`, not P1-supported; no ROM-/Reload-Evidenz, ROM-Smoke, output-ROM or Randomizer run was executed.
+
 # Roadmap status update - Diagnose 175B
 
 - MoveData write follow-up is recorded.

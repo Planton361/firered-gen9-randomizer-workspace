@@ -1,3 +1,10 @@
+# Coverage update - Diagnose 176B
+
+- UPR-FVX PR #46 is merged and the workspace submodule is pinned at `c86221d758bece06b216b1f4fb23dd8e4a6c8ec0`.
+- `WildCatchLevelDecisionTest` provides Non-ROM `:random:test` coverage for Wild catch/level decisions with synthetic Species and Encounter data.
+- `FVX-WILD-007`, `FVX-WILD-010` and `FVX-WILD-012` move to `tested-non-rom`.
+- This is not a P1-supported promotion: no ROM-/Reload-Evidenz, ROM-Smoke, output-ROM or Randomizer run is included.
+
 # Coverage update - Diagnose 175B
 
 - UPR-FVX PR #45 is merged and the workspace submodule is pinned at `1be6f51779906af017f6177f264e41f8c7902d8e`.
@@ -713,7 +720,7 @@ Diagnose 082 bestaetigt `FVX-TRAIT-018` nach der 081-Normalisierung:
 | Starters, Statics & Trades | 15 | 5 | 0 | 0 | 0 | 5 | 5 | 0 |
 | Moves & Movesets | 11 | 0 | 3 | 0 | 1 | 0 | 7 | 0 |
 | Foe Pokemon | 14 | 8 | 0 | 0 | 0 | 0 | 6 | 0 |
-| Wild Pokemon | 12 | 3 | 1 | 0 | 0 | 0 | 8 | 0 |
+| Wild Pokemon | 12 | 0 | 1 | 0 | 0 | 3 | 8 | 0 |
 | TM/HMs & Tutors | 15 | 0 | 9 | 0 | 0 | 0 | 6 | 0 |
 | Items | 10 | 0 | 0 | 0 | 10 | 0 | 0 | 0 |
 | Types | 3 | 0 | 0 | 0 | 0 | 3 | 0 | 0 |
@@ -817,12 +824,12 @@ Diagnose 082 bestaetigt `FVX-TRAIT-018` nach der 081-Normalisierung:
 - FVX-WILD-004 | Type Restrictions | GUI-kompatibel
 - FVX-WILD-005 | Evolution Restrictions | Plan erstellt
 - FVX-WILD-006 | Don't Use Legendaries | GUI-kompatibel
-- FVX-WILD-007 | Set Minimum Catch Rate | Nicht begonnen
+- FVX-WILD-007 | Set Minimum Catch Rate | tested-non-rom
 - FVX-WILD-008 | Randomize Wild Held Items | GUI-kompatibel
 - FVX-WILD-009 | Ban Bad Held Items | GUI-kompatibel
-- FVX-WILD-010 | Catch Em All Mode | Nicht begonnen
+- FVX-WILD-010 | Catch Em All Mode | tested-non-rom
 - FVX-WILD-011 | Similar Strength | GUI-kompatibel
-- FVX-WILD-012 | Balance Low Level Encounters + Level Modifier | Nicht begonnen
+- FVX-WILD-012 | Balance Low Level Encounters + Level Modifier | tested-non-rom
 
 ### TM/HMs & Tutors
 

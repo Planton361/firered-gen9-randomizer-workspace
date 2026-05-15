@@ -1,3 +1,10 @@
+# Roadmap update - Diagnose 176B
+
+- UPR-FVX PR #46 is merged and the workspace submodule is pinned to `c86221d758bece06b216b1f4fb23dd8e4a6c8ec0`.
+- The pinned `WildCatchLevelDecisionTest` provides Non-ROM `:random:test` coverage for Wild Set Minimum Catch Rate, Catch Em All and Balance Low Level Encounters + Level Modifier decisions.
+- Roadmap status for `FVX-WILD-007`, `FVX-WILD-010` and `FVX-WILD-012` is now `tested-non-rom`; this remains below P1-supported because no ROM-/Reload-Evidenz, ROM-Smoke, output-ROM or Randomizer run was executed.
+- A later P1 promotion needs a separately authorized ROM-/Reload-Smoke or equivalent writer/reload evidence.
+
 # Roadmap update - Diagnose 175B
 
 - UPR-FVX PR #45 is merged and the workspace submodule is pinned to `1be6f51779906af017f6177f264e41f8c7902d8e`.

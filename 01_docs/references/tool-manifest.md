@@ -1,3 +1,15 @@
+# Tool Manifest Update - 2026-05-16 - Wild catch level follow-up
+
+- Workspace branch: `test/upr-fvx-cfru-dpe-wild-catch-level-followup`.
+- UPR-FVX fork base branch: `compat/firered-gen9-cfru-dpe`.
+- UPR-FVX PR #46: <https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/46>.
+- Original UPR-FVX test commit: `8665eb4f070567fd908327b272c7f1da5abdef68`.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX commit `c86221d758bece06b216b1f4fb23dd8e4a6c8ec0`.
+- Previous workspace pin was `1be6f51779906af017f6177f264e41f8c7902d8e`.
+- Scope: Non-ROM `WildCatchLevelDecisionTest`; synthetic `Species`, `Encounter` and `EncounterArea` data cover `FVX-WILD-007`, `FVX-WILD-010` and `FVX-WILD-012`.
+- Checks recorded from UPR-FVX PR #46: `./gradlew --offline :random:test --tests com.uprfvx.random.randomizers.WildCatchLevelDecisionTest`, `./gradlew --offline :random:test --tests '*Wild*'` and `./gradlew --offline :random:test`, all `BUILD SUCCESSFUL`.
+- Safety: no Workspace code changes, no UPR-FVX code changes in this block, no ROM/save/output/log/build artifacts committed, no ROM-Smoke, no Writer-/Reload-ROM test, no P1-promotion and no Original-Upstream PR.
+
 # Tool Manifest Update - 2026-05-15 - MoveData write follow-up
 
 - Workspace branch: `test/upr-fvx-cfru-dpe-movedata-write-followup`.
