@@ -1,3 +1,11 @@
+# Next steps update - Diagnose 174B
+
+- Treat `FVX-TRAIT-025A` as `tested-non-rom`, not P1-supported.
+- The merged UPR-FVX PR #44 harness covers only ROM-free Make Evolutions Easier Condense-/Level-/Decision logic through synthetic Species/Evolution chains.
+- Keep `FVX-TRAIT-025B` separate: Gen3 Happiness-byte patch / writer-like scope still needs its own read-only plan or explicit implementation scope.
+- Keep `FVX-TRAIT-026` attached to `024/025`; do not promote it standalone.
+- Do not run ROM-Smoke, Writer/Reload tests, output-ROM generation, Randomizer runs or Gen3 Happiness-byte patch work without a separate explicit scope.
+
 # Next steps update - Diagnose 173
 
 - Treat `FVX-TRAIT-025` as `make-easier-plan-ready`, not tested and not P1-supported.

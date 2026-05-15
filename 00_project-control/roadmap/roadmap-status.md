@@ -1,3 +1,11 @@
+# Roadmap status update - Diagnose 174B
+
+- Evolution Make Evolutions Easier Non-ROM harness follow-up is recorded.
+- UPR-FVX PR #44 is merged and workspace-pinned at `85b282112322f8991dd11b14cc98d6dd68fd3fd4`.
+- The pinned `EvolutionMakeEasierDecisionTest` covers `FVX-TRAIT-025A` with synthetic Species/Evolution chains.
+- Statuswirkung: `FVX-TRAIT-025A` is now `tested-non-rom`, not P1-supported; no Writer-/Reload-Evidenz, ROM-Smoke, output-ROM or Randomizer run was executed.
+- `FVX-TRAIT-025B` remains a separate Gen3 Happiness-byte patch / writer-like scope; `FVX-TRAIT-026` remains a helper flag for `024/025`.
+
 # Roadmap status update - Diagnose 173
 
 - Evolution Make Evolutions Easier planning is complete for `FVX-TRAIT-025`.

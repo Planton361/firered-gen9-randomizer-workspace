@@ -1,3 +1,15 @@
+# Session update - Diagnose 174B
+
+- New branch: `test/upr-fvx-cfru-dpe-make-evolutions-easier-followup`.
+- UPR-FVX PR #44 was verified as merged into `compat/firered-gen9-cfru-dpe`.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX commit `85b282112322f8991dd11b14cc98d6dd68fd3fd4`.
+- Original UPR-FVX test commit: `a0fc6515b60ad3032a8d94c554bbc3021e10a33f`.
+- Follow-up 174B records the Non-ROM `EvolutionMakeEasierDecisionTest` harness for `FVX-TRAIT-025A` Make Evolutions Easier Condense-/Level-/Decision logic.
+- Test-/Seam-Entscheidung: small package-private helper in `AbstractRomHandler`; synthetic `Species` / `Evolution` chains; intermediate/final level caps, non-level `estimatedEvoLvl` capping and `highestEvoLvl` behavior are covered.
+- Statuswirkung: `FVX-TRAIT-025A` moves to `tested-non-rom`; `FVX-TRAIT-025B` remains a separate Gen3 Happiness-byte patch / writer-like scope; `FVX-TRAIT-026` remains helper-only with no standalone support claim.
+- Checks from 174A are recorded as `./gradlew --offline :romio:test --tests '*Evolution*'` and `./gradlew --offline :romio:test`, both `BUILD SUCCESSFUL`; the known existing `PlayerCharacterGraphicsTest.fromSheetGiveSameImagesAndPalsAsFromSeparate_RSE()` report failure line remains a risk/assumption.
+- No ROM, save, emulator state, output ROM, log, Randomizer JAR, tool binary, build artifact, private path, hash, secret, token or `.env` file was touched.
+
 # Session update - Diagnose 173
 
 - New branch: `test/upr-fvx-cfru-dpe-evolution-make-easier-scope-plan`.

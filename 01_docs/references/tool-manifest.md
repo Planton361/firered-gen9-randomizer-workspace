@@ -1,3 +1,15 @@
+# Tool Manifest Update - 2026-05-15 - Evolution make easier follow-up
+
+- Workspace branch: `test/upr-fvx-cfru-dpe-make-evolutions-easier-followup`.
+- UPR-FVX fork base branch: `compat/firered-gen9-cfru-dpe`.
+- UPR-FVX PR #44: <https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/44>.
+- Original UPR-FVX test commit: `a0fc6515b60ad3032a8d94c554bbc3021e10a33f`.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX commit `85b282112322f8991dd11b14cc98d6dd68fd3fd4`.
+- Previous workspace pin was `3b33412e80d1cb2d97725ad7a7dd01529aa56919`.
+- Scope: Non-ROM `EvolutionMakeEasierDecisionTest` only; synthetic `Species` / `Evolution` chains and a small package-private helper in `AbstractRomHandler` cover `FVX-TRAIT-025A`.
+- Checks recorded from UPR-FVX PR #44: `./gradlew --offline :romio:test --tests '*Evolution*'` and `./gradlew --offline :romio:test`, both `BUILD SUCCESSFUL`; known existing `PlayerCharacterGraphicsTest.fromSheetGiveSameImagesAndPalsAsFromSeparate_RSE()` report failure line remains a risk/assumption.
+- Safety: no Workspace code changes, no UPR-FVX code changes in this block, no ROM/save/output/log/build artifacts, no Gen3 Happiness-byte patch, no writer/reload, no ROM-Smoke, no Randomizer run, no `FVX-TRAIT-025B` scope, no `FVX-TRAIT-026` standalone support claim, and no Original-Upstream PR.
+
 # Tool Manifest Update - 2026-05-15 - Evolution method decision harness follow-up
 
 - Workspace branch: `test/upr-fvx-cfru-dpe-evolution-method-decisions-followup`.

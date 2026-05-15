@@ -1,3 +1,11 @@
+# Coverage update - Diagnose 174B
+
+- UPR-FVX PR #44 is merged and the workspace submodule is pinned at `85b282112322f8991dd11b14cc98d6dd68fd3fd4`.
+- `EvolutionMakeEasierDecisionTest` provides Non-ROM `:romio:test` coverage for `FVX-TRAIT-025A` using synthetic Species/Evolution chains.
+- `FVX-TRAIT-025A` moves from `make-easier-plan-ready` to `tested-non-rom`.
+- This is not a P1-supported promotion: no Writer-/Reload-Evidenz, ROM-Smoke, output-ROM, Randomizer run, Gen3 Happiness-byte patch or `025B` scope is included.
+- `FVX-TRAIT-026` remains helper-only for `024/025`; no standalone support claim.
+
 # Coverage update - Diagnose 173
 
 - `FVX-TRAIT-025` Make Evolutions Easier is now `make-easier-plan-ready`.
@@ -738,7 +746,7 @@ Diagnose 082 bestaetigt `FVX-TRAIT-018` nach der 081-Normalisierung:
 - FVX-TRAIT-022 | Evolutions: Force Change | tested-non-rom
 - FVX-TRAIT-023 | Evolutions: Force Growth | tested-non-rom
 - FVX-TRAIT-024 | Change Impossible Evolutions | tested-non-rom
-- FVX-TRAIT-025 | Make Evolutions Easier | make-easier-plan-ready / split into 025A+025B
+- FVX-TRAIT-025 | Make Evolutions Easier | 025A tested-non-rom; 025B offen
 - FVX-TRAIT-026 | Use Estimated Evolution Levels | helper-flag / no standalone support claim
 - FVX-TRAIT-027 | Remove Time-Based Evolutions | tested-non-rom
 - FVX-TRAIT-028 | EXP-/Legendary-Kurven-Sonderfaelle | Nicht begonnen
