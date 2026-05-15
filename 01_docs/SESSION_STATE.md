@@ -1,3 +1,11 @@
+# Session update - Diagnose 156
+
+- New branch: `test/upr-fvx-cfru-dpe-ingame-trades-preserve-skip-policy`.
+- PR #200 / Diagnose 155 is contained in `main` before this block.
+- Diagnose 156 defines the In-Game Trades Preserve/Skip policy from Diagnoses 152, 154 and 155.
+- Result: `blocked-pending-evidence`. All modeled In-Game Trade rows stay preserve-only; no Species-Write-Smoke, Trade Held Item, IV, Nickname/OT or other In-Game Trade write work is allowed.
+- `unsupported-dummy` remains plausible but unproven without additional read-only candidate-structure evidence; no code, build, Randomizer run, ROM/save/output/log access or external download was performed.
+
 # Session update - Diagnose 155
 
 - New branch: `test/upr-fvx-cfru-dpe-ingame-trades-active-row-candidates`.

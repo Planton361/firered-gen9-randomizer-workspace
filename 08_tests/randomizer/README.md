@@ -1,5 +1,9 @@
 # Current update
 
+- Diagnose 156 defines the In-Game Trades Preserve/Skip policy. Result: `blocked-pending-evidence`; all modeled trade rows remain preserve-only, no Species-Write-Smoke or Nickname/OT randomization is allowed, and `unsupported-dummy` remains plausible but unproven.
+
+# Current update
+
 - Diagnose 155 checks In-Game Trades active-row candidates from UPR-FVX `TradeTableOffset`, `TradeTableSize`, `TradesUnused` and the documented 60-byte Gen3 row model. Result: blocked; no valid active row is confirmed and `unsupported-dummy` is not proven strongly enough for a final unsupported decision.
 
 # Current update
