@@ -1,3 +1,13 @@
+# 2026-05-15 - Next: Trainer Held Items scope
+
+Recommended next branch: `analysis/upr-fvx-cfru-dpe-trainer-held-items-scope-plan` or, if no extra planning block is needed, `test/upr-fvx-cfru-dpe-trainer-held-items-boss-reload-smoke`.
+
+Goal: move from completed Wild/Encounter Held Items coverage to Trainer Held Items, starting with a narrow Boss Trainers-only scope without Consumable/Sensible/Highest-Level filters.
+
+Keep out of scope: Starter Held Items, Field Items, Pickup, Shops and all non-Held-Item randomizer work.
+
+Required checks for a smoke: save/log/output/reload success, trainer held item reload mismatches 0, preserve `shouldNotGetBuffs`, no invalid/unloaded/fallback/placeholder writes, and Wild/Starter/Field/Pickup/Shop isolation.
+
 # 2026-05-15 - Next: Wild Held Items Ban Bad smoke
 
 Recommended next branch: `test/upr-fvx-cfru-dpe-wild-held-items-ban-bad-reload-smoke`.

@@ -1,5 +1,11 @@
 # 2026-05-15 - Held Items roadmap update
 
+- Wild/Encounter Held Items + Ban Bad are now GUI-compatible in the tested CFRU/DPE Gen9-BPRE scope after Diagnose 140.
+- Wild/Encounter Held Items are covered both without Ban Bad and with Ban Bad.
+- Trainer Held Items and Starter Held Items remain separate follow-up scopes.
+
+# 2026-05-15 - Held Items roadmap update
+
 - Wild/Encounter Held Items without Ban Bad are now GUI-compatible in the tested CFRU/DPE Gen9-BPRE scope after Diagnose 139.
 - Ban Bad, Trainer Held Items and Starter Held Items remain separate follow-up scopes.
 - Field Items, Pickup and Shops remain closed/separate and unchanged by this block.
