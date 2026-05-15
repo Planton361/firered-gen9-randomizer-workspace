@@ -1,5 +1,11 @@
 # Next step - 2026-05-15
 
+- Minimal next branch: `test/upr-fvx-cfru-dpe-shop-cheap-rare-candies-reload-smoke`.
+- Scope: Shop-only Cheap Rare Candies with `ShopItemsMod.UNCHANGED`, `balanceShopPrices=false`, `addCheapRareCandiesToShops=true`; no Bans, no Guarantees, no Field/Pickup/Held Items.
+- Measure Shop-list growth, Rare Candy price reload, terminators, skipped-Shop policy, and foreign-scope stability.
+
+# Next step - 2026-05-15
+
 - Recommended next branch: `test/upr-fvx-cfru-dpe-shop-balance-prices-reload-smoke`.
 - Scope: Shop-only Balance Shop Prices with `ShopItemsMod.UNCHANGED`, no Cheap Rare Candies, no Ban combinations, no Guarantee combination, no Field/Pickup/Held Items.
 - Measure price table read/write/reload stability before any Rare-Candy Shop-list growth smoke.

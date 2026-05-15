@@ -1,3 +1,11 @@
+# Session update - 2026-05-15 - Diagnose 134
+
+- Current branch records Shop-only FVX-ITEM-009 Balance Shop Prices Write/Reload-Smoke.
+- Smoke result: PASS with `ShopItemsMod.UNCHANGED`, `balanceShopPrices=true`, `addCheapRareCandiesToShops=false`.
+- Price result: `priceTableTouched=true`, `balancedPriceWrites=132`, `priceReloadMismatches=0`, price entry counts stay `1779`.
+- Shop-list result: `shopCount=23`, `shopItemsTotal=157`, `shopItemReloadMismatches=0`, skipped Shop mismatches 0.
+- FVX-ITEM-009 is promoted only for Balance Shop Prices; Cheap Rare Candies remain open.
+
 # Session update - 2026-05-15 - Diagnose 133
 
 - Current branch plans `FVX-ITEM-009 Balance Shop Prices / Cheap Rare Candies` as a separate Shop-only subscope.

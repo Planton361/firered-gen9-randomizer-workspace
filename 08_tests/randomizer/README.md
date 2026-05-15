@@ -1,3 +1,10 @@
+# 2026-05-15 - Diagnose 134 Shop Balance Prices Reload Smoke
+
+- Added `08_tests/randomizer/134_shop_balance_prices_reload_smoke.md`.
+- Result: PASS for FVX-ITEM-009 Balance Shop Prices with `ShopItemsMod.UNCHANGED`.
+- `balancedPriceWrites=132`, `priceTableTouched=true`, `priceReloadMismatches=0`; Shop lists, skipped Shops, Field Items, Pickup, and Held Items stayed stable.
+- Cheap Rare Candies remain out of scope and unpromoted.
+
 # 2026-05-15 - Diagnose 133 Shop Prices / Cheap Rare Candies Scope Plan
 
 - Neues Protokoll: `133_shop_prices_cheap_rare_candies_scope_plan.md`.

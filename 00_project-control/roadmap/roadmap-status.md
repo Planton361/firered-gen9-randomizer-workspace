@@ -1,3 +1,9 @@
+# 2026-05-15 - Diagnose 134 status
+
+- FVX-ITEM-009 Balance Shop Prices: GUI-compatible in tested Shop-only scope.
+- Evidence: `balancedPriceWrites=132`, `priceReloadMismatches=0`, Shop-list reload mismatches 0.
+- FVX-ITEM-009 Cheap Rare Candies remains pending separate smoke.
+
 # 2026-05-15 - Diagnose 133 status
 
 - FVX-ITEM-009 Balance Shop Prices / Cheap Rare Candies: planned as separate Shop-only subscope.

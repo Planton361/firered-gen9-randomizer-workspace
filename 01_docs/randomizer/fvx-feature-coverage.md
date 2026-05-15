@@ -1,5 +1,11 @@
 # 2026-05-15 - FVX Shop coverage update
 
+- FVX-ITEM-009 Balance Shop Prices is covered as GUI-compatible for `ShopItemsMod.UNCHANGED + balanceShopPrices=true` only.
+- Evidence: Diagnose 134, save/log/output/reload successful, `balancedPriceWrites=132`, `priceReloadMismatches=0`, `shopItemReloadMismatches=0`.
+- Cheap Rare Candies and Balance+Rare-Candy combination remain unpromoted.
+
+# 2026-05-15 - FVX Shop coverage update
+
 - FVX-ITEM-009 Balance Shop Prices / Cheap Rare Candies remains Write modelliert after Diagnose 133.
 - Planned split: Balance Shop Prices first as a price-only smoke; Cheap Rare Candies second as Shop-list-growth plus Rare-Candy-price smoke.
 - FVX-ITEM-005..008 keep their existing individual GUI-compatible evidence; Ban combinations and Evolution+X combination remain unpromoted.
