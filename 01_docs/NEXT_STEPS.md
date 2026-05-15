@@ -1,3 +1,10 @@
+# Next steps update - Diagnose 164
+
+- Treat In-Game Trades as closed for the current tested scope: `guarded/preserve-only, not supported`.
+- Do not spend the next block on In-Game Trades unless there is explicit new read-only active-row evidence, corrected locator/row-shape evidence, hard unsupported/dummy proof, or a separately authorized ROM-facing smoke scope.
+- Do not run ROM-Smoke, Species-Write-Smoke, Randomizer runs, Text/Nickname/OT, IV or Trade Held Item randomization for In-Game Trades.
+- Move to the next non-In-Game-Trades Randomizer roadmap item unless the user explicitly reopens one of the documented criteria.
+
 # Next steps update - FVX dashboard XLSX export script
 
 - Markdown remains the source of truth for `01_docs/randomizer/fvx-progress-dashboard.md`.

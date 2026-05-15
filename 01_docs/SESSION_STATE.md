@@ -1,3 +1,12 @@
+# Session update - Diagnose 164
+
+- New branch: `test/upr-fvx-cfru-dpe-ingame-trades-final-classification`.
+- UPR-FVX submodule remains pinned at `dc6ad3cb01282db5ff85935959bbdac6c2d3fa0c`.
+- Diagnose 164 closes In-Game Trades in the tested CFRU/DPE Gen9-BPRE scope as `guarded/preserve-only, not supported`.
+- Rationale: no valid active In-Game Trade rows are confirmed; `P1-supported`, `candidate-confirmed` and hard `unsupported-dummy` are not justified by the current evidence.
+- Achieved evidence remains valuable: mutation guard, writer-preserve guard, non-ROM `TradeRandomizerTest`, and ROM-free `Gen3InGameTradeWriterTest`.
+- No ROM-Smoke, Species-Write-Smoke, Randomizer run, build, code change, text/Nickname/OT, IV or Trade Held Item randomization was performed or authorized.
+
 # Session update - FVX dashboard XLSX export script
 
 - New branch: `docs/fvx-dashboard-xlsx-export-script`.
