@@ -1,3 +1,9 @@
+# 2026-05-15 - Held Items roadmap update
+
+- Held Items becomes the next Item-related package after Field Items, Pickup and the closed tested Shop Items scope.
+- The package is planned as separate Wild/Encounter, Trainer and optional Starter subscopes.
+- First follow-up is read-only candidate diagnostics, not a write smoke.
+
 # 2026-05-15 - Shop Items roadmap update
 
 - Shop Items package is closed for the tested CFRU/DPE Gen9-BPRE GUI-compatible scope after Diagnose 136.

@@ -1,3 +1,20 @@
+# Next Steps Update - 2026-05-15 - Held Items diagnostics next
+
+Aktueller Fokus:
+
+- Diagnose 137 plans Held Items as a separate scope after the tested Shop Items scope was closed by Diagnose 136.
+- Held Items are split into Wild/Encounter, Trainer and Starter subscopes.
+- No Held-Item feature is promoted by the plan; a read-only candidate diagnostic is required before any Held-Items write smoke.
+
+Naechster empfohlener Minimalblock:
+
+- `test/upr-fvx-cfru-dpe-held-items-scope-diagnostics`
+
+Ziel des Folgeblocks:
+
+- Read-only Held-Items candidate diagnostic for Species/BaseStats held items, TrainerPokemon held items and Starter held items.
+- No Field Items, Pickup, Shops, Trainer Randomization, Wild Randomization, Evolution, Learnset, TM/HM/Tutor, Move, Ability, TypeChart, Palette, Graphics or Text/Menu work.
+
 # Next Steps Update - 2026-05-15 - Shop Items scope closed
 
 Aktueller Fokus:

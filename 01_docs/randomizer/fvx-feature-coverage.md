@@ -1,3 +1,9 @@
+# 2026-05-15 - FVX Held Items coverage plan
+
+- Held Items are confirmed as a separate CFRU/DPE Gen9-BPRE Randomizer scope after Diagnose 137.
+- Planned subscopes: Wild/Encounter Held Items, Trainer Held Items, and Starter Held Items if supported by the candidate.
+- No Held-Item feature is promoted; next evidence must be a read-only candidate diagnostic.
+
 # 2026-05-15 - FVX Shop coverage update
 
 - FVX-ITEM-009 Balance Shop Prices + Cheap Rare Candies combination is covered as GUI-compatible for `ShopItemsMod.UNCHANGED + balanceShopPrices=true + addCheapRareCandiesToShops=true`.
