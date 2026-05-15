@@ -1,3 +1,9 @@
+# FVX Feature Roadmap Update - 2026-05-15 - Shop Items diagnostics preflight
+
+- Shop Items remain the active next Item package, but Diagnose 122 blocks before a candidate scan because no explicitly approved local CFRU/DPE Gen9-BPRE candidate source was provided.
+- The next roadmap step is a read-only Shop candidate diagnostic with an approved source, not a Shop Shuffle smoke.
+- `FVX-ITEM-005..009` stay `Write modelliert`; Field Items, Pickup and Held Items stay separate and unchanged.
+
 # FVX Feature Roadmap Update - 2026-05-15 - Shop Items scope diagnostics plan
 
 - Shop Items are now the next planned Item package after completed Field Items and Pickup scopes.

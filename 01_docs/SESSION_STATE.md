@@ -1,3 +1,14 @@
+# Session State Update - 2026-05-15 - Shop Items scope diagnostics preflight
+
+- Branch: `test/upr-fvx-cfru-dpe-shop-items-scope-diagnostics`.
+- Workspace PR #166 was verified as merged before branch creation.
+- UPR-FVX pin remains `02_external/upr-fvx` at `a2373888ad17145f270ebf6ff17303af41aa86eb`.
+- New protocol: `08_tests/randomizer/122_shop_items_scope_diagnostics.md`.
+- No explicitly approved local CFRU/DPE Gen9-BPRE candidate source was provided for this block; no private search was expanded and no ROM was touched.
+- Result is blocked/preflight: `candidateFilesChecked=0`, `candidateLoaded=false`, `shopScanSuccessful=false`; Shop counts, lengths, terminator stability and item-safety counters remain `not_available`.
+- Read-only codepath review keeps `shopPointerModelObserved=true` and `dataRewriterOrRepointingRisk=true` because Gen3 Shops use `ShopPointerOffsets`, `MainGameShops`, `SkipShops`, `Shop` and `DataRewriter<Shop>` in `Gen3RomHandler.setShops(...)`.
+- `fieldItemScopeChanged=false`, `pickupScopeChanged=false`, `heldItemScopeChanged=false`, `priceTableTouched=false`. No code changes, no `02_external/**` changes, no submodule pin change, no build, no Randomizer write/save and no private artefact documentation.
+
 # Session State Update - 2026-05-15 - Shop Items scope diagnostics plan
 
 - Branch: `analysis/upr-fvx-cfru-dpe-shop-items-scope-diagnostics-plan`.

@@ -1,3 +1,21 @@
+# Next Steps Update - 2026-05-15 - Shop Items candidate needed
+
+Aktueller Fokus:
+
+- Diagnose 122 is blocked/preflight because no explicitly approved local CFRU/DPE Gen9-BPRE candidate source was provided for the Shop read-only scan.
+- The codepath model remains valid: Shops are pointer-list, terminator, length, `DataRewriter`/repointing and price-adjacent scope, separate from Field Items, Pickup and Held Items.
+- Do not run Shop Shuffle, Random, Ban, Guarantee or Price smokes before a successful read-only Shop candidate diagnostic.
+
+Naechster empfohlener Minimalblock:
+
+- `test/upr-fvx-cfru-dpe-shop-items-scope-diagnostics-candidate`
+
+Ziel des Folgeblocks:
+
+- Use an explicitly approved local CFRU/DPE Gen9-BPRE candidate source.
+- Read-only scan only Shops and report aggregated `candidateLoaded`, `shopScanSuccessful`, `shopCount`, `mainGameShopCount`, `skippedShopCount`, `specialShopCount`, `emptyShopCount`, `shopItemsTotal`, min/max length, terminator stability, item-safety counters and price-table untouched status.
+- Keep Field Items, Pickup, Held Items, prices, Shop writes, builds, Randomizer writes/saves and private artefact documentation out of scope.
+
 # Next Steps Update - 2026-05-15 - Shop Items scope diagnostics next
 
 Aktueller Fokus:

@@ -1,3 +1,11 @@
+# Roadmap Status Update - 2026-05-15 - Shop Items diagnostics preflight
+
+- Neuer Befund: `08_tests/randomizer/122_shop_items_scope_diagnostics.md`.
+- Shop read-only Kandidatendiagnose ist blockiert, weil keine explizit freigegebene lokale CFRU/DPE Gen9-BPRE-Kandidatenquelle fuer diesen Block vorlag.
+- `FVX-ITEM-005..009` bleiben `Write modelliert`; kein Shop Shuffle Smoke vor erfolgreichem Kandidatenscan.
+- Codepfad-Risiko bleibt bestaetigt: Shoplisten nutzen Pointer, Terminatoren, Laengen und `DataRewriter<Shop>`/Repointing; Preisfelder bleiben separat.
+- Keine Codeaenderung, kein Build, kein Randomizer-Write/Save, keine Submodule-Pin-Aenderung.
+
 # Roadmap Status Update - 2026-05-15 - Shop Items scope diagnostics plan
 
 - Neuer Plan: `08_tests/randomizer/121_shop_items_scope_diagnostics_plan.md`.
