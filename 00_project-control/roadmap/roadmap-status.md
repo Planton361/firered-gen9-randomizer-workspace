@@ -1,3 +1,9 @@
+# 2026-05-15 - Boss Trainer Held Items smoke update
+
+- Diagnose 141 records Boss Trainer Held Items Write/Reload-Smoke.
+- Result: PASS with save/log/output/reload successful, `bossTrainerHeldItemReloadMismatches=0`, preserve counters for Important/Regular/shouldNotGetBuffs all `0`, and no invalid/unloaded/fallback/placeholder writes.
+- Important Trainer Held Items are the next separate scope.
+
 # 2026-05-15 - Wild Held Items Ban Bad smoke update
 
 - Diagnose 140 records Wild/Encounter Held Items + Ban Bad Write/Reload-Smoke.

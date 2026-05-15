@@ -1,3 +1,7 @@
+# Latest - Diagnose 141
+
+- `141_trainer_held_items_boss_reload_smoke.md`: Boss Trainer Held Items Write/Reload-Smoke; PASS with reload-stable `TrainerPokemon.heldItem`, class preserve-policy and Wild/Starter/Field/Pickup/Shop isolation.
+
 # Latest - Diagnose 140
 
 - `140_wild_held_items_ban_bad_reload_smoke.md`: Wild/Encounter Held Items + Ban Bad Write/Reload-Smoke; PASS with reload-stable Species/BaseStats held items, non-bad pool enforcement and Trainer/Starter/Field/Pickup/Shop isolation.
