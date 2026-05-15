@@ -1,3 +1,10 @@
+# 2026-05-15 - Regular Trainer Held Item filters smoke update
+
+- Diagnose 145 records a PASS for Regular Trainer Held Items with Consumable Only, Sensible Items and Highest Level Only combined.
+- Save/log/output/reload succeeded; Regular reload mismatches were `0`; Boss/Important/shouldNotGetBuffs preserve counters were `0`.
+- All `697` highest-level writes were consumable and sensible; invalid/unloaded/fallback/placeholder writes were `0`.
+- Starter Held Items remain the next unpromoted Held Items scope.
+
 # 2026-05-15 - Trainer Held Item filters plan update
 
 - Diagnose 144 plans Trainer Held Item filter coverage after Boss/Important/Regular no-filter smokes passed.

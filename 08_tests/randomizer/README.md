@@ -1,3 +1,7 @@
+# Latest - Diagnose 145
+
+- `145_trainer_held_items_regular_filtered_reload_smoke.md`: Regular Trainer Held Items filtered Write/Reload-Smoke; PASS with Consumable Only, Sensible Items and Highest Level Only in the narrow Regular-Trainer scope.
+
 # Latest - Diagnose 144
 
 - `144_trainer_held_items_filters_scope_plan.md`: Trainer Held Items filter scope plan; separates Consumable Only, Sensible Items and Highest Level Only after Boss/Important/Regular no-filter smokes passed.
