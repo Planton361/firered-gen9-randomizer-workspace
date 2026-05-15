@@ -1,3 +1,9 @@
+# 2026-05-15 - Shop Item Bans Ban Regular Teilstatus
+
+- `FVX-ITEM-007` hat nun GUI-kompatible Teilnachweise fuer `ShopItemsMod.RANDOM + banBadRandomShopItems=true` und `ShopItemsMod.RANDOM + banRegularShopItems=true`.
+- `regularShopItemPoolCandidates=16`, `regularShopItemPoolExcluded=16`, `regularShopItemBannedWrites=0`.
+- Der Gesamt-Scope Shop Item Bans bleibt partiell: `banOPShopItems` und Ban-Kombinationen sind noch nicht hochgestuft.
+
 # 2026-05-15 - Shop Item Bans Teilstatus
 
 - `FVX-ITEM-007` hat einen GUI-kompatiblen Teilnachweis fuer `ShopItemsMod.RANDOM + banBadRandomShopItems=true`.
