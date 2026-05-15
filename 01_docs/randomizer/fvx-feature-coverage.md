@@ -1,3 +1,9 @@
+# 2026-05-15 - FVX Wild Encounters coverage update
+
+- Wild Encounters/Wild Pokemon Randomization is now planned as a separate unpromoted scope after Held Items closure.
+- Required first evidence: read-only candidate diagnostic for EncounterArea/Encounter structure, slot counts, encounter types and CFRU/DPE SpeciesSet identity mapping.
+- Held Items remain closed in their tested scope and are not re-tested by this plan.
+
 # 2026-05-15 - FVX Held Items scope closure update
 
 - Starter Held Items + Ban Bad are covered as GUI-compatible in the tested CFRU/DPE Gen9-BPRE scope after Diagnose 147.

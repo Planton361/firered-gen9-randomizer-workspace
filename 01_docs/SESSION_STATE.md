@@ -1,3 +1,10 @@
+# 2026-05-15 - Diagnose 148
+
+- Current branch plans Wild Encounters/Wild Pokemon Randomization as the next separate CFRU/DPE Gen9-BPRE scope after Held Items closure.
+- Scope is explicitly separate from Wild Held Items, Trainer Pokemon, Starters, Static/Gift Pokemon, Field Items, Pickup and Shops.
+- Code findings: Gen3 `getEncounters`/`setEncounters` use fixed EncounterArea/Encounter slot tables for Walking, Surfing, Rock Smash/Interact and Fishing, with CFRU/DPE extended BPRE species writes using SpeciesSet identity.
+- No feature is promoted in this plan; next step is read-only Wild Encounters candidate diagnostics.
+
 # 2026-05-15 - Diagnose 147
 
 - Current branch records Starter Held Items + Ban Bad Write/Reload-Smoke.

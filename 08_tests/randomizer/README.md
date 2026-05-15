@@ -1,3 +1,7 @@
+# Latest - Diagnose 148
+
+- `148_wild_encounters_scope_diagnostics_plan.md`: Wild Encounters scope diagnostics plan; starts a new Wild Pokemon/Encounter scope after Held Items closure and requires read-only candidate diagnostics before any write/reload smoke.
+
 # Latest - Diagnose 147
 
 - `147_starter_held_items_ban_bad_reload_smoke.md`: Starter Held Items + Ban Bad Write/Reload-Smoke; PASS with non-bad pool writes, reload stability and Wild/Trainer/Field/Pickup/Shop isolation. Tested Held Items scope is closed.

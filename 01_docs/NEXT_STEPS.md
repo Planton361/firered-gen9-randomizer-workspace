@@ -1,3 +1,11 @@
+# 2026-05-15 - Next: Wild Encounters read-only candidate diagnostic
+
+Recommended next branch: `test/upr-fvx-cfru-dpe-wild-encounters-scope-diagnostics`.
+
+Goal: scan Wild Encounter areas and slots read-only, classify encounter types and validate SpeciesSet identity mapping without writes, builds or Randomizer runs.
+
+Keep out of scope: Wild Held Items, Trainer Pokemon, Starters, Static/Gift Pokemon, Field Items, Pickup, Shops and all non-Wild-Encounter features.
+
 # 2026-05-15 - Next: next major Randomizer feature scope
 
 Held Items scope is closed in the tested CFRU/DPE Gen9-BPRE scope after Diagnose 147.
