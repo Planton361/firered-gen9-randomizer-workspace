@@ -1,3 +1,10 @@
+# Roadmap update - Diagnose 166
+
+- Evolution Same Typing (`FVX-TRAIT-019`) is reclassified read-only as `diagnosis-ready` for the narrow `FVX-TRAIT-016` Evolution-Species-Carrier scope.
+- The historical 070 NullPointerException blocker is superseded by Diagnose 079/080 evidence: `EvolutionRandomizer` guards null/unsupported Primary Type candidates before `hasSharedType(...)`, and Same Typing has Save/Log/Output/Reload true with `writeReloadEvolutionMismatches=0`.
+- No immediate UPR-FVX fix block is recommended; if additional confidence is requested, plan read-only code review or a small Non-ROM harness before any new ROM-facing smoke.
+- Keep Evolution-Methoden-Writer and other Evolution suboptions separate.
+
 # Roadmap update - Diagnose 165
 
 - Evolution Similar Strength (`FVX-TRAIT-018`) is reclassified read-only as `diagnosis-ready` for the narrow `FVX-TRAIT-016` Evolution-Species-Carrier scope.

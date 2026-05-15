@@ -1,3 +1,14 @@
+# Session update - Diagnose 166
+
+- New branch: `test/upr-fvx-cfru-dpe-evolution-same-typing-diagnostics`.
+- PR #214 / Diagnose 165 was verified as merged into `main` before this block.
+- UPR-FVX submodule remains clean and pinned at `dc6ad3cb01282db5ff85935959bbdac6c2d3fa0c`.
+- Diagnose 166 reclassifies `FVX-TRAIT-019` Evolution Same Typing read-only as `diagnosis-ready`.
+- Finding: the original 070 Same-Typing blocker (`saveSuccessful=false`, no Output/Reload, `NullPointerException`) is superseded by Diagnose 079/080. The current `EvolutionRandomizer` Same-Typing filter uses `hasUsableSharedType(...)` and guards candidate null/unsupported Primary Type before `candidate.hasSharedType(reference)`.
+- Diagnose 080 confirms Save/Log/Output/Reload true, `writeReloadEvolutionMismatches=0`, `<unknown>=false`, `exceptionClass=none` and `stacktrace=none` for the narrow Same-Typing scope.
+- No immediate UPR-FVX fixblock is recommended for this narrow Same-Typing scope; next minimal work is status reconciliation or, if extra evidence is requested, a read-only code-review / Non-ROM harness plan.
+- No ROM-Smoke, Randomizer run, build, code change, submodule change, ROM/save/output/log access or external download was performed.
+
 # Session update - Diagnose 165
 
 - New branch: `test/upr-fvx-cfru-dpe-evolution-similar-strength-diagnostics`.

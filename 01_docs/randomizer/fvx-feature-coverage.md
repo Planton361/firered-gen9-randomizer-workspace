@@ -1,3 +1,8 @@
+# Coverage update - Diagnose 166
+
+- Diagnose 166 reclassifies `FVX-TRAIT-019` Evolution Same Typing as `diagnosis-ready` for the narrow `FVX-TRAIT-016` Evolution-Species-Carrier scope.
+- The old 070 NullPointerException blocker is superseded by 079/080 same-typing null-primary-type guard and reload evidence; no immediate UPR-FVX fixblock is recommended unless new crash or normalized mismatch evidence appears.
+
 # Coverage update - Diagnose 164
 
 - Diagnose 165 reclassifies `FVX-TRAIT-018` Evolution Similar Strength as `diagnosis-ready` for the narrow `FVX-TRAIT-016` Evolution-Species-Carrier scope.

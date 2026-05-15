@@ -1,3 +1,10 @@
+# Roadmap status update - Diagnose 166
+
+- Evolution Same Typing (`FVX-TRAIT-019`) is reclassified read-only as `diagnosis-ready`.
+- The active blocker from Diagnose 070 is superseded by Diagnose 079/080: the Same-Typing null-primary-type guard is implemented in `EvolutionRandomizer`, and the Same-Typing smoke evidence shows Save/Log/Output/Reload true with `writeReloadEvolutionMismatches=0`.
+- `Bad Egg=true` remains classified under Diagnose 055 as an Evolution log / special-Species marker when reload criteria are stable.
+- No UPR-FVX fixblock is recommended for this narrow Same-Typing scope; optional next evidence should be read-only code review or a Non-ROM harness plan, not ROM-Smoke.
+
 # Roadmap status update - Diagnose 165
 
 - Evolution Similar Strength (`FVX-TRAIT-018`) is reclassified read-only as `diagnosis-ready`.
@@ -581,6 +588,7 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | 08 Randomizer-Kompatibilität | CFRU/DPE Evolution Similar Strength Mismatch Diagnostics | Diagnose 081 grenzt `FVX-TRAIT-018` wahrscheinlich auf einen zu breiten Diagnosevergleich gegen nicht persistierte Forme-/Zusatzfelder ein; naechster Schritt ist ein normalisierter Diagnose-Smoke, kein sofortiger Fix |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Evolution Similar Strength Normalized Reload Diagnostics | Diagnose 082 bestaetigt `FVX-TRAIT-018` mit Save/Log/Output/Reload true, `normalizedWriteReloadEvolutionMismatches=0`, `rawWithFormeWriteReloadEvolutionMismatches=0`, `<unknown>=false`, `exceptionClass=none` und `stacktrace=none`; `Bad Egg=true` bleibt nach 055 klassifiziert |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Evolution Similar Strength Diagnostics | Diagnose 165 ordnet `FVX-TRAIT-018` read-only als `diagnosis-ready` neu ein: 070 ist durch 081/082 normalisierte Reload-Evidenz ueberholt; kein unmittelbarer Fixblock, optional nur Code-Review oder Non-ROM-Harness-Plan |
+| 08 Randomizer-Kompatibilität | CFRU/DPE Evolution Same Typing Diagnostics | Diagnose 166 ordnet `FVX-TRAIT-019` read-only als `diagnosis-ready` neu ein: 070 ist durch 079/080 Same-Typing-Null-Type-Fix und Reload-Evidenz ueberholt; kein unmittelbarer Fixblock, optional nur Code-Review oder Non-ROM-Harness-Plan |
 
 ## In Arbeit
 
