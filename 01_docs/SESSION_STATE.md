@@ -1,3 +1,16 @@
+# Session State Update - 2026-05-15 - Pickup Items scope diagnostics
+
+- Branch: `test/upr-fvx-cfru-dpe-pickup-items-scope-diagnostics`.
+- Workspace PR #159 was verified as merged before branch creation.
+- UPR-FVX pin remains `02_external/upr-fvx` at `328e4441c2981d37aba9e2707a6f27f779b026e2`.
+- New protocol: `08_tests/randomizer/115_pickup_items_scope_diagnostics.md`.
+- A locally approved CFRU/DPE Gen9-BPRE candidate was scanned read-only for Pickup Items only.
+- Sanitized result: `candidateFilesChecked=97`, `candidateLoaded=true`, `pickupScanSuccessful=true`, `pickupLocatorSuccessful=true`, `pickupItemsTotal=16`, `pickupExpectedCount=16`, `pickupEntrySize=4`, `pickupProbabilitySlots=10`, `pickupProbabilityModelStable=true`, `pickupTableLengthMismatch=0`, `pickupLocatorCandidateCount=1`.
+- Item safety result: `pickupInvalidItemIds=0`, `pickupUnloadedItemIds=0`, `pickupFallbackItems=0`, `pickupPlaceholderItems=0`, `pickupBadItems=7`, `pickupTmItems=1`.
+- Pool result: `pickupPoolAllowedSize=536`, `pickupPoolNonBadSize=485`, `pickupBadItemPoolCandidates=51`, `pickupBadItemPoolExcluded=51`, `pickupTmPoolPolicy=tms allowed`, `canTMsBeHeld=true`, `isTMsReusable=false`.
+- Recommendation: run a Pickup-only Random write/reload smoke without Ban Bad first; keep Ban Bad separate afterwards.
+- No code changes, no `02_external/**` changes, no submodule pin change, no build, no Randomizer write/save, no Output-ROM committed, no private artefact documentation.
+
 # Session State Update - 2026-05-15 - Pickup Items diagnostics scope plan
 
 - Branch: `analysis/upr-fvx-cfru-dpe-pickup-items-scope-diagnostics-plan`.

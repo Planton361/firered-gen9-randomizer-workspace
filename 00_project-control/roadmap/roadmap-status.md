@@ -772,3 +772,11 @@ Zweck: Diagnose 082 reviewen und mergen; danach Evolution-Methoden-Writer und we
 - Pickup bleibt ein Table-/Locator-/Probability-Scope; vor jedem Write-Smoke muss `PickupTableStartLocator`, `PickupItemCount`, Tabellenlaenge und Item-ID-Validitaet read-only gegen den CFRU/DPE Gen9-BPRE-Kandidaten geprueft werden.
 - Empfohlene Reihenfolge: Pickup read-only Kandidatendiagnose, danach Pickup Random ohne Ban Bad, danach Pickup Random mit Ban Bad.
 - Field Items bleiben abgeschlossen; Shops und Held Items bleiben ohne Hochstufung getrennte Scopes.
+
+## 2026-05-15 - Pickup Items Scope Diagnostics
+
+- Diagnose 115 scanned Pickup Items read-only and sanitized.
+- Pickup locator/count/table model is stable for the candidate: `pickupLocatorSuccessful=true`, `pickupItemsTotal=16`, `pickupExpectedCount=16`, `pickupEntrySize=4`, `pickupProbabilitySlots=10`, `pickupProbabilityModelStable=true`, `pickupTableLengthMismatch=0`.
+- Item-ID safety is clean for invalid/unloaded/fallback/placeholder values, but Ban Bad remains a separate poolfilter concern: `pickupBadItems=7`, `pickupBadItemPoolCandidates=51`, `pickupBadItemPoolExcluded=51`.
+- `FVX-ITEM-010` remains `Write modelliert` until a Pickup Random Write-/Reload-Smoke passes.
+- Next recommended block: `test/upr-fvx-cfru-dpe-pickup-items-random-reload-smoke` with `banBadRandomPickupItems=false`.

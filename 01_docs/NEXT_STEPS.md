@@ -1,3 +1,22 @@
+# Next Steps Update - 2026-05-15 - Pickup Items random smoke next
+
+Aktueller Fokus:
+
+- Diagnose 115 hat Pickup Items read-only klassifiziert.
+- Locator, Count, Entry-Size und Probability-Modell sind fuer den Kandidaten stabil: `pickupLocatorSuccessful=true`, `pickupItemsTotal=16`, `pickupExpectedCount=16`, `pickupEntrySize=4`, `pickupProbabilityModelStable=true`.
+- Item-ID-Sicherheit ist fuer den aktuellen Pickup-Scope stabil: `pickupInvalidItemIds=0`, `pickupUnloadedItemIds=0`, `pickupFallbackItems=0`, `pickupPlaceholderItems=0`.
+- Ban Bad bleibt separat, weil `pickupBadItemPoolCandidates=51` und `pickupBadItemPoolExcluded=51` eine eigene Poolfilter-Wirkung zeigen.
+
+Naechster empfohlener Minimalblock:
+
+- `test/upr-fvx-cfru-dpe-pickup-items-random-reload-smoke`
+
+Ziel des Folgeblocks:
+
+- Nur `FVX-ITEM-010 Pickup Items Random` mit `banBadRandomPickupItems=false` als Write-/Reload-Smoke testen.
+- Erwartet: Save/Log/Output/Reload true, `pickupItemsTotalBefore/After/Reload=16`, `pickupItemReloadMismatches=0`, Tabellenlaenge und Probability-Modell stabil, keine invalid/unloaded/fallback/placeholder Writes.
+- Keine Field-Items-Arbeit, keine Shops, keine Held Items, keine TM/HM/Tutor/Learnset-Ausweitung, keine Palette/Graphics, kein MoveData/MoveNames, kein TypeChart/TypeEffectiveness, keine Trainer/Wild/Evolution/Text/Menu-Arbeit.
+
 # Next Steps Update - 2026-05-15 - Pickup Items diagnostics next
 
 Aktueller Fokus:

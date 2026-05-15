@@ -602,3 +602,10 @@ Diese Matrix soll nicht als 130 Roadmap-Zeilen gepflegt werden. Fuer die Roadmap
 - Pickup ist als eigener Table-/Locator-/Probability-Writer geplant und nicht durch die Field-Items-Smokes 102/109/110/112/113 abgedeckt.
 - Naechster Schritt ist eine read-only Pickup-only Kandidatendiagnose fuer Locator, Tabellenlaenge, Entry-Size, Probability-Modell, Common/Rare-Hinweise und Item-Pool-Sicherheit.
 - Keine Hochstufung fuer Shops, Encounter Held Items, Trainer Held Items oder Starter Held Items.
+
+## 2026-05-15 - Pickup Items diagnostics after Diagnose 115
+
+- `FVX-ITEM-010 Pickup Items Random / Ban Bad Items`: remains `Write modelliert`.
+- Diagnose 115 confirms read-only Pickup locator/count/table/probability safety for a candidate, but no Write-/Reload-Smoke has run yet.
+- Next step is Pickup Random without Ban Bad; Pickup Ban Bad remains separate because the non-bad pool filter has a measurable effect.
+- No upgrade for Shops, Field Items beyond their existing scope, Encounter Held Items, Trainer Held Items or Starter Held Items.
