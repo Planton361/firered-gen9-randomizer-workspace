@@ -1,3 +1,16 @@
+# Session State Update - 2026-05-15 - Pickup Items reload locator fix
+
+- Branch: `compat/upr-fvx-cfru-dpe-pickup-items-reload-locator-fix`.
+- Workspace PR #162 was verified as merged before branch creation.
+- UPR-FVX fix commit: `a2373888ad17145f270ebf6ff17303af41aa86eb`.
+- UPR-FVX PR #38 opened: <https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/38>.
+- Workspace now pins `02_external/upr-fvx` to `a2373888ad17145f270ebf6ff17303af41aa86eb`.
+- New protocol: `08_tests/randomizer/118_pickup_items_reload_locator_fix.md`.
+- Fix is limited to `Gen3RomHandler` Pickup table localization: classic `PickupTableStartLocator` remains first path; CFRU/DPE Gen9-BPRE gets a metadata fallback that ignores randomized item-ID words and requires exactly one table candidate.
+- Sanitized Pickup-only Random smoke with `banBadRandomPickupItems=false` passed: `saveSuccessful=true`, `logSuccessful=true`, `outputRomExists=true`, `reloadSuccessful=true`, `pickupLocatorSuccessful=true`, `pickupItemsTotalReload=16`, `pickupItemReloadMismatches=0`, `pickupLocatorMode=stable-metadata`, `pickupContentLocatorUsed=false`, `pickupReloadLocatorRegression=false`.
+- `FVX-ITEM-010 Pickup Items Random` is GUI-compatible only for `banBadRandomPickupItems=false`; Pickup Ban Bad remains separate.
+- No Field Items, Shops, Held Items, TM/HM/Tutor/Learnset, Scriptparser, Palette/Graphics, MoveData/MoveNames, TypeChart, Trainer/Wild/Evolution or Text/Menu work was done.
+
 # Session State Update - 2026-05-15 - Pickup Items reload locator blocker plan
 
 - Branch: `analysis/upr-fvx-cfru-dpe-pickup-items-reload-locator-blocker-plan`.

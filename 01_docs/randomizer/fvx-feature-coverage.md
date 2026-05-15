@@ -1,3 +1,10 @@
+# FVX Feature Coverage Update - 2026-05-15 - Pickup reload locator fix
+
+- `FVX-ITEM-010 Pickup Items Random` is GUI-compatible for the narrow Pickup-only `banBadRandomPickupItems=false` scope after Diagnose 118.
+- The UPR-FVX fix stabilizes Pickup table reload localization after random item-ID writes.
+- Pickup Ban Bad remains separate and not yet GUI-compatible.
+- Field Items keep their existing documented statuses; Shops and Held Items remain separate scopes.
+
 # FVX Feature Coverage Update - 2026-05-15 - Pickup reload locator blocker planned
 
 - `FVX-ITEM-010 Pickup Items Random` remains `Write modelliert` / reload-blocked after Diagnose 116.

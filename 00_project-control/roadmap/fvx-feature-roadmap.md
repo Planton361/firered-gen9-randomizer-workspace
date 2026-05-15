@@ -1,3 +1,9 @@
+# Roadmap Note - 2026-05-15 - Pickup reload locator fix
+
+- Diagnose 118 closes the Pickup Random reload-locator blocker for `banBadRandomPickupItems=false`.
+- UPR-FVX PR #38 keeps the fix scoped to Pickup table localization and leaves pool policy unchanged.
+- Next Pickup sub-scope is Ban Bad planning/smoke; Shops and Held Items remain separate.
+
 # Roadmap Note - 2026-05-15 - Pickup reload locator blocker
 
 - Diagnose 117 keeps Pickup as the active separated Item-writer track after Field Items.
