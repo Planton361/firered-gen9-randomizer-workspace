@@ -1,3 +1,10 @@
+# Coverage update - Diagnose 161B
+
+- In-Game Trades remain not compatible / blocked.
+- UPR-FVX PR #40 is merged and pinned at `1eaee2873cd69682335223f817b124bf36d004f2`; the non-ROM `TradeRandomizerTest` harness covers unsafe-row skip behavior without ROM files.
+- No Given Species, Requested Species, Trade Held Item, IV or Nickname/OT subfeature is promoted; Species-Write-Smoke and ROM-Smoke remain blocked.
+- Gen3 writer preserve coverage is not covered by this follow-up and remains a separately planned or blocked scope.
+
 # Coverage update - Diagnose 160
 
 - In-Game Trades remain not compatible / blocked.

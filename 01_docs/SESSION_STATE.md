@@ -1,3 +1,13 @@
+# Session update - Diagnose 161B
+
+- New branch: `test/upr-fvx-cfru-dpe-ingame-trades-non-rom-harness-followup`.
+- UPR-FVX PR #40 was verified as merged into `compat/firered-gen9-cfru-dpe`.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX commit `1eaee2873cd69682335223f817b124bf36d004f2`.
+- Diagnose 161B records the non-ROM In-Game Trades `TradeRandomizerTest` harness follow-up. The harness uses synthetic `InGameTrade` rows and a minimal `RomHandler` proxy/fake to cover null-request and placeholder/unsafe Species skips, all-skipped no `setInGameTrades(...)`, `isChangesMade=false`, skip counters and `hasSkippedTrades()`.
+- UPR-FVX PR #40 implementation-side check is recorded as `./gradlew --offline :random:test` with `BUILD SUCCESSFUL`.
+- In-Game Trades remain `blocked-pending-evidence`; no Gen3 writer test, ROM-Smoke, Species-Write-Smoke, text, Nickname/OT, IV or Trade Held Item randomization is authorized.
+- No ROM, save, emulator state, output ROM, log, Randomizer JAR, tool binary, build artifact, private path, hash, secret, token or `.env` file was touched.
+
 # Session update - Diagnose 160
 
 - New branch: `test/upr-fvx-cfru-dpe-ingame-trades-non-rom-harness-plan`.

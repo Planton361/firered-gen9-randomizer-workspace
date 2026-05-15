@@ -1,3 +1,10 @@
+# Roadmap update - Diagnose 161B
+
+- UPR-FVX PR #40 is merged and the workspace submodule is pinned to `1eaee2873cd69682335223f817b124bf36d004f2`.
+- The In-Game Trades non-ROM `TradeRandomizer` harness is now present in the pinned UPR-FVX submodule and covers null-request, placeholder/unsafe Species, all-skipped no-writeback, `changesMade=false`, and skip-status behavior.
+- Roadmap classification remains `blocked-pending-evidence`; valid active rows are still unproven and Species-Write-Smoke remains unauthorized.
+- Next roadmap step is either a read-only writer-preserve-test plan or leaving In-Game Trades guarded/preserve-only until further evidence is explicitly requested.
+
 # Roadmap update - Diagnose 160
 
 - In-Game Trades have a ready non-ROM harness plan after the guard code review.
