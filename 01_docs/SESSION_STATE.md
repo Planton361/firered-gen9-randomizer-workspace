@@ -1,3 +1,11 @@
+# 2026-05-15 - Diagnose 142
+
+- Current branch records Important Trainer Held Items Write/Reload-Smoke.
+- Smoke result: PASS; `saveSuccessful=true`, `logSuccessful=true`, `outputRomExists=true`, `reloadSuccessful=true`, `importantTrainerHeldItemReloadMismatches=0`.
+- Preserve result: Boss, Regular and `shouldNotGetBuffs` Trainer Held Items stayed unchanged with mismatch counters all `0`.
+- Safety metrics: invalid/unloaded/fallback/placeholder Trainer-Held-Item writes all `0`; Wild, Starter, Field, Pickup and Shop scopes stayed unchanged.
+- Trainer Held Items are now covered for Boss and Important Trainers in the tested scopes; Regular, filters and Starter Held Items remain open.
+
 # 2026-05-15 - Diagnose 141
 
 - Current branch records Boss Trainer Held Items Write/Reload-Smoke.
