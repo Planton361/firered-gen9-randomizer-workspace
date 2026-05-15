@@ -1,3 +1,9 @@
+# 2026-05-15 - Diagnose 129 Shop Items Ban OP
+
+- `FVX-ITEM-007` ist fuer `ShopItemsMod.RANDOM + banOPShopItems=true` im Shop-only Write/Reload-Smoke GUI-kompatibel.
+- `opShopItemBannedWrites=0`; Reload, Skip-Shops, Preis- und Fremdscopes bleiben stabil.
+- Ban Bad und Ban Regular sind bereits aus Diagnose 127/128 einzeln belegt; Ban-Kombinationen bleiben separat.
+
 # 2026-05-15 - Diagnose 128 Shop Items Ban Regular
 
 - `FVX-ITEM-007` ist fuer `ShopItemsMod.RANDOM + banRegularShopItems=true` im Shop-only Write/Reload-Smoke GUI-kompatibel.

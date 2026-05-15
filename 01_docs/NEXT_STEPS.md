@@ -1,3 +1,9 @@
+# 2026-05-15 - Naechster Schritt nach Diagnose 129
+
+- Entscheiden, ob `FVX-ITEM-007` Ban-Kombinationsdeckung braucht oder ob direkt `FVX-ITEM-008 Guarantee Evolution/X Items` geplant wird.
+- Wenn Kombinationen getestet werden: nur nach separater Scope-Entscheidung und ohne Preis/Rare-Candy-Optionen.
+- Nicht ausweiten auf `FVX-ITEM-009`, Field Items, Pickup oder Held Items.
+
 # 2026-05-15 - Naechster Schritt nach Diagnose 128
 
 - Empfohlen: Shop Random + Ban OP als separaten Subscope planen oder smoken.
