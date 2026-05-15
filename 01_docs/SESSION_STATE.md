@@ -1,3 +1,15 @@
+# Session update - Diagnose 173
+
+- New branch: `test/upr-fvx-cfru-dpe-evolution-make-easier-scope-plan`.
+- PR #221 / Follow-up 172B was verified as merged into `main` before this block.
+- UPR-FVX submodule remains clean and pinned at `3b33412e80d1cb2d97725ad7a7dd01529aa56919`.
+- Diagnose 173 plans `FVX-TRAIT-025` Make Evolutions Easier as a split scope.
+- Result: `make-easier-plan-ready`.
+- `025A` is ROM-free Condense-/Level-/Decision logic around `AbstractRomHandler.condenseLevelEvolutions(...)`, synthetic Species/Evolution chains, `extraInfo`, `estimatedEvoLvl` and `highestEvoLvl`.
+- `025B` is the separate Gen3 Happiness-byte patch / writer-like scope around `Gen3RomHandler.makeEvolutionsEasier(...)` and `Gen3Constants.friendshipValueForEvoLocator`.
+- `FVX-TRAIT-026` remains a helper flag for `024/025`, with no standalone support claim.
+- No ROM-Smoke, Randomizer run, build, code change, submodule change, ROM/save/output/log access or external download was performed.
+
 # Session update - Diagnose 172B
 
 - New branch: `test/upr-fvx-cfru-dpe-evolution-method-decisions-followup`.

@@ -1,3 +1,12 @@
+# Roadmap status update - Diagnose 173
+
+- Evolution Make Evolutions Easier planning is complete for `FVX-TRAIT-025`.
+- Result: `make-easier-plan-ready`.
+- `025A` is a ROM-free Condense-/Level-/Decision harness candidate around `AbstractRomHandler.condenseLevelEvolutions(...)`.
+- `025B` remains a separate Gen3 Happiness-byte patch / writer-like scope around `Gen3RomHandler.makeEvolutionsEasier(...)`.
+- `FVX-TRAIT-026` remains helper-only for `024/025`, with no standalone support claim.
+- No ROM-Smoke, Randomizer run, build, code change or submodule change was performed.
+
 # Roadmap status update - Diagnose 172B
 
 - Evolution method decision harness follow-up is recorded.
@@ -645,6 +654,7 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | 08 Randomizer-Kompatibilität | CFRU/DPE Evolution Methods Scope Plan | Diagnose 170 plant `FVX-TRAIT-024` bis `027` als getrennte Methoden-/Improvement-Slices; Ergebnis `methods-plan-ready`, keine Test-/P1-Promotion |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Evolution Methods Decision Review | Diagnose 171 reviewt `FVX-TRAIT-024` und `027` als `decision-review-ready`; naechster Schritt ist ein kleiner ROM-freier Decision-Harness, keine Writer-/Reload- oder P1-Promotion |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Evolution Method Decision Harness Follow-up | Diagnose 172B pinnt UPR-FVX PR #43; `EvolutionMethodDecisionTest` deckt `FVX-TRAIT-024` und `027` ROM-frei ab, Status `tested-non-rom`, keine P1-Promotion |
+| 08 Randomizer-Kompatibilität | CFRU/DPE Evolution Make Evolutions Easier Scope Plan | Diagnose 173 splittet `FVX-TRAIT-025` in 025A ROM-freie Condense-/Level-Decision und 025B Gen3-Happiness-Byte-Patch; `FVX-TRAIT-026` bleibt Helper-Flag |
 
 ## In Arbeit
 

@@ -33,12 +33,12 @@ Markdown bleibt Source of Truth.
 
 | Feld | Aktueller Stand |
 |---|---|
-| Stand | Nach Follow-up 172B |
-| Aktueller enger Blocker | Kein Evolution-Species-Carrier-Fixblock; `024/027` sind Non-ROM decision-tested, aber ohne Writer-/Reload-Evidenz |
+| Stand | Nach Diagnose 173 |
+| Aktueller enger Blocker | Kein Evolution-Species-Carrier-Fixblock; `025` ist gesplittet in Condense-Plan und Happiness-Byte-Patch-Risiko |
 | Zuletzt entblockt | Evolution Similar Strength und Same Typing bleiben aus aktivem Blockerstatus genommen |
-| Zuletzt validiert | Follow-up 172B: UPR-FVX PR #43 mit `EvolutionMethodDecisionTest`; `FVX-TRAIT-024` und `027` `tested-non-rom`, ohne P1-Promotion |
+| Zuletzt validiert | Diagnose 173: `FVX-TRAIT-025` Make Evolutions Easier als `025A`/`025B` geplant; `026` helper-only |
 | Carrier-Smokes bestanden | Global Species Pool, Starter-Suboptions, Trainer Similar Strength, Wild Similar Strength/Type Restrictions |
-| Danach | `FVX-TRAIT-025` splitten; `026` nur mit `024/025` fuehren; Writer-/Reload-Evidenz fuer `024/027` bleibt separat |
+| Danach | `FVX-TRAIT-025A` Non-ROM Condense-/Level-Harness planen/implementieren; `025B` Happiness-Byte-Patch separat halten |
 | Grosse offene Writer | MoveData Write, Palette Randomization, Evolution-Improvement-/Methoden-Slices |
 | Spaeter / P2 | Special Tutors/Text/Menu, Graphics/Sprites, Misc Tweaks |
 
@@ -50,6 +50,7 @@ Markdown bleibt Source of Truth.
 | Supported im getesteten Scope | Praktisch freigegeben fuer den konkret getesteten CFRU/DPE Gen9-BPRE-Scope, aber nicht automatisch fuer alle ROM-Hack-Varianten. |
 | Getestet im Carrier | Suboption wurde in einem bestimmten stabilen Hauptpfad getestet, aber nicht global fuer alle Kombinationen freigegeben. |
 | tested-non-rom | ROM-frei per Unit-/Harness-Test belegt, aber ohne ROM-Smoke/Reload noch nicht P1-supported. |
+| make-easier-plan-ready | `FVX-TRAIT-025` ist in ROM-freie Condense-Logik und separaten Happiness-Byte-Patch-Scope getrennt geplant. |
 | decision-review-ready | Methoden-/Mapping-Decision ist read-only fachlich geprueft und bereit fuer einen kleinen ROM-freien Decision-Test. |
 | methods-plan-ready | Methoden-/Improvement-Scope ist read-only geplant, aber noch nicht per Non-ROM-Test, Writer oder Reload belegt. |
 | Gefixt, Folgesmokes offen | Fix existiert, aber noch nicht durch vollstaendige Folgesmokes abgesichert. |
@@ -76,7 +77,7 @@ Markdown bleibt Source of Truth.
 | Paket | Leitstatus | Stabil belegt | Carrier-tested | Blocker / Luecke | Naechster Schritt | Belege |
 |---|---|---|---|---|---|---|
 | General Options | Gemischt | - | Limit Pokemon, No Premature Evolutions im Starter-Carrier | Race Mode, Intro Mon offen | separater General-Smoke | 064 |
-| Pokemon Traits | Gemischt | Base Stats, Species Types, Abilities, Evolution Species-only | Evolution Similar Strength und Evolution Same Typing diagnosis-ready; `017/020-023` tested-non-rom; `024/027` tested-non-rom; `025/026` methods-plan-ready | Writer-/Reload-Evidenz fuer Methoden-Scope fehlt | `FVX-TRAIT-025` Split-Plan oder separat freigegebener Writer-/Reload-Scope | 051, 052, 059, 070, 075, 026, 079-082, 165-172 |
+| Pokemon Traits | Gemischt | Base Stats, Species Types, Abilities, Evolution Species-only | Evolution Similar Strength und Evolution Same Typing diagnosis-ready; `017/020-023` tested-non-rom; `024/027` tested-non-rom; `025` make-easier-plan-ready; `026` helper-only | Writer-/Reload-Evidenz fuer Methoden-Scope fehlt | `FVX-TRAIT-025A` Non-ROM Condense-Harness oder separat freigegebener Writer-/Reload-Scope | 051, 052, 059, 070, 075, 026, 079-082, 165-173 |
 | Starters, Statics & Trades | Gemischt | Starter Species, Static/Gift Species | Starter-Filter | Starter Held Items offen; In-Game Trades guarded/preserve-only, not supported | naechster Nicht-Trades-Scope oder Reopen-Evidenz | 065, 152-164 |
 | Moves & Movesets | Gemischt | Movesets/Learnsets, Reorder Damaging | einige Filter-/Sanity-Optionen | MoveData Write offen | MoveData Write Preserve | 049, 056 |
 | Foe Pokemon / Trainer | Teilweise blockiert | Trainer Species, Movesets, Held Items, Similar Strength | Similar Strength im Trainer-Carrier | Type Diversity / Type Themes, Additional Pokemon, Textnamen | Trainer-Suboptionen spaeter | 070, 075, 077 |
@@ -95,7 +96,7 @@ Markdown bleibt Source of Truth.
 | Pokemon Base Stats | P1-supported | Random/Shuffle Base Stats | Follow Evolutions nur geplant | EXP Curves, Gen Update offen | Suboptionen spaeter |
 | Pokemon Types | P1-supported fuer Species Types | Type Read/Write | Force Dual Types geplant | TypeChart separat, inzwischen getestet | keine enge Luecke |
 | Pokemon Abilities | P1-supported | Ability1/2 + Hidden Ability | Ban-/Filter-Suboptionen geplant | - | Suboption-Smoke spaeter |
-| Evolutions | Konsolidiert, Suboptionen offen | normale Evolution Randomization / Species-only | Similar Strength und Same Typing diagnosis-ready; `017/020-023` tested-non-rom; `024/027` tested-non-rom; `025/026` methods-plan-ready | Writer-/Reload-Evidenz fuer Methoden-Slices fehlt | `FVX-TRAIT-025` Split-Plan oder separater Writer-/Reload-Scope |
+| Evolutions | Konsolidiert, Suboptionen offen | normale Evolution Randomization / Species-only | Similar Strength und Same Typing diagnosis-ready; `017/020-023` tested-non-rom; `024/027` tested-non-rom; `025` make-easier-plan-ready; `026` helper-only | Writer-/Reload-Evidenz fuer Methoden-Slices fehlt | `FVX-TRAIT-025A` Non-ROM Condense-Harness oder separater Writer-/Reload-Scope |
 | Starters | Stark / Carrier-tested | Starter Species | Basic/Type/BST/Legendary Filter | Starter Held Items | spaeter Held Items |
 | Static/Gift | P1-supported fuer Species | Static/Gift Species | Similar Strength im Scope | Level Modifier/Fix Music offen | spaeter |
 | In-Game Trades | Guarded / Preserve-only, not supported | Null-/Invalid-Species Guard, Non-ROM TradeRandomizerTest, ROM-freier Gen3 Writer-Preserve-Test | - | keine validen aktiven Rows, kein Species-Write-Smoke, kein Text/Nickname/OT/IV/Item | nur mit Reopen-Evidenz |
@@ -145,8 +146,8 @@ Diese Tabelle listet alle aktuell erfassten FVX-Features einmal kompakt auf. Sie
 | 26 | `FVX-TRAIT-022` | Pokemon Traits | Evolutions: Force Change | tested-non-rom | Evolution-Species-Carrier / Target filter |
 | 27 | `FVX-TRAIT-023` | Pokemon Traits | Evolutions: Force Growth | tested-non-rom | Evolution-Species-Carrier / BST filter |
 | 28 | `FVX-TRAIT-024` | Pokemon Traits | Change Impossible Evolutions | tested-non-rom | Evolution improvement / Methoden |
-| 29 | `FVX-TRAIT-025` | Pokemon Traits | Make Evolutions Easier | methods-plan-ready / split planned | Evolution improvement / Level-Methoden |
-| 30 | `FVX-TRAIT-026` | Pokemon Traits | Use Estimated Evolution Levels | methods-plan-ready / Helper-Flag | Evolution improvement Zusatzflag |
+| 29 | `FVX-TRAIT-025` | Pokemon Traits | Make Evolutions Easier | make-easier-plan-ready / split into 025A+025B | 025A Condense-Level; 025B Happiness-Byte-Patch |
+| 30 | `FVX-TRAIT-026` | Pokemon Traits | Use Estimated Evolution Levels | helper-flag / no standalone support claim | Helper for 024/025 |
 | 31 | `FVX-TRAIT-027` | Pokemon Traits | Remove Time-Based Evolutions | tested-non-rom | Evolution improvement / Time methods |
 | 32 | `FVX-TRAIT-028` | Pokemon Traits | EXP-/Legendary-Kurven-Sonderfaelle | Nicht begonnen | Writer / Filter |
 | 33 | `FVX-SST-001` | Starters, Statics & Trades | Starter Pokemon: Custom | P1-supported | Global |
@@ -294,9 +295,9 @@ Diese Tabelle listet alle aktuell erfassten FVX-Features einmal kompakt auf. Sie
 
 | Reihenfolge | Arbeitspaket | Ziel | Warum jetzt? | Erwartetes Ergebnis |
 |---:|---|---|---|---|
-| 1 | Evolution Easier Split | `FVX-TRAIT-025` in Condense-Logik und Happiness-Byte-Patch trennen; `026` nur mit `024/025` fuehren | 172B schliesst den Non-ROM Decision-Harness fuer `024/027`; `025` bleibt der naechste Methoden-Split | separater enger Plan |
-| 2 | Evolution Methods Writer-/Reload-Entscheidung | `FVX-TRAIT-024` und `027` nur bei separater Freigabe writer-/reload-seitig pruefen | 172B liefert Non-ROM Decision-Evidenz, aber keine Evolution-Table-Write-/Reload-Evidenz | nur explizit freigegebener Scope |
-| 3 | Evolution Carrier-Filter ROM-Smoke-Entscheidung | `FVX-TRAIT-017` und `020-023` nur bei Bedarf ROM-facing pruefen | 169B liefert Non-ROM-Evidenz, aber keine P1-Freigabe | nur explizit freigegebener Smoke |
+| 1 | Evolution Make Easier 025A Harness | `FVX-TRAIT-025A` ROM-frei mit synthetischen Species/Evolution-Ketten testen | 173 trennt Condense-Logik vom Happiness-Byte-Patch; 025A ist der kleinste naechste Nicht-ROM-Scope | Non-ROM `:romio:test`-Plan/PR |
+| 2 | Evolution Make Easier 025B Byte-Patch-Plan | Happiness-Byte-Patch nur separat writer-like planen | 173 klassifiziert 025B als Gen3-Byte-Patch-Risiko | read-only Plan oder separater Byte-Seam |
+| 3 | Evolution Methods Writer-/Reload-Entscheidung | `FVX-TRAIT-024` und `027` nur bei separater Freigabe writer-/reload-seitig pruefen | 172B liefert Non-ROM Decision-Evidenz, aber keine Evolution-Table-Write-/Reload-Evidenz | nur explizit freigegebener Scope |
 | 4 | MoveData Write | Power/Accuracy/PP/Type/Update Moves absichern | grosser offener Moves-Tab-Writer | `FVX-MOVE-001` bis `FVX-MOVE-006` hochstufen |
 | 5 | Palette Randomization | echte Palettenaenderungen absichern | grosser Graphics/Palette-Writer | `FVX-GFX-001` bis `FVX-GFX-004` hochstufen |
 | 6 | Special Tutors/Text/Menu | P2-Sonderpfade modellieren | nicht normaler Tutor-Tabellenpfad | P2-Entscheidung |
@@ -306,6 +307,7 @@ Diese Tabelle listet alle aktuell erfassten FVX-Features einmal kompakt auf. Sie
 
 | Diagnose / PR | Bereich | Ergebnis | Statuswirkung |
 |---|---|---|---|
+| 173 | Evolution Make Evolutions Easier Scope Plan | `make-easier-plan-ready` | `FVX-TRAIT-025` in 025A Condense-/Level-Decision und 025B Gen3-Happiness-Byte-Patch getrennt; `026` helper-only |
 | 172B / UPR-FVX PR #43 | Evolution Method Decision Harness Follow-up | UPR-FVX PR #43 gepinnt; `EvolutionMethodDecisionTest` vorhanden | `FVX-TRAIT-024` und `027` `tested-non-rom`, keine P1-Freigabe ohne Writer-/Reload- oder ROM-Smoke-Evidenz |
 | 171 | Evolution Methods Decision Review | `decision-review-ready` | `FVX-TRAIT-024` und `027` fachlich reviewt; kleiner ROM-freier Decision-Harness empfohlen |
 | 170 | Evolution Methods Scope Plan | `methods-plan-ready` | `FVX-TRAIT-024` bis `027` geplant, keine Test-/P1-Promotion |

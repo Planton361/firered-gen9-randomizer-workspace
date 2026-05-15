@@ -1,3 +1,11 @@
+# Coverage update - Diagnose 173
+
+- `FVX-TRAIT-025` Make Evolutions Easier is now `make-easier-plan-ready`.
+- 025A is ROM-free Condense-/Level-/Decision logic around `AbstractRomHandler.condenseLevelEvolutions(...)`.
+- 025B is a separate Gen3 Happiness-byte patch / writer-like scope around `Gen3RomHandler.makeEvolutionsEasier(...)`.
+- `FVX-TRAIT-026` remains helper-only for `024/025`; no standalone support claim.
+- No P1-promotion, no `tested-non-rom` promotion for `025`, and no ROM-Smoke, Writer-/Reload-Evidenz or Randomizer run was performed.
+
 # Coverage update - Diagnose 172B
 
 - UPR-FVX PR #43 is merged and the workspace submodule is pinned at `3b33412e80d1cb2d97725ad7a7dd01529aa56919`.
@@ -730,8 +738,8 @@ Diagnose 082 bestaetigt `FVX-TRAIT-018` nach der 081-Normalisierung:
 - FVX-TRAIT-022 | Evolutions: Force Change | tested-non-rom
 - FVX-TRAIT-023 | Evolutions: Force Growth | tested-non-rom
 - FVX-TRAIT-024 | Change Impossible Evolutions | tested-non-rom
-- FVX-TRAIT-025 | Make Evolutions Easier | methods-plan-ready / split planned
-- FVX-TRAIT-026 | Use Estimated Evolution Levels | methods-plan-ready / Helper-Flag
+- FVX-TRAIT-025 | Make Evolutions Easier | make-easier-plan-ready / split into 025A+025B
+- FVX-TRAIT-026 | Use Estimated Evolution Levels | helper-flag / no standalone support claim
 - FVX-TRAIT-027 | Remove Time-Based Evolutions | tested-non-rom
 - FVX-TRAIT-028 | EXP-/Legendary-Kurven-Sonderfaelle | Nicht begonnen
 
