@@ -1,5 +1,9 @@
 # Current update
 
+- Diagnose 174B records merged UPR-FVX PR #44 for the Non-ROM `EvolutionMakeEasierDecisionTest` harness and pins `02_external/upr-fvx` to `85b282112322f8991dd11b14cc98d6dd68fd3fd4`. `FVX-TRAIT-025A` is now `tested-non-rom` for Condense-/Level-/Decision logic; `FVX-TRAIT-025B` remains a separate Gen3 Happiness-byte patch / writer-like scope, and `FVX-TRAIT-026` remains helper-only with no standalone support claim.
+
+# Current update
+
 - Diagnose 173 plans `FVX-TRAIT-025` Make Evolutions Easier as a split scope. Result: `make-easier-plan-ready`; 025A is ROM-free Condense-/Level-/Decision logic, while 025B is a separate Gen3 Happiness-byte patch / writer-like scope. `FVX-TRAIT-026` remains helper-only for `024/025`, with no standalone support claim. No testcode, ROM-Smoke, Randomizer run, build, code change or submodule change was performed.
 
 # Current update

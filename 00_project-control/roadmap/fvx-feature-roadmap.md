@@ -1,3 +1,11 @@
+# Roadmap update - Diagnose 174B
+
+- UPR-FVX PR #44 is merged and the workspace submodule is pinned to `85b282112322f8991dd11b14cc98d6dd68fd3fd4`.
+- The pinned `EvolutionMakeEasierDecisionTest` provides Non-ROM `:romio:test` decision coverage for `FVX-TRAIT-025A`.
+- Roadmap status for `025A` is now `tested-non-rom`; this remains below P1-supported because no Writer-/Reload-Evidenz, ROM-Smoke, output-ROM or Randomizer run was executed.
+- Keep `FVX-TRAIT-025B` as a separate Gen3 Happiness-byte patch / writer-like scope.
+- Keep `FVX-TRAIT-026` helper-only for `024/025`, not a standalone feature promotion.
+
 # Roadmap update - Diagnose 173
 
 - `FVX-TRAIT-025` Make Evolutions Easier is now `make-easier-plan-ready`.
