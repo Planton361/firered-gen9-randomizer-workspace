@@ -1,3 +1,15 @@
+# Tool Manifest Update - 2026-05-15 - Evolution filter non-ROM harness follow-up
+
+- Workspace branch: `test/upr-fvx-cfru-dpe-evolution-filter-non-rom-harness-followup`.
+- UPR-FVX fork base branch: `compat/firered-gen9-cfru-dpe`.
+- UPR-FVX PR #42: <https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/42>.
+- Original UPR-FVX test commit: `e71a126c test: cover evolution filter options`.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX commit `587e857088cac4fba41c6559d3a6f6e2a7aad71f`.
+- Previous workspace pin was `dc6ad3cb01282db5ff85935959bbdac6c2d3fa0c`.
+- Scope: Non-ROM `EvolutionFilterOptionsTest` only; synthetic `Species` / `Evolution` data and a minimal `RomHandler` proxy/fake cover `FVX-TRAIT-017` and `FVX-TRAIT-020` through `FVX-TRAIT-023`.
+- Checks recorded from UPR-FVX PR #42: `./gradlew --offline :random:test --tests com.uprfvx.random.randomizers.EvolutionFilterOptionsTest` and `./gradlew --offline :random:test`, both `BUILD SUCCESSFUL`.
+- Safety: no Workspace code changes, no UPR-FVX code changes in this block, no ROM/save/output/log/build artifacts, no ROM-Smoke, no Gen3 writer, no reload, no `FVX-TRAIT-024..027` scope, and no Original-Upstream PR.
+
 # Tool Manifest Update - 2026-05-15 - In-Game Trades writer preserve follow-up
 
 - Workspace branch: `test/upr-fvx-cfru-dpe-ingame-trades-writer-preserve-followup`.

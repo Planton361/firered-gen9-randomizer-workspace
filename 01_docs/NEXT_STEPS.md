@@ -1,3 +1,10 @@
+# Next steps update - Diagnose 169B
+
+- Treat `FVX-TRAIT-017` and `FVX-TRAIT-020` through `FVX-TRAIT-023` as `tested-non-rom` after merged UPR-FVX PR #42.
+- Keep these slices below P1-supported until a separately authorized ROM-Smoke / reload path exists.
+- Do not run ROM-Smoke, Gen3 writer tests, output-ROM generation, Randomizer runs or builds for this follow-up status.
+- Keep `FVX-TRAIT-024` through `FVX-TRAIT-027` separate; the next minimal Evolution work is a read-only plan for Evolution-improvement/method slices.
+
 # Next steps update - Diagnose 168
 
 - Treat the Evolution filter harness scope as ready: `FVX-TRAIT-017` and `FVX-TRAIT-020` through `FVX-TRAIT-023` can be covered by a small UPR-FVX Non-ROM `:random:test`.

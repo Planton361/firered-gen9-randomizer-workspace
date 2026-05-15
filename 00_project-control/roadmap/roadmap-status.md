@@ -1,3 +1,11 @@
+# Roadmap status update - Diagnose 169B
+
+- Evolution filter Non-ROM harness follow-up is recorded.
+- UPR-FVX PR #42 is merged and workspace-pinned at `587e857088cac4fba41c6559d3a6f6e2a7aad71f`.
+- The pinned `EvolutionFilterOptionsTest` covers `FVX-TRAIT-017` and `FVX-TRAIT-020` through `FVX-TRAIT-023` with synthetic Species/Evolution data and a minimal `RomHandler` proxy/fake.
+- Statuswirkung: those slices are now `tested-non-rom`, not P1-supported; no ROM-Smoke, Gen3 writer, reload or output-ROM scope was executed.
+- `FVX-TRAIT-024` through `FVX-TRAIT-027` remain separate not-started Evolution-improvement/method slices.
+
 # Roadmap status update - Diagnose 168
 
 - Evolution filter harness planning is complete for `FVX-TRAIT-017` and `FVX-TRAIT-020` through `FVX-TRAIT-023`.
@@ -607,6 +615,7 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | 08 Randomizer-Kompatibilität | CFRU/DPE Evolution Same Typing Diagnostics | Diagnose 166 ordnet `FVX-TRAIT-019` read-only als `diagnosis-ready` neu ein: 070 ist durch 079/080 Same-Typing-Null-Type-Fix und Reload-Evidenz ueberholt; kein unmittelbarer Fixblock, optional nur Code-Review oder Non-ROM-Harness-Plan |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Evolution Suboptions Consolidation | Diagnose 167 konsolidiert `FVX-TRAIT-016` bis `FVX-TRAIT-027`: `016` P1-supported, `018/019` diagnosis-ready, `017/020-023` plan-only, `024-027` separate nicht begonnene Improvement-/Methoden-Slices |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Evolution Filter Harness Plan | Diagnose 168 plant `FVX-TRAIT-017` und `020-023` als ROM-freien `EvolutionRandomizer`-Harness mit synthetischem Species-/Evolution-Graph und kleinem `RomHandler`-Proxy/Fake; Ergebnis `harness-plan-ready` |
+| 08 Randomizer-Kompatibilität | CFRU/DPE Evolution Filter Non-ROM Harness Follow-up | Diagnose 169B pinnt UPR-FVX PR #42; `EvolutionFilterOptionsTest` deckt `FVX-TRAIT-017` und `020-023` ROM-frei ab, Status `tested-non-rom`, keine P1-Freigabe ohne ROM-Smoke/Reload |
 
 ## In Arbeit
 

@@ -1,3 +1,11 @@
+# Coverage update - Diagnose 169B
+
+- UPR-FVX PR #42 is merged and the workspace submodule is pinned at `587e857088cac4fba41c6559d3a6f6e2a7aad71f`.
+- `EvolutionFilterOptionsTest` provides Non-ROM `:random:test` coverage for `FVX-TRAIT-017` and `FVX-TRAIT-020` through `FVX-TRAIT-023` using synthetic Species/Evolution data and a minimal `RomHandler` proxy/fake.
+- These slices move from `harness-plan-ready` to `tested-non-rom`.
+- This is not a P1-supported promotion: no ROM-Smoke, Gen3 writer, reload, output-ROM or `FVX-TRAIT-024..027` scope is included.
+- `FVX-TRAIT-024` through `FVX-TRAIT-027` remain separate not-started Evolution-improvement/method slices.
+
 # Coverage update - Diagnose 168
 
 - Non-ROM harness planning for Evolution filter slices is ready.
@@ -690,13 +698,13 @@ Diagnose 082 bestaetigt `FVX-TRAIT-018` nach der 081-Normalisierung:
 - FVX-TRAIT-014 | Abilities: Ban Negative Abilities | Plan erstellt
 - FVX-TRAIT-015 | Abilities: Ban Bad Abilities | Plan erstellt
 - FVX-TRAIT-016 | Pokemon Evolutions randomisieren | GUI-kompatibel
-- FVX-TRAIT-017 | Evolutions: Random Every Level | Harness-plan-ready
+- FVX-TRAIT-017 | Evolutions: Random Every Level | tested-non-rom
 - FVX-TRAIT-018 | Evolutions: Similar Strength | Diagnosis-ready
 - FVX-TRAIT-019 | Evolutions: Same Typing | Diagnosis-ready
-- FVX-TRAIT-020 | Evolutions: Limit to Three Stages | Harness-plan-ready
-- FVX-TRAIT-021 | Evolutions: No Convergence | Harness-plan-ready
-- FVX-TRAIT-022 | Evolutions: Force Change | Harness-plan-ready
-- FVX-TRAIT-023 | Evolutions: Force Growth | Harness-plan-ready
+- FVX-TRAIT-020 | Evolutions: Limit to Three Stages | tested-non-rom
+- FVX-TRAIT-021 | Evolutions: No Convergence | tested-non-rom
+- FVX-TRAIT-022 | Evolutions: Force Change | tested-non-rom
+- FVX-TRAIT-023 | Evolutions: Force Growth | tested-non-rom
 - FVX-TRAIT-024 | Change Impossible Evolutions | Nicht begonnen
 - FVX-TRAIT-025 | Make Evolutions Easier | Nicht begonnen
 - FVX-TRAIT-026 | Use Estimated Evolution Levels | Nicht begonnen
