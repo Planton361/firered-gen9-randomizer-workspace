@@ -1,5 +1,11 @@
 # 2026-05-15 - FVX Shop coverage update
 
+- FVX-ITEM-009 Balance Shop Prices + Cheap Rare Candies combination is covered as GUI-compatible for `ShopItemsMod.UNCHANGED + balanceShopPrices=true + addCheapRareCandiesToShops=true`.
+- Evidence: Diagnose 136, save/log/output/reload successful, `balancedPriceWrites=132`, `rareCandyWrites=23`, `shopItemsTotalDeltaReload=23`, `priceReloadMismatches=0`.
+- Shop Items scope is closed for the tested CFRU/DPE Gen9-BPRE GUI-compatible paths; Ban combinations and Evolution+X combination remain optional regression follow-ups.
+
+# 2026-05-15 - FVX Shop coverage update
+
 - FVX-ITEM-009 Cheap Rare Candies is covered as GUI-compatible for `ShopItemsMod.UNCHANGED + addCheapRareCandiesToShops=true` only.
 - Evidence: Diagnose 135, save/log/output/reload successful, `rareCandyWrites=23`, `shopItemsTotalDeltaReload=23`, `priceReloadMismatches=0`.
 - FVX-ITEM-009 individual Balance Prices and Cheap Rare Candies subscopes are covered, but their combination remains unpromoted.
@@ -252,9 +258,9 @@ Sie ist die detaillierte Requirements-/Coverage-Ebene. Die Roadmap bleibt bewuss
 | Nicht begonnen | 39 |
 | Plan erstellt | 28 |
 | Read modelliert | 0 |
-| Write modelliert | 13 |
+| Write modelliert | 12 |
 | Getestet | 10 |
-| GUI-kompatibel | 40 |
+| GUI-kompatibel | 41 |
 | In Arbeit | 0 |
 | **Gesamt** | **130** |
 

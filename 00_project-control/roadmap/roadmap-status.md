@@ -1,3 +1,9 @@
+# 2026-05-15 - Shop Items scope closed
+
+- Diagnose 136 passes the Shop-only FVX-ITEM-009 Balance Prices + Cheap Rare Candies combination.
+- Shop Items scope is closed for tested CFRU/DPE Gen9-BPRE GUI-compatible paths: Shuffle, Random, individual Ban Bad/Regular/OP, individual Guarantee Evolution/X, Balance Prices, Cheap Rare Candies, and the Balance+Rare-Candy combination.
+- Next major scope: Held Items diagnostics plan.
+
 # 2026-05-15 - Diagnose 135 status
 
 - FVX-ITEM-009 Cheap Rare Candies: GUI-compatible in tested Shop-only scope.

@@ -1,3 +1,9 @@
+# 2026-05-15 - Shop Items roadmap update
+
+- Shop Items package is closed for the tested CFRU/DPE Gen9-BPRE GUI-compatible scope after Diagnose 136.
+- FVX-ITEM-009 now covers Balance Shop Prices, Cheap Rare Candies, and their tested combination.
+- Remaining Shop-related combinations, if desired, are optional regression follow-ups rather than blockers for moving to Held Items.
+
 # 2026-05-15 - Roadmap note: Shop Cheap Rare Candies
 
 - Completed Shop-only FVX-ITEM-009 Cheap Rare Candies reload smoke.
