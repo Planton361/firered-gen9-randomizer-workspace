@@ -1,3 +1,14 @@
+# Session update - Diagnose 177B
+
+- New branch: `test/upr-fvx-cfru-dpe-trainer-type-diversity-followup`.
+- UPR-FVX PR #47 was verified as merged into `compat/firered-gen9-cfru-dpe`.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX commit `ea5269706eb7d04eb0b305f88e8fa20bfb21f92a`.
+- Original UPR-FVX test commit: `60f6664e556cc750801ad1d47ba970ded8d6af85`.
+- Follow-up 177B records the Non-ROM `TrainerTypeDiversityGuardTest` harness for Trainer Type Diversity / Type Themes.
+- Statuswirkung: `FVX-FOE-009` moves to `tested-non-rom`, not P1-supported.
+- Checks from PR #47 are recorded as focused `:random:test --tests com.uprfvx.random.randomizers.TrainerTypeDiversityGuardTest`, broader `:random:test --tests '*Trainer*'` and full `:random:test`, all `BUILD SUCCESSFUL`.
+- No ROM, save, emulator state, output ROM, log, Randomizer JAR, tool binary, build artifact, private path, hash, secret, token or `.env` file was committed.
+
 # Session update - Diagnose 176B
 
 - New branch: `test/upr-fvx-cfru-dpe-wild-catch-level-followup`.

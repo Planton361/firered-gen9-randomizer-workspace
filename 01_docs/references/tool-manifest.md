@@ -1,3 +1,15 @@
+# Tool Manifest Update - 2026-05-16 - Trainer type diversity follow-up
+
+- Workspace branch: `test/upr-fvx-cfru-dpe-trainer-type-diversity-followup`.
+- UPR-FVX fork base branch: `compat/firered-gen9-cfru-dpe`.
+- UPR-FVX PR #47: <https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/47>.
+- Original UPR-FVX test commit: `60f6664e556cc750801ad1d47ba970ded8d6af85`.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX commit `ea5269706eb7d04eb0b305f88e8fa20bfb21f92a`.
+- Previous workspace pin was `c86221d758bece06b216b1f4fb23dd8e4a6c8ec0`.
+- Scope: Non-ROM `TrainerTypeDiversityGuardTest`; synthetic `Species`, `Trainer` and `TrainerPokemon` data cover `FVX-FOE-009` Force Diverse Types / Type Themes null Primary/Secondary Type guard behavior.
+- Checks recorded from UPR-FVX PR #47: `./gradlew --offline :random:test --tests com.uprfvx.random.randomizers.TrainerTypeDiversityGuardTest`, `./gradlew --offline :random:test --tests '*Trainer*'` and `./gradlew --offline :random:test`, all `BUILD SUCCESSFUL`.
+- Safety: no Workspace code changes, no UPR-FVX code changes in this block, no ROM/save/output/log/build artifacts committed, no Trainer Names/Class Names/Text scope, no ROM-Smoke, no Writer-/Reload-ROM test, no P1-promotion and no Original-Upstream PR.
+
 # Tool Manifest Update - 2026-05-16 - Wild catch level follow-up
 
 - Workspace branch: `test/upr-fvx-cfru-dpe-wild-catch-level-followup`.

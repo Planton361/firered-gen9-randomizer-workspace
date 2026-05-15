@@ -33,12 +33,12 @@ Markdown bleibt Source of Truth.
 
 | Feld | Aktueller Stand |
 |---|---|
-| Stand | Nach Diagnose 176B |
-| Aktueller enger Blocker | Kein Wild-Catch-/Level-P1-Fixblock; `FVX-WILD-007/010/012` sind tested-non-rom, aber ohne ROM-/Reload-Evidenz |
+| Stand | Nach Diagnose 177B |
+| Aktueller enger Blocker | Kein Trainer-Type-Diversity-P1-Fixblock; `FVX-FOE-009` ist tested-non-rom, aber ohne ROM-/Reload-Evidenz |
 | Zuletzt entblockt | Evolution Similar Strength und Same Typing bleiben aus aktivem Blockerstatus genommen |
-| Zuletzt validiert | Follow-up 176B: UPR-FVX PR #46 `WildCatchLevelDecisionTest` fuer Wild Catch-/Level-Entscheidungen |
+| Zuletzt validiert | Follow-up 177B: UPR-FVX PR #47 `TrainerTypeDiversityGuardTest` fuer Trainer Type Diversity / Type Themes |
 | Carrier-Smokes bestanden | Global Species Pool, Starter-Suboptions, Trainer Similar Strength, Wild Similar Strength/Type Restrictions |
-| Danach | Wild P1-Promotion nur mit separater ROM-/Reload-Evidenz; sonst Move Names/Text oder `FVX-TRAIT-025B` nur separat oeffnen |
+| Danach | Trainer/Wild P1-Promotion nur mit separater ROM-/Reload-Evidenz; sonst Move Names/Text oder `FVX-TRAIT-025B` nur separat oeffnen |
 | Grosse offene Writer | Palette Randomization, Evolution-Improvement-/Methoden-Slices, Move Names/Text |
 | Spaeter / P2 | Special Tutors/Text/Menu, Graphics/Sprites, Misc Tweaks |
 
@@ -80,7 +80,7 @@ Markdown bleibt Source of Truth.
 | Pokemon Traits | Gemischt | Base Stats, Species Types, Abilities, Evolution Species-only | Evolution Similar Strength und Evolution Same Typing diagnosis-ready; `017/020-023` tested-non-rom; `024/027` tested-non-rom; `025A` tested-non-rom; `026` helper-only | Writer-/Reload-Evidenz fuer Methoden-Scope und `025B` fehlt | `FVX-TRAIT-025B` Plan oder separat freigegebener Writer-/Reload-Scope | 051, 052, 059, 070, 075, 026, 079-082, 165-174 |
 | Starters, Statics & Trades | Gemischt | Starter Species, Static/Gift Species | Starter-Filter | Starter Held Items offen; In-Game Trades guarded/preserve-only, not supported | naechster Nicht-Trades-Scope oder Reopen-Evidenz | 065, 152-164 |
 | Moves & Movesets | Gemischt | Movesets/Learnsets, Reorder Damaging | MoveData Power/Accuracy/PP/Type/Update tested-non-rom; einige Filter-/Sanity-Optionen | Move Names/Text offen; keine neue P1-Promotion | Move Names/Text nur separat oder ROM-/Reload-Evidenz explizit freigeben | 049, 056, 083-090, 175 |
-| Foe Pokemon / Trainer | Teilweise blockiert | Trainer Species, Movesets, Held Items, Similar Strength | Similar Strength im Trainer-Carrier | Type Diversity / Type Themes, Additional Pokemon, Textnamen | Trainer-Suboptionen spaeter | 070, 075, 077 |
+| Foe Pokemon / Trainer | Gemischt | Trainer Species, Movesets, Held Items, Similar Strength | Similar Strength im Trainer-Carrier; Type Diversity / Type Themes tested-non-rom | Additional Pokemon, League Unique, Battle Style, Rival Carry, Textnamen; keine P1-Promotion fuer Type Diversity ohne ROM-/Reload-Evidenz | Trainer-Suboptionen spaeter | 070, 075, 077, 177 |
 | Wild Pokemon | Stark | Standard/Fallback Wild, Surfing, Fishing, Rock Smash, Wild Held Items | Similar Strength, Type Restrictions im Wild-Carrier; Catch Rate, Catch Em All und Level Modifier tested-non-rom | keine P1-Promotion fuer Catch/Level ohne ROM-/Reload-Evidenz | optionaler ROM-/Reload-Scope nur separat | 075, 176 |
 | TM/HMs & Tutors | Stark, Suboptionen offen | TM/HM 128-Slot, Tutor 152-Slot, Compatibility, Sanity | Filter-/Follow-Suboptionen teilweise Carrier | Special Tutors/Text/Menu out of scope | normale Suboptionen spaeter testen | 038, 040, 049 |
 | Items | Supported im getesteten Scope | Field Items, Pickup Items, Shop Items, Held Items | - | Sonderoptionen nur bei neuer Evidenz | Regression/Statuspflege | Item-Scope Abschlussdiagnosen |
@@ -100,7 +100,7 @@ Markdown bleibt Source of Truth.
 | Starters | Stark / Carrier-tested | Starter Species | Basic/Type/BST/Legendary Filter | Starter Held Items | spaeter Held Items |
 | Static/Gift | P1-supported fuer Species | Static/Gift Species | Similar Strength im Scope | Level Modifier/Fix Music offen | spaeter |
 | In-Game Trades | Guarded / Preserve-only, not supported | Null-/Invalid-Species Guard, Non-ROM TradeRandomizerTest, ROM-freier Gen3 Writer-Preserve-Test | - | keine validen aktiven Rows, kein Species-Write-Smoke, kein Text/Nickname/OT/IV/Item | nur mit Reopen-Evidenz |
-| Trainer | Teilweise blockiert | Species, Movesets, Held Items, Similar Strength | Similar Strength | Type Diversity / Type Themes | spaeter enger Blocker |
+| Trainer | Gemischt | Species, Movesets, Held Items, Similar Strength | Similar Strength; Type Diversity / Type Themes tested-non-rom | Additional Pokemon, League Unique, Battle Style, Rival Carry, Textnamen; keine P1-Promotion fuer Type Diversity ohne ROM-/Reload-Evidenz | separater ROM-/Reload-Scope falls freigegeben |
 | Wild | Stark | Standard/Fallback Wild, Surfing, Fishing, Rock Smash, Held Items | Similar Strength, Type Restrictions; Catch Rate, Catch Em All, Level Modifier tested-non-rom | keine P1-Promotion fuer Catch/Level ohne ROM-/Reload-Evidenz | separater ROM-/Reload-Scope falls freigegeben |
 | Movesets | P1-supported | Learnsets/Movesets/Reorder/Sanity | Filter-Suboptionen | - | Regression spaeter |
 | MoveData | tested-non-rom | Power/Accuracy/PP/Type/Update Writer-/Updater-Entscheidungen ROM-frei getestet | - | Move Names/Text bleibt getrennt; keine P1-Promotion ohne ROM-/Reload-Evidenz | optionaler Reload-Scope nur separat |
@@ -184,7 +184,7 @@ Diese Tabelle listet alle aktuell erfassten FVX-Features einmal kompakt auf. Sie
 | 64 | `FVX-FOE-006` | Foe Pokemon | Additional Pokemon: Important Trainers | Nicht begonnen | Writer |
 | 65 | `FVX-FOE-007` | Foe Pokemon | Additional Pokemon: Regular Trainers | Nicht begonnen | Writer |
 | 66 | `FVX-FOE-008` | Foe Pokemon | Trainer Held Items | P1-supported | Global |
-| 67 | `FVX-FOE-009` | Foe Pokemon | Force Diverse Types / Type Themes | Blockiert | Carrier / Filter |
+| 67 | `FVX-FOE-009` | Foe Pokemon | Force Diverse Types / Type Themes | tested-non-rom | Carrier / Filter |
 | 68 | `FVX-FOE-010` | Foe Pokemon | Pokemon League Has Unique Pokemon | Nicht begonnen | Filter |
 | 69 | `FVX-FOE-011` | Foe Pokemon | Battle Style randomisieren | Nicht begonnen | Writer |
 | 70 | `FVX-FOE-012` | Foe Pokemon | Rival Carries Starter Through Game | Nicht begonnen | Carrier |
@@ -286,7 +286,7 @@ Diese Tabelle listet alle aktuell erfassten FVX-Features einmal kompakt auf. Sie
 | P0/P1 | In-Game Trades | Guarded / Preserve-only, not supported | `FVX-SST-014`, `FVX-SST-015` | keine validen aktiven Rows; Guard und Non-ROM-Tests vorhanden, aber kein Species-Write-Smoke | nur mit Reopen-Evidenz | 152-164 |
 | P1 | Wild Catch / Level | tested-non-rom | `FVX-WILD-007`, `FVX-WILD-010`, `FVX-WILD-012` | Non-ROM `WildCatchLevelDecisionTest` vorhanden; keine ROM-/Reload-Evidenz und kein ROM-Smoke | P1-Promotion nur separat mit ROM-/Reload-Scope | 176 |
 | P1 | MoveData Write | tested-non-rom fuer Core-Bytes / Text offen | `FVX-MOVE-001` bis `FVX-MOVE-006` | Power/Accuracy/PP/Type/Update haben Non-ROM-Evidenz; Move Names/Text bleibt offen | Move Names/Text oder ROM-/Reload-Evidenz separat planen | 056, 083-090, 175 |
-| P1 | Trainer Type Diversity / Type Themes | Blockiert / gegen neue Roadmap pruefen | `FVX-FOE-009` | Diagnose 077 isoliert `primaryType == null` in `EnumSet<Type>` bei `updateUsedTypes(...)` als wahrscheinliche Ursache | bei Trainer-Fortsetzung eng gegateter Fixblock | 070, 075, 077 |
+| P1 | Trainer Type Diversity / Type Themes | tested-non-rom | `FVX-FOE-009` | Non-ROM `TrainerTypeDiversityGuardTest` vorhanden; keine ROM-/Reload-Evidenz und kein ROM-Smoke | P1-Promotion nur separat mit ROM-/Reload-Scope | 070, 075, 077, 177 |
 | P1 | Palette Randomization | Write modelliert / Fix offen | `FVX-GFX-001` bis `FVX-GFX-004` | compressed/shared/repointing risks | Palette Preserve/Repoint Fix | 058 |
 | P2 | Special Tutors/Text/Menu | P2 / Out of scope | Tutor-Sonderpfade | Text/Menu/Special-Tutor-Logik ist nicht normaler Tutor-Scope | spaeter P2-Modell | 047, 060 |
 | P2 | Graphics/Sprites | P2 / Nicht begonnen | `FVX-GFX-005`, `FVX-GFX-006` | Custom Player Graphics / Sprites getrennt von Paletten | spaeter Graphics-Modell | 058 |
@@ -296,18 +296,20 @@ Diese Tabelle listet alle aktuell erfassten FVX-Features einmal kompakt auf. Sie
 
 | Reihenfolge | Arbeitspaket | Ziel | Warum jetzt? | Erwartetes Ergebnis |
 |---:|---|---|---|---|
-| 1 | Wild Catch / Level ROM-/Reload-Entscheidung | `FVX-WILD-007`, `FVX-WILD-010`, `FVX-WILD-012` nur bei separater Freigabe writer-/reload-seitig pruefen | Non-ROM-Evidenz liegt vor, aber keine ROM-/Reload-Evidenz | nur explizit freigegebener Scope |
-| 2 | Evolution Make Easier 025B Byte-Patch-Plan | Happiness-Byte-Patch nur separat writer-like planen | 174B deckt 025A Non-ROM ab; 025B bleibt Gen3-Byte-Patch-Risiko | read-only Plan oder separater Byte-Seam |
-| 3 | Evolution Methods Writer-/Reload-Entscheidung | `FVX-TRAIT-024`, `025A` und `027` nur bei separater Freigabe writer-/reload-seitig pruefen | Non-ROM-Evidenz liegt vor, aber keine Evolution-Table-Write-/Reload-Evidenz | nur explizit freigegebener Scope |
-| 4 | MoveData Write | Move Names/Text getrennt halten; optional ROM-/Reload-Evidenz fuer Core-Bytes separat planen | Core-Bytes sind tested-non-rom, nicht P1 | `FVX-MOVE-005` separat, `FVX-MOVE-001/002/003/004/006` nicht automatisch P1 |
-| 5 | Palette Randomization | echte Palettenaenderungen absichern | grosser Graphics/Palette-Writer | `FVX-GFX-001` bis `FVX-GFX-004` hochstufen |
-| 6 | Special Tutors/Text/Menu | P2-Sonderpfade modellieren | nicht normaler Tutor-Tabellenpfad | P2-Entscheidung |
-| 7 | Graphics/Sprites | Custom Player Graphics/Sprites modellieren | getrennt von Paletten | P2-Entscheidung |
+| 1 | Trainer Type Diversity ROM-/Reload-Entscheidung | `FVX-FOE-009` nur bei separater Freigabe writer-/reload-seitig pruefen | Non-ROM-Evidenz liegt vor, aber keine ROM-/Reload-Evidenz | nur explizit freigegebener Scope |
+| 2 | Wild Catch / Level ROM-/Reload-Entscheidung | `FVX-WILD-007`, `FVX-WILD-010`, `FVX-WILD-012` nur bei separater Freigabe writer-/reload-seitig pruefen | Non-ROM-Evidenz liegt vor, aber keine ROM-/Reload-Evidenz | nur explizit freigegebener Scope |
+| 3 | Evolution Make Easier 025B Byte-Patch-Plan | Happiness-Byte-Patch nur separat writer-like planen | 174B deckt 025A Non-ROM ab; 025B bleibt Gen3-Byte-Patch-Risiko | read-only Plan oder separater Byte-Seam |
+| 4 | Evolution Methods Writer-/Reload-Entscheidung | `FVX-TRAIT-024`, `025A` und `027` nur bei separater Freigabe writer-/reload-seitig pruefen | Non-ROM-Evidenz liegt vor, aber keine Evolution-Table-Write-/Reload-Evidenz | nur explizit freigegebener Scope |
+| 5 | MoveData Write | Move Names/Text getrennt halten; optional ROM-/Reload-Evidenz fuer Core-Bytes separat planen | Core-Bytes sind tested-non-rom, nicht P1 | `FVX-MOVE-005` separat, `FVX-MOVE-001/002/003/004/006` nicht automatisch P1 |
+| 6 | Palette Randomization | echte Palettenaenderungen absichern | grosser Graphics/Palette-Writer | `FVX-GFX-001` bis `FVX-GFX-004` hochstufen |
+| 7 | Special Tutors/Text/Menu | P2-Sonderpfade modellieren | nicht normaler Tutor-Tabellenpfad | P2-Entscheidung |
+| 8 | Graphics/Sprites | Custom Player Graphics/Sprites modellieren | getrennt von Paletten | P2-Entscheidung |
 
 ## Zuletzt abgeschlossene PRs / Diagnosen
 
 | Diagnose / PR | Bereich | Ergebnis | Statuswirkung |
 |---|---|---|---|
+| 177B / UPR-FVX PR #47 | Trainer Type Diversity Follow-up | UPR-FVX PR #47 gepinnt; `TrainerTypeDiversityGuardTest` vorhanden | `FVX-FOE-009` `tested-non-rom`, keine P1-Freigabe ohne ROM-/Reload-Evidenz |
 | 176B / UPR-FVX PR #46 | Wild Catch / Level Follow-up | UPR-FVX PR #46 gepinnt; `WildCatchLevelDecisionTest` vorhanden | `FVX-WILD-007`, `010`, `012` `tested-non-rom`, keine P1-Freigabe ohne ROM-/Reload-Evidenz |
 | 175B / UPR-FVX PR #45 | MoveData Write Follow-up | UPR-FVX PR #45 gepinnt; `Gen3MoveDataWriterTest` und `MoveUpdateDecisionTest` vorhanden | `FVX-MOVE-001/002/003/004/006` `tested-non-rom`; `005` Text out of scope |
 | 174B / UPR-FVX PR #44 | Evolution Make Evolutions Easier Follow-up | UPR-FVX PR #44 gepinnt; `EvolutionMakeEasierDecisionTest` vorhanden | `FVX-TRAIT-025A` `tested-non-rom`; `025B` offen; `026` helper-only |
