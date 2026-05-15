@@ -1,3 +1,10 @@
+# Roadmap update - Diagnose 167
+
+- Evolution suboptions `FVX-TRAIT-016` through `FVX-TRAIT-027` are consolidated.
+- `FVX-TRAIT-016` remains P1-supported; `FVX-TRAIT-018` and `FVX-TRAIT-019` are `diagnosis-ready` and no longer active 070 blockers.
+- `FVX-TRAIT-017` and `FVX-TRAIT-020` through `FVX-TRAIT-023` stay plan-only Species-Carrier filter work; `FVX-TRAIT-024` through `FVX-TRAIT-027` stay separate not-started Evolution-improvement/method work.
+- Next minimal Evolution path is a read-only Non-ROM harness plan for the remaining Species-Carrier filters, not a fixbranch or ROM-Smoke.
+
 # Roadmap update - Diagnose 166
 
 - Evolution Same Typing (`FVX-TRAIT-019`) is reclassified read-only as `diagnosis-ready` for the narrow `FVX-TRAIT-016` Evolution-Species-Carrier scope.
@@ -423,7 +430,7 @@ Die detaillierte Status- und Feature-ID-Matrix bleibt in:
 | Paket | Feature-Zeilen | Leitstatus | Ziel |
 |---|---:|---|---|
 | General Options | 4 | Gemischt | `FVX-GEN-001/002` sind im Starter-Carrier-Smoke getestet; Race Mode und Intro-Mon separat pruefen |
-| Pokemon Traits | 28 | Gemischt | Base Stats, Types, Abilities, Evolutions, EXP Curves und Suboptionen systematisch absichern; Evolution Similar Strength und Same Typing sind im engen `FVX-TRAIT-016`-Scope stabil, weitere Evolution-Suboptionen getrennt halten |
+| Pokemon Traits | 28 | Gemischt | Base Stats, Types, Abilities, Evolutions, EXP Curves und Suboptionen systematisch absichern; Evolution-Scope ist konsolidiert: `016` P1-supported, `018/019` diagnosis-ready, `017/020-023` plan-only, `024-027` getrennte Methoden-Slices |
 | Starters, Statics & Trades | 15 | Gemischt | Starter-Filter sind im Starter-Species-Writer-Smoke getestet; Starter-Held-Items, Trades und Level-Subpfade ergaenzen |
 | Moves & Movesets | 11 | Gemischt | Learnset-/Moveset-GUI halten; MoveData `Update Moves`, Power/Accuracy/PP und Move Types sind stabil; Move Names ist als Name-only Smoke planbar, aber Diagnosen 089/090 sind mangels lokalem 992-Move-Kandidaten mit `991:PsychicNoise` blockiert; Move Descriptions / Text/Menu-Repointing bleibt getrennt |
 | Foe Pokemon | 14 | Gemischt | Trainer-Species/-Movesets/-Held-Items halten; Trainer Similar Strength und `FVX-FOE-009` sind im `FVX-FOE-001` Carrier stabil |
@@ -473,7 +480,7 @@ Die detaillierte Status- und Feature-ID-Matrix bleibt in:
 
 | Paket | Ziel |
 |---|---|
-| Pokemon Traits | Follow Evolutions, Force Dual Types, Ability-Ban-/Allow-Filter, EXP Curves testen; `FVX-TRAIT-018` aus 082 und `FVX-TRAIT-019` aus 080 halten, Evolution-Methoden weiter getrennt behandeln |
+| Pokemon Traits | Follow Evolutions, Force Dual Types, Ability-Ban-/Allow-Filter, EXP Curves testen; Evolution-Suboptionen nach 167 getrennt halten: `017/020-023` Non-ROM-Harness-Plan, `024-027` Methoden-/Improvement-Plan |
 | Starters, Statics & Trades | Starter-Held-Items und In-Game-Trades absichern; Starter-Type-/Legendary-/BST-Filter ausserhalb des Starter-Species-Writer-Smokes nur separat hochstufen |
 | Foe Pokemon | Additional Pokemon, League-Unique, Battle Style, Rival Carry, Trainer Names/Class Names absichern; Force Diverse Types / `FVX-FOE-009` aus 078 im `FVX-FOE-001` Carrier halten |
 | Wild Pokemon | Evolution Restrictions, Catch Rate, Catch-em-all und Level-Balance absichern; Wild Similar Strength und Type Restrictions aus 075 im `FVX-WILD-001` Carrier halten |
