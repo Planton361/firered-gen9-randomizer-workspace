@@ -1,5 +1,11 @@
 # 2026-05-15 - FVX Held Items coverage update
 
+- Regular Trainer Held Items are covered as GUI-compatible in the tested CFRU/DPE Gen9-BPRE no-filter scope after Diagnose 143.
+- Evidence: save/log/output/reload successful, `regularTrainerHeldItemReloadMismatches=0`, Boss/Important/shouldNotGetBuffs preserve counters `0`, invalid/unloaded/fallback/placeholder writes `0`, and Wild/Starter/Field/Pickup/Shop scopes unchanged.
+- Trainer Held Items class coverage is now complete for Boss/Important/Regular no-filter scopes; Trainer filters and Starter Held Items remain unpromoted.
+
+# 2026-05-15 - FVX Held Items coverage update
+
 - Important Trainer Held Items are covered as GUI-compatible in the tested CFRU/DPE Gen9-BPRE scope after Diagnose 142.
 - Evidence: save/log/output/reload successful, `importantTrainerHeldItemReloadMismatches=0`, Boss/Regular/shouldNotGetBuffs preserve counters `0`, invalid/unloaded/fallback/placeholder writes `0`, and Wild/Starter/Field/Pickup/Shop scopes unchanged.
 - Regular Trainer Held Items, Trainer filters and Starter Held Items remain unpromoted.
