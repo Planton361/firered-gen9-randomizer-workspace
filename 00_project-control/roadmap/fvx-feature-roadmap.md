@@ -1,3 +1,10 @@
+# FVX Feature Roadmap Update - 2026-05-15 - Pickup complete, Shops next
+
+- Pickup Random is reload-stable and GUI-compatible with and without Ban Bad in the tested Pickup-only scope.
+- Field Items and Pickup are now split from the remaining Item writer work.
+- Next recommended Item writer scope: Shops-only read-only diagnostics plan.
+- Keep Shop work separate from Field Items, Pickup and Held Items.
+
 # FVX Feature Roadmap Update - 2026-05-15 - Pickup Ban Bad next
 
 - Pickup Random without Ban Bad is reload-stable after UPR-FVX PR #38 and Diagnose 118.

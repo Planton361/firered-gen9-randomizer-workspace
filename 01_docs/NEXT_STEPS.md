@@ -1,3 +1,20 @@
+# Next Steps Update - 2026-05-15 - Shops-only scope next
+
+Current recommended branch:
+
+- `analysis/upr-fvx-cfru-dpe-shop-items-scope-diagnostics-plan`
+
+Goal:
+
+- Plan Shops as the next separate Item writer scope after Field Items and Pickup.
+- Keep Field Items, Pickup, Encounter Held Items, Trainer Held Items and Starter Held Items out of the Shop plan.
+- Start read-only: identify Shop item lists, terminators, lengths, special shops, price handling, bad-item policy and CFRU/DPE Gen9-BPRE risks before any writer smoke.
+
+Current Pickup status:
+
+- `FVX-ITEM-010 Pickup Items Random / Ban Bad Items` is `GUI-kompatibel` for the tested Pickup-only Random scope with `banBadRandomPickupItems=false` and `true`.
+- UPR-FVX remains pinned to `a2373888ad17145f270ebf6ff17303af41aa86eb`.
+
 # Next Steps Update - 2026-05-15 - Pickup Items Ban Bad smoke next
 
 Current recommended branch:
