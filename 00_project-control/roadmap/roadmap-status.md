@@ -1,3 +1,9 @@
+# 2026-05-15 - Diagnose 131 status
+
+- FVX-ITEM-008 Guarantee Evolution Items: GUI-compatible in tested Shop-only Random scope after reload-stable smoke.
+- FVX-ITEM-008 Guarantee X Items: still pending.
+- FVX-ITEM-009 Balance Shop Prices/Cheap Rare Candies: still pending separate scope.
+
 # 2026-05-15 - Diagnose 130 Shop Guarantee Items Plan
 
 - `FVX-ITEM-008 Guarantee Evolution/X Items` ist als Shop-only Subscope nach den einzeln reloadstabilen `FVX-ITEM-007` Ban-Flags geplant.

@@ -1,3 +1,9 @@
+# 2026-05-15 - Roadmap note: Shop Guarantee Evolution Items
+
+- Completed Shop-only FVX-ITEM-008 Guarantee Evolution Items reload smoke.
+- Promote only the tested Guarantee Evolution Items subscope to GUI-compatible.
+- Keep Guarantee X Items as the next Shop-only FVX-ITEM-008 candidate; keep FVX-ITEM-009 as a later separate price/Cheap Rare Candy scope.
+
 # 2026-05-15 - Shop Guarantee Items Roadmap Update
 
 - Diagnose 130 plant `FVX-ITEM-008 Guarantee Evolution/X Items` als naechsten Shop-only Subscope.

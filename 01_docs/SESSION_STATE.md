@@ -1,3 +1,11 @@
+# Session update - 2026-05-15 - Diagnose 131
+
+- Current branch records Shop-only FVX-ITEM-008 Guarantee Evolution Items Write/Reload-Smoke.
+- Smoke result: PASS; `guaranteedEvolutionItemsExpected=6`, `guaranteedEvolutionItemsPresent=6`, `guaranteedEvolutionItemsReloadPresent=6`, missing counts stay 0.
+- Stable metrics: `shopCount=23`, `mainGameShopCount=3`, `skippedShopCount=20`, `specialShopCount=3`, `shopItemsTotal=157`, `minShopLength=2`, `maxShopLength=9`, reload mismatches 0.
+- Foreign scopes stayed false: `fieldItemScopeChanged=false`, `pickupScopeChanged=false`, `heldItemScopeChanged=false`; prices stayed untouched.
+- FVX-ITEM-008 is promoted only for Guarantee Evolution Items in the tested Shop-only Random scope; Guarantee X Items and FVX-ITEM-009 remain open.
+
 # 2026-05-15 - Shop Guarantee Items Scope Plan
 
 - Arbeitsbranch: `analysis/upr-fvx-cfru-dpe-shop-guarantee-items-scope-plan`.
