@@ -1,3 +1,15 @@
+# Session State Update - 2026-05-15 - Shop Items scope diagnostics plan
+
+- Branch: `analysis/upr-fvx-cfru-dpe-shop-items-scope-diagnostics-plan`.
+- Workspace PR #165 was verified as merged before branch creation.
+- UPR-FVX pin remains `02_external/upr-fvx` at `a2373888ad17145f270ebf6ff17303af41aa86eb`.
+- New protocol: `08_tests/randomizer/121_shop_items_scope_diagnostics_plan.md`.
+- Shops are confirmed as the next separate CFRU/DPE Gen9-BPRE Item writer scope after Field Items and Pickup.
+- Feature IDs stay separated: `FVX-ITEM-005` Shop Items Shuffle, `FVX-ITEM-006` Shop Items Random, `FVX-ITEM-007` Shop Item Bans, `FVX-ITEM-008` Guarantee Evolution/X Items and `FVX-ITEM-009` Balance Shop Prices / Cheap Rare Candies.
+- Read-only UPR-FVX analysis identifies `Settings.ShopItemsMod`, `GameRandomizer.maybeRandomizeShops()`, `ItemRandomizer.shuffleShopItems()`, `randomizeShopItems()`, `addCheapRareCandiesToShops()`, `RomHandler.getShops()`/`setShops(...)`, `getShopPrices()`/`setShopPrices(...)`, `Gen3RomHandler` and `Shop` as the relevant paths.
+- `Gen3RomHandler.setShops(...)` uses `DataRewriter<Shop>` and can repoint terminated Shop item lists, so later diagnostics must measure pointers, terminators, lengths, skipped/special/main-game policy and price writes separately.
+- No Field Items, Pickup or Held Items are upgraded by this plan. No code changes, no `02_external/**` changes, no submodule pin change, no build, no Randomizer run and no private artefact documentation.
+
 # Session State Update - 2026-05-15 - Pickup Items Random Ban Bad reload smoke
 
 - Branch: `test/upr-fvx-cfru-dpe-pickup-items-random-ban-bad-reload-smoke`.

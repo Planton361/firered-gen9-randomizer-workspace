@@ -1,3 +1,9 @@
+# FVX Feature Coverage Update - 2026-05-15 - Shop Items scope diagnostics plan
+
+- `FVX-ITEM-005` Shop Items Shuffle, `FVX-ITEM-006` Shop Items Random, `FVX-ITEM-007` Shop Item Bans, `FVX-ITEM-008` Guarantee Evolution/X Items and `FVX-ITEM-009` Balance Shop Prices / Cheap Rare Candies are confirmed as a separate Shop-only scope.
+- Diagnose 121 keeps all five Shop features `Write modelliert` until a read-only Shop candidate diagnostic and later Shop-only smokes validate terminators, lengths, pointers, skip/special/main-game policy, item pools and price fields.
+- Field Items, Pickup and Held Items are not affected by this Shop plan.
+
 # FVX Feature Coverage Update - 2026-05-15 - Pickup Ban Bad complete
 
 - `FVX-ITEM-010 Pickup Items Random / Ban Bad Items`: `GUI-kompatibel` for the tested Pickup-only Random scope with `banBadRandomPickupItems=false` and `banBadRandomPickupItems=true`.
@@ -490,11 +496,11 @@ Diagnose 082 bestaetigt `FVX-TRAIT-018` nach der 081-Normalisierung:
 - FVX-ITEM-002 | Field Items Random | GUI-kompatibel im engen Field-Items-Random-Scope; Ban Bad fuer RANDOM getestet
 - FVX-ITEM-003 | Field Items Random even distribution | GUI-kompatibel im engen Random-Even-Scope ohne Ban Bad
 - FVX-ITEM-004 | Field Items Ban Bad Items | Getestet fuer FieldItemsMod.RANDOM; Random Even + Ban Bad ausstehend
-- FVX-ITEM-005 | Shop Items Shuffle | Write modelliert
-- FVX-ITEM-006 | Shop Items Random | Write modelliert
-- FVX-ITEM-007 | Shop Item Bans | Write modelliert
-- FVX-ITEM-008 | Guarantee Evolution/X Items | Write modelliert
-- FVX-ITEM-009 | Balance Shop Prices / Cheap Rare Candies | Write modelliert
+- FVX-ITEM-005 | Shop Items Shuffle | Write modelliert | Diagnose 121 plant den separaten Shoplisten-, Terminator-, Laengen- und Repointing-Scope; kein Smoke.
+- FVX-ITEM-006 | Shop Items Random | Write modelliert | Diagnose 121 plant Pool-, Terminator-, Laengen- und Reload-Kriterien; kein Smoke.
+- FVX-ITEM-007 | Shop Item Bans | Write modelliert | Diagnose 121 trennt Bad/Regular/OP-Bans als Shop-only Pool-Scope; kein Smoke.
+- FVX-ITEM-008 | Guarantee Evolution/X Items | Write modelliert | Diagnose 121 trennt MainGameShop-Placement als spaeteren Shop-only Scope; kein Smoke.
+- FVX-ITEM-009 | Balance Shop Prices / Cheap Rare Candies | Write modelliert | Diagnose 121 trennt Preislogik und Cheap-Rare-Candy-Listenlaengen als separaten spaeteren Scope; kein Smoke.
 - FVX-ITEM-010 | Pickup Items Random / Ban Bad Items | Write modelliert
 
 ### Types

@@ -1,3 +1,11 @@
+# Roadmap Status Update - 2026-05-15 - Shop Items scope diagnostics plan
+
+- Neuer Plan: `08_tests/randomizer/121_shop_items_scope_diagnostics_plan.md`.
+- Shops werden als eigener CFRU/DPE Gen9-BPRE Item-Writer-Scope nach Field Items und Pickup gefuehrt.
+- `FVX-ITEM-005..009` bleiben `Write modelliert`; Diagnose 121 definiert erst Codepfade, Datenstruktur, Risiken, Preserve-/Skip-Policy, Metriken und Reihenfolge.
+- Naechster Minimalblock: `test/upr-fvx-cfru-dpe-shop-items-scope-diagnostics`.
+- Keine Codeaenderung, kein Build, kein Randomizer-Lauf, keine Submodule-Pin-Aenderung.
+
 # Roadmap Status Update - 2026-05-15 - Pickup Ban Bad complete
 
 - `FVX-ITEM-010 Pickup Items Random / Ban Bad Items` is now `GUI-kompatibel` in the Pickup-only Random scope after Diagnose 118 and 120.

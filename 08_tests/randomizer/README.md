@@ -1,5 +1,8 @@
 # Randomizer Testprotokolle
 
+- 121 - `121_shop_items_scope_diagnostics_plan.md`: Read-only Plan fuer den CFRU/DPE Shop-Items-Scope. Bestaetigt `FVX-ITEM-005..009` als separates Shop-Paket nach Field Items und Pickup, dokumentiert `ShopItemsMod`, `ItemRandomizer`, `Gen3RomHandler.getShops()`/`setShops(...)`, `DataRewriter`, terminierte Shoplisten, MainGame/Skip/Special Shops, Preislogik, Risiken, Preserve-/Skip-Policy, spaetere Metriken und empfohlene Diagnose-Reihenfolge.
+
+
 ## Latest
 - `118_pickup_items_reload_locator_fix.md` dokumentiert den engen UPR-FVX-Fix fuer den Pickup-Reload-Locator und den erfolgreichen Pickup-only Random-Smoke mit `banBadRandomPickupItems=false`.
 - Ergebnis: Save/Log/Output/Reload true, `pickupItemsTotalReload=16`, `pickupItemReloadMismatches=0`; Pickup Ban Bad bleibt separat.
