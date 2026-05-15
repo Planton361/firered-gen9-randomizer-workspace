@@ -1,3 +1,15 @@
+# Tool Manifest Update - 2026-05-15 - In-Game Trades writer preserve follow-up
+
+- Workspace branch: `test/upr-fvx-cfru-dpe-ingame-trades-writer-preserve-followup`.
+- UPR-FVX fork base branch: `compat/firered-gen9-cfru-dpe`.
+- UPR-FVX PR #41: <https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/41>.
+- Original UPR-FVX test commit: `b71bd2ec test: cover ingame trade writer preserve guard`.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX commit `dc6ad3cb01282db5ff85935959bbdac6c2d3fa0c`.
+- Previous workspace pin was `1eaee2873cd69682335223f817b124bf36d004f2`.
+- Scope: ROM-free `Gen3InGameTradeWriterTest` only; synthetic `InGameTrade` rows and synthetic bytes cover unsafe/null-request writer preserve decisions through a narrow package-private `Gen3RomHandler` seam.
+- Checks recorded from UPR-FVX PR #41: `./gradlew --offline :romio:test` and focused `./gradlew --offline :romio:test --tests com.uprfvx.romio.romhandlers.Gen3InGameTradeWriterTest`, both `BUILD SUCCESSFUL`; known existing `PlayerCharacterGraphicsTest.fromSheetGiveSameImagesAndPalsAsFromSeparate_RSE()` report failure line remains a risk/assumption.
+- Safety: no Workspace code changes, no UPR-FVX code changes in this block, no ROM/save/output/log/build artifacts, no ROM-Smoke, no Species-Write-Smoke, no valid-active-row promotion, no text, Nickname/OT, IV or Trade Held Item randomization, and no Original-Upstream PR.
+
 # Tool Manifest Update - 2026-05-15 - In-Game Trades non-ROM harness follow-up
 
 - Workspace branch: `test/upr-fvx-cfru-dpe-ingame-trades-non-rom-harness-followup`.

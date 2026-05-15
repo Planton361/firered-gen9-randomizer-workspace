@@ -1,3 +1,10 @@
+# Coverage update - Diagnose 163B
+
+- In-Game Trades remain not compatible / blocked.
+- UPR-FVX PR #41 is merged and pinned at `dc6ad3cb01282db5ff85935959bbdac6c2d3fa0c`; the ROM-free `Gen3InGameTradeWriterTest` covers unsafe/null-request writer preserve decisions without ROM files.
+- No Given Species, Requested Species, Trade Held Item, IV or Nickname/OT subfeature is promoted; Species-Write-Smoke and ROM-Smoke remain blocked.
+- Coverage now has non-ROM evidence for mutation skip and writer preserve decisions, but still lacks valid active-row evidence and full ROM-backed `setInGameTrades(...)` coverage.
+
 # Coverage update - Diagnose 162
 
 - In-Game Trades remain not compatible / blocked.
@@ -682,8 +689,8 @@ Diagnose 082 bestaetigt `FVX-TRAIT-018` nach der 081-Normalisierung:
 - FVX-SST-011 | Static Pokemon: Random completely | GUI-kompatibel
 - FVX-SST-012 | Static Pokemon: Random similar strength | GUI-kompatibel
 - FVX-SST-013 | Static Pokemon: Level Modifier / Fix Music | Nicht begonnen
-- FVX-SST-014 | In-Game Trades: Given/Requested species | Nicht begonnen
-- FVX-SST-015 | In-Game Trades: Nickname/OT/IV/Item | Nicht begonnen
+- FVX-SST-014 | In-Game Trades: Given/Requested species | Guarded / blocked-pending-evidence
+- FVX-SST-015 | In-Game Trades: Nickname/OT/IV/Item | Blockiert / nicht freigegeben
 
 ### Moves & Movesets
 

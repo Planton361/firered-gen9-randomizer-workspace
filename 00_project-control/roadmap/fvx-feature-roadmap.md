@@ -1,3 +1,10 @@
+# Roadmap update - Diagnose 163B
+
+- UPR-FVX PR #41 is merged and the workspace submodule is pinned to `dc6ad3cb01282db5ff85935959bbdac6c2d3fa0c`.
+- The In-Game Trades ROM-free Gen3 writer-preserve test is now present in the pinned UPR-FVX submodule and covers unsafe/null-request row skip-before-byte-write behavior with synthetic `InGameTrade` rows and bytes.
+- Roadmap classification remains `blocked-pending-evidence`; valid active rows are still unproven and Species-Write-Smoke remains unauthorized.
+- Next roadmap step is either a guarded/preserve-only closure decision or additional read-only active-row evidence.
+
 # Roadmap update - Diagnose 162
 
 - In-Game Trades now have a ready ROM-free Gen3 writer-preserve test plan after the non-ROM `TradeRandomizer` harness follow-up.

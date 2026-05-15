@@ -1,3 +1,11 @@
+# Roadmap status update - Diagnose 163B
+
+- In-Game Trades writer-preserve follow-up is recorded.
+- UPR-FVX PR #41 is merged and workspace-pinned at `dc6ad3cb01282db5ff85935959bbdac6c2d3fa0c`.
+- The pinned `Gen3InGameTradeWriterTest` covers ROM-free unsafe/null-request writer preserve decisions with synthetic `InGameTrade` rows and synthetic bytes.
+- Status remains `blocked-pending-evidence`; no GUI-compatible In-Game Trade subfeature is promoted, no valid active rows are proven and Species-Write-Smoke remains blocked.
+- Next status target is a guarded/preserve-only closure decision or additional read-only active-row evidence, not ROM smoke.
+
 # Roadmap status update - Diagnose 162
 
 - In-Game Trades writer-preserve test plan result: `writer-test-plan-ready`.

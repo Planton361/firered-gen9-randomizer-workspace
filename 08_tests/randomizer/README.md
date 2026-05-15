@@ -1,5 +1,9 @@
 # Current update
 
+- Diagnose 163B records merged UPR-FVX PR #41 for the ROM-free Gen3 In-Game Trades writer-preserve test and pins `02_external/upr-fvx` to `dc6ad3cb01282db5ff85935959bbdac6c2d3fa0c`. The test covers unsafe/null-request writer preserve decisions with synthetic `InGameTrade` rows and bytes; Species-Write-Smoke, ROM-Smoke, valid-active-row promotion, and text/Nickname/OT/IV/Held-Item scopes remain blocked.
+
+# Current update
+
 - Diagnose 162 plans a small ROM-free Gen3 In-Game Trades writer-preserve test. Result: `writer-test-plan-ready`; the recommended later scope is a `:romio:test` unit test with a narrow Gen3 row-write decision seam proving unsafe/null-request rows skip before byte writes. Species-Write-Smoke, ROM-Smoke, Gen3 writer implementation, and text/Nickname/OT/IV/Held-Item scopes remain blocked.
 
 # Current update
