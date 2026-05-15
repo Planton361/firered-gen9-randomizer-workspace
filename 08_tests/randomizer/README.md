@@ -1,3 +1,7 @@
+# Current update
+
+- Diagnose 151 plans In-Game Trades as the next open CFRU/DPE Gen9-BPRE Randomizer scope. The plan splits trade species, held items, IVs and fixed-length nickname/OT fields into separate follow-up diagnostics and keeps Standard Wild, Special Wild, Starters, Statics, Trainer Pokemon, Held Items and Text/Menu work out of scope.
+
 # Latest - Diagnose 150
 
 - `150_special_wild_triggerability.md`: Read-only Special Wild triggerability analysis; marks Day/Night as dormant in the tracked state, Swarms/Roamers/Wild Double/gWildDataSwitch as runtime-state driven, DexNav as partial/future, and Raids as future parser/write scope.

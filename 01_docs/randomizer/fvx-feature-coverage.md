@@ -1,3 +1,9 @@
+# Coverage update - Diagnose 151
+
+- In-Game Trades remain open but now have a dedicated diagnostics plan.
+- Subfeatures are split into Given/Requested Species, Trade Held Item, Nickname/OT text and IV extras.
+- No In-Game Trade feature is marked compatible until a candidate diagnostic and follow-up write/reload smokes prove the individual subscopes.
+
 # 2026-05-15 - FVX Special Wild triggerability update
 
 - Diagnose 150 classifies Special Wild systems without new Randomizer runs.

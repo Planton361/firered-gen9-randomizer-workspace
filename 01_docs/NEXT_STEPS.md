@@ -1,3 +1,9 @@
+# Next steps update - Diagnose 151
+
+- Next minimal Randomizer step: run an In-Game Trades read-only candidate diagnostic.
+- First diagnostic should record sanitized trade count, requested/given species safety, held-item field safety, fixed-length nickname/OT readability, IV readability and foreign-scope isolation.
+- Do not start with text randomization; nickname/OT fixed-length fields should remain a separate follow-up after species and item paths are proven reload-stable.
+
 # 2026-05-15 - Next: move past Special Wild unless requirements change
 
 Special Wild triggerability is documented in Diagnose 150 and does not require immediate UPR-FVX writer work in the tracked state.
