@@ -1,3 +1,11 @@
+# 2026-05-15 - Diagnose 138
+
+- Current branch records read-only CFRU/DPE Gen9-BPRE Held Items candidate diagnostics.
+- Result: PASS for read-only structure; `candidateLoaded=true`, `heldItemScanSuccessful=true`, Wild/Encounter, Trainer and Starter held-item paths are readable.
+- Key metrics: `wildHeldItemsTotal=5656`, `wildHeldItemsNonZero=526`, `trainerHeldItemsTotal=1754`, `trainerHeldItemsNonZero=87`, `starterHeldItemsTotal=1`, `starterHeldItemsNonZero=0`.
+- Safety metrics: invalid/unloaded held item IDs `0`, fallback held items `109`, placeholder held items `130`, `fieldItemScopeChanged=false`, `pickupScopeChanged=false`, `shopScopeChanged=false`.
+- No feature promotion; next minimal block is Wild/Encounter Held Items smoke without Ban Bad.
+
 # 2026-05-15 - Diagnose 137
 
 - Current branch plans Held Items as the next separate CFRU/DPE Gen9-BPRE Randomizer scope after closed Shop Items.

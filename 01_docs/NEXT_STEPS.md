@@ -1,3 +1,20 @@
+# Next Steps Update - 2026-05-15 - Wild/Encounter Held Items smoke next
+
+Aktueller Fokus:
+
+- Diagnose 138 confirms read-only Held Items candidate structure for Wild/Encounter, Trainer and Starter paths.
+- Wild/Encounter Held Items are the first recommended write/reload smoke because the Species/BaseStats structure is readable and should be tested before Trainer or Starter Held Items.
+- Fallback/placeholder held items exist in the current read-only inventory and must be measured as write-safety counters.
+
+Naechster empfohlener Minimalblock:
+
+- `test/upr-fvx-cfru-dpe-wild-encounter-held-items-reload-smoke`
+
+Ziel des Folgeblocks:
+
+- Test only Wild/Encounter Held Items without Ban Bad.
+- Keep Trainer Held Items, Starter Held Items, Field Items, Pickup, Shops and all other randomizer scopes disabled.
+
 # Next Steps Update - 2026-05-15 - Held Items diagnostics next
 
 Aktueller Fokus:
