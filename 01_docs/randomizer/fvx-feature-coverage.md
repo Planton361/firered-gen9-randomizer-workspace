@@ -1,3 +1,9 @@
+# Coverage update - Diagnose 153
+
+- In-Game Trades remain open/blocked.
+- Diagnose 153 adds blocker criteria and minimum preconditions for a later species smoke; no In-Game Trade subfeature is marked compatible.
+- Other closed scopes remain unchanged.
+
 # Coverage update - Diagnose 152
 
 - In-Game Trades remain open/blocked after read-only candidate diagnostics.

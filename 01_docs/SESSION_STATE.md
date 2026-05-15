@@ -1,3 +1,10 @@
+# Session update - Diagnose 153
+
+- New branch: `analysis/upr-fvx-cfru-dpe-ingame-trades-table-model-blocker-plan`.
+- PR #197 was merged; `main` was fast-forwarded before planning.
+- Diagnose 153 documents the In-Game Trades locator/table-model blocker: `TradeTableOffset`, `TradeTableSize` and `TradesUnused` come from the Gen3 ROM entry, while `setInGameTrades(...)` dereferences requested Species and therefore is unsafe after Diagnose 152 null/invalid Species results.
+- No code changes, no build, no Randomizer run, no write/save, no ROM/artifact access and no `02_external/**` edits were made.
+
 # Session update - Diagnose 152
 
 - New branch: `test/upr-fvx-cfru-dpe-ingame-trades-scope-diagnostics`.

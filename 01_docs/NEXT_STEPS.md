@@ -1,3 +1,9 @@
+# Next steps update - Diagnose 153
+
+- Next minimal step: run a read-only In-Game Trades locator/table-model diagnostic.
+- Do not run species-only write/reload smoke until valid active trade rows are confirmed and requestedSpecies-null handling is resolved.
+- Keep Nickname/OT text, Trade Held Items and IV extras out of the locator diagnostic except for read-only field classification.
+
 # Next steps update - Diagnose 152
 
 - Next minimal step: plan a narrow In-Game Trades locator/table-model blocker diagnostic before any write/reload smoke.
