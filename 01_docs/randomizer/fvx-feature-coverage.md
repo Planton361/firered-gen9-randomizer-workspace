@@ -1,3 +1,9 @@
+# Coverage update - Diagnose 155
+
+- In-Game Trades remain not compatible / blocked.
+- Active-row candidates are not confirmed: modeled BPRE rows are non-unused by `TradesUnused`, but fail requested/offered Species validity based on the available read-only candidate metrics.
+- No Given Species, Requested Species, Trade Held Item, IV or Nickname/OT subfeature is promoted; no write smoke is prepared.
+
 # Coverage update - Diagnose 154
 
 - In-Game Trades remain not compatible / blocked.

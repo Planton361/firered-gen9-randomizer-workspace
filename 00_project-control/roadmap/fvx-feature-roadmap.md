@@ -1,3 +1,9 @@
+# Roadmap update - Diagnose 155
+
+- Keep the In-Game Trades blocker lane active after active-row candidate diagnosis.
+- Current classification: blocked, not candidate-confirmed and not yet unsupported-dummy.
+- Required next evidence: explicit valid active rows, corrected locator/row-shape evidence, content-based dummy skip policy, defensive null-requested-species plan, or final unsupported/dummy decision.
+
 # Roadmap update - Diagnose 154
 
 - Preserve the In-Game Trades blocker lane before any write smoke.

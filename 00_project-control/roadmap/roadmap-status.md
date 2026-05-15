@@ -1,3 +1,9 @@
+# Roadmap status update - Diagnose 155
+
+- In-Game Trades active-row candidate status: blocked.
+- UPR-FVX BPRE metadata models three non-unused 60-byte rows, but read-only candidate evidence still classifies requested Species as null and Species fields as invalid placeholders.
+- No Species-Write-Smoke is allowed until valid active rows are confirmed or the scope is explicitly classified as unsupported/dummy with a preserve/skip policy.
+
 # Roadmap status update - Diagnose 154
 
 - In-Game Trades table-model status: blocked.

@@ -1,3 +1,10 @@
+# Session update - Diagnose 155
+
+- New branch: `test/upr-fvx-cfru-dpe-ingame-trades-active-row-candidates`.
+- Diagnose 155 performs the requested read-only In-Game Trades active-row candidate check from UPR-FVX `TradeTableOffset`, `TradeTableSize`, `TradesUnused` and the 60-byte Gen3 row model.
+- Result: blocked. The BPRE model exposes three non-unused rows, but Diagnose 152 evidence still has `requestedSpeciesNullCount=3`, `invalidTradeSpecies=6` and `placeholderTradeSpecies=6`, so no valid active row is confirmed.
+- `unsupported-dummy` remains plausible but unproven; no Species-Write-Smoke, text randomization, build, Randomizer run, ROM/save/output/log access or code change was performed.
+
 # Session update - Diagnose 154
 
 - New branch: `test/upr-fvx-cfru-dpe-ingame-trades-table-model-diagnostics`.
