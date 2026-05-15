@@ -1,3 +1,10 @@
+# FVX Feature Coverage Update - 2026-05-15 - Shop Items diagnostics preflight
+
+- `FVX-ITEM-005..009` remain `Write modelliert` after Diagnose 122.
+- No explicitly approved local CFRU/DPE Gen9-BPRE candidate source was provided, so the Shop structure scan did not run: `candidateFilesChecked=0`, `candidateLoaded=false`, `shopScanSuccessful=false`.
+- The read-only codepath model still marks `shopPointerModelObserved=true` and `dataRewriterOrRepointingRisk=true`; a real Shop-only candidate scan is required before any Shuffle/Random/Ban/Guarantee/Price smoke.
+- Field Items, Pickup and Held Items are not affected.
+
 # FVX Feature Coverage Update - 2026-05-15 - Shop Items scope diagnostics plan
 
 - `FVX-ITEM-005` Shop Items Shuffle, `FVX-ITEM-006` Shop Items Random, `FVX-ITEM-007` Shop Item Bans, `FVX-ITEM-008` Guarantee Evolution/X Items and `FVX-ITEM-009` Balance Shop Prices / Cheap Rare Candies are confirmed as a separate Shop-only scope.

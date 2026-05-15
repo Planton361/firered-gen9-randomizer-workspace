@@ -1,5 +1,8 @@
 # Randomizer Testprotokolle
 
+- 122 - `122_shop_items_scope_diagnostics.md`: Blocked/Preflight fuer die read-only CFRU/DPE Shop-Items-Kandidatendiagnose. Keine explizit freigegebene lokale Kandidatenquelle im Block, daher `candidateFilesChecked=0`, `candidateLoaded=false`, `shopScanSuccessful=false`; Codepfadmodell mit `ShopPointerOffsets`, `MainGameShops`, `SkipShops`, `Shop` und `DataRewriter<Shop>` bleibt dokumentiert.
+
+
 - 121 - `121_shop_items_scope_diagnostics_plan.md`: Read-only Plan fuer den CFRU/DPE Shop-Items-Scope. Bestaetigt `FVX-ITEM-005..009` als separates Shop-Paket nach Field Items und Pickup, dokumentiert `ShopItemsMod`, `ItemRandomizer`, `Gen3RomHandler.getShops()`/`setShops(...)`, `DataRewriter`, terminierte Shoplisten, MainGame/Skip/Special Shops, Preislogik, Risiken, Preserve-/Skip-Policy, spaetere Metriken und empfohlene Diagnose-Reihenfolge.
 
 
