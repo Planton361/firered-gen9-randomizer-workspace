@@ -1,3 +1,13 @@
+# 2026-05-15 - Next: Important Trainer Held Items smoke
+
+Recommended next branch: `test/upr-fvx-cfru-dpe-trainer-held-items-important-reload-smoke`.
+
+Goal: test Important Trainer Held Items only, after Diagnose 141 confirmed Boss Trainer Held Items reload stability.
+
+Keep out of scope: Boss/Regular expansion beyond the selected class, Consumable/Sensible/Highest-Level filters, Starter Held Items, Wild Held Items, Field Items, Pickup, Shops and all non-Held-Item randomizer work.
+
+Required checks: save/log/output/reload success, Important Trainer held item reload mismatches 0, Boss/Regular/shouldNotGetBuffs preserve counters 0, no invalid/unloaded/fallback/placeholder writes, and Wild/Starter/Field/Pickup/Shop isolation.
+
 # 2026-05-15 - Next: Trainer Held Items scope
 
 Recommended next branch: `analysis/upr-fvx-cfru-dpe-trainer-held-items-scope-plan` or, if no extra planning block is needed, `test/upr-fvx-cfru-dpe-trainer-held-items-boss-reload-smoke`.
