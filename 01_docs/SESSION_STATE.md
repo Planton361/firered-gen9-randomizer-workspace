@@ -1,3 +1,11 @@
+# 2026-05-15 - Diagnose 139
+
+- Current branch records Wild/Encounter Held Items Write/Reload-Smoke without Ban Bad.
+- Smoke result: PASS; `saveSuccessful=true`, `logSuccessful=true`, `outputRomExists=true`, `reloadSuccessful=true`, `wildHeldItemReloadMismatches=0`.
+- Wild held item slots stayed stable at `5656/5656/5656`; non-zero slots changed as expected `526/312/312`.
+- Safety metrics: invalid/unloaded/fallback/placeholder Wild-Held-Item writes all `0`; Trainer, Starter, Field, Pickup and Shop scopes stayed unchanged.
+- Wild/Encounter Held Items without Ban Bad are GUI-compatible in the tested scope; Ban Bad, Trainer Held Items and Starter Held Items remain open.
+
 # 2026-05-15 - Diagnose 138
 
 - Current branch records read-only CFRU/DPE Gen9-BPRE Held Items candidate diagnostics.
