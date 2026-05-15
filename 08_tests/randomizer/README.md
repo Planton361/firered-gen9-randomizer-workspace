@@ -1,3 +1,7 @@
+# Latest - Diagnose 150
+
+- `150_special_wild_triggerability.md`: Read-only Special Wild triggerability analysis; marks Day/Night as dormant in the tracked state, Swarms/Roamers/Wild Double/gWildDataSwitch as runtime-state driven, DexNav as partial/future, and Raids as future parser/write scope.
+
 # Latest - Diagnose 149
 
 - `149_coverage_reconciliation.md`: Coverage/roadmap reconciliation after Held Items closure and Wild Encounters plan; identifies special Wild Encounter systems, not Standard Wild retest, as the next genuinely open major scope.

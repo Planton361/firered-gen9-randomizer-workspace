@@ -1,3 +1,9 @@
+# 2026-05-15 - Special Wild triggerability update
+
+- Diagnose 150 documents Special Wild systems read-only.
+- Immediate Randomizer action: none; Standard Wild P0 remains covered and special systems are dormant, runtime-only, partial or future-scope in the current tracked state.
+- Future work only if requirements activate: Day/Night non-empty tables, Swarm runtime support, Raids parser/writer, DexNav or Wild Double in-game trigger tests.
+
 # 2026-05-15 - Coverage reconciliation update
 
 - Diagnose 149 reconciles completed and open Randomizer feature scopes.
