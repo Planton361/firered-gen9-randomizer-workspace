@@ -1,3 +1,11 @@
+# 2026-05-15 - Next: Starter Held Items + Ban Bad
+
+Recommended next branch: `test/upr-fvx-cfru-dpe-starter-held-items-ban-bad-reload-smoke`.
+
+Goal: test Starter Held Items with `banBadRandomStarterHeldItems=true` after Diagnose 146 confirmed Starter Held Items reload stability without Ban Bad.
+
+Keep out of scope: Wild Held Items, Trainer Held Items, Field Items, Pickup, Shops and non-Held-Item randomizer work.
+
 # 2026-05-15 - Next: Starter Held Items or optional Trainer filter combinations
 
 Recommended next branch: `test/upr-fvx-cfru-dpe-starter-held-items-reload-smoke` if Boss/Important filter combinations are not required.

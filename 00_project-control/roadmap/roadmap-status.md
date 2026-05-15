@@ -1,3 +1,10 @@
+# 2026-05-15 - Starter Held Items smoke update
+
+- Diagnose 146 records a PASS for Starter Held Items without Ban Bad.
+- Save/log/output/reload succeeded; `starterHeldItemReloadMismatches=0`; one shared Gen3/FRLG Starter Held Item slot was written and reloaded stably.
+- Bad/TM/invalid/unloaded/fallback/placeholder writes were `0`; Wild/Trainer/Field/Pickup/Shop scopes stayed unchanged.
+- Starter Ban Bad remains open.
+
 # 2026-05-15 - Regular Trainer Held Item filters smoke update
 
 - Diagnose 145 records a PASS for Regular Trainer Held Items with Consumable Only, Sensible Items and Highest Level Only combined.

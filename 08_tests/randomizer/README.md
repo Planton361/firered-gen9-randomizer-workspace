@@ -1,3 +1,7 @@
+# Latest - Diagnose 146
+
+- `146_starter_held_items_reload_smoke.md`: Starter Held Items Write/Reload-Smoke without Ban Bad; PASS with one shared Gen3/FRLG Starter Held Item slot, reload stability and Wild/Trainer/Field/Pickup/Shop isolation.
+
 # Latest - Diagnose 145
 
 - `145_trainer_held_items_regular_filtered_reload_smoke.md`: Regular Trainer Held Items filtered Write/Reload-Smoke; PASS with Consumable Only, Sensible Items and Highest Level Only in the narrow Regular-Trainer scope.

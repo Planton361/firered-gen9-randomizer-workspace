@@ -1,3 +1,9 @@
+# 2026-05-15 - FVX Starter Held Items coverage update
+
+- Starter Held Items without Ban Bad are covered as GUI-compatible in the tested CFRU/DPE Gen9-BPRE scope after Diagnose 146.
+- Evidence: save/log/output/reload successful, `starterHeldItemReloadMismatches=0`, no bad/TM/invalid/unloaded/fallback/placeholder writes, and Wild/Trainer/Field/Pickup/Shop isolation preserved.
+- Starter Ban Bad remains unpromoted.
+
 # 2026-05-15 - FVX Trainer Held Item filter coverage update
 
 - Regular Trainer Held Items with combined Consumable Only, Sensible Items and Highest Level Only are covered as GUI-compatible in the tested CFRU/DPE Gen9-BPRE scope after Diagnose 145.
