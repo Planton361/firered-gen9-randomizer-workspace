@@ -1,3 +1,11 @@
+# Roadmap status update - Diagnose 164
+
+- In-Game Trades final classification is documented as `guarded/preserve-only, not supported`.
+- Status is closed for the tested CFRU/DPE Gen9-BPRE scope without GUI-compatible promotion.
+- Guard evidence is retained: UPR-FVX PR #39 null/invalid Species guard, PR #40 non-ROM `TradeRandomizerTest`, and PR #41 ROM-free `Gen3InGameTradeWriterTest`.
+- No valid active rows are confirmed; no ROM-Smoke, Species-Write-Smoke, text/Nickname/OT, IV or Trade Held Item randomization is authorized.
+- Next status target should move to a different Randomizer roadmap item unless In-Game Trades are explicitly reopened by the documented criteria.
+
 # Roadmap status update - Diagnose 163B
 
 - In-Game Trades writer-preserve follow-up is recorded.

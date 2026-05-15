@@ -33,12 +33,12 @@ Markdown bleibt Source of Truth.
 
 | Feld | Aktueller Stand |
 |---|---|
-| Stand | Nach PR #41 / Diagnose 163B und Workspace PR #209 |
-| Aktueller enger Blocker | In-Game Trades bleiben `blocked-pending-evidence`; Writer-Preserve-Test ist gemerged, aber aktive Rows bleiben unbewiesen |
+| Stand | Nach Diagnose 164 |
+| Aktueller enger Blocker | In-Game Trades sind `guarded/preserve-only, not supported`; aktive Rows bleiben unbewiesen |
 | Zuletzt entblockt | Item-Scope im getesteten CFRU/DPE Gen9-BPRE-Scope: Field Items, Pickup Items, Shop Items, Held Items |
 | Zuletzt validiert | In-Game-Trades Guard + Non-ROM `TradeRandomizerTest` + ROM-freier `Gen3InGameTradeWriterTest` |
 | Carrier-Smokes bestanden | Global Species Pool, Starter-Suboptions, Trainer Similar Strength, Wild Similar Strength/Type Restrictions |
-| Danach | In-Game-Trades guarded/preserve-only Entscheidung oder weitere read-only Active-Row-Evidenz |
+| Danach | naechster Nicht-In-Game-Trades-Randomizer-Scope oder explizite Reopen-Evidenz |
 | Grosse offene Writer | MoveData Write, Palette Randomization, mehrere Trainer/Evolution-Sonderoptionen |
 | Spaeter / P2 | Special Tutors/Text/Menu, Graphics/Sprites, Misc Tweaks |
 
@@ -74,7 +74,7 @@ Markdown bleibt Source of Truth.
 |---|---|---|---|---|---|---|
 | General Options | Gemischt | - | Limit Pokemon, No Premature Evolutions im Starter-Carrier | Race Mode, Intro Mon offen | separater General-Smoke | 064 |
 | Pokemon Traits | Gemischt | Base Stats, Species Types, Abilities, Evolution Species-only | - | Evolution Similar Strength, Evolution Same Typing | Evolution-Suboptionen isolieren | 051, 052, 059, 070, 075, 026 |
-| Starters, Statics & Trades | Gemischt | Starter Species, Static/Gift Species | Starter-Filter | Starter Held Items offen; In-Game Trades guarded/preserve-only aber blockiert | guarded-Abschluss oder Active-Row-Evidenz | 065, 152-163B |
+| Starters, Statics & Trades | Gemischt | Starter Species, Static/Gift Species | Starter-Filter | Starter Held Items offen; In-Game Trades guarded/preserve-only, not supported | naechster Nicht-Trades-Scope oder Reopen-Evidenz | 065, 152-164 |
 | Moves & Movesets | Gemischt | Movesets/Learnsets, Reorder Damaging | einige Filter-/Sanity-Optionen | MoveData Write offen | MoveData Write Preserve | 049, 056 |
 | Foe Pokemon / Trainer | Teilweise blockiert | Trainer Species, Movesets, Held Items, Similar Strength | Similar Strength im Trainer-Carrier | Type Diversity / Type Themes, Additional Pokemon, Textnamen | Trainer-Suboptionen spaeter | 070, 075, 077 |
 | Wild Pokemon | Stark | Standard/Fallback Wild, Surfing, Fishing, Rock Smash, Wild Held Items | Similar Strength, Type Restrictions im Wild-Carrier | Catch Rate, Catch Em All, Level Modifier offen | spaeter Wild-Level/Catch | 075 |
@@ -95,7 +95,7 @@ Markdown bleibt Source of Truth.
 | Evolutions | Teilweise supported, Suboptionen blockiert | normale Evolution Randomization, Species-only | einige Filter geplant | Similar Strength, Same Typing | eigener Evolution-Suboption-Block |
 | Starters | Stark / Carrier-tested | Starter Species | Basic/Type/BST/Legendary Filter | Starter Held Items | spaeter Held Items |
 | Static/Gift | P1-supported fuer Species | Static/Gift Species | Similar Strength im Scope | Level Modifier/Fix Music offen | spaeter |
-| In-Game Trades | Guarded / blockiert | Null-/Invalid-Species Guard, Non-ROM TradeRandomizerTest, ROM-freier Gen3 Writer-Preserve-Test | - | keine validen aktiven Rows, kein Species-Write-Smoke, kein Text/Nickname/OT/IV/Item | guarded-Abschluss oder Active-Row-Evidenz |
+| In-Game Trades | Guarded / Preserve-only, not supported | Null-/Invalid-Species Guard, Non-ROM TradeRandomizerTest, ROM-freier Gen3 Writer-Preserve-Test | - | keine validen aktiven Rows, kein Species-Write-Smoke, kein Text/Nickname/OT/IV/Item | nur mit Reopen-Evidenz |
 | Trainer | Teilweise blockiert | Species, Movesets, Held Items, Similar Strength | Similar Strength | Type Diversity / Type Themes | spaeter enger Blocker |
 | Wild | Stark | Standard/Fallback Wild, Surfing, Fishing, Rock Smash, Held Items | Similar Strength, Type Restrictions | Catch Rate, Catch Em All, Level Modifier | spaeter |
 | Movesets | P1-supported | Learnsets/Movesets/Reorder/Sanity | Filter-Suboptionen | - | Regression spaeter |
@@ -159,7 +159,7 @@ Diese Tabelle listet alle aktuell erfassten FVX-Features einmal kompakt auf. Sie
 | 43 | `FVX-SST-011` | Starters, Statics & Trades | Static Pokemon: Random completely | P1-supported | Global |
 | 44 | `FVX-SST-012` | Starters, Statics & Trades | Static Pokemon: Random similar strength | P1-supported | Global |
 | 45 | `FVX-SST-013` | Starters, Statics & Trades | Static Pokemon: Level Modifier / Fix Music | Nicht begonnen | Writer |
-| 46 | `FVX-SST-014` | Starters, Statics & Trades | In-Game Trades: Given/Requested species | Guarded / blocked-pending-evidence | Guard / Writer |
+| 46 | `FVX-SST-014` | Starters, Statics & Trades | In-Game Trades: Given/Requested species | Guarded / Preserve-only | Guard / Writer |
 | 47 | `FVX-SST-015` | Starters, Statics & Trades | In-Game Trades: Nickname/OT/IV/Item | Blockiert / nicht freigegeben | Writer / Text |
 | 48 | `FVX-MOVE-001` | Moves & Movesets | Randomize Move Power | Write modelliert / Fix offen | Writer |
 | 49 | `FVX-MOVE-002` | Moves & Movesets | Randomize Move Accuracy | Write modelliert / Fix offen | Writer |
@@ -245,7 +245,7 @@ Diese Tabelle listet alle aktuell erfassten FVX-Features einmal kompakt auf. Sie
 | 129 | `FVX-MISC-011` | Misc Tweaks | Reusable TMs | Nicht begonnen | Writer / Patch |
 | 130 | `FVX-MISC-012` | Misc Tweaks | Forgettable HMs | Nicht begonnen | Writer / Patch |
 
-## In-Game-Trades Status nach Diagnose 163B
+## In-Game-Trades Status nach Diagnose 164
 
 | Thema | Status |
 |---|---|
@@ -256,7 +256,7 @@ Diese Tabelle listet alle aktuell erfassten FVX-Features einmal kompakt auf. Sie
 | Gen3 Writer-Preserve-Test | UPR-FVX PR #41 gemerged; ROM-freier `Gen3InGameTradeWriterTest` vorhanden |
 | Species-Write-Smoke | blockiert |
 | Text/Nickname/OT/IV/Held Item | blockiert / nicht freigegeben |
-| Kompatibilitaetsklassifikation | `blocked-pending-evidence` |
+| Kompatibilitaetsklassifikation | `guarded/preserve-only, not supported` |
 
 ## Wichtige Belegkette In-Game-Trades
 
@@ -273,12 +273,13 @@ Diese Tabelle listet alle aktuell erfassten FVX-Features einmal kompakt auf. Sie
 | UPR-FVX PR #40 / Diagnose 161B | `TradeRandomizerTest` Non-ROM Harness gemerged und gepinnt |
 | UPR-FVX PR #41 / Diagnose 163B | `Gen3InGameTradeWriterTest` Writer-Preserve-Test gemerged und gepinnt |
 | Diagnose 162 / PR #207 | Writer-Preserve-Test-Plan: `writer-test-plan-ready` |
+| Diagnose 164 | Abschlussklassifikation: `guarded/preserve-only, not supported` |
 
 ## Offene Blocker
 
 | Prioritaet | Blocker | Status | Betroffene Feature-IDs | Ursache / Symptom | Naechster Schritt | Belege |
 |---|---|---|---|---|---|---|
-| P0/P1 | In-Game Trades | Guarded / `blocked-pending-evidence` | `FVX-SST-014`, `FVX-SST-015` | keine validen aktiven Rows; Guard und Non-ROM-Tests vorhanden, aber kein Species-Write-Smoke | guarded-Abschluss oder weitere Active-Row-Evidenz | 152-163B |
+| P0/P1 | In-Game Trades | Guarded / Preserve-only, not supported | `FVX-SST-014`, `FVX-SST-015` | keine validen aktiven Rows; Guard und Non-ROM-Tests vorhanden, aber kein Species-Write-Smoke | nur mit Reopen-Evidenz | 152-164 |
 | P1 | Evolution Similar Strength | Blockiert | `FVX-TRAIT-018` | Mismatch-/Bad-Egg-Slice aus bisherigem Similar-Strength-Smoke | separater Evolution-Similar-Strength-Block | 070, 075 |
 | P1 | Evolution Same Typing | Blockiert | `FVX-TRAIT-019` | Same-Type-Evolution-Slice nicht freigegeben | separater Evolution-Same-Typing-Block | 070, 075 |
 | P1 | MoveData Write | Write modelliert / Fix offen | `FVX-MOVE-001` bis `FVX-MOVE-006` | Writer fuer moderne MoveData-Felder offen | MoveData Preserve Writer | 056 |
@@ -292,18 +293,18 @@ Diese Tabelle listet alle aktuell erfassten FVX-Features einmal kompakt auf. Sie
 
 | Reihenfolge | Arbeitspaket | Ziel | Warum jetzt? | Erwartetes Ergebnis |
 |---:|---|---|---|---|
-| 1 | Entscheidung In-Game-Trades | guarded/preserve-only abschliessen oder weitere Evidenz suchen | Mutation- und Writer-Preserve-Guards sind ROM-frei getestet, aktive Rows aber unbewiesen | klare Klassifikation fuer diesen Scope |
-| 2 | Evolution Similar Strength | blockierte Evolution-Suboption isolieren | direkt danach offen | `FVX-TRAIT-018` geklaert |
-| 3 | Evolution Same Typing | Same-Type-Evolution-Slice isolieren | direkt danach offen | `FVX-TRAIT-019` geklaert |
-| 4 | MoveData Write | Power/Accuracy/PP/Type/Update Moves absichern | grosser offener Moves-Tab-Writer | `FVX-MOVE-001` bis `FVX-MOVE-006` hochstufen |
-| 5 | Palette Randomization | echte Palettenaenderungen absichern | grosser Graphics/Palette-Writer | `FVX-GFX-001` bis `FVX-GFX-004` hochstufen |
-| 6 | Special Tutors/Text/Menu | P2-Sonderpfade modellieren | nicht normaler Tutor-Tabellenpfad | P2-Entscheidung |
-| 7 | Graphics/Sprites | Custom Player Graphics/Sprites modellieren | getrennt von Paletten | P2-Entscheidung |
+| 1 | Evolution Similar Strength | blockierte Evolution-Suboption isolieren | In-Game Trades sind guarded/preserve-only abgeschlossen | `FVX-TRAIT-018` geklaert |
+| 2 | Evolution Same Typing | Same-Type-Evolution-Slice isolieren | direkt danach offen | `FVX-TRAIT-019` geklaert |
+| 3 | MoveData Write | Power/Accuracy/PP/Type/Update Moves absichern | grosser offener Moves-Tab-Writer | `FVX-MOVE-001` bis `FVX-MOVE-006` hochstufen |
+| 4 | Palette Randomization | echte Palettenaenderungen absichern | grosser Graphics/Palette-Writer | `FVX-GFX-001` bis `FVX-GFX-004` hochstufen |
+| 5 | Special Tutors/Text/Menu | P2-Sonderpfade modellieren | nicht normaler Tutor-Tabellenpfad | P2-Entscheidung |
+| 6 | Graphics/Sprites | Custom Player Graphics/Sprites modellieren | getrennt von Paletten | P2-Entscheidung |
 
 ## Zuletzt abgeschlossene PRs / Diagnosen
 
 | Diagnose / PR | Bereich | Ergebnis | Statuswirkung |
 |---|---|---|---|
+| 164 | In-Game Trades Final Classification | `guarded/preserve-only, not supported` | Trades-Lane fuer aktuellen Scope geschlossen, keine Species-Write-Freigabe |
 | 163B / PR #41 | In-Game Trades Writer-Preserve Follow-up | UPR-FVX PR #41 gepinnt; `Gen3InGameTradeWriterTest` vorhanden | Writer-Preserve-Decision ROM-frei getestet |
 | 162 / PR #207 | In-Game Trades Writer-Preserve-Test-Plan | `writer-test-plan-ready`; ROM-freier `:romio:test` empfohlen | naechster enger optionaler In-Game-Trades-Test vorbereitet |
 | 161B / PR #206 | In-Game Trades Non-ROM Harness Follow-up | UPR-FVX PR #40 gepinnt; `TradeRandomizerTest` vorhanden | Mutation-Skip-Guard ROM-frei getestet |

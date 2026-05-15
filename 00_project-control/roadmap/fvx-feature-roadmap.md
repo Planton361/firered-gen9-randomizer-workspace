@@ -1,3 +1,10 @@
+# Roadmap update - Diagnose 164
+
+- In-Game Trades are closed for the tested CFRU/DPE Gen9-BPRE scope as `guarded/preserve-only, not supported`.
+- The roadmap should not schedule further In-Game Trade work unless new evidence meets the documented reopen criteria.
+- Guard evidence remains pinned through UPR-FVX PR #39, PR #40 and PR #41, but no valid active rows are proven and Species-Write-Smoke remains unauthorized.
+- Next roadmap work should move to a different Randomizer feature lane.
+
 # Roadmap update - Diagnose 163B
 
 - UPR-FVX PR #41 is merged and the workspace submodule is pinned to `dc6ad3cb01282db5ff85935959bbdac6c2d3fa0c`.

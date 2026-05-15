@@ -1,3 +1,11 @@
+# Coverage update - Diagnose 164
+
+- In-Game Trades final coverage classification: `guarded/preserve-only, not supported`.
+- `FVX-SST-014` is guarded/preserve-only for unsafe Given/Requested Species rows, but not GUI-compatible.
+- `FVX-SST-015` remains blocked / not released; Nickname/OT, IV and Trade Held Item randomization are not authorized.
+- The closure keeps mutation and writer-preserve guard evidence while rejecting `P1-supported`, `candidate-confirmed` and hard `unsupported-dummy` as unsupported by the current evidence.
+- Reopen requires valid active rows, corrected locator/row-shape evidence, explicit unsupported/dummy proof, or a separately authorized ROM-facing smoke scope.
+
 # Coverage update - Diagnose 163B
 
 - In-Game Trades remain not compatible / blocked.
@@ -689,7 +697,7 @@ Diagnose 082 bestaetigt `FVX-TRAIT-018` nach der 081-Normalisierung:
 - FVX-SST-011 | Static Pokemon: Random completely | GUI-kompatibel
 - FVX-SST-012 | Static Pokemon: Random similar strength | GUI-kompatibel
 - FVX-SST-013 | Static Pokemon: Level Modifier / Fix Music | Nicht begonnen
-- FVX-SST-014 | In-Game Trades: Given/Requested species | Guarded / blocked-pending-evidence
+- FVX-SST-014 | In-Game Trades: Given/Requested species | Guarded / Preserve-only, not supported
 - FVX-SST-015 | In-Game Trades: Nickname/OT/IV/Item | Blockiert / nicht freigegeben
 
 ### Moves & Movesets
