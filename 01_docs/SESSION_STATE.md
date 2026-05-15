@@ -1,3 +1,16 @@
+# Session update - Diagnose 172B
+
+- New branch: `test/upr-fvx-cfru-dpe-evolution-method-decisions-followup`.
+- UPR-FVX PR #43 was verified as merged into `compat/firered-gen9-cfru-dpe`.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX commit `3b33412e80d1cb2d97725ad7a7dd01529aa56919`.
+- Original UPR-FVX test commit: `4b049ee82cf8716cb2fc17d0b6244020cddd22e4`.
+- Follow-up 172B records the Non-ROM `EvolutionMethodDecisionTest` harness for `FVX-TRAIT-024` Change Impossible Evolutions and `FVX-TRAIT-027` Remove Time-Based Evolutions.
+- Test-/Seam-Entscheidung: small package-private decision seams in `Gen3RomHandler` and `AbstractRomHandler`; synthetic `Species` / `Evolution` objects; no ROM file, Gen3 writer, reload, ROM-Smoke or Randomizer run.
+- Statuswirkung: `FVX-TRAIT-024` and `FVX-TRAIT-027` move from `decision-review-ready` to `tested-non-rom`, not P1-supported.
+- `FVX-TRAIT-025` remains split into condense-level logic and Gen3 happiness-byte patch risk; `FVX-TRAIT-026` remains a helper flag for `024/025`.
+- Checks from 172A are recorded as `./gradlew --offline :romio:test --tests '*Evolution*'` and `./gradlew --offline :romio:test`, both `BUILD SUCCESSFUL`; the known existing `PlayerCharacterGraphicsTest.fromSheetGiveSameImagesAndPalsAsFromSeparate_RSE()` report failure line remains a risk/assumption.
+- No ROM, save, emulator state, output ROM, log, Randomizer JAR, tool binary, build artifact, private path, hash, secret, token or `.env` file was touched.
+
 # Session update - Diagnose 171
 
 - New branch: `test/upr-fvx-cfru-dpe-evolution-methods-decision-review`.
