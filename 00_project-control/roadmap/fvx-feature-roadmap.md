@@ -1,3 +1,10 @@
+# Roadmap update - Diagnose 172B
+
+- UPR-FVX PR #43 is merged and the workspace submodule is pinned to `3b33412e80d1cb2d97725ad7a7dd01529aa56919`.
+- The pinned `EvolutionMethodDecisionTest` provides Non-ROM `:romio:test` decision coverage for `FVX-TRAIT-024` and `FVX-TRAIT-027`.
+- Roadmap status for those slices is now `tested-non-rom`; this remains below P1-supported because no Writer-/Reload-Evidenz, ROM-Smoke, output-ROM or Randomizer run was executed.
+- Keep `FVX-TRAIT-025` split into condense-level logic and Gen3 happiness-byte patch risk; keep `FVX-TRAIT-026` helper-only.
+
 # Roadmap update - Diagnose 171
 
 - `FVX-TRAIT-024` and `FVX-TRAIT-027` are now `decision-review-ready`.

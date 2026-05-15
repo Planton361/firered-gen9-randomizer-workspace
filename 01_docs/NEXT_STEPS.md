@@ -1,3 +1,11 @@
+# Next steps update - Diagnose 172B
+
+- Treat `FVX-TRAIT-024` and `FVX-TRAIT-027` as `tested-non-rom`, not P1-supported.
+- The merged UPR-FVX PR #43 harness covers only ROM-free method decisions with synthetic `Species` / `Evolution` objects.
+- Writer-/Reload-Evidenz, ROM-Smoke, output-ROM generation and Randomizer runs remain separate and unauthorized.
+- Next minimal Evolution work, if continued, should be a read-only plan for `FVX-TRAIT-025`: split ROM-free condense-level logic from the Gen3 happiness-byte patch risk.
+- Keep `FVX-TRAIT-026` attached to `024/025`; do not promote it standalone.
+
 # Next steps update - Diagnose 171
 
 - Treat `FVX-TRAIT-024` and `FVX-TRAIT-027` as `decision-review-ready`, not tested or P1-supported.

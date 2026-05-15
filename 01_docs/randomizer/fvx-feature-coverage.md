@@ -1,3 +1,11 @@
+# Coverage update - Diagnose 172B
+
+- UPR-FVX PR #43 is merged and the workspace submodule is pinned at `3b33412e80d1cb2d97725ad7a7dd01529aa56919`.
+- `EvolutionMethodDecisionTest` provides Non-ROM `:romio:test` coverage for `FVX-TRAIT-024` and `FVX-TRAIT-027` using synthetic Species/Evolution data.
+- `FVX-TRAIT-024` and `FVX-TRAIT-027` move from `decision-review-ready` to `tested-non-rom`.
+- This is not a P1-supported promotion: no Writer-/Reload-Evidenz, ROM-Smoke, output-ROM, Randomizer run or full Gen3 evolution table read/write path is included.
+- `FVX-TRAIT-025` remains split and `FVX-TRAIT-026` remains helper-only.
+
 # Coverage update - Diagnose 171
 
 - Evolution method decision review for `FVX-TRAIT-024` and `FVX-TRAIT-027` is complete as `decision-review-ready`.
@@ -721,10 +729,10 @@ Diagnose 082 bestaetigt `FVX-TRAIT-018` nach der 081-Normalisierung:
 - FVX-TRAIT-021 | Evolutions: No Convergence | tested-non-rom
 - FVX-TRAIT-022 | Evolutions: Force Change | tested-non-rom
 - FVX-TRAIT-023 | Evolutions: Force Growth | tested-non-rom
-- FVX-TRAIT-024 | Change Impossible Evolutions | decision-review-ready
+- FVX-TRAIT-024 | Change Impossible Evolutions | tested-non-rom
 - FVX-TRAIT-025 | Make Evolutions Easier | methods-plan-ready / split planned
 - FVX-TRAIT-026 | Use Estimated Evolution Levels | methods-plan-ready / Helper-Flag
-- FVX-TRAIT-027 | Remove Time-Based Evolutions | decision-review-ready
+- FVX-TRAIT-027 | Remove Time-Based Evolutions | tested-non-rom
 - FVX-TRAIT-028 | EXP-/Legendary-Kurven-Sonderfaelle | Nicht begonnen
 
 ### Starters, Statics & Trades

@@ -1,3 +1,15 @@
+# Tool Manifest Update - 2026-05-15 - Evolution method decision harness follow-up
+
+- Workspace branch: `test/upr-fvx-cfru-dpe-evolution-method-decisions-followup`.
+- UPR-FVX fork base branch: `compat/firered-gen9-cfru-dpe`.
+- UPR-FVX PR #43: <https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/43>.
+- Original UPR-FVX test commit: `4b049ee82cf8716cb2fc17d0b6244020cddd22e4`.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX commit `3b33412e80d1cb2d97725ad7a7dd01529aa56919`.
+- Previous workspace pin was `587e857088cac4fba41c6559d3a6f6e2a7aad71f`.
+- Scope: Non-ROM `EvolutionMethodDecisionTest` only; synthetic `Species` / `Evolution` data and small package-private decision seams in `Gen3RomHandler` and `AbstractRomHandler` cover `FVX-TRAIT-024` and `FVX-TRAIT-027`.
+- Checks recorded from UPR-FVX PR #43: `./gradlew --offline :romio:test --tests '*Evolution*'` and `./gradlew --offline :romio:test`, both `BUILD SUCCESSFUL`; known existing `PlayerCharacterGraphicsTest.fromSheetGiveSameImagesAndPalsAsFromSeparate_RSE()` report failure line remains a risk/assumption.
+- Safety: no Workspace code changes, no UPR-FVX code changes in this block, no ROM/save/output/log/build artifacts, no Gen3 writer, no reload, no ROM-Smoke, no Randomizer run, no `FVX-TRAIT-025/026` scope except `useEstimatedLevels` as `024` decision input, and no Original-Upstream PR.
+
 # Tool Manifest Update - 2026-05-15 - Evolution filter non-ROM harness follow-up
 
 - Workspace branch: `test/upr-fvx-cfru-dpe-evolution-filter-non-rom-harness-followup`.
