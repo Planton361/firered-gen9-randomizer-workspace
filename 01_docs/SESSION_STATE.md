@@ -1,3 +1,17 @@
+# Session State Update - 2026-05-15 - Field Items Random Even Ban Bad reload smoke
+
+- Branch: `test/upr-fvx-cfru-dpe-field-items-random-even-ban-bad-reload-smoke`.
+- Workspace PR #157 was verified as merged before branch creation.
+- UPR-FVX pin confirmed: `02_external/upr-fvx` at `328e4441c2981d37aba9e2707a6f27f779b026e2`.
+- New protocol: `08_tests/randomizer/113_field_items_random_even_ban_bad_reload_smoke.md`.
+- A locally approved CFRU/DPE Gen9-BPRE candidate was used for a Field-Items-only `FVX-ITEM-003 Field Items Random even distribution` smoke with `banBadRandomFieldItems=true`.
+- Sanitized result: `candidateFilesChecked=9`, `candidateLoaded=true`, `smokeExecuted=true`, `saveSuccessful=true`, `logSuccessful=true`, `outputRomExists=true`, `logNonEmpty=true`, `reloadSuccessful=true`.
+- Field-Items scope stayed stable: `fieldItemsTotalBefore=339`, `fieldItemsTotalAfter=339`, `fieldItemsTotalReload=339`, `fieldItemReloadMismatches=0`, visible/hidden mismatches `0`, TM/Non-TM slot mismatches `0`, `requiredFieldTMMissingAfter=0`.
+- Ban-Bad result: `badFieldItemWrites=0`, `badFieldItemPoolCandidates=47`, `badFieldItemPoolExcluded=47`, `nonBadFieldItemPoolSize=485`.
+- Random-Even result: `randomEvenQueueUsed=true`, `randomEvenTmDistributionStable=true`, `randomEvenNonTmDistributionStable=true`, `nonBadFieldItemQueueRefills=0`.
+- `FVX-ITEM-004` is now `GUI-kompatibel` for Field Items Random and Random Even. Shops, Pickup and Held Items remain separate scopes and are not upgraded.
+- No code changes, no `02_external/**` changes, no submodule pin change, no build, no committed ROM/log/output artefacts, no private artefact documentation.
+
 # Session State Update - 2026-05-15 - Field Items API TM-slot scope fix
 
 - UPR-FVX fix commit: `328e4441c2981d37aba9e2707a6f27f779b026e2`.
