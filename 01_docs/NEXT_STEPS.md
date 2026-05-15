@@ -1,3 +1,22 @@
+# Next Steps Update - 2026-05-15 - Pickup Items reload locator blocker
+
+Aktueller Fokus:
+
+- Diagnose 116 blockiert `FVX-ITEM-010 Pickup Items Random` nach erfolgreichem Save/Log/Output beim Reload-Locator.
+- Der frische Reload findet die Pickup-Tabelle nicht mehr: `pickupLocatorSuccessful=false`, `pickupItemsTotalReload=0`.
+- Vor und direkt nach Write bleibt der aktive Handler stabil: `pickupItemsTotalBefore=16`, `pickupItemsTotalAfter=16`.
+- Field Items, Shops und Held Items blieben unveraendert.
+
+Naechster empfohlener Minimalblock:
+
+- `analysis/upr-fvx-cfru-dpe-pickup-items-reload-locator-blocker-plan`
+
+Ziel des Folgeblocks:
+
+- Read-only klaeren, warum `PickupTableStartLocator` nach `PickupItemsMod.RANDOM` nicht mehr greift.
+- Einen engen spaeteren Fix-Scope fuer `Gen3RomHandler.getPickupItems()` / `setPickupItems(...)` oder einen privaten Pickup-Table-Helper planen.
+- Keine Ban-Bad-Pickup-Arbeit, keine Field Items, keine Shops, keine Held Items, keine TM/HM/Tutor/Learnset-Ausweitung, keine Palette/Graphics, kein MoveData/MoveNames, kein TypeChart/TypeEffectiveness, keine Trainer/Wild/Evolution/Text/Menu-Arbeit.
+
 # Next Steps Update - 2026-05-15 - Pickup Items random smoke next
 
 Aktueller Fokus:

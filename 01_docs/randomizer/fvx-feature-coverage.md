@@ -609,3 +609,10 @@ Diese Matrix soll nicht als 130 Roadmap-Zeilen gepflegt werden. Fuer die Roadmap
 - Diagnose 115 confirms read-only Pickup locator/count/table/probability safety for a candidate, but no Write-/Reload-Smoke has run yet.
 - Next step is Pickup Random without Ban Bad; Pickup Ban Bad remains separate because the non-bad pool filter has a measurable effect.
 - No upgrade for Shops, Field Items beyond their existing scope, Encounter Held Items, Trainer Held Items or Starter Held Items.
+
+## 2026-05-15 - Pickup Items Random smoke blocked after Diagnose 116
+
+- `FVX-ITEM-010 Pickup Items Random / Ban Bad Items`: remains `Write modelliert`.
+- Diagnose 116 confirms save/log/output/reopen for Pickup Random without Ban Bad, but fresh reload cannot locate the Pickup table after the write.
+- Blocker metrics: `pickupLocatorSuccessful=false`, `pickupItemsTotalReload=0`, `pickupItemReloadMismatches=16`.
+- Pickup Ban Bad remains untested; no upgrade for Shops, Field Items beyond existing scope, Encounter Held Items, Trainer Held Items or Starter Held Items.

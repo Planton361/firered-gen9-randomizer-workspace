@@ -205,3 +205,5 @@ Wenn ein Artefakt nicht eindeutig Smoke-Output ist, bleibt es lokal liegen und w
 - 114 - `114_pickup_items_scope_diagnostics_plan.md`: Read-only plan for the CFRU/DPE Pickup Items scope. Identifies `FVX-ITEM-010` as a separate table/locator/probability writer, recommends a Pickup-only candidate diagnostic before any write smoke, and keeps Field Items, Shops and Held Items separate.
 
 - 115 - `115_pickup_items_scope_diagnostics.md`: Sanitized read-only Pickup-only candidate diagnostics. Locator/count/entry-size/probability model stable (`pickupLocatorSuccessful=true`, `pickupItemsTotal=16`, `pickupEntrySize=4`, `pickupProbabilityModelStable=true`), no invalid/unloaded/fallback/placeholder Pickup IDs; recommends Pickup Random without Ban Bad before a separate Ban-Bad smoke.
+
+- 116 - `116_pickup_items_random_reload_smoke.md`: Sanitized Pickup-only `FVX-ITEM-010 Pickup Items Random` smoke with `banBadRandomPickupItems=false`. Save/log/output/reopen true, but blocked because fresh reload cannot locate the Pickup table after random write (`pickupLocatorSuccessful=false`, `pickupItemsTotalReload=0`, reload mismatches `16`); no feature upgrade.
