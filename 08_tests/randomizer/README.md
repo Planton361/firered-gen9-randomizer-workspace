@@ -1,5 +1,9 @@
 # Current update
 
+- Diagnose 175B records merged UPR-FVX PR #45 for the Non-ROM `Gen3MoveDataWriterTest` and `MoveUpdateDecisionTest` harnesses and pins `02_external/upr-fvx` to `1be6f51779906af017f6177f264e41f8c7902d8e`. `FVX-MOVE-001`, `FVX-MOVE-002`, `FVX-MOVE-003`, `FVX-MOVE-004` and `FVX-MOVE-006` are now `tested-non-rom`; `FVX-MOVE-005` Move Names/Text remains out of scope and no P1-promotion is made.
+
+# Current update
+
 - Diagnose 174B records merged UPR-FVX PR #44 for the Non-ROM `EvolutionMakeEasierDecisionTest` harness and pins `02_external/upr-fvx` to `85b282112322f8991dd11b14cc98d6dd68fd3fd4`. `FVX-TRAIT-025A` is now `tested-non-rom` for Condense-/Level-/Decision logic; `FVX-TRAIT-025B` remains a separate Gen3 Happiness-byte patch / writer-like scope, and `FVX-TRAIT-026` remains helper-only with no standalone support claim.
 
 # Current update
@@ -371,6 +375,7 @@ Der neueste bestaetigte Stand wird in Markdown ueber die Spalte `Latest` markier
 | 088 | `088_move_names_text_menu_scope_plan.md` | CFRU/DPE Move Names / Descriptions Text/Menu-Scope Plan | dokumentiert: `FVX-MOVE-005` ist vom MoveData-Byte-Writer getrennt; Name-only fixed-length Smoke ist realistisch, Move Descriptions / Text/Menu-Repointing vorerst zurueckstellen | keiner, read-only Analyse | nein |
 | 089 | `089_move_names_fixed_length_reload_smoke.md` | CFRU/DPE Move Names fixed-length Reload-Smoke | blockiert: lokaler Harness erstellt, aber kein freigegebener lokaler CFRU/DPE Gen9-BPRE-Kandidat mit `moves.total=992` und `991:PsychicNoise` gefunden; `FVX-MOVE-005` bleibt `Write modelliert` | lokal/ignored, nicht dokumentiert | nein |
 | 090 | `090_move_names_fixed_length_reload_smoke_retry.md` | CFRU/DPE Move Names fixed-length Reload-Smoke Retry | blockiert: Candidate-Preflight pruefte 94 lokale freigegebene private/ignored Kandidaten, fand aber keinen Stand mit `moves.total=992` und `991:PsychicNoise`; fachlicher Smoke nicht ausgefuehrt; `FVX-MOVE-005` bleibt `Write modelliert` | lokal/ignored, nicht dokumentiert | nein |
+| 175 | `175_movedata_write_followup.md` | MoveData Write Follow-up | UPR-FVX PR #45 gemerged und Submodule auf `1be6f517` gepinnt; `Gen3MoveDataWriterTest` und `MoveUpdateDecisionTest` belegen `FVX-MOVE-001/002/003/004/006` ROM-frei als `tested-non-rom`; `FVX-MOVE-005` bleibt Move Names/Text out of scope | keiner | nein |
 | 091 | `091_palette_randomization_preserve_repoint_plan.md` | CFRU/DPE Palette Randomization Preserve/Repoint Plan | dokumentiert: echte Palette-Randomization ist ein komprimierter Repointing-/Shared-Pointer-Writer; direkter Fix noch nicht eng genug, zuerst read-only Pointer-/Compression-Diagnose noetig; `FVX-GFX-001..004` bleiben `Write modelliert` | keiner, read-only Analyse | nein |
 | 092 | `092_palette_pointer_compression_diagnostics_plan.md` | CFRU/DPE Palette Pointer / Compression Diagnostics Plan | dokumentiert: spaetere Diagnose soll Normal-/Shiny-Palette-Pointer, Dekomprimierbarkeit, Single-Owner/Shared, missing/invalid und sichere Kandidaten aggregiert klassifizieren; kein Fix, kein Repointing | keiner, read-only Analyse | nein |
 | 093 | `093_palette_pointer_compression_diagnostics.md` | CFRU/DPE Palette Pointer / Compression Diagnostics | bestaetigt sanitisiert: `candidateLoaded=true`, `palettePointerScanSuccessful=true`, `candidateWritablePalettes=385`, `candidateWritableNormalPalettes=385`, `candidateWritableShinyPalettes=0`; shared/invalid/missing/decode-failed bleiben preserve-only | lokal/ignored, nicht dokumentiert | nein |

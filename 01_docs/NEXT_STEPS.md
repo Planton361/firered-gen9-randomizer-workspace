@@ -1,3 +1,10 @@
+# Next steps update - Diagnose 175B
+
+- Treat `FVX-MOVE-001`, `FVX-MOVE-002`, `FVX-MOVE-003`, `FVX-MOVE-004` and `FVX-MOVE-006` as `tested-non-rom`, not P1-supported.
+- The merged UPR-FVX PR #45 harnesses cover ROM-free Gen3 MoveData writer decisions and MoveUpdater apply decisions with synthetic data.
+- Keep `FVX-MOVE-005` Move Names/Text separate and out of scope.
+- Do not run ROM-Smoke, Writer-/Reload-ROM tests, output-ROM generation, Randomizer runs or Move Names/Text work without a separate explicit scope.
+
 # Next steps update - Diagnose 174B
 
 - Treat `FVX-TRAIT-025A` as `tested-non-rom`, not P1-supported.

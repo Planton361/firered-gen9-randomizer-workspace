@@ -1,3 +1,11 @@
+# Roadmap update - Diagnose 175B
+
+- UPR-FVX PR #45 is merged and the workspace submodule is pinned to `1be6f51779906af017f6177f264e41f8c7902d8e`.
+- The pinned `Gen3MoveDataWriterTest` provides Non-ROM `:romio:test` writer-decision coverage for MoveData Power, Accuracy, PP and Type bytes.
+- The pinned `MoveUpdateDecisionTest` provides Non-ROM `:random:test` apply-decision coverage for `Update Moves to Generation`.
+- Roadmap status for `FVX-MOVE-001`, `FVX-MOVE-002`, `FVX-MOVE-003`, `FVX-MOVE-004` and `FVX-MOVE-006` is now `tested-non-rom`; this remains below P1-supported because no ROM-/Reload-Evidenz, ROM-Smoke, output-ROM or Randomizer run was executed.
+- Keep `FVX-MOVE-005` Move Names/Text as a separate out-of-scope Text/Menu lane.
+
 # Roadmap update - Diagnose 174B
 
 - UPR-FVX PR #44 is merged and the workspace submodule is pinned to `85b282112322f8991dd11b14cc98d6dd68fd3fd4`.
@@ -484,7 +492,7 @@ Die detaillierte Status- und Feature-ID-Matrix bleibt in:
 | General Options | 4 | Gemischt | `FVX-GEN-001/002` sind im Starter-Carrier-Smoke getestet; Race Mode und Intro-Mon separat pruefen |
 | Pokemon Traits | 28 | Gemischt | Base Stats, Types, Abilities, Evolutions, EXP Curves und Suboptionen systematisch absichern; Evolution-Scope ist konsolidiert: `016` P1-supported, `018/019` diagnosis-ready, `017/020-023` tested-non-rom, `024-027` methods-plan-ready |
 | Starters, Statics & Trades | 15 | Gemischt | Starter-Filter sind im Starter-Species-Writer-Smoke getestet; Starter-Held-Items, Trades und Level-Subpfade ergaenzen |
-| Moves & Movesets | 11 | Gemischt | Learnset-/Moveset-GUI halten; MoveData `Update Moves`, Power/Accuracy/PP und Move Types sind stabil; Move Names ist als Name-only Smoke planbar, aber Diagnosen 089/090 sind mangels lokalem 992-Move-Kandidaten mit `991:PsychicNoise` blockiert; Move Descriptions / Text/Menu-Repointing bleibt getrennt |
+| Moves & Movesets | 11 | Gemischt | Learnset-/Moveset-GUI halten; MoveData `Update Moves`, Power/Accuracy/PP und Move Types haben zusaetzliche Non-ROM Writer-/Updater-Testabdeckung; Move Names ist als Name-only Smoke planbar, aber Diagnosen 089/090 sind mangels lokalem 992-Move-Kandidaten mit `991:PsychicNoise` blockiert; Move Descriptions / Text/Menu-Repointing bleibt getrennt |
 | Foe Pokemon | 14 | Gemischt | Trainer-Species/-Movesets/-Held-Items halten; Trainer Similar Strength und `FVX-FOE-009` sind im `FVX-FOE-001` Carrier stabil |
 | Wild Pokemon | 12 | Gemischt | Standard/Fallback-Wild halten; Similar Strength und Type Restrictions sind nach Diagnose 075 im `FVX-WILD-001` Carrier wieder stabil |
 | TM/HMs & Tutors | 15 | Gemischt | TM/Tutor-Tabellen halten; Preserve-/Filter-/Follow-Evolution-Suboptionen testen |
