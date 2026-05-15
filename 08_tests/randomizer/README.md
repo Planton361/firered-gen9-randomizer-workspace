@@ -1,3 +1,7 @@
+# Latest - Diagnose 144
+
+- `144_trainer_held_items_filters_scope_plan.md`: Trainer Held Items filter scope plan; separates Consumable Only, Sensible Items and Highest Level Only after Boss/Important/Regular no-filter smokes passed.
+
 # Latest - Diagnose 143
 
 - `143_trainer_held_items_regular_reload_smoke.md`: Regular Trainer Held Items Write/Reload-Smoke; PASS with reload-stable `TrainerPokemon.heldItem`, class preserve-policy and Wild/Starter/Field/Pickup/Shop isolation.

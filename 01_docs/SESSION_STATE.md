@@ -1,3 +1,10 @@
+# 2026-05-15 - Diagnose 144
+
+- Current branch plans Trainer Held Item filters as a separate sub-scope after Boss, Important and Regular no-filter smokes passed.
+- Code findings: `Consumable Only`, `Sensible Items` and `Highest Level Only` are separate Trainer Held Item settings; no separate Trainer Held Item Ban Bad flag was found.
+- Recommended next smoke: Regular Trainers only with the combined filter set, or split filters if narrower isolation is preferred.
+- Starter Held Items remain unpromoted and should follow after the filter coverage decision.
+
 # 2026-05-15 - Diagnose 143
 
 - Current branch records Regular Trainer Held Items Write/Reload-Smoke.

@@ -1,3 +1,10 @@
+# 2026-05-15 - Trainer Held Item filters plan update
+
+- Diagnose 144 plans Trainer Held Item filter coverage after Boss/Important/Regular no-filter smokes passed.
+- Filters identified: Consumable Only, Sensible Items and Highest Level Only.
+- No separate Trainer Held Item Ban Bad flag was found in the searched Settings/GUI/Randomizer paths.
+- Filter scope remains unpromoted until a write/reload smoke passes.
+
 # 2026-05-15 - Regular Trainer Held Items smoke update
 
 - Diagnose 143 records Regular Trainer Held Items Write/Reload-Smoke.

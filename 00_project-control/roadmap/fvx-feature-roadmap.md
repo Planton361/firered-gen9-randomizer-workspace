@@ -1,3 +1,9 @@
+# 2026-05-15 - Held Items roadmap filter update
+
+- Trainer Held Item filter coverage is planned in Diagnose 144 after Boss/Important/Regular no-filter success.
+- Recommended next step is a Regular-only combined filter smoke, with split filter smokes only if needed.
+- Starter Held Items remain the next major Held Items scope after the filter decision.
+
 # 2026-05-15 - Held Items roadmap update
 
 - Regular Trainer Held Items are now GUI-compatible in the tested CFRU/DPE Gen9-BPRE no-filter scope after Diagnose 143.
