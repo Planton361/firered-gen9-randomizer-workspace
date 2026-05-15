@@ -1,3 +1,14 @@
+# Tool Manifest Update - 2026-05-15 - In-Game Trades null-request guard follow-up
+
+- Workspace branch: `test/upr-fvx-cfru-dpe-ingame-trades-null-request-guard-followup`.
+- UPR-FVX fork base branch: `compat/firered-gen9-cfru-dpe`.
+- UPR-FVX PR #39: <https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/39>.
+- Original UPR-FVX fix commit: `1d3062d1 fix: skip unsafe ingame trade rows`.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX commit `a86315e8d82e0854e0fd59549f50e2c49f523c40`.
+- Previous workspace pin was `a2373888ad17145f270ebf6ff17303af41aa86eb`.
+- Scope: In-Game Trades defensive null/invalid Species guard only; `TradeRandomizer.java` skips unsafe rows before mutation and `Gen3RomHandler.java` preserves/skips unsafe rows before byte writes.
+- Safety: no Workspace code changes, no ROM/save/output/log/build artifacts, no text randomization, no Nickname/OT, IV or Trade Held Item randomization, and no Original-Upstream PR.
+
 # Tool Manifest Update - 2026-05-15 - Pickup reload locator fix
 
 - Workspace branch: `compat/upr-fvx-cfru-dpe-pickup-items-reload-locator-fix`.

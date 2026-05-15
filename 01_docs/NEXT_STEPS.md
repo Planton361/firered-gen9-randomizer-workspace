@@ -1,3 +1,9 @@
+# Next steps update - Diagnose 158B
+
+- Keep In-Game Trades closed as `blocked-pending-evidence` even after the merged UPR-FVX PR #39 guard.
+- Next allowed step is a targeted read-only/code-review of the guard behavior or an explicitly allowed non-ROM test/harness for skip/preserve behavior.
+- Do not run Species-Write-Smoke and do not add Text, Nickname/OT, IV or Trade Held Item randomization until valid active rows are separately proven and authorized.
+
 # Next steps update - Diagnose 157
 
 - Keep In-Game Trades closed as `blocked-pending-evidence`.

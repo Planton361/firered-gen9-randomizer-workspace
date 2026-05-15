@@ -1,3 +1,13 @@
+# Session update - Diagnose 158B
+
+- New branch: `test/upr-fvx-cfru-dpe-ingame-trades-null-request-guard-followup`.
+- UPR-FVX PR #39 was verified as merged into `compat/firered-gen9-cfru-dpe`.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX commit `a86315e8d82e0854e0fd59549f50e2c49f523c40`.
+- Diagnose 158B records the In-Game Trades Null-/Invalid-Species guard follow-up: `TradeRandomizer.java` skips unsafe rows before mutation and `Gen3RomHandler.java` preserves/skips unsafe rows before byte writes.
+- In-Game Trades remain `blocked-pending-evidence`; no Species-Write-Smoke, text randomization, Nickname/OT randomization, IV randomization or Trade Held Item randomization is authorized by this follow-up.
+- 158A Gradle context is recorded as an assumption/risk: `./gradlew --offline :romio:test :random:test` reported `BUILD SUCCESSFUL`, while an existing `PlayerCharacterGraphicsTest.fromSheetGiveSameImagesAndPalsAsFromSeparate_RSE()` failure line remained in the romio report.
+- No ROM, save, emulator state, output ROM, log, Randomizer JAR, tool binary, build artifact, private path, hash, secret, token or `.env` file was touched.
+
 # Session update - Diagnose 157
 
 - New branch: `test/upr-fvx-cfru-dpe-ingame-trades-null-request-guard-plan`.
