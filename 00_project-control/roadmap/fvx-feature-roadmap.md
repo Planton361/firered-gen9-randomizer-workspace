@@ -1,3 +1,9 @@
+# 2026-05-15 - Held Items roadmap filtered update
+
+- Regular Trainer Held Item combined filters passed in Diagnose 145.
+- Trainer Held Items are covered for Boss/Important/Regular no-filter scopes and Regular combined-filter scope.
+- Next recommended major scope is Starter Held Items unless Boss/Important filter combinations are required.
+
 # 2026-05-15 - Held Items roadmap filter update
 
 - Trainer Held Item filter coverage is planned in Diagnose 144 after Boss/Important/Regular no-filter success.

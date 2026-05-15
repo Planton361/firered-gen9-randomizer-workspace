@@ -1,3 +1,11 @@
+# 2026-05-15 - Diagnose 145
+
+- Current branch records Regular Trainer Held Items filtered Write/Reload-Smoke.
+- Smoke result: PASS; save/log/output/reload succeeded and `regularTrainerHeldItemReloadMismatches=0`.
+- Filter result: `highestLevelHeldItemWrites=697`, `consumableHeldItemWrites=697`, `sensibleHeldItemWrites=697`, with `nonConsumableHeldItemWrites=0` and `nonSensibleHeldItemWrites=0`.
+- Preserve result: Boss, Important and `shouldNotGetBuffs` Trainer Held Items stayed unchanged; Wild, Starter, Field, Pickup and Shop scopes stayed unchanged.
+- Next minimal scope is Starter Held Items unless Boss/Important filter combinations are explicitly required.
+
 # 2026-05-15 - Diagnose 144
 
 - Current branch plans Trainer Held Item filters as a separate sub-scope after Boss, Important and Regular no-filter smokes passed.

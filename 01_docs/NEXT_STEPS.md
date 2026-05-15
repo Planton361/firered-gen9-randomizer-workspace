@@ -1,3 +1,11 @@
+# 2026-05-15 - Next: Starter Held Items or optional Trainer filter combinations
+
+Recommended next branch: `test/upr-fvx-cfru-dpe-starter-held-items-reload-smoke` if Boss/Important filter combinations are not required.
+
+Optional alternative: plan Boss/Important Trainer Held Item filter combinations only if product coverage requires them.
+
+Keep out of scope for Starter: Wild Held Items, Trainer Held Items, Field Items, Pickup, Shops and non-Held-Item randomizer work.
+
 # 2026-05-15 - Next: Trainer Held Item filter smoke
 
 Recommended next branch: `test/upr-fvx-cfru-dpe-trainer-held-items-regular-filters-reload-smoke`.
