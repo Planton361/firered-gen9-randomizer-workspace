@@ -1,3 +1,10 @@
+# 2026-05-15 - Diagnose 137
+
+- Current branch plans Held Items as the next separate CFRU/DPE Gen9-BPRE Randomizer scope after closed Shop Items.
+- Scope split: Wild/Encounter Held Items, Trainer Held Items, and Starter Held Items if the candidate exposes a stable starter-held-item path.
+- Read-only codepath finding: Wild/Encounter writes Species/BaseStats held-item fields, Trainer writes `TrainerPokemon.heldItem`, and Starter uses `getStarterHeldItems()` / `setStarterHeldItems(...)`.
+- No smoke, no code changes, no ROM/artifact access, no submodule pin change, and no Held-Item feature promotion in this block.
+
 # 2026-05-15 - Diagnose 136
 
 - Current branch records Shop-only FVX-ITEM-009 Balance Prices + Cheap Rare Candies Write/Reload-Smoke.

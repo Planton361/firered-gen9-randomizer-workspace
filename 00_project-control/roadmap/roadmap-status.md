@@ -1,3 +1,9 @@
+# 2026-05-15 - Held Items roadmap update
+
+- Diagnose 137 opens Held Items as the next separate Randomizer scope after the tested Shop Items scope closed.
+- Planned split: Wild/Encounter Held Items, Trainer Held Items, and Starter Held Items if supported.
+- No Held-Item smoke or feature promotion in this branch.
+
 # 2026-05-15 - Shop Items scope closed
 
 - Diagnose 136 passes the Shop-only FVX-ITEM-009 Balance Prices + Cheap Rare Candies combination.

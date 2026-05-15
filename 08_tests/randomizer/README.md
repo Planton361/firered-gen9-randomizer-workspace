@@ -1,3 +1,7 @@
+# Latest - Diagnose 137
+
+- `137_held_items_scope_diagnostics_plan.md`: Read-only plan for CFRU/DPE Gen9-BPRE Held Items scope diagnostics after the tested Shop Items scope closed.
+
 # Latest - Diagnose 136
 
 - `136_shop_balance_prices_cheap_rare_candies_reload_smoke.md`: PASS for Shop-only FVX-ITEM-009 Balance Shop Prices + Cheap Rare Candies combination; Shop Items scope closed for tested CFRU/DPE Gen9-BPRE GUI-compatible paths.
