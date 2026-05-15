@@ -1,3 +1,10 @@
+# Roadmap status update - Diagnose 177B
+
+- Trainer Type Diversity follow-up is recorded.
+- UPR-FVX PR #47 is merged and workspace-pinned at `ea5269706eb7d04eb0b305f88e8fa20bfb21f92a`.
+- The pinned `TrainerTypeDiversityGuardTest` covers Force Diverse Types / Type Themes null Primary/Secondary Type guard behavior with synthetic Non-ROM data.
+- Statuswirkung: `FVX-FOE-009` is now `tested-non-rom`, not P1-supported; no ROM-/Reload-Evidenz, ROM-Smoke, Trainer Names/Class Names/Text work, output-ROM or Randomizer run was executed.
+
 # Roadmap status update - Diagnose 176B
 
 - Wild catch/level follow-up is recorded.

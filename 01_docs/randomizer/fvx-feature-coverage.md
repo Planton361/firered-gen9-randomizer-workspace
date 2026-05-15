@@ -1,3 +1,10 @@
+# Coverage update - Diagnose 177B
+
+- UPR-FVX PR #47 is merged and the workspace submodule is pinned at `ea5269706eb7d04eb0b305f88e8fa20bfb21f92a`.
+- `TrainerTypeDiversityGuardTest` provides Non-ROM `:random:test` coverage for Trainer Type Diversity / Type Themes null Primary/Secondary Type guard behavior with synthetic Trainer and Species data.
+- `FVX-FOE-009` moves to `tested-non-rom`.
+- This is not a P1-supported promotion: no ROM-/Reload-Evidenz, ROM-Smoke, Trainer Names/Class Names/Text work, output-ROM or Randomizer run is included.
+
 # Coverage update - Diagnose 176B
 
 - UPR-FVX PR #46 is merged and the workspace submodule is pinned at `c86221d758bece06b216b1f4fb23dd8e4a6c8ec0`.
@@ -719,7 +726,7 @@ Diagnose 082 bestaetigt `FVX-TRAIT-018` nach der 081-Normalisierung:
 | Pokemon Traits | 28 | 7 | 15 | 0 | 0 | 0 | 6 | 0 |
 | Starters, Statics & Trades | 15 | 5 | 0 | 0 | 0 | 5 | 5 | 0 |
 | Moves & Movesets | 11 | 0 | 3 | 0 | 1 | 0 | 7 | 0 |
-| Foe Pokemon | 14 | 8 | 0 | 0 | 0 | 0 | 6 | 0 |
+| Foe Pokemon | 14 | 8 | 0 | 0 | 0 | 1 | 5 | 0 |
 | Wild Pokemon | 12 | 0 | 1 | 0 | 0 | 3 | 8 | 0 |
 | TM/HMs & Tutors | 15 | 0 | 9 | 0 | 0 | 0 | 6 | 0 |
 | Items | 10 | 0 | 0 | 0 | 10 | 0 | 0 | 0 |
@@ -809,7 +816,7 @@ Diagnose 082 bestaetigt `FVX-TRAIT-018` nach der 081-Normalisierung:
 - FVX-FOE-006 | Additional Pokemon: Important Trainers | Nicht begonnen
 - FVX-FOE-007 | Additional Pokemon: Regular Trainers | Nicht begonnen
 - FVX-FOE-008 | Trainer Held Items | GUI-kompatibel
-- FVX-FOE-009 | Force Diverse Types | GUI-kompatibel
+- FVX-FOE-009 | Force Diverse Types | tested-non-rom
 - FVX-FOE-010 | Pokemon League Has Unique Pokemon | Nicht begonnen
 - FVX-FOE-011 | Battle Style randomisieren | Nicht begonnen
 - FVX-FOE-012 | Rival Carries Starter Through Game | Nicht begonnen

@@ -1,3 +1,10 @@
+# Roadmap update - Diagnose 177B
+
+- UPR-FVX PR #47 is merged and the workspace submodule is pinned to `ea5269706eb7d04eb0b305f88e8fa20bfb21f92a`.
+- The pinned `TrainerTypeDiversityGuardTest` provides Non-ROM `:random:test` coverage for Trainer Type Diversity / Type Themes null Primary/Secondary Type guard decisions.
+- Roadmap status for `FVX-FOE-009` is now `tested-non-rom`; this remains below P1-supported because no ROM-/Reload-Evidenz, ROM-Smoke, Trainer Names/Class Names/Text work, output-ROM or Randomizer run was executed.
+- A later P1 promotion needs a separately authorized ROM-/Reload-Smoke or equivalent writer/reload evidence.
+
 # Roadmap update - Diagnose 176B
 
 - UPR-FVX PR #46 is merged and the workspace submodule is pinned to `c86221d758bece06b216b1f4fb23dd8e4a6c8ec0`.
@@ -500,7 +507,7 @@ Die detaillierte Status- und Feature-ID-Matrix bleibt in:
 | Pokemon Traits | 28 | Gemischt | Base Stats, Types, Abilities, Evolutions, EXP Curves und Suboptionen systematisch absichern; Evolution-Scope ist konsolidiert: `016` P1-supported, `018/019` diagnosis-ready, `017/020-023` tested-non-rom, `024-027` methods-plan-ready |
 | Starters, Statics & Trades | 15 | Gemischt | Starter-Filter sind im Starter-Species-Writer-Smoke getestet; Starter-Held-Items, Trades und Level-Subpfade ergaenzen |
 | Moves & Movesets | 11 | Gemischt | Learnset-/Moveset-GUI halten; MoveData `Update Moves`, Power/Accuracy/PP und Move Types haben zusaetzliche Non-ROM Writer-/Updater-Testabdeckung; Move Names ist als Name-only Smoke planbar, aber Diagnosen 089/090 sind mangels lokalem 992-Move-Kandidaten mit `991:PsychicNoise` blockiert; Move Descriptions / Text/Menu-Repointing bleibt getrennt |
-| Foe Pokemon | 14 | Gemischt | Trainer-Species/-Movesets/-Held-Items halten; Trainer Similar Strength und `FVX-FOE-009` sind im `FVX-FOE-001` Carrier stabil |
+| Foe Pokemon | 14 | Gemischt | Trainer-Species/-Movesets/-Held-Items halten; Trainer Similar Strength halten; `FVX-FOE-009` ist nach 177B `tested-non-rom` und bleibt ohne ROM-/Reload-Evidenz unter P1 |
 | Wild Pokemon | 12 | Gemischt | Standard/Fallback-Wild halten; Similar Strength und Type Restrictions sind nach Diagnose 075 im `FVX-WILD-001` Carrier wieder stabil |
 | TM/HMs & Tutors | 15 | Gemischt | TM/Tutor-Tabellen halten; Preserve-/Filter-/Follow-Evolution-Suboptionen testen |
 | Items | 10 | Write modelliert | Field Items, Shops und Pickup als getrennte Writer implementieren/testen |
@@ -549,7 +556,7 @@ Die detaillierte Status- und Feature-ID-Matrix bleibt in:
 |---|---|
 | Pokemon Traits | Follow Evolutions, Force Dual Types, Ability-Ban-/Allow-Filter, EXP Curves testen; Evolution-Suboptionen nach 170 getrennt halten: `017/020-023` tested-non-rom, `024-027` methods-plan-ready |
 | Starters, Statics & Trades | Starter-Held-Items und In-Game-Trades absichern; Starter-Type-/Legendary-/BST-Filter ausserhalb des Starter-Species-Writer-Smokes nur separat hochstufen |
-| Foe Pokemon | Additional Pokemon, League-Unique, Battle Style, Rival Carry, Trainer Names/Class Names absichern; Force Diverse Types / `FVX-FOE-009` aus 078 im `FVX-FOE-001` Carrier halten |
+| Foe Pokemon | Additional Pokemon, League-Unique, Battle Style, Rival Carry, Trainer Names/Class Names absichern; Force Diverse Types / `FVX-FOE-009` nach 177B als `tested-non-rom` fuehren und P1 nur mit separater ROM-/Reload-Evidenz pruefen |
 | Wild Pokemon | Evolution Restrictions, Catch Rate, Catch-em-all und Level-Balance absichern; Wild Similar Strength und Type Restrictions aus 075 im `FVX-WILD-001` Carrier halten |
 | TM/HMs & Tutors | Keep Field Moves, No Game-Breaking, Good-Damaging-%, Follow-Evolutions und Full-HM-Kompatibilitaet absichern |
 

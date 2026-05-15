@@ -1,3 +1,9 @@
+# Next steps update - Diagnose 177B
+
+- Treat `FVX-FOE-009` Force Diverse Types / Type Themes as `tested-non-rom`, not P1-supported.
+- The merged UPR-FVX PR #47 harness covers ROM-free Trainer Type Diversity null Primary/Secondary Type guard behavior with synthetic Trainer and Species data.
+- Do not run ROM-Smoke, Writer-/Reload-ROM tests, Trainer Names/Class Names/Text work, output-ROM generation, Randomizer runs or P1-promotion work without a separate explicit scope.
+
 # Next steps update - Diagnose 176B
 
 - Treat `FVX-WILD-007`, `FVX-WILD-010` and `FVX-WILD-012` as `tested-non-rom`, not P1-supported.
