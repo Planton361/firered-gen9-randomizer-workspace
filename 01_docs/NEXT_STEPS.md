@@ -1,3 +1,9 @@
+# Next steps update - Diagnose 152
+
+- Next minimal step: plan a narrow In-Game Trades locator/table-model blocker diagnostic before any write/reload smoke.
+- Do not run the Given/Requested species-only smoke until active trade rows classify with valid Species fields and requestedSpecies-null risk is resolved.
+- Keep Nickname/OT fixed-length text randomization separate and blocked until locator and species safety are proven.
+
 # Next steps update - Diagnose 151
 
 - Next minimal Randomizer step: run an In-Game Trades read-only candidate diagnostic.

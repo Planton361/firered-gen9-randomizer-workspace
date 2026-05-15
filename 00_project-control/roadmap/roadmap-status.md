@@ -1,3 +1,9 @@
+# Roadmap status update - Diagnose 152
+
+- In-Game Trades candidate diagnostic is blocked/preflight.
+- The current Gen3 BPRE trade-table model does not safely classify active CFRU/DPE Gen9-BPRE trade records; no In-Game Trade subfeature is promoted.
+- Recommended next status: locator/table-model blocker plan.
+
 # Roadmap status update - Diagnose 151
 
 - In-Game Trades are now planned as the next open CFRU/DPE Gen9-BPRE GUI scope.

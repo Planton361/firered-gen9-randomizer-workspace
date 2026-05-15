@@ -1,3 +1,9 @@
+# Roadmap update - Diagnose 152
+
+- Pause In-Game Trade write smokes.
+- Add a narrow read-only locator/table-model blocker plan before testing Given/Requested species writes.
+- Keep Trade Held Items, Nickname/OT text and IV extras as later subscopes after valid active trade rows are confirmed.
+
 # Roadmap update - Diagnose 151
 
 - Add In-Game Trades as the recommended next Randomizer scope after Special Wild triggerability analysis.
