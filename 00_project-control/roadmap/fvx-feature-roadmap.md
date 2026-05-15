@@ -1,5 +1,11 @@
 # 2026-05-15 - Held Items roadmap update
 
+- Held Items read-only candidate diagnostics are complete in Diagnose 138.
+- Follow-up order remains split: Wild/Encounter first, Trainer second, Starter third; Ban Bad remains separate.
+- Fallback/placeholder held-item inventory is a tracked smoke-safety risk.
+
+# 2026-05-15 - Held Items roadmap update
+
 - Held Items becomes the next Item-related package after Field Items, Pickup and the closed tested Shop Items scope.
 - The package is planned as separate Wild/Encounter, Trainer and optional Starter subscopes.
 - First follow-up is read-only candidate diagnostics, not a write smoke.

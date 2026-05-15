@@ -1,3 +1,9 @@
+# 2026-05-15 - Held Items diagnostics update
+
+- Diagnose 138 completes the read-only Held Items candidate diagnostic.
+- Wild/Encounter, Trainer and Starter Held Items are all readable; no Field/Pickup/Shop scope changes were observed.
+- Next narrow test is Wild/Encounter Held Items without Ban Bad; no Held-Item feature is promoted yet.
+
 # 2026-05-15 - Held Items roadmap update
 
 - Diagnose 137 opens Held Items as the next separate Randomizer scope after the tested Shop Items scope closed.

@@ -1,3 +1,7 @@
+# Latest - Diagnose 138
+
+- `138_held_items_scope_diagnostics.md`: PASS for read-only CFRU/DPE Held Items candidate diagnostics; Wild/Encounter, Trainer and Starter paths are readable, with no Field/Pickup/Shop scope changes.
+
 # Latest - Diagnose 137
 
 - `137_held_items_scope_diagnostics_plan.md`: Read-only plan for CFRU/DPE Gen9-BPRE Held Items scope diagnostics after the tested Shop Items scope closed.

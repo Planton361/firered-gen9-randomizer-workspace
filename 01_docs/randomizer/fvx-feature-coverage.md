@@ -1,3 +1,9 @@
+# 2026-05-15 - FVX Held Items coverage update
+
+- Diagnose 138 records read-only Held Items candidate diagnostics for Wild/Encounter, Trainer and Starter paths.
+- Held Items remain not promoted; next evidence must be a Wild/Encounter Held Items write/reload smoke without Ban Bad.
+- Field Items, Pickup and Shops are unchanged and out of scope.
+
 # 2026-05-15 - FVX Held Items coverage plan
 
 - Held Items are confirmed as a separate CFRU/DPE Gen9-BPRE Randomizer scope after Diagnose 137.
