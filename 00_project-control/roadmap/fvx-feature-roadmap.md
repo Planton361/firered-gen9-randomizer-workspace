@@ -1,3 +1,10 @@
+# Roadmap update - Diagnose 158B
+
+- UPR-FVX PR #39 is merged and the workspace submodule is pinned to `a86315e8d82e0854e0fd59549f50e2c49f523c40`.
+- The In-Game Trades defensive null/invalid Species guard is now implemented upstream in the fork: `TradeRandomizer.java` skips unsafe rows before mutation and `Gen3RomHandler.java` preserves/skips unsafe rows before byte writes.
+- Roadmap classification remains `blocked-pending-evidence`; the guard reduces unsafe-write risk but does not prove valid active rows or authorize Species-Write-Smoke.
+- Next roadmap step is targeted read-only/code-review or an explicitly allowed non-ROM guard test/harness.
+
 # Roadmap update - Diagnose 157
 
 - In-Game Trades defensive null-request guard is planned read-only, not implemented.

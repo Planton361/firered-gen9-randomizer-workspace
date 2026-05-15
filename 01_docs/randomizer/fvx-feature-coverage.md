@@ -1,3 +1,9 @@
+# Coverage update - Diagnose 158B
+
+- In-Game Trades remain not compatible / blocked.
+- UPR-FVX PR #39 is merged and pinned at `a86315e8d82e0854e0fd59549f50e2c49f523c40`; the guard skips null-request and unsafe/placeholder Species rows before mutation and preserves/skips unsafe Gen3 rows before byte writes.
+- No Given Species, Requested Species, Trade Held Item, IV or Nickname/OT subfeature is promoted; Species-Write-Smoke remains blocked until valid active rows are separately proven.
+
 # Coverage update - Diagnose 157
 
 - In-Game Trades remain not compatible / blocked.

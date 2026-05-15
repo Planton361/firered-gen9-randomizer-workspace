@@ -1,3 +1,10 @@
+# Roadmap status update - Diagnose 158B
+
+- UPR-FVX PR #39 is merged and workspace-pinned at `a86315e8d82e0854e0fd59549f50e2c49f523c40`.
+- In-Game Trades now have a defensive null/invalid Species guard in the pinned UPR-FVX submodule: unsafe rows skip before mutation and preserve/skip before Gen3 byte writes.
+- Status remains `blocked-pending-evidence`; no GUI-compatible In-Game Trade subfeature is promoted and Species-Write-Smoke remains blocked.
+- Next status target: read-only/code-review or explicitly allowed non-ROM guard test, not ROM smoke.
+
 # Roadmap status update - Diagnose 157
 
 - In-Game Trades null-request guard plan is documented read-only.

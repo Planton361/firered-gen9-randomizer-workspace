@@ -1,5 +1,9 @@
 # Current update
 
+- Diagnose 158B records merged UPR-FVX PR #39 for the In-Game Trades null/invalid Species guard and pins `02_external/upr-fvx` to `a86315e8d82e0854e0fd59549f50e2c49f523c40`. In-Game Trades remain `blocked-pending-evidence`; Species-Write-Smoke, text, Nickname/OT, IV and Trade Held Item scopes stay blocked.
+
+# Current update
+
 - Diagnose 157 documents a read-only defensive null-request guard plan for In-Game Trades. Result: still `blocked-pending-evidence`; a later fix would skip/preserve null-request or invalid/placeholder Species rows before mutation/write and must not include Species-Write-Smoke, text, IV or Trade Held Item writes.
 
 # Current update
