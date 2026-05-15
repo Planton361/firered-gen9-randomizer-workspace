@@ -1,3 +1,10 @@
+# 2026-05-15 - Shop Items Random + Ban Regular Smoke
+
+- Arbeitsbranch: `test/upr-fvx-cfru-dpe-shop-items-random-ban-regular-reload-smoke`.
+- Diagnose 128 dokumentiert den Shop-only `FVX-ITEM-007` Subscope `ShopItemsMod.RANDOM + banRegularShopItems=true`.
+- Smoke bestanden: `regularShopSetClassifiable=true`, Save, Log, Output und Reload erfolgreich; `shopItemReloadMismatches=0`, `regularShopItemBannedWrites=0`, Skip-Shops und Preise unveraendert.
+- `FVX-ITEM-007` ist fuer Ban Bad und Ban Regular einzeln belegt; OP-Ban, `FVX-ITEM-008` und `FVX-ITEM-009` bleiben offen.
+
 # 2026-05-15 - Shop Items Random + Ban Bad Smoke
 
 - Arbeitsbranch: `test/upr-fvx-cfru-dpe-shop-items-random-ban-bad-reload-smoke`.
