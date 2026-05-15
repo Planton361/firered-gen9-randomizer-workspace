@@ -1,3 +1,21 @@
+# Next Steps Update - 2026-05-15 - Shop Items scope diagnostics next
+
+Aktueller Fokus:
+
+- Diagnose 121 confirms Shops as the next separate CFRU/DPE Gen9-BPRE Item writer scope after Field Items and Pickup.
+- `FVX-ITEM-005..009` remain Shop-only and are not upgraded by Field Items, Pickup or Held Item results.
+- `Gen3RomHandler.setShops(...)` uses `DataRewriter<Shop>`, so Shop writes must treat terminators, lengths, pointers, skipped/special/main-game policy and price fields as explicit reload criteria.
+
+Naechster empfohlener Minimalblock:
+
+- `test/upr-fvx-cfru-dpe-shop-items-scope-diagnostics`
+
+Ziel des Folgeblocks:
+
+- Run a sanitized read-only Shop candidate diagnostic.
+- Report only aggregated counters: `candidateLoaded`, `shopScanSuccessful`, `shopCount`, `mainGameShopCount`, `skippedShopCount`, `specialShopCount`, item counts, terminator/length mismatches, invalid/unloaded/fallback/placeholder/bad items, skipped-shop preservation expectations and price-table readability.
+- Do not run a Shop write smoke yet and keep Field Items, Pickup, Held Items, TM/HM/Tutor/Learnset, Trainer, Wild, Evolution, Text/Menu, Palette/Graphics, MoveData/MoveNames and TypeChart out of scope.
+
 # Next Steps Update - 2026-05-15 - Shops-only scope next
 
 Current recommended branch:

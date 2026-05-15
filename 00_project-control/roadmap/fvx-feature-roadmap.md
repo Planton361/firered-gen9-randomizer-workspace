@@ -1,3 +1,10 @@
+# FVX Feature Roadmap Update - 2026-05-15 - Shop Items scope diagnostics plan
+
+- Shop Items are now the next planned Item package after completed Field Items and Pickup scopes.
+- `FVX-ITEM-005..009` are kept together as a Shop package but split by diagnostic order: Shuffle, Random, Bans, Guarantee Evolution/X Items, then Balance Prices/Cheap Rare Candies.
+- The package remains `Write modelliert`; no Shop writer compatibility is claimed before read-only candidate diagnostics and Shop-only reload smokes.
+- Field Items, Pickup and Held Items are explicitly not promoted by the Shop plan.
+
 # FVX Feature Roadmap Update - 2026-05-15 - Pickup complete, Shops next
 
 - Pickup Random is reload-stable and GUI-compatible with and without Ban Bad in the tested Pickup-only scope.
