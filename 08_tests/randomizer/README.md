@@ -1,5 +1,9 @@
 # Current update
 
+- Diagnose 157 documents a read-only defensive null-request guard plan for In-Game Trades. Result: still `blocked-pending-evidence`; a later fix would skip/preserve null-request or invalid/placeholder Species rows before mutation/write and must not include Species-Write-Smoke, text, IV or Trade Held Item writes.
+
+# Current update
+
 - Diagnose 156 defines the In-Game Trades Preserve/Skip policy. Result: `blocked-pending-evidence`; all modeled trade rows remain preserve-only, no Species-Write-Smoke or Nickname/OT randomization is allowed, and `unsupported-dummy` remains plausible but unproven.
 
 # Current update

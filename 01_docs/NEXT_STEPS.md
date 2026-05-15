@@ -1,3 +1,9 @@
+# Next steps update - Diagnose 157
+
+- Keep In-Game Trades closed as `blocked-pending-evidence`.
+- Optional later implementation branch: defensive null-request guard only, likely scoped to `TradeRandomizer.java` and `Gen3RomHandler.java`, with optional logger/status strings if needed.
+- Do not run Species-Write-Smoke or include Nickname/OT, IV or Trade Held Item writes until skipped/preserved rows and valid active rows are separately proven.
+
 # Next steps update - Diagnose 156
 
 - Keep In-Game Trades closed as `blocked-pending-evidence`.

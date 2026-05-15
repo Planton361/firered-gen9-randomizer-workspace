@@ -1,3 +1,9 @@
+# Roadmap status update - Diagnose 157
+
+- In-Game Trades null-request guard plan is documented read-only.
+- Status remains `blocked-pending-evidence`; no GUI-compatible In-Game Trade subfeature is promoted.
+- Later code-fix candidate: skip/preserve rows with null requested Species or invalid/placeholder Species before mutation/write, with explicit skipped/preserved status and no text, IV or Trade Held Item writes.
+
 # Roadmap status update - Diagnose 156
 
 - In-Game Trades policy status: `blocked-pending-evidence`.
