@@ -1,3 +1,14 @@
+# Session update - Diagnose 163B
+
+- New branch: `test/upr-fvx-cfru-dpe-ingame-trades-writer-preserve-followup`.
+- UPR-FVX PR #41 was verified as merged into `compat/firered-gen9-cfru-dpe`.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX commit `dc6ad3cb01282db5ff85935959bbdac6c2d3fa0c`.
+- Diagnose 163B records the ROM-free Gen3 In-Game Trades writer-preserve test follow-up. The pinned `Gen3InGameTradeWriterTest` uses synthetic `InGameTrade` rows and synthetic bytes to verify unsafe/null-request rows are skipped before byte writes and preserved unchanged.
+- UPR-FVX PR #41 implementation-side checks are recorded as `./gradlew --offline :romio:test` and focused `./gradlew --offline :romio:test --tests com.uprfvx.romio.romhandlers.Gen3InGameTradeWriterTest`, both with `BUILD SUCCESSFUL`.
+- The known existing report failure line for `PlayerCharacterGraphicsTest.fromSheetGiveSameImagesAndPalsAsFromSeparate_RSE()` remains documented as a risk/assumption.
+- In-Game Trades remain `blocked-pending-evidence`; no ROM-Smoke, Species-Write-Smoke, valid-active-row promotion, text, Nickname/OT, IV or Trade Held Item randomization is authorized.
+- No ROM, save, emulator state, output ROM, log, Randomizer JAR, tool binary, build artifact, private path, hash, secret, token or `.env` file was touched.
+
 # Session update - Diagnose 162
 
 - New branch: `test/upr-fvx-cfru-dpe-ingame-trades-writer-preserve-test-plan`.

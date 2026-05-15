@@ -1,3 +1,10 @@
+# Next steps update - Diagnose 163B
+
+- Keep In-Game Trades closed as `blocked-pending-evidence`.
+- The ROM-free Gen3 writer-preserve test is merged and pinned, so unsafe-row mutation and writer-preserve decisions now have non-ROM test coverage.
+- Next allowed step, if explicitly requested, is a guarded/preserve-only closure decision or further read-only evidence for valid active trade rows.
+- Do not run ROM-Smoke, Species-Write-Smoke, Randomizer runs, Text/Nickname/OT, IV or Trade Held Item randomization.
+
 # Next steps update - Diagnose 162
 
 - Keep In-Game Trades closed as `blocked-pending-evidence`.
