@@ -1,3 +1,11 @@
+# Next steps update - Diagnose 173
+
+- Treat `FVX-TRAIT-025` as `make-easier-plan-ready`, not tested and not P1-supported.
+- Split future work into `025A` ROM-free Condense-/Level-/Decision harness and `025B` Gen3 Happiness-byte patch / writer-like scope.
+- Next minimal implementation, if continued, should be a small UPR-FVX Non-ROM `:romio:test` for `025A` only: synthetic Species/Evolution chains, intermediate/final level caps, non-level `estimatedEvoLvl` capping and `highestEvoLvl` behavior.
+- Keep `025B` out of that first harness; any byte-patch, writer/reload, ROM-Smoke, Save, Output-ROM or Randomizer run needs separate explicit scope.
+- Keep `FVX-TRAIT-026` attached to `024/025`; do not promote it standalone.
+
 # Next steps update - Diagnose 172B
 
 - Treat `FVX-TRAIT-024` and `FVX-TRAIT-027` as `tested-non-rom`, not P1-supported.

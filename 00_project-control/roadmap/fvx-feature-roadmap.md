@@ -1,3 +1,11 @@
+# Roadmap update - Diagnose 173
+
+- `FVX-TRAIT-025` Make Evolutions Easier is now `make-easier-plan-ready`.
+- Split future work into 025A ROM-free Condense-/Level-/Decision harness and 025B Gen3 Happiness-byte patch / writer-like scope.
+- Recommended next implementation, if approved, is only 025A as a small Non-ROM UPR-FVX `:romio:test` with synthetic Species/Evolution chains.
+- Keep 025B, Writer-/Reload-Evidenz, ROM-Smoke, output-ROM and Randomizer runs separate and unauthorized.
+- `FVX-TRAIT-026` remains helper-only for `024/025`, not a standalone feature promotion.
+
 # Roadmap update - Diagnose 172B
 
 - UPR-FVX PR #43 is merged and the workspace submodule is pinned to `3b33412e80d1cb2d97725ad7a7dd01529aa56919`.
