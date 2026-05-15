@@ -1,3 +1,11 @@
+# Session update - 2026-05-15 - Diagnose 135
+
+- Current branch records Shop-only FVX-ITEM-009 Cheap Rare Candies Write/Reload-Smoke.
+- Smoke result: PASS with `ShopItemsMod.UNCHANGED`, `addCheapRareCandiesToShops=true`, `balanceShopPrices=false`.
+- Shop-list result: `shopItemsTotal=157/180/180`, deltas `+23/+23`, `rareCandyWrites=23`, `skippedShopRareCandyWrites=20`, `shopItemReloadMismatches=0`.
+- Price result: `rareCandyPriceTouched=true`, `rareCandyPriceReloadStable=true`, `priceReloadMismatches=0`.
+- FVX-ITEM-009 is now individually covered for Balance Shop Prices and Cheap Rare Candies; their combination remains untested.
+
 # Session update - 2026-05-15 - Diagnose 134
 
 - Current branch records Shop-only FVX-ITEM-009 Balance Shop Prices Write/Reload-Smoke.

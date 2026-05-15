@@ -1,5 +1,11 @@
 # 2026-05-15 - FVX Shop coverage update
 
+- FVX-ITEM-009 Cheap Rare Candies is covered as GUI-compatible for `ShopItemsMod.UNCHANGED + addCheapRareCandiesToShops=true` only.
+- Evidence: Diagnose 135, save/log/output/reload successful, `rareCandyWrites=23`, `shopItemsTotalDeltaReload=23`, `priceReloadMismatches=0`.
+- FVX-ITEM-009 individual Balance Prices and Cheap Rare Candies subscopes are covered, but their combination remains unpromoted.
+
+# 2026-05-15 - FVX Shop coverage update
+
 - FVX-ITEM-009 Balance Shop Prices is covered as GUI-compatible for `ShopItemsMod.UNCHANGED + balanceShopPrices=true` only.
 - Evidence: Diagnose 134, save/log/output/reload successful, `balancedPriceWrites=132`, `priceReloadMismatches=0`, `shopItemReloadMismatches=0`.
 - Cheap Rare Candies and Balance+Rare-Candy combination remain unpromoted.
