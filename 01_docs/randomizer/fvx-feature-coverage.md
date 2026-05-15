@@ -587,3 +587,11 @@ Diese Matrix soll nicht als 130 Roadmap-Zeilen gepflegt werden. Fuer die Roadmap
 - `FVX-ITEM-003` Field Items Random even distribution: remains `Write modelliert`; candidate diagnostics support a guarded allowed-slot write/smoke after pool policy is enforced.
 - `FVX-ITEM-004` Field Items Ban Bad Items: remains `Write modelliert`; `badFieldItems=75`, so the ban policy must be asserted in the next smoke.
 - Field-Items-only candidate diagnostics: `fieldItemsTotal=339`, allowed `280`, disallowed `59`, TM slots `28`, Non-TM slots `311`, `requiredFieldTMMissing=0`, invalid/unloaded `0`.
+
+## 2026-05-15 - Field Items status after Diagnose 113
+
+- `FVX-ITEM-001 Field Items Shuffle`: `GUI-kompatibel` im getesteten allowed-slot Field-Items-Scope.
+- `FVX-ITEM-002 Field Items Random`: `GUI-kompatibel` im getesteten Field-Items-only Scope, inklusive `banBadRandomFieldItems=true` fuer `FieldItemsMod.RANDOM`.
+- `FVX-ITEM-003 Field Items Random even distribution`: `GUI-kompatibel` im getesteten Field-Items-only Scope, inklusive `banBadRandomFieldItems=true` fuer `FieldItemsMod.RANDOM_EVEN`.
+- `FVX-ITEM-004 Field Items Ban Bad Items`: `GUI-kompatibel` fuer Field Items Random und Random Even.
+- Nicht enthalten: Shops, Pickup, Encounter Held Items, Trainer Held Items, Starter Held Items, TM/HM/Tutor/Learnset, Scriptparser, Palette/Graphics, MoveData/MoveNames, TypeChart/TypeEffectiveness, Trainer/Wild/Evolution/Text/Menu.

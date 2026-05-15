@@ -1,3 +1,22 @@
+# Next Steps Update - 2026-05-15 - Field Items complete in tested scope
+
+Aktueller Fokus:
+
+- `FVX-ITEM-001 Field Items Shuffle` ist im engen allowed-slot Scope `GUI-kompatibel`.
+- `FVX-ITEM-002 Field Items Random` ist im engen Field-Items-only Scope `GUI-kompatibel`, inklusive `banBadRandomFieldItems=true` fuer `FieldItemsMod.RANDOM`.
+- `FVX-ITEM-003 Field Items Random even distribution` ist im engen Field-Items-only Scope `GUI-kompatibel`, inklusive `banBadRandomFieldItems=true` fuer `FieldItemsMod.RANDOM_EVEN`.
+- `FVX-ITEM-004 Field Items Ban Bad Items` ist fuer Field Items Random und Random Even `GUI-kompatibel`.
+- Shops, Pickup und Held Items bleiben nicht hochgestuft und muessen getrennt geplant werden.
+
+Naechster empfohlener Minimalblock:
+
+- `analysis/upr-fvx-cfru-dpe-pickup-items-scope-diagnostics-plan`
+
+Ziel des Folgeblocks:
+
+- Pickup als separaten Item-Writer-Scope read-only planen.
+- Keine Field-Items-Nacharbeit, keine Shops, keine Held Items, keine TM/HM/Tutor/Learnset-Ausweitung, keine Palette/Graphics, kein MoveData/MoveNames, kein TypeChart/TypeEffectiveness, keine Trainer/Wild/Evolution/Text/Menu-Arbeit.
+
 # Next Steps Update - 2026-05-15 - Field Items Random Even Ban Bad smoke next
 
 Aktueller Fokus:

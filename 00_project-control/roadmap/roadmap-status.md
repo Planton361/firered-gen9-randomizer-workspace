@@ -754,3 +754,13 @@ Zweck: Diagnose 082 reviewen und mergen; danach Evolution-Methoden-Writer und we
 - Sanitized result: `candidateLoaded=true`, `fieldItemScanSuccessful=true`, `fieldItemsTotal=339`, `visibleFieldItemSlots=168`, `hiddenFieldItemSlots=171`, `allowedFieldItemSlots=280`, `disallowedFieldItemSlots=59`, `tmFieldItemSlots=28`, `nonTmFieldItemSlots=311`, `requiredFieldTMMissing=0`, `invalidFieldItemIds=0`, `unloadedFieldItemIds=0`, `scriptPatternUnmatchedItemBalls=10`.
 - `FVX-ITEM-001..004` remain `Write modelliert`; next step is a guarded Field-Items write/smoke branch.
 - No code, submodule, build, Randomizer write/save, ROM output, log or private artefact changes.
+
+## 2026-05-15 - Field Items Random Even Ban Bad Reload-Smoke
+
+- Diagnose 113 bestaetigt `FVX-ITEM-003 Field Items Random even distribution` mit `banBadRandomFieldItems=true` im engen Field-Items-only Scope.
+- Save/log/output/reload sind true; `fieldItemReloadMismatches=0`, sichtbare/Hidden-Mismatches `0`, TM-/Non-TM-Slot-Mismatches `0`, `requiredFieldTMMissingAfter=0`.
+- Ban Bad bleibt stabil: `badFieldItemWrites=0`; der fachliche Kandidat meldet `badFieldItemPoolCandidates=47` und `badFieldItemPoolExcluded=47`.
+- Random-Even-Queue-/Verteilungsstabilitaet ist belegt: `randomEvenQueueUsed=true`, `randomEvenTmDistributionStable=true`, `randomEvenNonTmDistributionStable=true`, `nonBadFieldItemQueueRefills=0`.
+- `FVX-ITEM-001..004` sind fuer Field Items im getesteten engen Scope `GUI-kompatibel`.
+- Shops, Pickup und Held Items bleiben separate Writer-Scope-Bloecke ohne Hochstufung.
+- Naechster empfohlener P1-Block: `analysis/upr-fvx-cfru-dpe-pickup-items-scope-diagnostics-plan`.

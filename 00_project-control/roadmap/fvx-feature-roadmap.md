@@ -215,3 +215,18 @@ Field Items, Shops und Pickup bleiben im Items-Paket, werden aber nicht als geme
 - Field-Items-only diagnostics now have sanitized candidate data: `fieldItemsTotal=339`, visible `168`, hidden `171`, allowed `280`, disallowed `59`, TM slots `28`, Non-TM slots `311`, and `requiredFieldTMMissing=0`.
 - The next reviewable scope is a guarded Field-Items write/smoke for allowed slots only; disallowed, progression-sensitive, key/system and script-pattern-unmatched slots stay preserve-only.
 - Shops and Pickup remain separate follow-up tracks.
+
+## 2026-05-15 - Field Items completion in tested scope
+
+Diagnosen 102, 109, 110, 112 und 113 schliessen `FVX-ITEM-001..004` fuer Field Items im getesteten engen CFRU/DPE Gen9-BPRE-Scope ab:
+
+- Shuffle, Random und Random Even reloaden stabil.
+- Ban Bad ist fuer Random und Random Even bestaetigt.
+- Field-Item-Gesamtzahl bleibt `339`, Reload-Mismatches bleiben `0`, Required Field TMs bleiben vollstaendig.
+- CFRU/DPE Field-TM-Slots bleiben im API-Scope sichtbar, ohne TMs global allowed zu setzen.
+
+Naechste Item-Reihenfolge:
+
+1. Pickup Items separat read-only planen und diagnostizieren.
+2. Shops separat planen, weil Terminatoren, Shoplisten-Laengen, Preise und Repointing ein eigener Scope sind.
+3. Held Items bleiben getrennt von Field Items / Shops / Pickup.
