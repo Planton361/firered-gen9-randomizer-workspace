@@ -1,3 +1,11 @@
+# Roadmap status update - Diagnose 167
+
+- Evolution suboptions `FVX-TRAIT-016` through `FVX-TRAIT-027` are consolidated read-only.
+- Result: `evolution-scope-consolidated`.
+- `FVX-TRAIT-016` remains P1-supported; `FVX-TRAIT-018` and `FVX-TRAIT-019` are `diagnosis-ready` after 165/166.
+- `FVX-TRAIT-017` and `FVX-TRAIT-020` through `FVX-TRAIT-023` remain plan-only Species-Carrier filters; `FVX-TRAIT-024` through `FVX-TRAIT-027` remain separate not-started Evolution-improvement/method slices.
+- No UPR-FVX fixblock is opened by this consolidation; next minimal Evolution work is a read-only Non-ROM harness plan for the remaining Species-Carrier filters or a separate methods/improvements plan.
+
 # Roadmap status update - Diagnose 166
 
 - Evolution Same Typing (`FVX-TRAIT-019`) is reclassified read-only as `diagnosis-ready`.
@@ -589,6 +597,7 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | 08 Randomizer-Kompatibilität | CFRU/DPE Evolution Similar Strength Normalized Reload Diagnostics | Diagnose 082 bestaetigt `FVX-TRAIT-018` mit Save/Log/Output/Reload true, `normalizedWriteReloadEvolutionMismatches=0`, `rawWithFormeWriteReloadEvolutionMismatches=0`, `<unknown>=false`, `exceptionClass=none` und `stacktrace=none`; `Bad Egg=true` bleibt nach 055 klassifiziert |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Evolution Similar Strength Diagnostics | Diagnose 165 ordnet `FVX-TRAIT-018` read-only als `diagnosis-ready` neu ein: 070 ist durch 081/082 normalisierte Reload-Evidenz ueberholt; kein unmittelbarer Fixblock, optional nur Code-Review oder Non-ROM-Harness-Plan |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Evolution Same Typing Diagnostics | Diagnose 166 ordnet `FVX-TRAIT-019` read-only als `diagnosis-ready` neu ein: 070 ist durch 079/080 Same-Typing-Null-Type-Fix und Reload-Evidenz ueberholt; kein unmittelbarer Fixblock, optional nur Code-Review oder Non-ROM-Harness-Plan |
+| 08 Randomizer-Kompatibilität | CFRU/DPE Evolution Suboptions Consolidation | Diagnose 167 konsolidiert `FVX-TRAIT-016` bis `FVX-TRAIT-027`: `016` P1-supported, `018/019` diagnosis-ready, `017/020-023` plan-only, `024-027` separate nicht begonnene Improvement-/Methoden-Slices |
 
 ## In Arbeit
 

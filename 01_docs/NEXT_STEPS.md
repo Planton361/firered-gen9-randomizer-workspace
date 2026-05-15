@@ -1,3 +1,10 @@
+# Next steps update - Diagnose 167
+
+- Treat the Evolution-Species-Carrier matrix as consolidated for `FVX-TRAIT-016` through `FVX-TRAIT-027`.
+- Keep `FVX-TRAIT-016` as P1-supported and `FVX-TRAIT-018` / `FVX-TRAIT-019` as `diagnosis-ready`; do not open a fixbranch for these without new crash, unsafe Species or normalized reload mismatch evidence.
+- If Evolution suboptions remain the next priority, plan a small read-only Non-ROM harness block for `FVX-TRAIT-017` and `FVX-TRAIT-020` through `FVX-TRAIT-023`.
+- Keep `FVX-TRAIT-024` through `FVX-TRAIT-027` separate from the Species-Carrier; they need their own Evolution-improvement/methods plan before any smoke or code work.
+
 # Next steps update - Diagnose 166
 
 - Treat `FVX-TRAIT-019` Evolution Same Typing as reclassified out of the active blocker lane for the narrow `FVX-TRAIT-016` Evolution-Species-Carrier scope.

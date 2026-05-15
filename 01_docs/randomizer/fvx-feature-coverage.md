@@ -1,3 +1,10 @@
+# Coverage update - Diagnose 167
+
+- Evolution suboptions `FVX-TRAIT-016` through `FVX-TRAIT-027` are consolidated as `evolution-scope-consolidated`.
+- `FVX-TRAIT-016` remains GUI-compatible / P1-supported from Diagnose 026.
+- `FVX-TRAIT-018` and `FVX-TRAIT-019` are kept as `diagnosis-ready` for the narrow `FVX-TRAIT-016` Evolution-Species-Carrier scope after Diagnoses 165 and 166.
+- `FVX-TRAIT-017` and `FVX-TRAIT-020` through `FVX-TRAIT-023` remain plan-only; `FVX-TRAIT-024` through `FVX-TRAIT-027` remain not-started Evolution-improvement/method slices and are not promoted by the Species-Carrier evidence.
+
 # Coverage update - Diagnose 166
 
 - Diagnose 166 reclassifies `FVX-TRAIT-019` Evolution Same Typing as `diagnosis-ready` for the narrow `FVX-TRAIT-016` Evolution-Species-Carrier scope.
@@ -678,8 +685,8 @@ Diagnose 082 bestaetigt `FVX-TRAIT-018` nach der 081-Normalisierung:
 - FVX-TRAIT-015 | Abilities: Ban Bad Abilities | Plan erstellt
 - FVX-TRAIT-016 | Pokemon Evolutions randomisieren | GUI-kompatibel
 - FVX-TRAIT-017 | Evolutions: Random Every Level | Plan erstellt
-- FVX-TRAIT-018 | Evolutions: Similar Strength | GUI-kompatibel
-- FVX-TRAIT-019 | Evolutions: Same Typing | GUI-kompatibel
+- FVX-TRAIT-018 | Evolutions: Similar Strength | Diagnosis-ready
+- FVX-TRAIT-019 | Evolutions: Same Typing | Diagnosis-ready
 - FVX-TRAIT-020 | Evolutions: Limit to Three Stages | Plan erstellt
 - FVX-TRAIT-021 | Evolutions: No Convergence | Plan erstellt
 - FVX-TRAIT-022 | Evolutions: Force Change | Plan erstellt

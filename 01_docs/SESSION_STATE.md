@@ -1,3 +1,13 @@
+# Session update - Diagnose 167
+
+- New branch: `test/upr-fvx-cfru-dpe-evolution-suboptions-consolidation`.
+- PR #215 / Diagnose 166 was verified as merged into `main` before this block.
+- UPR-FVX submodule remains clean and pinned at `dc6ad3cb01282db5ff85935959bbdac6c2d3fa0c`.
+- Diagnose 167 consolidates Evolution suboptions `FVX-TRAIT-016` through `FVX-TRAIT-027`.
+- Result: `evolution-scope-consolidated`.
+- Consolidated status: `FVX-TRAIT-016` remains P1-supported; `FVX-TRAIT-018` and `FVX-TRAIT-019` are `diagnosis-ready`; `FVX-TRAIT-017` and `FVX-TRAIT-020` through `FVX-TRAIT-023` remain plan-only Species-Carrier filters; `FVX-TRAIT-024` through `FVX-TRAIT-027` remain not-started Evolution-improvement/method slices outside the narrow Species-Carrier.
+- No ROM-Smoke, Randomizer run, build, code change, submodule change, ROM/save/output/log access or external download was performed.
+
 # Session update - Diagnose 166
 
 - New branch: `test/upr-fvx-cfru-dpe-evolution-same-typing-diagnostics`.

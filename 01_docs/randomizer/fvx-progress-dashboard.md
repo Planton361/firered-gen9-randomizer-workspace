@@ -33,13 +33,13 @@ Markdown bleibt Source of Truth.
 
 | Feld | Aktueller Stand |
 |---|---|
-| Stand | Nach Diagnose 166 |
-| Aktueller enger Blocker | Evolution Same Typing ist read-only neu eingeordnet; kein unmittelbarer Fixblock fuer `FVX-TRAIT-019` |
-| Zuletzt entblockt | Evolution Similar Strength und Same Typing aus aktivem Blockerstatus genommen |
-| Zuletzt validiert | `FVX-TRAIT-019` durch 079/080 Same-Typing-Null-Type-Guard und Reload-Evidenz |
+| Stand | Nach Diagnose 167 |
+| Aktueller enger Blocker | Kein Evolution-Species-Carrier-Fixblock; offene Evolution-Slices sind plan-only oder Methoden-/Improvement-Scope |
+| Zuletzt entblockt | Evolution Similar Strength und Same Typing bleiben aus aktivem Blockerstatus genommen |
+| Zuletzt validiert | Evolution-Suboptionen `FVX-TRAIT-016` bis `FVX-TRAIT-027` read-only konsolidiert |
 | Carrier-Smokes bestanden | Global Species Pool, Starter-Suboptions, Trainer Similar Strength, Wild Similar Strength/Type Restrictions |
-| Danach | optionaler Evolution-Same-Typing Code-Review/Non-ROM-Harness-Plan oder naechster offener Writer-Scope |
-| Grosse offene Writer | MoveData Write, Palette Randomization, mehrere Trainer/Evolution-Sonderoptionen |
+| Danach | optionaler Non-ROM-Harness-Plan fuer `FVX-TRAIT-017`/`020-023` oder separater Methodenplan fuer `024-027` |
+| Grosse offene Writer | MoveData Write, Palette Randomization, Evolution-Improvement-/Methoden-Slices |
 | Spaeter / P2 | Special Tutors/Text/Menu, Graphics/Sprites, Misc Tweaks |
 
 ## Statusmodell
@@ -73,7 +73,7 @@ Markdown bleibt Source of Truth.
 | Paket | Leitstatus | Stabil belegt | Carrier-tested | Blocker / Luecke | Naechster Schritt | Belege |
 |---|---|---|---|---|---|---|
 | General Options | Gemischt | - | Limit Pokemon, No Premature Evolutions im Starter-Carrier | Race Mode, Intro Mon offen | separater General-Smoke | 064 |
-| Pokemon Traits | Gemischt | Base Stats, Species Types, Abilities, Evolution Species-only, Evolution Similar Strength, Evolution Same Typing | - | weitere Evolution-Methoden-/Sonderoptionen getrennt | Evolution-Suboptionen isoliert halten | 051, 052, 059, 070, 075, 026, 079-082, 165-166 |
+| Pokemon Traits | Gemischt | Base Stats, Species Types, Abilities, Evolution Species-only | Evolution Similar Strength und Evolution Same Typing diagnosis-ready | `017/020-023` plan-only; `024-027` Methoden-Scope | Evolution-Suboptionen nach 167 getrennt halten | 051, 052, 059, 070, 075, 026, 079-082, 165-167 |
 | Starters, Statics & Trades | Gemischt | Starter Species, Static/Gift Species | Starter-Filter | Starter Held Items offen; In-Game Trades guarded/preserve-only, not supported | naechster Nicht-Trades-Scope oder Reopen-Evidenz | 065, 152-164 |
 | Moves & Movesets | Gemischt | Movesets/Learnsets, Reorder Damaging | einige Filter-/Sanity-Optionen | MoveData Write offen | MoveData Write Preserve | 049, 056 |
 | Foe Pokemon / Trainer | Teilweise blockiert | Trainer Species, Movesets, Held Items, Similar Strength | Similar Strength im Trainer-Carrier | Type Diversity / Type Themes, Additional Pokemon, Textnamen | Trainer-Suboptionen spaeter | 070, 075, 077 |
@@ -92,7 +92,7 @@ Markdown bleibt Source of Truth.
 | Pokemon Base Stats | P1-supported | Random/Shuffle Base Stats | Follow Evolutions nur geplant | EXP Curves, Gen Update offen | Suboptionen spaeter |
 | Pokemon Types | P1-supported fuer Species Types | Type Read/Write | Force Dual Types geplant | TypeChart separat, inzwischen getestet | keine enge Luecke |
 | Pokemon Abilities | P1-supported | Ability1/2 + Hidden Ability | Ban-/Filter-Suboptionen geplant | - | Suboption-Smoke spaeter |
-| Evolutions | Teilweise supported, Suboptionen offen | normale Evolution Randomization, Species-only, Similar Strength und Same Typing im engen Carrier-Scope | einige Filter geplant | Evolution-Methoden-/weitere Sonderoptionen getrennt | optionaler Code-Review/Non-ROM-Harness-Plan |
+| Evolutions | Konsolidiert, Suboptionen offen | normale Evolution Randomization / Species-only | Similar Strength und Same Typing diagnosis-ready | `017/020-023` plan-only; `024-027` getrennte Methoden-/Improvement-Slices | Non-ROM-Harness-Plan oder Methodenplan |
 | Starters | Stark / Carrier-tested | Starter Species | Basic/Type/BST/Legendary Filter | Starter Held Items | spaeter Held Items |
 | Static/Gift | P1-supported fuer Species | Static/Gift Species | Similar Strength im Scope | Level Modifier/Fix Music offen | spaeter |
 | In-Game Trades | Guarded / Preserve-only, not supported | Null-/Invalid-Species Guard, Non-ROM TradeRandomizerTest, ROM-freier Gen3 Writer-Preserve-Test | - | keine validen aktiven Rows, kein Species-Write-Smoke, kein Text/Nickname/OT/IV/Item | nur mit Reopen-Evidenz |
@@ -134,17 +134,17 @@ Diese Tabelle listet alle aktuell erfassten FVX-Features einmal kompakt auf. Sie
 | 18 | `FVX-TRAIT-014` | Pokemon Traits | Abilities: Ban Negative Abilities | Plan erstellt | Filter |
 | 19 | `FVX-TRAIT-015` | Pokemon Traits | Abilities: Ban Bad Abilities | Plan erstellt | Filter |
 | 20 | `FVX-TRAIT-016` | Pokemon Traits | Pokemon Evolutions randomisieren | P1-supported | Global |
-| 21 | `FVX-TRAIT-017` | Pokemon Traits | Evolutions: Random Every Level | Plan erstellt | Carrier / Filter |
-| 22 | `FVX-TRAIT-018` | Pokemon Traits | Evolutions: Similar Strength | P1-supported | Evolution-Species-Carrier |
-| 23 | `FVX-TRAIT-019` | Pokemon Traits | Evolutions: Same Typing | P1-supported | Evolution-Species-Carrier |
-| 24 | `FVX-TRAIT-020` | Pokemon Traits | Evolutions: Limit to Three Stages | Plan erstellt | Filter |
-| 25 | `FVX-TRAIT-021` | Pokemon Traits | Evolutions: No Convergence | Plan erstellt | Filter |
-| 26 | `FVX-TRAIT-022` | Pokemon Traits | Evolutions: Force Change | Plan erstellt | Filter |
-| 27 | `FVX-TRAIT-023` | Pokemon Traits | Evolutions: Force Growth | Plan erstellt | Filter |
-| 28 | `FVX-TRAIT-024` | Pokemon Traits | Change Impossible Evolutions | Nicht begonnen | Writer |
-| 29 | `FVX-TRAIT-025` | Pokemon Traits | Make Evolutions Easier | Nicht begonnen | Writer |
-| 30 | `FVX-TRAIT-026` | Pokemon Traits | Use Estimated Evolution Levels | Nicht begonnen | Writer |
-| 31 | `FVX-TRAIT-027` | Pokemon Traits | Remove Time-Based Evolutions | Nicht begonnen | Writer |
+| 21 | `FVX-TRAIT-017` | Pokemon Traits | Evolutions: Random Every Level | Plan-only | Evolution-Species-Carrier / Filter |
+| 22 | `FVX-TRAIT-018` | Pokemon Traits | Evolutions: Similar Strength | Diagnosis-ready | Evolution-Species-Carrier |
+| 23 | `FVX-TRAIT-019` | Pokemon Traits | Evolutions: Same Typing | Diagnosis-ready | Evolution-Species-Carrier |
+| 24 | `FVX-TRAIT-020` | Pokemon Traits | Evolutions: Limit to Three Stages | Plan-only | Evolution-Species-Carrier / Graph filter |
+| 25 | `FVX-TRAIT-021` | Pokemon Traits | Evolutions: No Convergence | Plan-only | Evolution-Species-Carrier / Graph filter |
+| 26 | `FVX-TRAIT-022` | Pokemon Traits | Evolutions: Force Change | Plan-only | Evolution-Species-Carrier / Target filter |
+| 27 | `FVX-TRAIT-023` | Pokemon Traits | Evolutions: Force Growth | Plan-only | Evolution-Species-Carrier / BST filter |
+| 28 | `FVX-TRAIT-024` | Pokemon Traits | Change Impossible Evolutions | Nicht begonnen | Evolution improvement / Methoden |
+| 29 | `FVX-TRAIT-025` | Pokemon Traits | Make Evolutions Easier | Nicht begonnen | Evolution improvement / Level-Methoden |
+| 30 | `FVX-TRAIT-026` | Pokemon Traits | Use Estimated Evolution Levels | Nicht begonnen | Evolution improvement Zusatzflag |
+| 31 | `FVX-TRAIT-027` | Pokemon Traits | Remove Time-Based Evolutions | Nicht begonnen | Evolution improvement / Time methods |
 | 32 | `FVX-TRAIT-028` | Pokemon Traits | EXP-/Legendary-Kurven-Sonderfaelle | Nicht begonnen | Writer / Filter |
 | 33 | `FVX-SST-001` | Starters, Statics & Trades | Starter Pokemon: Custom | P1-supported | Global |
 | 34 | `FVX-SST-002` | Starters, Statics & Trades | Starter Pokemon: Random completely | P1-supported | Global |
@@ -291,8 +291,8 @@ Diese Tabelle listet alle aktuell erfassten FVX-Features einmal kompakt auf. Sie
 
 | Reihenfolge | Arbeitspaket | Ziel | Warum jetzt? | Erwartetes Ergebnis |
 |---:|---|---|---|---|
-| 1 | Evolution Same Typing optionaler Review/Harness-Plan | Status bei Bedarf ohne ROM-Smoke weiter absichern | 166 empfiehlt keinen Fixbranch | Review- oder Harness-Plan statt Fix |
-| 2 | Evolution-Methoden-/Sonderoptionen | Change Impossible / Easier / Time-Based getrennt halten | 166 deckt nur Same Typing im Species-Carrier ab | separater Scope-Plan |
+| 1 | Evolution Carrier-Filter Harness-Plan | `FVX-TRAIT-017` und `020-023` ohne ROM-Smoke planen | 167 konsolidiert diese als plan-only | Non-ROM-Harness-Plan statt Fix |
+| 2 | Evolution-Methoden-/Improvement-Slices | `FVX-TRAIT-024` bis `027` getrennt halten | 167 schliesst sie aus dem Species-Carrier aus | separater Scope-Plan |
 | 3 | MoveData Write | Power/Accuracy/PP/Type/Update Moves absichern | grosser offener Moves-Tab-Writer | `FVX-MOVE-001` bis `FVX-MOVE-006` hochstufen |
 | 4 | Palette Randomization | echte Palettenaenderungen absichern | grosser Graphics/Palette-Writer | `FVX-GFX-001` bis `FVX-GFX-004` hochstufen |
 | 5 | Special Tutors/Text/Menu | P2-Sonderpfade modellieren | nicht normaler Tutor-Tabellenpfad | P2-Entscheidung |
@@ -302,6 +302,7 @@ Diese Tabelle listet alle aktuell erfassten FVX-Features einmal kompakt auf. Sie
 
 | Diagnose / PR | Bereich | Ergebnis | Statuswirkung |
 |---|---|---|---|
+| 167 | Evolution Suboptions Consolidation | `evolution-scope-consolidated` | `FVX-TRAIT-016` bis `027` konsolidiert: `016` P1, `018/019` diagnosis-ready, `017/020-023` plan-only, `024-027` separat |
 | 166 | Evolution Same Typing Diagnostics | `diagnosis-ready` | `FVX-TRAIT-019` aus aktivem Fixblockerstatus genommen; 079/080 Guard- und Reload-Evidenz bleibt massgeblich |
 | 165 | Evolution Similar Strength Diagnostics | `diagnosis-ready` | `FVX-TRAIT-018` aus aktivem Fixblockerstatus genommen; 081/082 normalisierte Reload-Evidenz bleibt massgeblich |
 | 164 | In-Game Trades Final Classification | `guarded/preserve-only, not supported` | Trades-Lane fuer aktuellen Scope geschlossen, keine Species-Write-Freigabe |
