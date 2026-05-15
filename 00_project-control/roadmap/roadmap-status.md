@@ -1,3 +1,11 @@
+# Roadmap Status Update - 2026-05-15 - Shop Items Shuffle reload smoke
+
+- Neuer Befund: `08_tests/randomizer/124_shop_items_shuffle_reload_smoke.md`.
+- `FVX-ITEM-005 Shop Items Shuffle` ist im getesteten Shop-only CFRU/DPE Gen9-BPRE Scope `GUI-kompatibel`.
+- Smoke-Ergebnis: Save/Log/Output/Reload true, `shopCountBefore/After/Reload=23`, `shopItemsTotalBefore/After/Reload=157`, `shopItemReloadMismatches=0`, Laengen-/Skip-/Special-Policy-Mismatches `0`.
+- Preise, Field Items, Pickup und Held Items blieben unveraendert: `priceTableTouched=false`, `priceReloadMismatches=0`, Fremdscope-Flags `false`.
+- `FVX-ITEM-006..009` bleiben `Write modelliert`; naechster Minimalblock ist `test/upr-fvx-cfru-dpe-shop-items-random-reload-smoke`.
+
 # Roadmap Status Update - 2026-05-15 - Shop Items candidate diagnostics
 
 - Neuer Befund: `08_tests/randomizer/123_shop_items_scope_diagnostics_candidate.md`.

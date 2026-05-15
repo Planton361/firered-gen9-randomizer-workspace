@@ -1,3 +1,21 @@
+# Next Steps Update - 2026-05-15 - Shop Random smoke next
+
+Aktueller Fokus:
+
+- Diagnose 124 confirms `FVX-ITEM-005 Shop Items Shuffle` as reload-stable in the Shop-only CFRU/DPE Gen9-BPRE scope.
+- Stable criteria: `saveSuccessful=true`, `logSuccessful=true`, `outputRomExists=true`, `reloadSuccessful=true`, `shopItemReloadMismatches=0`, skipped-shop mismatches `0`, price reload mismatches `0`, and Field/Pickup/Held scope changes `false`.
+- `FVX-ITEM-006..009` remain separate and are not upgraded by the Shuffle smoke.
+
+Naechster empfohlener Minimalblock:
+
+- `test/upr-fvx-cfru-dpe-shop-items-random-reload-smoke`
+
+Ziel des Folgeblocks:
+
+- Run only `FVX-ITEM-006 Shop Items Random` as a Shop-only Write/Reload-Smoke.
+- Keep Shop Bans, Guarantee Evolution/X Items, Balance Prices, Cheap Rare Candies, Field Items, Pickup and Held Items out of scope.
+- Reuse the Diagnose-123/124 structure criteria: counts, lengths, terminators, skipped shops, special policy, prices and foreign scopes must stay stable.
+
 # Next Steps Update - 2026-05-15 - Shop Shuffle smoke next
 
 Aktueller Fokus:
