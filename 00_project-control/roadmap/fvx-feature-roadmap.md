@@ -240,3 +240,13 @@ Pickup folgt nach Field Items als separater Item-Writer-Scope:
 - CFRU/DPE-Risiken: falscher Locator, abweichende Common/Rare-Struktur, Probability-Semantik, moderne/fallback/bad Items und TM-Holdability-/Reusable-Policy.
 - Reihenfolge: read-only Diagnose, Random ohne Ban Bad, Random mit Ban Bad.
 - Shops bleiben wegen Terminator-/Repointing-/Preis-Scope separat.
+
+## 2026-05-15 - Pickup Items candidate diagnostics completed
+
+Pickup read-only diagnostics are complete for the next Item writer slice:
+
+- `FVX-ITEM-010` remains `Write modelliert` until a dedicated Write-/Reload-Smoke passes.
+- Diagnose 115 establishes `pickupLocatorSuccessful=true`, `pickupItemsTotal=16`, `pickupExpectedCount=16`, `pickupEntrySize=4`, `pickupProbabilitySlots=10` and `pickupProbabilityModelStable=true`.
+- Invalid/unloaded/fallback/placeholder Pickup IDs were not found in the current table.
+- Ban Bad remains a separate follow-up because `pickupBadItemPoolCandidates=51` and `pickupBadItemPoolExcluded=51` must be validated through the Pickup poolfilter.
+- Reihenfolge: Pickup Random ohne Ban Bad, danach Pickup Random mit Ban Bad.
