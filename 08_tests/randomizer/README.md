@@ -1,5 +1,9 @@
 # Current update
 
+- Diagnose 168 plans a Non-ROM harness for Evolution filter slices `FVX-TRAIT-017` and `FVX-TRAIT-020` through `FVX-TRAIT-023`. Result: `harness-plan-ready`; all five slices are ROM-free testable with synthetic `Species`/`Evolution` data and a small `RomHandler` proxy/fake, with no expected production-code seam. No testcode, ROM-Smoke, Randomizer run, build or code change was performed.
+
+# Current update
+
 - Diagnose 167 consolidates Evolution suboptions `FVX-TRAIT-016` through `FVX-TRAIT-027`. Result: `evolution-scope-consolidated`; `016` remains P1-supported, `018/019` are `diagnosis-ready`, `017/020-023` stay plan-only, and `024-027` stay separate not-started Evolution-improvement/method slices. No ROM-Smoke, Randomizer run, build or code change was performed.
 
 # Current update
@@ -329,6 +333,7 @@ Der neueste bestaetigte Stand wird in Markdown ueber die Spalte `Latest` markier
 | 165 | `165_evolution_similar_strength_diagnostics.md` | CFRU/DPE Evolution Similar Strength Diagnostics | read-only Neueinordnung: `diagnosis-ready`; `FVX-TRAIT-018` ist durch 081/082 nicht mehr aktiver Fixblocker, naechster minimaler Pfad ist Statuspflege oder optionaler Non-ROM-Harness-/Code-Review-Plan statt Fixbranch | keiner, read-only Analyse | nein |
 | 166 | `166_evolution_same_typing_diagnostics.md` | CFRU/DPE Evolution Same Typing Diagnostics | read-only Neueinordnung: `diagnosis-ready`; `FVX-TRAIT-019` ist durch 079/080 nicht mehr aktiver Fixblocker, naechster minimaler Pfad ist Statuspflege oder optionaler Non-ROM-Harness-/Code-Review-Plan statt Fixbranch | keiner, read-only Analyse | nein |
 | 167 | `167_evolution_suboptions_consolidation.md` | CFRU/DPE Evolution Suboptions Consolidation | read-only Konsolidierung: `evolution-scope-consolidated`; `FVX-TRAIT-016` bleibt P1-supported, `018/019` sind `diagnosis-ready`, `017/020-023` plan-only und `024-027` separate nicht begonnene Improvement-/Methoden-Slices | keiner, read-only Analyse | nein |
+| 168 | `168_evolution_filter_harness_plan.md` | CFRU/DPE Evolution Filter Harness Plan | read-only Plan: `harness-plan-ready`; `FVX-TRAIT-017` und `020-023` sind ROM-frei mit synthetischen Species/Evolution-Daten und kleinem `RomHandler`-Proxy/Fake testbar, ohne erwarteten Produktivcode-Seam | keiner, read-only Analyse | nein |
 | 083 | `083_move_data_write_preserve_diagnostics.md` | CFRU/DPE MoveData Write Preserve Diagnostics | UPR-FVX-Fix implementiert: klassische MoveData-Bytes `+0..+4` bleiben geschrieben, CFRU/DPE `BattleMove.split` wird im Gate bei `+10` geschrieben, nicht modellierte Bytes bleiben erhalten; Reload-Smoke separat in 084 | keiner | nein |
 | 084 | `084_move_data_write_preserve_reload_smoke.md` | CFRU/DPE MoveData Write Preserve Reload-Smoke | bestaetigt: Save/Log/Output/Reload true, `writeReloadMoveDataMismatches=0`, `moves.total=992`, `991:PsychicNoise`, category/split reload stabil und Preserve-Bytes fuer unveraenderte Moves bytegleich | lokal/ignored, nicht dokumentiert | nein |
 | 085 | `085_move_data_power_accuracy_pp_reload_smoke.md` | CFRU/DPE MoveData Power/Accuracy/PP Reload-Smoke | bestaetigt: Save/Log/Output/Reload true, `writeReloadMoveDataMismatches=0`, `powerReloadMismatches=0`, `accuracyReloadMismatches=0`, `ppReloadMismatches=0`, rohe `+1/+3/+4` Bytes stabil und Preserve-Bytes bytegleich | lokal/ignored, nicht dokumentiert | nein |

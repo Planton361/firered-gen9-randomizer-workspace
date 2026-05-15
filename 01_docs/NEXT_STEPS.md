@@ -1,3 +1,10 @@
+# Next steps update - Diagnose 168
+
+- Treat the Evolution filter harness scope as ready: `FVX-TRAIT-017` and `FVX-TRAIT-020` through `FVX-TRAIT-023` can be covered by a small UPR-FVX Non-ROM `:random:test`.
+- Preferred later implementation: synthetic `Species` / `Evolution` graph plus `RomHandler` proxy/fake, scoped to `EvolutionRandomizerTest` or a new `EvolutionFilterRandomizerTest`.
+- Keep `FVX-TRAIT-024` through `FVX-TRAIT-027` out of this harness; they remain separate Evolution-improvement/method slices.
+- Do not run ROM-Smoke, Randomizer runs, Gen3 writer tests, output-ROM generation or builds unless separately authorized.
+
 # Next steps update - Diagnose 167
 
 - Treat the Evolution-Species-Carrier matrix as consolidated for `FVX-TRAIT-016` through `FVX-TRAIT-027`.

@@ -1,3 +1,13 @@
+# Session update - Diagnose 168
+
+- New branch: `test/upr-fvx-cfru-dpe-evolution-filter-harness-plan`.
+- PR #216 / Diagnose 167 was verified as merged into `main` before this block.
+- UPR-FVX submodule remains clean and pinned at `dc6ad3cb01282db5ff85935959bbdac6c2d3fa0c`.
+- Diagnose 168 plans a Non-ROM harness for Evolution filter slices `FVX-TRAIT-017` and `FVX-TRAIT-020` through `FVX-TRAIT-023`.
+- Result: `harness-plan-ready`.
+- Finding: the target slices are all in `EvolutionRandomizer` Species-carrier/filter logic and can be tested with synthetic `Species` / `Evolution` data plus a small `RomHandler` proxy/fake, likely in `EvolutionRandomizerTest` or a new `EvolutionFilterRandomizerTest`.
+- No production-code seam is expected; no ROM-Smoke, Randomizer run, build, testcode, code change, submodule change, ROM/save/output/log access or external download was performed.
+
 # Session update - Diagnose 167
 
 - New branch: `test/upr-fvx-cfru-dpe-evolution-suboptions-consolidation`.

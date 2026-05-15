@@ -1,3 +1,9 @@
+# Coverage update - Diagnose 168
+
+- Non-ROM harness planning for Evolution filter slices is ready.
+- `FVX-TRAIT-017` and `FVX-TRAIT-020` through `FVX-TRAIT-023` remain plan-only, but now have a concrete `harness-plan-ready` path using synthetic Species/Evolution data and a small `RomHandler` proxy/fake.
+- No GUI-compatible promotion is made by this plan; `FVX-TRAIT-024` through `FVX-TRAIT-027` remain separate not-started Evolution-improvement/method slices.
+
 # Coverage update - Diagnose 167
 
 - Evolution suboptions `FVX-TRAIT-016` through `FVX-TRAIT-027` are consolidated as `evolution-scope-consolidated`.
@@ -684,13 +690,13 @@ Diagnose 082 bestaetigt `FVX-TRAIT-018` nach der 081-Normalisierung:
 - FVX-TRAIT-014 | Abilities: Ban Negative Abilities | Plan erstellt
 - FVX-TRAIT-015 | Abilities: Ban Bad Abilities | Plan erstellt
 - FVX-TRAIT-016 | Pokemon Evolutions randomisieren | GUI-kompatibel
-- FVX-TRAIT-017 | Evolutions: Random Every Level | Plan erstellt
+- FVX-TRAIT-017 | Evolutions: Random Every Level | Harness-plan-ready
 - FVX-TRAIT-018 | Evolutions: Similar Strength | Diagnosis-ready
 - FVX-TRAIT-019 | Evolutions: Same Typing | Diagnosis-ready
-- FVX-TRAIT-020 | Evolutions: Limit to Three Stages | Plan erstellt
-- FVX-TRAIT-021 | Evolutions: No Convergence | Plan erstellt
-- FVX-TRAIT-022 | Evolutions: Force Change | Plan erstellt
-- FVX-TRAIT-023 | Evolutions: Force Growth | Plan erstellt
+- FVX-TRAIT-020 | Evolutions: Limit to Three Stages | Harness-plan-ready
+- FVX-TRAIT-021 | Evolutions: No Convergence | Harness-plan-ready
+- FVX-TRAIT-022 | Evolutions: Force Change | Harness-plan-ready
+- FVX-TRAIT-023 | Evolutions: Force Growth | Harness-plan-ready
 - FVX-TRAIT-024 | Change Impossible Evolutions | Nicht begonnen
 - FVX-TRAIT-025 | Make Evolutions Easier | Nicht begonnen
 - FVX-TRAIT-026 | Use Estimated Evolution Levels | Nicht begonnen
