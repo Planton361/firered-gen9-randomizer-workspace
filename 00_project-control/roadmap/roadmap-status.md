@@ -1,3 +1,12 @@
+# Roadmap Status Update - 2026-05-15 - Shop Item Bans scope plan
+
+- Neuer Plan: `08_tests/randomizer/126_shop_item_bans_scope_plan.md`.
+- `FVX-ITEM-007 Shop Item Bans` ist als separater Shop-only Subscope nach `FVX-ITEM-006` geplant.
+- Codepfad-Befund: `banBadRandomShopItems`, `banRegularShopItems` und `banOPShopItems` wirken nur in `ItemRandomizer.randomizeShopItems()` unter `ShopItemsMod.RANDOM`; Shuffle/Unchanged belegen sie nicht.
+- Pool-Basis aus Diagnose 125: no-ban/no-TM `allowedShopItemPoolSize=536`, non-bad/no-TM `nonBadShopItemPoolSize=485`; vorhandene `badShopItems=36` bleiben Bestand, kein Ban-Ergebnis.
+- `FVX-ITEM-005` und `FVX-ITEM-006` bleiben `GUI-kompatibel`; `FVX-ITEM-007..009` bleiben `Write modelliert`.
+- Naechster Minimalblock: Shop Random + Ban Bad Smoke.
+
 # Roadmap Status Update - 2026-05-15 - Shop Items Random reload smoke
 
 - Neuer Befund: `08_tests/randomizer/125_shop_items_random_reload_smoke.md`.

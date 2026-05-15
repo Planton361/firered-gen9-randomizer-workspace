@@ -1,3 +1,10 @@
+# FVX Feature Roadmap Update - 2026-05-15 - Shop Item Bans scope plan
+
+- `FVX-ITEM-007 Shop Item Bans` is now planned as the next Shop-only sub-scope after Shop Random.
+- First executable step should be Shop Random + Ban Bad because its pool delta is directly measurable from Diagnose 125 (`536` allowed/no-TM vs `485` non-bad/no-TM).
+- Ban Regular and Ban OP should follow as separate smokes only after their banned sets are measured clearly.
+- `FVX-ITEM-008..009` remain separate Shop sub-scopes; Field Items, Pickup and Held Items are unchanged.
+
 # FVX Feature Roadmap Update - 2026-05-15 - Shop Items Random reload smoke
 
 - `FVX-ITEM-006 Shop Items Random` is now GUI-compatible in the tested Shop-only CFRU/DPE Gen9-BPRE scope.
