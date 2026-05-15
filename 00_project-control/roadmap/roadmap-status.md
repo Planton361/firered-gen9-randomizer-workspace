@@ -1,3 +1,11 @@
+# Roadmap Status Update - 2026-05-15 - Shop Items candidate diagnostics
+
+- Neuer Befund: `08_tests/randomizer/123_shop_items_scope_diagnostics_candidate.md`.
+- Read-only Shop-Kandidatendiagnose ist stabil: `candidateLoaded=true`, `shopScanSuccessful=true`, `shopCount=23`, `shopItemsTotal=157`, `terminatorModelStable=true`, `shopLengthMismatch=0`.
+- Item-Safety fuer den sichtbaren Shopbestand: invalid/unloaded/fallback/placeholder `0`; vorhandene `badShopItems=36` und `tmShopItems=6` bleiben spaetere Pool-/Ban-Themen.
+- `FVX-ITEM-005..009` bleiben `Write modelliert`; Diagnose 123 belegt nur die Voraussetzung fuer einen Shop Shuffle Smoke.
+- Naechster Minimalblock: `test/upr-fvx-cfru-dpe-shop-items-shuffle-reload-smoke`.
+
 # Roadmap Status Update - 2026-05-15 - Shop Items diagnostics preflight
 
 - Neuer Befund: `08_tests/randomizer/122_shop_items_scope_diagnostics.md`.

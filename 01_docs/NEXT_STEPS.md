@@ -1,3 +1,21 @@
+# Next Steps Update - 2026-05-15 - Shop Shuffle smoke next
+
+Aktueller Fokus:
+
+- Diagnose 123 confirms a stable read-only Shop structure for the approved CFRU/DPE Gen9-BPRE candidate.
+- Shop metrics are stable enough for the next minimal write/reload test: `shopScanSuccessful=true`, `shopCount=23`, `shopItemsTotal=157`, `terminatorModelStable=true`, `shopLengthMismatch=0`, invalid/unloaded/fallback/placeholder Shop items all `0`.
+- `dataRewriterOrRepointingRisk=true` remains a required Smoke criterion because `Gen3RomHandler.setShops(...)` uses `DataRewriter<Shop>`.
+
+Naechster empfohlener Minimalblock:
+
+- `test/upr-fvx-cfru-dpe-shop-items-shuffle-reload-smoke`
+
+Ziel des Folgeblocks:
+
+- Run only `FVX-ITEM-005 Shop Items Shuffle` as a Shop-only Write/Reload-Smoke.
+- Prove stable Shop count, item total, min/max length, terminators, preserved skipped shops, Special/MainGame policy and no price, Field, Pickup or Held scope changes.
+- Do not include Shop Random, Shop Bans, Guarantee Evolution/X Items, Balance Prices, Cheap Rare Candies, Field Items, Pickup, Held Items, TM/HM/Tutor/Learnset, Trainer, Wild, Evolution, Text/Menu, Palette/Graphics, MoveData/MoveNames or TypeChart.
+
 # Next Steps Update - 2026-05-15 - Shop Items candidate needed
 
 Aktueller Fokus:

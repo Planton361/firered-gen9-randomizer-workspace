@@ -1,3 +1,10 @@
+# FVX Feature Coverage Update - 2026-05-15 - Shop Items candidate diagnostics
+
+- Diagnose 123 confirms the read-only Shop candidate structure for the CFRU/DPE Gen9-BPRE scope: `candidateLoaded=true`, `shopScanSuccessful=true`, `shopCount=23`, `shopItemsTotal=157`, `terminatorModelStable=true`, `shopLengthMismatch=0`.
+- `FVX-ITEM-005 Shop Items Shuffle` has its prerequisite for a Shop-only Shuffle smoke, but is not upgraded yet.
+- `FVX-ITEM-006..009` remain `Write modelliert`; Random, Bans, Guarantee and Price/Rare-Candy options are not tested.
+- Field Items, Pickup and Held Items are not affected.
+
 # FVX Feature Coverage Update - 2026-05-15 - Shop Items diagnostics preflight
 
 - `FVX-ITEM-005..009` remain `Write modelliert` after Diagnose 122.
