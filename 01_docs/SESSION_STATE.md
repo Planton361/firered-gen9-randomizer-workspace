@@ -1,3 +1,11 @@
+# 2026-05-15 - Shop Guarantee Items Scope Plan
+
+- Arbeitsbranch: `analysis/upr-fvx-cfru-dpe-shop-guarantee-items-scope-plan`.
+- Diagnose 130 plant `FVX-ITEM-008 Guarantee Evolution/X Items` als separaten Shop-only Subscope.
+- Read-only Befund: Guarantee Evolution/X wirkt nur bei `ShopItemsMod.RANDOM` ueber `setupGuaranteed()` und `placeNewItems(...)`.
+- Placement zielt auf Special Shops; Guaranteed Items werden fuer MainGame-Special-Shops reserviert, SkipShops bleiben preserve-only.
+- `FVX-ITEM-005`, `FVX-ITEM-006` und die einzeln getesteten `FVX-ITEM-007` Ban-Flags bleiben GUI-kompatibel; `FVX-ITEM-008` bleibt bis Smoke `Write modelliert`, `FVX-ITEM-009` bleibt offen.
+
 # 2026-05-15 - Shop Items Random + Ban OP Smoke
 
 - Arbeitsbranch: `test/upr-fvx-cfru-dpe-shop-items-random-ban-op-reload-smoke`.

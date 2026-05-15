@@ -1,3 +1,9 @@
+# 2026-05-15 - Shop Guarantee Items Coverage Plan
+
+- `FVX-ITEM-008 Guarantee Evolution/X Items` bleibt `Write modelliert`; Diagnose 130 ist read-only Planung.
+- Die Suboptionen Guarantee Evolution Items und Guarantee X Items werden getrennt als Shop-only Random-Smokes geplant.
+- `FVX-ITEM-005`, `FVX-ITEM-006` und die einzeln getesteten `FVX-ITEM-007` Ban-Flags bleiben GUI-kompatibel; `FVX-ITEM-009` bleibt nicht hochgestuft.
+
 # 2026-05-15 - Shop Item Bans Ban OP Teilstatus
 
 - `FVX-ITEM-007` hat nun GUI-kompatible Teilnachweise fuer `ShopItemsMod.RANDOM` mit Ban Bad, Ban Regular und Ban OP jeweils einzeln.

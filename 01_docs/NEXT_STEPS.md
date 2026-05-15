@@ -1,3 +1,9 @@
+# 2026-05-15 - Naechster Schritt nach Diagnose 130
+
+- Empfohlen: `test/upr-fvx-cfru-dpe-shop-guarantee-evolution-items-reload-smoke`.
+- Scope: nur `ShopItemsMod.RANDOM + guaranteeEvolutionItems=true`; keine Guarantee X Items, keine Ban-Kombinationen, keine Preis- oder Cheap-Rare-Candy-Optionen.
+- Pflicht: MainGame-Special-Placement, SkipShop-Preserve, Laengen/Terminatoren, Reload und Preis/Field/Pickup/Held-Fremdscopes messen.
+
 # 2026-05-15 - Naechster Schritt nach Diagnose 129
 
 - Entscheiden, ob `FVX-ITEM-007` Ban-Kombinationsdeckung braucht oder ob direkt `FVX-ITEM-008 Guarantee Evolution/X Items` geplant wird.

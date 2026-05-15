@@ -1,3 +1,9 @@
+# 2026-05-15 - Diagnose 130 Shop Guarantee Items Plan
+
+- `FVX-ITEM-008 Guarantee Evolution/X Items` ist als Shop-only Subscope nach den einzeln reloadstabilen `FVX-ITEM-007` Ban-Flags geplant.
+- Guarantee-Flags wirken nur unter `ShopItemsMod.RANDOM`; Placement laeuft ueber Special Shops, mit Guaranteed-Rest fuer MainGame-Special-Shops.
+- `FVX-ITEM-008` bleibt bis Smoke `Write modelliert`; `FVX-ITEM-009` und Ban-Kombinationen bleiben separat.
+
 # 2026-05-15 - Diagnose 129 Shop Items Ban OP
 
 - `FVX-ITEM-007` ist fuer `ShopItemsMod.RANDOM + banOPShopItems=true` im Shop-only Write/Reload-Smoke GUI-kompatibel.
