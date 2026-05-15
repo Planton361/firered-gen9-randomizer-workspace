@@ -1,3 +1,10 @@
+# Next steps update - Diagnose 166
+
+- Treat `FVX-TRAIT-019` Evolution Same Typing as reclassified out of the active blocker lane for the narrow `FVX-TRAIT-016` Evolution-Species-Carrier scope.
+- Do not open a UPR-FVX fix branch for Same Typing unless new evidence shows a null-type crash, normalized reload mismatches, unsafe target Species, or a Save/Log/Reload failure.
+- If more confidence is required, the next minimal block should be read-only code review or a Non-ROM harness plan for the Same-Typing guard, not a ROM-Smoke.
+- Keep Evolution-Methoden-Writer, Change Impossible Evolutions, Make Evolutions Easier, Text/Menu, Items, MoveData, TypeChart and Graphics as separate scopes.
+
 # Next steps update - Diagnose 165
 
 - Treat `FVX-TRAIT-018` Evolution Similar Strength as reclassified out of the active blocker lane for the narrow `FVX-TRAIT-016` Evolution-Species-Carrier scope.
