@@ -1,3 +1,10 @@
+# Next steps update - Diagnose 165
+
+- Treat `FVX-TRAIT-018` Evolution Similar Strength as reclassified out of the active blocker lane for the narrow `FVX-TRAIT-016` Evolution-Species-Carrier scope.
+- Do not open a UPR-FVX fix branch for Similar Strength unless new normalized reload evidence shows mismatches, unsafe target Species, or a Save/Log/Reload failure.
+- If more confidence is required, the next minimal block should be read-only code review or a Non-ROM harness plan for Similar-Strength selection/normalization, not a ROM-Smoke.
+- Keep Evolution-Methoden-Writer, Change Impossible Evolutions, Make Evolutions Easier, Text/Menu, Items, MoveData, TypeChart and Graphics as separate scopes.
+
 # Next steps update - Diagnose 164
 
 - Treat In-Game Trades as closed for the current tested scope: `guarded/preserve-only, not supported`.

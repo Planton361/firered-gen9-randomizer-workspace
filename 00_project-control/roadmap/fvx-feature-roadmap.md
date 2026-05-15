@@ -1,3 +1,10 @@
+# Roadmap update - Diagnose 165
+
+- Evolution Similar Strength (`FVX-TRAIT-018`) is reclassified read-only as `diagnosis-ready` for the narrow `FVX-TRAIT-016` Evolution-Species-Carrier scope.
+- The historical 070 mismatch blocker is superseded by Diagnose 081/082 normalized reload evidence: Save/Log/Output/Reload true and `normalizedWriteReloadEvolutionMismatches=0`.
+- No immediate UPR-FVX fix block is recommended; if additional confidence is requested, plan read-only code review or a small Non-ROM harness before any new ROM-facing smoke.
+- Keep Evolution-Methoden-Writer and other Evolution suboptions separate.
+
 # Roadmap update - Diagnose 164
 
 - In-Game Trades are closed for the tested CFRU/DPE Gen9-BPRE scope as `guarded/preserve-only, not supported`.

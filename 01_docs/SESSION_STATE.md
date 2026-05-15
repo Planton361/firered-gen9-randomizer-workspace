@@ -1,3 +1,13 @@
+# Session update - Diagnose 165
+
+- New branch: `test/upr-fvx-cfru-dpe-evolution-similar-strength-diagnostics`.
+- PR #213 / Diagnose 164 was verified as merged into `main` before this block.
+- UPR-FVX submodule remains clean and pinned at `dc6ad3cb01282db5ff85935959bbdac6c2d3fa0c`.
+- Diagnose 165 reclassifies `FVX-TRAIT-018` Evolution Similar Strength read-only as `diagnosis-ready`.
+- Finding: the original 070 blocker (`writeReloadEvolutionMismatches=24` plus `Bad Egg=true`) is superseded by Diagnose 081/082. The normalized reload comparison in 082 confirms Save/Log/Output/Reload true, `normalizedWriteReloadEvolutionMismatches=0`, `rawWithFormeWriteReloadEvolutionMismatches=0`, `<unknown>=false`, `exceptionClass=none` and `stacktrace=none`.
+- No immediate UPR-FVX fixblock is recommended for this narrow Similar-Strength scope; next minimal work is status reconciliation or, if extra evidence is requested, a read-only code-review / Non-ROM harness plan.
+- No ROM-Smoke, Randomizer run, build, code change, submodule change, ROM/save/output/log access or external download was performed.
+
 # Session update - Diagnose 164
 
 - New branch: `test/upr-fvx-cfru-dpe-ingame-trades-final-classification`.

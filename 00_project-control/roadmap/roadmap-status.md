@@ -1,3 +1,10 @@
+# Roadmap status update - Diagnose 165
+
+- Evolution Similar Strength (`FVX-TRAIT-018`) is reclassified read-only as `diagnosis-ready`.
+- The active blocker from Diagnose 070 is superseded by Diagnose 081/082: normalized Evolution reload evidence shows Save/Log/Output/Reload true and `normalizedWriteReloadEvolutionMismatches=0`.
+- `Bad Egg=true` remains classified under Diagnose 055 as an Evolution log / special-Species marker when reload criteria are stable.
+- No UPR-FVX fixblock is recommended for this narrow Similar-Strength scope; optional next evidence should be read-only code review or a Non-ROM harness plan, not ROM-Smoke.
+
 # Roadmap status update - Diagnose 164
 
 - In-Game Trades final classification is documented as `guarded/preserve-only, not supported`.
@@ -573,6 +580,7 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | 08 Randomizer-Kompatibilität | CFRU/DPE Evolution Same Typing Null-Type Fix | UPR-FVX `74d88a7a` und Diagnose 080 bestaetigen `FVX-TRAIT-019` mit Save/Log/Output/Reload true, `writeReloadEvolutionMismatches=0`, `<unknown>=false`, `exceptionClass=none` und `stacktrace=none`; `Bad Egg` bleibt nach 055 klassifiziert |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Evolution Similar Strength Mismatch Diagnostics | Diagnose 081 grenzt `FVX-TRAIT-018` wahrscheinlich auf einen zu breiten Diagnosevergleich gegen nicht persistierte Forme-/Zusatzfelder ein; naechster Schritt ist ein normalisierter Diagnose-Smoke, kein sofortiger Fix |
 | 08 Randomizer-Kompatibilität | CFRU/DPE Evolution Similar Strength Normalized Reload Diagnostics | Diagnose 082 bestaetigt `FVX-TRAIT-018` mit Save/Log/Output/Reload true, `normalizedWriteReloadEvolutionMismatches=0`, `rawWithFormeWriteReloadEvolutionMismatches=0`, `<unknown>=false`, `exceptionClass=none` und `stacktrace=none`; `Bad Egg=true` bleibt nach 055 klassifiziert |
+| 08 Randomizer-Kompatibilität | CFRU/DPE Evolution Similar Strength Diagnostics | Diagnose 165 ordnet `FVX-TRAIT-018` read-only als `diagnosis-ready` neu ein: 070 ist durch 081/082 normalisierte Reload-Evidenz ueberholt; kein unmittelbarer Fixblock, optional nur Code-Review oder Non-ROM-Harness-Plan |
 
 ## In Arbeit
 

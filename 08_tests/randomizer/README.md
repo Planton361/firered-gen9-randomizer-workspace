@@ -1,5 +1,9 @@
 # Current update
 
+- Diagnose 165 reclassifies `FVX-TRAIT-018` Evolution Similar Strength read-only. Result: `diagnosis-ready`; 070's mismatch blocker is superseded by 081/082 normalized reload evidence, so no immediate UPR-FVX fix block is recommended. No ROM-Smoke, Randomizer run, build or code change was performed.
+
+# Current update
+
 - Diagnose 164 closes In-Game Trades for the tested CFRU/DPE Gen9-BPRE scope as `guarded/preserve-only, not supported`. Guards and non-ROM tests are documented, but no valid active rows are confirmed; Species-Write-Smoke, ROM-Smoke, valid-active-row promotion, and text/Nickname/OT/IV/Held-Item scopes remain blocked.
 
 # Current update
@@ -314,6 +318,7 @@ Der neueste bestaetigte Stand wird in Markdown ueber die Spalte `Latest` markier
 | 080 | `080_evolution_same_typing_nulltype_fix_diagnostics.md` | CFRU/DPE Evolution Same Typing Null-Type Fix Diagnostics | bestaetigt: UPR-FVX-Fix fuer `EvolutionRandomizer` Same-Typing-Null-Primary-Type-Scope; `FVX-TRAIT-019` mit Save/Log/Output/Reload true, `writeReloadEvolutionMismatches=0`, `<unknown>=false`, `exceptionClass=none` und `stacktrace=none`; `FVX-TRAIT-018` nur als getrennte Regression | lokal/ignored, nicht dokumentiert | nein |
 | 081 | `081_p1_evolution_similar_strength_mismatch_diagnostics.md` | CFRU/DPE P1 Evolution Similar Strength Mismatch Diagnostics | dokumentiert: read-only Code-/Protokollanalyse fuer `FVX-TRAIT-018`; wahrscheinlich ist der 070-Mismatch-Zaehler durch einen zu breiten Vergleich auf nicht persistierte Forme-/Zusatzfelder entstanden; empfiehlt getrennten normalisierten Diagnose-Smoke vor jedem Fix | keiner, read-only Analyse | nein |
 | 082 | `082_evolution_similar_strength_normalized_reload_diagnostics.md` | CFRU/DPE Evolution Similar Strength Normalized Reload Diagnostics | bestaetigt: `FVX-TRAIT-018` mit Save/Log/Output/Reload true, `normalizedWriteReloadEvolutionMismatches=0`, `rawWithFormeWriteReloadEvolutionMismatches=0`, `<unknown>=false`, `exceptionClass=none` und `stacktrace=none`; `Bad Egg=true` nach 055 klassifiziert | lokal/ignored, nicht dokumentiert | nein |
+| 165 | `165_evolution_similar_strength_diagnostics.md` | CFRU/DPE Evolution Similar Strength Diagnostics | read-only Neueinordnung: `diagnosis-ready`; `FVX-TRAIT-018` ist durch 081/082 nicht mehr aktiver Fixblocker, naechster minimaler Pfad ist Statuspflege oder optionaler Non-ROM-Harness-/Code-Review-Plan statt Fixbranch | keiner, read-only Analyse | nein |
 | 083 | `083_move_data_write_preserve_diagnostics.md` | CFRU/DPE MoveData Write Preserve Diagnostics | UPR-FVX-Fix implementiert: klassische MoveData-Bytes `+0..+4` bleiben geschrieben, CFRU/DPE `BattleMove.split` wird im Gate bei `+10` geschrieben, nicht modellierte Bytes bleiben erhalten; Reload-Smoke separat in 084 | keiner | nein |
 | 084 | `084_move_data_write_preserve_reload_smoke.md` | CFRU/DPE MoveData Write Preserve Reload-Smoke | bestaetigt: Save/Log/Output/Reload true, `writeReloadMoveDataMismatches=0`, `moves.total=992`, `991:PsychicNoise`, category/split reload stabil und Preserve-Bytes fuer unveraenderte Moves bytegleich | lokal/ignored, nicht dokumentiert | nein |
 | 085 | `085_move_data_power_accuracy_pp_reload_smoke.md` | CFRU/DPE MoveData Power/Accuracy/PP Reload-Smoke | bestaetigt: Save/Log/Output/Reload true, `writeReloadMoveDataMismatches=0`, `powerReloadMismatches=0`, `accuracyReloadMismatches=0`, `ppReloadMismatches=0`, rohe `+1/+3/+4` Bytes stabil und Preserve-Bytes bytegleich | lokal/ignored, nicht dokumentiert | nein |
