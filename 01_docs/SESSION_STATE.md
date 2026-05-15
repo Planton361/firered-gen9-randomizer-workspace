@@ -1,3 +1,11 @@
+# 2026-05-15 - Diagnose 146
+
+- Current branch records Starter Held Items Write/Reload-Smoke without Ban Bad.
+- Smoke result: PASS; save/log/output/reload succeeded and `starterHeldItemReloadMismatches=0`.
+- Starter model result: one shared Gen3/FRLG Starter Held Item slot changed from empty to non-empty and reloaded stably.
+- Safety metrics: bad/TM/invalid/unloaded/fallback/placeholder Starter-Held-Item writes all `0`; Wild, Trainer, Field, Pickup and Shop scopes stayed unchanged.
+- Starter Ban Bad remains the only open Starter Held Items sub-scope.
+
 # 2026-05-15 - Diagnose 145
 
 - Current branch records Regular Trainer Held Items filtered Write/Reload-Smoke.
