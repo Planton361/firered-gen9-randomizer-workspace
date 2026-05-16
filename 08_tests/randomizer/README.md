@@ -1,5 +1,11 @@
 # Current update
 
+- UPR-FVX PR #55 is merged and `02_external/upr-fvx` now pins `8f88e25d458996b560189ba23d3216ee0c775f14`.
+- Wild Encounters now have a second ROM-free Multi-Area-/Multi-Slot Unit-Test-Slice in `WildCatchLevelDecisionTest`: unterschiedliche Areas, Slot-Anzahlen und Levelbereiche bleiben strukturell stabil; selected Species stay in the allowed pool including high IDs above `1000`.
+- Statuswirkung: ROM-free evidence only; no ROM-facing Reload evidence, Writer/Reload smoke, output ROM, Randomizer run or P1 promotion was performed.
+
+# Current update
+
 - UPR-FVX PR #54 is merged and `02_external/upr-fvx` now pins `8d67f8686e16b3a9d3e77da5789a06889a645e5f`.
 - Wild Encounters now have a first ROM-free Unit-Test-Slice in `WildCatchLevelDecisionTest`: Slot-/Level-/Area structure remains preserved, encounter areas stay non-empty, and selected Species stay in the allowed pool including high IDs above `1000`.
 - Statuswirkung: ROM-free evidence only; no ROM-facing Reload evidence, Writer/Reload smoke, output ROM, Randomizer run or P1 promotion was performed.

@@ -1,3 +1,11 @@
+# Next steps update - Wild encounters multi-area test slice sync
+
+- Treat the UPR-FVX PR #55 sync as a narrow ROM-free Wild Encounter unit-test evidence update only.
+- The pinned `WildCatchLevelDecisionTest` now includes a second synthetic Multi-Area-/Multi-Slot Wild Encounter slice: unterschiedliche Areas, Slot-Anzahlen, Levelbereiche, encounter types, rates and map/location metadata remain structurally stable.
+- Keep Wild Encounters below P1-supported; no ROM-facing Writer/Reload evidence, output ROM, Randomizer run or reload equality was produced in this sync.
+- Next Wild work, if explicitly authorized, should choose a separate narrow scope: either more ROM-free option coverage or a later ROM-facing/equivalent Writer/Reload evidence plan.
+- Do not run ROM evidence, perform Writer-/Reload smokes or promote P1 from this sync.
+
 # Next steps update - Wild encounters first test slice sync
 
 - Treat the UPR-FVX PR #54 sync as a narrow ROM-free Wild Encounter unit-test evidence update only.

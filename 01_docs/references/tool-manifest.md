@@ -1,3 +1,15 @@
+# Tool Manifest Update - 2026-05-16 - Wild encounters multi-area test slice
+
+- Workspace branch: `docs/sync-wild-encounters-multi-area-slice`.
+- UPR-FVX fork base branch: `compat/firered-gen9-cfru-dpe`.
+- UPR-FVX PR #55: <https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/55>.
+- Original UPR-FVX test commit: `52da522e test: cover wild encounters multi area structure`.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX commit `8f88e25d458996b560189ba23d3216ee0c775f14`.
+- Previous workspace pin was `8d67f8686e16b3a9d3e77da5789a06889a645e5f`.
+- Scope: second ROM-free Wild Encounter unit-test slice in `WildCatchLevelDecisionTest`; synthetic multi-area data covers different encounter areas, encounter types, slot counts, rates, map/location metadata and level ranges while preserving structure and allowing high-numbered Species IDs above `1000`.
+- Checks recorded from UPR-FVX PR #55: `git diff --check`, `git diff --cached --check` and `./gradlew :random:test --tests com.uprfvx.random.randomizers.WildCatchLevelDecisionTest`, successful.
+- Safety: no Workspace code changes beyond documentation and submodule pin, no UPR-FVX code changes in this workspace sync, no ROM/save/output/log/build artifacts committed, no ROM-facing Writer/Reload evidence, no P1-promotion and no Original-Upstream PR.
+
 # Tool Manifest Update - 2026-05-16 - Wild encounters first test slice
 
 - Workspace branch: `docs/sync-wild-encounters-first-slice`.
