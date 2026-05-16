@@ -1,3 +1,9 @@
+# Next steps update - Wild encounters P1 decision
+
+- Treat Standard/Fallback Wild Encounters as `P1-supported` for the documented writer/reload scope in the tested private target context.
+- Keep special Wild systems separate: CFRU Day/Night Wild, Swarms, Roamers, DexNav, Raids, Wild Double Battles and other non-standard systems are not promoted by this decision.
+- Next Randomizer work should move to the next explicitly scoped area; do not rerun or expand Wild ROM evidence unless a new Wild sub-scope is opened.
+
 # Next steps update - Wild encounters ROM smoke evidence sync
 
 - Treat UPR-FVX PR #66 plus the sanitized local `Gen3WildEncounterRomSmokeTest` pass as ROM-facing Writer/Reload smoke evidence for Wild Encounters.

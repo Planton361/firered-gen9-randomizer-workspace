@@ -1,5 +1,12 @@
 # Current update
 
+- `183_wild_encounters_p1_decision.md` records the separate P1 decision for Wild Encounters.
+- Statuswirkung: Standard/Fallback Wild Encounters are now `P1-supported` for the documented writer/reload scope in the tested private target context.
+- Scope boundary: CFRU Day/Night Wild, Swarms, Roamers, DexNav, Raids, Wild Double Battles and other special Wild systems remain separate and non-promoted.
+- No new ROM execution, UPR-FVX code change, submodule pin change, ROM path/hash/full log or output ROM was added.
+
+# Current update
+
 - UPR-FVX PR #66 is merged and `02_external/upr-fvx` now pins `f4d0cbbe3143cab4b963d2444b8354d97fa96403`.
 - PR #66 fixes the Gen3 Evolution load blocker that stopped the opt-in Wild Encounter ROM smoke before the Wild Encounter writer/reload portion.
 - `182_wild_encounters_rom_smoke_evidence.md` records sanitized local ROM-facing evidence: `Gen3WildEncounterRomSmokeTest` passed with Tests 1, Failures 0, Errors 0, Skipped 0.
