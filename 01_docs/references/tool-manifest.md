@@ -1,3 +1,15 @@
+# Tool Manifest Update - 2026-05-16 - Learnsets starting moves test slice
+
+- Workspace branch: `docs/sync-learnsets-starting-moves-slice`.
+- UPR-FVX fork base branch: `compat/firered-gen9-cfru-dpe`.
+- UPR-FVX PR #59: <https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/59>.
+- Original UPR-FVX test commit: `948d8526 test: cover learnsets starting or evolution option`.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX commit `0d217db45086d8d03b4eb606ae2621633396d768`.
+- Previous workspace pin was `6ed75f5b1e5b8b354e2db694c880407c8e0a10dd`.
+- Scope: third ROM-free Learnsets test slice in `LearnsetDecisionTest`; synthetic Guaranteed Starting Moves coverage verifies expected Level-1 slots are added while the later level slot, Move pool and high Species ID `1025` path remain stable.
+- Checks recorded from UPR-FVX PR #59: `git diff --check`, `git diff --cached --check` and `./gradlew :random:test --tests '*Learn*'`, successful.
+- Safety: no Workspace code changes beyond documentation and submodule pin, no UPR-FVX code changes in this workspace sync, no ROM/save/output/log/build artifacts committed, no ROM-facing Writer/Reload evidence, no P1-promotion and no Original-Upstream PR.
+
 # Tool Manifest Update - 2026-05-16 - Learnsets option test slice
 
 - Workspace branch: `docs/sync-learnsets-option-slice`.
