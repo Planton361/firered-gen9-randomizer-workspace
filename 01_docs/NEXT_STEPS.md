@@ -1,3 +1,11 @@
+# Next steps update - Wild encounters ROM smoke harness sync
+
+- Treat UPR-FVX PR #65 as harness-prepared only: a ROM-facing Wild Encounter writer/reload smoke can now be run locally with explicit private-ROM opt-in.
+- The harness default path skips without ROM, so normal tests do not require or expose private ROM material.
+- Keep Wild Encounters below P1-supported; the real local ROM smoke has not been executed or reviewed.
+- Next Wild work, if explicitly authorized, should run the harness locally with private ROM and summarize only non-private pass/fail evidence. Do not document ROM paths, hashes, logs or output ROMs.
+- Do not promote P1 from PR #65 alone.
+
 # Next steps update - Wild encounters reload equality evidence sync
 
 - Treat UPR-FVX PR #64 as the first ROM-free Writer/Reload Equality evidence for Wild Encounters only.

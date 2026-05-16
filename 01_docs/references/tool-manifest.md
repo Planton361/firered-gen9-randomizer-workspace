@@ -1,3 +1,16 @@
+# Tool Manifest Update - 2026-05-16 - Wild encounters ROM smoke harness
+
+- Workspace branch: `randomizer/wild-encounters-rom-smoke-harness-sync`.
+- UPR-FVX fork base branch: `compat/firered-gen9-cfru-dpe`.
+- UPR-FVX PR #65: <https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/65>.
+- Original UPR-FVX test commit: `41e35eec test: add wild encounters rom smoke harness`.
+- Workspace submodule `02_external/upr-fvx` now pins verified merged UPR-FVX commit `f224862c91aed8e7a75fe843f5088cadea734da4`.
+- Previous workspace pin was `d49837fea305157a2fe94f3f57d09cedc8ab25f8`.
+- Scope: opt-in ROM-facing Wild Encounter smoke harness in `Gen3WildEncounterRomSmokeTest`; default no-ROM run skips cleanly.
+- Checks recorded from UPR-FVX PR #65: `git diff --check`, `git diff --cached --check`, `./gradlew :romio:test --tests '*Gen3WildEncounterRomSmokeTest*'`, `./gradlew :romio:test --tests '*Wild*'` and `./gradlew :random:test --tests '*Wild*'`, successful with the no-ROM smoke skipped.
+- Safety: no Workspace code changes beyond documentation and submodule pin, no new UPR-FVX code changes in this workspace sync, no ROM/save/output/log/build artifacts committed, no private ROM path/hash/log/output ROM documented, no local ROM-smoke result, no P1-promotion and no Original-Upstream PR.
+- Note: the requested SHA `c7a07a4643a570b2e27de059804f1a249616aaf0` was not reachable in the UPR-FVX fork; GitHub reports PR #65 merge commit `f224862c91aed8e7a75fe843f5088cadea734da4`.
+
 # Tool Manifest Update - 2026-05-16 - Wild encounters reload equality evidence
 
 - Workspace branch: `randomizer/wild-encounters-p1-track`.

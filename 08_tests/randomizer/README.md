@@ -1,5 +1,12 @@
 # Current update
 
+- UPR-FVX PR #65 is merged and `02_external/upr-fvx` now pins verified merge commit `f224862c91aed8e7a75fe843f5088cadea734da4`.
+- Wild Encounters now have an opt-in ROM-facing smoke harness in `Gen3WildEncounterRomSmokeTest`; default no-ROM execution skips cleanly.
+- Statuswirkung: harness prepared only; no private local ROM smoke was executed, no ROM path/hash/log/output ROM is documented and no P1 promotion was performed.
+- Note: the requested SHA `c7a07a4643a570b2e27de059804f1a249616aaf0` was not reachable in the UPR-FVX fork; PR #65 resolves to merge commit `f224862c91aed8e7a75fe843f5088cadea734da4`.
+
+# Current update
+
 - UPR-FVX PR #64 is merged and `02_external/upr-fvx` now pins `d49837fea305157a2fe94f3f57d09cedc8ab25f8`.
 - Wild Encounters now have ROM-free synthetic Writer/Reload Equality evidence in `WildCatchLevelDecisionTest`: a reloadable fake `RomHandler` deep-copies `setEncounters(...)` data and reloads fresh `getEncounters(...)` copies.
 - Statuswirkung: Writer/Reload Equality evidence only at synthetic ROM-free level; no real Gen3 byte writer proof, output ROM, Randomizer run or P1 promotion was performed.
