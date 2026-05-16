@@ -1,5 +1,11 @@
 # Current update
 
+- UPR-FVX PR #57 is merged and `02_external/upr-fvx` now pins `56cae7eb0c2ddc626dc31c4802d3f696a42959bf`.
+- Learnsets now have a first ROM-free Unit-Test-Slice in `LearnsetDecisionTest`: `randomizeMovesLearnt()` keeps Learnsets non-empty, preserves Level-/Slot-Anzahl, selects from the allowed Move pool and processes high Species ID `1025`.
+- Statuswirkung: ROM-free evidence only; no ROM-facing Reload evidence, Writer/Reload smoke, output ROM, Randomizer run or P1 promotion was performed.
+
+# Current update
+
 - UPR-FVX PR #56 is merged and `02_external/upr-fvx` now pins `b3b9a8ab5e8726f4b4d2d4e23efa733cce7287ac`.
 - Wild Encounters now have a third ROM-free Option-Test-Slice in `WildCatchLevelDecisionTest`: `BlockWildLegendaries` is checked synthetically so legendary Species stay out of the replacement pool while Slot-/Level-/Area structure remains stable.
 - Statuswirkung: ROM-free evidence only; no ROM-facing Reload evidence, Writer/Reload smoke, output ROM, Randomizer run or P1 promotion was performed.

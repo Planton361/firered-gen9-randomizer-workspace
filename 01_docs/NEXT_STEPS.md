@@ -1,3 +1,11 @@
+# Next steps update - Learnsets first test slice sync
+
+- Treat the UPR-FVX PR #57 sync as a narrow ROM-free Learnsets unit-test evidence update only.
+- The pinned `LearnsetDecisionTest` now includes a first synthetic `randomizeMovesLearnt()` slice: Learnsets stay non-empty, Level-/Slot-Anzahl remains stable, selected Moves stay in the allowed pool and high Species ID `1025` is processed.
+- Keep Learnsets below P1-supported; no ROM-facing Writer/Reload evidence, output ROM, Randomizer run or reload equality was produced in this sync.
+- Next Learnsets work, if explicitly authorized, should choose another narrow ROM-free option/behavior slice or a later ROM-facing/equivalent Writer/Reload evidence plan.
+- Do not run ROM evidence, perform Writer-/Reload smokes or promote P1 from this sync.
+
 # Next steps update - Wild encounters option test slice sync
 
 - Treat the UPR-FVX PR #56 sync as a narrow ROM-free Wild Encounter option-test evidence update only.
