@@ -1,5 +1,9 @@
 # Current update
 
+- `027_trainer_rom_reload_text_evidence_plan.md`: read-only plan for later Trainer ROM-/Reload-/Text-Encoding evidence. It keeps current Trainer suboptions at `tested-non-rom`, separates missing ROM/reload proof from text-encoding and `changeTo.length()` risks, and defines criteria for any later narrowly scoped P1 promotion.
+
+# Current update
+
 - `181_trainer_names_followup.md`: records merged UPR-FVX PR #51 and pins `02_external/upr-fvx` to `d20eb1367c62a4f14c8778bc61ad6904ea76a6d6`.
 - The pinned `TrainerNameRandomizerTest` covers `FVX-FOE-013` Trainer Names/Class Names with synthetic Non-ROM data: `canChangeTrainerText=false`, singles-/doubles-pool selection, repeated-name translation, `MAX_LENGTH`, `MAX_LENGTH_WITH_CLASS`, Class-Name pools and fixed class-name length.
 - Statuswirkung: Trainer Names/Class Names is now `tested-non-rom`, not P1-supported; no Gen3 Writer-/Reload-ROM evidence, ROM-Smoke, text-encoding proof, output-ROM or Randomizer run was performed.

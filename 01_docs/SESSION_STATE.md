@@ -1,3 +1,12 @@
+# Session update - Trainer ROM/Reload/Text evidence plan
+
+- New branch: `analysis/trainer-rom-reload-text-evidence-plan`.
+- Added a read-only plan for later Trainer ROM-/Reload-/Text-Encoding evidence: `08_tests/randomizer/027_trainer_rom_reload_text_evidence_plan.md`.
+- The plan records current Trainer suboptions `FVX-FOE-005` through `FVX-FOE-014` as applicable `tested-non-rom`, not P1-supported, based on recent synthetic harness follow-ups.
+- Missing evidence is kept separate: later ROM-/Reload evidence, Trainer text-encoding proof, and the `changeTo.length()` length-measurement risk each need their own proof before any promotion.
+- No Roadmap status promotion is made: no ROM, save, emulator state, output ROM, log, build artifact, Randomizer JAR, tool binary, private path, hash, secret, token or `.env` file was read, copied, changed or documented.
+- No UPR-FVX code, Writer-/Reload fix, Text-Encoding implementation, Randomizer run or P1 promotion was performed.
+
 # Session update - Diagnose 181
 
 - New branch: `test/upr-fvx-cfru-dpe-trainer-names-followup`.
