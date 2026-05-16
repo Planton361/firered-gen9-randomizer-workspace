@@ -1,5 +1,11 @@
 # Current update
 
+- `031_trainer_names_text_length_unit_evidence.md`: records merged UPR-FVX PR #52 and pins `02_external/upr-fvx` to `7357b244e01ef2c7790b858d50c19c31ac72e955`.
+- The pinned ROM-free `TrainerNameRandomizerTest` extension covers Trainer Names/Class Names text-length risks with synthetic encoded/internal length data: ASCII inside limit, exactly at limit, over limit, Java length != internal length, escaped-token-style length divergence and the Class-Names `changeTo.length()` risk.
+- Statuswirkung: Trainer Names/Class Names remains `tested-non-rom`, not P1-supported; no ROM-facing Writer/Reload, Terminator/Padding proof, decoded reload equality, Text-Encoding safety claim or P1 promotion was performed.
+
+# Current update
+
 - `027_trainer_rom_reload_text_evidence_plan.md`: read-only plan for later Trainer ROM-/Reload-/Text-Encoding evidence. It keeps current Trainer suboptions at `tested-non-rom`, separates missing ROM/reload proof from text-encoding and `changeTo.length()` risks, and defines criteria for any later narrowly scoped P1 promotion.
 
 # Current update

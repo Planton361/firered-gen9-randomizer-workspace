@@ -1,3 +1,15 @@
+# Tool Manifest Update - 2026-05-16 - Trainer names text length unit evidence
+
+- Workspace branch: `docs/trainer-names-text-length-unit-evidence`.
+- UPR-FVX fork base branch: `compat/firered-gen9-cfru-dpe`.
+- UPR-FVX PR #52: <https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/52>.
+- Original UPR-FVX test commit: `230f667f test: cover trainer names text length risks`.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX commit `7357b244e01ef2c7790b858d50c19c31ac72e955`.
+- Previous workspace pin was `d20eb1367c62a4f14c8778bc61ad6904ea76a6d6`.
+- Scope: ROM-free `TrainerNameRandomizerTest` extension; synthetic RomHandler data covers Trainer Names/Class Names text-length risks including ASCII inside limit, exactly at encoded/internal limit, over encoded/internal limit, Java length != internal length, escaped-token-style divergence and Class-Names `changeTo.length()` risk exposure.
+- Checks recorded from UPR-FVX PR #52: `git diff --check`, `git diff --cached --check` and `./gradlew :random:test --tests '*TrainerNameRandomizer*'`, successful after local Gradle cache access was allowed.
+- Safety: no Workspace code changes beyond documentation and submodule pin, no UPR-FVX production code changes in this block, no ROM/save/output/log/build artifacts committed, no ROM-facing Writer/Reload evidence, no Terminator/Padding proof, no decoded reload equality, no Text-Encoding safety claim, no P1-promotion and no Original-Upstream PR.
+
 # Tool Manifest Update - 2026-05-16 - Trainer names follow-up
 
 - Workspace branch: `test/upr-fvx-cfru-dpe-trainer-names-followup`.
