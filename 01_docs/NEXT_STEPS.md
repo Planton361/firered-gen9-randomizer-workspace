@@ -1,3 +1,11 @@
+# Next steps update - Items/Moves/Abilities first test slice sync
+
+- Treat the UPR-FVX PR #61 sync as a narrow ROM-free Items/Moves/Abilities evidence update only.
+- The pinned `SpeciesAbilityDecisionTest` now includes a first synthetic Ability slice: `SpeciesAbilityRandomizer` keeps choices inside the allowed Ability pool, rejects banned Ability candidates, produces non-empty two-Ability output and keeps Species ID `1025` in the path.
+- Keep Items/Moves/Abilities below P1-supported; no ROM-facing Writer/Reload evidence, output ROM, Randomizer run or reload equality was produced in this sync.
+- Next Items/Moves/Abilities work, if explicitly authorized, should choose another narrow ROM-free Move/Ability/Item behavior slice or a later ROM-facing/equivalent Writer/Reload evidence plan.
+- Do not run ROM evidence, perform Writer-/Reload smokes or promote P1 from this sync.
+
 # Next steps update - Learnsets evolution moves test slice sync
 
 - Treat the UPR-FVX PR #60 sync as a narrow ROM-free Learnsets option-test evidence update only.

@@ -1,3 +1,15 @@
+# Tool Manifest Update - 2026-05-16 - Items/Moves/Abilities first test slice
+
+- Workspace branch: `docs/sync-items-moves-abilities-first-slice`.
+- UPR-FVX fork base branch: `compat/firered-gen9-cfru-dpe`.
+- UPR-FVX PR #61: <https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/61>.
+- Original UPR-FVX test commit: `952d0a66 test: add items moves abilities first slice`.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX commit `c365b96399ed36881ed637edce0721c059c442d1`.
+- Previous workspace pin was `c40fbbd796db5b43a3bc53e547dc890a853cef20`.
+- Scope: first ROM-free Items/Moves/Abilities test slice in `SpeciesAbilityDecisionTest`; synthetic `SpeciesAbilityRandomizer` coverage verifies allowed Ability pool bounds, banned Ability rejection, non-empty two-Ability output and high Species ID `1025` path.
+- Checks recorded from UPR-FVX PR #61: `git diff --check`, `git diff --cached --check` and `./gradlew :random:test --tests '*SpeciesAbilityDecisionTest*'`, successful.
+- Safety: no Workspace code changes beyond documentation and submodule pin, no UPR-FVX code changes in this workspace sync, no ROM/save/output/log/build artifacts committed, no ROM-facing Writer/Reload evidence, no P1-promotion and no Original-Upstream PR.
+
 # Tool Manifest Update - 2026-05-16 - Learnsets evolution moves test slice
 
 - Workspace branch: `docs/sync-learnsets-evolution-moves-slice`.
