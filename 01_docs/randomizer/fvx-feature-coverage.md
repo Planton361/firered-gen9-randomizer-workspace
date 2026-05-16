@@ -1,10 +1,18 @@
+# Coverage update - Diagnose 181
+
+- UPR-FVX PR #51 is merged and the workspace submodule is pinned at `d20eb1367c62a4f14c8778bc61ad6904ea76a6d6`.
+- `TrainerNameRandomizerTest` provides Non-ROM `:random:test` coverage for `FVX-FOE-013` Trainer Names/Class Names decisions with synthetic RomHandler data.
+- Covered decisions include `canChangeTrainerText=false`, Trainer Names singles-/doubles-pools, repeated-name translation, `MAX_LENGTH`, `MAX_LENGTH_WITH_CLASS`, Trainer Class Name pools and fixed class-name length.
+- `FVX-FOE-013` moves to `tested-non-rom`.
+- This is not a P1-supported promotion: no Gen3 Writer-/Reload-ROM evidence, ROM-Smoke, text-encoding proof, output-ROM, Randomizer run or `changeTo.length()` fix is included.
+
 # Coverage update - Diagnose 180B
 
 - UPR-FVX PR #50 is merged and the workspace submodule is pinned at `5e2d351966ce4a96d02cdb6ca676b39bde7a9505`.
 - `TrainerBattleStyleTest` provides Non-ROM `:random:test` coverage for `FVX-FOE-011` Battle Style decisions with synthetic Trainer data.
 - `FVX-FOE-011` moves to `tested-non-rom`.
 - This is not a P1-supported promotion: no ROM-/Reload-Evidenz, ROM-Smoke, Trainer Names/Class Names/Text work, output-ROM or Randomizer run is included.
-- `FVX-FOE-013` Trainer Names/Class Names/Text remains a separate unpromoted Text scope.
+- `FVX-FOE-013` Trainer Names/Class Names/Text remains unpromoted beyond Non-ROM decision coverage.
 
 # Coverage update - Diagnose 179B
 
@@ -844,7 +852,7 @@ Diagnose 082 bestaetigt `FVX-TRAIT-018` nach der 081-Normalisierung:
 - FVX-FOE-010 | Pokemon League Has Unique Pokemon | tested-non-rom
 - FVX-FOE-011 | Battle Style randomisieren | tested-non-rom
 - FVX-FOE-012 | Rival Carries Starter Through Game | tested-non-rom
-- FVX-FOE-013 | Randomize Trainer Names / Class Names | Nicht begonnen
+- FVX-FOE-013 | Randomize Trainer Names / Class Names | tested-non-rom
 - FVX-FOE-014 | Trainers Evolve Their Pokemon + Level Modifier | tested-non-rom
 
 ### Wild Pokemon

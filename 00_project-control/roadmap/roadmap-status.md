@@ -1,3 +1,10 @@
+# Roadmap status update - Diagnose 181
+
+- Trainer Names/Class Names follow-up is recorded.
+- UPR-FVX PR #51 is merged and workspace-pinned at `d20eb1367c62a4f14c8778bc61ad6904ea76a6d6`.
+- The pinned `TrainerNameRandomizerTest` covers `FVX-FOE-013` Trainer Names/Class Names with synthetic Non-ROM data.
+- Statuswirkung: `FVX-FOE-013` is now `tested-non-rom`, not P1-supported; no Gen3 Writer-/Reload-ROM evidence, ROM-Smoke, text-encoding proof, output-ROM, Randomizer run or `changeTo.length()` fix was executed.
+
 # Roadmap status update - Diagnose 180B
 
 - Trainer Battle Style follow-up is recorded.

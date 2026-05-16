@@ -1,3 +1,10 @@
+# Next steps update - Diagnose 181
+
+- Treat `FVX-FOE-013` Trainer Names/Class Names as `tested-non-rom`, not P1-supported.
+- The merged UPR-FVX PR #51 harness covers ROM-free `TrainerNameRandomizerTest` decisions with synthetic data: `canChangeTrainerText=false`, singles-/doubles-pools, repeated-name translation, `MAX_LENGTH`, `MAX_LENGTH_WITH_CLASS`, Class-Name pools and fixed class-name length.
+- Keep Gen3 Writer-/Reload-ROM evidence, ROM-Smoke, text-encoding proof, output-ROM generation, Randomizer runs, `changeTo.length()` fixes and P1-promotion out of scope unless separately authorized.
+- Next minimal Trainer block, if continued, should be another still-open Trainer scope or an explicit ROM-/Reload/Text-Encoding evidence plan. Do not start implementation from this follow-up.
+
 # Next steps update - Diagnose 180B
 
 - Treat `FVX-FOE-011` Battle Style as `tested-non-rom`, not P1-supported.

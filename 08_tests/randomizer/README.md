@@ -1,10 +1,16 @@
 # Current update
 
+- `181_trainer_names_followup.md`: records merged UPR-FVX PR #51 and pins `02_external/upr-fvx` to `d20eb1367c62a4f14c8778bc61ad6904ea76a6d6`.
+- The pinned `TrainerNameRandomizerTest` covers `FVX-FOE-013` Trainer Names/Class Names with synthetic Non-ROM data: `canChangeTrainerText=false`, singles-/doubles-pool selection, repeated-name translation, `MAX_LENGTH`, `MAX_LENGTH_WITH_CLASS`, Class-Name pools and fixed class-name length.
+- Statuswirkung: Trainer Names/Class Names is now `tested-non-rom`, not P1-supported; no Gen3 Writer-/Reload-ROM evidence, ROM-Smoke, text-encoding proof, output-ROM or Randomizer run was performed.
+
+# Previous update
+
 - `180_trainer_battle_style_followup.md`: records merged UPR-FVX PR #50 and pins `02_external/upr-fvx` to `5e2d351966ce4a96d02cdb6ca676b39bde7a9505`.
 - The pinned `TrainerBattleStyleTest` covers `FVX-FOE-011` with synthetic Non-ROM Trainer data: `UNCHANGED`, `SINGLE_STYLE`, deterministic `RANDOM` and too-few-Pokemon skips.
 - Statuswirkung: Battle Style is now `tested-non-rom`, not P1-supported; no ROM-Smoke, Trainer Writer-/Reload-ROM evidence, Trainer Names/Class Names/Text work, output-ROM or Randomizer run was performed.
 
-# Current update
+# Previous update
 
 - `179_trainer_special_rules_followup.md`: records merged UPR-FVX PR #49 and pins `02_external/upr-fvx` to `bc46fdc49741643d8f09dd302b67b5b2d35d24c5`.
 - The pinned `TrainerSpecialRulesTest` covers `FVX-FOE-010`, `FVX-FOE-012` and `FVX-FOE-014` with synthetic Non-ROM Trainer, Party, Species and Evolution data.
