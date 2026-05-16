@@ -1,3 +1,11 @@
+# Next steps update - Items first test slice sync
+
+- Treat the UPR-FVX PR #63 sync as a narrow ROM-free Items/Moves/Abilities evidence update only.
+- The pinned `ItemDecisionTest` now includes a first synthetic Items slice: `ItemRandomizer.randomizeFieldItems()` for Non-TM Field Items keeps choices inside the non-bad allowed Item pool, excludes bad/key-style Items, keeps output non-empty, preserves Field-Item count and allows high Item IDs `1001..1003`.
+- Keep Items/Moves/Abilities below P1-supported; no ROM-facing Writer/Reload evidence, output ROM, Randomizer run or reload equality was produced in this sync.
+- Next Items/Moves/Abilities work, if explicitly authorized, should choose another narrow ROM-free Move/Ability/Item behavior slice or a later ROM-facing/equivalent Writer/Reload evidence plan.
+- Do not run ROM evidence, perform Writer-/Reload smokes or promote P1 from this sync.
+
 # Next steps update - Moves first test slice sync
 
 - Treat the UPR-FVX PR #62 sync as a narrow ROM-free Items/Moves/Abilities evidence update only.
