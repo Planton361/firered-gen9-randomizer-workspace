@@ -1,3 +1,15 @@
+# Session update - Wild encounters ROM smoke harness sync
+
+- New branch: `randomizer/wild-encounters-rom-smoke-harness-sync`.
+- UPR-FVX PR #65 was verified as merged into `compat/firered-gen9-cfru-dpe`.
+- Workspace submodule `02_external/upr-fvx` now pins verified merged UPR-FVX commit `f224862c91aed8e7a75fe843f5088cadea734da4`.
+- Evidence scope: ROM-facing Wild Encounter smoke harness prepared in UPR-FVX; default no-ROM execution skips cleanly.
+- The real local ROM smoke has not been executed in this workspace sync.
+- Status remains below P1-supported; no private ROM path, hash, log, output ROM, Randomizer run, ROM evidence result or P1 promotion was added.
+- No ROM, save, emulator state, output ROM, build, tool binary, private path, secret, token or `.env` file was read, copied, changed or documented.
+- No new UPR-FVX code change in this workspace sync.
+- Note: the requested SHA `c7a07a4643a570b2e27de059804f1a249616aaf0` was not reachable in the UPR-FVX fork; GitHub reports PR #65 merge commit `f224862c91aed8e7a75fe843f5088cadea734da4`.
+
 # Session update - Wild encounters reload equality evidence sync
 
 - New branch: `randomizer/wild-encounters-p1-track`.
