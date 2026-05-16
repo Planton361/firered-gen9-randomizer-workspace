@@ -1,3 +1,12 @@
+# Next steps update - Trainer text ROM smoke harness sync
+
+- Treat UPR-FVX PR #67 as harness-prepared only: a ROM-facing Gen3 Trainer Names/Class Names smoke can now be run locally with explicit private-ROM opt-in.
+- The harness default path skips without ROM, so normal tests do not require or expose private ROM material.
+- Keep Trainer Names/Class Names below P1-supported; the real local ROM smoke has not been documented.
+- Byte-exact Terminator/Padding inspection is still not directly proven and remains a later evidence gap.
+- Next Trainer Names/Class Names work, if explicitly authorized, should run the harness locally with private ROM and summarize only sanitized pass/fail evidence. Do not document ROM paths, hashes, full logs or output ROMs.
+- Do not promote P1 from PR #67 alone.
+
 # Next steps update - Wild encounters P1 decision
 
 - Treat Standard/Fallback Wild Encounters as `P1-supported` for the documented writer/reload scope in the tested private target context.

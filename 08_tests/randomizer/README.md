@@ -1,5 +1,12 @@
 # Current update
 
+- UPR-FVX PR #67 is merged and `02_external/upr-fvx` now pins verified merge commit `9bde3d4e2f983bfb96875c5fe9697f87763d8665`.
+- Trainer Names/Class Names now have an opt-in ROM-facing smoke harness in `Gen3TrainerTextRomSmokeTest`; default no-ROM execution skips cleanly with Tests 1, Skipped 1, Failures 0, Errors 0.
+- Statuswirkung: harness prepared only; no private local ROM smoke is documented, no ROM path/hash/full log/output ROM is documented, byte-exact Terminator/Padding inspection is not directly proven and no P1 promotion was performed.
+- Note: the expected SHA `a5a8887e0dac0bdbe4bfe87bfdc2e7a27fb79b75` was not the actual PR #67 merge commit; PR #67 resolves to merge commit `9bde3d4e2f983bfb96875c5fe9697f87763d8665`.
+
+# Current update
+
 - `183_wild_encounters_p1_decision.md` records the separate P1 decision for Wild Encounters.
 - Statuswirkung: Standard/Fallback Wild Encounters are now `P1-supported` for the documented writer/reload scope in the tested private target context.
 - Scope boundary: CFRU Day/Night Wild, Swarms, Roamers, DexNav, Raids, Wild Double Battles and other special Wild systems remain separate and non-promoted.

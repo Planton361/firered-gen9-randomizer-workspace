@@ -1,3 +1,16 @@
+# Session update - Trainer text ROM smoke harness sync
+
+- New branch: `randomizer/trainer-text-rom-smoke-harness-sync`.
+- UPR-FVX PR #67 was verified as merged into `compat/firered-gen9-cfru-dpe`.
+- Workspace submodule `02_external/upr-fvx` now pins verified merged UPR-FVX commit `9bde3d4e2f983bfb96875c5fe9697f87763d8665`.
+- PR #67 adds the opt-in Gen3 Trainer Names/Class Names ROM-facing smoke harness `Gen3TrainerTextRomSmokeTest`.
+- Evidence scope: harness prepared only; default no-ROM execution skips cleanly with Tests 1, Skipped 1, Failures 0, Errors 0.
+- The real local ROM smoke has not been documented yet, and byte-exact Terminator/Padding inspection is not directly proven.
+- Status remains below P1-supported; no P1 promotion is made in this sync.
+- No ROM path, ROM hash, full log, output ROM, save, emulator state, build artifact, tool binary, private path, secret, token or `.env` detail was read, copied, changed or documented.
+- No new UPR-FVX code change in this workspace sync.
+- Note: the expected SHA `a5a8887e0dac0bdbe4bfe87bfdc2e7a27fb79b75` was not the actual PR #67 merge commit; GitHub reports `9bde3d4e2f983bfb96875c5fe9697f87763d8665`.
+
 # Session update - Wild encounters P1 decision
 
 - New branch: `randomizer/wild-encounters-p1-decision`.
