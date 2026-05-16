@@ -1,3 +1,11 @@
+# Next steps update - Trainer writer/reload/text field review
+
+- Treat `08_tests/randomizer/028_trainer_writer_reload_text_field_review.md` as read-only preparation only.
+- Current Trainer follow-up suboptions remain `tested-non-rom`, not P1-supported.
+- If continued, open a separate narrow evidence plan or harness design for exactly one Trainer scope.
+- For Trainer Names/Class Names, require encoded/internal byte length, fixed-field write/reload, terminator/padding validity and decoded reload equality; do not rely on Java `String.length()` / `changeTo.length()` as the proof metric.
+- Do not run ROM evidence, implement Writer-/Reload fixes, make Text-Encoding support claims or promote P1 from this review.
+
 # Next steps update - Trainer ROM/Reload/Text evidence plan
 
 - Treat the new Trainer ROM-/Reload-/Text-Encoding evidence document as a plan only.
