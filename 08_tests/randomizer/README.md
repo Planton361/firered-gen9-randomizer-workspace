@@ -1,5 +1,11 @@
 # Current update
 
+- UPR-FVX PR #53 is merged and `02_external/upr-fvx` now pins `955c852cf07f155a046b18865a39e6912a6ee09c`.
+- Trainer Class Names Length Check now uses internal/encoded length instead of Java `changeTo.length()`; the focused ROM-free `TrainerNameRandomizerTest` passed in PR #53.
+- Statuswirkung: Trainer Names/Class Names remains `tested-non-rom`, not P1-supported; no ROM-facing Reload evidence, Terminator/Padding proof, decoded reload equality or P1 promotion was performed.
+
+# Current update
+
 - `031_trainer_names_text_length_unit_evidence.md`: records merged UPR-FVX PR #52 and pins `02_external/upr-fvx` to `7357b244e01ef2c7790b858d50c19c31ac72e955`.
 - The pinned ROM-free `TrainerNameRandomizerTest` extension covers Trainer Names/Class Names text-length risks with synthetic encoded/internal length data: ASCII inside limit, exactly at limit, over limit, Java length != internal length, escaped-token-style length divergence and the Class-Names `changeTo.length()` risk.
 - Statuswirkung: Trainer Names/Class Names remains `tested-non-rom`, not P1-supported; no ROM-facing Writer/Reload, Terminator/Padding proof, decoded reload equality, Text-Encoding safety claim or P1 promotion was performed.

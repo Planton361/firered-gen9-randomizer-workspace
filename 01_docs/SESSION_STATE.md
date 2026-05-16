@@ -1,3 +1,14 @@
+# Session update - Trainer Class Names encoded length fix sync
+
+- New branch: `docs/sync-trainer-class-names-encoded-length-fix`.
+- UPR-FVX PR #53 was verified as merged into `compat/firered-gen9-cfru-dpe`.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX commit `955c852cf07f155a046b18865a39e6912a6ee09c`.
+- Fix scope: Trainer Class Names max-length filtering now uses encoded/internal length through `romHandler.internalStringLength(...)` instead of Java `changeTo.length()`.
+- Evidence scope: focused ROM-free `TrainerNameRandomizerTest` coverage for class names inside limit, exactly at limit, over limit and Java length != internal length.
+- Status remains `tested-non-rom`, not P1-supported; no ROM-facing Writer/Reload, real Terminator/Padding proof, decoded reload equality or Text-Encoding safety claim is added.
+- No ROM, save, emulator state, output ROM, build, tool binary, private path, secret, token or `.env` file was read, copied, changed or documented.
+- No UPR-FVX code change in this workspace block, Writer-/Reload smoke, ROM-Smoke, Randomizer run or P1 promotion was performed.
+
 # Session update - Trainer Names text length unit evidence
 
 - New branch: `docs/trainer-names-text-length-unit-evidence`.
