@@ -1,3 +1,13 @@
+# Session update - GUI E2E smoke pipeline
+
+- New branch: `randomizer/gui-e2e-smoke-pipeline`.
+- Added `08_tests/randomizer/gui_e2e_smoke_pipeline.md` as a short local-only GUI E2E smoke pipeline for the private custom ROM.
+- Fastest order: GUI-0 load the custom ROM in UPR-FVX GUI without randomization, GUI-1 randomize only Wild Standard/Fallback, GUI-2 boot the output ROM locally, GUI-3 reach the first wild encounter, GUI-4+ add further option groups only after the minimal path is clean.
+- Initially disabled: Trainer Names/Class Names, Learnsets, Items/Moves/Abilities, Special Wild systems, Day/Night Wild, Swarms, Roamers, DexNav, Raids and Wild Double Battles.
+- Sanitized feedback format is yes/no only for GUI opened, custom ROM loaded, options used, output ROM created, emulator boot, first wild encounter reached and a short sanitized error summary.
+- Codex did not run ROM, GUI or emulator smokes; no ROM path, ROM hash, full log, output ROM, save, emulator state, build artifact, screenshot with private paths, secret, token or `.env` detail was read, copied, changed or documented.
+- No UPR-FVX code change, no submodule pin change and no P1 promotion was made.
+
 # Session update - Trainer text ROM smoke harness sync
 
 - New branch: `randomizer/trainer-text-rom-smoke-harness-sync`.
