@@ -1,3 +1,15 @@
+# Tool Manifest Update - 2026-05-16 - Wild encounters reload equality evidence
+
+- Workspace branch: `randomizer/wild-encounters-p1-track`.
+- UPR-FVX fork base branch: `compat/firered-gen9-cfru-dpe`.
+- UPR-FVX PR #64: <https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/64>.
+- Original UPR-FVX test commit: `0a0ec0b2 test: add wild encounters reload equality evidence`.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX commit `d49837fea305157a2fe94f3f57d09cedc8ab25f8`.
+- Previous workspace pin was `d88a0cdb8c11473d2a3448028e937422eaf38679`.
+- Scope: ROM-free synthetic Wild Encounter Writer/Reload Equality evidence in `WildCatchLevelDecisionTest`; a reloadable fake `RomHandler` deep-copies `setEncounters(...)` data and reloads fresh `getEncounters(...)` copies.
+- Checks recorded from UPR-FVX PR #64: `git diff --check`, `git diff --cached --check`, `./gradlew :random:test --tests '*WildCatchLevelDecisionTest*'` and `./gradlew :random:test --tests '*Wild*'`, successful.
+- Safety: no Workspace code changes beyond documentation and submodule pin, no new UPR-FVX code changes in this workspace sync, no ROM/save/output/log/build artifacts committed, no real Gen3 byte writer proof, no output ROM, no Randomizer run, no P1-promotion and no Original-Upstream PR.
+
 # Tool Manifest Update - 2026-05-16 - Items first test slice
 
 - Workspace branch: `docs/sync-items-first-slice`.

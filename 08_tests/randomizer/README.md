@@ -1,5 +1,11 @@
 # Current update
 
+- UPR-FVX PR #64 is merged and `02_external/upr-fvx` now pins `d49837fea305157a2fe94f3f57d09cedc8ab25f8`.
+- Wild Encounters now have ROM-free synthetic Writer/Reload Equality evidence in `WildCatchLevelDecisionTest`: a reloadable fake `RomHandler` deep-copies `setEncounters(...)` data and reloads fresh `getEncounters(...)` copies.
+- Statuswirkung: Writer/Reload Equality evidence only at synthetic ROM-free level; no real Gen3 byte writer proof, output ROM, Randomizer run or P1 promotion was performed.
+
+# Current update
+
 - UPR-FVX PR #63 is merged and `02_external/upr-fvx` now pins `d88a0cdb8c11473d2a3448028e937422eaf38679`.
 - Items/Moves/Abilities now have a third ROM-free Slice in `ItemDecisionTest`: `ItemRandomizer.randomizeFieldItems()` for Non-TM Field Items covers the non-bad allowed Item pool, bad/key-style exclusions, non-empty output, stable Field-Item count and high Item IDs `1001..1003`.
 - Statuswirkung: ROM-free evidence only; no ROM-facing Reload evidence, Writer/Reload smoke, output ROM, Randomizer run or P1 promotion was performed.
