@@ -1,3 +1,11 @@
+# Next steps update - Trainer Names text harness design
+
+- Treat `08_tests/randomizer/030_trainer_names_text_harness_design.md` as a design only.
+- Keep `FVX-FOE-013` Trainer Names/Class Names at `tested-non-rom`, not P1-supported.
+- Next minimal implementation, if explicitly authorized, should be a focused UPR-FVX unit-test branch extending the existing Trainer-name test style with a fake `RomHandler` encoded/internal length model that differs from Java length.
+- Include a class-name risk test that exposes `changeTo.length()` without fixing it; keep any fixed-field byte-model helper test-only and ROM-free.
+- Do not run ROM evidence, implement Writer-/Reload fixes, make Text-Encoding support claims or promote P1 from this design.
+
 # Next steps update - Trainer Names text evidence harness plan
 
 - Treat `08_tests/randomizer/029_trainer_names_text_evidence_harness_plan.md` as a plan only.

@@ -1,3 +1,13 @@
+# Session update - Trainer Names text harness design
+
+- New branch: `analysis/trainer-names-text-harness-design`.
+- Added read-only design `08_tests/randomizer/030_trainer_names_text_harness_design.md` for a future ROM-free Trainer Names/Class Names harness.
+- Decision: later implementation should be a focused UPR-FVX unit-test scope, with a fake `RomHandler` whose `internalStringLength(...)` can differ from Java length; workspace-only/manual plan, local helper and separate diagnosis harness are less suitable for the first ROM-free step.
+- The design keeps byte truncation, terminator/padding and decoded reload equality as a separate synthetic byte-model layer or later ROM-facing evidence, not as proven support.
+- Status remains `tested-non-rom`, not P1-supported; no Text-Encoding safety claim is made and `changeTo.length()` remains an open class-name risk.
+- No ROM, save, emulator state, output ROM, build, tool binary, private path, hash, secret, token or `.env` file was read, copied, changed or documented.
+- No implementation, UPR-FVX code change, Writer-/Reload fix, external download, smoke run, build or P1 promotion was performed.
+
 # Session update - Trainer Names text evidence harness plan
 
 - New branch: `analysis/trainer-names-text-evidence-harness-plan`.
