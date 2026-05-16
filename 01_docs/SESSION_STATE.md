@@ -1,3 +1,16 @@
+# Session update - Diagnose 181
+
+- New branch: `test/upr-fvx-cfru-dpe-trainer-names-followup`.
+- UPR-FVX PR #51 was verified as merged into `compat/firered-gen9-cfru-dpe`.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX commit `d20eb1367c62a4f14c8778bc61ad6904ea76a6d6`.
+- Original UPR-FVX test commit: `f49f5aa9 test: cover trainer name decisions`.
+- Follow-up 181 records the Non-ROM `TrainerNameRandomizerTest` harness for `FVX-FOE-013` Trainer Names/Class Names.
+- Covered decisions: `canChangeTrainerText=false`, Trainer Names singles-/doubles-pools, repeated-name translation, `MAX_LENGTH`, `MAX_LENGTH_WITH_CLASS`, Trainer Class Name pools through `getDoublesTrainerClasses()` and fixed class-name length.
+- Statuswirkung: `FVX-FOE-013` moves to `tested-non-rom`, not P1-supported.
+- Checks from PR #51 are recorded as `git diff --check`, focused `:random:test --tests '*TrainerNameRandomizer*'` and broader `:random:test --tests '*Trainer*'`, all successful.
+- No Gen3 Writer/Reload, ROM-Smoke, text-encoding proof, output-ROM generation, Randomizer run, `changeTo.length()` fix or P1-promotion was performed.
+- No ROM, save, emulator state, output ROM, log, Randomizer JAR, tool binary, build artifact, private path, secret, token or `.env` file was committed.
+
 # Session update - Diagnose 180B
 
 - New branch: `test/upr-fvx-cfru-dpe-battle-style-followup`.
