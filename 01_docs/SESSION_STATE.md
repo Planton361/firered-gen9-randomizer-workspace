@@ -1,3 +1,13 @@
+# Session update - Items/Moves/Abilities first test slice sync
+
+- New branch: `docs/sync-items-moves-abilities-first-slice`.
+- UPR-FVX PR #61 was verified as merged into `compat/firered-gen9-cfru-dpe`.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX commit `c365b96399ed36881ed637edce0721c059c442d1`.
+- Evidence scope: first ROM-free Items/Moves/Abilities slice for Abilities; synthetic `SpeciesAbilityDecisionTest` verifies `SpeciesAbilityRandomizer` keeps Ability choices inside the allowed pool, rejects banned Ability candidates, produces non-empty two-Ability output and keeps high Species ID `1025` in the path.
+- Status remains ROM-free unit-test evidence only, not P1-supported; no ROM-facing Writer/Reload evidence, output ROM, Randomizer run or P1 promotion is added.
+- No ROM, save, emulator state, output ROM, build, tool binary, private path, secret, token or `.env` file was read, copied, changed or documented.
+- No UPR-FVX code change in this workspace block, Writer-/Reload smoke, ROM-Smoke, Randomizer run or P1 promotion was performed.
+
 # Session update - Learnsets evolution moves test slice sync
 
 - New branch: `docs/sync-learnsets-evolution-moves-slice`.
