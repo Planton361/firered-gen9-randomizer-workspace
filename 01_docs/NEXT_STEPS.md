@@ -1,3 +1,11 @@
+# Next steps update - Moves first test slice sync
+
+- Treat the UPR-FVX PR #62 sync as a narrow ROM-free Items/Moves/Abilities evidence update only.
+- The pinned `TMTutorMoveDecisionTest` now includes a first synthetic Moves slice: `TMTutorMoveRandomizer.randomizeTMMoves()` keeps choices inside the allowed Move pool, excludes HM/game-breaking/levelup-banned/illegal Moves, preserves the Field-Move-TM slot, keeps output count stable and allows high Move IDs `1001..1003`.
+- Keep Items/Moves/Abilities below P1-supported; no ROM-facing Writer/Reload evidence, output ROM, Randomizer run or reload equality was produced in this sync.
+- Next Items/Moves/Abilities work, if explicitly authorized, should choose another narrow ROM-free Move/Ability/Item behavior slice or a later ROM-facing/equivalent Writer/Reload evidence plan.
+- Do not run ROM evidence, perform Writer-/Reload smokes or promote P1 from this sync.
+
 # Next steps update - Items/Moves/Abilities first test slice sync
 
 - Treat the UPR-FVX PR #61 sync as a narrow ROM-free Items/Moves/Abilities evidence update only.
