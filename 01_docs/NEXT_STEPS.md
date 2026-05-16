@@ -1,3 +1,11 @@
+# Next steps update - Trainer Names text evidence harness plan
+
+- Treat `08_tests/randomizer/029_trainer_names_text_evidence_harness_plan.md` as a plan only.
+- Keep `FVX-FOE-013` Trainer Names/Class Names at `tested-non-rom`, not P1-supported.
+- Next minimal implementation, if explicitly authorized, should start with a ROM-free harness that proves selection behavior using encoded/internal length and exposes the `changeTo.length()` class-name risk with synthetic strings.
+- Any later ROM-facing evidence must separately prove fixed-field byte length, byte-truncation absence, terminator/padding validity and decoded reload equality before P1 can be discussed.
+- Do not run ROM evidence, implement Writer-/Reload fixes, make Text-Encoding support claims or promote P1 from this plan.
+
 # Next steps update - Trainer writer/reload/text field review
 
 - Treat `08_tests/randomizer/028_trainer_writer_reload_text_field_review.md` as read-only preparation only.

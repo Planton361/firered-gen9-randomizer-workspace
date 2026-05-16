@@ -1,3 +1,12 @@
+# Session update - Trainer Names text evidence harness plan
+
+- New branch: `analysis/trainer-names-text-evidence-harness-plan`.
+- Added read-only plan `08_tests/randomizer/029_trainer_names_text_evidence_harness_plan.md` for Trainer Names/Class Names only.
+- The plan derives minimal later cases from 027/028: ASCII inside limit, ASCII exactly at limit, encoded over-limit rejection, Gen3 escaped/control-token length divergence, terminator/padding checks and decoded reload equality.
+- Status remains `tested-non-rom`, not P1-supported; the plan makes no Text-Encoding safety claim and keeps `changeTo.length()` as an open class-name risk.
+- No ROM, save, emulator state, output ROM, build, tool binary, private path, hash, secret, token or `.env` file was read, copied, changed or documented.
+- No UPR-FVX code change, Writer-/Reload fix, Text-Encoding implementation, smoke run, build or P1 promotion was performed.
+
 # Session update - Trainer writer/reload/text field review
 
 - New branch: `analysis/trainer-writer-reload-text-field-review`.
