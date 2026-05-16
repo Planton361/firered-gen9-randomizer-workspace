@@ -1,3 +1,15 @@
+# Tool Manifest Update - 2026-05-16 - Wild encounters first test slice
+
+- Workspace branch: `docs/sync-wild-encounters-first-slice`.
+- UPR-FVX fork base branch: `compat/firered-gen9-cfru-dpe`.
+- UPR-FVX PR #54: <https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/54>.
+- Original UPR-FVX test commit: `20213ee6 test: add wild encounters first slice`.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX commit `8d67f8686e16b3a9d3e77da5789a06889a645e5f`.
+- Previous workspace pin was `955c852cf07f155a046b18865a39e6912a6ee09c`.
+- Scope: first ROM-free Wild Encounter unit-test slice in `WildCatchLevelDecisionTest`; synthetic encounters cover preserved Slot-/Level-/Area structure, non-empty encounter areas, allowed Species selection and high-numbered Species IDs above `1000`.
+- Checks recorded from UPR-FVX PR #54: `git diff --check`, `git diff --cached --check` and `./gradlew :random:test --tests com.uprfvx.random.randomizers.WildCatchLevelDecisionTest`, successful.
+- Safety: no Workspace code changes beyond documentation and submodule pin, no UPR-FVX code changes in this workspace sync, no ROM/save/output/log/build artifacts committed, no ROM-facing Writer/Reload evidence, no P1-promotion and no Original-Upstream PR.
+
 # Tool Manifest Update - 2026-05-16 - Trainer class names encoded length fix
 
 - Workspace branch: `docs/sync-trainer-class-names-encoded-length-fix`.
