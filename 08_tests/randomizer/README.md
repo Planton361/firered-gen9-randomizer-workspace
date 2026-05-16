@@ -1,5 +1,11 @@
 # Current update
 
+- UPR-FVX PR #58 is merged and `02_external/upr-fvx` now pins `6ed75f5b1e5b8b354e2db694c880407c8e0a10dd`.
+- Learnsets now have a second ROM-free Option-Test-Slice in `LearnsetDecisionTest`: `orderDamagingMovesByDamage()` sorts damaging Moves by damage, leaves Evolution-/Non-Damaging-Slots unchanged, preserves Level-/Slot-Anzahl and Move pool, and keeps Species ID `1025` in the path.
+- Statuswirkung: ROM-free evidence only; no ROM-facing Reload evidence, Writer/Reload smoke, output ROM, Randomizer run or P1 promotion was performed.
+
+# Current update
+
 - UPR-FVX PR #57 is merged and `02_external/upr-fvx` now pins `56cae7eb0c2ddc626dc31c4802d3f696a42959bf`.
 - Learnsets now have a first ROM-free Unit-Test-Slice in `LearnsetDecisionTest`: `randomizeMovesLearnt()` keeps Learnsets non-empty, preserves Level-/Slot-Anzahl, selects from the allowed Move pool and processes high Species ID `1025`.
 - Statuswirkung: ROM-free evidence only; no ROM-facing Reload evidence, Writer/Reload smoke, output ROM, Randomizer run or P1 promotion was performed.
