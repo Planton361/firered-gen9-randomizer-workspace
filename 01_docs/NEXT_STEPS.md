@@ -1,3 +1,10 @@
+# Next steps update - Wild encounters ROM smoke evidence sync
+
+- Treat UPR-FVX PR #66 plus the sanitized local `Gen3WildEncounterRomSmokeTest` pass as ROM-facing Writer/Reload smoke evidence for Wild Encounters.
+- Wild Encounters is now a P1 candidate, not automatically P1-promoted.
+- Next Wild work should be a short separate P1 decision/evaluation that reviews this evidence and any remaining P1 criteria.
+- Keep private ROM paths, hashes, full logs and output ROMs out of documentation.
+
 # Next steps update - Wild encounters ROM smoke harness sync
 
 - Treat UPR-FVX PR #65 as harness-prepared only: a ROM-facing Wild Encounter writer/reload smoke can now be run locally with explicit private-ROM opt-in.

@@ -1,3 +1,15 @@
+# Session update - Wild encounters ROM smoke evidence sync
+
+- New branch: `randomizer/wild-encounters-rom-smoke-evidence-sync`.
+- UPR-FVX PR #66 was verified as merged into `compat/firered-gen9-cfru-dpe`.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX commit `f4d0cbbe3143cab4b963d2444b8354d97fa96403`.
+- PR #66 fixes the Gen3 Evolution load blocker that previously stopped the opt-in Wild Encounter ROM smoke before the Wild Encounter writer/reload portion.
+- Sanitized local evidence after PR #66: `Gen3WildEncounterRomSmokeTest` passed with Tests 1, Failures 0, Errors 0, Skipped 0.
+- Evidence scope: local ROM-facing Writer/Reload smoke evidence for Wild Encounters in the private target context.
+- Status: Wild Encounters is a P1 candidate, but no P1 promotion is made in this sync; promotion requires a separate short decision/evaluation.
+- No ROM path, ROM hash, full log, output ROM, save, emulator state, build artifact, tool binary, private path, secret, token or `.env` detail was read, copied, changed or documented.
+- No new UPR-FVX code change in this workspace sync.
+
 # Session update - Wild encounters ROM smoke harness sync
 
 - New branch: `randomizer/wild-encounters-rom-smoke-harness-sync`.
