@@ -1,3 +1,10 @@
+# Roadmap status update - GUI load null species fix
+
+- UPR-FVX PR #68 is merged and workspace-pinned at `04bdd8b2f2769bedb1bf6c6ff8fcdecbbf84e29c`.
+- GUI-0 status: passed locally; the private custom ROM loads in the UPR-FVX GUI after null Species are filtered from dropdown Species lists.
+- Next local step is GUI-1: Wild Standard/Fallback only randomization.
+- No Output-ROM evidence, emulator boot evidence, first-encounter evidence or P1 promotion is added by this sync.
+
 # Roadmap status update - GUI E2E smoke pipeline
 
 - Focus shifts from broad per-feature expansion to the fastest local GUI E2E compatibility path for the private custom ROM.

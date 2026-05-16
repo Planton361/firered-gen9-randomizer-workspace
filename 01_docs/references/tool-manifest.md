@@ -1,3 +1,15 @@
+# Tool Manifest Update - 2026-05-16 - GUI load null species fix
+
+- Workspace branch: `randomizer/gui-load-null-species-fix-sync`.
+- UPR-FVX fork base branch: `compat/firered-gen9-cfru-dpe`.
+- UPR-FVX PR #68: <https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/68>.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX commit `04bdd8b2f2769bedb1bf6c6ff8fcdecbbf84e29c`.
+- Previous workspace pin was `9bde3d4e2f983bfb96875c5fe9697f87763d8665`.
+- Scope: fixes the GUI-0 ROM-load blocker where `RandomizerGUI.populateDropdowns()` could dereference a null Species in sparse Custom-ROM mappings.
+- Fix summary: null Species are filtered out before GUI dropdown names are built, so null Species are not selectable dropdown entries.
+- Sanitized local GUI-0 evidence after PR #68: GUI opened yes, custom ROM loaded yes, randomization not yet, output ROM not yet, private paths/logs/hashes/screenshots omitted yes.
+- Safety: no ROM/save/output/log/build artifact committed, no private path/hash/full log/screenshot documented, no UPR-FVX code change in this workspace sync beyond pinning the merged PR, no Output-ROM evidence and no P1 promotion.
+
 # Tool Manifest Update - 2026-05-16 - Trainer text ROM smoke harness
 
 - Workspace branch: `randomizer/trainer-text-rom-smoke-harness-sync`.
