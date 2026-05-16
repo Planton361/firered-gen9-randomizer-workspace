@@ -1,3 +1,14 @@
+# Session update - Trainer Names text length unit evidence
+
+- New branch: `docs/trainer-names-text-length-unit-evidence`.
+- UPR-FVX PR #52 was verified as merged into `compat/firered-gen9-cfru-dpe`.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX commit `7357b244e01ef2c7790b858d50c19c31ac72e955`.
+- Added evidence document `08_tests/randomizer/031_trainer_names_text_length_unit_evidence.md`.
+- Evidence scope: ROM-free `TrainerNameRandomizerTest` extension for Trainer Names/Class Names text-length risks: ASCII inside limit, exactly at encoded/internal limit, over encoded/internal limit, Java length != internal length, escaped-token-style divergence and Class-Names `changeTo.length()` risk exposure.
+- Status remains `tested-non-rom`, not P1-supported; no ROM-facing Writer/Reload, real Terminator/Padding proof, decoded reload equality or Text-Encoding safety claim is added.
+- No ROM, save, emulator state, output ROM, build, tool binary, private path, secret, token or `.env` file was read, copied, changed or documented.
+- No UPR-FVX code change in this workspace block, Writer-/Reload fix, ROM-Smoke, Randomizer run or P1 promotion was performed.
+
 # Session update - Trainer Names text harness design
 
 - New branch: `analysis/trainer-names-text-harness-design`.

@@ -1,3 +1,11 @@
+# Next steps update - Trainer Names text length unit evidence
+
+- Treat `08_tests/randomizer/031_trainer_names_text_length_unit_evidence.md` as ROM-free unit-test evidence only.
+- Keep `FVX-FOE-013` Trainer Names/Class Names at `tested-non-rom`, not P1-supported.
+- The next possible step, only if explicitly authorized, is a separate ROM-facing or equivalent writer/reload evidence plan for fixed-field byte length, truncation absence, Terminator/Padding validity and decoded reload equality.
+- Keep the Class-Names `changeTo.length()` risk open unless a later fix/evidence scope explicitly addresses encoded/internal class-name limits.
+- Do not run ROM evidence, implement Writer-/Reload fixes, make Text-Encoding support claims or promote P1 from this unit evidence.
+
 # Next steps update - Trainer Names text harness design
 
 - Treat `08_tests/randomizer/030_trainer_names_text_harness_design.md` as a design only.
