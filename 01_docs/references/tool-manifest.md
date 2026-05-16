@@ -1,3 +1,17 @@
+# Tool Manifest Update - 2026-05-16 - Trainer text ROM smoke harness
+
+- Workspace branch: `randomizer/trainer-text-rom-smoke-harness-sync`.
+- UPR-FVX fork base branch: `compat/firered-gen9-cfru-dpe`.
+- UPR-FVX PR #67: <https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/67>.
+- Original UPR-FVX test commit: `7b03bcae test: add trainer names rom smoke harness`.
+- Workspace submodule `02_external/upr-fvx` now pins verified merged UPR-FVX commit `9bde3d4e2f983bfb96875c5fe9697f87763d8665`.
+- Previous workspace pin was `f4d0cbbe3143cab4b963d2444b8354d97fa96403`.
+- Scope: opt-in ROM-facing Gen3 Trainer Names/Class Names smoke harness in `Gen3TrainerTextRomSmokeTest`; default no-ROM run skips cleanly.
+- Checks recorded from UPR-FVX PR #67: `git diff --check`, `git diff --cached --check`, `./gradlew :romio:test --tests '*Trainer*Smoke*'` and `./gradlew :random:test --tests '*TrainerNameRandomizerDecisions*'`, successful with the no-ROM smoke skipped.
+- Evidence status: harness prepared only; no documented local ROM-smoke pass, no byte-exact Terminator/Padding inspection proof and no P1 promotion.
+- Safety: no Workspace code changes beyond documentation and submodule pin, no new UPR-FVX code changes in this workspace sync, no ROM/save/output/log/build artifacts committed, no private ROM path/hash/full log/output ROM documented and no Original-Upstream PR.
+- Note: the expected SHA `a5a8887e0dac0bdbe4bfe87bfdc2e7a27fb79b75` was not the actual PR #67 merge commit; GitHub reports `9bde3d4e2f983bfb96875c5fe9697f87763d8665`.
+
 # Tool Manifest Update - 2026-05-16 - Wild encounters P1 decision
 
 - Workspace branch: `randomizer/wild-encounters-p1-decision`.
