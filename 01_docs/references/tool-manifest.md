@@ -1,3 +1,15 @@
+# Tool Manifest Update - 2026-05-16 - Learnsets first test slice
+
+- Workspace branch: `docs/sync-learnsets-first-test-slice`.
+- UPR-FVX fork base branch: `compat/firered-gen9-cfru-dpe`.
+- UPR-FVX PR #57: <https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/57>.
+- Original UPR-FVX test commit: `747c4821 test: add learnsets first slice`.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX commit `56cae7eb0c2ddc626dc31c4802d3f696a42959bf`.
+- Previous workspace pin was `b3b9a8ab5e8726f4b4d2d4e23efa733cce7287ac`.
+- Scope: first ROM-free Learnsets unit-test slice in `LearnsetDecisionTest`; synthetic `randomizeMovesLearnt()` coverage verifies non-empty Learnsets, preserved Level-/Slot-Anzahl, allowed Move-pool selection and high Species ID `1025`.
+- Checks recorded from UPR-FVX PR #57: `git diff --check`, `git diff --cached --check` and `./gradlew :random:test --tests '*Learn*'`, successful.
+- Safety: no Workspace code changes beyond documentation and submodule pin, no UPR-FVX code changes in this workspace sync, no ROM/save/output/log/build artifacts committed, no ROM-facing Writer/Reload evidence, no P1-promotion and no Original-Upstream PR.
+
 # Tool Manifest Update - 2026-05-16 - Wild encounters option test slice
 
 - Workspace branch: `docs/sync-wild-encounters-option-slice`.
