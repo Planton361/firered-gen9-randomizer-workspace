@@ -1,3 +1,13 @@
+# Session update - Wild encounters option test slice sync
+
+- New branch: `docs/sync-wild-encounters-option-slice`.
+- UPR-FVX PR #56 was verified as merged into `compat/firered-gen9-cfru-dpe`.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX commit `b3b9a8ab5e8726f4b4d2d4e23efa733cce7287ac`.
+- Evidence scope: third ROM-free `WildCatchLevelDecisionTest` slice for Wild Encounters; synthetic `BlockWildLegendaries` coverage verifies legendary Species stay out of the replacement pool while Slot-/Level-/Area structure remains stable.
+- Status remains ROM-free unit-test evidence only, not P1-supported; no ROM-facing Writer/Reload evidence, output ROM, Randomizer run or P1 promotion is added.
+- No ROM, save, emulator state, output ROM, build, tool binary, private path, secret, token or `.env` file was read, copied, changed or documented.
+- No UPR-FVX code change in this workspace block, Writer-/Reload smoke, ROM-Smoke, Randomizer run or P1 promotion was performed.
+
 # Session update - Wild encounters multi-area test slice sync
 
 - New branch: `docs/sync-wild-encounters-multi-area-slice`.
