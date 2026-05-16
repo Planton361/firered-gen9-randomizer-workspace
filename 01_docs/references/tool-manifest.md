@@ -1,3 +1,12 @@
+# Tool Manifest Update - 2026-05-16 - Wild encounters P1 decision
+
+- Workspace branch: `randomizer/wild-encounters-p1-decision`.
+- UPR-FVX pin remains `f4d0cbbe3143cab4b963d2444b8354d97fa96403`.
+- Decision: Standard/Fallback Wild Encounters are now `P1-supported` for the documented writer/reload scope in the tested private target context.
+- Evidence basis: ROM-free Wild Encounter decision/option slices, ROM-free synthetic Writer/Reload Equality, opt-in ROM-facing smoke harness and sanitized local `Gen3WildEncounterRomSmokeTest` pass after PR #66.
+- Scope boundary: CFRU Day/Night Wild, Swarms, Roamers, DexNav, Raids, Wild Double Battles and other special Wild systems remain separate/non-promoted scopes.
+- Safety: no UPR-FVX code change, no submodule pin change, no new ROM execution, no ROM/save/output/log/build artifact committed, and no private ROM path/hash/full log/output ROM documented.
+
 # Tool Manifest Update - 2026-05-16 - Wild encounters ROM smoke evidence
 
 - Workspace branch: `randomizer/wild-encounters-rom-smoke-evidence-sync`.

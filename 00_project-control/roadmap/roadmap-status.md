@@ -1,3 +1,10 @@
+# Roadmap status update - Wild encounters P1 decision
+
+- Wild Encounters are promoted to `P1-supported` for the documented Standard/Fallback Wild Encounter writer/reload scope in the tested private target context.
+- Evidence basis: ROM-free Wild Encounter decision/option slices, ROM-free synthetic Writer/Reload Equality, opt-in ROM-facing smoke harness and sanitized local `Gen3WildEncounterRomSmokeTest` pass after UPR-FVX PR #66.
+- Scope boundary: CFRU Day/Night Wild, Swarms, Roamers, DexNav, Raids, Wild Double Battles and other special Wild systems remain separate/non-promoted scopes.
+- No new ROM execution, UPR-FVX code change, submodule pin change, ROM path, ROM hash, full log or output ROM was added.
+
 # Roadmap status update - Diagnose 181
 
 - Trainer Names/Class Names follow-up is recorded.
