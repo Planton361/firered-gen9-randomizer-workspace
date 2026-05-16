@@ -1,5 +1,12 @@
 # Current update
 
+- `184_gui_e2e_wild_smoke_pass.md` records the first sanitized GUI E2E Wild smoke pass on UPR-FVX pin `04bdd8b2f2769bedb1bf6c6ff8fcdecbbf84e29c`.
+- Evidence: correct CFRU/DPE Gen9 ROM loaded yes, PokemonCount 1439, PokedexCount 1290, generation counts include 4-9 yes, Wild Standard/Fallback only randomization completed yes, output ROM created yes, BizHawk boot yes, first wild encounter reached yes, first encounter species Avalugg Lv2, private paths/logs/hashes/screenshots omitted yes.
+- Statuswirkung: GUI-0 through GUI-3 passed for the minimal Wild Standard/Fallback route. No new P1 promotion; Wild Standard/Fallback was already P1-supported.
+- Next GUI step: GUI-4 with one option group at a time, preferably Trainer-Core or Learnsets, not full randomization.
+
+# Current update
+
 - UPR-FVX PR #68 is merged and `02_external/upr-fvx` now pins `04bdd8b2f2769bedb1bf6c6ff8fcdecbbf84e29c`.
 - The GUI-0 blocker in `RandomizerGUI.populateDropdowns()` is fixed by filtering null Species out of GUI dropdown Species lists.
 - Sanitized local GUI-0 result: GUI opened yes, custom ROM loaded yes, randomization not yet, output ROM not yet, private paths/logs/hashes/screenshots omitted yes.

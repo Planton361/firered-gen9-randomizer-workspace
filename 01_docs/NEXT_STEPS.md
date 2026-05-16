@@ -1,3 +1,12 @@
+# Next steps update - GUI E2E Wild smoke pass
+
+- Treat GUI-0 through GUI-3 as passed for the minimal Wild Standard/Fallback route: GUI load, Wild-only randomization, local output creation, BizHawk boot and first wild encounter all succeeded in sanitized local evidence.
+- Keep the evidence boundary narrow: this is GUI workflow evidence for Wild Standard/Fallback only and does not promote any new P1 scope.
+- Next local step is GUI-4: add one option group at a time.
+- Start GUI-4 with either a Trainer-Core slice or a Learnsets slice.
+- Do not jump directly to full randomization; keep Trainer Names/Class Names, Items/Moves/Abilities and Special Wild systems separate unless explicitly selected as the next isolated smoke.
+- Continue reporting only sanitized yes/no evidence without ROM paths, hashes, CRCs, full logs, screenshots, saves, emulator states, private paths, secrets, tokens or `.env` data.
+
 # Next steps update - GUI load null species fix sync
 
 - Treat GUI-0 as passed after UPR-FVX PR #68: the private custom ROM loads in the local UPR-FVX GUI with null Species filtered from dropdown Species lists.

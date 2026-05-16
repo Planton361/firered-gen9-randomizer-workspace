@@ -1,3 +1,12 @@
+# Roadmap status update - GUI E2E Wild smoke pass
+
+- First sanitized GUI E2E smoke pass is recorded for the minimal Wild Standard/Fallback route.
+- Evidence: correct CFRU/DPE Gen9 ROM loaded, Wild Standard/Fallback only randomization completed, output ROM created, output ROM booted in BizHawk and first wild encounter reached.
+- First encounter species is recorded only as sanitized gameplay evidence: Avalugg Lv2.
+- PokemonCount 1439, PokedexCount 1290 and generation counts include 4-9.
+- No ROM paths, hashes, CRCs, full logs, screenshots, saves, emulator states, output ROMs, UPR-FVX code changes, submodule pin changes or P1 promotion are added.
+- Next GUI focus: GUI-4 with one option group at a time, starting with Trainer-Core or Learnsets rather than full randomization.
+
 # Roadmap status update - GUI load null species fix
 
 - UPR-FVX PR #68 is merged and workspace-pinned at `04bdd8b2f2769bedb1bf6c6ff8fcdecbbf84e29c`.

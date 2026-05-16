@@ -18,9 +18,11 @@ The goal is quick GUI compatibility evidence:
 
 Current sanitized status:
 
-- GUI-0 passed after UPR-FVX PR #68: GUI opened yes and the custom ROM loaded yes.
-- Randomization has not been run yet.
-- No output ROM has been created yet.
+- GUI-0 passed after UPR-FVX PR #68: GUI opened yes and the correct CFRU/DPE Gen9 ROM loaded yes.
+- GUI-1 passed with Wild Standard/Fallback only: randomization completed yes and output ROM created yes.
+- GUI-2 passed: output ROM booted locally in BizHawk yes.
+- GUI-3 passed: first wild encounter reached yes, with first encounter species recorded as Avalugg Lv2.
+- PokemonCount 1439, PokedexCount 1290 and generation counts include 4-9 yes.
 - Private paths, logs, hashes and screenshots remain omitted.
 
 ### GUI-0: Load Only
@@ -36,26 +38,27 @@ Current sanitized status:
 - Enable only Standard/Fallback Wild Encounter randomization.
 - Leave all other option groups disabled.
 - Generate one local randomized output ROM.
-- Result target: prove the smallest P1-supported GUI path can write an output ROM.
+- Result status: passed locally; Wild Standard/Fallback only randomization completed and created an output ROM.
 
 ### GUI-2: Boot Output ROM
 
 - Boot the locally generated output ROM in the local emulator.
 - Do not document emulator paths, ROM paths, screenshots or full logs.
-- Result target: prove the generated ROM starts locally.
+- Result status: passed locally in BizHawk.
 
 ### GUI-3: First Wild Encounter
 
 - Reach the first wild encounter locally.
 - Record only whether an encounter was reached.
 - Do not document species names, screenshots, save states or route/location details unless a later sanitized scope explicitly asks for them.
-- Result target: prove the minimal Wild Standard/Fallback GUI output reaches gameplay evidence.
+- Result status: passed locally; first encounter species was Avalugg Lv2.
 
 ### GUI-4+: Later Option Groups
 
 - Add further option groups only after GUI-0 through GUI-3 are clean.
 - Each new group should be added in a separate local smoke so failures stay attributable.
 - Do not treat any later group as P1-promoted by this pipeline.
+- Recommended first GUI-4 candidates: Trainer-Core or Learnsets. Do not jump directly to full randomization.
 
 ## Initially Disabled
 
@@ -107,6 +110,6 @@ Do not include:
 
 ## Evidence Boundary
 
-This pipeline is a local GUI E2E compatibility smoke plan only. The GUI-0 sync pins the already-merged UPR-FVX PR #68, but it does not add Output-ROM evidence, does not make new UPR-FVX code changes in the workspace and does not promote any new feature to P1-supported.
+This pipeline is a local GUI E2E compatibility smoke plan only. The GUI-0 sync pins the already-merged UPR-FVX PR #68, and the GUI-1 through GUI-3 pass records sanitized local Output-ROM, BizHawk boot and first-encounter evidence for Wild Standard/Fallback only. It does not make new UPR-FVX code changes in the workspace and does not promote any new feature to P1-supported.
 
-The GUI-0 pass records only load evidence. GUI-1 must still produce the first local randomized output ROM before any boot or encounter stages can be attempted.
+The GUI-1 through GUI-3 pass does not imply support for Trainer Names/Class Names, Learnsets, Items/Moves/Abilities, Special Wild systems or full randomization.
