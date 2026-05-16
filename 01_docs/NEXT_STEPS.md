@@ -1,3 +1,10 @@
+# Next steps update - Trainer ROM/Reload/Text evidence plan
+
+- Treat the new Trainer ROM-/Reload-/Text-Encoding evidence document as a plan only.
+- Keep current Trainer follow-up suboptions at `tested-non-rom`, not P1-supported, until a separately authorized evidence scope exists.
+- Next minimal step, if continued, should be a read-only design/review block that identifies exact Trainer writer/reload fields and exact Trainer text encoder/decoder length checks.
+- Do not run ROM evidence, implement Writer-/Reload fixes, make Text-Encoding claims, rely on `changeTo.length()` alone, or promote P1 from this plan.
+
 # Next steps update - Diagnose 181
 
 - Treat `FVX-FOE-013` Trainer Names/Class Names as `tested-non-rom`, not P1-supported.
