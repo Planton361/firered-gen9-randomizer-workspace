@@ -1,5 +1,11 @@
 # Current update
 
+- UPR-FVX PR #62 is merged and `02_external/upr-fvx` now pins `a5b1b63b134149bd88e62af27a9b45332f617d9e`.
+- Items/Moves/Abilities now have a second ROM-free Slice in `TMTutorMoveDecisionTest`: `TMTutorMoveRandomizer.randomizeTMMoves()` covers allowed Move pool, exclusion of HM/game-breaking/levelup-banned/illegal Moves, preserved Field-Move-TM slot, stable output count and high Move IDs `1001..1003`.
+- Statuswirkung: ROM-free evidence only; no ROM-facing Reload evidence, Writer/Reload smoke, output ROM, Randomizer run or P1 promotion was performed.
+
+# Current update
+
 - UPR-FVX PR #61 is merged and `02_external/upr-fvx` now pins `c365b96399ed36881ed637edce0721c059c442d1`.
 - Items/Moves/Abilities now have a first ROM-free Ability-Test-Slice in `SpeciesAbilityDecisionTest`: `SpeciesAbilityRandomizer` covers allowed Ability pool, banned Ability exclusion, non-empty two-Ability output and Species-ID-`1025` path.
 - Statuswirkung: ROM-free evidence only; no ROM-facing Reload evidence, Writer/Reload smoke, output ROM, Randomizer run or P1 promotion was performed.

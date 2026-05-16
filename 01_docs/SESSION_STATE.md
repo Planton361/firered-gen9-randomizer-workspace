@@ -1,3 +1,13 @@
+# Session update - Moves first test slice sync
+
+- New branch: `docs/sync-moves-first-slice`.
+- UPR-FVX PR #62 was verified as merged into `compat/firered-gen9-cfru-dpe`.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX commit `a5b1b63b134149bd88e62af27a9b45332f617d9e`.
+- Evidence scope: second ROM-free Items/Moves/Abilities slice for Moves; synthetic `TMTutorMoveDecisionTest` verifies `TMTutorMoveRandomizer.randomizeTMMoves()` keeps TM choices inside the allowed Move pool, excludes HM/game-breaking/levelup-banned/illegal Moves, preserves the Field-Move-TM slot, keeps output count stable and allows high Move IDs `1001..1003`.
+- Status remains ROM-free unit-test evidence only, not P1-supported; no ROM-facing Writer/Reload evidence, output ROM, Randomizer run or P1 promotion is added.
+- No ROM, save, emulator state, output ROM, build, tool binary, private path, secret, token or `.env` file was read, copied, changed or documented.
+- No UPR-FVX code change in this workspace block, Writer-/Reload smoke, ROM-Smoke, Randomizer run or P1 promotion was performed.
+
 # Session update - Items/Moves/Abilities first test slice sync
 
 - New branch: `docs/sync-items-moves-abilities-first-slice`.
