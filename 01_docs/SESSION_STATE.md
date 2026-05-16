@@ -1,3 +1,15 @@
+# Session update - GUI load null species fix sync
+
+- New branch: `randomizer/gui-load-null-species-fix-sync`.
+- UPR-FVX PR #68 is merged and `02_external/upr-fvx` now pins merged commit `04bdd8b2f2769bedb1bf6c6ff8fcdecbbf84e29c`.
+- Previous GUI-0 blocker: `RandomizerGUI.populateDropdowns()` could throw a NullPointerException when sparse Custom-ROM Species mappings contained null Species.
+- Fix: null Species are filtered out of GUI dropdown Species lists and are not selectable dropdown entries.
+- Sanitized local GUI-0 result after the fix: GUI opened yes, custom ROM loaded yes, randomization not yet, output ROM not yet, private paths/logs/hashes/screenshots omitted yes.
+- Status: GUI-0 passed for Custom ROM load in the local GUI path.
+- Next local step: GUI-1 with Wild Standard/Fallback only randomization.
+- No ROM, save, emulator state, output ROM, build artifact, tool binary, private path, hash, full log, screenshot, secret, token or `.env` detail was read, copied, changed or documented by Codex.
+- No UPR-FVX code change was made in this workspace sync, no Output-ROM evidence exists yet and no P1 promotion was made.
+
 # Session update - GUI E2E smoke pipeline
 
 - New branch: `randomizer/gui-e2e-smoke-pipeline`.

@@ -16,12 +16,19 @@ The goal is quick GUI compatibility evidence:
 
 ## Fastest Order
 
+Current sanitized status:
+
+- GUI-0 passed after UPR-FVX PR #68: GUI opened yes and the custom ROM loaded yes.
+- Randomization has not been run yet.
+- No output ROM has been created yet.
+- Private paths, logs, hashes and screenshots remain omitted.
+
 ### GUI-0: Load Only
 
 - Open the UPR-FVX GUI locally.
 - Load the private custom ROM.
 - Do not randomize and do not save an output ROM in this stage.
-- Result target: prove the GUI accepts and identifies the custom ROM without documenting private details.
+- Result status: passed locally after the null-Species dropdown fix in UPR-FVX PR #68.
 
 ### GUI-1: Wild Standard/Fallback Only
 
@@ -74,6 +81,7 @@ Use this exact structure for local handoff notes:
 ```text
 GUI opened: yes/no
 Custom ROM loaded: yes/no
+Randomization: not yet / yes / no
 Options used: Wild Standard/Fallback only
 Output ROM created: yes/no
 Emulator boot: yes/no
@@ -99,4 +107,6 @@ Do not include:
 
 ## Evidence Boundary
 
-This pipeline is a local GUI E2E compatibility smoke plan only. It does not add ROM evidence by itself, does not update the UPR-FVX submodule pin, does not change UPR-FVX code and does not promote any new feature to P1-supported.
+This pipeline is a local GUI E2E compatibility smoke plan only. The GUI-0 sync pins the already-merged UPR-FVX PR #68, but it does not add Output-ROM evidence, does not make new UPR-FVX code changes in the workspace and does not promote any new feature to P1-supported.
+
+The GUI-0 pass records only load evidence. GUI-1 must still produce the first local randomized output ROM before any boot or encounter stages can be attempted.

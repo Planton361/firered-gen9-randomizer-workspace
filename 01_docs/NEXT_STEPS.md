@@ -1,3 +1,11 @@
+# Next steps update - GUI load null species fix sync
+
+- Treat GUI-0 as passed after UPR-FVX PR #68: the private custom ROM loads in the local UPR-FVX GUI with null Species filtered from dropdown Species lists.
+- Continue with GUI-1 locally: start a fresh/minimal GUI session, enable only Wild Standard/Fallback randomization and attempt to create one local output ROM.
+- Keep Trainer Names/Class Names, Learnsets, Items/Moves/Abilities, Special Wild systems, Day/Night Wild, Swarms, Roamers, DexNav, Raids and Wild Double Battles disabled for GUI-1.
+- Report GUI-1 only with sanitized yes/no fields; do not include ROM paths, output paths, hashes, full logs, screenshots with private paths, saves, emulator states, build artifacts, secrets, tokens or `.env` data.
+- Do not promote any new P1 support from the GUI-0 load pass.
+
 # Next steps update - GUI E2E smoke pipeline
 
 - Run the GUI E2E smoke locally, not through Codex: GUI-0 load the private custom ROM in UPR-FVX GUI without randomization, GUI-1 enable only Wild Standard/Fallback and create one local output ROM, GUI-2 boot that output ROM locally, GUI-3 reach the first wild encounter.

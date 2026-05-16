@@ -1,5 +1,12 @@
 # Current update
 
+- UPR-FVX PR #68 is merged and `02_external/upr-fvx` now pins `04bdd8b2f2769bedb1bf6c6ff8fcdecbbf84e29c`.
+- The GUI-0 blocker in `RandomizerGUI.populateDropdowns()` is fixed by filtering null Species out of GUI dropdown Species lists.
+- Sanitized local GUI-0 result: GUI opened yes, custom ROM loaded yes, randomization not yet, output ROM not yet, private paths/logs/hashes/screenshots omitted yes.
+- Statuswirkung: GUI-0 passed for Custom ROM load; GUI-1 Wild Standard/Fallback only is next. No Output-ROM evidence and no P1 promotion.
+
+# Current update
+
 - `gui_e2e_smoke_pipeline.md` defines the fastest local GUI E2E smoke order for the private custom ROM: GUI load only, then Wild Standard/Fallback only, then local emulator boot, then first wild encounter. It also defines the sanitized yes/no feedback format and keeps Trainer Names/Class Names, Learnsets, Items/Moves/Abilities and Special Wild systems disabled initially. No ROM/GUI/emulator smoke was run and no P1 promotion was made.
 
 # Current update
