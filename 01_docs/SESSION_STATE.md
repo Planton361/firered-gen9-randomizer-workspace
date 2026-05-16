@@ -1,3 +1,14 @@
+# Session update - Wild encounters reload equality evidence sync
+
+- New branch: `randomizer/wild-encounters-p1-track`.
+- UPR-FVX PR #64 was verified as merged into `compat/firered-gen9-cfru-dpe`.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX commit `d49837fea305157a2fe94f3f57d09cedc8ab25f8`.
+- Evidence scope: ROM-free synthetic Writer/Reload Equality evidence for Wild Encounters in `WildCatchLevelDecisionTest`; a reloadable fake `RomHandler` deep-copies `setEncounters(...)` data and reloads fresh `getEncounters(...)` copies.
+- Covered invariants: Area metadata, Slot-Anzahlen, Levelbereiche, allowed Species pool and high Species IDs above `1000` remain reload-equal.
+- Status remains below P1-supported; no real Gen3 ROM byte writer proof, output ROM, Randomizer run, ROM-Smoke or P1 promotion was added.
+- No ROM, save, emulator state, output ROM, build, tool binary, private path, secret, token or `.env` file was read, copied, changed or documented.
+- No new UPR-FVX code change in this workspace sync.
+
 # Session update - Items first test slice sync
 
 - New branch: `docs/sync-items-first-slice`.

@@ -1,3 +1,10 @@
+# Next steps update - Wild encounters reload equality evidence sync
+
+- Treat UPR-FVX PR #64 as the first ROM-free Writer/Reload Equality evidence for Wild Encounters only.
+- The pinned `WildCatchLevelDecisionTest` now includes a synthetic reloadable `RomHandler` path that proves written Wild Encounter slot data reloads equal for area metadata, slot counts, level ranges, allowed Species and high Species IDs above `1000`.
+- Keep Wild Encounters below P1-supported; real Gen3 byte writer/reload proof, output ROM evidence and a Randomizer run remain missing.
+- Next Wild P1 work, if explicitly authorized, should target the smallest ROM-facing or equivalent Gen3 writer/reload proof. Do not promote P1 from PR #64 alone.
+
 # Next steps update - Items first test slice sync
 
 - Treat the UPR-FVX PR #63 sync as a narrow ROM-free Items/Moves/Abilities evidence update only.
