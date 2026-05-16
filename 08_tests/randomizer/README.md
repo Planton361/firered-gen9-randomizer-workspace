@@ -1,5 +1,11 @@
 # Current update
 
+- `179_trainer_special_rules_followup.md`: records merged UPR-FVX PR #49 and pins `02_external/upr-fvx` to `bc46fdc49741643d8f09dd302b67b5b2d35d24c5`.
+- The pinned `TrainerSpecialRulesTest` covers `FVX-FOE-010`, `FVX-FOE-012` and `FVX-FOE-014` with synthetic Non-ROM Trainer, Party, Species and Evolution data.
+- Statuswirkung: Trainer Special Rules for League Unique, Rival Carries Starter and Trainers Evolve Their Pokemon + Level Modifier are now `tested-non-rom`, not P1-supported; `FVX-FOE-011` Battle Style and `FVX-FOE-013` Trainer Names/Class Names/Text remain separate; no ROM-Smoke, Trainer Writer-/Reload-ROM evidence, output-ROM or Randomizer run was performed.
+
+# Current update
+
 - `178_trainer_additional_pokemon_followup.md`: records merged UPR-FVX PR #48 and pins `02_external/upr-fvx` to `32ab7d969e5439d38e5781670c9a68e0ea418d0a`.
 - The pinned `TrainerAdditionalPokemonTest` covers `FVX-FOE-005`, `FVX-FOE-006` and `FVX-FOE-007` with synthetic Non-ROM Trainer/Party/Species data, including safe-template cloning, max party size 6 and multi-battle limit 3.
 - Statuswirkung: Trainer Additional Pokemon for Boss, Important and Regular Trainers is now `tested-non-rom`, not P1-supported; no ROM-Smoke, Trainer Writer-/Reload-ROM evidence, Trainer Names/Class Names/Text work, output-ROM or Randomizer run was performed.
@@ -397,6 +403,7 @@ Der neueste bestaetigte Stand wird in Markdown ueber die Spalte `Latest` markier
 | 176 | `176_wild_catch_level_followup.md` | Wild Catch/Level Follow-up | UPR-FVX PR #46 gemerged und Submodule auf `c86221d7` gepinnt; `WildCatchLevelDecisionTest` belegt `FVX-WILD-007/010/012` ROM-frei als `tested-non-rom`; keine P1-Freigabe ohne ROM-/Reload-Evidenz | keiner | nein |
 | 177 | `177_trainer_type_diversity_followup.md` | Trainer Type Diversity Follow-up | UPR-FVX PR #47 gemerged und Submodule auf `ea526970` gepinnt; `TrainerTypeDiversityGuardTest` belegt `FVX-FOE-009` ROM-frei als `tested-non-rom`; keine P1-Freigabe ohne ROM-/Reload-Evidenz | keiner | nein |
 | 178 | `178_trainer_additional_pokemon_followup.md` | Trainer Additional Pokemon Follow-up | UPR-FVX PR #48 gemerged und Submodule auf `32ab7d96` gepinnt; `TrainerAdditionalPokemonTest` belegt `FVX-FOE-005/006/007` ROM-frei als `tested-non-rom`; keine P1-Freigabe ohne ROM-/Reload-Evidenz | keiner | nein |
+| 179 | `179_trainer_special_rules_followup.md` | Trainer Special Rules Follow-up | UPR-FVX PR #49 gemerged und Submodule auf `bc46fdc4` gepinnt; `TrainerSpecialRulesTest` belegt `FVX-FOE-010/012/014` ROM-frei als `tested-non-rom`; `FVX-FOE-011/013` bleiben separat; keine P1-Freigabe ohne ROM-/Reload-Evidenz | keiner | nein |
 | 091 | `091_palette_randomization_preserve_repoint_plan.md` | CFRU/DPE Palette Randomization Preserve/Repoint Plan | dokumentiert: echte Palette-Randomization ist ein komprimierter Repointing-/Shared-Pointer-Writer; direkter Fix noch nicht eng genug, zuerst read-only Pointer-/Compression-Diagnose noetig; `FVX-GFX-001..004` bleiben `Write modelliert` | keiner, read-only Analyse | nein |
 | 092 | `092_palette_pointer_compression_diagnostics_plan.md` | CFRU/DPE Palette Pointer / Compression Diagnostics Plan | dokumentiert: spaetere Diagnose soll Normal-/Shiny-Palette-Pointer, Dekomprimierbarkeit, Single-Owner/Shared, missing/invalid und sichere Kandidaten aggregiert klassifizieren; kein Fix, kein Repointing | keiner, read-only Analyse | nein |
 | 093 | `093_palette_pointer_compression_diagnostics.md` | CFRU/DPE Palette Pointer / Compression Diagnostics | bestaetigt sanitisiert: `candidateLoaded=true`, `palettePointerScanSuccessful=true`, `candidateWritablePalettes=385`, `candidateWritableNormalPalettes=385`, `candidateWritableShinyPalettes=0`; shared/invalid/missing/decode-failed bleiben preserve-only | lokal/ignored, nicht dokumentiert | nein |

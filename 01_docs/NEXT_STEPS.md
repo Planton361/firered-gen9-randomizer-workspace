@@ -1,3 +1,10 @@
+# Next steps update - Diagnose 179B
+
+- Treat `FVX-FOE-010`, `FVX-FOE-012` and `FVX-FOE-014` Trainer Special Rules as `tested-non-rom`, not P1-supported.
+- The merged UPR-FVX PR #49 harness covers ROM-free League Unique, Rival Carries Starter and Trainers Evolve Their Pokemon + Level Modifier behavior with synthetic Trainer, Party, Species and Evolution data.
+- Keep `FVX-FOE-011` Battle Style and `FVX-FOE-013` Trainer Names/Class Names/Text as separate scopes.
+- Do not run ROM-Smoke, Trainer Writer-/Reload-ROM tests, Trainer Names/Class Names/Text work, Battle Style work, output-ROM generation, Randomizer runs or P1-promotion work without a separate explicit scope.
+
 # Next steps update - Diagnose 178B
 
 - Treat `FVX-FOE-005`, `FVX-FOE-006` and `FVX-FOE-007` Additional Pokemon for Boss, Important and Regular Trainers as `tested-non-rom`, not P1-supported.

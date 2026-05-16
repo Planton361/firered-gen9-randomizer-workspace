@@ -1,3 +1,15 @@
+# Session update - Diagnose 179B
+
+- New branch: `test/upr-fvx-cfru-dpe-trainer-special-rules-followup`.
+- UPR-FVX PR #49 was verified as merged into `compat/firered-gen9-cfru-dpe`.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX commit `bc46fdc49741643d8f09dd302b67b5b2d35d24c5`.
+- Original UPR-FVX test commit: `6489dd1e61d1bcb35345ae006032b884527e0a97`.
+- Follow-up 179B records the Non-ROM `TrainerSpecialRulesTest` harness for Trainer Special Rules.
+- Statuswirkung: `FVX-FOE-010`, `FVX-FOE-012` and `FVX-FOE-014` move to `tested-non-rom`, not P1-supported.
+- `FVX-FOE-011` Battle Style and `FVX-FOE-013` Trainer Names/Class Names/Text remain separate and unpromoted.
+- Checks from PR #49 are recorded as focused `:random:test --tests com.uprfvx.random.randomizers.TrainerSpecialRulesTest`, broader `:random:test --tests '*Trainer*'` and full `:random:test`, all `BUILD SUCCESSFUL`.
+- No ROM, save, emulator state, output ROM, log, Randomizer JAR, tool binary, build artifact, private path, hash, secret, token or `.env` file was committed.
+
 # Session update - Diagnose 178B
 
 - New branch: `test/upr-fvx-cfru-dpe-trainer-additional-pokemon-followup`.
