@@ -1,3 +1,11 @@
+# Roadmap status update - Diagnose 178B
+
+- Trainer Additional Pokemon follow-up is recorded.
+- UPR-FVX PR #48 is merged and workspace-pinned at `32ab7d969e5439d38e5781670c9a68e0ea418d0a`.
+- The pinned `TrainerAdditionalPokemonTest` covers Additional Pokemon for Boss, Important and Regular Trainers with synthetic Non-ROM data.
+- Guard/Fix: additional Pokemon are cloned only from original slots with non-null Species; trainers without a safe template are skipped, and max party size 6 plus multi-battle limit 3 are covered.
+- Statuswirkung: `FVX-FOE-005`, `FVX-FOE-006` and `FVX-FOE-007` are now `tested-non-rom`, not P1-supported; no ROM-/Reload-Evidenz, ROM-Smoke, Trainer Names/Class Names/Text work, output-ROM or Randomizer run was executed.
+
 # Roadmap status update - Diagnose 177B
 
 - Trainer Type Diversity follow-up is recorded.

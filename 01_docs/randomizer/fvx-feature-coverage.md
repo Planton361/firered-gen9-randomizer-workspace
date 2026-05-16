@@ -1,3 +1,11 @@
+# Coverage update - Diagnose 178B
+
+- UPR-FVX PR #48 is merged and the workspace submodule is pinned at `32ab7d969e5439d38e5781670c9a68e0ea418d0a`.
+- `TrainerAdditionalPokemonTest` provides Non-ROM `:random:test` coverage for Additional Pokemon on Boss, Important and Regular Trainers with synthetic Trainer, Party and Species data.
+- `TrainerPokemonRandomizer` now guards additional Pokemon cloning to original slots with non-null Species and skips trainers without a safe template.
+- `FVX-FOE-005`, `FVX-FOE-006` and `FVX-FOE-007` move to `tested-non-rom`.
+- This is not a P1-supported promotion: no ROM-/Reload-Evidenz, ROM-Smoke, Trainer Names/Class Names/Text work, output-ROM or Randomizer run is included.
+
 # Coverage update - Diagnose 177B
 
 - UPR-FVX PR #47 is merged and the workspace submodule is pinned at `ea5269706eb7d04eb0b305f88e8fa20bfb21f92a`.
@@ -726,7 +734,7 @@ Diagnose 082 bestaetigt `FVX-TRAIT-018` nach der 081-Normalisierung:
 | Pokemon Traits | 28 | 7 | 15 | 0 | 0 | 0 | 6 | 0 |
 | Starters, Statics & Trades | 15 | 5 | 0 | 0 | 0 | 5 | 5 | 0 |
 | Moves & Movesets | 11 | 0 | 3 | 0 | 1 | 0 | 7 | 0 |
-| Foe Pokemon | 14 | 8 | 0 | 0 | 0 | 1 | 5 | 0 |
+| Foe Pokemon | 14 | 5 | 0 | 0 | 0 | 4 | 5 | 0 |
 | Wild Pokemon | 12 | 0 | 1 | 0 | 0 | 3 | 8 | 0 |
 | TM/HMs & Tutors | 15 | 0 | 9 | 0 | 0 | 0 | 6 | 0 |
 | Items | 10 | 0 | 0 | 0 | 10 | 0 | 0 | 0 |
@@ -812,9 +820,9 @@ Diagnose 082 bestaetigt `FVX-TRAIT-018` nach der 081-Normalisierung:
 - FVX-FOE-002 | Better Movesets: Boss Trainers | GUI-kompatibel
 - FVX-FOE-003 | Better Movesets: Important Trainers | GUI-kompatibel
 - FVX-FOE-004 | Better Movesets: Regular Trainers | GUI-kompatibel
-- FVX-FOE-005 | Additional Pokemon: Boss Trainers | Nicht begonnen
-- FVX-FOE-006 | Additional Pokemon: Important Trainers | Nicht begonnen
-- FVX-FOE-007 | Additional Pokemon: Regular Trainers | Nicht begonnen
+- FVX-FOE-005 | Additional Pokemon: Boss Trainers | tested-non-rom
+- FVX-FOE-006 | Additional Pokemon: Important Trainers | tested-non-rom
+- FVX-FOE-007 | Additional Pokemon: Regular Trainers | tested-non-rom
 - FVX-FOE-008 | Trainer Held Items | GUI-kompatibel
 - FVX-FOE-009 | Force Diverse Types | tested-non-rom
 - FVX-FOE-010 | Pokemon League Has Unique Pokemon | Nicht begonnen
