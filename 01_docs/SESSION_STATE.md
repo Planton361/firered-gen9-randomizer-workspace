@@ -1,3 +1,13 @@
+# Session update - Items first test slice sync
+
+- New branch: `docs/sync-items-first-slice`.
+- UPR-FVX PR #63 was verified as merged into `compat/firered-gen9-cfru-dpe`.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX commit `d88a0cdb8c11473d2a3448028e937422eaf38679`.
+- Evidence scope: third ROM-free Items/Moves/Abilities slice for Items; synthetic `ItemDecisionTest` verifies `ItemRandomizer.randomizeFieldItems()` for Non-TM Field Items keeps choices inside the non-bad allowed Item pool, excludes bad/key-style Items, keeps output non-empty, preserves Field-Item count and allows high Item IDs `1001..1003`.
+- Status remains ROM-free unit-test evidence only, not P1-supported; no ROM-facing Writer/Reload evidence, output ROM, Randomizer run or P1 promotion is added.
+- No ROM, save, emulator state, output ROM, build, tool binary, private path, secret, token or `.env` file was read, copied, changed or documented.
+- No UPR-FVX code change in this workspace block, Writer-/Reload smoke, ROM-Smoke, Randomizer run or P1 promotion was performed.
+
 # Session update - Moves first test slice sync
 
 - New branch: `docs/sync-moves-first-slice`.
