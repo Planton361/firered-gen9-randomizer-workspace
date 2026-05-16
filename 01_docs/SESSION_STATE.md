@@ -1,3 +1,15 @@
+# Session update - Diagnose 180B
+
+- New branch: `test/upr-fvx-cfru-dpe-battle-style-followup`.
+- UPR-FVX PR #50 was verified as merged into `compat/firered-gen9-cfru-dpe`.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX commit `5e2d351966ce4a96d02cdb6ca676b39bde7a9505`.
+- Original UPR-FVX test commit: `99f46cce7464750ea5cdc4055b1e9168e59bc1a0`.
+- Follow-up 180B records the Non-ROM `TrainerBattleStyleTest` harness for `FVX-FOE-011` Battle Style.
+- Statuswirkung: `FVX-FOE-011` moves to `tested-non-rom`, not P1-supported.
+- Checks from PR #50 are recorded as `git diff --check`, focused `:random:test --tests '*TrainerBattleStyle*'`, broader `:random:test --tests '*Trainer*'` and full `:random:test`, all successful.
+- No Writer/Reload, ROM-Smoke, output-ROM generation, Randomizer run, Trainer Names/Class Names/Text work or P1-promotion was performed.
+- No ROM, save, emulator state, output ROM, log, Randomizer JAR, tool binary, build artifact, private path, secret, token or `.env` file was committed.
+
 # Session update - Diagnose 179B
 
 - New branch: `test/upr-fvx-cfru-dpe-trainer-special-rules-followup`.

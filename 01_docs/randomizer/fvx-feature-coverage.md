@@ -1,3 +1,11 @@
+# Coverage update - Diagnose 180B
+
+- UPR-FVX PR #50 is merged and the workspace submodule is pinned at `5e2d351966ce4a96d02cdb6ca676b39bde7a9505`.
+- `TrainerBattleStyleTest` provides Non-ROM `:random:test` coverage for `FVX-FOE-011` Battle Style decisions with synthetic Trainer data.
+- `FVX-FOE-011` moves to `tested-non-rom`.
+- This is not a P1-supported promotion: no ROM-/Reload-Evidenz, ROM-Smoke, Trainer Names/Class Names/Text work, output-ROM or Randomizer run is included.
+- `FVX-FOE-013` Trainer Names/Class Names/Text remains a separate unpromoted Text scope.
+
 # Coverage update - Diagnose 179B
 
 - UPR-FVX PR #49 is merged and the workspace submodule is pinned at `bc46fdc49741643d8f09dd302b67b5b2d35d24c5`.
@@ -834,7 +842,7 @@ Diagnose 082 bestaetigt `FVX-TRAIT-018` nach der 081-Normalisierung:
 - FVX-FOE-008 | Trainer Held Items | GUI-kompatibel
 - FVX-FOE-009 | Force Diverse Types | tested-non-rom
 - FVX-FOE-010 | Pokemon League Has Unique Pokemon | tested-non-rom
-- FVX-FOE-011 | Battle Style randomisieren | Nicht begonnen
+- FVX-FOE-011 | Battle Style randomisieren | tested-non-rom
 - FVX-FOE-012 | Rival Carries Starter Through Game | tested-non-rom
 - FVX-FOE-013 | Randomize Trainer Names / Class Names | Nicht begonnen
 - FVX-FOE-014 | Trainers Evolve Their Pokemon + Level Modifier | tested-non-rom

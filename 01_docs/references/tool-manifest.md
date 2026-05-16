@@ -1,3 +1,15 @@
+# Tool Manifest Update - 2026-05-16 - Trainer battle style follow-up
+
+- Workspace branch: `test/upr-fvx-cfru-dpe-battle-style-followup`.
+- UPR-FVX fork base branch: `compat/firered-gen9-cfru-dpe`.
+- UPR-FVX PR #50: <https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/50>.
+- Original UPR-FVX test commit: `99f46cce7464750ea5cdc4055b1e9168e59bc1a0`.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX commit `5e2d351966ce4a96d02cdb6ca676b39bde7a9505`.
+- Previous workspace pin was `bc46fdc49741643d8f09dd302b67b5b2d35d24c5`.
+- Scope: Non-ROM `TrainerBattleStyleTest`; synthetic Trainer data covers `FVX-FOE-011` Battle Style decisions.
+- Checks recorded from UPR-FVX PR #50: `git diff --check`, `./gradlew --offline :random:test --tests '*TrainerBattleStyle*'`, `./gradlew --offline :random:test --tests '*Trainer*'` and `./gradlew --offline :random:test`, all successful.
+- Safety: no Workspace code changes, no UPR-FVX code changes in this block, no ROM/save/output/log/build artifacts committed, no Trainer Names/Class Names/Text scope, no ROM-Smoke, no Writer-/Reload-ROM test, no P1-promotion and no Original-Upstream PR.
+
 # Tool Manifest Update - 2026-05-16 - Trainer special rules follow-up
 
 - Workspace branch: `test/upr-fvx-cfru-dpe-trainer-special-rules-followup`.
