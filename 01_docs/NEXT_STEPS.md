@@ -1,3 +1,9 @@
+# Next steps update - Diagnose 178B
+
+- Treat `FVX-FOE-005`, `FVX-FOE-006` and `FVX-FOE-007` Additional Pokemon for Boss, Important and Regular Trainers as `tested-non-rom`, not P1-supported.
+- The merged UPR-FVX PR #48 harness covers ROM-free Trainer Additional Pokemon mutation/guard behavior with synthetic Trainer, Party and Species data.
+- Do not run ROM-Smoke, Trainer Writer-/Reload-ROM tests, Trainer Names/Class Names/Text work, output-ROM generation, Randomizer runs or P1-promotion work without a separate explicit scope.
+
 # Next steps update - Diagnose 177B
 
 - Treat `FVX-FOE-009` Force Diverse Types / Type Themes as `tested-non-rom`, not P1-supported.

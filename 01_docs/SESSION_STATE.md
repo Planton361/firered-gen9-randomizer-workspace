@@ -1,3 +1,15 @@
+# Session update - Diagnose 178B
+
+- New branch: `test/upr-fvx-cfru-dpe-trainer-additional-pokemon-followup`.
+- UPR-FVX PR #48 was verified as merged into `compat/firered-gen9-cfru-dpe`.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX commit `32ab7d969e5439d38e5781670c9a68e0ea418d0a`.
+- Original UPR-FVX test commit: `cdc09eaee12c44a7f3ba5ca24a091ce4da2ef8ac`.
+- Follow-up 178B records the Non-ROM `TrainerAdditionalPokemonTest` harness for Additional Pokemon on Boss, Important and Regular Trainers.
+- Guard/Fix: `TrainerPokemonRandomizer` clones additional Pokemon only from original slots with non-null Species; trainers without a safe template are skipped, while max party size 6 and multi-battle limit 3 are covered.
+- Statuswirkung: `FVX-FOE-005`, `FVX-FOE-006` and `FVX-FOE-007` move to `tested-non-rom`, not P1-supported.
+- Checks from PR #48 are recorded as focused `:random:test --tests com.uprfvx.random.randomizers.TrainerAdditionalPokemonTest`, broader `:random:test --tests '*Trainer*'` and full `:random:test`, all `BUILD SUCCESSFUL`.
+- No ROM, save, emulator state, output ROM, log, Randomizer JAR, tool binary, build artifact, private path, hash, secret, token or `.env` file was committed.
+
 # Session update - Diagnose 177B
 
 - New branch: `test/upr-fvx-cfru-dpe-trainer-type-diversity-followup`.
