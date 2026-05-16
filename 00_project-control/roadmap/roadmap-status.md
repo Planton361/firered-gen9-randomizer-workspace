@@ -1,3 +1,10 @@
+# Roadmap status update - GUI E2E smoke pipeline
+
+- Focus shifts from broad per-feature expansion to the fastest local GUI E2E compatibility path for the private custom ROM.
+- Minimal order: GUI load only, Wild Standard/Fallback only, local output boot, first wild encounter.
+- Trainer Names/Class Names, Learnsets, Items/Moves/Abilities and Special Wild systems stay out of the initial GUI smoke.
+- This is a documentation-only pipeline update: no ROM/GUI/emulator smoke, UPR-FVX code change, submodule pin change or P1 promotion was performed.
+
 # Roadmap status update - Wild encounters P1 decision
 
 - Wild Encounters are promoted to `P1-supported` for the documented Standard/Fallback Wild Encounter writer/reload scope in the tested private target context.

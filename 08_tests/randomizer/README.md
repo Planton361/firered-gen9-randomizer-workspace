@@ -1,5 +1,9 @@
 # Current update
 
+- `gui_e2e_smoke_pipeline.md` defines the fastest local GUI E2E smoke order for the private custom ROM: GUI load only, then Wild Standard/Fallback only, then local emulator boot, then first wild encounter. It also defines the sanitized yes/no feedback format and keeps Trainer Names/Class Names, Learnsets, Items/Moves/Abilities and Special Wild systems disabled initially. No ROM/GUI/emulator smoke was run and no P1 promotion was made.
+
+# Current update
+
 - UPR-FVX PR #67 is merged and `02_external/upr-fvx` now pins verified merge commit `9bde3d4e2f983bfb96875c5fe9697f87763d8665`.
 - Trainer Names/Class Names now have an opt-in ROM-facing smoke harness in `Gen3TrainerTextRomSmokeTest`; default no-ROM execution skips cleanly with Tests 1, Skipped 1, Failures 0, Errors 0.
 - Statuswirkung: harness prepared only; no private local ROM smoke is documented, no ROM path/hash/full log/output ROM is documented, byte-exact Terminator/Padding inspection is not directly proven and no P1 promotion was performed.

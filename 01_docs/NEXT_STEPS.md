@@ -1,3 +1,11 @@
+# Next steps update - GUI E2E smoke pipeline
+
+- Run the GUI E2E smoke locally, not through Codex: GUI-0 load the private custom ROM in UPR-FVX GUI without randomization, GUI-1 enable only Wild Standard/Fallback and create one local output ROM, GUI-2 boot that output ROM locally, GUI-3 reach the first wild encounter.
+- Report back only with the sanitized yes/no structure from `08_tests/randomizer/gui_e2e_smoke_pipeline.md`.
+- Keep Trainer Names/Class Names, Learnsets, Items/Moves/Abilities, Special Wild systems, Day/Night Wild, Swarms, Roamers, DexNav, Raids and Wild Double Battles disabled until GUI-0 through GUI-3 are clean.
+- Do not include ROM paths, output paths, hashes, full logs, screenshots with private paths, saves, emulator states, build artifacts, secrets, tokens or `.env` data.
+- Do not promote any new P1 support from this documentation-only block.
+
 # Next steps update - Trainer text ROM smoke harness sync
 
 - Treat UPR-FVX PR #67 as harness-prepared only: a ROM-facing Gen3 Trainer Names/Class Names smoke can now be run locally with explicit private-ROM opt-in.
