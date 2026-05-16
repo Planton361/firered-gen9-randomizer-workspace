@@ -1,3 +1,11 @@
+# Coverage update - Diagnose 179B
+
+- UPR-FVX PR #49 is merged and the workspace submodule is pinned at `bc46fdc49741643d8f09dd302b67b5b2d35d24c5`.
+- `TrainerSpecialRulesTest` provides Non-ROM `:random:test` coverage for Trainer Special Rules with synthetic Trainer, Party, Species and Evolution data.
+- `FVX-FOE-010`, `FVX-FOE-012` and `FVX-FOE-014` move to `tested-non-rom`.
+- This is not a P1-supported promotion: no ROM-/Reload-Evidenz, ROM-Smoke, Trainer Names/Class Names/Text work, Battle Style work, output-ROM or Randomizer run is included.
+- `FVX-FOE-011` Battle Style and `FVX-FOE-013` Trainer Names/Class Names/Text remain separate unpromoted scopes.
+
 # Coverage update - Diagnose 178B
 
 - UPR-FVX PR #48 is merged and the workspace submodule is pinned at `32ab7d969e5439d38e5781670c9a68e0ea418d0a`.
@@ -532,11 +540,11 @@ Sie ist die detaillierte Requirements-/Coverage-Ebene. Die Roadmap bleibt bewuss
 
 | Status | Anzahl |
 |---|---:|
-| Nicht begonnen | 39 |
+| Nicht begonnen | 36 |
 | Plan erstellt | 28 |
 | Read modelliert | 0 |
 | Write modelliert | 12 |
-| Getestet | 10 |
+| Getestet | 13 |
 | GUI-kompatibel | 41 |
 | In Arbeit | 0 |
 | **Gesamt** | **130** |
@@ -734,7 +742,7 @@ Diagnose 082 bestaetigt `FVX-TRAIT-018` nach der 081-Normalisierung:
 | Pokemon Traits | 28 | 7 | 15 | 0 | 0 | 0 | 6 | 0 |
 | Starters, Statics & Trades | 15 | 5 | 0 | 0 | 0 | 5 | 5 | 0 |
 | Moves & Movesets | 11 | 0 | 3 | 0 | 1 | 0 | 7 | 0 |
-| Foe Pokemon | 14 | 5 | 0 | 0 | 0 | 4 | 5 | 0 |
+| Foe Pokemon | 14 | 2 | 0 | 0 | 0 | 7 | 5 | 0 |
 | Wild Pokemon | 12 | 0 | 1 | 0 | 0 | 3 | 8 | 0 |
 | TM/HMs & Tutors | 15 | 0 | 9 | 0 | 0 | 0 | 6 | 0 |
 | Items | 10 | 0 | 0 | 0 | 10 | 0 | 0 | 0 |
@@ -825,11 +833,11 @@ Diagnose 082 bestaetigt `FVX-TRAIT-018` nach der 081-Normalisierung:
 - FVX-FOE-007 | Additional Pokemon: Regular Trainers | tested-non-rom
 - FVX-FOE-008 | Trainer Held Items | GUI-kompatibel
 - FVX-FOE-009 | Force Diverse Types | tested-non-rom
-- FVX-FOE-010 | Pokemon League Has Unique Pokemon | Nicht begonnen
+- FVX-FOE-010 | Pokemon League Has Unique Pokemon | tested-non-rom
 - FVX-FOE-011 | Battle Style randomisieren | Nicht begonnen
-- FVX-FOE-012 | Rival Carries Starter Through Game | Nicht begonnen
+- FVX-FOE-012 | Rival Carries Starter Through Game | tested-non-rom
 - FVX-FOE-013 | Randomize Trainer Names / Class Names | Nicht begonnen
-- FVX-FOE-014 | Trainers Evolve Their Pokemon + Level Modifier | Nicht begonnen
+- FVX-FOE-014 | Trainers Evolve Their Pokemon + Level Modifier | tested-non-rom
 
 ### Wild Pokemon
 

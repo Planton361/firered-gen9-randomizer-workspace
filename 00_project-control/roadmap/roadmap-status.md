@@ -1,3 +1,11 @@
+# Roadmap status update - Diagnose 179B
+
+- Trainer Special Rules follow-up is recorded.
+- UPR-FVX PR #49 is merged and workspace-pinned at `bc46fdc49741643d8f09dd302b67b5b2d35d24c5`.
+- The pinned `TrainerSpecialRulesTest` covers Pokemon League Has Unique Pokemon, Rival Carries Starter Through Game and Trainers Evolve Their Pokemon + Level Modifier with synthetic Non-ROM data.
+- Statuswirkung: `FVX-FOE-010`, `FVX-FOE-012` and `FVX-FOE-014` are now `tested-non-rom`, not P1-supported; no ROM-/Reload-Evidenz, ROM-Smoke, Trainer Names/Class Names/Text work, Battle Style work, output-ROM or Randomizer run was executed.
+- `FVX-FOE-011` Battle Style and `FVX-FOE-013` Trainer Names/Class Names/Text remain separate scopes.
+
 # Roadmap status update - Diagnose 178B
 
 - Trainer Additional Pokemon follow-up is recorded.
