@@ -1,3 +1,11 @@
+# Next steps update - Trainer Class Names encoded length fix sync
+
+- Treat the UPR-FVX PR #53 sync as a narrow fix/evidence update only.
+- The Trainer Class Names `changeTo.length()` selection-guard risk is fixed in the pinned UPR-FVX logic by using encoded/internal length.
+- Keep `FVX-FOE-013` Trainer Names/Class Names at `tested-non-rom`, not P1-supported.
+- Any later P1 discussion still needs separately authorized ROM-facing or equivalent Writer/Reload evidence for fixed-field byte length, byte-truncation absence, Terminator/Padding validity and decoded reload equality.
+- Do not run ROM evidence, perform Writer-/Reload smokes, make Text-Encoding support claims or promote P1 from this sync.
+
 # Next steps update - Trainer Names text length unit evidence
 
 - Treat `08_tests/randomizer/031_trainer_names_text_length_unit_evidence.md` as ROM-free unit-test evidence only.

@@ -14,6 +14,10 @@ No ROM, save, emulator state, output ROM, build artifact, tool binary, private p
 - Workspace submodule pin: `7357b244e01ef2c7790b858d50c19c31ac72e955`
 - Previous workspace submodule pin: `d20eb1367c62a4f14c8778bc61ad6904ea76a6d6`
 
+## Fix Follow-up
+
+UPR-FVX PR #53 replaced the Trainer Class Names Java `changeTo.length()` guard with an encoded/internal-length check and the workspace now pins merged commit `955c852cf07f155a046b18865a39e6912a6ee09c`. This resolves the documented synthetic selection-guard risk, but still does not prove ROM-facing Writer/Reload behavior, real Terminator/Padding, decoded reload equality, broad Text-Encoding safety or P1 support.
+
 ## Tested
 
 The merged UPR-FVX PR extends the existing ROM-free `TrainerNameRandomizerTest` style. It uses a synthetic fake `RomHandler` whose `internalStringLength(...)` can differ from Java `String.length()`.
