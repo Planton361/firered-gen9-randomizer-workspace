@@ -1,3 +1,13 @@
+# Session update - Learnsets evolution moves test slice sync
+
+- New branch: `docs/sync-learnsets-evolution-moves-slice`.
+- UPR-FVX PR #60 was verified as merged into `compat/firered-gen9-cfru-dpe`.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX commit `c40fbbd796db5b43a3bc53e547dc890a853cef20`.
+- Evidence scope: fourth ROM-free `LearnsetDecisionTest` slice for Learnsets; synthetic Evolution Moves for All data verifies exactly one Level-0 Evolution-Move slot is added while existing Level-1/later level slots, Move pool and high Species ID `1025` path remain stable.
+- Status remains ROM-free unit-test evidence only, not P1-supported; no ROM-facing Writer/Reload evidence, output ROM, Randomizer run or P1 promotion is added.
+- No ROM, save, emulator state, output ROM, build, tool binary, private path, secret, token or `.env` file was read, copied, changed or documented.
+- No UPR-FVX code change in this workspace block, Writer-/Reload smoke, ROM-Smoke, Randomizer run or P1 promotion was performed.
+
 # Session update - Learnsets starting moves test slice sync
 
 - New branch: `docs/sync-learnsets-starting-moves-slice`.
