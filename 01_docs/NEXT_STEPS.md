@@ -1,3 +1,11 @@
+# Next steps update - Learnsets evolution moves test slice sync
+
+- Treat the UPR-FVX PR #60 sync as a narrow ROM-free Learnsets option-test evidence update only.
+- The pinned `LearnsetDecisionTest` now includes a fourth synthetic Evolution Moves for All slice: exactly one Level-0 Evolution-Move slot is added while existing Level-1/later level slots, Move pool and high Species ID `1025` path stay stable.
+- Keep Learnsets below P1-supported; no ROM-facing Writer/Reload evidence, output ROM, Randomizer run or reload equality was produced in this sync.
+- Learnsets now has four small ROM-free slices; next Learnsets work should be a separately authorized ROM-facing/equivalent Writer/Reload evidence plan or a different Randomizer area.
+- Do not run ROM evidence, perform Writer-/Reload smokes or promote P1 from this sync.
+
 # Next steps update - Learnsets starting moves test slice sync
 
 - Treat the UPR-FVX PR #59 sync as a narrow ROM-free Learnsets option-test evidence update only.
