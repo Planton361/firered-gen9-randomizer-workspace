@@ -1,3 +1,13 @@
+# Session update - Wild encounters first test slice sync
+
+- New branch: `docs/sync-wild-encounters-first-slice`.
+- UPR-FVX PR #54 was verified as merged into `compat/firered-gen9-cfru-dpe`.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX commit `8d67f8686e16b3a9d3e77da5789a06889a645e5f`.
+- Evidence scope: first ROM-free `WildCatchLevelDecisionTest` slice for Wild Encounters; synthetic encounters verify preserved Slot-/Level-/Area structure, non-empty encounter areas, allowed Species selection and high-numbered Species IDs above `1000`.
+- Status remains ROM-free unit-test evidence only, not P1-supported; no ROM-facing Writer/Reload evidence, output ROM, Randomizer run or P1 promotion is added.
+- No ROM, save, emulator state, output ROM, build, tool binary, private path, secret, token or `.env` file was read, copied, changed or documented.
+- No UPR-FVX code change in this workspace block, Writer-/Reload smoke, ROM-Smoke, Randomizer run or P1 promotion was performed.
+
 # Session update - Trainer Class Names encoded length fix sync
 
 - New branch: `docs/sync-trainer-class-names-encoded-length-fix`.

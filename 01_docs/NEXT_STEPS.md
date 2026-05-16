@@ -1,3 +1,11 @@
+# Next steps update - Wild encounters first test slice sync
+
+- Treat the UPR-FVX PR #54 sync as a narrow ROM-free Wild Encounter unit-test evidence update only.
+- The pinned `WildCatchLevelDecisionTest` now includes a first synthetic Wild Encounter slice for preserved Slot-/Level-/Area structure, non-empty encounter areas, allowed Species selection and high-numbered Species IDs above `1000`.
+- Keep Wild Encounters below P1-supported; no ROM-facing Writer/Reload evidence, output ROM, Randomizer run or reload equality was produced in this sync.
+- Next Wild work, if explicitly authorized, should choose a separate narrow scope: either more ROM-free option coverage or a later ROM-facing/equivalent Writer/Reload evidence plan.
+- Do not run ROM evidence, perform Writer-/Reload smokes or promote P1 from this sync.
+
 # Next steps update - Trainer Class Names encoded length fix sync
 
 - Treat the UPR-FVX PR #53 sync as a narrow fix/evidence update only.

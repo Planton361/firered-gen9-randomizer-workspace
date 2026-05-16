@@ -1,5 +1,11 @@
 # Current update
 
+- UPR-FVX PR #54 is merged and `02_external/upr-fvx` now pins `8d67f8686e16b3a9d3e77da5789a06889a645e5f`.
+- Wild Encounters now have a first ROM-free Unit-Test-Slice in `WildCatchLevelDecisionTest`: Slot-/Level-/Area structure remains preserved, encounter areas stay non-empty, and selected Species stay in the allowed pool including high IDs above `1000`.
+- Statuswirkung: ROM-free evidence only; no ROM-facing Reload evidence, Writer/Reload smoke, output ROM, Randomizer run or P1 promotion was performed.
+
+# Current update
+
 - UPR-FVX PR #53 is merged and `02_external/upr-fvx` now pins `955c852cf07f155a046b18865a39e6912a6ee09c`.
 - Trainer Class Names Length Check now uses internal/encoded length instead of Java `changeTo.length()`; the focused ROM-free `TrainerNameRandomizerTest` passed in PR #53.
 - Statuswirkung: Trainer Names/Class Names remains `tested-non-rom`, not P1-supported; no ROM-facing Reload evidence, Terminator/Padding proof, decoded reload equality or P1 promotion was performed.
