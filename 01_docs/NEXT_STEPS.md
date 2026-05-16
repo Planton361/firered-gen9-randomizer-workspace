@@ -1,3 +1,11 @@
+# Next steps update - Diagnose 180B
+
+- Treat `FVX-FOE-011` Battle Style as `tested-non-rom`, not P1-supported.
+- The merged UPR-FVX PR #50 harness covers ROM-free Battle Style decisions with synthetic Trainer data: `UNCHANGED`, `SINGLE_STYLE`, deterministic `RANDOM` and too-few-Pokemon skips.
+- Keep Writer-/Reload-ROM evidence, ROM-Smoke, output-ROM generation, Randomizer runs and P1-promotion out of scope unless separately authorized.
+- Keep `FVX-FOE-013` Trainer Names/Class Names/Text separate and unstarted.
+- Next minimal Trainer block, if continued, should be a read-only plan for `FVX-FOE-013` Trainer Names/Class Names/Text or another still-open Trainer suboption, without implementing text changes.
+
 # Next steps update - Diagnose 179B
 
 - Treat `FVX-FOE-010`, `FVX-FOE-012` and `FVX-FOE-014` Trainer Special Rules as `tested-non-rom`, not P1-supported.

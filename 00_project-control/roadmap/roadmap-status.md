@@ -1,3 +1,11 @@
+# Roadmap status update - Diagnose 180B
+
+- Trainer Battle Style follow-up is recorded.
+- UPR-FVX PR #50 is merged and workspace-pinned at `5e2d351966ce4a96d02cdb6ca676b39bde7a9505`.
+- The pinned `TrainerBattleStyleTest` covers `FVX-FOE-011` Battle Style with synthetic Non-ROM Trainer data.
+- Statuswirkung: `FVX-FOE-011` is now `tested-non-rom`, not P1-supported; no ROM-/Reload-Evidenz, ROM-Smoke, Trainer Names/Class Names/Text work, output-ROM or Randomizer run was executed.
+- `FVX-FOE-013` Trainer Names/Class Names/Text remains a separate unstarted scope.
+
 # Roadmap status update - Diagnose 179B
 
 - Trainer Special Rules follow-up is recorded.
