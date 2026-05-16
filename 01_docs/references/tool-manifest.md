@@ -1,3 +1,15 @@
+# Tool Manifest Update - 2026-05-16 - Learnsets option test slice
+
+- Workspace branch: `docs/sync-learnsets-option-slice`.
+- UPR-FVX fork base branch: `compat/firered-gen9-cfru-dpe`.
+- UPR-FVX PR #58: <https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/58>.
+- Original UPR-FVX test commit: `96b6fc0f test: cover learnsets option behavior`.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX commit `6ed75f5b1e5b8b354e2db694c880407c8e0a10dd`.
+- Previous workspace pin was `56cae7eb0c2ddc626dc31c4802d3f696a42959bf`.
+- Scope: second ROM-free Learnsets option-test slice in `LearnsetDecisionTest`; synthetic `orderDamagingMovesByDamage()` coverage verifies damaging Moves are sorted by damage while Evolution-/Non-Damaging-Slots, Level-/Slot-Anzahl, Move pool and high Species ID `1025` remain stable.
+- Checks recorded from UPR-FVX PR #58: `git diff --check`, `git diff --cached --check` and `./gradlew :random:test --tests '*Learn*'`, successful.
+- Safety: no Workspace code changes beyond documentation and submodule pin, no UPR-FVX code changes in this workspace sync, no ROM/save/output/log/build artifacts committed, no ROM-facing Writer/Reload evidence, no P1-promotion and no Original-Upstream PR.
+
 # Tool Manifest Update - 2026-05-16 - Learnsets first test slice
 
 - Workspace branch: `docs/sync-learnsets-first-test-slice`.
