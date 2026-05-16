@@ -1,3 +1,16 @@
+# Tool Manifest Update - 2026-05-16 - Wild encounters ROM smoke evidence
+
+- Workspace branch: `randomizer/wild-encounters-rom-smoke-evidence-sync`.
+- UPR-FVX fork base branch: `compat/firered-gen9-cfru-dpe`.
+- UPR-FVX PR #66: <https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/66>.
+- Original UPR-FVX fix commit: `75f95d15 fix: handle gen3 wild smoke evolution load blocker`.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX commit `f4d0cbbe3143cab4b963d2444b8354d97fa96403`.
+- Previous workspace pin was `f224862c91aed8e7a75fe843f5088cadea734da4`.
+- Scope: PR #66 fixes the Gen3 Evolution load blocker in `loadEvolutions()` so the opt-in Wild Encounter ROM smoke can reach the Wild Encounter writer/reload path.
+- Sanitized local evidence after PR #66: `Gen3WildEncounterRomSmokeTest` passed with Tests 1, Failures 0, Errors 0, Skipped 0.
+- Status: Wild Encounters is a P1 candidate; no P1 promotion is made in this sync.
+- Safety: no Workspace code changes beyond documentation and submodule pin, no new UPR-FVX code changes in this workspace sync, no ROM/save/output/log/build artifacts committed, no private ROM path/hash/full log/output ROM documented and no Original-Upstream PR.
+
 # Tool Manifest Update - 2026-05-16 - Wild encounters ROM smoke harness
 
 - Workspace branch: `randomizer/wild-encounters-rom-smoke-harness-sync`.
