@@ -1,3 +1,11 @@
+# Next steps update - Wild encounters option test slice sync
+
+- Treat the UPR-FVX PR #56 sync as a narrow ROM-free Wild Encounter option-test evidence update only.
+- The pinned `WildCatchLevelDecisionTest` now includes a third synthetic option slice for `BlockWildLegendaries`, proving the option keeps legendary Species out of the replacement pool under ROM-free test data.
+- Keep Wild Encounters below P1-supported; no ROM-facing Writer/Reload evidence, output ROM, Randomizer run or reload equality was produced in this sync.
+- Next Wild work, if explicitly authorized, should choose another narrow ROM-free option slice or a later ROM-facing/equivalent Writer/Reload evidence plan.
+- Do not run ROM evidence, perform Writer-/Reload smokes or promote P1 from this sync.
+
 # Next steps update - Wild encounters multi-area test slice sync
 
 - Treat the UPR-FVX PR #55 sync as a narrow ROM-free Wild Encounter unit-test evidence update only.
