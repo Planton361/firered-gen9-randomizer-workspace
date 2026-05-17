@@ -1,5 +1,14 @@
 # Current update
 
+- `187_gui4a_wild_trainer_ogerpon_pass.md` records the sanitized GUI-4A pass after syncing UPR-FVX PR #78.
+- Workspace pin: `02_external/upr-fvx` now points to merge commit `18e184b2c22451c74b4ba46bd7203c579d3bc9e7`.
+- Evidence: correct CFRU/DPE Gen9 ROM loaded with `isRomHack=true`, PokemonCount 1439, PokedexCount 1290 and generations 1-9 present; Wild Standard/Fallback plus Trainer Pokemon core randomization completed; output ROM was created locally; emulator boot, wild encounter check and trainer battle check passed.
+- Missing sprites observed: no. Move-less Pokemon observed: no.
+- Ogerpon appears in Trainer output/log and is pool-eligible after the Learnset/Sprite/Palette fixes.
+- Day/Night Wild, Swarms and other Special-Wild systems remain out-of-scope. Remaining invalid asset candidates are known and guarded. No P1 promotion is made.
+
+# Current update
+
 - `186_ogerpon_asset_fix_sync.md` records the sanitized Pool Asset Report evidence after syncing DPE PR #2 and UPR-FVX PR #77.
 - Workspace pins now include DPE `3d0ac870fadc91e55f6ff19c0f7aae3cac2014a1` and UPR-FVX `d6415d59a8b94b4d6d4c1e424a73c0f426993d03`.
 - Evidence: accepted count after guard improved to 1186, excluded count is 6, no usable learnset exclusions remain at 1, invalid/missing front battle sprite pointer exclusions dropped to 5, and invalid/missing normal palette pointer exclusions dropped to 5.

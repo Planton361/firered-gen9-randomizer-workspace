@@ -18,6 +18,12 @@ The goal is quick GUI compatibility evidence:
 
 Current sanitized status:
 
+- GUI-4A passed with Wild Standard/Fallback plus Trainer Pokemon core after syncing UPR-FVX PR #78.
+- Correct CFRU/DPE Gen9 ROM loaded with `isRomHack=true`, PokemonCount 1439, PokedexCount 1290 and generations 1-9 present.
+- GUI randomization completed, output ROM was created locally, emulator boot succeeded, wild encounters were checked and a trainer battle was checked.
+- Missing sprites observed: no. Move-less Pokemon observed: no.
+- Ogerpon appears in Trainer output/log and is pool-eligible after the Ogerpon Learnset/Sprite/Palette fixes.
+- CFRU Day/Night Wild, Swarms and other Special-Wild systems remain out-of-scope for the current normal walkthrough goal.
 - Ogerpon asset blocker: resolved after syncing DPE PR #2 and UPR-FVX PR #77.
 - Updated Pool Asset Report baseline after local DPE+CFRU rebuild: 1186 accepted after guard, 6 excluded total, 1 no-usable-learnset exclusion, 5 invalid/missing front battle sprite pointer exclusions and 5 invalid/missing normal palette pointer exclusions.
 - Ogerpon internal slots 1422..1429 now have movesLearntCount 20, learnsetPointerValid true, frontSpritePointerValid true and palettePointerValid true.
@@ -63,8 +69,9 @@ Current sanitized status:
 - Add further option groups only after GUI-0 through GUI-3 are clean.
 - Each new group should be added in a separate local smoke so failures stay attributable.
 - Do not treat any later group as P1-promoted by this pipeline.
-- Recommended first GUI-4 candidates: Trainer-Core or Learnsets. Do not jump directly to full randomization.
-- With Ogerpon accepted in the updated Pool Asset Report, rerun the local GUI E2E path on the new pins before broadening option groups.
+- GUI-4A result: Wild Standard/Fallback plus Trainer Pokemon core passed in sanitized local evidence.
+- Recommended next GUI-4B candidate: Learnsets only, layered on the now-passed Wild Standard/Fallback plus Trainer Pokemon core path.
+- Keep Trainer Names/Class Names and Items/Moves/Abilities separate unless explicitly selected as the next isolated smoke. Do not jump directly to full randomization.
 
 ## Initially Disabled
 
@@ -91,10 +98,11 @@ Use this exact structure for local handoff notes:
 GUI opened: yes/no
 Custom ROM loaded: yes/no
 Randomization: not yet / yes / no
-Options used: Wild Standard/Fallback only
+Options used: Wild Standard/Fallback only / Wild Standard/Fallback + Trainer Pokemon core / other narrow block
 Output ROM created: yes/no
 Emulator boot: yes/no
 First wild encounter reached: yes/no
+Trainer battle checked: yes/no/not in scope
 Error summary: sanitized, no paths/logs/hashes
 ```
 
@@ -116,6 +124,6 @@ Do not include:
 
 ## Evidence Boundary
 
-This pipeline is a local GUI E2E compatibility smoke plan only. The GUI-0 sync pins the already-merged UPR-FVX PR #68, and the GUI-1 through GUI-3 pass records sanitized local Output-ROM, BizHawk boot and first-encounter evidence for Wild Standard/Fallback only. It does not make new UPR-FVX code changes in the workspace and does not promote any new feature to P1-supported.
+This pipeline is a local GUI E2E compatibility smoke plan only. The GUI-0 sync pins the already-merged UPR-FVX PR #68, the GUI-1 through GUI-3 pass records sanitized local Output-ROM, BizHawk boot and first-encounter evidence for Wild Standard/Fallback only, and GUI-4A records sanitized Wild Standard/Fallback plus Trainer Pokemon core evidence after the Ogerpon asset fix. It does not make new UPR-FVX code changes in the workspace and does not promote any new feature to P1-supported.
 
-The GUI-1 through GUI-3 pass does not imply support for Trainer Names/Class Names, Learnsets, Items/Moves/Abilities, Special Wild systems or full randomization.
+The GUI-4A pass does not imply support for Trainer Names/Class Names, Learnsets, Items/Moves/Abilities, Special Wild systems or full randomization. CFRU Day/Night Wild, Swarms and other Special-Wild systems remain outside the current normal walkthrough scope.
