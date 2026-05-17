@@ -1,3 +1,16 @@
+# Tool Manifest Update - 2026-05-17 - CFRU/DPE evolution row stride fix
+
+- Workspace branch: `randomizer/sync-cfru-dpe-evolution-row-stride-fix`.
+- UPR-FVX PR #82: <https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/82>.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX PR #82 commit `485f0b899c84470f3fab82317331a671ec023ac1`.
+- Scope: PR #82 fixes the Gen3/CFRU-DPE evolution table row-stride path. CFRU/DPE uses `EVOS_PER_MON=16`, so CFRU/DPE evolution rows are now read/written/reported with `evolutionSlotsPerSpecies=16` and `evolutionRowSize=0x80`.
+- Root cause: the old UPR-FVX evolution read/write/report path used vanilla 5-slot rows (`0x28` bytes), which made the report read the private input ROM incorrectly and could corrupt output evolutions.
+- Sanitized local report evidence after PR #82: Input ROM starter chains correct and new Output ROM starter chains correct.
+- Starter chain evidence: Bulbasaur -> Ivysaur Lv16, Ivysaur -> Venusaur Lv32, Charmander -> Charmeleon Lv16, Charmeleon -> Charizard Lv36, Squirtle -> Wartortle Lv16 and Wartortle -> Blastoise Lv36.
+- Previous bad/Test13-style outputs were produced by the old writer path and are stale; they must not be reused as current evidence.
+- Next local smoke: verify Squirtle evolving at Lv16 in a newly generated output.
+- Safety: no ROM/save/output/log/build artifact committed, no private path/ROM hash/full log/screenshot documented, no UPR-FVX/CFRU/DPE code change in this workspace sync and no P1 promotion.
+
 # Tool Manifest Update - 2026-05-17 - GUI-4B no-swarms pass
 
 - Workspace branch: `randomizer/sync-gui4b-no-swarms-pass`.

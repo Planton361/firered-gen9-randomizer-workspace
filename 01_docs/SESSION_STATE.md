@@ -1,3 +1,17 @@
+# Session update - CFRU/DPE evolution row stride fix
+
+- New branch: `randomizer/sync-cfru-dpe-evolution-row-stride-fix`.
+- Synced merged UPR-FVX PR #82 into the workspace pin.
+- `02_external/upr-fvx` now pins merge commit `485f0b899c84470f3fab82317331a671ec023ac1`.
+- CFRU/DPE uses `EVOS_PER_MON=16`; UPR-FVX PR #82 now uses `evolutionSlotsPerSpecies=16` and `evolutionRowSize=0x80` for the CFRU/DPE Gen9 evolution path.
+- Root cause recorded: the old UPR-FVX evolution read/write/report path used vanilla 5-slot row stride (`0x28` bytes), so the report could read the private input ROM incorrectly and the old writer could damage output evolutions.
+- Sanitized local report evidence after PR #82: Input ROM starter chains correct and new Output ROM starter chains correct.
+- Starter chain evidence: Bulbasaur -> Ivysaur Lv16, Ivysaur -> Venusaur Lv32, Charmander -> Charmeleon Lv16, Charmeleon -> Charizard Lv36, Squirtle -> Wartortle Lv16 and Wartortle -> Blastoise Lv36.
+- Previous bad/Test13-style outputs are invalid/stale because they were created by the old writer path; do not use them for current validation.
+- Next local smoke: verify Squirtle Lv16 evolution in a newly generated output.
+- No ROM, output ROM, save, emulator state, screenshot, full log, ROM path, hash, private path, secret, token or `.env` detail was read, copied, changed or documented by Codex.
+- No UPR-FVX/CFRU/DPE code change and no P1 promotion was made in this workspace sync.
+
 # Session update - GUI-4B no-swarms pass
 
 - New branch: `randomizer/sync-gui4b-no-swarms-pass`.

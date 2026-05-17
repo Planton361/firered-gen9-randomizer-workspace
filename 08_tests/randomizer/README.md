@@ -1,5 +1,14 @@
 # Current update
 
+- `189_cfru_dpe_evolution_row_stride_fix.md` records the sanitized Evolution Report evidence after syncing UPR-FVX PR #82.
+- Workspace pin: `02_external/upr-fvx` now points to merge commit `485f0b899c84470f3fab82317331a671ec023ac1`.
+- Evidence: CFRU/DPE uses `EVOS_PER_MON=16`; PR #82 uses `evolutionSlotsPerSpecies=16` and `evolutionRowSize=0x80` for CFRU/DPE Gen9 evolution rows.
+- Input ROM starter chains correct and new Output ROM starter chains correct in sanitized local report evidence.
+- Correct starter chain baseline: Bulbasaur -> Ivysaur Lv16, Ivysaur -> Venusaur Lv32, Charmander -> Charmeleon Lv16, Charmeleon -> Charizard Lv36, Squirtle -> Wartortle Lv16 and Wartortle -> Blastoise Lv36.
+- Previous bad/Test13-style outputs are stale and must not be used. Next local smoke is Squirtle Lv16 evolution in a newly generated output. No P1 promotion is made.
+
+# Current update
+
 - `188_gui4b_learnsets_no_swarms_pass.md` records the sanitized GUI-4B pass after syncing UPR-FVX PR #79, UPR-FVX PR #80 and CFRU PR #5.
 - Workspace pins now include UPR-FVX `226bcacc4f66cee5689caa128d5e35ef4acc001d` and CFRU `c4c90373fe7f24acd5dcfa3a8fbdd5cb573bfe29`.
 - Evidence: correct CFRU/DPE Gen9 ROM loaded with `isRomHack=true`, PokemonCount 1439, PokedexCount 1290 and generations 1-9 present; Wild Standard/Fallback plus Trainer Pokemon core plus Pokemon Movesets -> Random completely passed.

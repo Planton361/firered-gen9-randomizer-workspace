@@ -18,6 +18,13 @@ The goal is quick GUI compatibility evidence:
 
 Current sanitized status:
 
+- Evolution row-stride fix is synced after UPR-FVX PR #82.
+- UPR-FVX pin: `485f0b899c84470f3fab82317331a671ec023ac1`.
+- CFRU/DPE uses `EVOS_PER_MON=16`; the UPR-FVX evolution report/read/write path now uses `evolutionSlotsPerSpecies=16` and `evolutionRowSize=0x80`.
+- Sanitized local Evolution Report evidence after PR #82 shows the private input ROM starter chains correct and a newly generated output preserving starter evolutions.
+- Correct starter chain baseline: Bulbasaur -> Ivysaur Lv16, Ivysaur -> Venusaur Lv32, Charmander -> Charmeleon Lv16, Charmeleon -> Charizard Lv36, Squirtle -> Wartortle Lv16 and Wartortle -> Blastoise Lv36.
+- Previous bad/Test13-style outputs are stale and must not be used for current validation.
+- Next local smoke: verify Squirtle evolves at Lv16 in a newly generated output before broadening GUI options.
 - GUI-4B passed with Wild Standard/Fallback plus Trainer Pokemon core plus Pokemon Movesets -> Random completely after syncing UPR-FVX PR #79, UPR-FVX PR #80 and CFRU PR #5.
 - UPR-FVX pin: `226bcacc4f66cee5689caa128d5e35ef4acc001d`.
 - CFRU pin: `c4c90373fe7f24acd5dcfa3a8fbdd5cb573bfe29`.
@@ -80,7 +87,8 @@ Current sanitized status:
 - Do not treat any later group as P1-promoted by this pipeline.
 - GUI-4A result: Wild Standard/Fallback plus Trainer Pokemon core passed in sanitized local evidence.
 - GUI-4B result: Learnsets passed when layered on the now-passed Wild Standard/Fallback plus Trainer Pokemon core path, with CFRU swarms neutralized by `SWARM_CHANCE=0`.
-- Recommended next GUI-4C candidate: one separate narrow scope such as Trainer Names/Class Names or a first Items/Moves/Abilities slice.
+- Recommended next step before GUI-4C: Squirtle Lv16 evolution sanity check in a newly generated output after the CFRU/DPE evolution row-stride fix.
+- Recommended next GUI-4C candidate after that smoke: one separate narrow scope such as Trainer Names/Class Names or a first Items/Moves/Abilities slice.
 - Keep Trainer Names/Class Names and Items/Moves/Abilities separate unless explicitly selected as the next isolated smoke. Do not jump directly to full randomization.
 
 ## Initially Disabled
@@ -137,3 +145,5 @@ Do not include:
 This pipeline is a local GUI E2E compatibility smoke plan only. The GUI-0 sync pins the already-merged UPR-FVX PR #68, the GUI-1 through GUI-3 pass records sanitized local Output-ROM, BizHawk boot and first-encounter evidence for Wild Standard/Fallback only, and GUI-4A records sanitized Wild Standard/Fallback plus Trainer Pokemon core evidence after the Ogerpon asset fix. It does not make new UPR-FVX code changes in the workspace and does not promote any new feature to P1-supported.
 
 The GUI-4B pass does not imply support for Trainer Names/Class Names, Items/Moves/Abilities, Special Wild systems or full randomization. CFRU Day/Night Wild and other Special-Wild systems remain outside the current normal walkthrough scope. Swarms are neutralized for normal randomized walkthroughs by `SWARM_CHANCE=0`, not promoted as a randomized Special-Wild feature.
+
+The evolution row-stride sync documents a corrected CFRU/DPE evolution table path and sanitized report evidence only. It does not promote Evolution randomization settings or any new GUI option group to P1-supported.
