@@ -1,3 +1,19 @@
+# Session update - GUI working settings matrix
+
+- New branch: `randomizer/sync-gui-settings-matrix-pass`.
+- Synced merged UPR-FVX PR #88 and PR #89 into the workspace pin.
+- `02_external/upr-fvx` now pins merge commit `f3a6d04ff6db8d48468800194e0baffbafb7505c`.
+- Added `08_tests/randomizer/190_gui_working_settings_matrix.md`.
+- Sanitized local GUI Working Settings Matrix evidence is recorded after UPR-FVX fixes through PR #89.
+- Passed settings: Wild Standard/Fallback, Trainer Pokemon core, Pokemon Movesets -> Random completely, Trainer Movesets, Trainer Names, Field Items basic, Pokemon Abilities, TM/HM Compatibility, TM Moves, Move Tutor Moves, Move Tutor Compatibility, Shop Items, Pickup Items, In-Game Trades, Static Pokemon, Type Effectiveness, Pokemon Base Statistics and Move Data Power/Accuracy/PP/Type/Names.
+- In-Game Trades no longer show `NEW GIVEN = ?` after PR #89 in sanitized evidence.
+- Evolutions unchanged are preserved; swarms remain disabled by CFRU `SWARM_CHANCE=0`.
+- Trainer Class Names is documented as textlabel remapping only; sprite/class-id mismatch is expected and the option is recommended off for a stable visual profile.
+- Starter Pokemon remains caveated: player starter choices randomize, but rival first-battle sync is unresolved/blocked.
+- Special-Wild remains out-of-scope. Supported/special shops are confirmed, Pickup Items are log-confirmed, Static null placeholders remain null and Base Stats ability-name log display can appear truncated while ingame names are correct.
+- No ROM, output ROM, save, emulator state, screenshot, full log, ROM path, hash, private path, secret, token or `.env` detail was read, copied, changed or documented by Codex.
+- No UPR-FVX/CFRU/DPE code change and no P1 promotion was made in this workspace sync.
+
 # Session update - Trainer Names/Class Names GUI smoke
 
 - New branch: `randomizer/sync-trainer-names-class-names-pass`.

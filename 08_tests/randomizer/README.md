@@ -1,5 +1,15 @@
 # Current update
 
+- `190_gui_working_settings_matrix.md` records the sanitized GUI Working Settings Matrix after syncing UPR-FVX PR #88 and PR #89.
+- Workspace pin: `02_external/upr-fvx` now points to merge commit `f3a6d04ff6db8d48468800194e0baffbafb7505c`.
+- Evidence: Wild Standard/Fallback, Trainer Pokemon core, Pokemon Movesets -> Random completely, Trainer Movesets, Trainer Names, Field Items basic, Pokemon Abilities, TM/HM Compatibility, TM Moves, Move Tutor Moves, Move Tutor Compatibility, Shop Items, Pickup Items, In-Game Trades, Static Pokemon, Type Effectiveness, Pokemon Base Statistics and Move Data Power/Accuracy/PP/Type/Names are recorded as passed in sanitized local evidence.
+- In-Game Trades no longer show `NEW GIVEN = ?` after PR #89.
+- Evolutions unchanged are preserved and swarms remain disabled by CFRU `SWARM_CHANCE=0`.
+- Caveats: Trainer Class Names is textlabel remapping only and should stay off for visual consistency; Starter rival first-battle sync remains unresolved; Special-Wild remains out-of-scope; Shop Items evidence covers supported/special shops; Static null placeholders remain null; Base Stats ability-name log display may appear truncated while ingame names are correct.
+- No P1 promotion is made.
+
+# Current update
+
 - `190_trainer_names_class_names_pass.md` records the sanitized Trainer Names/Class Names GUI-smoke after syncing UPR-FVX PR #83, PR #85 and PR #86.
 - Workspace pin: `02_external/upr-fvx` now points to merge commit `f86315e7528ba3257df03b80c0c75ccc69ef574b`.
 - Evidence: Trainer Names are visibly changed in the Trainer Pokemon log.
