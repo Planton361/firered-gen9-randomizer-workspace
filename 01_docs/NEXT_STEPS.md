@@ -1,3 +1,14 @@
+# Next steps update - GUI working settings matrix
+
+- Treat UPR-FVX PR #88 and PR #89 as synced into the workspace pin at `f3a6d04ff6db8d48468800194e0baffbafb7505c`.
+- Treat the current GUI Working Settings Matrix as locally passed for the sanitized normal walkthrough scope after fixes through PR #89.
+- Keep the stable visual profile conservative: Wild Standard/Fallback, Trainer Pokemon core, Pokemon Movesets -> Random completely, Trainer Movesets, Trainer Names, Field Items basic, Pokemon Abilities, TM/HM/Tutor options, supported Shop Items, Pickup Items, In-Game Trades, Static Pokemon, Type Effectiveness, Pokemon Base Statistics and Move Data slices are recorded as passed with the documented caveats.
+- Keep Trainer Class Names off for visual consistency unless class-text-only remapping is intentionally desired; class id and trainer sprite remain unchanged by that option.
+- Keep Starter Pokemon off the stable profile until rival first-battle sync is diagnosed.
+- Keep Special-Wild out-of-scope and swarms disabled by CFRU `SWARM_CHANCE=0`.
+- Recommended next option block: isolate Starter Pokemon/rival starter sync, or run one stable-profile local smoke with Trainer Class Names, Starters and Special-Wild still disabled before expanding further.
+- Do not promote any new P1 status from this sync; continue reporting sanitized yes/no evidence only, without ROM paths, hashes, full logs, screenshots, output ROMs, saves, emulator states, private paths, secrets, tokens or `.env` data.
+
 # Next steps update - Trainer Names/Class Names GUI smoke
 
 - Treat UPR-FVX PR #83, PR #85 and PR #86 as synced into the workspace pin at `f86315e7528ba3257df03b80c0c75ccc69ef574b`.

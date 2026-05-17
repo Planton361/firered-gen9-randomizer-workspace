@@ -1,3 +1,16 @@
+# Tool Manifest Update - 2026-05-18 - GUI working settings matrix
+
+- Workspace branch: `randomizer/sync-gui-settings-matrix-pass`.
+- UPR-FVX PR #88: <https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/88>.
+- UPR-FVX PR #89: <https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/89>.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX PR #89 commit `f3a6d04ff6db8d48468800194e0baffbafb7505c`, including PR #88.
+- Scope: PR #88 documents Trainer Class Names as class-text remapping with unchanged trainer class id/sprite behavior; PR #89 fixes CFRU/DPE Extended-BPRE In-Game Trades species writes to use internal SpeciesSet identity.
+- Sanitized local evidence records the current GUI Working Settings Matrix after UPR-FVX fixes through PR #89.
+- Passed settings: Wild Standard/Fallback, Trainer Pokemon core, Pokemon Movesets -> Random completely, Trainer Movesets, Trainer Names, Field Items basic, Pokemon Abilities, TM/HM Compatibility, TM Moves, Move Tutor Moves, Move Tutor Compatibility, Shop Items, Pickup Items, In-Game Trades, Static Pokemon, Type Effectiveness, Pokemon Base Statistics and Move Data Power/Accuracy/PP/Type/Names.
+- Evolutions unchanged are preserved, including the corrected CFRU/DPE row-stride path; swarms remain disabled through CFRU `SWARM_CHANCE=0`.
+- Caveats: Trainer Class Names is textlabel remapping only and can mismatch the trainer sprite/class id, so it is recommended off for the stable visual profile; Starter Pokemon still has unresolved rival first-battle sync; Special-Wild remains out-of-scope; supported/special shops are confirmed; Static null placeholders remain null; Base Stats ability-name log display can appear truncated while ingame names are correct.
+- Safety: no ROM/save/output/log/build artifact committed, no private path/ROM hash/full log/screenshot documented, no UPR-FVX/CFRU/DPE code change in this workspace sync and no P1 promotion.
+
 # Tool Manifest Update - 2026-05-17 - Trainer Names/Class Names GUI smoke
 
 - Workspace branch: `randomizer/sync-trainer-names-class-names-pass`.

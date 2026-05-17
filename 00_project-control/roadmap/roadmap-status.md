@@ -1,3 +1,15 @@
+# Roadmap status update - GUI working settings matrix
+
+- UPR-FVX PR #88 and PR #89 are synced into the workspace pin at `f3a6d04ff6db8d48468800194e0baffbafb7505c`.
+- Current GUI Working Settings Matrix passed in sanitized local evidence after UPR-FVX fixes through PR #89.
+- Passed settings: Wild Standard/Fallback, Trainer Pokemon core, Pokemon Movesets -> Random completely, Trainer Movesets, Trainer Names, Field Items basic, Pokemon Abilities, TM/HM Compatibility, TM Moves, Move Tutor Moves, Move Tutor Compatibility, Shop Items, Pickup Items, In-Game Trades, Static Pokemon, Type Effectiveness, Pokemon Base Statistics and Move Data Power/Accuracy/PP/Type/Names.
+- In-Game Trades no longer show `NEW GIVEN = ?` after PR #89; Evolutions unchanged remain preserved; swarms remain disabled through CFRU `SWARM_CHANCE=0`.
+- Trainer Class Names is class-text remapping only and can mismatch the unchanged trainer class id/sprite; keep it off for the stable visual profile unless that mismatch is acceptable.
+- Starter Pokemon remains blocked for stable profile use because rival first-battle sync is unresolved. Special-Wild remains out-of-scope.
+- Shop Items evidence covers supported/special shops, Pickup Items are log-confirmed, Static null placeholders remain null and Base Stats ability-name log display can appear truncated while ingame names are correct.
+- Next recommended option block: Starter Pokemon/rival starter sync diagnosis, or a stable visual profile smoke with Trainer Class Names, Starters and Special-Wild disabled.
+- No ROM paths, hashes, CRCs, full logs, screenshots, saves, emulator states, output ROMs, UPR-FVX/CFRU/DPE code changes or P1 promotion are added.
+
 # Roadmap status update - Trainer Names/Class Names GUI smoke
 
 - UPR-FVX PR #83, PR #85 and PR #86 are synced into the workspace pin at `f86315e7528ba3257df03b80c0c75ccc69ef574b`.

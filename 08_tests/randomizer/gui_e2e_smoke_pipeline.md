@@ -18,6 +18,14 @@ The goal is quick GUI compatibility evidence:
 
 Current sanitized status:
 
+- GUI Working Settings Matrix is recorded after syncing UPR-FVX PR #88 and PR #89.
+- UPR-FVX pin: `f3a6d04ff6db8d48468800194e0baffbafb7505c`.
+- Working settings passed: Wild Standard/Fallback, Trainer Pokemon core, Pokemon Movesets -> Random completely, Trainer Movesets, Trainer Names, Field Items basic, Pokemon Abilities, TM/HM Compatibility, TM Moves, Move Tutor Moves, Move Tutor Compatibility, Shop Items, Pickup Items, In-Game Trades, Static Pokemon, Type Effectiveness, Pokemon Base Statistics and Move Data Power/Accuracy/PP/Type/Names.
+- In-Game Trades passed after PR #89 with no `NEW GIVEN = ?` observed in sanitized evidence.
+- Evolutions unchanged are preserved and swarms remain disabled by CFRU `SWARM_CHANCE=0`.
+- Trainer Class Names is class-text remapping only: class id and sprite remain unchanged, so sprite/class visual mismatch is expected. Recommend off for the stable visual profile.
+- Starter Pokemon remains caveated: player starter choices randomize, but rival first-battle sync is unresolved/blocked.
+- Special-Wild remains out-of-scope. Shop Items evidence covers supported/special shops, Pickup Items are log-confirmed, Static null placeholders remain null and Base Stats ability-name log display may appear truncated while ingame names are correct.
 - Trainer Names/Class Names GUI-smoke is recorded after syncing UPR-FVX PR #83, PR #85 and PR #86.
 - UPR-FVX pin: `f86315e7528ba3257df03b80c0c75ccc69ef574b`.
 - Trainer Names are visibly changed in the Trainer Pokemon log.
@@ -98,8 +106,9 @@ Current sanitized status:
 - GUI-4A result: Wild Standard/Fallback plus Trainer Pokemon core passed in sanitized local evidence.
 - GUI-4B result: Learnsets passed when layered on the now-passed Wild Standard/Fallback plus Trainer Pokemon core path, with CFRU swarms neutralized by `SWARM_CHANCE=0`.
 - GUI-4C result: Trainer Names/Class Names passed as global class-label remapping on the current stable path.
-- Recommended next GUI-4D candidate: a first Items/Moves/Abilities slice.
-- Keep Items/Moves/Abilities separate unless explicitly selected as the next isolated smoke. Do not jump directly to full randomization.
+- GUI Working Settings Matrix result: broad local settings matrix passed after fixes through UPR-FVX PR #89, with the caveats documented above.
+- Recommended next candidate: isolate Starter Pokemon/rival starter sync, or repeat the stable visual profile with Trainer Class Names, Starters and Special-Wild disabled.
+- Keep Special-Wild disabled unless explicitly selected as a separate diagnostic smoke.
 
 ## Initially Disabled
 
@@ -116,7 +125,7 @@ Do not enable these groups in GUI-1:
 - Raids.
 - Wild Double Battles.
 
-Trainer Names/Class Names has a sanitized local GUI-smoke pass but remains below P1-supported. Learnsets and Items/Moves/Abilities have ROM-free evidence slices only for this pipeline decision. Special Wild systems remain outside the Standard/Fallback Wild Encounter scope.
+Trainer Names has a sanitized local GUI-smoke pass but remains below P1-supported. Trainer Class Names is class-text remapping only and should stay disabled in a stable visual profile unless the sprite/class-id mismatch is acceptable. Special Wild systems remain outside the Standard/Fallback Wild Encounter scope.
 
 ## Sanitized Result Format
 
@@ -154,6 +163,6 @@ Do not include:
 
 This pipeline is a local GUI E2E compatibility smoke plan only. The GUI-0 sync pins the already-merged UPR-FVX PR #68, the GUI-1 through GUI-3 pass records sanitized local Output-ROM, BizHawk boot and first-encounter evidence for Wild Standard/Fallback only, and GUI-4A records sanitized Wild Standard/Fallback plus Trainer Pokemon core evidence after the Ogerpon asset fix. It does not make new UPR-FVX code changes in the workspace and does not promote any new feature to P1-supported.
 
-The GUI-4B pass does not imply support for Items/Moves/Abilities, Special Wild systems or full randomization. GUI-4C records Trainer Names/Class Names only as a sanitized GUI-smoke pass, not as P1 support. CFRU Day/Night Wild and other Special-Wild systems remain outside the current normal walkthrough scope. Swarms are neutralized for normal randomized walkthroughs by `SWARM_CHANCE=0`, not promoted as a randomized Special-Wild feature.
+The GUI-4B pass does not imply support for Special Wild systems or full randomization. GUI-4C records Trainer Names/Class Names only as a sanitized GUI-smoke pass, not as P1 support. The GUI Working Settings Matrix records broad local evidence after PR #89, still without P1 promotion. CFRU Day/Night Wild and other Special-Wild systems remain outside the current normal walkthrough scope. Swarms are neutralized for normal randomized walkthroughs by `SWARM_CHANCE=0`, not promoted as a randomized Special-Wild feature.
 
 The evolution row-stride sync documents a corrected CFRU/DPE evolution table path and sanitized report evidence only. It does not promote Evolution randomization settings or any new GUI option group to P1-supported.
