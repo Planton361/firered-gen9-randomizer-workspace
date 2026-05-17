@@ -18,6 +18,9 @@ The goal is quick GUI compatibility evidence:
 
 Current sanitized status:
 
+- Learnset runtime pointer blocker: resolved after syncing UPR-FVX PR #76 plus CFRU/DPE learnset table/repoint fixes.
+- Pool Asset Report baseline after local rebuild: 1185 accepted after guard, 7 excluded total and 1 no-usable-learnset exclusion.
+- Ogerpon now has a valid learnset and moves, but remains excluded because of invalid/missing front battle sprite pointer.
 - GUI-0 passed after UPR-FVX PR #68: GUI opened yes and the correct CFRU/DPE Gen9 ROM loaded yes.
 - GUI-1 passed with Wild Standard/Fallback only: randomization completed yes and output ROM created yes.
 - GUI-2 passed: output ROM booted locally in BizHawk yes.
@@ -59,6 +62,7 @@ Current sanitized status:
 - Each new group should be added in a separate local smoke so failures stay attributable.
 - Do not treat any later group as P1-promoted by this pipeline.
 - Recommended first GUI-4 candidates: Trainer-Core or Learnsets. Do not jump directly to full randomization.
+- The next technical blocker before broadening Ogerpon-eligible pools is Ogerpon/front battle sprite pointer diagnosis.
 
 ## Initially Disabled
 

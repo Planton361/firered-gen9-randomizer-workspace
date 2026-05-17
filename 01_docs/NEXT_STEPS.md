@@ -1,3 +1,12 @@
+# Next steps update - CFRU/DPE learnset runtime fixes sync
+
+- Treat the learnset-runtime-pointer blocker as resolved in the sanitized Pool Asset Report baseline after syncing UPR-FVX PR #76, CFRU PR #3, CFRU PR #2 and DPE PR #1.
+- Current sanitized report baseline: 1185 accepted after guard, 7 excluded total, 1 no-usable-learnset exclusion, 6 invalid/missing front battle sprite pointer exclusions and 6 invalid/missing normal palette pointer exclusions.
+- Ogerpon now has a valid learnset and moves in the report: movesLearntCount 20 and learnsetPointerValid true.
+- Ogerpon remains excluded because of invalid/missing front battle sprite pointer.
+- Next technical block: diagnose Ogerpon/front battle sprite pointer before expanding GUI E2E options further around Ogerpon-eligible pools.
+- Do not promote any new P1 status from this sync; keep reporting sanitized evidence only, without ROM paths, hashes, full logs, screenshots, output ROMs, saves, emulator states, private paths, secrets, tokens or `.env` data.
+
 # Next steps update - GUI E2E Wild smoke pass
 
 - Treat GUI-0 through GUI-3 as passed for the minimal Wild Standard/Fallback route: GUI load, Wild-only randomization, local output creation, BizHawk boot and first wild encounter all succeeded in sanitized local evidence.

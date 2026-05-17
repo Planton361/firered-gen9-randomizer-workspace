@@ -1,3 +1,16 @@
+# Session update - CFRU/DPE learnset runtime fixes sync
+
+- New branch: `randomizer/sync-cfru-dpe-learnset-runtime-fixes`.
+- Synced merged learnset-runtime related fixes: UPR-FVX PR #76, CFRU PR #3, CFRU PR #2 and DPE PR #1.
+- Workspace pins now include UPR-FVX `808cbe823772187ec3ecc13e484a87eb449aaac5`, CFRU `1c99ca5abeeb577f8214247e523e62575443bb81` and DPE `0a1ca7811fd00f981dad19d7476b92513fe62cdc`.
+- Added `08_tests/randomizer/185_cfru_dpe_learnset_runtime_fixes_sync.md`.
+- Sanitized local Pool Asset Report evidence after local rebuild: PokemonCount 1439, PokedexCount 1290, maxInternalSpeciesId 1439, accepted count after guard 1185, excluded count 7, excluded no usable learnset 1, invalid/missing front battle sprite pointer 6, invalid/missing normal palette pointer 6, cfruRuntimeLearnsetPointerOffset `0x1167134`, chosenLearnsetTableBase `0x1167134`, Ogerpon movesLearntCount 20 and Ogerpon learnsetPointerValid true.
+- Status: learnset runtime pointer blocker is resolved; Pool Asset Report improved from 436 accepted / 756 no-learnset exclusions to 1185 accepted / 1 no-learnset exclusion.
+- Ogerpon now has moves/learnset, but remains excluded because of invalid/missing front battle sprite pointer.
+- Next technical block: diagnose Ogerpon/front battle sprite pointer.
+- No ROM, output ROM, save, emulator state, screenshot, full log, ROM path, hash, private path, secret, token or `.env` detail was read, copied, changed or documented by Codex.
+- No UPR-FVX/CFRU/DPE code change and no P1 promotion was made in this workspace sync.
+
 # Session update - GUI E2E Wild smoke pass
 
 - New branch: `randomizer/gui-e2e-wild-pass-sync`.

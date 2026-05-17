@@ -1,5 +1,12 @@
 # Current update
 
+- `185_cfru_dpe_learnset_runtime_fixes_sync.md` records the sanitized Pool Asset Report evidence after syncing UPR-FVX PR #76, CFRU PR #3, CFRU PR #2 and DPE PR #1.
+- Workspace pins now include UPR-FVX `808cbe823772187ec3ecc13e484a87eb449aaac5`, CFRU `1c99ca5abeeb577f8214247e523e62575443bb81` and DPE `0a1ca7811fd00f981dad19d7476b92513fe62cdc`.
+- Evidence: accepted count after guard improved to 1185, excluded count is 7, no usable learnset exclusions dropped to 1, and Ogerpon now reports movesLearntCount 20 with learnsetPointerValid true.
+- Remaining blocker: Ogerpon is still excluded because of invalid/missing front battle sprite pointer. No P1 promotion is made.
+
+# Current update
+
 - `184_gui_e2e_wild_smoke_pass.md` records the first sanitized GUI E2E Wild smoke pass on UPR-FVX pin `04bdd8b2f2769bedb1bf6c6ff8fcdecbbf84e29c`.
 - Evidence: correct CFRU/DPE Gen9 ROM loaded yes, PokemonCount 1439, PokedexCount 1290, generation counts include 4-9 yes, Wild Standard/Fallback only randomization completed yes, output ROM created yes, BizHawk boot yes, first wild encounter reached yes, first encounter species Avalugg Lv2, private paths/logs/hashes/screenshots omitted yes.
 - Statuswirkung: GUI-0 through GUI-3 passed for the minimal Wild Standard/Fallback route. No new P1 promotion; Wild Standard/Fallback was already P1-supported.
