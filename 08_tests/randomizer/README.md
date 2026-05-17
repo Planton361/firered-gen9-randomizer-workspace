@@ -1,5 +1,14 @@
 # Current update
 
+- `188_gui4b_learnsets_no_swarms_pass.md` records the sanitized GUI-4B pass after syncing UPR-FVX PR #79, UPR-FVX PR #80 and CFRU PR #5.
+- Workspace pins now include UPR-FVX `226bcacc4f66cee5689caa128d5e35ef4acc001d` and CFRU `c4c90373fe7f24acd5dcfa3a8fbdd5cb573bfe29`.
+- Evidence: correct CFRU/DPE Gen9 ROM loaded with `isRomHack=true`, PokemonCount 1439, PokedexCount 1290 and generations 1-9 present; Wild Standard/Fallback plus Trainer Pokemon core plus Pokemon Movesets -> Random completely passed.
+- Output ROM was created locally, emulator boot succeeded, wild encounters and a trainer battle were checked, missing sprites were not observed and move-less Pokemon were not observed.
+- Learnset empty-moveset crash was not reproduced. CFRU `SWARM_CHANCE=0` was confirmed; Route 1 no-swarm rebuild did not observe Swarm-Frigibax and an example Route 1 encounter was Urshifu Lv3 displayed correctly.
+- Ogerpon remains valid and pool-eligible. Remaining guarded invalid palette candidates are known warnings and not blockers. Day/Night/Special-Wild remain out-of-scope. No P1 promotion is made.
+
+# Current update
+
 - `187_gui4a_wild_trainer_ogerpon_pass.md` records the sanitized GUI-4A pass after syncing UPR-FVX PR #78.
 - Workspace pin: `02_external/upr-fvx` now points to merge commit `18e184b2c22451c74b4ba46bd7203c579d3bc9e7`.
 - Evidence: correct CFRU/DPE Gen9 ROM loaded with `isRomHack=true`, PokemonCount 1439, PokedexCount 1290 and generations 1-9 present; Wild Standard/Fallback plus Trainer Pokemon core randomization completed; output ROM was created locally; emulator boot, wild encounter check and trainer battle check passed.

@@ -1,3 +1,16 @@
+# Roadmap status update - GUI-4B no-swarms pass
+
+- UPR-FVX PR #79 and PR #80 are synced into the workspace pin at `226bcacc4f66cee5689caa128d5e35ef4acc001d`.
+- CFRU PR #5 is synced into the workspace pin at `c4c90373fe7f24acd5dcfa3a8fbdd5cb573bfe29`.
+- GUI-4B Wild Standard/Fallback plus Trainer Pokemon core plus Pokemon Movesets -> Random completely passed in sanitized local evidence.
+- Correct CFRU/DPE Gen9 ROM loaded with `isRomHack=true`, PokemonCount 1439, PokedexCount 1290 and generations 1-9 present.
+- Output ROM creation, emulator boot, wild encounter check and trainer battle check all succeeded in local evidence.
+- Learnset empty-moveset crash is resolved for this scope; the `SpeciesMovesetRandomizer` `IndexOutOfBoundsException` was not reproduced.
+- Swarm-Frigibax is neutralized for normal randomized walkthroughs by CFRU `SWARM_CHANCE=0`; Route 1 no-swarm rebuild did not observe Swarm-Frigibax and an example Route 1 encounter was Urshifu Lv3 displayed correctly.
+- Ogerpon remains valid and pool-eligible. Remaining guarded invalid palette candidates are known warnings and not blockers.
+- CFRU Day/Night Wild and other Special-Wild systems remain out-of-scope for the current normal walkthrough goal.
+- No ROM paths, hashes, CRCs, full logs, screenshots, saves, emulator states, output ROMs, UPR-FVX/CFRU/DPE code changes or P1 promotion are added.
+
 # Roadmap status update - GUI-4A Ogerpon Wild/Trainer pass
 
 - UPR-FVX PR #78 is synced into the workspace pin at `18e184b2c22451c74b4ba46bd7203c579d3bc9e7`.
