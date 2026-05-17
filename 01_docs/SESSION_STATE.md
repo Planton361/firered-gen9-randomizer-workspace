@@ -1,3 +1,19 @@
+# Session update - GUI-4A Ogerpon Wild/Trainer pass
+
+- New branch: `randomizer/sync-gui4a-ogerpon-wild-trainer-pass`.
+- Synced merged UPR-FVX PR #78 into the workspace pin.
+- `02_external/upr-fvx` now pins merge commit `18e184b2c22451c74b4ba46bd7203c579d3bc9e7`.
+- Added `08_tests/randomizer/187_gui4a_wild_trainer_ogerpon_pass.md`.
+- Sanitized local GUI-4A evidence: correct CFRU/DPE Gen9 ROM loaded with `isRomHack=true`, PokemonCount 1439, PokedexCount 1290 and generations 1-9 present.
+- Options used: Wild Standard/Fallback plus Trainer Pokemon core; Trainer Names/Class Names, Learnsets, Items/Moves/Abilities and Special-Wild systems were not enabled.
+- Result: GUI randomization completed, output ROM was created locally, emulator boot succeeded, wild encounters were checked and a trainer battle was checked.
+- Missing sprites observed: no. Move-less Pokemon observed: no.
+- Ogerpon appears in Trainer output/log and is now pool-eligible after the Ogerpon Learnset/Sprite/Palette fixes.
+- Remaining known guarded exclusions: Bad Egg has no usable learnset; Warrior, Exeggcute, Cubone, Koffing and Mime Jr. still have invalid/missing front battle sprite/palette.
+- CFRU Day/Night Wild, Swarms and other Special-Wild systems remain out-of-scope for the current normal walkthrough goal.
+- No ROM, output ROM, save, emulator state, screenshot, full log, ROM path, hash, private path, secret, token or `.env` detail was read, copied, changed or documented by Codex.
+- No UPR-FVX/CFRU/DPE code change and no P1 promotion was made in this workspace sync.
+
 # Session update - Ogerpon asset fix sync
 
 - New branch: `randomizer/sync-ogerpon-asset-fix`.

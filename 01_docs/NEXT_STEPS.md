@@ -1,3 +1,12 @@
+# Next steps update - GUI-4A Ogerpon Wild/Trainer pass
+
+- Treat GUI-4A as passed for Wild Standard/Fallback plus Trainer Pokemon core in sanitized local GUI E2E evidence.
+- Ogerpon's Learnset/Sprite/Palette blocker is resolved for the current randomizer pool; Ogerpon appears in Trainer output/log and is pool-eligible.
+- Keep remaining invalid candidates guarded: Bad Egg for no usable learnset, plus Warrior, Exeggcute, Cubone, Koffing and Mime Jr. for invalid/missing front battle sprite/palette.
+- CFRU Day/Night Wild, Swarms and other Special-Wild systems remain out-of-scope for the current normal walkthrough goal.
+- Recommended next local option block: GUI-4B Learnsets only, layered on top of the now-passed Wild Standard/Fallback plus Trainer Pokemon core path. Keep Trainer Names/Class Names and Items/Moves/Abilities separate unless explicitly selected next.
+- Do not promote any new P1 status from this sync; continue reporting only sanitized yes/no evidence without ROM paths, hashes, full logs, screenshots, output ROMs, saves, emulator states, private paths, secrets, tokens or `.env` data.
+
 # Next steps update - Ogerpon asset fix sync
 
 - Treat the Ogerpon front-sprite/palette asset blocker as resolved in the sanitized Pool Asset Report baseline after syncing DPE PR #2 and UPR-FVX PR #77.
