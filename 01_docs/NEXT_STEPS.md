@@ -1,3 +1,15 @@
+# Next steps update - Trainer Names/Class Names GUI smoke
+
+- Treat UPR-FVX PR #83, PR #85 and PR #86 as synced into the workspace pin at `f86315e7528ba3257df03b80c0c75ccc69ef574b`.
+- Treat Trainer Names as locally GUI-smoke passed for the current normal walkthrough path; changed names are visible in the Trainer Pokemon log.
+- Treat Trainer Class Names as locally GUI-smoke passed for global class-label remapping. The option remaps class labels, so the same original class receives the same new class label.
+- The previous `Director` and `[PKMN] BREEDER` collapse symptoms are resolved in sanitized local evidence.
+- Per-trainer class assignment is not supported by this option and remains a separate possible future feature.
+- Keep Evolutions, Wild Standard/Fallback, Trainer Pokemon core and Pokemon Movesets -> Random completely as stable in the tested path. Squirtle -> Wartortle Lv16 remains correct.
+- Keep swarms disabled and Special-Wild systems out-of-scope.
+- Recommended next isolated option block: a first Items/Moves/Abilities slice, still with Special-Wild systems disabled and without P1 promotion.
+- Continue reporting sanitized yes/no evidence only, without ROM paths, hashes, full logs, screenshots, output ROMs, saves, emulator states, private paths, secrets, tokens or `.env` data.
+
 # Next steps update - CFRU/DPE evolution row stride fix
 
 - Treat UPR-FVX PR #82 as synced into the workspace pin at `485f0b899c84470f3fab82317331a671ec023ac1`.

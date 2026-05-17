@@ -1,3 +1,20 @@
+# Tool Manifest Update - 2026-05-17 - Trainer Names/Class Names GUI smoke
+
+- Workspace branch: `randomizer/sync-trainer-names-class-names-pass`.
+- UPR-FVX PR #83: <https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/83>.
+- UPR-FVX PR #85: <https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/85>.
+- UPR-FVX PR #86: <https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/86>.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX PR #86 commit `f86315e7528ba3257df03b80c0c75ccc69ef574b`, including PR #83 and PR #85.
+- Scope: PR #83 refreshed stale Gen3 trainer `fullDisplayName` values after Trainer Names/Class Names changes; PR #85 changed Trainer Class Names to shuffle existing class labels; PR #86 fixed the Gen3 loaded trainer class id used by the display-name refresh path.
+- Sanitized local GUI-smoke evidence: Trainer Names and Trainer Class Names were enabled with the stable Wild Standard/Fallback, Trainer Pokemon core and Pokemon Movesets -> Random completely path.
+- Trainer Names are visibly changed in the Trainer Pokemon log.
+- Trainer Class Names no longer collapse to `Director` or `[PKMN] BREEDER`.
+- Trainer Class Names pass as global class-label remapping; per-trainer class assignment remains a separate possible future feature.
+- Evolutions remain correct in the tested path, including Squirtle -> Wartortle Lv16.
+- Wild Standard/Fallback, Trainer Pokemon core and Pokemon Movesets -> Random completely remain stable; swarms remain disabled.
+- Missing sprites were not observed and move-less Pokemon were not observed.
+- Safety: no ROM/save/output/log/build artifact committed, no private path/ROM hash/full log/screenshot documented, no UPR-FVX/CFRU/DPE code change in this workspace sync and no P1 promotion.
+
 # Tool Manifest Update - 2026-05-17 - CFRU/DPE evolution row stride fix
 
 - Workspace branch: `randomizer/sync-cfru-dpe-evolution-row-stride-fix`.
