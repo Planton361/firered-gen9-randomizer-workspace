@@ -5,7 +5,8 @@
 - Evidence: CFRU/DPE uses `EVOS_PER_MON=16`; PR #82 uses `evolutionSlotsPerSpecies=16` and `evolutionRowSize=0x80` for CFRU/DPE Gen9 evolution rows.
 - Input ROM starter chains correct and new Output ROM starter chains correct in sanitized local report evidence.
 - Correct starter chain baseline: Bulbasaur -> Ivysaur Lv16, Ivysaur -> Venusaur Lv32, Charmander -> Charmeleon Lv16, Charmeleon -> Charizard Lv36, Squirtle -> Wartortle Lv16 and Wartortle -> Blastoise Lv36.
-- Previous bad/Test13-style outputs are stale and must not be used. Next local smoke is Squirtle Lv16 evolution in a newly generated output. No P1 promotion is made.
+- Sanitized ingame smoke evidence: Squirtle evolved at Lv16 in a new FVX output.
+- Previous bad/Test13-style outputs are stale and must not be used. Next recommended option block is a separate Trainer Names/Class Names or first Items/Moves/Abilities slice. No P1 promotion is made.
 
 # Current update
 
