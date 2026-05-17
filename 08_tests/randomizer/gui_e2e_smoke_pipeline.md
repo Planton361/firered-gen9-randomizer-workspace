@@ -18,6 +18,15 @@ The goal is quick GUI compatibility evidence:
 
 Current sanitized status:
 
+- Trainer Names/Class Names GUI-smoke is recorded after syncing UPR-FVX PR #83, PR #85 and PR #86.
+- UPR-FVX pin: `f86315e7528ba3257df03b80c0c75ccc69ef574b`.
+- Trainer Names are visibly changed in the Trainer Pokemon log.
+- Trainer Class Names no longer collapse to `Director` or `[PKMN] BREEDER`.
+- Trainer Class Names pass as global class-label remapping: the same original class gets the same new class label.
+- Per-trainer class assignment is not part of this option and remains a separate possible future feature.
+- Evolutions remain correct, including Squirtle -> Wartortle Lv16.
+- Wild Standard/Fallback, Trainer Pokemon core and Pokemon Movesets -> Random completely remain stable; swarms remain disabled.
+- Missing sprites observed: no. Move-less Pokemon observed: no.
 - Evolution row-stride fix is synced after UPR-FVX PR #82.
 - UPR-FVX pin: `485f0b899c84470f3fab82317331a671ec023ac1`.
 - CFRU/DPE uses `EVOS_PER_MON=16`; the UPR-FVX evolution report/read/write path now uses `evolutionSlotsPerSpecies=16` and `evolutionRowSize=0x80`.
@@ -88,8 +97,9 @@ Current sanitized status:
 - Do not treat any later group as P1-promoted by this pipeline.
 - GUI-4A result: Wild Standard/Fallback plus Trainer Pokemon core passed in sanitized local evidence.
 - GUI-4B result: Learnsets passed when layered on the now-passed Wild Standard/Fallback plus Trainer Pokemon core path, with CFRU swarms neutralized by `SWARM_CHANCE=0`.
-- Recommended next GUI-4C candidate: one separate narrow scope such as Trainer Names/Class Names or a first Items/Moves/Abilities slice.
-- Keep Trainer Names/Class Names and Items/Moves/Abilities separate unless explicitly selected as the next isolated smoke. Do not jump directly to full randomization.
+- GUI-4C result: Trainer Names/Class Names passed as global class-label remapping on the current stable path.
+- Recommended next GUI-4D candidate: a first Items/Moves/Abilities slice.
+- Keep Items/Moves/Abilities separate unless explicitly selected as the next isolated smoke. Do not jump directly to full randomization.
 
 ## Initially Disabled
 
@@ -106,7 +116,7 @@ Do not enable these groups in GUI-1:
 - Raids.
 - Wild Double Battles.
 
-Trainer Names/Class Names currently has only a ROM-facing smoke harness prepared and remains below P1-supported. Learnsets and Items/Moves/Abilities have ROM-free evidence slices only for this pipeline decision. Special Wild systems remain outside the Standard/Fallback Wild Encounter scope.
+Trainer Names/Class Names has a sanitized local GUI-smoke pass but remains below P1-supported. Learnsets and Items/Moves/Abilities have ROM-free evidence slices only for this pipeline decision. Special Wild systems remain outside the Standard/Fallback Wild Encounter scope.
 
 ## Sanitized Result Format
 
@@ -144,6 +154,6 @@ Do not include:
 
 This pipeline is a local GUI E2E compatibility smoke plan only. The GUI-0 sync pins the already-merged UPR-FVX PR #68, the GUI-1 through GUI-3 pass records sanitized local Output-ROM, BizHawk boot and first-encounter evidence for Wild Standard/Fallback only, and GUI-4A records sanitized Wild Standard/Fallback plus Trainer Pokemon core evidence after the Ogerpon asset fix. It does not make new UPR-FVX code changes in the workspace and does not promote any new feature to P1-supported.
 
-The GUI-4B pass does not imply support for Trainer Names/Class Names, Items/Moves/Abilities, Special Wild systems or full randomization. CFRU Day/Night Wild and other Special-Wild systems remain outside the current normal walkthrough scope. Swarms are neutralized for normal randomized walkthroughs by `SWARM_CHANCE=0`, not promoted as a randomized Special-Wild feature.
+The GUI-4B pass does not imply support for Items/Moves/Abilities, Special Wild systems or full randomization. GUI-4C records Trainer Names/Class Names only as a sanitized GUI-smoke pass, not as P1 support. CFRU Day/Night Wild and other Special-Wild systems remain outside the current normal walkthrough scope. Swarms are neutralized for normal randomized walkthroughs by `SWARM_CHANCE=0`, not promoted as a randomized Special-Wild feature.
 
 The evolution row-stride sync documents a corrected CFRU/DPE evolution table path and sanitized report evidence only. It does not promote Evolution randomization settings or any new GUI option group to P1-supported.

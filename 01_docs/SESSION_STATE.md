@@ -1,3 +1,20 @@
+# Session update - Trainer Names/Class Names GUI smoke
+
+- New branch: `randomizer/sync-trainer-names-class-names-pass`.
+- Synced merged UPR-FVX PR #83, PR #85 and PR #86 into the workspace pin.
+- `02_external/upr-fvx` now pins merge commit `f86315e7528ba3257df03b80c0c75ccc69ef574b`.
+- Added `08_tests/randomizer/190_trainer_names_class_names_pass.md`.
+- Sanitized local GUI-smoke evidence: Trainer Names and Trainer Class Names were enabled on top of the stable Wild Standard/Fallback, Trainer Pokemon core and Pokemon Movesets -> Random completely path.
+- Trainer Names are visibly changed in the Trainer Pokemon log.
+- Trainer Class Names no longer collapse to `Director` or `[PKMN] BREEDER`.
+- Trainer Class Names now pass as global class-label remapping: the same original class maps to the same new class label.
+- Per-trainer class assignment is not part of the current option and remains a separate possible future feature.
+- Evolutions remain correct in the tested path; Squirtle evolved into Wartortle at Lv16.
+- Wild Standard/Fallback, Trainer Pokemon core and Pokemon Movesets -> Random completely remain stable; swarms remain disabled.
+- Missing sprites were not observed and move-less Pokemon were not observed.
+- No ROM, output ROM, save, emulator state, screenshot, full log, ROM path, hash, private path, secret, token or `.env` detail was read, copied, changed or documented by Codex.
+- No UPR-FVX/CFRU/DPE code change and no P1 promotion was made in this workspace sync.
+
 # Session update - CFRU/DPE evolution row stride fix
 
 - New branch: `randomizer/sync-cfru-dpe-evolution-row-stride-fix`.

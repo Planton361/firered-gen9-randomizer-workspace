@@ -1,3 +1,16 @@
+# Roadmap status update - Trainer Names/Class Names GUI smoke
+
+- UPR-FVX PR #83, PR #85 and PR #86 are synced into the workspace pin at `f86315e7528ba3257df03b80c0c75ccc69ef574b`.
+- Trainer Names/Class Names GUI-smoke passed in sanitized local evidence on the current stable path.
+- Trainer Names are visibly changed in the Trainer Pokemon log.
+- Trainer Class Names pass as global class-label remapping and no longer collapse to `Director` or `[PKMN] BREEDER`.
+- Per-trainer class assignment is not part of the current option and remains a separate possible future feature.
+- Evolutions remain correct in the tested path, including Squirtle -> Wartortle Lv16.
+- Wild Standard/Fallback, Trainer Pokemon core and Pokemon Movesets -> Random completely remain stable; swarms remain disabled.
+- Missing sprites were not observed and move-less Pokemon were not observed.
+- Next recommended option block: a first Items/Moves/Abilities slice, with Special-Wild systems still disabled.
+- No ROM paths, hashes, CRCs, full logs, screenshots, saves, emulator states, output ROMs, UPR-FVX/CFRU/DPE code changes or P1 promotion are added.
+
 # Roadmap status update - CFRU/DPE evolution row stride fix
 
 - UPR-FVX PR #82 is synced into the workspace pin at `485f0b899c84470f3fab82317331a671ec023ac1`.

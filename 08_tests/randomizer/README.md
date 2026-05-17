@@ -1,5 +1,17 @@
 # Current update
 
+- `190_trainer_names_class_names_pass.md` records the sanitized Trainer Names/Class Names GUI-smoke after syncing UPR-FVX PR #83, PR #85 and PR #86.
+- Workspace pin: `02_external/upr-fvx` now points to merge commit `f86315e7528ba3257df03b80c0c75ccc69ef574b`.
+- Evidence: Trainer Names are visibly changed in the Trainer Pokemon log.
+- Evidence: Trainer Class Names no longer collapse to `Director` or `[PKMN] BREEDER`.
+- Trainer Class Names pass as global class-label remapping: the same original class gets the same new class label.
+- Per-trainer class assignment is not part of this option and remains a separate possible future feature.
+- Evolutions remain correct, including Squirtle -> Wartortle Lv16.
+- Wild Standard/Fallback, Trainer Pokemon core and Pokemon Movesets -> Random completely remain stable; swarms remain disabled.
+- Missing sprites observed: no. Move-less Pokemon observed: no. No P1 promotion is made.
+
+# Current update
+
 - `189_cfru_dpe_evolution_row_stride_fix.md` records the sanitized Evolution Report evidence after syncing UPR-FVX PR #82.
 - Workspace pin: `02_external/upr-fvx` now points to merge commit `485f0b899c84470f3fab82317331a671ec023ac1`.
 - Evidence: CFRU/DPE uses `EVOS_PER_MON=16`; PR #82 uses `evolutionSlotsPerSpecies=16` and `evolutionRowSize=0x80` for CFRU/DPE Gen9 evolution rows.
