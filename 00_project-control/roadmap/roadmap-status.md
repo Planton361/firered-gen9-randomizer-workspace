@@ -1,3 +1,22 @@
+# Roadmap status update - CFRU/DPE learnset runtime fixes sync
+
+- UPR-FVX PR #76, CFRU PR #3, CFRU PR #2 and DPE PR #1 are synced into the workspace pins.
+- Learnset runtime pointer blocker status: resolved in the sanitized local Pool Asset Report baseline.
+- Evidence improvement: Pool Asset Report moved from 436 accepted / 756 no-learnset exclusions to 1185 accepted / 1 no-learnset exclusion.
+- Ogerpon now has moves and a valid learnset pointer in the report, with movesLearntCount 20 and learnsetPointerValid true.
+- Remaining blocker: Ogerpon is still excluded because of invalid/missing front battle sprite pointer.
+- Next technical focus: Ogerpon/front battle sprite pointer diagnosis.
+- No ROM paths, hashes, CRCs, full logs, screenshots, saves, emulator states, output ROMs, UPR-FVX/CFRU/DPE code changes or P1 promotion are added.
+
+# Roadmap status update - GUI E2E Wild smoke pass
+
+- First sanitized GUI E2E smoke pass is recorded for the minimal Wild Standard/Fallback route.
+- Evidence: correct CFRU/DPE Gen9 ROM loaded, Wild Standard/Fallback only randomization completed, output ROM created, output ROM booted in BizHawk and first wild encounter reached.
+- First encounter species is recorded only as sanitized gameplay evidence: Avalugg Lv2.
+- PokemonCount 1439, PokedexCount 1290 and generation counts include 4-9.
+- No ROM paths, hashes, CRCs, full logs, screenshots, saves, emulator states, output ROMs, UPR-FVX code changes, submodule pin changes or P1 promotion are added.
+- Next GUI focus: GUI-4 with one option group at a time, starting with Trainer-Core or Learnsets rather than full randomization.
+
 # Roadmap status update - GUI load null species fix
 
 - UPR-FVX PR #68 is merged and workspace-pinned at `04bdd8b2f2769bedb1bf6c6ff8fcdecbbf84e29c`.

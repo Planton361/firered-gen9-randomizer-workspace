@@ -1,3 +1,27 @@
+# Session update - CFRU/DPE learnset runtime fixes sync
+
+- New branch: `randomizer/sync-cfru-dpe-learnset-runtime-fixes`.
+- Synced merged learnset-runtime related fixes: UPR-FVX PR #76, CFRU PR #3, CFRU PR #2 and DPE PR #1.
+- Workspace pins now include UPR-FVX `808cbe823772187ec3ecc13e484a87eb449aaac5`, CFRU `1c99ca5abeeb577f8214247e523e62575443bb81` and DPE `0a1ca7811fd00f981dad19d7476b92513fe62cdc`.
+- Added `08_tests/randomizer/185_cfru_dpe_learnset_runtime_fixes_sync.md`.
+- Sanitized local Pool Asset Report evidence after local rebuild: PokemonCount 1439, PokedexCount 1290, maxInternalSpeciesId 1439, accepted count after guard 1185, excluded count 7, excluded no usable learnset 1, invalid/missing front battle sprite pointer 6, invalid/missing normal palette pointer 6, cfruRuntimeLearnsetPointerOffset `0x1167134`, chosenLearnsetTableBase `0x1167134`, Ogerpon movesLearntCount 20 and Ogerpon learnsetPointerValid true.
+- Status: learnset runtime pointer blocker is resolved; Pool Asset Report improved from 436 accepted / 756 no-learnset exclusions to 1185 accepted / 1 no-learnset exclusion.
+- Ogerpon now has moves/learnset, but remains excluded because of invalid/missing front battle sprite pointer.
+- Next technical block: diagnose Ogerpon/front battle sprite pointer.
+- No ROM, output ROM, save, emulator state, screenshot, full log, ROM path, hash, private path, secret, token or `.env` detail was read, copied, changed or documented by Codex.
+- No UPR-FVX/CFRU/DPE code change and no P1 promotion was made in this workspace sync.
+
+# Session update - GUI E2E Wild smoke pass
+
+- New branch: `randomizer/gui-e2e-wild-pass-sync`.
+- UPR-FVX pin remains `04bdd8b2f2769bedb1bf6c6ff8fcdecbbf84e29c`; no submodule change was made.
+- Added `08_tests/randomizer/184_gui_e2e_wild_smoke_pass.md`.
+- Sanitized local GUI E2E evidence: correct CFRU/DPE Gen9 ROM loaded yes, PokemonCount 1439, PokedexCount 1290, generation counts include 4-9 yes, options used Wild Standard/Fallback only, randomization completed yes, output ROM created yes, emulator boot yes, first wild encounter reached yes, first encounter species Avalugg Lv2, private paths/logs/hashes/screenshots omitted yes.
+- Status: GUI-0 through GUI-3 passed for the minimal Wild Standard/Fallback route.
+- No ROM, output ROM, save, emulator state, screenshot, full log, ROM path, hash, CRC, private path, secret, token or `.env` detail was read, copied, changed or documented by Codex.
+- No UPR-FVX code change, no submodule pin change and no P1 promotion was made; Standard/Fallback Wild was already P1-supported.
+- Next local step: GUI-4, expand one option group at a time, starting with Trainer-Core or Learnsets rather than full randomization.
+
 # Session update - GUI load null species fix sync
 
 - New branch: `randomizer/gui-load-null-species-fix-sync`.

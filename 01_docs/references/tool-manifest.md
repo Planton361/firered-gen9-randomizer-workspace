@@ -1,3 +1,17 @@
+# Tool Manifest Update - 2026-05-17 - CFRU/DPE learnset runtime fixes sync
+
+- Workspace branch: `randomizer/sync-cfru-dpe-learnset-runtime-fixes`.
+- UPR-FVX PR #76: `fix: read cfru runtime learnset pointer`.
+- CFRU PR #3: `fix: generate learnset runtime repoint`.
+- CFRU PR #2: gLevelUpLearnsets runtime repoint plus Ogerpon internal mappings.
+- DPE PR #1: Ogerpon Terastal learnset mappings.
+- Workspace submodule `02_external/upr-fvx` now pins `808cbe823772187ec3ecc13e484a87eb449aaac5`.
+- Workspace submodule `02_external/CFRU-expansion` now pins `1c99ca5abeeb577f8214247e523e62575443bb81`.
+- Workspace submodule `02_external/Dynamic-Pokemon-Expansion-Gen-9` now pins `0a1ca7811fd00f981dad19d7476b92513fe62cdc`.
+- Sanitized local Pool Asset Report evidence after local rebuild: PokemonCount 1439, PokedexCount 1290, maxInternalSpeciesId 1439, accepted count after guard 1185, excluded count 7, excluded no usable learnset 1, invalid/missing front battle sprite pointer 6, invalid/missing normal palette pointer 6, cfruRuntimeLearnsetPointerOffset `0x1167134`, chosenLearnsetTableBase `0x1167134`, Ogerpon movesLearntCount 20 and Ogerpon learnsetPointerValid true.
+- Effect: the learnset runtime pointer blocker is resolved; Ogerpon now has moves/learnset and remains excluded only because of invalid/missing front battle sprite pointer.
+- Safety: no ROM/save/output/log/build artifact committed, no private path/hash/full log/screenshot documented, no UPR-FVX/CFRU/DPE code change in this workspace sync and no P1 promotion.
+
 # Tool Manifest Update - 2026-05-16 - GUI load null species fix
 
 - Workspace branch: `randomizer/gui-load-null-species-fix-sync`.
