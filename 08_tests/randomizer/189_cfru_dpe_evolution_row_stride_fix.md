@@ -25,6 +25,7 @@ Codex did not read, copy, change or generate ROMs.
 - PR #82 uses `evolutionSlotsPerSpecies=16` and `evolutionRowSize=0x80` for CFRU/DPE Gen9.
 - Local report after PR #82: Input ROM starter chains correct.
 - Local report after PR #82: new Output ROM starter chains correct.
+- Ingame smoke after PR #82: Squirtle evolved at Lv16 in a new FVX output.
 
 Starter chain baseline:
 
@@ -35,10 +36,10 @@ Starter chain baseline:
 - Squirtle -> Wartortle Lv16.
 - Wartortle -> Blastoise Lv36.
 
-## Next Local Smoke
+## Next Recommended Option Block
 
-- Generate a fresh output from the fixed UPR-FVX pin.
-- Verify Squirtle evolves into Wartortle at Lv16.
+- Keep Special-Wild systems disabled.
+- Choose one separate narrow scope, preferably Trainer Names/Class Names or a first Items/Moves/Abilities slice.
 - Keep reporting sanitized yes/no evidence only.
 
 ## Safety Boundary

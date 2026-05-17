@@ -4,9 +4,9 @@
 - Evolution row stride is fixed for the CFRU/DPE Gen9 path: `EVOS_PER_MON=16`, `evolutionSlotsPerSpecies=16` and `evolutionRowSize=0x80`.
 - Sanitized local Evolution Report evidence after PR #82 shows the private input ROM starter chains correct and a newly generated output preserving the same starter chains.
 - Correct starter chain baseline: Bulbasaur -> Ivysaur Lv16, Ivysaur -> Venusaur Lv32, Charmander -> Charmeleon Lv16, Charmeleon -> Charizard Lv36, Squirtle -> Wartortle Lv16 and Wartortle -> Blastoise Lv36.
+- Sanitized ingame smoke evidence after PR #82 shows Squirtle evolved into Wartortle at Lv16 in a new FVX output.
 - Discard previous bad/Test13-style outputs; they are stale because they were produced before the evolution row-stride fix.
-- Next local smoke: in a newly generated output, level Squirtle to Lv16 and confirm it evolves into Wartortle.
-- Continue GUI option expansion only after this new-output evolution sanity check is clean.
+- Next recommended local option block: keep Special-Wild off and choose one separate narrow scope, preferably Trainer Names/Class Names or a first Items/Moves/Abilities slice, rather than full randomization.
 - Do not promote any new P1 status from this sync; continue reporting sanitized yes/no evidence without ROM paths, hashes, full logs, screenshots, output ROMs, saves, emulator states, private paths, secrets, tokens or `.env` data.
 
 # Next steps update - GUI-4B no-swarms pass

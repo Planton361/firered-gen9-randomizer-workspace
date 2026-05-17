@@ -7,8 +7,9 @@
 - Root cause recorded: the old UPR-FVX evolution read/write/report path used vanilla 5-slot row stride (`0x28` bytes), so the report could read the private input ROM incorrectly and the old writer could damage output evolutions.
 - Sanitized local report evidence after PR #82: Input ROM starter chains correct and new Output ROM starter chains correct.
 - Starter chain evidence: Bulbasaur -> Ivysaur Lv16, Ivysaur -> Venusaur Lv32, Charmander -> Charmeleon Lv16, Charmeleon -> Charizard Lv36, Squirtle -> Wartortle Lv16 and Wartortle -> Blastoise Lv36.
+- Sanitized ingame smoke evidence after PR #82: Squirtle evolved at Lv16 in a new FVX output.
 - Previous bad/Test13-style outputs are invalid/stale because they were created by the old writer path; do not use them for current validation.
-- Next local smoke: verify Squirtle Lv16 evolution in a newly generated output.
+- Recommended next isolated option block: Trainer Names/Class Names or a first Items/Moves/Abilities slice, with Special-Wild systems still disabled.
 - No ROM, output ROM, save, emulator state, screenshot, full log, ROM path, hash, private path, secret, token or `.env` detail was read, copied, changed or documented by Codex.
 - No UPR-FVX/CFRU/DPE code change and no P1 promotion was made in this workspace sync.
 
