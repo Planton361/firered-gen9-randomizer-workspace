@@ -18,6 +18,13 @@ The goal is quick GUI compatibility evidence:
 
 Current sanitized status:
 
+- Stable Visual Profile smoke is recorded after the merged GUI Working Settings Matrix baseline.
+- Stable Visual Profile ON: Wild Standard/Fallback, Trainer Pokemon core, Pokemon Movesets -> Random completely, Trainer Movesets, Trainer Names, Field Items basic, Pokemon Abilities, TM/HM Compatibility, TM Moves, Move Tutor Moves, Move Tutor Compatibility, Shop Items, Pickup Items, In-Game Trades, Static Pokemon, Type Effectiveness, Pokemon Base Statistics and Move Data Power/Accuracy/PP/Type/Names.
+- Stable Visual Profile OFF: Starter Pokemon, Trainer Class Names, Evolution Randomization and Special-Wild/Day-Night/Swarms.
+- Sanitized local smoke evidence: randomization completed, output ROM booted, short run played, wild encounters worked and trainer battle worked.
+- Items/shops/moves/abilities showed no blockers during the short run. Evolutions unchanged remain expected.
+- No missing sprites, move-less Pokemon, crash, freeze or softlock were observed in this short smoke.
+- This is still smoke evidence only and does not promote any new P1 status.
 - GUI Working Settings Matrix is recorded after syncing UPR-FVX PR #88 and PR #89.
 - UPR-FVX pin: `f3a6d04ff6db8d48468800194e0baffbafb7505c`.
 - Working settings passed: Wild Standard/Fallback, Trainer Pokemon core, Pokemon Movesets -> Random completely, Trainer Movesets, Trainer Names, Field Items basic, Pokemon Abilities, TM/HM Compatibility, TM Moves, Move Tutor Moves, Move Tutor Compatibility, Shop Items, Pickup Items, In-Game Trades, Static Pokemon, Type Effectiveness, Pokemon Base Statistics and Move Data Power/Accuracy/PP/Type/Names.
@@ -107,7 +114,8 @@ Current sanitized status:
 - GUI-4B result: Learnsets passed when layered on the now-passed Wild Standard/Fallback plus Trainer Pokemon core path, with CFRU swarms neutralized by `SWARM_CHANCE=0`.
 - GUI-4C result: Trainer Names/Class Names passed as global class-label remapping on the current stable path.
 - GUI Working Settings Matrix result: broad local settings matrix passed after fixes through UPR-FVX PR #89, with the caveats documented above.
-- Recommended next candidate: isolate Starter Pokemon/rival starter sync, or repeat the stable visual profile with Trainer Class Names, Starters and Special-Wild disabled.
+- Stable Visual Profile result: short local smoke passed with Trainer Class Names, Starters, Evolution Randomization and Special-Wild disabled.
+- Recommended next candidate: isolate Starter Pokemon/rival starter sync, or continue longer local playthrough sampling on the same Stable Visual Profile.
 - Keep Special-Wild disabled unless explicitly selected as a separate diagnostic smoke.
 
 ## Initially Disabled
@@ -163,6 +171,6 @@ Do not include:
 
 This pipeline is a local GUI E2E compatibility smoke plan only. The GUI-0 sync pins the already-merged UPR-FVX PR #68, the GUI-1 through GUI-3 pass records sanitized local Output-ROM, BizHawk boot and first-encounter evidence for Wild Standard/Fallback only, and GUI-4A records sanitized Wild Standard/Fallback plus Trainer Pokemon core evidence after the Ogerpon asset fix. It does not make new UPR-FVX code changes in the workspace and does not promote any new feature to P1-supported.
 
-The GUI-4B pass does not imply support for Special Wild systems or full randomization. GUI-4C records Trainer Names/Class Names only as a sanitized GUI-smoke pass, not as P1 support. The GUI Working Settings Matrix records broad local evidence after PR #89, still without P1 promotion. CFRU Day/Night Wild and other Special-Wild systems remain outside the current normal walkthrough scope. Swarms are neutralized for normal randomized walkthroughs by `SWARM_CHANCE=0`, not promoted as a randomized Special-Wild feature.
+The GUI-4B pass does not imply support for Special Wild systems or full randomization. GUI-4C records Trainer Names/Class Names only as a sanitized GUI-smoke pass, not as P1 support. The GUI Working Settings Matrix records broad local evidence after PR #89, still without P1 promotion. The Stable Visual Profile smoke records a short local play smoke with risky visual/scope options disabled; it also does not promote P1. CFRU Day/Night Wild and other Special-Wild systems remain outside the current normal walkthrough scope. Swarms are neutralized for normal randomized walkthroughs by `SWARM_CHANCE=0`, not promoted as a randomized Special-Wild feature.
 
 The evolution row-stride sync documents a corrected CFRU/DPE evolution table path and sanitized report evidence only. It does not promote Evolution randomization settings or any new GUI option group to P1-supported.

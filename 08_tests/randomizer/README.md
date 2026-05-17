@@ -1,5 +1,16 @@
 # Current update
 
+- `191_stable_visual_profile_smoke.md` records the sanitized Stable Visual Profile smoke after the merged GUI Working Settings Matrix baseline.
+- Stable Visual Profile ON: Wild Standard/Fallback, Trainer Pokemon core, Pokemon Movesets -> Random completely, Trainer Movesets, Trainer Names, Field Items basic, Pokemon Abilities, TM/HM Compatibility, TM Moves, Move Tutor Moves, Move Tutor Compatibility, Shop Items, Pickup Items, In-Game Trades, Static Pokemon, Type Effectiveness, Pokemon Base Statistics and Move Data Power/Accuracy/PP/Type/Names.
+- Stable Visual Profile OFF: Starter Pokemon, Trainer Class Names, Evolution Randomization and Special-Wild/Day-Night/Swarms.
+- Evidence: randomization completed, output ROM booted, a short run was played, wild encounters worked and a trainer battle worked.
+- Items/shops/moves/abilities showed no blockers during the short run; evolutions unchanged remain expected.
+- No missing sprites, move-less Pokemon, crash, freeze or softlock were observed in this short smoke.
+- Known exclusions remain: Starter/Rival sync, Trainer Class Names visual mismatch and Special-Wild out-of-scope.
+- No P1 promotion is made.
+
+# Current update
+
 - `190_gui_working_settings_matrix.md` records the sanitized GUI Working Settings Matrix after syncing UPR-FVX PR #88 and PR #89.
 - Workspace pin: `02_external/upr-fvx` now points to merge commit `f3a6d04ff6db8d48468800194e0baffbafb7505c`.
 - Evidence: Wild Standard/Fallback, Trainer Pokemon core, Pokemon Movesets -> Random completely, Trainer Movesets, Trainer Names, Field Items basic, Pokemon Abilities, TM/HM Compatibility, TM Moves, Move Tutor Moves, Move Tutor Compatibility, Shop Items, Pickup Items, In-Game Trades, Static Pokemon, Type Effectiveness, Pokemon Base Statistics and Move Data Power/Accuracy/PP/Type/Names are recorded as passed in sanitized local evidence.

@@ -1,3 +1,15 @@
+# Roadmap status update - Stable Visual Profile smoke
+
+- Stable Visual Profile smoke passed in sanitized local evidence after the merged GUI Working Settings Matrix baseline.
+- ON profile: Wild Standard/Fallback, Trainer Pokemon core, Pokemon Movesets -> Random completely, Trainer Movesets, Trainer Names, Field Items basic, Pokemon Abilities, TM/HM Compatibility, TM Moves, Move Tutor Moves, Move Tutor Compatibility, Shop Items, Pickup Items, In-Game Trades, Static Pokemon, Type Effectiveness, Pokemon Base Statistics and Move Data Power/Accuracy/PP/Type/Names.
+- OFF profile: Starter Pokemon, Trainer Class Names, Evolution Randomization and Special-Wild/Day-Night/Swarms.
+- Evidence: randomization completed, output ROM booted, short run played, wild encounters worked and trainer battle worked.
+- Items/shops/moves/abilities showed no blockers during the short run; evolutions unchanged remain expected.
+- No missing sprites, move-less Pokemon, crash, freeze or softlock were observed in this short smoke.
+- Known exclusions remain: Starter/Rival sync, Trainer Class Names visual mismatch and Special-Wild out-of-scope.
+- Next recommended block: Starter Pokemon/rival first-battle sync diagnosis, or longer local sampling of the same Stable Visual Profile.
+- No ROM paths, hashes, CRCs, full logs, screenshots, saves, emulator states, output ROMs, UPR-FVX/CFRU/DPE code changes or P1 promotion are added.
+
 # Roadmap status update - GUI working settings matrix
 
 - UPR-FVX PR #88 and PR #89 are synced into the workspace pin at `f3a6d04ff6db8d48468800194e0baffbafb7505c`.
