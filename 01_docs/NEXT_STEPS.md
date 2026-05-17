@@ -1,3 +1,13 @@
+# Next steps update - Stable Visual Profile smoke
+
+- Treat the Stable Visual Profile as locally smoke-passed on sanitized evidence after the merged GUI Working Settings Matrix baseline.
+- Keep Stable Visual Profile ON: Wild Standard/Fallback, Trainer Pokemon core, Pokemon Movesets -> Random completely, Trainer Movesets, Trainer Names, Field Items basic, Pokemon Abilities, TM/HM Compatibility, TM Moves, Move Tutor Moves, Move Tutor Compatibility, Shop Items, Pickup Items, In-Game Trades, Static Pokemon, Type Effectiveness, Pokemon Base Statistics and Move Data Power/Accuracy/PP/Type/Names.
+- Keep Stable Visual Profile OFF: Starter Pokemon, Trainer Class Names, Evolution Randomization and Special-Wild/Day-Night/Swarms.
+- This is still a short smoke and does not promote any new P1 status.
+- Known exclusions remain separate: Starter/Rival sync, Trainer Class Names visual mismatch and Special-Wild scope.
+- Recommended next block: isolate Starter Pokemon/rival first-battle sync if starters should enter the stable profile; otherwise continue with longer local playthrough sampling on the same Stable Visual Profile.
+- Continue reporting sanitized yes/no evidence only, without ROM paths, hashes, full logs, screenshots, output ROMs, saves, emulator states, private paths, secrets, tokens or `.env` data.
+
 # Next steps update - GUI working settings matrix
 
 - Treat UPR-FVX PR #88 and PR #89 as synced into the workspace pin at `f3a6d04ff6db8d48468800194e0baffbafb7505c`.

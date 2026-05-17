@@ -1,3 +1,18 @@
+# Session update - Stable Visual Profile smoke
+
+- New branch: `randomizer/sync-stable-visual-profile-smoke`.
+- Workspace PR #262 is treated as merged baseline for the GUI Working Settings Matrix.
+- Added `08_tests/randomizer/191_stable_visual_profile_smoke.md`.
+- Sanitized local Stable Visual Profile smoke passed after the Working Settings Matrix sync.
+- ON profile: Wild Standard/Fallback, Trainer Pokemon core, Pokemon Movesets -> Random completely, Trainer Movesets, Trainer Names, Field Items basic, Pokemon Abilities, TM/HM Compatibility, TM Moves, Move Tutor Moves, Move Tutor Compatibility, Shop Items, Pickup Items, In-Game Trades, Static Pokemon, Type Effectiveness, Pokemon Base Statistics and Move Data Power/Accuracy/PP/Type/Names.
+- OFF profile: Starter Pokemon, Trainer Class Names, Evolution Randomization and Special-Wild/Day-Night/Swarms.
+- Sanitized evidence: randomization completed, output ROM booted, a short run was played, wild encounters worked, a trainer battle worked and items/shops/moves/abilities showed no blockers during the short run.
+- Evolutions unchanged remain expected.
+- No missing sprites, move-less Pokemon, crash, freeze or softlock were observed in this short smoke.
+- Known exclusions remain: Starter/Rival sync is unresolved, Trainer Class Names can visually mismatch sprites because it is textlabel remapping only and Special-Wild remains out-of-scope.
+- No ROM, output ROM, save, emulator state, screenshot, full log, ROM path, hash, private path, secret, token or `.env` detail was read, copied, changed or documented by Codex.
+- No UPR-FVX/CFRU/DPE code change and no P1 promotion was made in this workspace sync.
+
 # Session update - GUI working settings matrix
 
 - New branch: `randomizer/sync-gui-settings-matrix-pass`.
