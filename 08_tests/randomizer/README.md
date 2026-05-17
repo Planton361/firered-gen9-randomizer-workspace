@@ -1,5 +1,13 @@
 # Current update
 
+- `186_ogerpon_asset_fix_sync.md` records the sanitized Pool Asset Report evidence after syncing DPE PR #2 and UPR-FVX PR #77.
+- Workspace pins now include DPE `3d0ac870fadc91e55f6ff19c0f7aae3cac2014a1` and UPR-FVX `d6415d59a8b94b4d6d4c1e424a73c0f426993d03`.
+- Evidence: accepted count after guard improved to 1186, excluded count is 6, no usable learnset exclusions remain at 1, invalid/missing front battle sprite pointer exclusions dropped to 5, and invalid/missing normal palette pointer exclusions dropped to 5.
+- Ogerpon internal slots 1422..1429 now report movesLearntCount 20, learnsetPointerValid true, frontSpritePointerValid true and palettePointerValid true.
+- Ogerpon status: accepted. No P1 promotion is made.
+
+# Current update
+
 - `185_cfru_dpe_learnset_runtime_fixes_sync.md` records the sanitized Pool Asset Report evidence after syncing UPR-FVX PR #76, CFRU PR #3, CFRU PR #2 and DPE PR #1.
 - Workspace pins now include UPR-FVX `808cbe823772187ec3ecc13e484a87eb449aaac5`, CFRU `1c99ca5abeeb577f8214247e523e62575443bb81` and DPE `0a1ca7811fd00f981dad19d7476b92513fe62cdc`.
 - Evidence: accepted count after guard improved to 1185, excluded count is 7, no usable learnset exclusions dropped to 1, and Ogerpon now reports movesLearntCount 20 with learnsetPointerValid true.

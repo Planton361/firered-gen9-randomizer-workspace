@@ -1,3 +1,16 @@
+# Session update - Ogerpon asset fix sync
+
+- New branch: `randomizer/sync-ogerpon-asset-fix`.
+- Synced merged DPE PR #2 and UPR-FVX PR #77.
+- Workspace pins now include DPE `3d0ac870fadc91e55f6ff19c0f7aae3cac2014a1` and UPR-FVX `d6415d59a8b94b4d6d4c1e424a73c0f426993d03`.
+- Added `08_tests/randomizer/186_ogerpon_asset_fix_sync.md`.
+- Sanitized local Pool Asset Report evidence after local DPE+CFRU rebuild: PokemonCount 1439, PokedexCount 1290, candidate count before guard 1192, accepted count after guard 1186, excluded count 6, excluded no usable learnset 1, invalid/missing front battle sprite pointer 5 and invalid/missing normal palette pointer 5.
+- Ogerpon internal slots 1422..1429 now report movesLearntCount 20, learnsetPointerValid true, frontSpritePointerValid true and palettePointerValid true.
+- Ogerpon status: accepted.
+- Remaining invalid candidates: Bad Egg has no usable learnset; Warrior, Exeggcute, Cubone, Koffing and Mime Jr. still have invalid/missing front battle sprite pointers.
+- No ROM, output ROM, save, emulator state, screenshot, full log, ROM path, hash, private path, secret, token or `.env` detail was read, copied, changed or documented by Codex.
+- No UPR-FVX/CFRU/DPE code change and no P1 promotion was made in this workspace sync.
+
 # Session update - CFRU/DPE learnset runtime fixes sync
 
 - New branch: `randomizer/sync-cfru-dpe-learnset-runtime-fixes`.
