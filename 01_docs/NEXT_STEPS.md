@@ -1,3 +1,14 @@
+# Next steps update - GUI-4B no-swarms pass
+
+- Treat GUI-4B as passed for Wild Standard/Fallback plus Trainer Pokemon core plus Pokemon Movesets -> Random completely in sanitized local GUI E2E evidence.
+- The empty-learnset `SpeciesMovesetRandomizer` crash is resolved for this scope; the prior `IndexOutOfBoundsException` was not reproduced.
+- Treat Swarm-Frigibax as neutralized for normal randomized walkthroughs by the synced CFRU `SWARM_CHANCE=0` config. Route 1 no-swarm rebuild evidence did not observe Swarm-Frigibax, and an example Route 1 encounter was Urshifu Lv3 displayed correctly.
+- Ogerpon remains valid and pool-eligible after the Learnset/Sprite/Palette fixes.
+- Remaining guarded invalid palette candidates are known warnings and not blockers.
+- CFRU Day/Night Wild and other Special-Wild systems remain out-of-scope and are not promoted.
+- Recommended next local option block: keep Special-Wild off and choose one separate narrow scope, preferably Trainer Names/Class Names or a first Items/Moves/Abilities slice, rather than full randomization.
+- Do not promote any new P1 status from this sync; continue reporting sanitized yes/no evidence without ROM paths, hashes, full logs, screenshots, output ROMs, saves, emulator states, private paths, secrets, tokens or `.env` data.
+
 # Next steps update - GUI-4A Ogerpon Wild/Trainer pass
 
 - Treat GUI-4A as passed for Wild Standard/Fallback plus Trainer Pokemon core in sanitized local GUI E2E evidence.

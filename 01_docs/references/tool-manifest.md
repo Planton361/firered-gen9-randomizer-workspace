@@ -1,3 +1,20 @@
+# Tool Manifest Update - 2026-05-17 - GUI-4B no-swarms pass
+
+- Workspace branch: `randomizer/sync-gui4b-no-swarms-pass`.
+- UPR-FVX PR #79: <https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/79>.
+- UPR-FVX PR #80: <https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/80>.
+- CFRU PR #5: <https://github.com/Planton361/CFRU-expansion/pull/5>.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX PR #80 commit `226bcacc4f66cee5689caa128d5e35ef4acc001d`, including PR #79's empty-learnset guard.
+- Workspace submodule `02_external/CFRU-expansion` now pins merged CFRU PR #5 commit `c4c90373fe7f24acd5dcfa3a8fbdd5cb573bfe29`, with `SWARM_CHANCE=0` for normal FVX-randomized runs.
+- Sanitized local GUI-4B evidence: correct CFRU/DPE Gen9 ROM loaded with `isRomHack=true`, PokemonCount 1439, PokedexCount 1290 and generations 1-9 present.
+- Options used: Wild Standard/Fallback, Trainer Pokemon core and Pokemon Movesets -> Random completely. Trainer Names/Class Names, Items/Moves/Abilities, TM/HM/Tutor and Special-Wild systems were not enabled.
+- Result: output ROM was created locally, emulator boot succeeded, wild encounters and a trainer battle were checked, missing sprites were not observed and move-less Pokemon were not observed.
+- The `SpeciesMovesetRandomizer` empty-moveset `IndexOutOfBoundsException` was not reproduced; Ogerpon remains valid and pool-eligible.
+- Route 1 no-swarm rebuild check did not observe Swarm-Frigibax; example post-fix Route 1 encounter was Urshifu Lv3 displayed correctly.
+- Remaining guarded invalid palette candidates are known warnings and not blockers for this GUI-4B scope.
+- CFRU Day/Night Wild and other Special-Wild systems remain outside the current normal walkthrough scope.
+- Safety: no ROM/save/output/log/build artifact committed, no private path/ROM hash/full log/screenshot documented, no UPR-FVX/CFRU/DPE code change in this workspace sync and no P1 promotion.
+
 # Tool Manifest Update - 2026-05-17 - GUI-4A Ogerpon Wild/Trainer pass
 
 - Workspace branch: `randomizer/sync-gui4a-ogerpon-wild-trainer-pass`.
