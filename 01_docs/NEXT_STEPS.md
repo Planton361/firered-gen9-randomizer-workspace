@@ -1,3 +1,13 @@
+# Next steps update - Ogerpon asset fix sync
+
+- Treat the Ogerpon front-sprite/palette asset blocker as resolved in the sanitized Pool Asset Report baseline after syncing DPE PR #2 and UPR-FVX PR #77.
+- Current sanitized report baseline: 1186 accepted after guard, 6 excluded total, 1 no-usable-learnset exclusion, 5 invalid/missing front battle sprite pointer exclusions and 5 invalid/missing normal palette pointer exclusions.
+- Ogerpon internal slots 1422..1429 now have valid learnsets, front sprite pointers and normal palette pointers in the report.
+- Ogerpon status is accepted.
+- Remaining invalid candidates are Bad Egg for no usable learnset, plus Warrior, Exeggcute, Cubone, Koffing and Mime Jr. for invalid/missing front battle sprite pointers.
+- Next local GUI step: rerun the local GUI E2E path with the updated DPE/UPR-FVX pins before broadening option groups; keep reporting sanitized yes/no evidence only.
+- Do not promote any new P1 status from this sync; keep ROM paths, hashes, full logs, screenshots, output ROMs, saves, emulator states, private paths, secrets, tokens and `.env` data out of documentation.
+
 # Next steps update - CFRU/DPE learnset runtime fixes sync
 
 - Treat the learnset-runtime-pointer blocker as resolved in the sanitized Pool Asset Report baseline after syncing UPR-FVX PR #76, CFRU PR #3, CFRU PR #2 and DPE PR #1.

@@ -1,3 +1,14 @@
+# Roadmap status update - Ogerpon asset fix sync
+
+- DPE PR #2 and UPR-FVX PR #77 are synced into the workspace pins.
+- Ogerpon front-sprite/palette asset blocker status: resolved in the sanitized local Pool Asset Report baseline.
+- Evidence improvement: Pool Asset Report moved from 1185 accepted / 7 excluded to 1186 accepted / 6 excluded.
+- Ogerpon internal slots 1422..1429 now have moves, a valid learnset pointer, a valid front sprite pointer and a valid normal palette pointer in the report.
+- Ogerpon status is accepted.
+- Remaining invalid candidates are Bad Egg for no usable learnset, plus Warrior, Exeggcute, Cubone, Koffing and Mime Jr. for invalid/missing front battle sprite pointers.
+- Next technical focus: rerun the local GUI E2E path with the updated pins before broadening option groups.
+- No ROM paths, hashes, CRCs, full logs, screenshots, saves, emulator states, output ROMs, UPR-FVX/CFRU/DPE code changes or P1 promotion are added.
+
 # Roadmap status update - CFRU/DPE learnset runtime fixes sync
 
 - UPR-FVX PR #76, CFRU PR #3, CFRU PR #2 and DPE PR #1 are synced into the workspace pins.

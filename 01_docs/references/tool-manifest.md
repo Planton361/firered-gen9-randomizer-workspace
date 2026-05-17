@@ -1,3 +1,15 @@
+# Tool Manifest Update - 2026-05-17 - Ogerpon asset fix sync
+
+- Workspace branch: `randomizer/sync-ogerpon-asset-fix`.
+- DPE PR #2: <https://github.com/Planton361/Dynamic-Pokemon-Expansion-Gen-9/pull/2>.
+- UPR-FVX PR #77: <https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/77>.
+- Workspace submodule `02_external/Dynamic-Pokemon-Expansion-Gen-9` now pins merged DPE PR #2 commit `3d0ac870fadc91e55f6ff19c0f7aae3cac2014a1`.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX PR #77 commit `d6415d59a8b94b4d6d4c1e424a73c0f426993d03`.
+- Sanitized local Pool Asset Report evidence after local DPE+CFRU rebuild: PokemonCount 1439, PokedexCount 1290, candidate count before guard 1192, accepted count after guard 1186, excluded count 6, excluded no usable learnset 1, invalid/missing front battle sprite pointer 5 and invalid/missing normal palette pointer 5.
+- Ogerpon internal slots 1422..1429 report movesLearntCount 20, learnsetPointerValid true, frontSpritePointerValid true and palettePointerValid true; Ogerpon status is accepted.
+- Remaining invalid candidates in the sanitized report: Bad Egg has no usable learnset; Warrior, Exeggcute, Cubone, Koffing and Mime Jr. still have invalid/missing front battle sprite pointers.
+- Safety: no ROM/save/output/log/build artifact committed, no private path/ROM hash/full log/screenshot documented, no UPR-FVX/CFRU/DPE code change in this workspace sync and no P1 promotion.
+
 # Tool Manifest Update - 2026-05-17 - CFRU/DPE learnset runtime fixes sync
 
 - Workspace branch: `randomizer/sync-cfru-dpe-learnset-runtime-fixes`.
