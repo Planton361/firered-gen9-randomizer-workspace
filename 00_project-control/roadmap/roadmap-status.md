@@ -1,3 +1,12 @@
+# Roadmap status update - Exact coverage batch 02 items
+
+- Recorded a sanitized exact-coverage Batch 02 Item CLI log-smoke run.
+- `08_tests/randomizer/200_exact_coverage_batch_02_items.md` documents 13 profiles processed with dry-run disabled, all PASS, 0 bad markers and 0 warnings.
+- Updated `fvx_feature_test_status_matrix.tsv` only for `FVX-ITEM-001` through `FVX-ITEM-010`.
+- Batch 02 converts the targeted Item exact-coverage gaps to `PASS_LOG` evidence while retaining ingame follow-up requirements and existing Item caveats.
+- Progress dashboard snapshot and completed-diagnosis references now mention Batch 02 Items without shortening the full Feature-ID list.
+- No ROM paths, hashes, CRCs, full logs, screenshots, saves, emulator states, output ROMs, UPR-FVX/CFRU/DPE code changes or P1 promotion are added.
+
 # Roadmap status update - Exact coverage batch 01
 
 - Recorded a sanitized exact-coverage Batch 01 CLI log-smoke run.

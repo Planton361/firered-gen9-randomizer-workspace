@@ -1,5 +1,14 @@
 # Current update
 
+- `200_exact_coverage_batch_02_items.md` records the sanitized exact-coverage Batch 02 CLI log-smoke result for Item Feature IDs.
+- 13 exact Item single/variant profiles were processed with dry-run disabled.
+- All 13 profiles passed with 0 bad markers and 0 warnings.
+- Updated `fvx_feature_test_status_matrix.tsv` only for `FVX-ITEM-001` through `FVX-ITEM-010`.
+- The updated rows remain below P1: log-pass evidence still needs local boot/play or item-specific ingame smoke.
+- No ROM paths, hashes, full logs, output paths or P1 promotion are documented.
+
+# Current update
+
 - `199_exact_coverage_batch_01.md` records the sanitized exact-coverage Batch 01 CLI log-smoke result.
 - 19 exact single/variant profiles were processed with dry-run disabled.
 - All 19 profiles passed with 0 bad markers and 0 warnings.

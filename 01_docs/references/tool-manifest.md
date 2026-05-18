@@ -1,3 +1,12 @@
+# Tool Manifest Update - 2026-05-18 - Exact coverage batch 02 items
+
+- Workspace branch: `randomizer/sync-exact-coverage-batch-02-items`.
+- Added `08_tests/randomizer/200_exact_coverage_batch_02_items.md`.
+- Sanitized local exact-coverage Batch 02 Item CLI log-smoke result: dry-run disabled, 13 profiles processed, all profiles PASS, bad markers 0 and warnings 0.
+- Updated `08_tests/randomizer/fvx_feature_test_status_matrix.tsv` only for `FVX-ITEM-001` through `FVX-ITEM-010`.
+- Updated `01_docs/randomizer/fvx-progress-dashboard.md` conservatively for the Batch 02 Items snapshot/diagnosis status without shortening the full Feature-ID list.
+- Safety: no ROM/save/output/log artifact committed, no private path/ROM hash/full log/screenshot documented, no UPR-FVX/CFRU/DPE code change and no P1 promotion.
+
 # Tool Manifest Update - 2026-05-18 - Exact coverage batch 01
 
 - Workspace branch: `randomizer/sync-exact-coverage-batch-01`.
