@@ -1,5 +1,17 @@
 # Current update
 
+- `192_starter_rival_sync_pass.md` records the sanitized Starter/Rival sync smoke after syncing UPR-FVX PR #97.
+- Workspace pin: `02_external/upr-fvx` now points to merge commit `51d52a03235664154549105003dadfb45c76d0d0`.
+- Root cause: Oak-Lab Rival uses raw `TrainerData` party rows outside the normal loaded trainer list; PR #97 corrects the slot projection to `[328, 326, 327]`.
+- Evidence: starter slots Groudon, Fearow and Mudbray; player chose Groudon; expected Rival Fearow; observed Rival Fearow.
+- Starter Pokemon passed for the Oak-Lab first Rival smoke.
+- No vanilla fallback, same-starter bug, crash or softlock was observed.
+- Stable Visual Profile can now optionally include Starter Pokemon for local sampling.
+- `Rival Carries Starter Through Game` remains separate and not tested by this smoke.
+- No P1 promotion is made.
+
+# Current update
+
 - `191_stable_visual_profile_smoke.md` records the sanitized Stable Visual Profile smoke after the merged GUI Working Settings Matrix baseline.
 - Stable Visual Profile ON: Wild Standard/Fallback, Trainer Pokemon core, Pokemon Movesets -> Random completely, Trainer Movesets, Trainer Names, Field Items basic, Pokemon Abilities, TM/HM Compatibility, TM Moves, Move Tutor Moves, Move Tutor Compatibility, Shop Items, Pickup Items, In-Game Trades, Static Pokemon, Type Effectiveness, Pokemon Base Statistics and Move Data Power/Accuracy/PP/Type/Names.
 - Stable Visual Profile OFF: Starter Pokemon, Trainer Class Names, Evolution Randomization and Special-Wild/Day-Night/Swarms.

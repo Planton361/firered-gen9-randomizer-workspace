@@ -1,3 +1,16 @@
+# Roadmap status update - Starter/Rival sync pass
+
+- UPR-FVX PR #97 is synced into the workspace pin at `51d52a03235664154549105003dadfb45c76d0d0`.
+- Starter Pokemon passed in sanitized local evidence for the Oak-Lab first Rival counter-slot path.
+- Root cause: the real Oak-Lab Rival runtime source is raw `TrainerData` party rows outside the normal loaded trainer list. PR #96 hit that source; PR #97 corrected the slot projection to `[328, 326, 327]`.
+- Counter-slot rule: player slot 0 -> starter slot 1, player slot 1 -> starter slot 2 and player slot 2 -> starter slot 0.
+- Evidence: starter slots Groudon, Fearow and Mudbray; player chose Groudon; expected Rival Fearow; observed Rival Fearow.
+- No vanilla fallback, same-starter bug, crash or softlock was observed.
+- Stable Visual Profile can now optionally include Starter Pokemon for local sampling.
+- `Rival Carries Starter Through Game` remains a separate, not-tested full-rival path.
+- Next recommended block: Stable Visual Profile plus Starter Pokemon with Trainer Class Names and Special-Wild still disabled, or a separate `Rival Carries Starter Through Game` smoke.
+- No ROM paths, hashes, CRCs, full logs, screenshots, saves, emulator states, output ROMs, UPR-FVX/CFRU/DPE code changes or P1 promotion are added.
+
 # Roadmap status update - Stable Visual Profile smoke
 
 - Stable Visual Profile smoke passed in sanitized local evidence after the merged GUI Working Settings Matrix baseline.
