@@ -1,3 +1,13 @@
+# Next steps update - Coverage CLI profile matrix pass
+
+- Treat `08_tests/randomizer/198_cli_profile_matrix_coverage_run.md` as sanitized CLI log evidence for the coverage-generated profile matrix only.
+- The coverage `.rnqs` matrix processed 14 profiles with 0 bad markers and 0 warnings.
+- Keep all updated TSV rows below P1: log-pass evidence is not ingame evidence, writer/reload proof or full-playthrough evidence.
+- Only rows exactly enabled by the executed coverage profile overlays should cite the 198 evidence.
+- Unexpected-pass profiles still need focused follow-up before de-caveating: `04_foe_held_items_sensible_expected_fail`, `09_graphics_palettes`, `10_misc_tweaks` and `11_special_wild`.
+- Continue using `fvx_profile_coverage_plan.md` to identify variants that were not actually covered by the 14-profile run.
+- No ROM paths, hashes, full logs, output paths, screenshots, saves, emulator states, private paths, secrets, tokens or `.env` data should be documented. No P1 promotion follows from this matrix run.
+
 # Next steps update - FVX profile coverage audit
 
 - Use `08_tests/randomizer/fvx_profile_coverage_plan.md` as the profile coverage source of truth for mapping all 130 Feature IDs to single, variant, tab, cumulative and risk-interaction profile IDs.

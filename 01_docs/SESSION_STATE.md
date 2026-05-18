@@ -1,3 +1,14 @@
+# Session update - Coverage CLI profile matrix pass
+
+- New branch: `randomizer/sync-coverage-profile-matrix-pass`.
+- Added `08_tests/randomizer/198_cli_profile_matrix_coverage_run.md`.
+- Sanitized local coverage-generated `.rnqs` CLI profile matrix result: dry-run disabled, 14 profiles processed.
+- PASS profiles with 0 bad markers and 0 warnings: `00_baseline`, `01_traits_full`, `02_starters_statics_trades_full`, `03_moves_movesets_full`, `04_foe_base`, `04_foe_held_items_basic`, `05_wild_full`, `06_tm_tutor_full`, `07_items_full` and `08_types_full`.
+- UNEXPECTED_PASS profiles with 0 bad markers and 0 warnings: `04_foe_held_items_sensible_expected_fail`, `09_graphics_palettes`, `10_misc_tweaks` and `11_special_wild`.
+- Updated `08_tests/randomizer/fvx_feature_test_status_matrix.tsv` only for rows exactly enabled by the executed coverage profile overlays; unexpected-pass rows remain `PASS_LOG_WITH_CAVEAT`.
+- Updated the FVX progress dashboard snapshot/package summaries without shortening the full Feature-ID list.
+- Scope boundary: no ROM paths, hashes, full logs, output paths, screenshots, saves, emulator states, secrets, tokens or `.env` data were documented. No UPR-FVX/CFRU/DPE code change and no P1 promotion were made.
+
 # Session update - FVX profile coverage audit
 
 - New branch: `randomizer/profile-coverage-audit`.

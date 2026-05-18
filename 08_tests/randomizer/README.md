@@ -1,5 +1,14 @@
 # Current update
 
+- `198_cli_profile_matrix_coverage_run.md` records the sanitized coverage-generated `.rnqs` CLI profile matrix result.
+- 14 coverage profiles were processed with dry-run disabled.
+- PASS profiles and UNEXPECTED_PASS profiles all reported 0 bad markers and 0 warnings.
+- Unexpected passes remain caveated: Sensible Trainer Held Items, Graphics/Palettes, Misc Tweaks and Special-Wild.
+- `fvx_feature_test_status_matrix.tsv` is updated only where the executed coverage profile exactly enabled the Feature ID through the profile/feature overlay set.
+- No ROM paths, hashes, full logs, output paths or P1 promotion are documented.
+
+# Current update
+
 - `fvx_profile_coverage_plan.md` audits the generated settings profiles against all 130 FVX Feature IDs.
 - `cli_profile_matrix.coverage.example.tsv` adds an opt-in coverage manifest with single, variant, tab, cumulative and risk-interaction profile IDs.
 - `generate_settings_profiles_from_matrix.sh` now accepts an optional `feature_overlays` TSV column and can generate profiles via explicit `--enable` Feature IDs instead of only built-in UPR-FVX profile IDs.
