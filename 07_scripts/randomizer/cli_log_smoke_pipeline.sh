@@ -209,6 +209,7 @@ fi
 success_count=$(count_matches 'Randomized successfully!' "$stdout_log")
 fatal_count=$(count_matches 'Exception|ERROR:|Randomization failed|IndexOutOfBoundsException|NullPointerException|NoSuchElementException' "$scan_log")
 known_bad_count=$(count_matches 'NEW GIVEN = \?|move-less|missing sprite|unknown/undecoded|SpeciesMovesetRandomizer.*IndexOutOfBoundsException' "$scan_log")
+warning_count=$(count_matches 'WARNING:|Warning:|warning:' "$scan_log")
 
 {
     printf '# CLI Log Smoke Report\n\n'
@@ -220,6 +221,7 @@ known_bad_count=$(count_matches 'NEW GIVEN = \?|move-less|missing sprite|unknown
     printf -- '- Detailed UPR-FVX log created: %s\n' "$(bool_file_exists "$detail_log")"
     printf -- '- Fatal marker count: %s\n' "$fatal_count"
     printf -- '- Known bad marker count: %s\n' "$known_bad_count"
+    printf -- '- Warning marker count: %s\n' "$warning_count"
     printf -- '- ROM path/hash/full log documented: no\n'
     printf -- '- Output path documented: no\n'
     printf -- '- P1 promotion: no\n'
@@ -230,6 +232,7 @@ known_bad_count=$(count_matches 'NEW GIVEN = \?|move-less|missing sprite|unknown
 
 append_snippets "Fatal Marker Snippets" 'Exception|ERROR:|Randomization failed|IndexOutOfBoundsException|NullPointerException|NoSuchElementException' "$scan_log" "$report"
 append_snippets "Known Bad Marker Snippets" 'NEW GIVEN = \?|move-less|missing sprite|unknown/undecoded|SpeciesMovesetRandomizer.*IndexOutOfBoundsException' "$scan_log" "$report"
+append_snippets "Warning Marker Snippets" 'WARNING:|Warning:|warning:' "$scan_log" "$report"
 
 rm -f "$scan_log"
 if [ "$cleanup_stdout" = "yes" ]; then

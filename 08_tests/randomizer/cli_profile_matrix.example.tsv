@@ -1,0 +1,15 @@
+profile_id	enabled	expected_result	settings_file	seed	notes
+00_baseline	yes	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/00_baseline.rnqs	1000	Baseline exported from GUI or future FVX helper.
+01_traits_full	yes	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/01_traits_full.rnqs	1001	Traits block: base stats, types, abilities; evolution randomization only if intentionally enabled.
+02_starters_statics_trades_full	yes	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/02_starters_statics_trades_full.rnqs	1002	Starters, statics and trades; Rival Carries Starter remains separate unless intentionally enabled.
+03_moves_movesets_full	yes	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/03_moves_movesets_full.rnqs	1003	Moves and movesets block.
+04_foe_base	yes	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/04_foe_base.rnqs	1004	Trainer Pokemon core, trainer movesets and trainer names.
+04_foe_held_items_basic	yes	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/04_foe_held_items_basic.rnqs	1005	Trainer held items basic.
+04_foe_held_items_sensible_expected_fail	yes	EXPECTED_FAIL	05_builds/randomizer-smoke/cli-profile-matrix/settings/04_foe_held_items_sensible_expected_fail.rnqs	1006	Known-risk sensible held item profile until local evidence says otherwise.
+05_wild_full	yes	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/05_wild_full.rnqs	1007	Standard/Fallback Wild only; Special-Wild remains separate.
+06_tm_tutor_full	yes	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/06_tm_tutor_full.rnqs	1008	TM/HM and Tutor moves/compatibility.
+07_items_full	yes	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/07_items_full.rnqs	1009	Field, shop and pickup items.
+08_types_full	yes	PASS_WITH_WARNINGS	05_builds/randomizer-smoke/cli-profile-matrix/settings/08_types_full.rnqs	1010	Type effectiveness chaos profile; warnings acceptable if no fatal/bad markers.
+09_graphics_palettes	yes	EXPECTED_FAIL	05_builds/randomizer-smoke/cli-profile-matrix/settings/09_graphics_palettes.rnqs	1011	Palette/graphics profile remains risky/P2 until separately fixed.
+10_misc_tweaks	yes	EXPECTED_FAIL	05_builds/randomizer-smoke/cli-profile-matrix/settings/10_misc_tweaks.rnqs	1012	Misc tweaks inventory profile; not stable yet.
+11_special_wild	yes	EXPECTED_FAIL	05_builds/randomizer-smoke/cli-profile-matrix/settings/11_special_wild.rnqs	1013	Special-Wild/Day-Night/Swarms remain out-of-scope.

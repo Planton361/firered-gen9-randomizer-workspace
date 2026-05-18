@@ -1,5 +1,14 @@
 # Current update
 
+- `194_cli_profile_matrix_pipeline.md` documents the second CLI smoke stage: a profile matrix runner for multiple saved FVX settings profiles.
+- `cli_profile_matrix.example.tsv` lists the current roadmap profile IDs from `00_baseline` through `11_special_wild`.
+- `run_cli_profile_matrix.sh` executes enabled manifest rows through `cli_log_smoke_pipeline.sh` and writes a sanitized aggregate table with `profile_id | result | bad markers | warnings | next action`.
+- `generate_cli_smoke_profiles.sh` creates only a manifest scaffold. It does not byte-patch or generate `.rnqs` settings because FVX settings are versioned Base64 plus CRC/checksum state.
+- Real matrix runs remain local-only with private ROM/settings paths under ignored output directories. Codex may only use dry-run or artificial fixtures.
+- No P1 promotion is made.
+
+# Current update
+
 - `193_cli_log_smoke_pipeline.md` documents the local-only UPR-FVX CLI log smoke pipeline.
 - `07_scripts/randomizer/cli_log_smoke_pipeline.sh` wraps `UPR-FVX.jar cli` for opt-in local runs, requests detailed logging with `-l` and writes a sanitized summary report.
 - The helper supports `--dry-run` for repo checks without reading a ROM or creating an output ROM.

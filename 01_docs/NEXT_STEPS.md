@@ -1,3 +1,13 @@
+# Next steps update - CLI profile matrix pipeline
+
+- Use `08_tests/randomizer/194_cli_profile_matrix_pipeline.md` for multi-profile CLI smoke orchestration.
+- Keep the current implementation on saved local `.rnqs` profiles listed in a TSV manifest. Do not byte-patch settings files from shell/Python.
+- To scaffold a local manifest, run `07_scripts/randomizer/generate_cli_smoke_profiles.sh --output 05_builds/randomizer-smoke/cli-profile-matrix/profiles.tsv`.
+- To validate wiring without ROM access, run `07_scripts/randomizer/run_cli_profile_matrix.sh --profile-manifest 08_tests/randomizer/cli_profile_matrix.example.tsv --output-dir /tmp/upr-fvx-cli-profile-matrix --summary-report /tmp/upr-fvx-cli-profile-matrix/summary.md --dry-run`.
+- Target state: add a future UPR-FVX CLI/helper subcommand or Java helper that derives profile settings through FVX `Settings` APIs, then let the manifest activate feature blocks automatically.
+- Real matrix runs remain local-only with private ROM/settings/output/log paths under ignored directories. Report back only sanitized aggregate evidence.
+- Keep Trainer Class Names, Special-Wild and `Rival Carries Starter Through Game` caveated/separate unless a profile explicitly tests them. Do not promote P1 from this pipeline.
+
 # Next steps update - CLI log smoke pipeline
 
 - Use `08_tests/randomizer/193_cli_log_smoke_pipeline.md` for the local-only CLI counterpart to the GUI smoke.

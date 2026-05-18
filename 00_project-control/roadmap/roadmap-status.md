@@ -1,3 +1,13 @@
+# Roadmap status update - CLI profile matrix pipeline
+
+- Added the second CLI smoke stage for profile-matrix orchestration.
+- `run_cli_profile_matrix.sh` consumes a TSV manifest, invokes the existing CLI log smoke helper per enabled profile and writes a sanitized aggregate summary with `profile_id | result | bad markers | warnings | next action`.
+- `generate_cli_smoke_profiles.sh` writes only a manifest scaffold; it does not generate or patch FVX `.rnqs` settings.
+- `cli_profile_matrix.example.tsv` captures the current roadmap profile IDs: baseline, traits, starters/statics/trades, moves/movesets, foe slices, wild, TM/tutor, items, types, graphics/palettes, misc tweaks and Special-Wild.
+- Technical decision: FVX settings are versioned Base64 plus CRC/checksum state, so automatic settings derivation should be implemented later through FVX `Settings` APIs, not shell byte-patching.
+- Scope: dry-run/tooling only in this branch. No ROM runs, output ROM evidence, emulator checks or P1 promotion are added.
+- No ROM paths, hashes, CRCs, full logs, screenshots, saves, emulator states, output ROMs, UPR-FVX/CFRU/DPE code changes or P1 promotion are added.
+
 # Roadmap status update - CLI log smoke pipeline
 
 - Added a repo-safe local UPR-FVX CLI log smoke pipeline.
