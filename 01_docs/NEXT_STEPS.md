@@ -1,3 +1,12 @@
+# Next steps update - Trainer runtime source diagnostics sync
+
+- Treat UPR-FVX PR #100 as synced into the workspace pin at `87bba797620dd2043f02c11c67f7b752a7238a00`.
+- Use `08_tests/randomizer/202_trainer_runtime_source_diagnostics_sync.md` as the workspace handoff for the Trainer runtime-source diagnosis.
+- Keep Foe Trainer as CLI-log-clean but ingame partial/caveated until local sanitized evidence proves the affected battles use the same `TrainerData` rows and party pointers that UPR-FVX logs and writes.
+- Prioritize local opt-in evidence for second Rival, Brock and selected normal trainers: affected battle label, trainer ID if visible, observed party summary if known, and redacted runtime-source diagnostic rows.
+- If runtime-source rows differ from the logged trainer IDs, plan a focused UPR-FVX follow-up for script-ID mapping or raw/source sync before any stronger Foe Trainer support claim.
+- No ROM runs by Codex, output ROMs, private paths, hashes, full logs, screenshots, saves, emulator states, secrets, tokens, `.env` data or P1 promotion follow from this sync.
+
 # Next steps update - Settings profile variant overlays sync
 
 - Treat UPR-FVX PR #99 as synced into the workspace pin at `4c8e7394a230e6e8471977036be268c80883ac0b`.

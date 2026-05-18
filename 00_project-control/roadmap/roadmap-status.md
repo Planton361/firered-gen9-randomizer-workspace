@@ -1,3 +1,12 @@
+# Roadmap status update - Trainer runtime source diagnostics sync
+
+- Synced merged UPR-FVX PR #100 into the workspace pin at `87bba797620dd2043f02c11c67f7b752a7238a00`.
+- PR #100 adds a No-ROM/synthetic trainerbattle runtime-source diagnostic harness for FRLG `trainerbattle` script IDs, `TrainerData` rows, party pointers and first raw party species.
+- Added `08_tests/randomizer/202_trainer_runtime_source_diagnostics_sync.md` to document the workspace handoff and sanitized evidence boundary.
+- Foe Trainer remains CLI-log-clean from exact coverage, but ingame status is partial/caveated because second Rival, Brock and selected normal trainers may use runtime sources that differ from the logged/written trainer list.
+- Next roadmap step is local opt-in sanitized runtime-source evidence, not P1 promotion: compare affected battle labels and trainer IDs against redacted `trainerOffset`, `partyPointer`, `partyPointerValid` and `firstRawSpeciesId` diagnostic rows.
+- No ROM paths, hashes, CRCs, full logs, screenshots, saves, emulator states, output ROMs, UPR-FVX/CFRU/DPE code changes or P1 promotion are added.
+
 # Roadmap status update - Settings profile variant overlays sync
 
 - Synced merged UPR-FVX PR #99 into the workspace pin at `4c8e7394a230e6e8471977036be268c80883ac0b`.

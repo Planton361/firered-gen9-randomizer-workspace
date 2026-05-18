@@ -1,3 +1,13 @@
+# Session update - Trainer runtime source diagnostics sync
+
+- New branch: `randomizer/sync-trainer-runtime-source-diagnostics`.
+- Synced `02_external/upr-fvx` to merged UPR-FVX PR #100 commit `87bba797620dd2043f02c11c67f7b752a7238a00`.
+- PR #100 adds No-ROM/synthetic diagnostics for mapping FRLG `trainerbattle` script trainer IDs to `TrainerData` rows, party pointers and first raw party species.
+- Added `08_tests/randomizer/202_trainer_runtime_source_diagnostics_sync.md`.
+- Status impact: Foe Trainer remains CLI-log-clean from exact coverage, but ingame status is partial/caveated because second Rival, Brock and selected normal trainers may use runtime sources that differ from the logged/written trainer list.
+- The next evidence needed is local-only and sanitized: affected battle label, trainer ID if visible, party summary if known, and redacted runtime-source diagnostic rows showing whether script/runtime and logged/written `TrainerData` match.
+- Scope boundary: no ROM run, output ROM, full log, private path, hash, screenshot, save, emulator state, secret, token or `.env` data was documented. No P1 promotion was made.
+
 # Session update - Settings profile variant overlays sync
 
 - New branch: `randomizer/sync-settings-profile-variant-overlays`.
