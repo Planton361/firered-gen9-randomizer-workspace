@@ -6,12 +6,12 @@
 - Keep `MODE-GEN-LIMIT-1-9*` rows disabled/unsupported until Settings can encode Gen 8/9 restrictions and GMax exclusion.
 - No ROM runs, output ROMs, private paths, hashes, full logs, screenshots, saves, emulator states, secrets, tokens, `.env` data or P1 promotion follow from this sync.
 
-# Next steps update - Exact coverage batches 03-13
+# Next steps update - Exact coverage batches 03-18
 
-- Treat `08_tests/randomizer/201_exact_coverage_batches_03_13.md` as sanitized CLI log evidence for exact-coverage Batches 03 through 13 only.
-- Batch 03 through 13 processed 149 generator-capable exact/cumulative profiles with dry-run disabled, 0 bad markers and 0 warnings.
-- Covered rows now have Batch 03-13 log-pass evidence but still need local boot/play, visual smoke, behavior-specific ingame/manual smoke or feature-specific ingame smoke before any stronger support claim.
-- Keep caveats visible: Graphics/Palettes need visual smoke, sensible Trainer Held Items remains caveated due previous NPE history, Special-Wild remains separate, exact Type Random/Keep/Inverse variants remain generator-overlay gaps if unsupported, static null placeholders remain null, Custom Starters and Custom Player Graphics remain manual/unsupported, and Update Moves remains out-of-scope for CFRU/DPE Gen9.
+- Treat `08_tests/randomizer/201_exact_coverage_batches_03_18.md` as sanitized CLI log/helper evidence for exact-coverage Batches 03 through 18 only.
+- Batch 03 through 17 processed 165 generator-capable exact/cumulative/mode profiles with dry-run disabled, 0 bad markers and 0 warnings for all PASS profiles; Batch 18 confirmed 4 Gen-Limit `MODE-*` overlays fail as expected because they are unsupported by current Settings format.
+- Covered rows now have Batch 03-18 log-pass evidence but still need local boot/play, visual smoke, behavior-specific ingame/manual smoke or feature-specific ingame smoke before any stronger support claim.
+- Keep caveats visible: Graphics/Palettes need visual smoke, sensible Trainer Held Items remains caveated due previous NPE history, Intro Mon needs visual confirmation, Special-Wild remains separate, Gen-Limit-1-9 `MODE-*` overlays remain unsupported by Settings format, static null placeholders remain null, Custom Starters and Custom Player Graphics remain manual/unsupported, and Update Moves remains out-of-scope for CFRU/DPE Gen9.
 - No P1 promotion follows from these batches.
 - Continue excluding ROM paths, hashes, full logs, output paths, screenshots, saves, emulator states, private paths, secrets, tokens and `.env` data.
 
