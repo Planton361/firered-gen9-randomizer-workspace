@@ -21,7 +21,7 @@ Manifest columns:
   profile_id enabled expected_result settings_file seed notes
 
 Optional generator-only column:
-  feature_overlays
+  feature_overlays (Feature IDs or MODE-* overlay IDs)
 
 The matrix runner ignores feature_overlays and consumes the generated settings_file.
 

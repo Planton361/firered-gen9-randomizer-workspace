@@ -1,3 +1,13 @@
+# Session update - Settings profile variant overlays sync
+
+- New branch: `randomizer/sync-settings-profile-variant-overlays`.
+- Synced `02_external/upr-fvx` to merged UPR-FVX PR #99 commit `4c8e7394a230e6e8471977036be268c80883ac0b`.
+- PR #99 adds exact No-ROM `settings-profile` `MODE-*` overlays for Foe Pokemon modes, Wild replacement/location modes, TypeEffectiveness modes and Intro Mon toggles.
+- Updated the coverage manifest and generator/runner docs so `feature_overlays` can carry Feature IDs or `MODE-*` overlay IDs.
+- Added disabled opt-in exact variant rows for Foe modes, Wild locations, TypeEffectiveness modes and Intro random/no-random.
+- Documented `MODE-GEN-LIMIT-1-9*` variants as unsupported because current Settings cannot encode Gen 8/9 restrictions or GMax exclusion.
+- Scope boundary: no ROM run, output ROM, full log, private path, hash, screenshot, save, emulator state, secret, token or `.env` data was documented. No P1 promotion was made.
+
 # Session update - Exact coverage batches 03-13
 
 - New branch: `randomizer/sync-exact-coverage-batches-03-13`.
@@ -53,7 +63,7 @@
 - Identified Feature IDs that need single/variant profiles instead of related broad-profile assumptions: `FVX-TRAIT-017`, several Starter/Static variants, several Foe variants and Item Shuffle/Even/Shop-Shuffle variants.
 - Extended `07_scripts/randomizer/generate_settings_profiles_from_matrix.sh` so manifest rows can use an optional comma-separated `feature_overlays` column and call `settings-profile --enable <FEATURE_ID>`.
 - Updated `07_scripts/randomizer/run_cli_profile_matrix.sh` to tolerate the optional generator-only column.
-- TypeEffectiveness exact mode coverage is documented as partly blocked: current UPR-FVX exposes Random-Balanced via `FVX-TYPE-001`, while Random, Keep-Identities and Inverse need future exact overlays.
+- Superseded by UPR-FVX PR #99: TypeEffectiveness exact mode coverage can now use `MODE-TYPE-*` overlays for Random, Random-Balanced, Keep-Identities and Inverse.
 - Scope boundary: no ROMs, output ROMs, full logs, private paths, hashes, screenshots, saves, emulator states, secrets, tokens or `.env` data were documented. No UPR-FVX/CFRU/DPE code change and no P1 promotion were made.
 
 # Session update - Generated CLI profile matrix results

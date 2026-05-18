@@ -23,9 +23,10 @@ It accepts no ROM argument, runs no randomization, and creates no output ROM.
 Manifest columns:
   profile_id enabled expected_result settings_file seed notes [feature_overlays]
 
-If feature_overlays is present, it must be a comma-separated Feature-ID list.
+If feature_overlays is present, it must be a comma-separated overlay list.
+Overlay IDs may be Feature IDs such as FVX-FOE-001 or mode IDs such as MODE-FOE-RANDOM.
 Those rows call:
-  settings-profile --enable <FEATURE_ID> ...
+  settings-profile --enable <OVERLAY_ID> ...
 
 Rows without feature_overlays continue to call:
   settings-profile --profile <profile_id>
@@ -126,9 +127,9 @@ while IFS='	' read -r profile_id enabled expected_result settings_file seed note
 
     if [ "$dry_run" = "yes" ]; then
         safe_profile=$(printf '%s\n' "$profile_id" | sanitize_line)
-        safe_features=$(printf '%s\n' "${feature_overlays:-}" | sanitize_line)
+        safe_overlays=$(printf '%s\n' "${feature_overlays:-}" | sanitize_line)
         if [ -n "${feature_overlays:-}" ]; then
-            printf 'Would generate profile: %s from features: %s\n' "$safe_profile" "$safe_features"
+            printf 'Would generate profile: %s from overlays: %s\n' "$safe_profile" "$safe_overlays"
         else
             printf 'Would generate profile: %s\n' "$safe_profile"
         fi
@@ -141,8 +142,8 @@ while IFS='	' read -r profile_id enabled expected_result settings_file seed note
             --output-settings "$output_settings"
         old_ifs=$IFS
         IFS=','
-        for feature_id in $feature_overlays; do
-            set -- "$@" --enable "$feature_id"
+        for overlay_id in $feature_overlays; do
+            set -- "$@" --enable "$overlay_id"
         done
         IFS=$old_ifs
         "$@" >/dev/null

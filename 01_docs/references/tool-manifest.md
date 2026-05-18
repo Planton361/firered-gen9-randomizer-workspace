@@ -1,3 +1,14 @@
+# Tool Manifest Update - 2026-05-18 - Settings profile variant overlays sync
+
+- Workspace branch: `randomizer/sync-settings-profile-variant-overlays`.
+- UPR-FVX PR #99: <https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/99>.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX PR #99 commit `4c8e7394a230e6e8471977036be268c80883ac0b`.
+- Scope: PR #99 extends the No-ROM `settings-profile` helper with exact `MODE-*` overlays for Foe Pokemon modes, Wild replacement/location modes, TypeEffectiveness modes and Intro Mon toggles.
+- Updated the workspace generator/matrix docs so `feature_overlays` can contain either Feature IDs such as `FVX-FOE-001` or exact mode overlay IDs such as `MODE-FOE-RANDOM`.
+- Updated `08_tests/randomizer/cli_profile_matrix.coverage.example.tsv` with disabled opt-in rows for Foe mode, Wild location, TypeEffectiveness and Intro random/no-random variants.
+- Documented exact Gen-Limit-1-9 variants as unsupported because current UPR-FVX Settings cannot encode Gen 8/9 restrictions or GMax exclusion.
+- Safety: no ROM/save/output/log artifact committed, no private path/ROM hash/full log/screenshot documented, no workspace-side UPR-FVX/CFRU/DPE code change and no P1 promotion.
+
 # Tool Manifest Update - 2026-05-18 - Exact coverage batches 03-13
 
 - Workspace branch: `randomizer/sync-exact-coverage-batches-03-13`.
