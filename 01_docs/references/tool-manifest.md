@@ -1,3 +1,12 @@
+# Tool Manifest Update - 2026-05-19 - Runtime trainer party fix sync
+
+- Workspace branch: `randomizer/sync-runtime-trainer-party-fix`.
+- UPR-FVX PR #102: <https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/102>.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX PR #102 commit `eabbcd7eccb1703f98000f85669d969f516e1247`.
+- Scope: PR #102 fixes the confirmed CFRU/DPE FireRed Trainer Pokemon runtime-source mismatch for Rival 2 trainer IDs `329/330/331` and Brock trainer ID `414` by loading and saving validated raw FRLG `trainerbattle` runtime-source `TrainerData` rows outside the normal loaded trainer count.
+- Status impact: Foe Trainer remains CLI-log-clean from exact coverage; Rival 2 and Brock now have a pinned runtime-source party fix, but local ingame smoke remains required before stronger support claims.
+- Safety: no ROM/save/output/log artifact committed, no private path/ROM hash/full log/screenshot documented, no workspace-side UPR-FVX/CFRU/DPE code change and no P1 promotion.
+
 # Tool Manifest Update - 2026-05-18 - Trainer runtime source diagnostics sync
 
 - Workspace branch: `randomizer/sync-trainer-runtime-source-diagnostics`.

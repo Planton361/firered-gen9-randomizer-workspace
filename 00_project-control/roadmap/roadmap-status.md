@@ -1,3 +1,12 @@
+# Roadmap status update - Runtime trainer party fix sync
+
+- Synced merged UPR-FVX PR #102 into the workspace pin at `eabbcd7eccb1703f98000f85669d969f516e1247`.
+- PR #102 fixes the confirmed CFRU/DPE FireRed Trainer Pokemon runtime-source mismatch for Rival 2 trainer IDs `329/330/331` and Brock trainer ID `414`.
+- The fix is intentionally narrow: only validated raw FRLG `trainerbattle` runtime-source `TrainerData` rows outside the normal loaded trainer count are loaded into the trainer model and serialized back through the trainer writer.
+- Foe Trainer remains CLI-log-clean from exact coverage, but local ingame smoke is still required before stronger support claims.
+- Further vanilla-looking trainer battles should be expanded only after targeted redacted runtime-source evidence confirms valid raw rows and party pointers.
+- No ROM paths, hashes, CRCs, full logs, screenshots, saves, emulator states, output ROMs, workspace-side UPR-FVX/CFRU/DPE code changes or P1 promotion are added.
+
 # Roadmap status update - Trainer runtime source diagnostics sync
 
 - Synced merged UPR-FVX PR #100 into the workspace pin at `87bba797620dd2043f02c11c67f7b752a7238a00`.
