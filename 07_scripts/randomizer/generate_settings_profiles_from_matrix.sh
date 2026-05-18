@@ -19,6 +19,16 @@ This script only calls:
   java -jar <UPR-FVX.jar> settings-profile ...
 
 It accepts no ROM argument, runs no randomization, and creates no output ROM.
+
+Manifest columns:
+  profile_id enabled expected_result settings_file seed notes [feature_overlays]
+
+If feature_overlays is present, it must be a comma-separated Feature-ID list.
+Those rows call:
+  settings-profile --enable <FEATURE_ID> ...
+
+Rows without feature_overlays continue to call:
+  settings-profile --profile <profile_id>
 USAGE
 }
 
@@ -100,7 +110,7 @@ fi
 processed=0
 generated=0
 
-while IFS='	' read -r profile_id enabled expected_result settings_file seed notes; do
+while IFS='	' read -r profile_id enabled expected_result settings_file seed notes feature_overlays; do
     case "$profile_id" in
         ''|\#*) continue ;;
         profile_id) continue ;;
@@ -116,14 +126,32 @@ while IFS='	' read -r profile_id enabled expected_result settings_file seed note
 
     if [ "$dry_run" = "yes" ]; then
         safe_profile=$(printf '%s\n' "$profile_id" | sanitize_line)
-        printf 'Would generate profile: %s\n' "$safe_profile"
+        safe_features=$(printf '%s\n' "${feature_overlays:-}" | sanitize_line)
+        if [ -n "${feature_overlays:-}" ]; then
+            printf 'Would generate profile: %s from features: %s\n' "$safe_profile" "$safe_features"
+        else
+            printf 'Would generate profile: %s\n' "$safe_profile"
+        fi
         continue
     fi
 
-    java -jar "$jar_path" settings-profile \
-        --base-settings "$base_settings" \
-        --output-settings "$output_settings" \
-        --profile "$profile_id" >/dev/null
+    if [ -n "${feature_overlays:-}" ]; then
+        set -- java -jar "$jar_path" settings-profile \
+            --base-settings "$base_settings" \
+            --output-settings "$output_settings"
+        old_ifs=$IFS
+        IFS=','
+        for feature_id in $feature_overlays; do
+            set -- "$@" --enable "$feature_id"
+        done
+        IFS=$old_ifs
+        "$@" >/dev/null
+    else
+        java -jar "$jar_path" settings-profile \
+            --base-settings "$base_settings" \
+            --output-settings "$output_settings" \
+            --profile "$profile_id" >/dev/null
+    fi
     generated=$((generated + 1))
 done < "$profile_manifest"
 

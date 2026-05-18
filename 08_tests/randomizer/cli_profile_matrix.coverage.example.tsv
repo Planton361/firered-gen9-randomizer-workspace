@@ -1,0 +1,169 @@
+profile_id	enabled	expected_result	settings_file	seed	notes	feature_overlays
+00_baseline	yes	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/00_baseline.rnqs	2000	Current generated profile matrix carrier; feature_overlays documents actual generator coverage.
+01_traits_full	yes	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/01_traits_full.rnqs	2001	Current generated profile matrix carrier; feature_overlays documents actual generator coverage.	FVX-TRAIT-001,FVX-TRAIT-002,FVX-TRAIT-003,FVX-TRAIT-004,FVX-TRAIT-005,FVX-TRAIT-006,FVX-TRAIT-007,FVX-TRAIT-008,FVX-TRAIT-009,FVX-TRAIT-010,FVX-TRAIT-011,FVX-TRAIT-012,FVX-TRAIT-013,FVX-TRAIT-014,FVX-TRAIT-015,FVX-TRAIT-016,FVX-TRAIT-018,FVX-TRAIT-019,FVX-TRAIT-020,FVX-TRAIT-021,FVX-TRAIT-022,FVX-TRAIT-023,FVX-TRAIT-024,FVX-TRAIT-025,FVX-TRAIT-026,FVX-TRAIT-027,FVX-TRAIT-028
+02_starters_statics_trades_full	yes	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/02_starters_statics_trades_full.rnqs	2002	Current generated profile matrix carrier; feature_overlays documents actual generator coverage.	FVX-SST-002,FVX-SST-006,FVX-SST-007,FVX-SST-008,FVX-SST-011,FVX-SST-013,FVX-SST-014,FVX-SST-015
+03_moves_movesets_full	yes	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/03_moves_movesets_full.rnqs	2003	Current generated profile matrix carrier; feature_overlays documents actual generator coverage.	FVX-MOVE-001,FVX-MOVE-002,FVX-MOVE-003,FVX-MOVE-004,FVX-MOVE-005,FVX-MOVE-007,FVX-MOVE-008,FVX-MOVE-009,FVX-MOVE-010,FVX-MOVE-011
+04_foe_base	yes	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/04_foe_base.rnqs	2004	Current generated profile matrix carrier; feature_overlays documents actual generator coverage.	FVX-FOE-001,FVX-FOE-002,FVX-FOE-003,FVX-FOE-004,FVX-FOE-013,FVX-FOE-014
+04_foe_held_items_basic	yes	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/04_foe_held_items_basic.rnqs	2005	Current generated profile matrix carrier; feature_overlays documents actual generator coverage.	FVX-FOE-008
+04_foe_held_items_sensible_expected_fail	yes	EXPECTED_FAIL	05_builds/randomizer-smoke/cli-profile-matrix/settings/04_foe_held_items_sensible_expected_fail.rnqs	2006	Current generated profile matrix carrier; feature_overlays documents actual generator coverage.	FVX-FOE-008,FVX-FOE-SENSIBLE-HELD-ITEMS
+05_wild_full	yes	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/05_wild_full.rnqs	2007	Current generated profile matrix carrier; feature_overlays documents actual generator coverage.	FVX-WILD-001,FVX-WILD-002,FVX-WILD-003,FVX-WILD-004,FVX-WILD-005,FVX-WILD-006,FVX-WILD-007,FVX-WILD-008,FVX-WILD-009,FVX-WILD-010,FVX-WILD-011,FVX-WILD-012
+06_tm_tutor_full	yes	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/06_tm_tutor_full.rnqs	2008	Current generated profile matrix carrier; feature_overlays documents actual generator coverage.	FVX-TM-001,FVX-TM-002,FVX-TM-003,FVX-TM-004,FVX-TM-005,FVX-TM-006,FVX-TM-007,FVX-TM-008,FVX-TM-009,FVX-TM-010,FVX-TM-011,FVX-TM-012,FVX-TM-013,FVX-TM-014,FVX-TM-015
+07_items_full	yes	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/07_items_full.rnqs	2009	Current generated profile matrix carrier; feature_overlays documents actual generator coverage.	FVX-ITEM-002,FVX-ITEM-004,FVX-ITEM-006,FVX-ITEM-007,FVX-ITEM-008,FVX-ITEM-009,FVX-ITEM-010
+08_types_full	yes	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/08_types_full.rnqs	2010	Current generated profile matrix carrier; feature_overlays documents actual generator coverage.	FVX-TYPE-001,FVX-TYPE-002,FVX-TYPE-003
+09_graphics_palettes	yes	EXPECTED_FAIL	05_builds/randomizer-smoke/cli-profile-matrix/settings/09_graphics_palettes.rnqs	2011	Current generated profile matrix carrier; feature_overlays documents actual generator coverage.	FVX-GFX-001,FVX-GFX-002,FVX-GFX-003,FVX-GFX-004
+10_misc_tweaks	yes	EXPECTED_FAIL	05_builds/randomizer-smoke/cli-profile-matrix/settings/10_misc_tweaks.rnqs	2012	Current generated profile matrix carrier; feature_overlays documents actual generator coverage.	FVX-MISC-001,FVX-MISC-002,FVX-MISC-003,FVX-MISC-004,FVX-MISC-005,FVX-MISC-006,FVX-MISC-007,FVX-MISC-008,FVX-MISC-009,FVX-MISC-010,FVX-MISC-011,FVX-MISC-012
+11_special_wild	yes	EXPECTED_FAIL	05_builds/randomizer-smoke/cli-profile-matrix/settings/11_special_wild.rnqs	2013	Special-Wild overlay outside the 130 Feature IDs; remains scope separate.	FVX-SPECIAL-WILD-001
+variant_evolutions_random_every_level	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/variant_evolutions_random_every_level.rnqs	2014	Evolution Random Every Level single variant omitted by 01_traits_full.	FVX-TRAIT-017
+variant_starters_random_completely	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/variant_starters_random_completely.rnqs	2015	Starter Random completely variant.	FVX-SST-002
+variant_starters_random_two_evos	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/variant_starters_random_two_evos.rnqs	2016	Starter random basic with two evolutions variant.	FVX-SST-003
+variant_starters_random_basic	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/variant_starters_random_basic.rnqs	2017	Starter random any basic variant.	FVX-SST-004
+variant_starters_type_restrictions	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/variant_starters_type_restrictions.rnqs	2018	Starter type restrictions variant layered on random starters.	FVX-SST-002,FVX-SST-005
+variant_starters_bst_bounds	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/variant_starters_bst_bounds.rnqs	2019	Starter BST min/max variant layered on random starters.	FVX-SST-002,FVX-SST-009
+variant_static_swap_legendary_standard	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/variant_static_swap_legendary_standard.rnqs	2020	Static swap legendary/standard variant.	FVX-SST-010
+variant_static_random_completely	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/variant_static_random_completely.rnqs	2021	Static random completely variant.	FVX-SST-011
+variant_static_random_similar_strength	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/variant_static_random_similar_strength.rnqs	2022	Static similar strength variant.	FVX-SST-012
+variant_static_level_music	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/variant_static_level_music.rnqs	2023	Static level modifier/fix music interaction.	FVX-SST-011,FVX-SST-013
+variant_foe_held_items_basic	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/variant_foe_held_items_basic.rnqs	2024	Trainer held items basic.	FVX-FOE-008
+risk_foe_held_items_sensible	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/risk_foe_held_items_sensible.rnqs	2025	Trainer held items sensible risk profile; previous NPE not reproduced in broad generated run.	FVX-FOE-008,FVX-FOE-SENSIBLE-HELD-ITEMS
+variant_field_items_shuffle	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/variant_field_items_shuffle.rnqs	2026	Field items shuffle plus bad-item ban.	FVX-ITEM-001,FVX-ITEM-004
+variant_field_items_random	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/variant_field_items_random.rnqs	2027	Field items random plus bad-item ban.	FVX-ITEM-002,FVX-ITEM-004
+variant_field_items_even_distribution	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/variant_field_items_even_distribution.rnqs	2028	Field items even distribution plus bad-item ban.	FVX-ITEM-003,FVX-ITEM-004
+variant_palettes_random	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/variant_palettes_random.rnqs	2029	Palette random single variant.	FVX-GFX-001
+variant_palettes_follow_types	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/variant_palettes_follow_types.rnqs	2030	Palette follow types variant.	FVX-GFX-001,FVX-GFX-002
+variant_palettes_follow_evolutions	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/variant_palettes_follow_evolutions.rnqs	2031	Palette follow evolutions variant.	FVX-GFX-001,FVX-GFX-003
+variant_palettes_shiny_from_normal	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/variant_palettes_shiny_from_normal.rnqs	2032	Palette shiny from normal variant.	FVX-GFX-001,FVX-GFX-004
+risk_graphics_palettes_visual	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/risk_graphics_palettes_visual.rnqs	2033	Graphics/palettes visual risk profile; needs ingame visual smoke.	FVX-GFX-001,FVX-GFX-002,FVX-GFX-003,FVX-GFX-004
+variant_type_effectiveness_random	no	EXPECTED_FAIL	05_builds/randomizer-smoke/cli-profile-matrix/settings/variant_type_effectiveness_random.rnqs	3000	Placeholder for exact TypeEffectiveness Random mode; requires future UPR-FVX generator overlay before enabling.
+variant_type_effectiveness_random_balanced	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/variant_type_effectiveness_random_balanced.rnqs	3001	Current FVX-TYPE-001 generator overlay; exact balanced mode.	FVX-TYPE-001
+variant_type_effectiveness_keep_identities	no	EXPECTED_FAIL	05_builds/randomizer-smoke/cli-profile-matrix/settings/variant_type_effectiveness_keep_identities.rnqs	3002	Placeholder for exact TypeEffectiveness Keep Identities mode; requires future UPR-FVX generator overlay before enabling.
+variant_type_effectiveness_inverse	no	EXPECTED_FAIL	05_builds/randomizer-smoke/cli-profile-matrix/settings/variant_type_effectiveness_inverse.rnqs	3003	Placeholder for exact TypeEffectiveness Inverse mode; requires future UPR-FVX generator overlay before enabling.
+risk_type_effectiveness_chaos	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/risk_type_effectiveness_chaos.rnqs	2034	Type effectiveness chaos risk profile. Current generator exposes RANDOM_BALANCED only for FVX-TYPE-001.	FVX-TYPE-001,FVX-TYPE-002,FVX-TYPE-003
+variant_misc_text_speed_names	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/variant_misc_text_speed_names.rnqs	2035	Misc text speed/name casing group.	FVX-MISC-001,FVX-MISC-006
+variant_misc_navigation	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/variant_misc_navigation.rnqs	2036	Misc movement/navigation group.	FVX-MISC-002,FVX-MISC-010
+variant_misc_items_pc_pickup	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/variant_misc_items_pc_pickup.rnqs	2037	Misc item-state group.	FVX-MISC-003,FVX-MISC-008
+variant_misc_story_dex_tutorial	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/variant_misc_story_dex_tutorial.rnqs	2038	Misc story/tutorial group.	FVX-MISC-004,FVX-MISC-007
+variant_misc_breeding_static_tm_hm	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/variant_misc_breeding_static_tm_hm.rnqs	2039	Misc breeding/static/TM/HM group.	FVX-MISC-005,FVX-MISC-009,FVX-MISC-011,FVX-MISC-012
+single_fvx_gen_001	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_gen_001.rnqs	2040	Single Feature-ID profile for FVX-GEN-001.	FVX-GEN-001
+single_fvx_gen_002	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_gen_002.rnqs	2041	Single Feature-ID profile for FVX-GEN-002.	FVX-GEN-002
+single_fvx_trait_001	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_trait_001.rnqs	2042	Single Feature-ID profile for FVX-TRAIT-001.	FVX-TRAIT-001
+single_fvx_trait_002	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_trait_002.rnqs	2043	Single Feature-ID profile for FVX-TRAIT-002.	FVX-TRAIT-002
+single_fvx_trait_003	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_trait_003.rnqs	2044	Single Feature-ID profile for FVX-TRAIT-003.	FVX-TRAIT-003
+single_fvx_trait_004	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_trait_004.rnqs	2045	Single Feature-ID profile for FVX-TRAIT-004.	FVX-TRAIT-004
+single_fvx_trait_005	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_trait_005.rnqs	2046	Single Feature-ID profile for FVX-TRAIT-005.	FVX-TRAIT-005
+single_fvx_trait_006	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_trait_006.rnqs	2047	Single Feature-ID profile for FVX-TRAIT-006.	FVX-TRAIT-006
+single_fvx_trait_007	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_trait_007.rnqs	2048	Single Feature-ID profile for FVX-TRAIT-007.	FVX-TRAIT-007
+single_fvx_trait_008	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_trait_008.rnqs	2049	Single Feature-ID profile for FVX-TRAIT-008.	FVX-TRAIT-008
+single_fvx_trait_009	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_trait_009.rnqs	2050	Single Feature-ID profile for FVX-TRAIT-009.	FVX-TRAIT-009
+single_fvx_trait_010	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_trait_010.rnqs	2051	Single Feature-ID profile for FVX-TRAIT-010.	FVX-TRAIT-010
+single_fvx_trait_011	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_trait_011.rnqs	2052	Single Feature-ID profile for FVX-TRAIT-011.	FVX-TRAIT-011
+single_fvx_trait_012	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_trait_012.rnqs	2053	Single Feature-ID profile for FVX-TRAIT-012.	FVX-TRAIT-012
+single_fvx_trait_013	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_trait_013.rnqs	2054	Single Feature-ID profile for FVX-TRAIT-013.	FVX-TRAIT-013
+single_fvx_trait_014	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_trait_014.rnqs	2055	Single Feature-ID profile for FVX-TRAIT-014.	FVX-TRAIT-014
+single_fvx_trait_015	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_trait_015.rnqs	2056	Single Feature-ID profile for FVX-TRAIT-015.	FVX-TRAIT-015
+single_fvx_trait_016	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_trait_016.rnqs	2057	Single Feature-ID profile for FVX-TRAIT-016.	FVX-TRAIT-016
+single_fvx_trait_017	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_trait_017.rnqs	2058	Single Feature-ID profile for FVX-TRAIT-017.	FVX-TRAIT-017
+single_fvx_trait_018	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_trait_018.rnqs	2059	Single Feature-ID profile for FVX-TRAIT-018.	FVX-TRAIT-018
+single_fvx_trait_019	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_trait_019.rnqs	2060	Single Feature-ID profile for FVX-TRAIT-019.	FVX-TRAIT-019
+single_fvx_trait_020	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_trait_020.rnqs	2061	Single Feature-ID profile for FVX-TRAIT-020.	FVX-TRAIT-020
+single_fvx_trait_021	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_trait_021.rnqs	2062	Single Feature-ID profile for FVX-TRAIT-021.	FVX-TRAIT-021
+single_fvx_trait_022	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_trait_022.rnqs	2063	Single Feature-ID profile for FVX-TRAIT-022.	FVX-TRAIT-022
+single_fvx_trait_023	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_trait_023.rnqs	2064	Single Feature-ID profile for FVX-TRAIT-023.	FVX-TRAIT-023
+single_fvx_trait_024	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_trait_024.rnqs	2065	Single Feature-ID profile for FVX-TRAIT-024.	FVX-TRAIT-024
+single_fvx_trait_025	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_trait_025.rnqs	2066	Single Feature-ID profile for FVX-TRAIT-025.	FVX-TRAIT-025
+single_fvx_trait_026	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_trait_026.rnqs	2067	Single Feature-ID profile for FVX-TRAIT-026.	FVX-TRAIT-026
+single_fvx_trait_027	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_trait_027.rnqs	2068	Single Feature-ID profile for FVX-TRAIT-027.	FVX-TRAIT-027
+single_fvx_trait_028	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_trait_028.rnqs	2069	Single Feature-ID profile for FVX-TRAIT-028.	FVX-TRAIT-028
+single_fvx_sst_002	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_sst_002.rnqs	2070	Single Feature-ID profile for FVX-SST-002.	FVX-SST-002
+single_fvx_sst_003	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_sst_003.rnqs	2071	Single Feature-ID profile for FVX-SST-003.	FVX-SST-003
+single_fvx_sst_004	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_sst_004.rnqs	2072	Single Feature-ID profile for FVX-SST-004.	FVX-SST-004
+single_fvx_sst_005	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_sst_005.rnqs	2073	Single Feature-ID profile for FVX-SST-005.	FVX-SST-005
+single_fvx_sst_006	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_sst_006.rnqs	2074	Single Feature-ID profile for FVX-SST-006.	FVX-SST-006
+single_fvx_sst_007	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_sst_007.rnqs	2075	Single Feature-ID profile for FVX-SST-007.	FVX-SST-007
+single_fvx_sst_008	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_sst_008.rnqs	2076	Single Feature-ID profile for FVX-SST-008.	FVX-SST-008
+single_fvx_sst_009	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_sst_009.rnqs	2077	Single Feature-ID profile for FVX-SST-009.	FVX-SST-009
+single_fvx_sst_010	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_sst_010.rnqs	2078	Single Feature-ID profile for FVX-SST-010.	FVX-SST-010
+single_fvx_sst_011	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_sst_011.rnqs	2079	Single Feature-ID profile for FVX-SST-011.	FVX-SST-011
+single_fvx_sst_012	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_sst_012.rnqs	2080	Single Feature-ID profile for FVX-SST-012.	FVX-SST-012
+single_fvx_sst_013	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_sst_013.rnqs	2081	Single Feature-ID profile for FVX-SST-013.	FVX-SST-013
+single_fvx_sst_014	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_sst_014.rnqs	2082	Single Feature-ID profile for FVX-SST-014.	FVX-SST-014
+single_fvx_sst_015	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_sst_015.rnqs	2083	Single Feature-ID profile for FVX-SST-015.	FVX-SST-015
+single_fvx_move_001	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_move_001.rnqs	2084	Single Feature-ID profile for FVX-MOVE-001.	FVX-MOVE-001
+single_fvx_move_002	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_move_002.rnqs	2085	Single Feature-ID profile for FVX-MOVE-002.	FVX-MOVE-002
+single_fvx_move_003	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_move_003.rnqs	2086	Single Feature-ID profile for FVX-MOVE-003.	FVX-MOVE-003
+single_fvx_move_004	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_move_004.rnqs	2087	Single Feature-ID profile for FVX-MOVE-004.	FVX-MOVE-004
+single_fvx_move_005	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_move_005.rnqs	2088	Single Feature-ID profile for FVX-MOVE-005.	FVX-MOVE-005
+single_fvx_move_007	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_move_007.rnqs	2089	Single Feature-ID profile for FVX-MOVE-007.	FVX-MOVE-007
+single_fvx_move_008	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_move_008.rnqs	2090	Single Feature-ID profile for FVX-MOVE-008.	FVX-MOVE-008
+single_fvx_move_009	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_move_009.rnqs	2091	Single Feature-ID profile for FVX-MOVE-009.	FVX-MOVE-009
+single_fvx_move_010	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_move_010.rnqs	2092	Single Feature-ID profile for FVX-MOVE-010.	FVX-MOVE-010
+single_fvx_move_011	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_move_011.rnqs	2093	Single Feature-ID profile for FVX-MOVE-011.	FVX-MOVE-011
+single_fvx_foe_001	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_foe_001.rnqs	2094	Single Feature-ID profile for FVX-FOE-001.	FVX-FOE-001
+single_fvx_foe_002	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_foe_002.rnqs	2095	Single Feature-ID profile for FVX-FOE-002.	FVX-FOE-002
+single_fvx_foe_003	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_foe_003.rnqs	2096	Single Feature-ID profile for FVX-FOE-003.	FVX-FOE-003
+single_fvx_foe_004	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_foe_004.rnqs	2097	Single Feature-ID profile for FVX-FOE-004.	FVX-FOE-004
+single_fvx_foe_005	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_foe_005.rnqs	2098	Single Feature-ID profile for FVX-FOE-005.	FVX-FOE-005
+single_fvx_foe_006	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_foe_006.rnqs	2099	Single Feature-ID profile for FVX-FOE-006.	FVX-FOE-006
+single_fvx_foe_007	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_foe_007.rnqs	2100	Single Feature-ID profile for FVX-FOE-007.	FVX-FOE-007
+single_fvx_foe_008	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_foe_008.rnqs	2101	Single Feature-ID profile for FVX-FOE-008.	FVX-FOE-008
+single_fvx_foe_009	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_foe_009.rnqs	2102	Single Feature-ID profile for FVX-FOE-009.	FVX-FOE-009
+single_fvx_foe_010	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_foe_010.rnqs	2103	Single Feature-ID profile for FVX-FOE-010.	FVX-FOE-010
+single_fvx_foe_011	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_foe_011.rnqs	2104	Single Feature-ID profile for FVX-FOE-011.	FVX-FOE-011
+single_fvx_foe_012	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_foe_012.rnqs	2105	Single Feature-ID profile for FVX-FOE-012.	FVX-FOE-012
+single_fvx_foe_013	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_foe_013.rnqs	2106	Single Feature-ID profile for FVX-FOE-013.	FVX-FOE-013
+single_fvx_foe_014	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_foe_014.rnqs	2107	Single Feature-ID profile for FVX-FOE-014.	FVX-FOE-014
+single_fvx_wild_001	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_wild_001.rnqs	2108	Single Feature-ID profile for FVX-WILD-001.	FVX-WILD-001
+single_fvx_wild_002	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_wild_002.rnqs	2109	Single Feature-ID profile for FVX-WILD-002.	FVX-WILD-002
+single_fvx_wild_003	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_wild_003.rnqs	2110	Single Feature-ID profile for FVX-WILD-003.	FVX-WILD-003
+single_fvx_wild_004	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_wild_004.rnqs	2111	Single Feature-ID profile for FVX-WILD-004.	FVX-WILD-004
+single_fvx_wild_005	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_wild_005.rnqs	2112	Single Feature-ID profile for FVX-WILD-005.	FVX-WILD-005
+single_fvx_wild_006	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_wild_006.rnqs	2113	Single Feature-ID profile for FVX-WILD-006.	FVX-WILD-006
+single_fvx_wild_007	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_wild_007.rnqs	2114	Single Feature-ID profile for FVX-WILD-007.	FVX-WILD-007
+single_fvx_wild_008	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_wild_008.rnqs	2115	Single Feature-ID profile for FVX-WILD-008.	FVX-WILD-008
+single_fvx_wild_009	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_wild_009.rnqs	2116	Single Feature-ID profile for FVX-WILD-009.	FVX-WILD-009
+single_fvx_wild_010	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_wild_010.rnqs	2117	Single Feature-ID profile for FVX-WILD-010.	FVX-WILD-010
+single_fvx_wild_011	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_wild_011.rnqs	2118	Single Feature-ID profile for FVX-WILD-011.	FVX-WILD-011
+single_fvx_wild_012	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_wild_012.rnqs	2119	Single Feature-ID profile for FVX-WILD-012.	FVX-WILD-012
+single_fvx_tm_001	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_tm_001.rnqs	2120	Single Feature-ID profile for FVX-TM-001.	FVX-TM-001
+single_fvx_tm_002	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_tm_002.rnqs	2121	Single Feature-ID profile for FVX-TM-002.	FVX-TM-002
+single_fvx_tm_003	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_tm_003.rnqs	2122	Single Feature-ID profile for FVX-TM-003.	FVX-TM-003
+single_fvx_tm_004	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_tm_004.rnqs	2123	Single Feature-ID profile for FVX-TM-004.	FVX-TM-004
+single_fvx_tm_005	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_tm_005.rnqs	2124	Single Feature-ID profile for FVX-TM-005.	FVX-TM-005
+single_fvx_tm_006	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_tm_006.rnqs	2125	Single Feature-ID profile for FVX-TM-006.	FVX-TM-006
+single_fvx_tm_007	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_tm_007.rnqs	2126	Single Feature-ID profile for FVX-TM-007.	FVX-TM-007
+single_fvx_tm_008	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_tm_008.rnqs	2127	Single Feature-ID profile for FVX-TM-008.	FVX-TM-008
+single_fvx_tm_009	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_tm_009.rnqs	2128	Single Feature-ID profile for FVX-TM-009.	FVX-TM-009
+single_fvx_tm_010	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_tm_010.rnqs	2129	Single Feature-ID profile for FVX-TM-010.	FVX-TM-010
+single_fvx_tm_011	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_tm_011.rnqs	2130	Single Feature-ID profile for FVX-TM-011.	FVX-TM-011
+single_fvx_tm_012	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_tm_012.rnqs	2131	Single Feature-ID profile for FVX-TM-012.	FVX-TM-012
+single_fvx_tm_013	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_tm_013.rnqs	2132	Single Feature-ID profile for FVX-TM-013.	FVX-TM-013
+single_fvx_tm_014	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_tm_014.rnqs	2133	Single Feature-ID profile for FVX-TM-014.	FVX-TM-014
+single_fvx_tm_015	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_tm_015.rnqs	2134	Single Feature-ID profile for FVX-TM-015.	FVX-TM-015
+single_fvx_item_001	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_item_001.rnqs	2135	Single Feature-ID profile for FVX-ITEM-001.	FVX-ITEM-001
+single_fvx_item_002	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_item_002.rnqs	2136	Single Feature-ID profile for FVX-ITEM-002.	FVX-ITEM-002
+single_fvx_item_003	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_item_003.rnqs	2137	Single Feature-ID profile for FVX-ITEM-003.	FVX-ITEM-003
+single_fvx_item_004	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_item_004.rnqs	2138	Single Feature-ID profile for FVX-ITEM-004.	FVX-ITEM-004
+single_fvx_item_005	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_item_005.rnqs	2139	Single Feature-ID profile for FVX-ITEM-005.	FVX-ITEM-005
+single_fvx_item_006	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_item_006.rnqs	2140	Single Feature-ID profile for FVX-ITEM-006.	FVX-ITEM-006
+single_fvx_item_007	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_item_007.rnqs	2141	Single Feature-ID profile for FVX-ITEM-007.	FVX-ITEM-007
+single_fvx_item_008	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_item_008.rnqs	2142	Single Feature-ID profile for FVX-ITEM-008.	FVX-ITEM-008
+single_fvx_item_009	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_item_009.rnqs	2143	Single Feature-ID profile for FVX-ITEM-009.	FVX-ITEM-009
+single_fvx_item_010	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_item_010.rnqs	2144	Single Feature-ID profile for FVX-ITEM-010.	FVX-ITEM-010
+single_fvx_type_001	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_type_001.rnqs	2145	Single Feature-ID profile for FVX-TYPE-001.	FVX-TYPE-001
+single_fvx_type_002	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_type_002.rnqs	2146	Single Feature-ID profile for FVX-TYPE-002.	FVX-TYPE-002
+single_fvx_type_003	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_type_003.rnqs	2147	Single Feature-ID profile for FVX-TYPE-003.	FVX-TYPE-003
+single_fvx_gfx_001	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_gfx_001.rnqs	2148	Single Feature-ID profile for FVX-GFX-001.	FVX-GFX-001
+single_fvx_gfx_002	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_gfx_002.rnqs	2149	Single Feature-ID profile for FVX-GFX-002.	FVX-GFX-002
+single_fvx_gfx_003	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_gfx_003.rnqs	2150	Single Feature-ID profile for FVX-GFX-003.	FVX-GFX-003
+single_fvx_gfx_004	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_gfx_004.rnqs	2151	Single Feature-ID profile for FVX-GFX-004.	FVX-GFX-004
+single_fvx_misc_001	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_misc_001.rnqs	2152	Single Feature-ID profile for FVX-MISC-001.	FVX-MISC-001
+single_fvx_misc_002	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_misc_002.rnqs	2153	Single Feature-ID profile for FVX-MISC-002.	FVX-MISC-002
+single_fvx_misc_003	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_misc_003.rnqs	2154	Single Feature-ID profile for FVX-MISC-003.	FVX-MISC-003
+single_fvx_misc_004	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_misc_004.rnqs	2155	Single Feature-ID profile for FVX-MISC-004.	FVX-MISC-004
+single_fvx_misc_005	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_misc_005.rnqs	2156	Single Feature-ID profile for FVX-MISC-005.	FVX-MISC-005
+single_fvx_misc_006	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_misc_006.rnqs	2157	Single Feature-ID profile for FVX-MISC-006.	FVX-MISC-006
+single_fvx_misc_007	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_misc_007.rnqs	2158	Single Feature-ID profile for FVX-MISC-007.	FVX-MISC-007
+single_fvx_misc_008	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_misc_008.rnqs	2159	Single Feature-ID profile for FVX-MISC-008.	FVX-MISC-008
+single_fvx_misc_009	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_misc_009.rnqs	2160	Single Feature-ID profile for FVX-MISC-009.	FVX-MISC-009
+single_fvx_misc_010	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_misc_010.rnqs	2161	Single Feature-ID profile for FVX-MISC-010.	FVX-MISC-010
+single_fvx_misc_011	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_misc_011.rnqs	2162	Single Feature-ID profile for FVX-MISC-011.	FVX-MISC-011
+single_fvx_misc_012	no	PASS_LOG	05_builds/randomizer-smoke/cli-profile-matrix/settings/single_fvx_misc_012.rnqs	2163	Single Feature-ID profile for FVX-MISC-012.	FVX-MISC-012

@@ -1,3 +1,16 @@
+# Session update - FVX profile coverage audit
+
+- New branch: `randomizer/profile-coverage-audit`.
+- Added `08_tests/randomizer/fvx_profile_coverage_plan.md`.
+- Added `08_tests/randomizer/cli_profile_matrix.coverage.example.tsv`.
+- Audited the current generated settings profiles against all 130 FVX Feature IDs.
+- Result: the current 14-profile matrix is valid as broad tab/cumulative log-smoke evidence, but not as exact per-feature coverage.
+- Identified Feature IDs that need single/variant profiles instead of related broad-profile assumptions: `FVX-TRAIT-017`, several Starter/Static variants, several Foe variants and Item Shuffle/Even/Shop-Shuffle variants.
+- Extended `07_scripts/randomizer/generate_settings_profiles_from_matrix.sh` so manifest rows can use an optional comma-separated `feature_overlays` column and call `settings-profile --enable <FEATURE_ID>`.
+- Updated `07_scripts/randomizer/run_cli_profile_matrix.sh` to tolerate the optional generator-only column.
+- TypeEffectiveness exact mode coverage is documented as partly blocked: current UPR-FVX exposes Random-Balanced via `FVX-TYPE-001`, while Random, Keep-Identities and Inverse need future exact overlays.
+- Scope boundary: no ROMs, output ROMs, full logs, private paths, hashes, screenshots, saves, emulator states, secrets, tokens or `.env` data were documented. No UPR-FVX/CFRU/DPE code change and no P1 promotion were made.
+
 # Session update - Generated CLI profile matrix results
 
 - New branch: `randomizer/sync-cli-profile-matrix-results`.

@@ -1,3 +1,13 @@
+# Next steps update - FVX profile coverage audit
+
+- Use `08_tests/randomizer/fvx_profile_coverage_plan.md` as the profile coverage source of truth for mapping all 130 Feature IDs to single, variant, tab, cumulative and risk-interaction profile IDs.
+- Use `08_tests/randomizer/cli_profile_matrix.coverage.example.tsv` for opt-in fine-grained profile generation. The broad rows remain enabled; single/variant/risk rows are disabled until the user chooses a focused run.
+- When generating targeted profiles, pass the coverage manifest through `generate_settings_profiles_from_matrix.sh`; rows with `feature_overlays` call UPR-FVX `settings-profile --enable` directly.
+- Do not count related broad profiles as exact feature coverage when the coverage plan says `current_14_profile_includes_feature=no`.
+- Priority follow-ups: `FVX-TRAIT-017`, Starter/Static variants, Foe Additional/Type/Battle/Rival-Carry variants, Field/Shop item variants, exact TypeEffectiveness modes, Graphics/Palettes visual smoke and Misc behavior smokes.
+- TypeEffectiveness Random, Keep-Identities and Inverse need a future UPR-FVX exact-overlay helper before they can be auto-generated from this workspace manifest.
+- No ROM runs, output ROMs, private paths, hashes, full logs or P1 promotion follow from this audit.
+
 # Next steps update - Generated CLI profile matrix results
 
 - Treat `08_tests/randomizer/197_cli_profile_matrix_generated_run.md` as sanitized CLI log evidence for the generated profile matrix only.

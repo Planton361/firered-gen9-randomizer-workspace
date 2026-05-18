@@ -1,3 +1,13 @@
+# Roadmap status update - FVX profile coverage audit
+
+- Added a No-ROM profile coverage audit for all 130 FVX Feature IDs.
+- `08_tests/randomizer/fvx_profile_coverage_plan.md` maps each Feature ID to single, variant, tab, cumulative and risk-interaction profile IDs, plus unsupported/manual/out-of-scope flags where needed.
+- `08_tests/randomizer/cli_profile_matrix.coverage.example.tsv` provides an opt-in coverage manifest for fine-grained generated `.rnqs` profiles.
+- `generate_settings_profiles_from_matrix.sh` now supports an optional `feature_overlays` column so the workspace can generate targeted settings with UPR-FVX `settings-profile --enable`.
+- Audit result: the 14 generated profiles remain useful broad log-smoke coverage, but they do not exactly cover every Feature ID. Missing exact coverage includes `FVX-TRAIT-017`, multiple Starter/Static variants, multiple Foe variants and Field/Shop item variants.
+- Exact TypeEffectiveness Random, Keep-Identities and Inverse mode generation remains a future UPR-FVX helper gap; current `FVX-TYPE-001` maps to Random-Balanced only.
+- No ROM paths, hashes, CRCs, full logs, screenshots, saves, emulator states, output ROMs, UPR-FVX/CFRU/DPE code changes or P1 promotion are added.
+
 # Roadmap status update - Generated CLI profile matrix results
 
 - Recorded a sanitized generated `.rnqs` CLI profile matrix run.
