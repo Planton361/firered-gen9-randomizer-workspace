@@ -1,3 +1,12 @@
+# Next steps update - Exact coverage batches 03-13
+
+- Treat `08_tests/randomizer/201_exact_coverage_batches_03_13.md` as sanitized CLI log evidence for exact-coverage Batches 03 through 13 only.
+- Batch 03 through 13 processed 149 generator-capable exact/cumulative profiles with dry-run disabled, 0 bad markers and 0 warnings.
+- Covered rows now have Batch 03-13 log-pass evidence but still need local boot/play, visual smoke, behavior-specific ingame/manual smoke or feature-specific ingame smoke before any stronger support claim.
+- Keep caveats visible: Graphics/Palettes need visual smoke, sensible Trainer Held Items remains caveated due previous NPE history, Special-Wild remains separate, exact Type Random/Keep/Inverse variants remain generator-overlay gaps if unsupported, static null placeholders remain null, Custom Starters and Custom Player Graphics remain manual/unsupported, and Update Moves remains out-of-scope for CFRU/DPE Gen9.
+- No P1 promotion follows from these batches.
+- Continue excluding ROM paths, hashes, full logs, output paths, screenshots, saves, emulator states, private paths, secrets, tokens and `.env` data.
+
 # Next steps update - Exact coverage batch 02 items
 
 - Treat `08_tests/randomizer/200_exact_coverage_batch_02_items.md` as sanitized CLI log evidence for exact-coverage Batch 02 Items only.
