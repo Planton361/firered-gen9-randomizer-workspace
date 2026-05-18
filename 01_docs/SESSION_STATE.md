@@ -1,3 +1,15 @@
+# Session update - Exact coverage batch 02 items
+
+- New branch: `randomizer/sync-exact-coverage-batch-02-items`.
+- Added `08_tests/randomizer/200_exact_coverage_batch_02_items.md`.
+- Sanitized local exact-coverage Batch 02 Item CLI log-smoke result: dry-run disabled, 13 profiles processed.
+- All 13 profiles passed with 0 bad markers and 0 warnings.
+- Updated `08_tests/randomizer/fvx_feature_test_status_matrix.tsv` only for `FVX-ITEM-001` through `FVX-ITEM-010`.
+- The updated Item rows cite `200 exact coverage batch 02 items`, keep ingame follow-up required, and do not promote P1.
+- Existing Item caveats remain visible: Required-TM forcing and supported/special shop coverage still need item-specific ingame follow-up.
+- Updated the FVX progress dashboard snapshot/diagnosis references without shortening the full Feature-ID list.
+- Scope boundary: no ROM paths, hashes, full logs, output paths, screenshots, saves, emulator states, secrets, tokens or `.env` data were documented. No UPR-FVX/CFRU/DPE code change and no P1 promotion were made.
+
 # Session update - Exact coverage batch 01
 
 - New branch: `randomizer/sync-exact-coverage-batch-01`.

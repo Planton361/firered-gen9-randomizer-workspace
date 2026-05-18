@@ -1,3 +1,12 @@
+# Next steps update - Exact coverage batch 02 items
+
+- Treat `08_tests/randomizer/200_exact_coverage_batch_02_items.md` as sanitized CLI log evidence for exact-coverage Batch 02 Items only.
+- Batch 02 processed 13 exact Item single/variant profiles with dry-run disabled, 0 bad markers and 0 warnings.
+- `FVX-ITEM-001` through `FVX-ITEM-010` now have Batch 02 log-pass evidence but still need local boot/play or item-specific ingame smoke before any stronger support claim.
+- Keep the Required-TM forcing and supported/special shop caveats visible; this batch does not change item writer/reload or gameplay evidence.
+- No P1 promotion follows from this batch.
+- Continue excluding ROM paths, hashes, full logs, output paths, screenshots, saves, emulator states, private paths, secrets, tokens and `.env` data.
+
 # Next steps update - Exact coverage batch 01
 
 - Treat `08_tests/randomizer/199_exact_coverage_batch_01.md` as sanitized CLI log evidence for exact-coverage Batch 01 only.

@@ -33,12 +33,12 @@ Markdown bleibt Source of Truth.
 
 | Feld | Aktueller Stand |
 |---|---|
-| Stand | Nach Workspace PR #272 / UPR-FVX PR #98, coverage-generated CLI profile matrix run und exact-coverage Batch 01 CLI-Log-Smoke |
+| Stand | Nach Workspace PR #272 / UPR-FVX PR #98, coverage-generated CLI profile matrix run, exact-coverage Batch 01 und exact-coverage Batch 02 Items CLI-Log-Smoke |
 | UPR-FVX-Pin im Workspace | `81fa4cf35af48bce19996e4581f1e4a688ebfa3b` |
 | Breites GUI-Profil | GUI Working Settings Matrix passed: Wild Standard/Fallback, Trainer Pokemon core, Pokemon Movesets Random completely, Trainer Movesets, Trainer Names, Field Items basic, Abilities, TM/HM, Tutors, Shops, Pickup, In-Game Trades, Static Pokemon, Type Effectiveness, Base Stats und Move Data |
-| CLI Profile Matrix | Coverage-generated `.rnqs` profile matrix log-smoke passed for 14 profiles; exact-coverage Batch 01 passed for 19 profiles; bad markers 0 and warnings 0 for all profiles |
+| CLI Profile Matrix | Coverage-generated `.rnqs` profile matrix log-smoke passed for 14 profiles; exact-coverage Batch 01 passed for 19 profiles; exact-coverage Batch 02 Items passed for 13 profiles; bad markers 0 and warnings 0 for all profiles |
 | Stable Visual Profile | Passed im kurzen lokalen Smoke; Trainer Class Names, Evolution Randomization und Special-Wild bleiben OFF |
-| Zuletzt entblockt | Exact-coverage Batch 01 filled targeted single/variant log-smoke gaps for `FVX-TRAIT-017`, selected Starter/Static variants and selected Foe variants |
+| Zuletzt entblockt | Exact-coverage Batch 02 Items filled targeted item single/variant log-smoke gaps for `FVX-ITEM-001` through `FVX-ITEM-010` |
 | Aktuelle Caveats | Trainer Class Names bleibt textlabel-only; Graphics/Palettes und Misc Tweaks brauchen Ingame-/Manual-Smokes; Special-Wild/Day-Night/Swarms bleiben separater Scope; `Rival Carries Starter Through Game` bleibt ungetestet |
 | Keine P1-Promotion | Aktuelle Updates sind Workspace-/Smoke-Status, keine neue P1-Freigabe |
 | Naechster sinnvoller Block | Coverage-Luecken und Unexpected-Pass-Profile gezielt isolieren: Trainer Held Items Sensible, Graphics/Palettes, Misc Tweaks, Special-Wild sowie nicht exakt abgedeckte Varianten |
@@ -88,7 +88,7 @@ Markdown bleibt Source of Truth.
 | Foe Pokemon / Trainer | Working-matrix passed mit Caveat / generated CLI profile passed / exact Batch 01 passed | Trainer Pokemon core, Trainer Movesets, Trainer Names | Additional Pokemon, Type Diversity / Type Themes and Battle Style exact-smoked in Batch 01; Trainer Held Items log-smoked in generated matrix | Trainer Class Names textlabel-only; Sprite/Class-ID mismatch erwartbar; Sensible Held Items braucht fokussierte Isolation; `Rival Carries Starter Through Game` ungetestet | Trainer Class Names OFF lassen oder Class Assignment separat planen; Sensible Items isolieren | 190, 191, 197, 198, 199 |
 | Wild Pokemon | Working-matrix passed / generated CLI profile passed | Standard/Fallback Wild, normale Encounter-Smokes | Similar Strength, Type Restrictions, Catch Rate, Catch Em All und Level Modifier log-smoked in generated matrix | Special-Wild/Day-Night/Swarms bleiben separater Scope trotz clean CLI profile | Special-Wild nur separater Scope | 190, 191, 197, 198 |
 | TM/HMs & Tutors | Working-matrix passed / generated CLI profile passed | TM Moves, TM/HM Compatibility, Move Tutor Moves, Tutor Compatibility | Filter-/Follow-Suboptionen log-smoked in generated matrix | Special Tutors/Text/Menu out of scope; Required-TM-Zwang bei Field Items separat | Ingame-Smoke fuer Suboptionen spaeter | 190, 197, 198 |
-| Items | Working-matrix passed mit Caveats / generated CLI profile passed | Field Items basic, Pickup Items, Shop Items | - | Required-TM-Field-Item-Zwang kann bei expanded TMs blockieren; supported/special shops bestaetigt | Basic Field Items verwenden; Sonderoptionen separat | 190, 191, 197, 198 |
+| Items | Working-matrix passed mit Caveats / generated CLI profile passed / exact Batch 02 passed | Field Items basic, Pickup Items, Shop Items | Item single/variant profiles in Batch 02 log-smoke | Required-TM-Field-Item-Zwang kann bei expanded TMs blockieren; supported/special shops bestaetigt | local boot/play or item-specific ingame smoke | 190, 191, 197, 198, 200 |
 | Types | Working-matrix passed / generated CLI profile passed / optional chaos | TypeEffectiveness Random/Balanced/Inverse/Update/Add Immunities | - | stark gameplayveraendernd, fuer normale Runs optional | Statuspflege/Regression | 190, 197, 198 |
 | Graphics | Generated CLI profile passed mit Caveat / P2 gemischt | Palette Randomization log-smoked ohne Bad Marker | - | Ingame visual smoke fuer Palettes fehlt; Custom Player Graphics bleibt P2/out-of-scope | Palette-Visual-Smoke oder Fix spaeter | 058, 191, 197, 198 |
 | Misc Tweaks | Coverage CLI profile passed mit Caveat | Misc Tweaks log-smoked ohne Bad Marker | - | behavior-spezifische Ingame-/Manual-Smokes fehlen | Misc-Inventar und fokussierte Smokes | 197, 198 |
@@ -324,6 +324,7 @@ Diese Tabelle listet alle aktuell erfassten FVX-Features einmal kompakt auf. Sie
 
 | Diagnose / PR | Bereich | Ergebnis | Statuswirkung |
 |---|---|---|---|
+| Exact coverage Batch 02 Items | CLI Profile Matrix / Items | 13 exact Item single/variant profiles log-smoked cleanly; bad markers 0, warnings 0 | Updates requested Item Feature-Test-Status-Matrix rows to `PASS_LOG`; no P1-Promotion |
 | Exact coverage Batch 01 | CLI Profile Matrix | 19 exact single/variant profiles log-smoked cleanly; bad markers 0, warnings 0 | Updates requested Feature-Test-Status-Matrix rows to `PASS_LOG`; no P1-Promotion |
 | Workspace PR #270 + generated matrix run | CLI Profile Matrix | 14 generated `.rnqs` profiles log-smoked cleanly; bad markers 0, warnings 0 | Updates Feature-Test-Status-Matrix to `PASS_LOG` / `PASS_LOG_WITH_CAVEAT`; no P1-Promotion |
 | Workspace PR #264 / UPR-FVX PR #97 | Starter/Rival Sync | UPR-FVX Pin `51d52a03235664154549105003dadfb45c76d0d0`; Oak-Lab Rival Counter-Slot passed | Starter Pokemon kann optional ins Stable Visual Profile; keine P1-Promotion; `Rival Carries Starter Through Game` bleibt separat |
