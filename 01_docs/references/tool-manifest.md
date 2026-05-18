@@ -1,3 +1,13 @@
+# Tool Manifest Update - 2026-05-18 - Coverage CLI profile matrix pass
+
+- Workspace branch: `randomizer/sync-coverage-profile-matrix-pass`.
+- Added `08_tests/randomizer/198_cli_profile_matrix_coverage_run.md`.
+- Sanitized local coverage-generated `.rnqs` CLI profile matrix result: dry-run disabled, 14 profiles processed, all PASS/UNEXPECTED_PASS profiles had 0 bad markers and 0 warnings.
+- PASS profiles: `00_baseline`, `01_traits_full`, `02_starters_statics_trades_full`, `03_moves_movesets_full`, `04_foe_base`, `04_foe_held_items_basic`, `05_wild_full`, `06_tm_tutor_full`, `07_items_full` and `08_types_full`.
+- UNEXPECTED_PASS profiles remain caveated: `04_foe_held_items_sensible_expected_fail`, `09_graphics_palettes`, `10_misc_tweaks` and `11_special_wild`.
+- Updated `08_tests/randomizer/fvx_feature_test_status_matrix.tsv` and `01_docs/randomizer/fvx-progress-dashboard.md` conservatively, only crediting 198 evidence where the executed profile exactly enabled the Feature ID.
+- Safety: no ROM/save/output/log artifact committed, no private path/ROM hash/full log/screenshot documented, no UPR-FVX/CFRU/DPE code change and no P1 promotion.
+
 # Tool Manifest Update - 2026-05-18 - FVX profile coverage audit
 
 - Workspace branch: `randomizer/profile-coverage-audit`.

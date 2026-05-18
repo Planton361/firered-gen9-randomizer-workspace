@@ -1,3 +1,13 @@
+# Roadmap status update - Coverage CLI profile matrix pass
+
+- Recorded a sanitized coverage-generated `.rnqs` CLI profile matrix run.
+- `08_tests/randomizer/198_cli_profile_matrix_coverage_run.md` documents 14 profiles processed with dry-run disabled, 0 bad markers and 0 warnings.
+- PASS profiles: baseline, Traits, Starters/Statics/Trades, Moves/Movesets, Foe base, Foe held items basic, Wild, TM/Tutor, Items and Types.
+- UNEXPECTED_PASS profiles remain caveated, not promoted: Trainer Held Items Sensible, Graphics/Palettes, Misc Tweaks and Special-Wild.
+- `fvx_feature_test_status_matrix.tsv` is updated only for rows exactly enabled by the executed coverage profile overlays.
+- Progress dashboard snapshot now reflects the coverage-generated matrix pass while keeping existing caveats and the full Feature-ID list.
+- No ROM paths, hashes, CRCs, full logs, screenshots, saves, emulator states, output ROMs, UPR-FVX/CFRU/DPE code changes or P1 promotion are added.
+
 # Roadmap status update - FVX profile coverage audit
 
 - Added a No-ROM profile coverage audit for all 130 FVX Feature IDs.
