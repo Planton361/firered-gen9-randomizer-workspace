@@ -1,3 +1,15 @@
+# Session update - CLI profile matrix pipeline
+
+- New branch: `randomizer/settings-profile-matrix-pipeline`.
+- Prerequisite verified: PR #267 is merged and this branch starts from current `main` at `204184e4d5aab834fa2a3725fa76f341995cd042`.
+- Added `07_scripts/randomizer/run_cli_profile_matrix.sh` to execute multiple saved FVX settings profiles through the existing CLI log smoke helper and write a sanitized aggregate summary.
+- Added `07_scripts/randomizer/generate_cli_smoke_profiles.sh` as a manifest scaffold generator only.
+- Added `08_tests/randomizer/194_cli_profile_matrix_pipeline.md` and `08_tests/randomizer/cli_profile_matrix.example.tsv`.
+- Technical decision: FVX `.rnqs` settings are versioned Base64 plus CRC/checksum state, so workspace shell/Python scripts must not byte-patch settings. The matrix currently uses saved local settings profiles; a future UPR-FVX helper or Java helper should generate derived profiles through FVX `Settings` APIs.
+- `cli_log_smoke_pipeline.sh` now records warning marker counts in sanitized reports.
+- Codex tested only help/syntax/dry-run paths. No ROM, output ROM, save, emulator state, screenshot, full log, ROM path, hash, private path, secret, token or `.env` detail was read, copied, changed or documented.
+- No UPR-FVX/CFRU/DPE code change and no P1 promotion was made.
+
 # Session update - CLI log smoke pipeline
 
 - New branch: `randomizer/cli-log-smoke-pipeline`.

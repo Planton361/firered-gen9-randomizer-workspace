@@ -1,3 +1,14 @@
+# Tool Manifest Update - 2026-05-18 - CLI profile matrix pipeline
+
+- Workspace branch: `randomizer/settings-profile-matrix-pipeline`.
+- Base verified: current `main` includes merged Workspace PR #267 at `204184e4d5aab834fa2a3725fa76f341995cd042`.
+- Added `07_scripts/randomizer/run_cli_profile_matrix.sh` for TSV-driven multi-profile CLI smoke orchestration.
+- Added `07_scripts/randomizer/generate_cli_smoke_profiles.sh` as a manifest scaffold generator. It does not create or modify FVX `.rnqs` settings files.
+- Added `08_tests/randomizer/194_cli_profile_matrix_pipeline.md` and `08_tests/randomizer/cli_profile_matrix.example.tsv`.
+- Updated `07_scripts/randomizer/cli_log_smoke_pipeline.sh` so per-profile sanitized reports include warning marker counts and snippets.
+- Technical decision: FVX settings files are versioned Base64 plus CRC/checksum state, so this workspace PR avoids shell/Python byte-patching. Current matrix execution uses saved local settings profiles; automatic profile derivation should be a later UPR-FVX helper/CLI subcommand or Java helper using FVX `Settings` APIs.
+- Safety: Codex used dry-run only, no ROM/save/output/log/build artifact committed, no private path/ROM hash/full log/screenshot documented, no UPR-FVX/CFRU/DPE code change and no P1 promotion.
+
 # Tool Manifest Update - 2026-05-18 - CLI log smoke pipeline
 
 - Workspace branch: `randomizer/cli-log-smoke-pipeline`.
