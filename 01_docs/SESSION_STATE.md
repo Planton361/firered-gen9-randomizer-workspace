@@ -1,3 +1,14 @@
+# Session update - Exact coverage batch 01
+
+- New branch: `randomizer/sync-exact-coverage-batch-01`.
+- Added `08_tests/randomizer/199_exact_coverage_batch_01.md`.
+- Sanitized local exact-coverage Batch 01 CLI log-smoke result: dry-run disabled, 19 profiles processed.
+- All 19 profiles passed with 0 bad markers and 0 warnings.
+- Updated `08_tests/randomizer/fvx_feature_test_status_matrix.tsv` only for the requested Feature IDs: `FVX-TRAIT-017`, `FVX-SST-003`, `FVX-SST-004`, `FVX-SST-005`, `FVX-SST-009`, `FVX-SST-010`, `FVX-SST-012`, `FVX-FOE-005`, `FVX-FOE-006`, `FVX-FOE-007`, `FVX-FOE-009` and `FVX-FOE-011`.
+- The updated rows cite `199 exact coverage batch 01`, keep ingame follow-up required, and do not promote P1.
+- Updated the FVX progress dashboard snapshot/diagnosis references without shortening the full Feature-ID list.
+- Scope boundary: no ROM paths, hashes, full logs, output paths, screenshots, saves, emulator states, secrets, tokens or `.env` data were documented. No UPR-FVX/CFRU/DPE code change and no P1 promotion were made.
+
 # Session update - Coverage CLI profile matrix pass
 
 - New branch: `randomizer/sync-coverage-profile-matrix-pass`.
