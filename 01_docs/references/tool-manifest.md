@@ -1,3 +1,12 @@
+# Tool Manifest Update - 2026-05-18 - Exact coverage batch 01
+
+- Workspace branch: `randomizer/sync-exact-coverage-batch-01`.
+- Added `08_tests/randomizer/199_exact_coverage_batch_01.md`.
+- Sanitized local exact-coverage Batch 01 CLI log-smoke result: dry-run disabled, 19 profiles processed, all profiles PASS, bad markers 0 and warnings 0.
+- Updated `08_tests/randomizer/fvx_feature_test_status_matrix.tsv` only for `FVX-TRAIT-017`, `FVX-SST-003`, `FVX-SST-004`, `FVX-SST-005`, `FVX-SST-009`, `FVX-SST-010`, `FVX-SST-012`, `FVX-FOE-005`, `FVX-FOE-006`, `FVX-FOE-007`, `FVX-FOE-009` and `FVX-FOE-011`.
+- Updated `01_docs/randomizer/fvx-progress-dashboard.md` conservatively for the Batch 01 snapshot/diagnosis status without shortening the full Feature-ID list.
+- Safety: no ROM/save/output/log artifact committed, no private path/ROM hash/full log/screenshot documented, no UPR-FVX/CFRU/DPE code change and no P1 promotion.
+
 # Tool Manifest Update - 2026-05-18 - Coverage CLI profile matrix pass
 
 - Workspace branch: `randomizer/sync-coverage-profile-matrix-pass`.

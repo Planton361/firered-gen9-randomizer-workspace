@@ -1,3 +1,12 @@
+# Next steps update - Exact coverage batch 01
+
+- Treat `08_tests/randomizer/199_exact_coverage_batch_01.md` as sanitized CLI log evidence for exact-coverage Batch 01 only.
+- Batch 01 processed 19 exact single/variant profiles with dry-run disabled, 0 bad markers and 0 warnings.
+- The updated Feature IDs now have log-pass evidence from Batch 01 but still need local boot/play or feature-specific ingame smoke before any stronger support claim.
+- Keep `FVX-SST-010` and `FVX-SST-012` static null-placeholder caveats visible; this batch does not change static placeholder semantics.
+- No P1 promotion follows from this batch.
+- Continue excluding ROM paths, hashes, full logs, output paths, screenshots, saves, emulator states, private paths, secrets, tokens and `.env` data.
+
 # Next steps update - Coverage CLI profile matrix pass
 
 - Treat `08_tests/randomizer/198_cli_profile_matrix_coverage_run.md` as sanitized CLI log evidence for the coverage-generated profile matrix only.

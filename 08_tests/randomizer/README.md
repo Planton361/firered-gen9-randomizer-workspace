@@ -1,5 +1,14 @@
 # Current update
 
+- `199_exact_coverage_batch_01.md` records the sanitized exact-coverage Batch 01 CLI log-smoke result.
+- 19 exact single/variant profiles were processed with dry-run disabled.
+- All 19 profiles passed with 0 bad markers and 0 warnings.
+- Updated `fvx_feature_test_status_matrix.tsv` only for the requested Feature IDs: `FVX-TRAIT-017`, selected Starter/Static variants and selected Foe variants.
+- The updated rows remain below P1: log-pass evidence still needs local boot/play or feature-specific ingame smoke.
+- No ROM paths, hashes, full logs, output paths or P1 promotion are documented.
+
+# Current update
+
 - `198_cli_profile_matrix_coverage_run.md` records the sanitized coverage-generated `.rnqs` CLI profile matrix result.
 - 14 coverage profiles were processed with dry-run disabled.
 - PASS profiles and UNEXPECTED_PASS profiles all reported 0 bad markers and 0 warnings.
