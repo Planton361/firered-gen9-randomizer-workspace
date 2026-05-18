@@ -1,3 +1,19 @@
+# Session update - Starter/Rival sync pass
+
+- New branch: `randomizer/sync-starter-rival-sync-pass`.
+- Synced merged UPR-FVX PR #97 into the workspace pin.
+- `02_external/upr-fvx` now pins merge commit `51d52a03235664154549105003dadfb45c76d0d0`.
+- Root cause recorded: the real FireRed/CFRU-DPE Oak-Lab Rival uses raw `TrainerData` party rows that did not run through the normal loaded trainer list. PR #96 hit that raw source, and PR #97 corrected the slot projection to `[328, 326, 327]`.
+- Counter-slot rule preserved: player slot 0 -> starter slot 1, player slot 1 -> starter slot 2 and player slot 2 -> starter slot 0.
+- Added `08_tests/randomizer/192_starter_rival_sync_pass.md`.
+- Sanitized local Starter/Rival smoke evidence: starter slots were Groudon, Fearow and Mudbray; the player chose Groudon; expected Rival was Fearow; observed Rival was Fearow.
+- Starter Pokemon passed for the Oak-Lab first Rival smoke. No vanilla fallback, same-starter bug, crash or softlock was observed.
+- Stable Visual Profile can now optionally include Starter Pokemon for local sampling.
+- `Rival Carries Starter Through Game` remains a separate, not-tested full-rival path.
+- Known exclusions remain: Trainer Class Names visual mismatch and Special-Wild out-of-scope.
+- No ROM, output ROM, save, emulator state, screenshot, full log, ROM path, hash, private path, secret, token or `.env` detail was read, copied, changed or documented by Codex.
+- No UPR-FVX/CFRU/DPE code change and no P1 promotion was made in this workspace sync.
+
 # Session update - Stable Visual Profile smoke
 
 - New branch: `randomizer/sync-stable-visual-profile-smoke`.

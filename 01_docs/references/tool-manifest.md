@@ -1,3 +1,15 @@
+# Tool Manifest Update - 2026-05-18 - Starter/Rival sync pass
+
+- Workspace branch: `randomizer/sync-starter-rival-sync-pass`.
+- UPR-FVX PR #97: <https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/97>.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX PR #97 commit `51d52a03235664154549105003dadfb45c76d0d0`.
+- Scope: PR #97 fixes the FireRed/CFRU-DPE Oak-Lab Rival slot mapping after PR #96 identified the raw `TrainerData` party rows as the real runtime source.
+- Root cause: the Oak-Lab Rival uses raw trainer party rows outside the normal loaded trainer list; PR #96 wrote the correct source but projected the starter slots incorrectly. PR #97 maps the candidate trainer IDs as `[328, 326, 327]` and keeps the FRLG counter rule: player slot 0 -> starter slot 1, player slot 1 -> starter slot 2 and player slot 2 -> starter slot 0.
+- Sanitized local smoke evidence: randomized starter slots were Groudon, Fearow and Mudbray; the player chose Groudon; the expected Rival counter-slot was Fearow; the observed Rival was Fearow.
+- Result: Starter Pokemon passed for the Oak-Lab first Rival smoke. No vanilla fallback, same-starter bug, crash or softlock was observed in the sanitized evidence.
+- Stable Visual Profile can now optionally include Starter Pokemon for local sampling. `Rival Carries Starter Through Game` remains a separate, not-tested full-rival path.
+- Safety: no ROM/save/output/log/build artifact committed, no private path/ROM hash/full log/screenshot documented, no UPR-FVX/CFRU/DPE code change in this workspace sync and no P1 promotion.
+
 # Tool Manifest Update - 2026-05-18 - GUI working settings matrix
 
 - Workspace branch: `randomizer/sync-gui-settings-matrix-pass`.

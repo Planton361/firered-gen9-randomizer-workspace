@@ -1,3 +1,16 @@
+# Next steps update - Starter/Rival sync pass
+
+- Treat UPR-FVX PR #97 as synced into the workspace pin at `51d52a03235664154549105003dadfb45c76d0d0`.
+- Treat Starter Pokemon as locally smoke-passed for the Oak-Lab first Rival counter-slot path.
+- Root cause: the Oak-Lab Rival runtime source is raw `TrainerData` party rows outside the normal loaded trainer model. The corrected candidate mapping is `[328, 326, 327]`.
+- Sanitized local evidence: starter slots Groudon, Fearow and Mudbray; player chose Groudon; expected Rival Fearow; observed Rival Fearow.
+- Stable Visual Profile can now optionally include Starter Pokemon in local sampling.
+- Keep `Rival Carries Starter Through Game` separate until the full-rival-through-game path has its own evidence.
+- Keep Trainer Class Names off for visual consistency unless textlabel-only remapping is intentional.
+- Keep Special-Wild/Day-Night/Swarms out-of-scope for the stable profile.
+- Recommended next block: run a Stable Visual Profile + Starter Pokemon local smoke with Trainer Class Names and Special-Wild still disabled, or isolate `Rival Carries Starter Through Game` as a separate path.
+- Do not promote any new P1 status from this sync; continue reporting sanitized yes/no evidence only, without ROM paths, hashes, full logs, screenshots, output ROMs, saves, emulator states, private paths, secrets, tokens or `.env` data.
+
 # Next steps update - Stable Visual Profile smoke
 
 - Treat the Stable Visual Profile as locally smoke-passed on sanitized evidence after the merged GUI Working Settings Matrix baseline.

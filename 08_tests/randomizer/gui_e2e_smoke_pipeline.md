@@ -18,6 +18,14 @@ The goal is quick GUI compatibility evidence:
 
 Current sanitized status:
 
+- Starter/Rival sync smoke is recorded after syncing UPR-FVX PR #97.
+- UPR-FVX pin: `51d52a03235664154549105003dadfb45c76d0d0`.
+- Starter Pokemon passed for the Oak-Lab first Rival counter-slot path.
+- Root cause fixed: Oak-Lab Rival uses raw `TrainerData` party rows outside the normal loaded trainer list; the corrected trainer ID projection is `[328, 326, 327]`.
+- Sanitized local evidence: starter slots Groudon, Fearow and Mudbray; player chose Groudon; expected Rival Fearow; observed Rival Fearow.
+- No vanilla fallback, same-starter bug, crash or softlock was observed.
+- Stable Visual Profile can now optionally include Starter Pokemon for local sampling.
+- `Rival Carries Starter Through Game` remains a separate, not-tested full-rival path.
 - Stable Visual Profile smoke is recorded after the merged GUI Working Settings Matrix baseline.
 - Stable Visual Profile ON: Wild Standard/Fallback, Trainer Pokemon core, Pokemon Movesets -> Random completely, Trainer Movesets, Trainer Names, Field Items basic, Pokemon Abilities, TM/HM Compatibility, TM Moves, Move Tutor Moves, Move Tutor Compatibility, Shop Items, Pickup Items, In-Game Trades, Static Pokemon, Type Effectiveness, Pokemon Base Statistics and Move Data Power/Accuracy/PP/Type/Names.
 - Stable Visual Profile OFF: Starter Pokemon, Trainer Class Names, Evolution Randomization and Special-Wild/Day-Night/Swarms.
@@ -115,7 +123,8 @@ Current sanitized status:
 - GUI-4C result: Trainer Names/Class Names passed as global class-label remapping on the current stable path.
 - GUI Working Settings Matrix result: broad local settings matrix passed after fixes through UPR-FVX PR #89, with the caveats documented above.
 - Stable Visual Profile result: short local smoke passed with Trainer Class Names, Starters, Evolution Randomization and Special-Wild disabled.
-- Recommended next candidate: isolate Starter Pokemon/rival starter sync, or continue longer local playthrough sampling on the same Stable Visual Profile.
+- Starter/Rival sync result: Starter Pokemon passed for the Oak-Lab first Rival counter-slot path after PR #97.
+- Recommended next candidate: Stable Visual Profile plus Starter Pokemon, or isolate `Rival Carries Starter Through Game` as a separate full-rival path.
 - Keep Special-Wild disabled unless explicitly selected as a separate diagnostic smoke.
 
 ## Initially Disabled
@@ -169,7 +178,7 @@ Do not include:
 
 ## Evidence Boundary
 
-This pipeline is a local GUI E2E compatibility smoke plan only. The GUI-0 sync pins the already-merged UPR-FVX PR #68, the GUI-1 through GUI-3 pass records sanitized local Output-ROM, BizHawk boot and first-encounter evidence for Wild Standard/Fallback only, and GUI-4A records sanitized Wild Standard/Fallback plus Trainer Pokemon core evidence after the Ogerpon asset fix. It does not make new UPR-FVX code changes in the workspace and does not promote any new feature to P1-supported.
+This pipeline is a local GUI E2E compatibility smoke plan only. The GUI-0 sync pins the already-merged UPR-FVX PR #68, the GUI-1 through GUI-3 pass records sanitized local Output-ROM, BizHawk boot and first-encounter evidence for Wild Standard/Fallback only, and GUI-4A records sanitized Wild Standard/Fallback plus Trainer Pokemon core evidence after the Ogerpon asset fix. The Starter/Rival sync records the Oak-Lab first Rival counter-slot path after PR #97. It does not make new UPR-FVX code changes in the workspace and does not promote any new feature to P1-supported.
 
 The GUI-4B pass does not imply support for Special Wild systems or full randomization. GUI-4C records Trainer Names/Class Names only as a sanitized GUI-smoke pass, not as P1 support. The GUI Working Settings Matrix records broad local evidence after PR #89, still without P1 promotion. The Stable Visual Profile smoke records a short local play smoke with risky visual/scope options disabled; it also does not promote P1. CFRU Day/Night Wild and other Special-Wild systems remain outside the current normal walkthrough scope. Swarms are neutralized for normal randomized walkthroughs by `SWARM_CHANCE=0`, not promoted as a randomized Special-Wild feature.
 
