@@ -1,5 +1,14 @@
 # Current update
 
+- `202_trainer_runtime_source_diagnostics_sync.md` records the workspace sync for merged UPR-FVX PR #100.
+- Workspace pin: `02_external/upr-fvx` now points to merge commit `87bba797620dd2043f02c11c67f7b752a7238a00`.
+- PR #100 adds No-ROM/synthetic trainerbattle runtime-source diagnostics for FRLG script trainer IDs, `TrainerData` rows, party pointers and first raw party species.
+- The opt-in runtime-source report remains local-only and must not be run by Codex with a ROM.
+- Foe Trainer is CLI-log-clean from exact coverage, but ingame status remains partial/caveated until local sanitized runtime-source evidence confirms affected battles use the logged/written `TrainerData` source.
+- No ROM run, output ROM, private path, full log or P1 promotion is added.
+
+# Current update
+
 - Workspace branch `randomizer/sync-settings-profile-variant-overlays` pins `02_external/upr-fvx` to merged UPR-FVX PR #99 commit `4c8e7394a230e6e8471977036be268c80883ac0b`.
 - PR #99 extends the No-ROM `settings-profile` helper with exact `MODE-*` overlays for Foe Pokemon modes, Wild replacement/location modes, TypeEffectiveness modes and Intro Mon toggles.
 - `cli_profile_matrix.coverage.example.tsv` now includes disabled opt-in exact variant rows for Foe mode, Wild location, TypeEffectiveness and Intro random/no-random coverage.

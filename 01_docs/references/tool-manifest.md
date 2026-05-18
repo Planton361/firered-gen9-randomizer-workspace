@@ -1,3 +1,13 @@
+# Tool Manifest Update - 2026-05-18 - Trainer runtime source diagnostics sync
+
+- Workspace branch: `randomizer/sync-trainer-runtime-source-diagnostics`.
+- UPR-FVX PR #100: <https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/100>.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX PR #100 commit `87bba797620dd2043f02c11c67f7b752a7238a00`.
+- Scope: PR #100 adds No-ROM/synthetic trainerbattle runtime-source diagnostics for mapping FRLG script trainer IDs to `TrainerData` rows, party pointers and first raw party species.
+- The existing opt-in local runtime-source report can now include trainerbattle runtime-source rows; it remains local-only and ROM-reading only when explicitly configured by the user.
+- Status impact: Foe Trainer remains CLI-log-clean from exact coverage, but ingame status is partial/caveated until local sanitized evidence confirms affected battles use the same runtime `TrainerData` source that UPR-FVX logs and writes.
+- Safety: no ROM/save/output/log artifact committed, no private path/ROM hash/full log/screenshot documented, no workspace-side UPR-FVX/CFRU/DPE code change and no P1 promotion.
+
 # Tool Manifest Update - 2026-05-18 - Settings profile variant overlays sync
 
 - Workspace branch: `randomizer/sync-settings-profile-variant-overlays`.
