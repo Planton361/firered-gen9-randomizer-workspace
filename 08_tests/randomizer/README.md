@@ -1,5 +1,13 @@
 # Current update
 
+- `193_cli_log_smoke_pipeline.md` documents the local-only UPR-FVX CLI log smoke pipeline.
+- `07_scripts/randomizer/cli_log_smoke_pipeline.sh` wraps `UPR-FVX.jar cli` for opt-in local runs, requests detailed logging with `-l` and writes a sanitized summary report.
+- The helper supports `--dry-run` for repo checks without reading a ROM or creating an output ROM.
+- CLI smoke evidence must stay sanitized: no ROM paths, output paths, hashes, full logs, screenshots, saves, emulator states, secrets, tokens or `.env` data.
+- This is pipeline/tooling evidence only and does not promote P1.
+
+# Current update
+
 - `192_starter_rival_sync_pass.md` records the sanitized Starter/Rival sync smoke after syncing UPR-FVX PR #97.
 - Workspace pin: `02_external/upr-fvx` now points to merge commit `51d52a03235664154549105003dadfb45c76d0d0`.
 - Root cause: Oak-Lab Rival uses raw `TrainerData` party rows outside the normal loaded trainer list; PR #97 corrects the slot projection to `[328, 326, 327]`.

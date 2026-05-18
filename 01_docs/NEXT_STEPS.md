@@ -1,3 +1,13 @@
+# Next steps update - CLI log smoke pipeline
+
+- Use `08_tests/randomizer/193_cli_log_smoke_pipeline.md` for the local-only CLI counterpart to the GUI smoke.
+- Build the pinned UPR-FVX jar locally if needed, then run `07_scripts/randomizer/cli_log_smoke_pipeline.sh` with a private ROM, local settings file and ignored `05_builds/randomizer-smoke/` output/report paths.
+- Prefer a settings file over `--settings-string` for local runs so shell history does not capture the settings string.
+- Treat the generated sanitized report as smoke evidence only: CLI exit code, success marker, output/log creation and marker counts.
+- Keep Trainer Class Names disabled for stable visual sampling unless textlabel-only remapping is intentionally being tested.
+- Keep Special-Wild/Day-Night/Swarms out-of-scope and keep `Rival Carries Starter Through Game` separate until explicitly smoked.
+- Do not promote any new P1 status from the CLI pipeline; continue reporting sanitized yes/no evidence only, without ROM paths, hashes, full logs, screenshots, output ROMs, saves, emulator states, private paths, secrets, tokens or `.env` data.
+
 # Next steps update - Starter/Rival sync pass
 
 - Treat UPR-FVX PR #97 as synced into the workspace pin at `51d52a03235664154549105003dadfb45c76d0d0`.

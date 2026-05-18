@@ -1,3 +1,14 @@
+# Tool Manifest Update - 2026-05-18 - CLI log smoke pipeline
+
+- Workspace branch: `randomizer/cli-log-smoke-pipeline`.
+- Added `07_scripts/randomizer/cli_log_smoke_pipeline.sh` as a local opt-in wrapper around `UPR-FVX.jar cli`.
+- Added `08_tests/randomizer/193_cli_log_smoke_pipeline.md` with usage, pass criteria, dry-run behavior and sanitized handoff rules.
+- Default jar path: `02_external/upr-fvx/random/build/libs/UPR-FVX.jar`.
+- The helper forwards local private ROM/settings/output paths to UPR-FVX only when the user runs it explicitly; Codex did not run it with a ROM.
+- The helper requests UPR-FVX detailed logging with `-l`, then writes a sanitized summary report with CLI exit status, success marker, output/log creation and blocked marker counts.
+- Scope boundary: Stable Visual Profile plus optional Starter Pokemon remains the current local smoke target; Trainer Class Names is textlabel-only, Special-Wild is out-of-scope and `Rival Carries Starter Through Game` remains separate.
+- Safety: no ROM/save/output/log/build artifact committed, no private path/ROM hash/full log/screenshot documented, no UPR-FVX/CFRU/DPE code change and no P1 promotion.
+
 # Tool Manifest Update - 2026-05-18 - Starter/Rival sync pass
 
 - Workspace branch: `randomizer/sync-starter-rival-sync-pass`.

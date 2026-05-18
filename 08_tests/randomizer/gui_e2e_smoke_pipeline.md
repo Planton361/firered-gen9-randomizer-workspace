@@ -6,6 +6,8 @@ This document defines the fastest local GUI end-to-end smoke for the private cus
 
 Codex does not run this smoke. The GUI, ROM loading, randomized output creation, emulator boot and first encounter check are local-only user steps.
 
+For CLI-only generation/log validation, use `193_cli_log_smoke_pipeline.md` and `07_scripts/randomizer/cli_log_smoke_pipeline.sh`. The CLI pipeline is a separate local opt-in smoke and does not replace emulator boot/play checks.
+
 The goal is quick GUI compatibility evidence:
 
 1. Load the private custom ROM in the UPR-FVX GUI.
