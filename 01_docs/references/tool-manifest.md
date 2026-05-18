@@ -1,3 +1,13 @@
+# Tool Manifest Update - 2026-05-18 - FVX feature test status matrix
+
+- Workspace branch: `randomizer/fvx-feature-test-status-matrix`.
+- Base verified: current `main` includes merged Workspace PR #268 at `1c2ca82c7cc96191c6ab57f198956542e95e44d6`.
+- Added `08_tests/randomizer/fvx_feature_test_status_matrix.tsv` with all 130 Feature IDs from the dashboard full feature list.
+- Added `08_tests/randomizer/195_fvx_feature_test_status_matrix.md` documenting the status model, CLI profile mapping, update rules and privacy boundary.
+- Scope: machine-readable status/worklist only. The dashboard remains the human overview and its full feature list is unchanged.
+- Captured current caveats: hard Evolution combinations can fallback under constraints, Trainer Class Names is textlabel-only, trainer held Sensible Items is expected-fail due to `getSensibleHeldItemsFor` NPE, Special-Wild is out-of-scope, Palettes/Graphics remain open and Misc Tweaks are not started.
+- Safety: no ROM/save/output/log/build artifact committed, no private path/ROM hash/full log/screenshot documented, no UPR-FVX/CFRU/DPE code change and no P1 promotion.
+
 # Tool Manifest Update - 2026-05-18 - CLI profile matrix pipeline
 
 - Workspace branch: `randomizer/settings-profile-matrix-pipeline`.

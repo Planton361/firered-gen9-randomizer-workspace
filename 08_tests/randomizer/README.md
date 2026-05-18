@@ -1,5 +1,13 @@
 # Current update
 
+- `195_fvx_feature_test_status_matrix.md` documents the machine-readable per-feature status matrix.
+- `fvx_feature_test_status_matrix.tsv` tracks all 130 dashboard Feature IDs with profile mapping, log status, ingame status, caveats, blockers, evidence anchors and next steps.
+- The dashboard remains the human overview; the TSV is the CLI-profile-matrix worklist.
+- Current matrix status records the latest sanitized knowledge: Traits tab log-passed including Evolutions with caveats for hard combos, Starters/Statics/Trades log-passed, Starter Held Items log-passed, Moves/Movesets log-passed, Foe base log-passed, Trainer Class Names textlabel-only, Trainer held Sensible Items expected-fail, Special-Wild out-of-scope, Graphics/Palettes open and Misc Tweaks not started.
+- No ROMs, logs, output ROMs, private paths or P1 promotion are added.
+
+# Current update
+
 - `194_cli_profile_matrix_pipeline.md` documents the second CLI smoke stage: a profile matrix runner for multiple saved FVX settings profiles.
 - `cli_profile_matrix.example.tsv` lists the current roadmap profile IDs from `00_baseline` through `11_special_wild`.
 - `run_cli_profile_matrix.sh` executes enabled manifest rows through `cli_log_smoke_pipeline.sh` and writes a sanitized aggregate table with `profile_id | result | bad markers | warnings | next action`.
