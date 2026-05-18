@@ -1,3 +1,14 @@
+# Next steps update - Generated CLI profile matrix results
+
+- Treat `08_tests/randomizer/197_cli_profile_matrix_generated_run.md` as sanitized CLI log evidence for the generated profile matrix only.
+- The generated `.rnqs` matrix processed 14 profiles with 0 bad markers and 0 warnings.
+- Keep all updated TSV rows below P1: log-pass evidence is not ingame evidence, writer/reload proof or full-playthrough evidence.
+- Unexpected-pass profiles need focused follow-up before de-caveating: `04_foe_held_items_sensible_expected_fail`, `09_graphics_palettes`, `10_misc_tweaks` and `11_special_wild`.
+- Recommended next block: isolate one unexpected-pass profile at a time, starting with Trainer Held Items Sensible or Graphics/Palettes visual smoke.
+- Special-Wild/Day-Night/Swarms remain a separate scope despite the clean CLI profile log smoke.
+- Continue excluding ROM paths, hashes, full logs, output paths, screenshots, saves, emulator states, private paths, secrets, tokens and `.env` data.
+- No P1 promotion follows from this matrix run.
+
 # Next steps update - Settings profile generator sync
 
 - Treat UPR-FVX PR #98 as synced into the workspace pin at `81fa4cf35af48bce19996e4581f1e4a688ebfa3b`.

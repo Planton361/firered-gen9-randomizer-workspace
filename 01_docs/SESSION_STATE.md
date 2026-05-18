@@ -1,3 +1,15 @@
+# Session update - Generated CLI profile matrix results
+
+- New branch: `randomizer/sync-cli-profile-matrix-results`.
+- Added `08_tests/randomizer/197_cli_profile_matrix_generated_run.md`.
+- Sanitized local generated `.rnqs` CLI profile matrix result: 14 profiles processed.
+- All profiles produced CLI log smoke pass or unexpected pass.
+- Bad markers were 0 for all profiles; warnings were 0 for all profiles.
+- Unexpected passes: `04_foe_held_items_sensible_expected_fail`, `09_graphics_palettes`, `10_misc_tweaks` and `11_special_wild`.
+- Updated `08_tests/randomizer/fvx_feature_test_status_matrix.tsv`: expected-pass profile rows are raised to log-pass where appropriate, and unexpected-pass profile rows remain `PASS_LOG_WITH_CAVEAT`.
+- Updated the FVX progress dashboard snapshot and package/status summaries without shortening the full feature list.
+- Scope boundary: no ROM paths, hashes, full logs, output paths, screenshots, saves, emulator states, secrets, tokens or `.env` data were documented. No UPR-FVX/CFRU/DPE code change and no P1 promotion were made.
+
 # Session update - Settings profile generator sync
 
 - New branch: `randomizer/sync-settings-profile-generator`.

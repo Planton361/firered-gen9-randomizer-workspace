@@ -1,5 +1,13 @@
 # Current update
 
+- `197_cli_profile_matrix_generated_run.md` records the sanitized generated `.rnqs` CLI profile matrix result.
+- 14 profiles were processed; every profile produced CLI log smoke pass or unexpected pass.
+- Bad markers and warnings were 0 for all profiles.
+- Unexpected passes are now caveated instead of treated as stable: Sensible Trainer Held Items, Graphics/Palettes, Misc Tweaks and Special-Wild.
+- `fvx_feature_test_status_matrix.tsv` is updated to reflect log-pass evidence while keeping ingame/manual smoke requirements and no P1 promotion.
+
+# Current update
+
 - `196_settings_profile_generator_sync.md` documents the synced UPR-FVX Settings Profile Generator from PR #98.
 - `generate_settings_profiles_from_matrix.sh` derives `.rnqs` files from a local base settings file and the profile matrix manifest by calling `UPR-FVX.jar settings-profile`.
 - The generator path is No-ROM only: it accepts no ROM argument, runs no randomization and creates no output ROM.

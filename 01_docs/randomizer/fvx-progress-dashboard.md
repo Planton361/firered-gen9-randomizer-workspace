@@ -33,14 +33,15 @@ Markdown bleibt Source of Truth.
 
 | Feld | Aktueller Stand |
 |---|---|
-| Stand | Nach Workspace PR #264 / UPR-FVX PR #97 |
-| UPR-FVX-Pin im Workspace | `51d52a03235664154549105003dadfb45c76d0d0` |
+| Stand | Nach Workspace PR #270 / UPR-FVX PR #98 und generated CLI profile matrix run |
+| UPR-FVX-Pin im Workspace | `81fa4cf35af48bce19996e4581f1e4a688ebfa3b` |
 | Breites GUI-Profil | GUI Working Settings Matrix passed: Wild Standard/Fallback, Trainer Pokemon core, Pokemon Movesets Random completely, Trainer Movesets, Trainer Names, Field Items basic, Abilities, TM/HM, Tutors, Shops, Pickup, In-Game Trades, Static Pokemon, Type Effectiveness, Base Stats und Move Data |
+| CLI Profile Matrix | Generated `.rnqs` profile matrix log-smoke passed for 14 profiles; bad markers 0 and warnings 0 for all profiles |
 | Stable Visual Profile | Passed im kurzen lokalen Smoke; Trainer Class Names, Evolution Randomization und Special-Wild bleiben OFF |
-| Zuletzt entblockt | Starter Pokemon / Oak-Lab Rival Sync passed: Oak-Lab Rival nutzt den randomisierten Counter-Slot |
-| Aktuelle Caveats | Trainer Class Names bleibt textlabel-only; Special-Wild/Day-Night/Swarms bleiben out-of-scope; `Rival Carries Starter Through Game` bleibt ungetestet |
+| Zuletzt entblockt | Generated settings profiles and CLI matrix log-smoke path passed; previous expected-fail profiles now caveated unexpected passes |
+| Aktuelle Caveats | Trainer Class Names bleibt textlabel-only; Graphics/Palettes und Misc Tweaks brauchen Ingame-/Manual-Smokes; Special-Wild/Day-Night/Swarms bleiben separater Scope; `Rival Carries Starter Through Game` bleibt ungetestet |
 | Keine P1-Promotion | Aktuelle Updates sind Workspace-/Smoke-Status, keine neue P1-Freigabe |
-| Naechster sinnvoller Block | Stable Visual Profile + Starter Pokemon laenger samplen oder `Rival Carries Starter Through Game` separat isolieren |
+| Naechster sinnvoller Block | Unexpected-Pass-Profile gezielt isolieren: Trainer Held Items Sensible, Graphics/Palettes, Misc Tweaks und Special-Wild |
 
 ## Statusmodell
 
@@ -80,41 +81,41 @@ Markdown bleibt Source of Truth.
 
 | Paket | Leitstatus | Stabil belegt | Carrier-tested | Blocker / Luecke | Naechster Schritt | Belege |
 |---|---|---|---|---|---|---|
-| General Options | Gemischt | - | Limit Pokemon, No Premature Evolutions im Starter-Carrier | Race Mode, Intro Mon offen; nicht Teil des Stable Visual Profile | separater General-Smoke | 064 |
-| Pokemon Traits | Working-matrix passed fuer Kernteile | Base Stats, Species Types, Abilities; Evolutions unchanged preserved | Evolution Similar Strength und Same Typing diagnosis-ready; `017/020-023`, `024/027`, `025A` tested-non-rom; `026` helper-only | Evolution Randomization/Methoden-Slices bleiben separat; Base-Stats-Log kann Ability-Namen kuerzen, ingame OK | Evolution-Randomization isolieren oder Stable-Profil laenger samplen | 189, 190, 191 |
-| Starters, Statics & Trades | Working-matrix passed / Starter Sync passed | Starter Pokemon Random completely + Oak-Lab Rival Counter-Sync; Static Pokemon; In-Game Trades ohne `NEW GIVEN = ?` | Starter-Filter | Starter Held Items offen; `Rival Carries Starter Through Game` ungetestet; Static null placeholders bleiben null | Stable Visual Profile + Starter Pokemon samplen; Full-Rival-Carry separat | 190, 192 |
-| Moves & Movesets | Working-matrix passed | Pokemon Movesets, Trainer Movesets, Move Data Power/Accuracy/PP/Type/Names | einige Filter-/Sanity-Optionen | Update Moves / Text-Encoding-Detailpfade nicht global P1-promoted | laengeres Stable-Profil-Sampling | 190, 191 |
-| Foe Pokemon / Trainer | Working-matrix passed mit Caveat | Trainer Pokemon core, Trainer Movesets, Trainer Names | Similar Strength im Trainer-Carrier; Additional Pokemon, Type Diversity / Type Themes, Special Rules, Battle Style tested-non-rom | Trainer Class Names textlabel-only; Sprite/Class-ID mismatch erwartbar; `Rival Carries Starter Through Game` ungetestet | Trainer Class Names OFF lassen oder Class Assignment separat planen | 190, 191 |
-| Wild Pokemon | Working-matrix passed | Standard/Fallback Wild, normale Encounter-Smokes | Similar Strength, Type Restrictions im Wild-Carrier; Catch Rate, Catch Em All und Level Modifier tested-non-rom | Special-Wild/Day-Night/Swarms out-of-scope | Special-Wild nur separater Scope | 190, 191 |
-| TM/HMs & Tutors | Working-matrix passed, Suboptionen offen | TM Moves, TM/HM Compatibility, Move Tutor Moves, Tutor Compatibility | Filter-/Follow-Suboptionen teilweise Carrier | Special Tutors/Text/Menu out of scope; Required-TM-Zwang bei Field Items separat | normale Suboptionen spaeter testen | 190 |
-| Items | Working-matrix passed mit Caveats | Field Items basic, Pickup Items, Shop Items | - | Required-TM-Field-Item-Zwang kann bei expanded TMs blockieren; supported/special shops bestaetigt | Basic Field Items verwenden; Sonderoptionen separat | 190, 191 |
-| Types | Working-matrix passed / optional chaos | TypeEffectiveness Random/Balanced/Inverse/Update/Add Immunities | - | stark gameplayveraendernd, fuer normale Runs optional | Statuspflege/Regression | 190 |
-| Graphics | Write modelliert / P2 gemischt | Palette Safety / unchanged; keine Missing-Sprite-Blocker im Stable Smoke beobachtet | - | echte Palette Randomization, Custom Player Graphics | Palette Fix spaeter | 058, 191 |
-| Misc Tweaks | Nicht begonnen | - | - | alle Misc Tweaks offen | Misc-Inventar | offen |
+| General Options | Gemischt / generated matrix caveat | - | Limit Pokemon, No Premature Evolutions im Starter-Carrier | Race Mode und Intro Mon bleiben nicht einzeln freigegeben; generated matrix ohne Bad Marker | separater General-Smoke | 064, 197 |
+| Pokemon Traits | Working-matrix passed / generated CLI profile passed | Base Stats, Species Types, Abilities; Evolutions unchanged preserved | Evolution subsettings log-smoked in generated matrix with caveats | Evolution Randomization/Methoden-Slices brauchen weiter Ingame-/Methoden-Smoke; Base-Stats-Log kann Ability-Namen kuerzen, ingame OK | Evolution-Randomization isolieren oder Stable-Profil laenger samplen | 189, 190, 191, 197 |
+| Starters, Statics & Trades | Working-matrix passed / Starter Sync passed / generated CLI profile passed | Starter Pokemon Random completely + Oak-Lab Rival Counter-Sync; Static Pokemon; In-Game Trades ohne `NEW GIVEN = ?` | Starter-Filter und Starter Held Items im generated matrix log-smoke | `Rival Carries Starter Through Game` ungetestet; Static null placeholders bleiben null | Stable Visual Profile + Starter Pokemon samplen; Full-Rival-Carry separat | 190, 192, 197 |
+| Moves & Movesets | Working-matrix passed / generated CLI profile passed | Pokemon Movesets, Trainer Movesets, Move Data Power/Accuracy/PP/Type/Names | Filter-/Sanity-Optionen im generated matrix log-smoke | Update Moves bleibt fuer CFRU/DPE Gen9-Basis out-of-scope; Text-Encoding-Detailpfade nicht global P1-promoted | laengeres Stable-Profil-Sampling | 190, 191, 197 |
+| Foe Pokemon / Trainer | Working-matrix passed mit Caveat / generated CLI profile passed | Trainer Pokemon core, Trainer Movesets, Trainer Names | Additional Pokemon, Type Diversity / Type Themes, Battle Style und Trainer Held Items log-smoked in generated matrix | Trainer Class Names textlabel-only; Sprite/Class-ID mismatch erwartbar; Sensible Held Items braucht fokussierte Isolation; `Rival Carries Starter Through Game` ungetestet | Trainer Class Names OFF lassen oder Class Assignment separat planen; Sensible Items isolieren | 190, 191, 197 |
+| Wild Pokemon | Working-matrix passed / generated CLI profile passed | Standard/Fallback Wild, normale Encounter-Smokes | Similar Strength, Type Restrictions, Catch Rate, Catch Em All und Level Modifier log-smoked in generated matrix | Special-Wild/Day-Night/Swarms bleiben separater Scope trotz clean CLI profile | Special-Wild nur separater Scope | 190, 191, 197 |
+| TM/HMs & Tutors | Working-matrix passed / generated CLI profile passed | TM Moves, TM/HM Compatibility, Move Tutor Moves, Tutor Compatibility | Filter-/Follow-Suboptionen log-smoked in generated matrix | Special Tutors/Text/Menu out of scope; Required-TM-Zwang bei Field Items separat | Ingame-Smoke fuer Suboptionen spaeter | 190, 197 |
+| Items | Working-matrix passed mit Caveats / generated CLI profile passed | Field Items basic, Pickup Items, Shop Items | - | Required-TM-Field-Item-Zwang kann bei expanded TMs blockieren; supported/special shops bestaetigt | Basic Field Items verwenden; Sonderoptionen separat | 190, 191, 197 |
+| Types | Working-matrix passed / generated CLI profile passed / optional chaos | TypeEffectiveness Random/Balanced/Inverse/Update/Add Immunities | - | stark gameplayveraendernd, fuer normale Runs optional | Statuspflege/Regression | 190, 197 |
+| Graphics | Generated CLI profile passed mit Caveat / P2 gemischt | Palette Randomization log-smoked ohne Bad Marker | - | Ingame visual smoke fuer Palettes fehlt; Custom Player Graphics bleibt P2/out-of-scope | Palette-Visual-Smoke oder Fix spaeter | 058, 191, 197 |
+| Misc Tweaks | Generated CLI profile passed mit Caveat | Misc Tweaks log-smoked ohne Bad Marker | - | behavior-spezifische Ingame-/Manual-Smokes fehlen | Misc-Inventar und fokussierte Smokes | 197 |
 
 ## GUI-Feature-Gruppen
 
 | GUI-Gruppe | Hauptstatus | Was funktioniert? | Was ist nur Carrier-tested? | Offen / blockiert | Naechster Schritt |
 |---|---|---|---|---|---|
-| General Options | Teilweise getestet | - | Limit Pokemon, No Premature Evolutions | Race Mode, Intro Mon; nicht im Stable Visual Profile | General-Smoke spaeter |
-| Pokemon Base Stats | Working-matrix passed | Random/Shuffle Base Stats | Follow Evolutions nur geplant | EXP Curves, Gen Update offen; Log-Ability-Namen koennen kuerzen | Suboptionen spaeter |
-| Pokemon Types | Working-matrix passed fuer Species Types | Type Read/Write | Force Dual Types geplant | TypeChart separat, inzwischen getestet | keine enge Luecke |
-| Pokemon Abilities | Working-matrix passed | Ability1/2 + Hidden Ability | Ban-/Filter-Suboptionen geplant | - | Suboption-Smoke spaeter |
-| Evolutions | Unchanged preserved, Randomization separat | Evolutions unchanged preserved nach Row-Stride-Fix | Similar Strength und Same Typing diagnosis-ready; `017/020-023`, `024/027`, `025A` tested-non-rom; `026` helper-only | Evolution Randomization im Stable-Profil OFF | separater Evolution-Smoke |
-| Starters | Starter/Rival sync passed | Starter Random completely; Oak-Lab Rival Counter-Slot | Basic/Type/BST/Legendary Filter | Starter Held Items; `Rival Carries Starter Through Game` ungetestet | Stable Visual Profile + Starters samplen |
+| General Options | Teilweise getestet / generated matrix caveat | - | Limit Pokemon, No Premature Evolutions | Race Mode, Intro Mon bleiben nicht einzeln freigegeben | General-Smoke spaeter |
+| Pokemon Base Stats | Working-matrix passed / generated matrix passed | Random/Shuffle Base Stats | Follow Evolutions, EXP Curves und Gen Update log-smoked | Log-Ability-Namen koennen kuerzen; Ingame-Smoke fuer Suboptionen fehlt | Suboptionen spaeter |
+| Pokemon Types | Working-matrix passed / generated matrix passed | Type Read/Write | Force Dual Types log-smoked | TypeChart separat, inzwischen getestet | Ingame-Smoke fuer Suboptionen spaeter |
+| Pokemon Abilities | Working-matrix passed / generated matrix passed | Ability1/2 + Hidden Ability | Ban-/Filter-Suboptionen log-smoked | Ingame-Smoke fuer Suboptionen fehlt | Suboption-Smoke spaeter |
+| Evolutions | Unchanged preserved / generated matrix passed mit Caveats | Evolutions unchanged preserved nach Row-Stride-Fix | Evolution-Randomization und Subsettings log-smoked | Evolution Randomization im Stable-Profil OFF; Methoden-/Ingame-Smoke fehlt | separater Evolution-Smoke |
+| Starters | Starter/Rival sync passed / generated matrix passed | Starter Random completely; Oak-Lab Rival Counter-Slot | Basic/Type/BST/Legendary Filter und Starter Held Items log-smoked | `Rival Carries Starter Through Game` ungetestet | Stable Visual Profile + Starters samplen |
 | Static/Gift | Working-matrix passed mit Caveat | Static/Gift Species | Similar Strength im Scope | null placeholders bleiben null; Level Modifier/Fix Music offen | spaeter |
 | In-Game Trades | Working-matrix passed | Species writes im CFRU/DPE Extended-BPRE-Pfad; kein `NEW GIVEN = ?` | - | Text/Nickname/OT/IV/Item nicht gesondert freigegeben | Detailpfade nur separat |
-| Trainer | Working-matrix passed mit Caveat | Species, Movesets, Trainer Names | Similar Strength; Additional Pokemon, Type Diversity / Type Themes, Trainer Special Rules, Battle Style tested-non-rom | Trainer Class Names textlabel-only; Sprite/Class-ID mismatch erwartbar | Trainer Class Names fuer Stable-Visual OFF lassen |
-| Wild | Working-matrix passed | Standard/Fallback Wild | Similar Strength, Type Restrictions; Catch Rate, Catch Em All, Level Modifier tested-non-rom | Special-Wild/Day-Night/Swarms out-of-scope | separater Special-Wild-Scope falls freigegeben |
+| Trainer | Working-matrix passed mit Caveat / generated matrix passed | Species, Movesets, Trainer Names | Additional Pokemon, Type Diversity / Type Themes, Special Rules, Battle Style log-smoked | Trainer Class Names textlabel-only; Sensible Held Items braucht fokussierte Isolation | Trainer Class Names fuer Stable-Visual OFF lassen; Sensible Items isolieren |
+| Wild | Working-matrix passed / generated matrix passed | Standard/Fallback Wild | Similar Strength, Type Restrictions, Catch Rate, Catch Em All, Level Modifier log-smoked | Special-Wild/Day-Night/Swarms separater Scope trotz clean CLI profile | separater Special-Wild-Scope falls freigegeben |
 | Movesets | Working-matrix passed | Learnsets/Movesets/Reorder/Sanity | Filter-Suboptionen | - | Regression spaeter |
 | MoveData | Working-matrix passed | Power/Accuracy/PP/Type/Names im GUI-Smoke | - | Update Moves / Text-Encoding-Details nicht global P1-promoted | optionaler Reload-Scope nur separat |
-| TM/HM | Working-matrix passed, Suboptionen offen | TM moves + compatibility | Field/Filter/Follow-Suboptionen | Required-TM-Zwang mit expanded TMs separat | spaeter |
-| Tutors | Working-matrix passed normal, P2 Special | normal tutor moves + compatibility | filter/follow-suboptions | Special Tutors/Text/Menu | P2 |
+| TM/HM | Working-matrix passed / generated matrix passed | TM moves + compatibility | Field/Filter/Follow-Suboptionen log-smoked | Required-TM-Zwang mit expanded TMs separat | spaeter |
+| Tutors | Working-matrix passed normal / generated matrix passed | normal tutor moves + compatibility | filter/follow-suboptions log-smoked | Special Tutors/Text/Menu | P2 |
 | Items | Working-matrix passed mit Caveats | Field Items basic, Pickup Items, Shop Items | - | Field Items Required-TM-Zwang; supported/special shops bestaetigt | Basic Field Items verwenden |
 | TypeEffectiveness | Working-matrix passed / optional chaos | Random/Balanced/Inverse/Update/Add Immunities | - | stark gameplayveraendernd | Statuspflege |
-| Palettes | Write modelliert | unchanged/safety path | - | echte Palette Randomization | Palette Fix |
+| Palettes | Generated CLI profile passed mit Caveat | Palette Randomization log-smoked | - | Ingame visual smoke fehlt | Palette Visual Smoke / Fix |
 | Graphics/Sprites | P2 / Nicht begonnen | - | - | Custom Player Graphics, Sprites | P2 |
-| Misc Tweaks | Nicht begonnen | - | - | 12 Tweaks offen | Inventar |
+| Misc Tweaks | Generated CLI profile passed mit Caveat | 12 Tweaks log-smoked | - | behavior-spezifische Ingame-/Manual-Smokes fehlen | Inventar und fokussierte Smokes |
 
 ## Vollstaendige Feature-Liste
 
@@ -127,48 +128,48 @@ Diese Tabelle listet alle aktuell erfassten FVX-Features einmal kompakt auf. Sie
 | 3 | `FVX-GEN-003` | General Options | No Random Intro Mon | Nicht begonnen | No-write / P2 offen |
 | 4 | `FVX-GEN-004` | General Options | Race Mode | Nicht begonnen | No-write |
 | 5 | `FVX-TRAIT-001` | Pokemon Traits | Base Stats: Shuffle / Random | Working-matrix passed | Stable Visual Profile / Log-caveat |
-| 6 | `FVX-TRAIT-002` | Pokemon Traits | Base Stats: Follow Evolutions | Plan erstellt | Carrier / Filter |
-| 7 | `FVX-TRAIT-003` | Pokemon Traits | Randomize Added Stats on Evolution | Plan erstellt | Carrier / Filter |
-| 8 | `FVX-TRAIT-004` | Pokemon Traits | Update Base Stats to Generation | Nicht begonnen | Writer |
-| 9 | `FVX-TRAIT-005` | Pokemon Traits | Standardize EXP Curves | Nicht begonnen | Writer |
+| 6 | `FVX-TRAIT-002` | Pokemon Traits | Base Stats: Follow Evolutions | Generated CLI profile passed | Log-smoke / Ingame follow-up needed |
+| 7 | `FVX-TRAIT-003` | Pokemon Traits | Randomize Added Stats on Evolution | Generated CLI profile passed | Log-smoke / Ingame follow-up needed |
+| 8 | `FVX-TRAIT-004` | Pokemon Traits | Update Base Stats to Generation | Generated CLI profile passed | Log-smoke / Ingame follow-up needed |
+| 9 | `FVX-TRAIT-005` | Pokemon Traits | Standardize EXP Curves | Generated CLI profile passed | Log-smoke / Ingame follow-up needed |
 | 10 | `FVX-TRAIT-006` | Pokemon Traits | Pokemon Types randomisieren | Working-matrix passed | Stable Visual Profile |
-| 11 | `FVX-TRAIT-007` | Pokemon Traits | Force Dual Types | Plan erstellt | Carrier / Filter |
+| 11 | `FVX-TRAIT-007` | Pokemon Traits | Force Dual Types | Generated CLI profile passed | Log-smoke / Ingame follow-up needed |
 | 12 | `FVX-TRAIT-008` | Pokemon Traits | Pokemon Abilities randomisieren | Working-matrix passed | Stable Visual Profile |
-| 13 | `FVX-TRAIT-009` | Pokemon Traits | Abilities: Follow Evolutions | Plan erstellt | Carrier / Filter |
-| 14 | `FVX-TRAIT-010` | Pokemon Traits | Abilities: Allow Wonder Guard | Plan erstellt | Filter |
-| 15 | `FVX-TRAIT-011` | Pokemon Traits | Abilities: Combine Duplicate Abilities | Plan erstellt | Filter |
-| 16 | `FVX-TRAIT-012` | Pokemon Traits | Abilities: Ensure Two Abilities | Plan erstellt | Filter |
-| 17 | `FVX-TRAIT-013` | Pokemon Traits | Abilities: Ban Trapping Abilities | Plan erstellt | Filter |
-| 18 | `FVX-TRAIT-014` | Pokemon Traits | Abilities: Ban Negative Abilities | Plan erstellt | Filter |
-| 19 | `FVX-TRAIT-015` | Pokemon Traits | Abilities: Ban Bad Abilities | Plan erstellt | Filter |
+| 13 | `FVX-TRAIT-009` | Pokemon Traits | Abilities: Follow Evolutions | Generated CLI profile passed | Log-smoke / Ingame follow-up needed |
+| 14 | `FVX-TRAIT-010` | Pokemon Traits | Abilities: Allow Wonder Guard | Generated CLI profile passed | Log-smoke / Ingame follow-up needed |
+| 15 | `FVX-TRAIT-011` | Pokemon Traits | Abilities: Combine Duplicate Abilities | Generated CLI profile passed | Log-smoke / Ingame follow-up needed |
+| 16 | `FVX-TRAIT-012` | Pokemon Traits | Abilities: Ensure Two Abilities | Generated CLI profile passed | Log-smoke / Ingame follow-up needed |
+| 17 | `FVX-TRAIT-013` | Pokemon Traits | Abilities: Ban Trapping Abilities | Generated CLI profile passed | Log-smoke / Ingame follow-up needed |
+| 18 | `FVX-TRAIT-014` | Pokemon Traits | Abilities: Ban Negative Abilities | Generated CLI profile passed | Log-smoke / Ingame follow-up needed |
+| 19 | `FVX-TRAIT-015` | Pokemon Traits | Abilities: Ban Bad Abilities | Generated CLI profile passed | Log-smoke / Ingame follow-up needed |
 | 20 | `FVX-TRAIT-016` | Pokemon Traits | Pokemon Evolutions randomisieren | Unchanged preserved; randomization separat | Evolution row-stride fixed / no P1 promotion |
-| 21 | `FVX-TRAIT-017` | Pokemon Traits | Evolutions: Random Every Level | tested-non-rom | Evolution-Species-Carrier / Filter |
-| 22 | `FVX-TRAIT-018` | Pokemon Traits | Evolutions: Similar Strength | Diagnosis-ready | Evolution-Species-Carrier |
-| 23 | `FVX-TRAIT-019` | Pokemon Traits | Evolutions: Same Typing | Diagnosis-ready | Evolution-Species-Carrier |
-| 24 | `FVX-TRAIT-020` | Pokemon Traits | Evolutions: Limit to Three Stages | tested-non-rom | Evolution-Species-Carrier / Graph filter |
-| 25 | `FVX-TRAIT-021` | Pokemon Traits | Evolutions: No Convergence | tested-non-rom | Evolution-Species-Carrier / Graph filter |
-| 26 | `FVX-TRAIT-022` | Pokemon Traits | Evolutions: Force Change | tested-non-rom | Evolution-Species-Carrier / Target filter |
-| 27 | `FVX-TRAIT-023` | Pokemon Traits | Evolutions: Force Growth | tested-non-rom | Evolution-Species-Carrier / BST filter |
-| 28 | `FVX-TRAIT-024` | Pokemon Traits | Change Impossible Evolutions | tested-non-rom | Evolution improvement / Methoden |
-| 29 | `FVX-TRAIT-025` | Pokemon Traits | Make Evolutions Easier | 025A tested-non-rom; 025B offen | 025A Condense-Level; 025B Happiness-Byte-Patch |
-| 30 | `FVX-TRAIT-026` | Pokemon Traits | Use Estimated Evolution Levels | helper-flag / no standalone support claim | Helper for 024/025 |
-| 31 | `FVX-TRAIT-027` | Pokemon Traits | Remove Time-Based Evolutions | tested-non-rom | Evolution improvement / Time methods |
-| 32 | `FVX-TRAIT-028` | Pokemon Traits | EXP-/Legendary-Kurven-Sonderfaelle | Nicht begonnen | Writer / Filter |
+| 21 | `FVX-TRAIT-017` | Pokemon Traits | Evolutions: Random Every Level | Generated CLI profile passed | Log-smoke / Ingame follow-up needed |
+| 22 | `FVX-TRAIT-018` | Pokemon Traits | Evolutions: Similar Strength | Generated CLI profile passed | Log-smoke / Ingame follow-up needed |
+| 23 | `FVX-TRAIT-019` | Pokemon Traits | Evolutions: Same Typing | Generated CLI profile passed | Log-smoke / Ingame follow-up needed |
+| 24 | `FVX-TRAIT-020` | Pokemon Traits | Evolutions: Limit to Three Stages | Generated CLI profile passed | Log-smoke / Ingame follow-up needed |
+| 25 | `FVX-TRAIT-021` | Pokemon Traits | Evolutions: No Convergence | Generated CLI profile passed | Log-smoke / Ingame follow-up needed |
+| 26 | `FVX-TRAIT-022` | Pokemon Traits | Evolutions: Force Change | Generated CLI profile passed | Log-smoke / Ingame follow-up needed |
+| 27 | `FVX-TRAIT-023` | Pokemon Traits | Evolutions: Force Growth | Generated CLI profile passed | Log-smoke / Ingame follow-up needed |
+| 28 | `FVX-TRAIT-024` | Pokemon Traits | Change Impossible Evolutions | Generated CLI profile passed | Log-smoke / Ingame follow-up needed |
+| 29 | `FVX-TRAIT-025` | Pokemon Traits | Make Evolutions Easier | Generated CLI profile passed | Log-smoke / Ingame follow-up needed |
+| 30 | `FVX-TRAIT-026` | Pokemon Traits | Use Estimated Evolution Levels | Generated CLI profile passed | Log-smoke / Ingame follow-up needed |
+| 31 | `FVX-TRAIT-027` | Pokemon Traits | Remove Time-Based Evolutions | Generated CLI profile passed | Log-smoke / Ingame follow-up needed |
+| 32 | `FVX-TRAIT-028` | Pokemon Traits | EXP-/Legendary-Kurven-Sonderfaelle | Generated CLI profile passed | Log-smoke / Ingame follow-up needed |
 | 33 | `FVX-SST-001` | Starters, Statics & Trades | Starter Pokemon: Custom | P1-supported | Global |
 | 34 | `FVX-SST-002` | Starters, Statics & Trades | Starter Pokemon: Random completely | Starter/Rival sync passed | Oak-Lab counter-slot / Stable optional |
 | 35 | `FVX-SST-003` | Starters, Statics & Trades | Starter Pokemon: Random basic with 2 evolutions | Getestet im Carrier | Carrier |
 | 36 | `FVX-SST-004` | Starters, Statics & Trades | Starter Pokemon: Random any basic | Getestet im Carrier | Carrier |
 | 37 | `FVX-SST-005` | Starters, Statics & Trades | Starter Type Restrictions | Getestet im Carrier | Carrier |
 | 38 | `FVX-SST-006` | Starters, Statics & Trades | Starter: Don't Use Legendaries | Getestet im Carrier | Carrier |
-| 39 | `FVX-SST-007` | Starters, Statics & Trades | Starter Held Items randomisieren | Nicht begonnen | Writer |
-| 40 | `FVX-SST-008` | Starters, Statics & Trades | Starter Held Items: Ban Bad Items | Nicht begonnen | Writer / Filter |
+| 39 | `FVX-SST-007` | Starters, Statics & Trades | Starter Held Items randomisieren | Generated CLI profile passed | Log-smoke / Ingame follow-up needed |
+| 40 | `FVX-SST-008` | Starters, Statics & Trades | Starter Held Items: Ban Bad Items | Generated CLI profile passed | Log-smoke / Ingame follow-up needed |
 | 41 | `FVX-SST-009` | Starters, Statics & Trades | Starter BST-Min/Max | Getestet im Carrier | Carrier |
 | 42 | `FVX-SST-010` | Starters, Statics & Trades | Static Pokemon: Swap Legendaries & Standards | P1-supported | Global |
 | 43 | `FVX-SST-011` | Starters, Statics & Trades | Static Pokemon: Random completely | P1-supported | Global |
 | 44 | `FVX-SST-012` | Starters, Statics & Trades | Static Pokemon: Random similar strength | P1-supported | Global |
-| 45 | `FVX-SST-013` | Starters, Statics & Trades | Static Pokemon: Level Modifier / Fix Music | Nicht begonnen | Writer |
+| 45 | `FVX-SST-013` | Starters, Statics & Trades | Static Pokemon: Level Modifier / Fix Music | Generated CLI profile passed | Log-smoke / Ingame follow-up needed |
 | 46 | `FVX-SST-014` | Starters, Statics & Trades | In-Game Trades: Given/Requested species | Working-matrix passed | CFRU/DPE Extended-BPRE Species identity |
-| 47 | `FVX-SST-015` | Starters, Statics & Trades | In-Game Trades: Nickname/OT/IV/Item | Offen / nicht gesondert freigegeben | Writer / Text |
+| 47 | `FVX-SST-015` | Starters, Statics & Trades | In-Game Trades: Nickname/OT/IV/Item | Generated CLI profile passed | Log-smoke / Ingame follow-up needed |
 | 48 | `FVX-MOVE-001` | Moves & Movesets | Randomize Move Power | Working-matrix passed | Stable Visual Profile |
 | 49 | `FVX-MOVE-002` | Moves & Movesets | Randomize Move Accuracy | Working-matrix passed | Stable Visual Profile |
 | 50 | `FVX-MOVE-003` | Moves & Movesets | Randomize Move PP | Working-matrix passed | Stable Visual Profile |
@@ -184,43 +185,43 @@ Diese Tabelle listet alle aktuell erfassten FVX-Features einmal kompakt auf. Sie
 | 60 | `FVX-FOE-002` | Foe Pokemon | Better Movesets: Boss Trainers | Stable-profile passed | Stable Visual Profile |
 | 61 | `FVX-FOE-003` | Foe Pokemon | Better Movesets: Important Trainers | Stable-profile passed | Stable Visual Profile |
 | 62 | `FVX-FOE-004` | Foe Pokemon | Better Movesets: Regular Trainers | Stable-profile passed | Stable Visual Profile |
-| 63 | `FVX-FOE-005` | Foe Pokemon | Additional Pokemon: Boss Trainers | tested-non-rom | Writer / Mutation |
-| 64 | `FVX-FOE-006` | Foe Pokemon | Additional Pokemon: Important Trainers | tested-non-rom | Writer / Mutation |
-| 65 | `FVX-FOE-007` | Foe Pokemon | Additional Pokemon: Regular Trainers | tested-non-rom | Writer / Mutation |
-| 66 | `FVX-FOE-008` | Foe Pokemon | Trainer Held Items | P1-supported | Global |
-| 67 | `FVX-FOE-009` | Foe Pokemon | Force Diverse Types / Type Themes | tested-non-rom | Carrier / Filter |
-| 68 | `FVX-FOE-010` | Foe Pokemon | Pokemon League Has Unique Pokemon | tested-non-rom | Filter |
-| 69 | `FVX-FOE-011` | Foe Pokemon | Battle Style randomisieren | tested-non-rom | Decision / Writer-risk |
+| 63 | `FVX-FOE-005` | Foe Pokemon | Additional Pokemon: Boss Trainers | Generated CLI profile passed | Log-smoke / Ingame follow-up needed |
+| 64 | `FVX-FOE-006` | Foe Pokemon | Additional Pokemon: Important Trainers | Generated CLI profile passed | Log-smoke / Ingame follow-up needed |
+| 65 | `FVX-FOE-007` | Foe Pokemon | Additional Pokemon: Regular Trainers | Generated CLI profile passed | Log-smoke / Ingame follow-up needed |
+| 66 | `FVX-FOE-008` | Foe Pokemon | Trainer Held Items | Generated CLI profile passed with caveat | Held Items / Sensible caveat |
+| 67 | `FVX-FOE-009` | Foe Pokemon | Force Diverse Types / Type Themes | Generated CLI profile passed | Log-smoke / Ingame follow-up needed |
+| 68 | `FVX-FOE-010` | Foe Pokemon | Pokemon League Has Unique Pokemon | Generated CLI profile passed | Log-smoke / Ingame follow-up needed |
+| 69 | `FVX-FOE-011` | Foe Pokemon | Battle Style randomisieren | Generated CLI profile passed | Log-smoke / Ingame follow-up needed |
 | 70 | `FVX-FOE-012` | Foe Pokemon | Rival Carries Starter Through Game | Ungetestet im aktuellen GUI-Smoke | Full-rival path / separate from Oak-Lab sync |
 | 71 | `FVX-FOE-013` | Foe Pokemon | Randomize Trainer Names / Class Names | Trainer Names passed; Class Names textlabel-only caveat | Text / Stable-Visual Class Names OFF |
-| 72 | `FVX-FOE-014` | Foe Pokemon | Trainers Evolve Their Pokemon + Level Modifier | tested-non-rom | Writer |
+| 72 | `FVX-FOE-014` | Foe Pokemon | Trainers Evolve Their Pokemon + Level Modifier | Generated CLI profile passed | Log-smoke / Ingame follow-up needed |
 | 73 | `FVX-WILD-001` | Wild Pokemon | Randomize Wild Pokemon | Stable-profile passed | Standard/Fallback Wild |
 | 74 | `FVX-WILD-002` | Wild Pokemon | Replacements Per Species | P1-supported | Global |
 | 75 | `FVX-WILD-003` | Wild Pokemon | Split by Encounter Types | P1-supported | Global |
 | 76 | `FVX-WILD-004` | Wild Pokemon | Type Restrictions | Getestet im Carrier | Carrier |
 | 77 | `FVX-WILD-005` | Wild Pokemon | Evolution Restrictions | Plan erstellt | Filter |
 | 78 | `FVX-WILD-006` | Wild Pokemon | Don't Use Legendaries | P1-supported | Global |
-| 79 | `FVX-WILD-007` | Wild Pokemon | Set Minimum Catch Rate | tested-non-rom | Writer |
+| 79 | `FVX-WILD-007` | Wild Pokemon | Set Minimum Catch Rate | Generated CLI profile passed | Log-smoke / Ingame follow-up needed |
 | 80 | `FVX-WILD-008` | Wild Pokemon | Randomize Wild Held Items | Working-matrix passed | Stable Visual Profile if enabled |
 | 81 | `FVX-WILD-009` | Wild Pokemon | Ban Bad Held Items | Working-matrix passed | Stable Visual Profile if enabled |
-| 82 | `FVX-WILD-010` | Wild Pokemon | Catch Em All Mode | tested-non-rom | Filter / Writer |
+| 82 | `FVX-WILD-010` | Wild Pokemon | Catch Em All Mode | Generated CLI profile passed | Log-smoke / Ingame follow-up needed |
 | 83 | `FVX-WILD-011` | Wild Pokemon | Similar Strength | Getestet im Carrier | Carrier |
-| 84 | `FVX-WILD-012` | Wild Pokemon | Balance Low Level Encounters + Level Modifier | tested-non-rom | Writer |
+| 84 | `FVX-WILD-012` | Wild Pokemon | Balance Low Level Encounters + Level Modifier | Generated CLI profile passed | Log-smoke / Ingame follow-up needed |
 | 85 | `FVX-TM-001` | TM/HMs & Tutors | TM Moves randomisieren | Working-matrix passed | Stable Visual Profile |
-| 86 | `FVX-TM-002` | TM/HMs & Tutors | Keep Field Move TMs | Plan erstellt | Filter |
-| 87 | `FVX-TM-003` | TM/HMs & Tutors | TM No Game-Breaking Moves | Plan erstellt | Filter |
-| 88 | `FVX-TM-004` | TM/HMs & Tutors | TM Force % Good Damaging Moves | Plan erstellt | Filter |
+| 86 | `FVX-TM-002` | TM/HMs & Tutors | Keep Field Move TMs | Generated CLI profile passed | Log-smoke / Ingame follow-up needed |
+| 87 | `FVX-TM-003` | TM/HMs & Tutors | TM No Game-Breaking Moves | Generated CLI profile passed | Log-smoke / Ingame follow-up needed |
+| 88 | `FVX-TM-004` | TM/HMs & Tutors | TM Force % Good Damaging Moves | Generated CLI profile passed | Log-smoke / Ingame follow-up needed |
 | 89 | `FVX-TM-005` | TM/HMs & Tutors | TM/HM Compatibility randomisieren | Working-matrix passed | Stable Visual Profile |
 | 90 | `FVX-TM-006` | TM/HMs & Tutors | TM/Levelup Move Sanity | Working-matrix passed | Stable Visual Profile |
-| 91 | `FVX-TM-007` | TM/HMs & Tutors | TM Compatibility Follow Evolutions | Plan erstellt | Filter |
-| 92 | `FVX-TM-008` | TM/HMs & Tutors | Full HM Compatibility | Plan erstellt | Filter |
+| 91 | `FVX-TM-007` | TM/HMs & Tutors | TM Compatibility Follow Evolutions | Generated CLI profile passed | Log-smoke / Ingame follow-up needed |
+| 92 | `FVX-TM-008` | TM/HMs & Tutors | Full HM Compatibility | Generated CLI profile passed | Log-smoke / Ingame follow-up needed |
 | 93 | `FVX-TM-009` | TM/HMs & Tutors | Move Tutor Moves randomisieren | Working-matrix passed | Stable Visual Profile |
-| 94 | `FVX-TM-010` | TM/HMs & Tutors | Keep Field Move Tutors | Plan erstellt | Filter |
-| 95 | `FVX-TM-011` | TM/HMs & Tutors | Tutor No Game-Breaking Moves | Plan erstellt | Filter |
-| 96 | `FVX-TM-012` | TM/HMs & Tutors | Tutor Force % Good Damaging Moves | Plan erstellt | Filter |
+| 94 | `FVX-TM-010` | TM/HMs & Tutors | Keep Field Move Tutors | Generated CLI profile passed | Log-smoke / Ingame follow-up needed |
+| 95 | `FVX-TM-011` | TM/HMs & Tutors | Tutor No Game-Breaking Moves | Generated CLI profile passed | Log-smoke / Ingame follow-up needed |
+| 96 | `FVX-TM-012` | TM/HMs & Tutors | Tutor Force % Good Damaging Moves | Generated CLI profile passed | Log-smoke / Ingame follow-up needed |
 | 97 | `FVX-TM-013` | TM/HMs & Tutors | Tutor Compatibility randomisieren | Working-matrix passed | Stable Visual Profile |
 | 98 | `FVX-TM-014` | TM/HMs & Tutors | Tutor/Levelup Sanity | Working-matrix passed | Stable Visual Profile |
-| 99 | `FVX-TM-015` | TM/HMs & Tutors | Tutor Compatibility Follow Evolutions | Plan erstellt | Filter |
+| 99 | `FVX-TM-015` | TM/HMs & Tutors | Tutor Compatibility Follow Evolutions | Generated CLI profile passed | Log-smoke / Ingame follow-up needed |
 | 100 | `FVX-ITEM-001` | Items | Field Items Shuffle | Working-matrix passed | Field Items basic; Required-TM caveat |
 | 101 | `FVX-ITEM-002` | Items | Field Items Random | Working-matrix passed | Field Items basic; Required-TM caveat |
 | 102 | `FVX-ITEM-003` | Items | Field Items Random even distribution | Working-matrix passed | Field Items basic; Required-TM caveat |
@@ -234,24 +235,24 @@ Diese Tabelle listet alle aktuell erfassten FVX-Features einmal kompakt auf. Sie
 | 110 | `FVX-TYPE-001` | Types | Type Effectiveness Random/Balanced/Keep Identities/Inverse | Working-matrix passed / optional chaos | Writer |
 | 111 | `FVX-TYPE-002` | Types | Add Random Immunities | Getestet | Writer |
 | 112 | `FVX-TYPE-003` | Types | Update Type Effectiveness | Getestet | Writer |
-| 113 | `FVX-GFX-001` | Graphics | Pokemon Palettes Random | Write modelliert / Fix offen | Writer |
-| 114 | `FVX-GFX-002` | Graphics | Palettes: Follow Types | Write modelliert / Fix offen | Writer / Filter |
-| 115 | `FVX-GFX-003` | Graphics | Palettes: Follow Evolutions | Write modelliert / Fix offen | Writer / Filter |
-| 116 | `FVX-GFX-004` | Graphics | Palettes: Shiny From Normal | Write modelliert / Fix offen | Writer |
+| 113 | `FVX-GFX-001` | Graphics | Pokemon Palettes Random | Generated CLI profile passed with caveat | Palette visual smoke needed |
+| 114 | `FVX-GFX-002` | Graphics | Palettes: Follow Types | Generated CLI profile passed with caveat | Palette visual smoke needed |
+| 115 | `FVX-GFX-003` | Graphics | Palettes: Follow Evolutions | Generated CLI profile passed with caveat | Palette visual smoke needed |
+| 116 | `FVX-GFX-004` | Graphics | Palettes: Shiny From Normal | Generated CLI profile passed with caveat | Palette visual smoke needed |
 | 117 | `FVX-GFX-005` | Graphics | Custom Player Graphics | P2 / Nicht begonnen | P2 |
 | 118 | `FVX-GFX-006` | Graphics | Character to Replace | P2 / Nicht begonnen | P2 |
-| 119 | `FVX-MISC-001` | Misc Tweaks | Fastest Text | Nicht begonnen | Writer / Patch |
-| 120 | `FVX-MISC-002` | Misc Tweaks | Running Shoes Indoors | Nicht begonnen | Writer / Patch |
-| 121 | `FVX-MISC-003` | Misc Tweaks | Randomize PC Potion | Nicht begonnen | Writer / Patch |
-| 122 | `FVX-MISC-004` | Misc Tweaks | Give National Dex at Start | Nicht begonnen | Writer / Patch |
-| 123 | `FVX-MISC-005` | Misc Tweaks | Fast Egg Hatching | Nicht begonnen | Writer / Patch |
-| 124 | `FVX-MISC-006` | Misc Tweaks | Lower Case Pokemon Names | Nicht begonnen | Writer / Patch |
-| 125 | `FVX-MISC-007` | Misc Tweaks | Randomize Catching Tutorial | Nicht begonnen | Writer / Patch |
-| 126 | `FVX-MISC-008` | Misc Tweaks | Ban Lucky Egg | Nicht begonnen | Writer / Patch |
-| 127 | `FVX-MISC-009` | Misc Tweaks | Balance Static Pokemon Levels | Nicht begonnen | Writer / Patch |
-| 128 | `FVX-MISC-010` | Misc Tweaks | Run Without Running Shoes | Nicht begonnen | Writer / Patch |
-| 129 | `FVX-MISC-011` | Misc Tweaks | Reusable TMs | Nicht begonnen | Writer / Patch |
-| 130 | `FVX-MISC-012` | Misc Tweaks | Forgettable HMs | Nicht begonnen | Writer / Patch |
+| 119 | `FVX-MISC-001` | Misc Tweaks | Fastest Text | Generated CLI profile passed with caveat | Behavior-specific manual/ingame smoke |
+| 120 | `FVX-MISC-002` | Misc Tweaks | Running Shoes Indoors | Generated CLI profile passed with caveat | Behavior-specific manual/ingame smoke |
+| 121 | `FVX-MISC-003` | Misc Tweaks | Randomize PC Potion | Generated CLI profile passed with caveat | Behavior-specific manual/ingame smoke |
+| 122 | `FVX-MISC-004` | Misc Tweaks | Give National Dex at Start | Generated CLI profile passed with caveat | Behavior-specific manual/ingame smoke |
+| 123 | `FVX-MISC-005` | Misc Tweaks | Fast Egg Hatching | Generated CLI profile passed with caveat | Behavior-specific manual/ingame smoke |
+| 124 | `FVX-MISC-006` | Misc Tweaks | Lower Case Pokemon Names | Generated CLI profile passed with caveat | Behavior-specific manual/ingame smoke |
+| 125 | `FVX-MISC-007` | Misc Tweaks | Randomize Catching Tutorial | Generated CLI profile passed with caveat | Behavior-specific manual/ingame smoke |
+| 126 | `FVX-MISC-008` | Misc Tweaks | Ban Lucky Egg | Generated CLI profile passed with caveat | Behavior-specific manual/ingame smoke |
+| 127 | `FVX-MISC-009` | Misc Tweaks | Balance Static Pokemon Levels | Generated CLI profile passed with caveat | Behavior-specific manual/ingame smoke |
+| 128 | `FVX-MISC-010` | Misc Tweaks | Run Without Running Shoes | Generated CLI profile passed with caveat | Behavior-specific manual/ingame smoke |
+| 129 | `FVX-MISC-011` | Misc Tweaks | Reusable TMs | Generated CLI profile passed with caveat | Behavior-specific manual/ingame smoke |
+| 130 | `FVX-MISC-012` | Misc Tweaks | Forgettable HMs | Generated CLI profile passed with caveat | Behavior-specific manual/ingame smoke |
 
 ## In-Game-Trades Status nach Diagnose 164
 
@@ -294,15 +295,15 @@ Diese Tabelle listet alle aktuell erfassten FVX-Features einmal kompakt auf. Sie
 | P1 | Trainer Battle Style | tested-non-rom | `FVX-FOE-011` | Non-ROM `TrainerBattleStyleTest` vorhanden; keine ROM-/Reload-Evidenz und kein ROM-Smoke | P1-Promotion nur separat mit ROM-/Reload-Scope | 180 |
 | P1 | Trainer Names/Class Names | Trainer Names passed; Class Names textlabel-only caveat | `FVX-FOE-013` | Trainer Class Names aendert Textlabels; Sprite/Class-ID mismatch bleibt erwartbar | fuer Stable-Visual OFF lassen; echte Class Assignment waere neues Feature | 190 |
 | P1 | In-Game Trades Detailpfade | Species path passed; Textdetails offen | `FVX-SST-014`, `FVX-SST-015` | Species schreibt im CFRU/DPE Extended-BPRE-Pfad, aber Nickname/OT/IV/Item nicht gesondert freigegeben | Detailpfade nur separat | 190 |
-| P1 | Trainer Additional Pokemon | tested-non-rom | `FVX-FOE-005`, `FVX-FOE-006`, `FVX-FOE-007` | Non-ROM `TrainerAdditionalPokemonTest` vorhanden; keine ROM-/Reload-Evidenz und kein ROM-Smoke | P1-Promotion nur separat mit ROM-/Reload-Scope | 178 |
-| P1 | Wild Catch / Level | tested-non-rom | `FVX-WILD-007`, `FVX-WILD-010`, `FVX-WILD-012` | Non-ROM `WildCatchLevelDecisionTest` vorhanden; keine ROM-/Reload-Evidenz und kein ROM-Smoke | P1-Promotion nur separat mit ROM-/Reload-Scope | 176 |
+| P1 | Trainer Additional Pokemon | generated CLI profile passed | `FVX-FOE-005`, `FVX-FOE-006`, `FVX-FOE-007` | CLI log-smoke passed, aber keine ROM-/Reload-Evidenz und kein Ingame-Smoke | P1-Promotion nur separat mit ROM-/Reload-Scope | 178, 197 |
+| P1 | Wild Catch / Level | generated CLI profile passed | `FVX-WILD-007`, `FVX-WILD-010`, `FVX-WILD-012` | CLI log-smoke passed, aber keine ROM-/Reload-Evidenz und kein Ingame-Smoke | P1-Promotion nur separat mit ROM-/Reload-Scope | 176, 197 |
 | P1 | MoveData Write | tested-non-rom fuer Core-Bytes / Text offen | `FVX-MOVE-001` bis `FVX-MOVE-006` | Power/Accuracy/PP/Type/Update haben Non-ROM-Evidenz; Move Names/Text bleibt offen | Move Names/Text oder ROM-/Reload-Evidenz separat planen | 056, 083-090, 175 |
-| P1 | Trainer Type Diversity / Type Themes | tested-non-rom | `FVX-FOE-009` | Non-ROM `TrainerTypeDiversityGuardTest` vorhanden; keine ROM-/Reload-Evidenz und kein ROM-Smoke | P1-Promotion nur separat mit ROM-/Reload-Scope | 070, 075, 077, 177 |
-| P1 | Palette Randomization | Write modelliert / Fix offen | `FVX-GFX-001` bis `FVX-GFX-004` | compressed/shared/repointing risks | Palette Preserve/Repoint Fix | 058 |
-| P1 | Special-Wild / Day-Night / Swarms | out-of-scope | Wild Sondertabellen ausser Standard/Fallback | nicht Teil der aktuellen GUI Working Matrix; Swarms fuer normales Profil deaktiviert | nur separater Special-Wild-Scope | 188, 190 |
+| P1 | Trainer Type Diversity / Type Themes | generated CLI profile passed | `FVX-FOE-009` | CLI log-smoke passed, aber keine ROM-/Reload-Evidenz und kein Ingame-Smoke | P1-Promotion nur separat mit ROM-/Reload-Scope | 070, 075, 077, 177, 197 |
+| P1 | Palette Randomization | generated CLI profile passed mit Caveat | `FVX-GFX-001` bis `FVX-GFX-004` | CLI log-smoke clean, aber Ingame Visual Smoke und Writer-Risiko bleiben offen | Palette Visual Smoke / Preserve-Repoint-Fix | 058, 197 |
+| P1 | Special-Wild / Day-Night / Swarms | generated CLI profile passed mit Scope-Caveat | Wild Sondertabellen ausser Standard/Fallback | CLI log-smoke clean, aber nicht Teil der GUI Working Matrix; Swarms fuer normales Profil deaktiviert | nur separater Special-Wild-Scope | 188, 190, 197 |
 | P2 | Special Tutors/Text/Menu | P2 / Out of scope | Tutor-Sonderpfade | Text/Menu/Special-Tutor-Logik ist nicht normaler Tutor-Scope | spaeter P2-Modell | 047, 060 |
 | P2 | Graphics/Sprites | P2 / Nicht begonnen | `FVX-GFX-005`, `FVX-GFX-006` | Custom Player Graphics / Sprites getrennt von Paletten | spaeter Graphics-Modell | 058 |
-| P2 | Misc Tweaks | Nicht begonnen | `FVX-MISC-001` bis `FVX-MISC-012` | Misc-Inventar offen | spaeter Inventar | offen |
+| P2 | Misc Tweaks | generated CLI profile passed mit Caveat | `FVX-MISC-001` bis `FVX-MISC-012` | CLI log-smoke clean, aber behavior-spezifische Ingame-/Manual-Smokes fehlen | spaeter Inventar / fokussierte Smokes | 197 |
 
 ## Naechste empfohlene Arbeitspakete
 
@@ -315,14 +316,15 @@ Diese Tabelle listet alle aktuell erfassten FVX-Features einmal kompakt auf. Sie
 | 5 | Field Items Required-TM Overflow | expanded-TM-Zwang absichern oder vermeiden | Basic Field Items passed, Required-TM-Zwang kann blockieren | Option separat diagnostizieren |
 | 6 | Trainer Battle Style / Additional Pokemon / Special Rules | nur bei separater Freigabe writer-/reload-seitig pruefen | Non-ROM-Evidenz liegt vor, aber kein aktueller Stable-Smoke | nur explizit freigegebener Scope |
 | 7 | Evolution Methods / Make Easier 025B | Methoden-/Byte-Patch-Slices getrennt halten | Non-ROM-Evidenz fuer Teile, Writer-/Reload-Evidenz fehlt | nur explizit freigegebener Scope |
-| 8 | Palette Randomization | echte Palettenaenderungen absichern | grosser Graphics/Palette-Writer | `FVX-GFX-001` bis `FVX-GFX-004` hochstufen |
-| 9 | Special-Wild / Special Tutors/Text/Menu | Sonderpfade modellieren | nicht normaler Stable-Profil-Scope | P2- oder separater Diagnose-Scope |
-| 10 | Graphics/Sprites / Misc Tweaks | Custom Graphics und Misc inventarisieren | getrennt von aktuellen GUI-Smokes | P2-Entscheidung |
+| 8 | Palette Randomization | echte Palettenaenderungen visuell absichern | generated CLI profile passed, aber Visual Smoke fehlt | `FVX-GFX-001` bis `FVX-GFX-004` de-caveaten |
+| 9 | Special-Wild / Special Tutors/Text/Menu | Sonderpfade modellieren | Special-Wild CLI profile clean, aber Scope bleibt separat | P2- oder separater Diagnose-Scope |
+| 10 | Graphics/Sprites / Misc Tweaks | Custom Graphics und Misc-Verhalten inventarisieren | Palettes/Misc CLI profiles clean, aber visuelle/manuelle Smokes fehlen | P2-Entscheidung / fokussierte Smokes |
 
 ## Zuletzt abgeschlossene PRs / Diagnosen
 
 | Diagnose / PR | Bereich | Ergebnis | Statuswirkung |
 |---|---|---|---|
+| Workspace PR #270 + generated matrix run | CLI Profile Matrix | 14 generated `.rnqs` profiles log-smoked cleanly; bad markers 0, warnings 0 | Updates Feature-Test-Status-Matrix to `PASS_LOG` / `PASS_LOG_WITH_CAVEAT`; no P1-Promotion |
 | Workspace PR #264 / UPR-FVX PR #97 | Starter/Rival Sync | UPR-FVX Pin `51d52a03235664154549105003dadfb45c76d0d0`; Oak-Lab Rival Counter-Slot passed | Starter Pokemon kann optional ins Stable Visual Profile; keine P1-Promotion; `Rival Carries Starter Through Game` bleibt separat |
 | Workspace PR #263 | Stable Visual Profile Smoke | kurzer lokaler Stable Visual Profile Smoke passed | Stable Visual Profile ohne Starters passed; keine P1-Promotion |
 | Workspace PR #262 | GUI Working Settings Matrix | Working Settings Matrix passed nach UPR-FVX PR #89 | breite GUI-Feature-Gruppen lokal nutzbar mit Caveats; keine P1-Promotion |
