@@ -1,5 +1,13 @@
 # Current update
 
+- `196_settings_profile_generator_sync.md` documents the synced UPR-FVX Settings Profile Generator from PR #98.
+- `generate_settings_profiles_from_matrix.sh` derives `.rnqs` files from a local base settings file and the profile matrix manifest by calling `UPR-FVX.jar settings-profile`.
+- The generator path is No-ROM only: it accepts no ROM argument, runs no randomization and creates no output ROM.
+- The profile matrix can now move from saved GUI-exported profiles to generated profiles under ignored local directories.
+- Real ROM CLI matrix runs remain local-only user work and no P1 promotion is made.
+
+# Current update
+
 - `195_fvx_feature_test_status_matrix.md` documents the machine-readable per-feature status matrix.
 - `fvx_feature_test_status_matrix.tsv` tracks all 130 dashboard Feature IDs with profile mapping, log status, ingame status, caveats, blockers, evidence anchors and next steps.
 - The dashboard remains the human overview; the TSV is the CLI-profile-matrix worklist.

@@ -1,3 +1,12 @@
+# Roadmap status update - Settings profile generator sync
+
+- Synced merged UPR-FVX PR #98 into the workspace pin at `81fa4cf35af48bce19996e4581f1e4a688ebfa3b`.
+- The CLI profile matrix can now generate `.rnqs` profiles from a local base settings file through `UPR-FVX.jar settings-profile`.
+- Added `generate_settings_profiles_from_matrix.sh` as the Workspace wrapper around the UPR-FVX helper.
+- Added `196_settings_profile_generator_sync.md` and updated the CLI profile matrix docs to replace the prior "saved profiles only" limitation.
+- Scope: No-ROM settings generation only. Real ROM CLI matrix runs remain local-only user work after profile settings are generated.
+- No ROM paths, hashes, CRCs, full logs, screenshots, saves, emulator states, output ROMs, UPR-FVX/CFRU/DPE code changes or P1 promotion are added.
+
 # Roadmap status update - FVX feature test status matrix
 
 - Added a machine-readable per-feature test status matrix for FVX.

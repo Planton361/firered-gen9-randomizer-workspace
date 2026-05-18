@@ -1,3 +1,14 @@
+# Next steps update - Settings profile generator sync
+
+- Treat UPR-FVX PR #98 as synced into the workspace pin at `81fa4cf35af48bce19996e4581f1e4a688ebfa3b`.
+- Use `07_scripts/randomizer/generate_settings_profiles_from_matrix.sh` to derive `.rnqs` profile settings from one local base `.rnqs` and `08_tests/randomizer/cli_profile_matrix.example.tsv`.
+- Build the pinned UPR-FVX jar first, then run the generator with `--upr-dir 02_external/upr-fvx --base-settings <local-base-settings.rnqs> --profile-manifest <profiles.tsv> --output-settings-dir <ignored-local-settings-dir>`.
+- Keep generated settings, real CLI smoke outputs and raw logs under ignored local directories.
+- Continue using `run_cli_profile_matrix.sh` for actual local private-ROM matrix runs after settings are generated.
+- Codex may use only help/dry-run/artificial fixtures. Real ROM smokes remain user-local.
+- Do not document ROM paths, hashes, full logs, screenshots, output ROM paths, saves, emulator states, private paths, secrets, tokens or `.env` data.
+- No P1 promotion follows from this tooling sync.
+
 # Next steps update - FVX feature test status matrix
 
 - Use `08_tests/randomizer/fvx_feature_test_status_matrix.tsv` as the machine-readable worklist for future CLI profile matrix runs.

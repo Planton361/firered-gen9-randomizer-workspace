@@ -1,3 +1,15 @@
+# Session update - Settings profile generator sync
+
+- New branch: `randomizer/sync-settings-profile-generator`.
+- Prerequisite verified: current `main` is at `c8ea5fddf6f73a63604b0dccb3fb11b64dbfda31`, and UPR-FVX PR #98 is merged into `origin/compat/firered-gen9-cfru-dpe`.
+- Synced `02_external/upr-fvx` to merged UPR-FVX PR #98 commit `81fa4cf35af48bce19996e4581f1e4a688ebfa3b`.
+- Added `07_scripts/randomizer/generate_settings_profiles_from_matrix.sh`.
+- Added `08_tests/randomizer/196_settings_profile_generator_sync.md`.
+- Updated the CLI profile matrix documentation: generated profiles now use `UPR-FVX.jar settings-profile` instead of saved GUI-only `.rnqs` files.
+- The new workspace wrapper accepts `--upr-dir`, `--base-settings`, `--profile-manifest` and `--output-settings-dir`, and calls the UPR-FVX helper once per enabled profile.
+- Scope boundary: No-ROM settings generation only. Codex did not read a ROM, run randomization, create output ROMs, commit real logs or document private paths/hashes/screenshots.
+- No UPR-FVX code change was made in this workspace PR, and no P1 promotion was made.
+
 # Session update - FVX feature test status matrix
 
 - New branch: `randomizer/fvx-feature-test-status-matrix`.
