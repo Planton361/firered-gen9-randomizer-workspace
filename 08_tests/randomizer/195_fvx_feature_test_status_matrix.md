@@ -58,6 +58,7 @@ Current profile IDs:
 
 ## Current Caveats Captured
 
+- Generated `.rnqs` CLI profile matrix passed log smoke for all 14 profiles with 0 bad markers and 0 warnings.
 - Pokemon Traits tab is marked log-passed, including Evolutions and subsettings.
 - Hard Evolution combinations are marked with constraint/fallback caveats.
 - Starters, Statics and Trades are marked log-passed; Oak-Lab Rival sync has ingame smoke for `FVX-SST-002`.
@@ -68,11 +69,11 @@ Current profile IDs:
 - `Update Moves to Generation` is `OUT_OF_SCOPE` by design for the CFRU/DPE Gen9 basis.
 - Foe base is marked log-passed.
 - Trainer Class Names remains textlabel-only.
-- Trainer Held Items basic is log-passed, but Sensible Items remains blocked/expected-fail because of the `getSensibleHeldItemsFor` NPE interaction.
+- Trainer Held Items basic is log-passed. The generated Sensible Items profile also log-passed; the prior `getSensibleHeldItemsFor` NPE was not reproduced there, but the interaction remains caveated until a focused isolation run.
 - Trainer `Don't Use Legendaries` carries an expanded-pool caveat on the Trainer Pokemon base row.
-- Special-Wild remains out-of-scope.
-- Palettes/Graphics remain expected-fail or P2/out-of-scope.
-- Misc Tweaks remain not started.
+- Special-Wild generated profile log-passed, but Special-Wild/Day-Night/Swarms remain a separate scope.
+- Palettes/Graphics generated profile log-passed, but ingame visual smoke remains required; Custom Player Graphics remains P2/out-of-scope.
+- Misc Tweaks generated profile log-passed, but behavior-specific ingame/manual smoke remains required.
 - No P1 promotion is made by this matrix.
 
 ## Updating Rows

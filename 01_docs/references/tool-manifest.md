@@ -1,3 +1,12 @@
+# Tool Manifest Update - 2026-05-18 - Generated CLI profile matrix results
+
+- Workspace branch: `randomizer/sync-cli-profile-matrix-results`.
+- Added `08_tests/randomizer/197_cli_profile_matrix_generated_run.md`.
+- Sanitized local generated `.rnqs` CLI profile matrix result: 14 profiles processed, all profiles produced CLI log smoke pass or unexpected pass, bad markers 0 for all profiles and warnings 0 for all profiles.
+- Unexpected-pass profiles: `04_foe_held_items_sensible_expected_fail`, `09_graphics_palettes`, `10_misc_tweaks` and `11_special_wild`.
+- Updated `08_tests/randomizer/fvx_feature_test_status_matrix.tsv` and `01_docs/randomizer/fvx-progress-dashboard.md` to record log-pass evidence and caveats without removing Feature IDs or shortening the dashboard full list.
+- Safety: no ROM/save/output/log artifact committed, no private path/ROM hash/full log/screenshot documented, no UPR-FVX/CFRU/DPE code change and no P1 promotion.
+
 # Tool Manifest Update - 2026-05-18 - Settings profile generator sync
 
 - Workspace branch: `randomizer/sync-settings-profile-generator`.

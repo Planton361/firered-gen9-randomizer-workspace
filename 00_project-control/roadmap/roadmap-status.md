@@ -1,3 +1,13 @@
+# Roadmap status update - Generated CLI profile matrix results
+
+- Recorded a sanitized generated `.rnqs` CLI profile matrix run.
+- `08_tests/randomizer/197_cli_profile_matrix_generated_run.md` documents 14 profiles processed with 0 bad markers and 0 warnings.
+- All profiles produced CLI log smoke pass or unexpected pass.
+- Unexpected passes are caveated, not promoted: Trainer Held Items Sensible, Graphics/Palettes, Misc Tweaks and Special-Wild.
+- `fvx_feature_test_status_matrix.tsv` is updated so log-pass evidence is tracked per Feature ID while ingame/manual follow-up remains required.
+- Progress dashboard snapshot and package summaries now reflect the generated matrix pass.
+- No ROM paths, hashes, CRCs, full logs, screenshots, saves, emulator states, output ROMs, UPR-FVX/CFRU/DPE code changes or P1 promotion are added.
+
 # Roadmap status update - Settings profile generator sync
 
 - Synced merged UPR-FVX PR #98 into the workspace pin at `81fa4cf35af48bce19996e4581f1e4a688ebfa3b`.
