@@ -9,6 +9,15 @@
 - Documented exact Gen-Limit-1-9 variants as unsupported because current UPR-FVX Settings cannot encode Gen 8/9 restrictions or GMax exclusion.
 - Safety: no ROM/save/output/log artifact committed, no private path/ROM hash/full log/screenshot documented, no workspace-side UPR-FVX/CFRU/DPE code change and no P1 promotion.
 
+# Tool Manifest Update - 2026-05-18 - Exact coverage batches 03-13
+
+- Workspace branch: `randomizer/sync-exact-coverage-batches-03-13`.
+- Added `08_tests/randomizer/201_exact_coverage_batches_03_13.md`.
+- Sanitized local exact-coverage Batch 03 through 13 CLI log-smoke results: dry-run disabled, 149 generator-capable exact/cumulative profiles processed, all profiles PASS, bad markers 0 and warnings 0.
+- Updated `08_tests/randomizer/fvx_feature_test_status_matrix.tsv` for affected generator-capable Feature IDs across TM/Tutor, Wild, Foe, General/Traits, Starters/Statics/Trades, Moves, Graphics/Palettes, Misc, Types and cumulative coverage.
+- Updated `01_docs/randomizer/fvx-progress-dashboard.md` conservatively for the Batch 03-13 snapshot/package/diagnosis status without shortening the full Feature-ID list.
+- Safety: no ROM/save/output/log artifact committed, no private path/ROM hash/full log/screenshot documented, no UPR-FVX/CFRU/DPE code change and no P1 promotion.
+
 # Tool Manifest Update - 2026-05-18 - Exact coverage batch 02 items
 
 - Workspace branch: `randomizer/sync-exact-coverage-batch-02-items`.

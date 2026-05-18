@@ -6,6 +6,12 @@
 - Unsupported Gen-Limit-1-9 mode rows are documented as disabled expected-fail rows because the current Settings format cannot represent Gen 8/9 restrictions or GMax exclusion.
 - No ROM run, output ROM, private path, full log or P1 promotion is added.
 
+- `201_exact_coverage_batches_03_13.md` records the sanitized exact-coverage Batch 03 through 13 CLI log-smoke results.
+- 149 generator-capable exact/cumulative profiles were processed across TM/Tutor, Wild, Foe, General/Traits, Starters/Statics/Trades, Moves, Graphics/Palettes, Misc, Types and cumulative coverage.
+- All Batch 03 through 13 profiles passed with 0 bad markers and 0 warnings.
+- Updated `fvx_feature_test_status_matrix.tsv` for the affected generator-capable rows while preserving caveats for Graphics/Palettes, sensible Trainer Held Items, Special-Wild/type overlay gaps, static placeholders and manual/unsupported rows.
+- No ROM paths, hashes, full logs, output paths or P1 promotion are documented.
+
 # Current update
 
 - `200_exact_coverage_batch_02_items.md` records the sanitized exact-coverage Batch 02 CLI log-smoke result for Item Feature IDs.

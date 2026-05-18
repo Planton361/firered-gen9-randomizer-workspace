@@ -6,6 +6,15 @@
 - Exact Gen-Limit-1-9 rows remain documented as unsupported because current Settings cannot encode Gen 8/9 restrictions or GMax exclusion.
 - No ROM paths, hashes, CRCs, full logs, screenshots, saves, emulator states, output ROMs or P1 promotion are added.
 
+# Roadmap status update - Exact coverage batches 03-13
+
+- Recorded sanitized exact-coverage Batch 03 through 13 CLI log-smoke results.
+- `08_tests/randomizer/201_exact_coverage_batches_03_13.md` documents 149 generator-capable exact/cumulative profiles processed with dry-run disabled, all PASS, 0 bad markers and 0 warnings.
+- Updated `fvx_feature_test_status_matrix.tsv` for affected generator-capable rows across TM/Tutor, Wild, Foe, General/Traits, Starters/Statics/Trades, Moves, Graphics/Palettes, Misc, Types and cumulative coverage.
+- Caveated rows remain caveated where appropriate: Graphics/Palettes, sensible Trainer Held Items, Special-Wild/type overlay gaps and static placeholders. Manual/unsupported and out-of-scope rows are not promoted.
+- Progress dashboard snapshot, package summaries and completed-diagnosis references now mention Batches 03-13 without shortening the full Feature-ID list.
+- No ROM paths, hashes, CRCs, full logs, screenshots, saves, emulator states, output ROMs, UPR-FVX/CFRU/DPE code changes or P1 promotion are added.
+
 # Roadmap status update - Exact coverage batch 02 items
 
 - Recorded a sanitized exact-coverage Batch 02 Item CLI log-smoke run.
