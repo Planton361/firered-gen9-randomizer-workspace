@@ -17,22 +17,24 @@ FVX settings are not plain text. `Settings.writeToFileFormat(...)` writes:
 
 `CliRandomizer` reads settings via `-s <settings file>` or `-S <settings string>`, then reconstructs `Settings` through FVX's Java code.
 
-Because of that, this workspace PR does not byte-patch `.rnqs` files from shell/Python. The safe implementation is Option C for now:
+Because of that, workspace shell/Python code must not byte-patch `.rnqs` files. The safe implementation is now Option A through the UPR-FVX PR #98 helper:
+
+- `UPR-FVX.jar settings-profile` loads a base `.rnqs`, applies feature/profile overlays through FVX `Settings` APIs and writes a new `.rnqs`.
+- `generate_settings_profiles_from_matrix.sh` calls that helper once per enabled manifest profile.
+- Existing matrix execution then consumes those generated `.rnqs` files.
+
+The earlier saved-profile mode remains valid:
 
 - Profile settings are saved locally, usually from the GUI.
 - A manifest lists the profile IDs and local settings files.
 - The matrix runner executes each profile through the existing CLI log smoke helper.
 - A sanitized aggregate report is produced.
 
-Target state remains Option A or B later:
-
-- Option A: add an FVX CLI/helper subcommand in a separate UPR-FVX PR to derive profile settings using `Settings` APIs.
-- Option B: add a Java workspace helper that links against UPR-FVX classes and writes settings with `Settings.writeToFileFormat(...)`.
-
 ## Files
 
 - `07_scripts/randomizer/cli_log_smoke_pipeline.sh`
 - `07_scripts/randomizer/generate_cli_smoke_profiles.sh`
+- `07_scripts/randomizer/generate_settings_profiles_from_matrix.sh`
 - `07_scripts/randomizer/run_cli_profile_matrix.sh`
 - `08_tests/randomizer/cli_profile_matrix.example.tsv`
 
@@ -75,6 +77,21 @@ The example manifest covers:
 ```
 
 This only writes a manifest scaffold. It does not create or modify `.rnqs` settings files.
+
+## Generate Profile Settings
+
+After creating one local base `.rnqs`, generate profile `.rnqs` files without ROM access:
+
+```sh
+07_scripts/randomizer/generate_settings_profiles_from_matrix.sh \
+  --upr-dir 02_external/upr-fvx \
+  --base-settings <local-base-settings.rnqs> \
+  --profile-manifest 08_tests/randomizer/cli_profile_matrix.example.tsv \
+  --output-settings-dir 05_builds/randomizer-smoke/cli-profile-matrix/settings \
+  --force
+```
+
+This invokes `UPR-FVX.jar settings-profile` only. It accepts no ROM argument, runs no randomization and creates no output ROM.
 
 ## Dry Run
 
@@ -133,6 +150,6 @@ Expected-fail or not-stable profiles until separately fixed:
 
 ## Evidence Boundary
 
-The GUI is still needed only to create a base settings profile unless a future FVX settings helper exists. The target state is manifest-driven profile generation where feature blocks can be activated automatically by a helper that uses FVX `Settings` APIs.
+The GUI is still needed only to create a base settings profile. Feature blocks can now be activated automatically through the UPR-FVX Settings Profile Generator.
 
 This pipeline does not promote P1. It is orchestration and reporting infrastructure for local smoke evidence.

@@ -1,3 +1,14 @@
+# Tool Manifest Update - 2026-05-18 - Settings profile generator sync
+
+- Workspace branch: `randomizer/sync-settings-profile-generator`.
+- UPR-FVX PR #98: <https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/98>.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX PR #98 commit `81fa4cf35af48bce19996e4581f1e4a688ebfa3b`.
+- Scope: PR #98 adds the No-ROM `settings-profile` helper that reads a base `.rnqs`, applies feature/profile overlays through FVX `Settings` APIs and writes generated `.rnqs` files.
+- Added `07_scripts/randomizer/generate_settings_profiles_from_matrix.sh` to call the UPR-FVX helper once per enabled profile in a TSV manifest.
+- Added `08_tests/randomizer/196_settings_profile_generator_sync.md` and updated CLI profile matrix docs.
+- Default UPR-FVX jar path remains `02_external/upr-fvx/random/build/libs/UPR-FVX.jar`.
+- Safety: Codex verified only No-ROM build/help paths and generated no output ROM. No ROM/save/output/log artifact committed, no private path/ROM hash/full log/screenshot documented, no UPR-FVX code change in this workspace PR and no P1 promotion.
+
 # Tool Manifest Update - 2026-05-18 - FVX feature test status matrix
 
 - Workspace branch: `randomizer/fvx-feature-test-status-matrix`.
