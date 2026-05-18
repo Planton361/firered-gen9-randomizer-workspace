@@ -1,3 +1,12 @@
+# Roadmap status update - CLI log smoke pipeline
+
+- Added a repo-safe local UPR-FVX CLI log smoke pipeline.
+- `07_scripts/randomizer/cli_log_smoke_pipeline.sh` wraps `UPR-FVX.jar cli`, enables detailed logging with `-l`, writes a sanitized summary report and scans for fatal/known bad markers.
+- `08_tests/randomizer/193_cli_log_smoke_pipeline.md` documents usage, dry-run behavior, pass criteria and sanitized handoff format.
+- Scope: pipeline/tooling only. No ROM run, output ROM evidence, emulator check or P1 promotion is added by this branch.
+- Current recommended local target remains Stable Visual Profile plus optional Starter Pokemon; Trainer Class Names, Special-Wild and `Rival Carries Starter Through Game` stay caveated/separate.
+- No ROM paths, hashes, CRCs, full logs, screenshots, saves, emulator states, output ROMs, UPR-FVX/CFRU/DPE code changes or P1 promotion are added.
+
 # Roadmap status update - Starter/Rival sync pass
 
 - UPR-FVX PR #97 is synced into the workspace pin at `51d52a03235664154549105003dadfb45c76d0d0`.

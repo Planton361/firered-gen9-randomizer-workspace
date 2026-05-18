@@ -1,3 +1,15 @@
+# Session update - CLI log smoke pipeline
+
+- New branch: `randomizer/cli-log-smoke-pipeline`.
+- Added `07_scripts/randomizer/cli_log_smoke_pipeline.sh` as a repo-safe local helper for UPR-FVX CLI smoke runs.
+- Added `08_tests/randomizer/193_cli_log_smoke_pipeline.md` to document the local-only CLI log smoke flow, pass criteria and sanitized handoff format.
+- Scope: the helper wraps `UPR-FVX.jar cli` with `-l`, writes only a sanitized summary report and scans local stdout/detailed logs for fatal or known bad markers.
+- The helper supports `--dry-run` so repository checks can validate the wrapper without reading a ROM or creating an output ROM.
+- Current UPR-FVX pin remains `51d52a03235664154549105003dadfb45c76d0d0`.
+- Stable Visual Profile and Starter Pokemon/Oak-Lab first Rival sync remain the current smoke-passed baseline; Trainer Class Names remains textlabel-only, Special-Wild remains out-of-scope and `Rival Carries Starter Through Game` remains untested.
+- No ROM, output ROM, save, emulator state, screenshot, full log, ROM path, hash, private path, secret, token or `.env` detail was read, copied, changed or documented by Codex.
+- No UPR-FVX/CFRU/DPE code change and no P1 promotion was made.
+
 # Session update - Starter/Rival sync pass
 
 - New branch: `randomizer/sync-starter-rival-sync-pass`.
