@@ -1,3 +1,11 @@
+# Next steps update - Settings profile variant overlays sync
+
+- Treat UPR-FVX PR #99 as synced into the workspace pin at `4c8e7394a230e6e8471977036be268c80883ac0b`.
+- Use `08_tests/randomizer/cli_profile_matrix.coverage.example.tsv` to enable exact Foe mode, Wild location, TypeEffectiveness and Intro random/no-random rows for local generated settings runs when needed.
+- `feature_overlays` may now contain Feature IDs or exact `MODE-*` overlay IDs; keep generated `.rnqs` files and real matrix outputs under ignored local directories.
+- Keep `MODE-GEN-LIMIT-1-9*` rows disabled/unsupported until Settings can encode Gen 8/9 restrictions and GMax exclusion.
+- No ROM runs, output ROMs, private paths, hashes, full logs, screenshots, saves, emulator states, secrets, tokens, `.env` data or P1 promotion follow from this sync.
+
 # Next steps update - Exact coverage batch 02 items
 
 - Treat `08_tests/randomizer/200_exact_coverage_batch_02_items.md` as sanitized CLI log evidence for exact-coverage Batch 02 Items only.
@@ -33,7 +41,7 @@
 - When generating targeted profiles, pass the coverage manifest through `generate_settings_profiles_from_matrix.sh`; rows with `feature_overlays` call UPR-FVX `settings-profile --enable` directly.
 - Do not count related broad profiles as exact feature coverage when the coverage plan says `current_14_profile_includes_feature=no`.
 - Priority follow-ups: `FVX-TRAIT-017`, Starter/Static variants, Foe Additional/Type/Battle/Rival-Carry variants, Field/Shop item variants, exact TypeEffectiveness modes, Graphics/Palettes visual smoke and Misc behavior smokes.
-- TypeEffectiveness Random, Keep-Identities and Inverse need a future UPR-FVX exact-overlay helper before they can be auto-generated from this workspace manifest.
+- Superseded by UPR-FVX PR #99: TypeEffectiveness Random, Random-Balanced, Keep-Identities and Inverse can now be auto-generated from this workspace manifest through `MODE-TYPE-*` overlays.
 - No ROM runs, output ROMs, private paths, hashes, full logs or P1 promotion follow from this audit.
 
 # Next steps update - Generated CLI profile matrix results

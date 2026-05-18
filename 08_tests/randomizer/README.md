@@ -1,5 +1,13 @@
 # Current update
 
+- Workspace branch `randomizer/sync-settings-profile-variant-overlays` pins `02_external/upr-fvx` to merged UPR-FVX PR #99 commit `4c8e7394a230e6e8471977036be268c80883ac0b`.
+- PR #99 extends the No-ROM `settings-profile` helper with exact `MODE-*` overlays for Foe Pokemon modes, Wild replacement/location modes, TypeEffectiveness modes and Intro Mon toggles.
+- `cli_profile_matrix.coverage.example.tsv` now includes disabled opt-in exact variant rows for Foe mode, Wild location, TypeEffectiveness and Intro random/no-random coverage.
+- Unsupported Gen-Limit-1-9 mode rows are documented as disabled expected-fail rows because the current Settings format cannot represent Gen 8/9 restrictions or GMax exclusion.
+- No ROM run, output ROM, private path, full log or P1 promotion is added.
+
+# Current update
+
 - `200_exact_coverage_batch_02_items.md` records the sanitized exact-coverage Batch 02 CLI log-smoke result for Item Feature IDs.
 - 13 exact Item single/variant profiles were processed with dry-run disabled.
 - All 13 profiles passed with 0 bad markers and 0 warnings.

@@ -1,3 +1,11 @@
+# Roadmap status update - Settings profile variant overlays sync
+
+- Synced merged UPR-FVX PR #99 into the workspace pin at `4c8e7394a230e6e8471977036be268c80883ac0b`.
+- The CLI profile matrix can now target exact GUI-mode/variant overlays for Foe Pokemon modes, Wild replacement/location modes, TypeEffectiveness modes and Intro Mon toggles through No-ROM `settings-profile`.
+- `cli_profile_matrix.coverage.example.tsv` now contains disabled opt-in exact rows for Foe mode variants, Wild location variants, TypeEffectiveness exact variants and Intro random/no-random variants.
+- Exact Gen-Limit-1-9 rows remain documented as unsupported because current Settings cannot encode Gen 8/9 restrictions or GMax exclusion.
+- No ROM paths, hashes, CRCs, full logs, screenshots, saves, emulator states, output ROMs or P1 promotion are added.
+
 # Roadmap status update - Exact coverage batch 02 items
 
 - Recorded a sanitized exact-coverage Batch 02 Item CLI log-smoke run.
@@ -33,7 +41,7 @@
 - `08_tests/randomizer/cli_profile_matrix.coverage.example.tsv` provides an opt-in coverage manifest for fine-grained generated `.rnqs` profiles.
 - `generate_settings_profiles_from_matrix.sh` now supports an optional `feature_overlays` column so the workspace can generate targeted settings with UPR-FVX `settings-profile --enable`.
 - Audit result: the 14 generated profiles remain useful broad log-smoke coverage, but they do not exactly cover every Feature ID. Missing exact coverage includes `FVX-TRAIT-017`, multiple Starter/Static variants, multiple Foe variants and Field/Shop item variants.
-- Exact TypeEffectiveness Random, Keep-Identities and Inverse mode generation remains a future UPR-FVX helper gap; current `FVX-TYPE-001` maps to Random-Balanced only.
+- Superseded by UPR-FVX PR #99: exact TypeEffectiveness Random, Random-Balanced, Keep-Identities and Inverse mode generation now uses `MODE-TYPE-*` overlays.
 - No ROM paths, hashes, CRCs, full logs, screenshots, saves, emulator states, output ROMs, UPR-FVX/CFRU/DPE code changes or P1 promotion are added.
 
 # Roadmap status update - Generated CLI profile matrix results

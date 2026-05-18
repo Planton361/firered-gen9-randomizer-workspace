@@ -5,15 +5,17 @@ No ROMs, output ROMs, full logs, private paths, hashes, screenshots, saves, emul
 ## Audit Result
 - The current 14-profile matrix is useful as tab/cumulative log-smoke coverage, but it is not exact per-feature coverage.
 - The profile generator supports most single Feature-ID overlays through `--enable`, so coverage can be split into single, variant, tab, cumulative and risk-interaction profiles without byte-patching `.rnqs` files.
-- The generator wrapper now treats an optional manifest `feature_overlays` column as authoritative. Rows with that column call `settings-profile --enable ...` instead of requiring a built-in `--profile` ID.
+- After UPR-FVX PR #99, the profile generator also supports exact `MODE-*` overlays for Foe Pokemon modes, Wild replacement/location modes, TypeEffectiveness modes and Intro Mon toggles.
+- The generator wrapper now treats an optional manifest `feature_overlays` column as authoritative. Rows with that column call `settings-profile --enable ...` instead of requiring a built-in `--profile` ID. Values may be Feature IDs or `MODE-*` overlay IDs.
 - Existing full profiles that truly enable a feature are recorded in `current_14_profile_includes_feature`; related profiles must not be counted as coverage when this is `no`.
 
 ## Known Coverage Gaps From The Current 14 Profiles
 - Supported by generator but not actually enabled by the current 14 profiles: `FVX-GEN-001`, `FVX-GEN-002`, `FVX-TRAIT-017`, `FVX-SST-003`, `FVX-SST-004`, `FVX-SST-005`, `FVX-SST-009`, `FVX-SST-010`, `FVX-SST-012`, `FVX-FOE-005`, `FVX-FOE-006`, `FVX-FOE-007`, `FVX-FOE-009`, `FVX-FOE-010`, `FVX-FOE-011`, `FVX-FOE-012`, `FVX-ITEM-001`, `FVX-ITEM-003`, `FVX-ITEM-005`.
-- Unsupported or out-of-scope for generated `.rnqs` overlays today: `FVX-SST-001`, `FVX-MOVE-006`, `FVX-GFX-005`, `FVX-GFX-006`.
-- `FVX-TYPE-001` currently means the generator's `RANDOM_BALANCED` overlay only. Separate Random, Balanced, Keep-Identities and Inverse mode overlays need a future UPR-FVX helper extension if exact mode coverage is required.
+- Unsupported or out-of-scope for generated `.rnqs` overlays today: `FVX-SST-001`, `FVX-MOVE-006`, `FVX-GFX-005`, `FVX-GFX-006`, and exact `MODE-GEN-LIMIT-1-9*` variants.
+- Exact TypeEffectiveness Random, Random-Balanced, Keep-Identities and Inverse mode rows are now runnable through UPR-FVX PR #99 `MODE-TYPE-*` overlays.
+- Exact Gen-Limit-1-9 variants remain unsupported because the current UPR-FVX `GenRestrictions` Settings format cannot represent Gen 8/9 restrictions; GMax exclusion also has no dedicated Settings field.
 - `11_special_wild` is represented by a generator-only overlay outside the 130 dashboard Feature IDs; it remains scope-separate despite the clean CLI log smoke.
-- The coverage manifest names exact TypeEffectiveness mode rows separately. Only the current Random-Balanced row is runnable today; Random, Keep-Identities and Inverse rows are disabled placeholders until UPR-FVX exposes exact overlays.
+- The coverage manifest names exact Foe, Wild, TypeEffectiveness and Intro mode rows separately. These rows are disabled by default but can be enabled locally for generated settings/profile matrix runs.
 
 ## Coverage Profile Layers
 | Layer | Meaning | Example |
@@ -27,14 +29,15 @@ No ROMs, output ROMs, full logs, private paths, hashes, screenshots, saves, emul
 
 ## Coverage Manifest
 `08_tests/randomizer/cli_profile_matrix.coverage.example.tsv` is an opt-in manifest. It keeps the existing runner columns and adds an optional `feature_overlays` column for settings generation.
+`feature_overlays` accepts both Feature IDs, such as `FVX-FOE-001`, and exact mode overlay IDs, such as `MODE-FOE-RANDOM`.
 Rows in that manifest are disabled by default unless they are already part of the current broad matrix. A local tester can enable targeted rows, generate `.rnqs` profiles, then run the usual CLI matrix with private ROM inputs outside the repository.
 
 ## Per-Feature Coverage Map
 | Feature ID | Feature | Group | Single | Variant | Tab | Cumulative | Risk | Flag | In Current 14? | Note |
 |---|---|---|---|---|---|---|---|---|---|---|
-| FVX-GEN-001 | Limit Pokemon | General Options | single_fvx_gen_001 | - | 00_baseline | cumulative_generated_cli_matrix | risk_fvx_gen_001 | profile_overlay_supported | no | Not actually enabled by the current 14 generated profiles; needs single/variant profile. |
+| FVX-GEN-001 | Limit Pokemon | General Options | single_fvx_gen_001 | - | 00_baseline | cumulative_generated_cli_matrix | risk_fvx_gen_001 | profile_overlay_supported | no | Not actually enabled by the current 14 generated profiles; needs single/variant profile. Exact `MODE-GEN-LIMIT-1-9*` variants remain unsupported by current Settings format. |
 | FVX-GEN-002 | No Premature Evolutions | General Options | single_fvx_gen_002 | - | 00_baseline | cumulative_generated_cli_matrix | risk_fvx_gen_002 | profile_overlay_supported | no | Not actually enabled by the current 14 generated profiles; needs single/variant profile. |
-| FVX-GEN-003 | No Random Intro Mon | General Options | - | - | 10_misc_tweaks | - | - | manual_only | no | - |
+| FVX-GEN-003 | No Random Intro Mon | General Options | - | variant_intro_no_random | 10_misc_tweaks | - | - | profile_overlay_supported | no | Exact `MODE-NO-RANDOM-INTRO` overlay available after UPR-FVX PR #99. |
 | FVX-GEN-004 | Race Mode | General Options | - | - | 10_misc_tweaks | - | - | manual_only | no | - |
 | FVX-TRAIT-001 | Base Stats: Shuffle / Random | Pokemon Traits | single_fvx_trait_001 | - | 01_traits_full | cumulative_generated_cli_matrix | - | profile_overlay_supported | yes | - |
 | FVX-TRAIT-002 | Base Stats: Follow Evolutions | Pokemon Traits | single_fvx_trait_002 | - | 01_traits_full | cumulative_generated_cli_matrix | - | profile_overlay_supported | yes | - |
@@ -90,7 +93,7 @@ Rows in that manifest are disabled by default unless they are already part of th
 | FVX-MOVE-009 | Reorder Damaging Moves | Moves & Movesets | single_fvx_move_009 | - | 03_moves_movesets_full | cumulative_generated_cli_matrix | - | profile_overlay_supported | yes | - |
 | FVX-MOVE-010 | No Game-Breaking Moves | Moves & Movesets | single_fvx_move_010 | - | 03_moves_movesets_full | cumulative_generated_cli_matrix | - | profile_overlay_supported | yes | - |
 | FVX-MOVE-011 | Force % Good Damaging Moves | Moves & Movesets | single_fvx_move_011 | - | 03_moves_movesets_full | cumulative_generated_cli_matrix | - | profile_overlay_supported | yes | - |
-| FVX-FOE-001 | Trainer Pokemon randomisieren | Foe Pokemon | single_fvx_foe_001 | - | 04_foe_base | cumulative_generated_cli_matrix | risk_fvx_foe_001 | profile_overlay_supported | yes | - |
+| FVX-FOE-001 | Trainer Pokemon randomisieren | Foe Pokemon | single_fvx_foe_001 | variant_foe_mode_random; variant_foe_mode_even_distribution; variant_foe_mode_main_playthrough; variant_foe_mode_type_themed; variant_foe_mode_keep_themed | 04_foe_base | cumulative_generated_cli_matrix | risk_fvx_foe_001 | profile_overlay_supported | yes | Exact `MODE-FOE-*` overlays available after UPR-FVX PR #99. |
 | FVX-FOE-002 | Better Movesets: Boss Trainers | Foe Pokemon | single_fvx_foe_002 | - | 04_foe_base | cumulative_generated_cli_matrix | - | profile_overlay_supported | yes | - |
 | FVX-FOE-003 | Better Movesets: Important Trainers | Foe Pokemon | single_fvx_foe_003 | - | 04_foe_base | cumulative_generated_cli_matrix | - | profile_overlay_supported | yes | - |
 | FVX-FOE-004 | Better Movesets: Regular Trainers | Foe Pokemon | single_fvx_foe_004 | - | 04_foe_base | cumulative_generated_cli_matrix | - | profile_overlay_supported | yes | - |
@@ -105,7 +108,7 @@ Rows in that manifest are disabled by default unless they are already part of th
 | FVX-FOE-013 | Randomize Trainer Names / Class Names | Foe Pokemon | single_fvx_foe_013 | - | 04_foe_base | cumulative_generated_cli_matrix | risk_fvx_foe_013 | profile_overlay_supported | yes | - |
 | FVX-FOE-014 | Trainers Evolve Their Pokemon + Level Modifier | Foe Pokemon | single_fvx_foe_014 | - | 04_foe_base | cumulative_generated_cli_matrix | - | profile_overlay_supported | yes | - |
 | FVX-WILD-001 | Randomize Wild Pokemon | Wild Pokemon | single_fvx_wild_001 | - | 05_wild_full | cumulative_generated_cli_matrix | risk_wild_standard_vs_special_wild | profile_overlay_supported | yes | - |
-| FVX-WILD-002 | Replacements Per Species | Wild Pokemon | single_fvx_wild_002 | - | 05_wild_full | cumulative_generated_cli_matrix | - | profile_overlay_supported | yes | - |
+| FVX-WILD-002 | Replacements Per Species | Wild Pokemon | single_fvx_wild_002 | variant_wild_location_encounter_set; variant_wild_location_map; variant_wild_location_named_location; variant_wild_location_game | 05_wild_full | cumulative_generated_cli_matrix | - | profile_overlay_supported | yes | Exact `MODE-WILD-*` replacement/location overlays available after UPR-FVX PR #99. |
 | FVX-WILD-003 | Split by Encounter Types | Wild Pokemon | single_fvx_wild_003 | - | 05_wild_full | cumulative_generated_cli_matrix | - | profile_overlay_supported | yes | - |
 | FVX-WILD-004 | Type Restrictions | Wild Pokemon | single_fvx_wild_004 | - | 05_wild_full | cumulative_generated_cli_matrix | - | profile_overlay_supported | yes | - |
 | FVX-WILD-005 | Evolution Restrictions | Wild Pokemon | single_fvx_wild_005 | - | 05_wild_full | cumulative_generated_cli_matrix | - | profile_overlay_supported | yes | - |
@@ -113,7 +116,7 @@ Rows in that manifest are disabled by default unless they are already part of th
 | FVX-WILD-007 | Set Minimum Catch Rate | Wild Pokemon | single_fvx_wild_007 | - | 05_wild_full | cumulative_generated_cli_matrix | - | profile_overlay_supported | yes | - |
 | FVX-WILD-008 | Randomize Wild Held Items | Wild Pokemon | single_fvx_wild_008 | - | 05_wild_full | cumulative_generated_cli_matrix | - | profile_overlay_supported | yes | - |
 | FVX-WILD-009 | Ban Bad Held Items | Wild Pokemon | single_fvx_wild_009 | - | 05_wild_full | cumulative_generated_cli_matrix | - | profile_overlay_supported | yes | - |
-| FVX-WILD-010 | Catch Em All Mode | Wild Pokemon | single_fvx_wild_010 | - | 05_wild_full | cumulative_generated_cli_matrix | - | profile_overlay_supported | yes | - |
+| FVX-WILD-010 | Catch Em All Mode | Wild Pokemon | single_fvx_wild_010 | variant_wild_location_catch_em_all | 05_wild_full | cumulative_generated_cli_matrix | - | profile_overlay_supported | yes | Exact `MODE-WILD-CATCH-EM-ALL` overlay available after UPR-FVX PR #99. |
 | FVX-WILD-011 | Similar Strength | Wild Pokemon | single_fvx_wild_011 | - | 05_wild_full | cumulative_generated_cli_matrix | - | profile_overlay_supported | yes | - |
 | FVX-WILD-012 | Balance Low Level Encounters + Level Modifier | Wild Pokemon | single_fvx_wild_012 | - | 05_wild_full | cumulative_generated_cli_matrix | - | profile_overlay_supported | yes | - |
 | FVX-TM-001 | TM Moves randomisieren | TM/HMs & Tutors | single_fvx_tm_001 | - | 06_tm_tutor_full | cumulative_generated_cli_matrix | - | profile_overlay_supported | yes | - |
@@ -141,7 +144,7 @@ Rows in that manifest are disabled by default unless they are already part of th
 | FVX-ITEM-008 | Guarantee Evolution/X Items | Items | single_fvx_item_008 | - | 07_items_full | cumulative_generated_cli_matrix | risk_items_required_tm_special_shops | profile_overlay_supported | yes | - |
 | FVX-ITEM-009 | Balance Shop Prices / Cheap Rare Candies | Items | single_fvx_item_009 | - | 07_items_full | cumulative_generated_cli_matrix | risk_items_required_tm_special_shops | profile_overlay_supported | yes | - |
 | FVX-ITEM-010 | Pickup Items Random / Ban Bad Items | Items | single_fvx_item_010 | - | 07_items_full | cumulative_generated_cli_matrix | - | profile_overlay_supported | yes | - |
-| FVX-TYPE-001 | Type Effectiveness Random/Balanced/Keep Identities/Inverse | Types | single_fvx_type_001 | variant_type_effectiveness_random_balanced; future: random, inverse, keep-identities need generator overlays | 08_types_full | cumulative_generated_cli_matrix | risk_type_effectiveness_chaos | profile_overlay_supported | yes | Current overlay is RANDOM_BALANCED only; other TypeEffectiveness modes need generator overlays. |
+| FVX-TYPE-001 | Type Effectiveness Random/Balanced/Keep Identities/Inverse | Types | single_fvx_type_001 | variant_type_effectiveness_random; variant_type_effectiveness_random_balanced; variant_type_effectiveness_keep_identities; variant_type_effectiveness_inverse | 08_types_full | cumulative_generated_cli_matrix | risk_type_effectiveness_chaos | profile_overlay_supported | yes | Exact `MODE-TYPE-*` overlays available after UPR-FVX PR #99. |
 | FVX-TYPE-002 | Add Random Immunities | Types | single_fvx_type_002 | - | 08_types_full | cumulative_generated_cli_matrix | risk_type_effectiveness_chaos | profile_overlay_supported | yes | - |
 | FVX-TYPE-003 | Update Type Effectiveness | Types | single_fvx_type_003 | - | 08_types_full | cumulative_generated_cli_matrix | risk_type_effectiveness_chaos | profile_overlay_supported | yes | - |
 | FVX-GFX-001 | Pokemon Palettes Random | Graphics | single_fvx_gfx_001 | variant_palettes_random | 09_graphics_palettes | cumulative_generated_cli_matrix | risk_graphics_palettes_visual | profile_overlay_supported | yes | - |
