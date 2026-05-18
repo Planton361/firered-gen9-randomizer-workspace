@@ -1,3 +1,12 @@
+# Roadmap status update - FVX feature test status matrix
+
+- Added a machine-readable per-feature test status matrix for FVX.
+- `08_tests/randomizer/fvx_feature_test_status_matrix.tsv` contains all 130 dashboard Feature IDs and maps each row to a CLI profile ID, test mode, log status, ingame status, caveat, blocker, evidence and next step.
+- `08_tests/randomizer/195_fvx_feature_test_status_matrix.md` documents the status model and maintenance rules.
+- The dashboard remains the human-readable overview; the TSV is the worklist for future CLI profile matrix runs.
+- Current rows reflect sanitized state only: Traits/Starters/Moves/Foe base logs passed with caveats where needed, Special-Wild remains out-of-scope, Palettes/Graphics remain open, Misc Tweaks remain not started and no P1 promotion is made.
+- No ROM paths, hashes, CRCs, full logs, screenshots, saves, emulator states, output ROMs, UPR-FVX/CFRU/DPE code changes or P1 promotion are added.
+
 # Roadmap status update - CLI profile matrix pipeline
 
 - Added the second CLI smoke stage for profile-matrix orchestration.

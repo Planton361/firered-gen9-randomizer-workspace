@@ -1,3 +1,13 @@
+# Next steps update - FVX feature test status matrix
+
+- Use `08_tests/randomizer/fvx_feature_test_status_matrix.tsv` as the machine-readable worklist for future CLI profile matrix runs.
+- Keep `01_docs/randomizer/fvx-progress-dashboard.md` as the human overview and do not shorten its full feature list.
+- When a local CLI matrix run reports sanitized results, update only the affected TSV rows: `log_status`, `ingame_status`, `known_caveat`, `blocker`, `evidence` and `next_step`.
+- Move a row to `PASS_INGAME_SMOKE` only after sanitized local ingame evidence exists for that feature path.
+- Keep Special-Wild out-of-scope, Trainer Class Names textlabel-only, trainer held Sensible Items expected-fail, Palettes/Graphics open and Misc Tweaks not started until separate work changes those rows.
+- Continue excluding ROM paths, hashes, full logs, screenshots, output ROMs, saves, emulator states, private paths, secrets, tokens and `.env` data.
+- No P1 promotion follows from the matrix alone.
+
 # Next steps update - CLI profile matrix pipeline
 
 - Use `08_tests/randomizer/194_cli_profile_matrix_pipeline.md` for multi-profile CLI smoke orchestration.

@@ -1,3 +1,15 @@
+# Session update - FVX feature test status matrix
+
+- New branch: `randomizer/fvx-feature-test-status-matrix`.
+- Prerequisite verified: PR #268 is merged and this branch starts from current `main` at `1c2ca82c7cc96191c6ab57f198956542e95e44d6`.
+- Added `08_tests/randomizer/fvx_feature_test_status_matrix.tsv` with all 130 Feature IDs from `01_docs/randomizer/fvx-progress-dashboard.md`.
+- Added `08_tests/randomizer/195_fvx_feature_test_status_matrix.md` explaining the matrix purpose, status model, CLI profile relationship and update rules.
+- The TSV maps every Feature ID to a CLI profile, test mode, log status, ingame status, caveat/blocker/evidence fields and next step.
+- Current status captures the latest sanitized evidence: Traits tab log-passed including Evolutions with hard-combo caveats; Starters/Statics/Trades, Moves/Movesets and Foe base log-passed; Trainer Class Names remains textlabel-only; trainer held Sensible Items remains expected-fail; Special-Wild remains out-of-scope; Palettes/Graphics remain open; Misc Tweaks remain not started.
+- Dashboard remains the human overview; TSV is the machine-readable worklist for future CLI profile matrix updates.
+- No ROM, output ROM, save, emulator state, screenshot, full log, ROM path, hash, private path, secret, token or `.env` detail was read, copied, changed or documented.
+- No UPR-FVX/CFRU/DPE code change and no P1 promotion was made.
+
 # Session update - CLI profile matrix pipeline
 
 - New branch: `randomizer/settings-profile-matrix-pipeline`.
