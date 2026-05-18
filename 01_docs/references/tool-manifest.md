@@ -1,3 +1,14 @@
+# Tool Manifest Update - 2026-05-18 - FVX profile coverage audit
+
+- Workspace branch: `randomizer/profile-coverage-audit`.
+- Added `08_tests/randomizer/fvx_profile_coverage_plan.md`.
+- Added `08_tests/randomizer/cli_profile_matrix.coverage.example.tsv`.
+- Extended `07_scripts/randomizer/generate_settings_profiles_from_matrix.sh` with an optional TSV `feature_overlays` column. Rows with this column call `UPR-FVX.jar settings-profile --enable <FEATURE_ID>` for each comma-separated Feature ID instead of only `--profile <profile_id>`.
+- Updated `07_scripts/randomizer/run_cli_profile_matrix.sh` so the runner tolerates the optional generator-only column and continues to consume generated `settings_file` paths.
+- The coverage audit keeps all 130 Feature IDs trackable across single, variant, tab, cumulative and risk-interaction profile layers.
+- Current generator gap: exact TypeEffectiveness Random, Keep-Identities and Inverse modes are documented as disabled placeholders until UPR-FVX exposes exact overlays; `FVX-TYPE-001` currently maps to Random-Balanced.
+- Safety: no ROM/save/output/log artifact committed, no private path/ROM hash/full log/screenshot documented, no UPR-FVX/CFRU/DPE code change and no P1 promotion.
+
 # Tool Manifest Update - 2026-05-18 - Generated CLI profile matrix results
 
 - Workspace branch: `randomizer/sync-cli-profile-matrix-results`.

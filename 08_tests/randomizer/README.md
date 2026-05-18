@@ -1,5 +1,13 @@
 # Current update
 
+- `fvx_profile_coverage_plan.md` audits the generated settings profiles against all 130 FVX Feature IDs.
+- `cli_profile_matrix.coverage.example.tsv` adds an opt-in coverage manifest with single, variant, tab, cumulative and risk-interaction profile IDs.
+- `generate_settings_profiles_from_matrix.sh` now accepts an optional `feature_overlays` TSV column and can generate profiles via explicit `--enable` Feature IDs instead of only built-in UPR-FVX profile IDs.
+- The audit identifies features that were previously only covered by related broad profiles, including missing `Random Every Level`, several Starter/Static variants, Foe variants and Item mode variants.
+- This is No-ROM coverage planning only: no ROM run, output ROM, private path, full log or P1 promotion is added.
+
+# Current update
+
 - `197_cli_profile_matrix_generated_run.md` records the sanitized generated `.rnqs` CLI profile matrix result.
 - 14 profiles were processed; every profile produced CLI log smoke pass or unexpected pass.
 - Bad markers and warnings were 0 for all profiles.

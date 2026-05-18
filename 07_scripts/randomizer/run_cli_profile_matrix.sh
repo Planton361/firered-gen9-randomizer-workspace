@@ -20,6 +20,11 @@ Dry-run, no ROM access:
 Manifest columns:
   profile_id enabled expected_result settings_file seed notes
 
+Optional generator-only column:
+  feature_overlays
+
+The matrix runner ignores feature_overlays and consumes the generated settings_file.
+
 expected_result:
   PASS_LOG             Profile should pass with zero fatal/bad markers.
   PASS_WITH_WARNINGS   Profile should pass; warning markers are acceptable.
@@ -130,7 +135,7 @@ mkdir -p "$output_dir" "$(dirname "$summary_report")"
 matrix_exit=0
 processed=0
 
-while IFS='	' read -r profile_id enabled expected_result settings_file seed notes; do
+while IFS='	' read -r profile_id enabled expected_result settings_file seed notes feature_overlays; do
     case "$profile_id" in
         ''|\#*) continue ;;
         profile_id) continue ;;
