@@ -8,14 +8,14 @@
 - Documented `MODE-GEN-LIMIT-1-9*` variants as unsupported because current Settings cannot encode Gen 8/9 restrictions or GMax exclusion.
 - Scope boundary: no ROM run, output ROM, full log, private path, hash, screenshot, save, emulator state, secret, token or `.env` data was documented. No P1 promotion was made.
 
-# Session update - Exact coverage batches 03-13
+# Session update - Exact coverage batches 03-18
 
-- New branch: `randomizer/sync-exact-coverage-batches-03-13`.
-- Added `08_tests/randomizer/201_exact_coverage_batches_03_13.md`.
-- Sanitized local exact-coverage Batch 03 through 13 CLI log-smoke results: dry-run disabled, 149 generator-capable exact/cumulative profiles processed.
-- All Batch 03 through 13 profiles passed with 0 bad markers and 0 warnings.
-- Updated `08_tests/randomizer/fvx_feature_test_status_matrix.tsv` for the affected generator-capable Feature IDs across TM/Tutor, Wild, Foe, General/Traits, Starters/Statics/Trades, Moves, Graphics/Palettes, Misc, Types and cumulative coverage.
-- Preserved caveats and non-promotions: Graphics/Palettes remain `PASS_LOG_WITH_CAVEAT` with visual smoke needed, sensible Trainer Held Items remains caveated because of previous NPE history, Special-Wild/type overlay gaps remain separate, `FVX-SST-001` and `FVX-GFX-005/006` remain manual/unsupported, and `FVX-MOVE-006` remains out-of-scope for CFRU/DPE Gen9.
+- New branch: `randomizer/sync-exact-coverage-batches-03-18`.
+- Added `08_tests/randomizer/201_exact_coverage_batches_03_18.md`.
+- Sanitized local exact-coverage Batch 03 through 18 CLI log-smoke/helper results: Batches 03 through 17 processed 165 generator-capable exact/cumulative/mode profiles.
+- All Batch 03 through 17 PASS profiles had 0 bad markers and 0 warnings; Batch 18 confirmed 4 Gen-Limit `MODE-*` overlays fail as expected because they are unsupported by the current Settings format.
+- Updated `08_tests/randomizer/fvx_feature_test_status_matrix.tsv` for affected generator-capable Feature IDs across TM/Tutor, Wild, Foe, General/Traits, Starters/Statics/Trades, Moves, Graphics/Palettes, Misc, Types, cumulative coverage and exact Foe/Wild/Type/Intro mode overlays.
+- Preserved caveats and non-promotions: Graphics/Palettes remain `PASS_LOG_WITH_CAVEAT` with visual smoke needed, sensible Trainer Held Items remains caveated because of previous NPE history, Intro Mon needs visual confirmation, Gen-Limit-1-9 `MODE-*` overlays remain unsupported by Settings format, Special-Wild remains separate, `FVX-SST-001` and `FVX-GFX-005/006` remain manual/unsupported, and `FVX-MOVE-006` remains out-of-scope for CFRU/DPE Gen9.
 - Updated the FVX progress dashboard snapshot/package status and completed-diagnosis references without shortening the full Feature-ID list.
 - Scope boundary: no ROM paths, hashes, full logs, output paths, screenshots, saves, emulator states, secrets, tokens or `.env` data were documented. No UPR-FVX/CFRU/DPE code change and no P1 promotion were made.
 
