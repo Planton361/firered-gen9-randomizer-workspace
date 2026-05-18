@@ -1,3 +1,13 @@
+# Session update - Runtime trainer party fix sync
+
+- New branch: `randomizer/sync-runtime-trainer-party-fix`.
+- Synced `02_external/upr-fvx` to merged UPR-FVX PR #102 commit `eabbcd7eccb1703f98000f85669d969f516e1247`.
+- PR #102 fixes the confirmed CFRU/DPE FireRed Trainer Pokemon runtime-source mismatch for Rival 2 trainer IDs `329/330/331` and Brock trainer ID `414` by loading and saving validated raw `TrainerData` runtime-source rows that sit outside the normal loaded trainer count.
+- Foe Trainer remains CLI-log-clean from exact coverage; the specific Rival 2 and Brock runtime-source fix is now merged and pinned.
+- Ingame smoke is still required before stronger Foe Trainer support claims.
+- Further vanilla-looking trainer battles should only extend the runtime-source sync after targeted, redacted runtime-source evidence confirms valid raw `TrainerData` rows and party pointers.
+- Scope boundary: no ROM run, output ROM, full log, private path, hash, screenshot, save, emulator state, secret, token or `.env` data was documented. No UPR-FVX/CFRU/DPE code change was made in this workspace PR. No P1 promotion was made.
+
 # Session update - Trainer runtime source diagnostics sync
 
 - New branch: `randomizer/sync-trainer-runtime-source-diagnostics`.

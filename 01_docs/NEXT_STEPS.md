@@ -1,3 +1,11 @@
+# Next steps update - Runtime trainer party fix sync
+
+- Treat UPR-FVX PR #102 as synced into the workspace pin at `eabbcd7eccb1703f98000f85669d969f516e1247`.
+- Rival 2 trainer IDs `329/330/331` and Brock trainer ID `414` now have a merged UPR-FVX fix that loads and saves validated raw FRLG `trainerbattle` runtime-source `TrainerData` rows outside the normal loaded trainer count.
+- Keep Foe Trainer as CLI-log-clean but not P1-promoted: local ingame smoke is still needed to confirm Rival 2, Brock and broader trainer play use randomized runtime parties as expected.
+- For any additional vanilla-looking trainer, first collect targeted redacted runtime-source evidence before expanding the sync target list.
+- Continue excluding ROM paths, hashes, full logs, screenshots, output ROMs, saves, emulator states, private paths, secrets, tokens and `.env` data. No ROM runs by Codex and no P1 promotion follow from this sync.
+
 # Next steps update - Trainer runtime source diagnostics sync
 
 - Treat UPR-FVX PR #100 as synced into the workspace pin at `87bba797620dd2043f02c11c67f7b752a7238a00`.
