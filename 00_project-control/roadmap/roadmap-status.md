@@ -1,3 +1,12 @@
+# Roadmap status update - Trainer Class Sprite Sync
+
+- Synced merged UPR-FVX PR #111 into the workspace pin at `4805a5a930bc97203199816222465c76de2f2150`.
+- PR #111 adds opt-in `MODE-TRAINER-CLASS-SPRITE-SYNC`.
+- Semantics: `Randomize Trainer Names` remains personal-name-only; `Randomize Trainer Class Names` remains legacy/textlabel-only without Sprite Sync; with Sprite Sync enabled, `trainerClass` and visible `trainerPic` follow the Trainer Class Names target class mapping.
+- Status impact: Trainer Class Sprite Sync is available for class label / classId / pic consistency, but final local smoke on the merged pin remains required before stronger support claims.
+- Special target classes are not globally excluded; target classes without observed valid `trainerPic` are skipped.
+- No ROM paths, hashes, CRCs, full logs, screenshots, saves, emulator states, output ROMs, workspace-side UPR-FVX/CFRU/DPE code changes or P1 promotion are added.
+
 # Roadmap status update - Intro Mon visual source fix smoke
 
 - Synced merged UPR-FVX PR #109 into the workspace pin at `a9bb4a5f201c5078ec02fe1f2f8417695448afe9`.

@@ -1,3 +1,14 @@
+# Tool Manifest Update - 2026-05-19 - Trainer Class Sprite Sync
+
+- UPR-FVX fork base branch: `compat/firered-gen9-cfru-dpe`.
+- UPR-FVX PR #111: <https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/111>.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX PR #111 commit `4805a5a930bc97203199816222465c76de2f2150`.
+- Scope: PR #111 adds opt-in `MODE-TRAINER-CLASS-SPRITE-SYNC` for Gen 3 Trainer Class Sprite Sync.
+- Semantics: `Randomize Trainer Names` changes only trainer personal names; `Randomize Trainer Class Names` remains legacy/textlabel-only without Sprite Sync; with Sprite Sync, `trainerClass` and visible `trainerPic` follow the Trainer Class Names target class mapping.
+- Status impact: class label / classId / pic consistency is available as an opt-in feature. Sanitized evidence so far confirms a regular trainer battle started, visible sprite changed and class/sprite sync markers appeared, but final local smoke on the merged pin remains required.
+- Boundary: no ROM execution by Codex and no P1 promotion.
+- Safety: no ROM/save/output/log artifact committed, no private path/ROM hash/full log/screenshot documented, no workspace-side UPR-FVX/CFRU/DPE code change and no P1 promotion.
+
 # Tool Manifest Update - 2026-05-19 - Intro Mon visual source fix smoke
 
 - UPR-FVX fork base branch: `compat/firered-gen9-cfru-dpe`.

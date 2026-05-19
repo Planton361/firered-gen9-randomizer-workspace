@@ -1,3 +1,15 @@
+# Session update - Trainer Class Sprite Sync
+
+- New branch: `randomizer/sync-trainer-class-sprite-sync`.
+- Synced `02_external/upr-fvx` to merged UPR-FVX PR #111 commit `4805a5a930bc97203199816222465c76de2f2150`.
+- Added `08_tests/randomizer/206_trainer_class_sprite_sync.md`.
+- PR #111 adds opt-in `MODE-TRAINER-CLASS-SPRITE-SYNC` for Gen 3 Trainer Class Sprite Sync.
+- Semantics after the pre-merge correction: `Randomize Trainer Names` remains separate and changes only trainer personal names; without `MODE-TRAINER-CLASS-SPRITE-SYNC`, `Randomize Trainer Class Names` remains legacy/textlabel-only; with Sync enabled, Sprite Sync follows the Trainer Class Names `oldClassId -> targetClassId` mapping and sets `trainerClass` plus `trainerPic` to match the target class.
+- Special target classes such as Rival, Gym Leader, Elite Four and Champion are not globally excluded. Target classes without an observed valid `trainerPic` are skipped.
+- Sanitized evidence available before this workspace sync: a regular trainer battle started, the visible sprite changed, and the log showed class/sprite sync markers. The earlier Regular-only semantic mismatch was corrected before merge.
+- Status impact: Trainer Class Sprite Sync is available as an opt-in feature, but final local smoke on the merged PR #111 pin is still required before stronger support claims.
+- Scope boundary: no ROM run by Codex, output ROM, full log, private path, hash, screenshot, save, emulator state, secret, token or `.env` data was documented. No P1 promotion was made.
+
 # Session update - Intro Mon visual source fix smoke
 
 - New branch: `randomizer/sync-intro-mon-visual-source-fix`.
