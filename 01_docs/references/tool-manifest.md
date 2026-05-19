@@ -1,3 +1,13 @@
+# Tool Manifest Update - 2026-05-19 - Strict runtime trainer source sync
+
+- UPR-FVX fork base branch: `compat/firered-gen9-cfru-dpe`.
+- UPR-FVX PR #104: <https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/104>.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX PR #104 commit `6dcda7e499cd3e22319c447c7d7df9ddbd67de60`.
+- Scope: PR #104 implements strict sync for FRLG/CFRU-DPE `trainerbattle` runtime-source TrainerData rows classified as `VALID_RUNTIME_NOT_LOADED`, deduped by trainer ID and constrained to valid in-bounds rows with readable parties.
+- Status impact: Trainer/Foe remains CLI-log-clean with strict sync pinned, but local private-ROM audit plus ingame smoke is still required; Viridian Forest trainer IDs `531/532` should be covered if they remain `VALID_RUNTIME_NOT_LOADED`.
+- Follow-up scope: loaded-mismatch, invalid-pointer, empty-party and out-of-range audit rows remain diagnostic/follow-up work.
+- Safety: no ROM/save/output/log artifact committed, no private path/ROM hash/full log/screenshot documented, no workspace-side UPR-FVX/CFRU/DPE code change and no P1 promotion.
+
 # Tool Manifest Update - 2026-05-19 - Runtime trainer source audit sync
 
 - Workspace branch: `randomizer/sync-runtime-trainer-source-audit`.

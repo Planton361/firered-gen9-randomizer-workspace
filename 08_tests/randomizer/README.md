@@ -1,5 +1,14 @@
 # Current update
 
+- Workspace branch `randomizer/sync-strict-runtime-trainer-source-sync` pins `02_external/upr-fvx` to merged UPR-FVX PR #104 commit `6dcda7e499cd3e22319c447c7d7df9ddbd67de60`.
+- PR #104 adds strict auto-sync for valid FRLG/CFRU-DPE `trainerbattle` runtime-source TrainerData rows classified as `VALID_RUNTIME_NOT_LOADED`.
+- Trainer/Foe remains CLI-log-clean; local private-ROM audit plus ingame smoke is still required before stronger support claims.
+- Viridian Forest trainer IDs `531/532` should be covered by strict sync if the local audit still classifies them as `VALID_RUNTIME_NOT_LOADED`.
+- Loaded-mismatch, invalid-pointer, empty-party and out-of-range audit rows remain diagnosis/follow-up scope.
+- No ROM run, output ROM, private path, full log or P1 promotion is added.
+
+# Current update
+
 - Workspace branch `randomizer/sync-runtime-trainer-party-fix` pins `02_external/upr-fvx` to merged UPR-FVX PR #102 commit `eabbcd7eccb1703f98000f85669d969f516e1247`.
 - PR #102 fixes the confirmed CFRU/DPE FireRed runtime Trainer Pokemon mismatch for Rival 2 trainer IDs `329/330/331` and Brock trainer ID `414`.
 - The fix loads and saves validated raw FRLG `trainerbattle` runtime-source `TrainerData` rows outside the normal loaded trainer count, so those rows are no longer only visible through diagnostics.

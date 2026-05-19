@@ -1,3 +1,12 @@
+# Roadmap update - Strict runtime trainer source sync
+
+- UPR-FVX PR #104 is merged and the workspace submodule is pinned to `6dcda7e499cd3e22319c447c7d7df9ddbd67de60`.
+- The pinned trainer path now strictly syncs valid audit candidates classified as `VALID_RUNTIME_NOT_LOADED` into the trainer model/writer path instead of relying on a narrow known-ID list.
+- Trainer/Foe remains below P1: CLI-log-clean plus strict sync pinned is not a private-ROM audit or ingame smoke pass.
+- Viridian Forest trainer IDs `531/532` should be covered when the local audit still reports them as valid runtime-not-loaded rows.
+- Loaded-mismatch and invalid audit classifications remain separate follow-up lanes.
+- No ROM run, output ROM, workspace-side UPR-FVX/CFRU/DPE code change or P1 promotion is part of this workspace sync.
+
 # Roadmap update - Runtime trainer source audit
 
 - UPR-FVX PR #103 is merged and the workspace submodule is pinned to `14c1c8c0c6960f1b4a0cf0246a1117628ca1f3cc`.
