@@ -1,3 +1,13 @@
+# Session update - Graphics/Palettes smoke settings prep
+
+- New branch: `randomizer/prepare-graphics-palettes-smoke`.
+- Prepared local ignored manual settings input `05_builds/randomizer-smoke/settings/manual/graphics_palettes_smoke.rnqs`.
+- Source profile: existing generated `05_builds/randomizer-smoke/settings/exact-coverage-batch-09/risk_graphics_palettes_visual.rnqs`.
+- Intended scope: isolated Graphics/Palettes visual smoke for `FVX-GFX-001` through `FVX-GFX-004` only.
+- Excluded from the profile scope: Wild, Foe, Items, Misc, TypeEffectiveness/type chaos, Custom Player Graphics and Character-to-Replace manual graphics.
+- No RNQS byte-patching was done; the manual input reuses a generated UPR-FVX settings-profile artifact.
+- No ROM run by Codex, no output ROM, no smoke evidence update and no P1 promotion were made.
+
 # Session update - Wild encounter output audit sync
 
 - New branch: `randomizer/sync-wild-encounter-output-audit`.

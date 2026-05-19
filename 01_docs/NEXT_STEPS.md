@@ -1,3 +1,13 @@
+# Next steps update - Graphics/Palettes smoke settings prep
+
+- A local ignored manual smoke input is prepared at `05_builds/randomizer-smoke/settings/manual/graphics_palettes_smoke.rnqs`.
+- The input is copied from the existing generated `risk_graphics_palettes_visual` settings profile and should be treated as Graphics/Palettes-only.
+- Feature scope: `FVX-GFX-001` Pokemon Palettes Random, `FVX-GFX-002` Palettes Follow Types, `FVX-GFX-003` Palettes Follow Evolutions and `FVX-GFX-004` Palettes Shiny From Normal.
+- Do not mix this smoke with Wild, Foe, Items, Misc, TypeEffectiveness/type chaos, Custom Player Graphics or Character-to-Replace.
+- Next local work, if explicitly run outside Codex, is a targeted visual palette smoke with sanitized observations only.
+- Do not update evidence or promote P1 until a local ingame smoke actually exists.
+- Do not run ROMs through Codex. Continue excluding ROM paths, hashes, full logs, screenshots, output ROMs, saves, emulator states, private paths, secrets, tokens and `.env` data.
+
 # Next steps update - Wild encounter output audit sync
 
 - Treat UPR-FVX PR #118 as synced into the workspace pin at `ed692d07bfc81405706f2b94fda06639426e6a75`.

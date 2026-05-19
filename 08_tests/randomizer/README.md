@@ -1,5 +1,13 @@
 # Current update
 
+- Local ignored manual input `05_builds/randomizer-smoke/settings/manual/graphics_palettes_smoke.rnqs` is prepared for a future isolated Graphics/Palettes visual smoke.
+- It reuses the generated `risk_graphics_palettes_visual` settings-profile artifact; no RNQS fields were guessed or byte-patched.
+- Intended Feature-ID scope: `FVX-GFX-001` through `FVX-GFX-004`.
+- Excluded: Wild, Foe, Items, Misc, TypeEffectiveness/type chaos, Custom Player Graphics and Character-to-Replace.
+- No evidence file is updated, no ROM run by Codex occurred and no P1 promotion is added.
+
+# Current update
+
 - Workspace branch `randomizer/sync-wild-encounter-output-audit` pins `02_external/upr-fvx` to merged UPR-FVX PR #118 commit `ed692d07bfc81405706f2b94fda06639426e6a75`.
 - Wild Encounter Base-vs-Output Audit is available for Gen3/FRLG/CFRU-DPE.
 - The audit is diagnostic-only and does not change writer or randomizer behavior.
