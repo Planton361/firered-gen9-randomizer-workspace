@@ -1,3 +1,13 @@
+# Tool Manifest Update - 2026-05-19 - Runtime trainer post-randomization audit sync
+
+- UPR-FVX fork base branch: `compat/firered-gen9-cfru-dpe`.
+- UPR-FVX PR #106: <https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/106>.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX PR #106 commit `5bb1d853f132095922be2aceef55af2878192b85`.
+- Scope: PR #106 adds an opt-in Pre/Post Runtime-Trainer-Audit that compares a private base ROM against a private randomized output ROM.
+- Status impact: local users can check valid script-referenced runtime trainer rows for base/output raw party differences, loaded output party, output classification, changed-from-base state, loaded/raw comparison and warning markers.
+- Boundary: audit-only; no new writer, auto-sync or randomizer behavior.
+- Safety: no ROM/save/output/log artifact committed, no private path/ROM hash/full log/screenshot documented, no workspace-side UPR-FVX/CFRU/DPE code change and no P1 promotion.
+
 # Tool Manifest Update - 2026-05-19 - Runtime source trainer randomization smoke
 
 - UPR-FVX fork base branch: `compat/firered-gen9-cfru-dpe`.

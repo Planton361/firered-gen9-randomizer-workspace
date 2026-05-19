@@ -1,5 +1,14 @@
 # Current update
 
+- Workspace branch `randomizer/sync-runtime-trainer-post-audit` pins `02_external/upr-fvx` to merged UPR-FVX PR #106 commit `5bb1d853f132095922be2aceef55af2878192b85`.
+- PR #106 adds the opt-in Pre/Post Runtime-Trainer-Audit for local comparison of a private Base-ROM and private randomized Output-ROM.
+- The report is audit-only and helps check valid script-referenced runtime trainer rows for changed-from-base state, loaded/raw output comparison and warning markers.
+- This sync adds no new Writer, Sync or Randomizer behavior, and no ROM run by Codex.
+- Local users should compare their Base-ROM and randomized Output-ROM locally and post only sanitized trainer IDs, party summaries, classifications, warning markers and pass/fail observations.
+- No P1 promotion is added.
+
+# Current update
+
 - `203_runtime_source_trainer_randomization_smoke.md` records sanitized local evidence for merged UPR-FVX PR #105.
 - Workspace branch `randomizer/sync-runtime-source-trainer-randomization` pins `02_external/upr-fvx` to merge commit `c0d8e33f3547020c6fd2fe5baffbc80ec93f9197`.
 - PR #105 makes generic `RUNTIME-SOURCE` trainers randomizer-eligible as regular trainers while preserving known Rival 2/Brock special tags.
