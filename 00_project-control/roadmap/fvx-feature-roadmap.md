@@ -1,6 +1,6 @@
 # Roadmap update - Runtime source trainer randomization smoke evidence refresh
 
-- UPR-FVX PR #105 is merged and the workspace submodule is pinned to `c0d8e33f3547020c6fd2fe5baffbc80ec93f9197`.
+- UPR-FVX PR #105 is merged and its smoke evidence is documented while the workspace submodule remains pinned to PR #106 commit `5bb1d853f132095922be2aceef55af2878192b85`.
 - Generic `RUNTIME-SOURCE` trainers are treated as regular trainers for randomizer eligibility while known special runtime tags remain special.
 - Local sanitized evidence confirms Viridian Forest trainer IDs `531/532` load randomized parties, raw parties match loaded parties, and the observed battle shows randomized Eiscue.
 - The randomized output audit reports `unloaded-valid-parties total=0`, equivalent to no focused valid-runtime-not-loaded rows left in that audit mode.

@@ -1,9 +1,9 @@
 # Session update - Runtime source trainer randomization smoke evidence refresh
 
 - New branch: `randomizer/sync-runtime-source-trainer-randomization-smoke`.
-- Synced `02_external/upr-fvx` to merged UPR-FVX PR #105 commit `c0d8e33f3547020c6fd2fe5baffbc80ec93f9197`.
+- `02_external/upr-fvx` remains pinned to merged UPR-FVX PR #106 commit `5bb1d853f132095922be2aceef55af2878192b85`; no pin rewind is introduced.
 - Added `08_tests/randomizer/204_runtime_source_trainer_randomization_smoke.md`.
-- PR #105 makes generic `RUNTIME-SOURCE` trainers randomizer-eligible by treating them as regular trainers while preserving known Rival 2/Brock special tags.
+- PR #105 makes generic `RUNTIME-SOURCE` trainers randomizer-eligible by treating them as regular trainers while preserving known Rival 2/Brock special tags; the evidence applies to that fix and remains compatible with PR #106 post-audit tooling.
 - Sanitized local evidence confirms Viridian Forest runtime-source trainer IDs `531/532` are loaded, randomized and saved: `531` loaded/raw party is `[Klawf Lv7, Togepi Lv8]`, `532` loaded/raw party is `[Eiscue Lv7, Rampardos Lv7, Aron Lv7]`, and both loaded/raw comparisons match.
 - Ingame smoke observed the formerly vanilla Metapod/Caterpie Viridian Forest trainer showing Eiscue.
 - Runtime-source audit on the randomized output ROM reported `trainer runtime source audit mode=unloaded-valid-parties` with `total=0`, equivalent to no remaining valid runtime-not-loaded rows in that focused audit view.

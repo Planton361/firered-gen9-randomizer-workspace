@@ -16,7 +16,10 @@ raw logs, or document private paths.
 
 - UPR-FVX PR: #105
 - Workspace branch: `randomizer/sync-runtime-source-trainer-randomization-smoke`
-- Workspace submodule pin: `c0d8e33f3547020c6fd2fe5baffbc80ec93f9197`
+- Workspace submodule pin: `5bb1d853f132095922be2aceef55af2878192b85`
+- Pin note: the evidence targets the PR #105 runtime-source randomization fix,
+  while the workspace remains pinned to PR #106 or later so the post-audit
+  tooling is retained.
 
 ## Local Sanitized Evidence
 
