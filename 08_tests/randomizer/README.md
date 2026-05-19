@@ -1,5 +1,16 @@
 # Current update
 
+- `206_trainer_class_sprite_sync.md` records the workspace sync for merged UPR-FVX PR #111.
+- Workspace branch `randomizer/sync-trainer-class-sprite-sync` pins `02_external/upr-fvx` to merge commit `4805a5a930bc97203199816222465c76de2f2150`.
+- `MODE-TRAINER-CLASS-SPRITE-SYNC` is now available as an opt-in mode.
+- `Randomize Trainer Names` remains separate and changes no `classId`/`pic`.
+- Without the mode, `Randomize Trainer Class Names` remains legacy/textlabel-only.
+- With the mode, Sprite Sync follows the Trainer Class Names mapping and syncs class label / classId / visible `trainerPic`.
+- Existing sanitized evidence is pre-final-merge: regular trainer battle started, visible sprite changed, and the log showed class/sprite sync markers. Final local smoke on the merged pin is still required.
+- No ROM run by Codex and no P1 promotion is added.
+
+# Current update
+
 - `205_intro_mon_visual_source_fix_smoke.md` records sanitized local smoke evidence for merged UPR-FVX PR #109.
 - Workspace branch `randomizer/sync-intro-mon-visual-source-fix` pins `02_external/upr-fvx` to merged UPR-FVX PR #109 commit `a9bb4a5f201c5078ec02fe1f2f8417695448afe9`.
 - PR #109 fixes the CFRU/DPE Gen9 BPRE Intro Mon visual mismatch by syncing the Nidoran female `PokemonFrontImages` and `PokemonNormalPalettes` entries to the selected intro species' asset pointers when Intro Mon is randomized.
@@ -143,7 +154,7 @@
 - `195_fvx_feature_test_status_matrix.md` documents the machine-readable per-feature status matrix.
 - `fvx_feature_test_status_matrix.tsv` tracks all 130 dashboard Feature IDs with profile mapping, log status, ingame status, caveats, blockers, evidence anchors and next steps.
 - The dashboard remains the human overview; the TSV is the CLI-profile-matrix worklist.
-- Current matrix status records the latest sanitized knowledge: Traits tab log-passed including Evolutions with caveats for hard combos, Starters/Statics/Trades log-passed, Starter Held Items log-passed, Moves/Movesets log-passed, Foe base log-passed, Trainer Class Names textlabel-only, Trainer held Sensible Items expected-fail, Special-Wild out-of-scope, Graphics/Palettes open and Misc Tweaks not started.
+- Current matrix status records the latest sanitized knowledge: Traits tab log-passed including Evolutions with caveats for hard combos, Starters/Statics/Trades log-passed, Starter Held Items log-passed, Moves/Movesets log-passed, Foe base log-passed, Trainer Class Names legacy/textlabel-only without Sync, Trainer Class Sprite Sync opt-in available with final merged-pin smoke still needed, Trainer held Sensible Items expected-fail, Special-Wild out-of-scope, Graphics/Palettes open and Misc Tweaks not started.
 - No ROMs, logs, output ROMs, private paths or P1 promotion are added.
 
 # Current update
