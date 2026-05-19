@@ -1,3 +1,14 @@
+# Session update - Intro Mon visual source diagnostics sync
+
+- New branch: `randomizer/sync-intro-mon-visual-source-diagnostics`.
+- Synced `02_external/upr-fvx` to merged UPR-FVX PR #107 commit `a7e098a5158d824b1ddec62a286f2a6ffafce8e4`.
+- PR #107 adds an opt-in Intro Mon Visual-Source diagnostic for known FRLG Intro Mon literals and pointers, with optional Base-ROM vs randomized Output-ROM comparison for local use.
+- Setting semantics are documented: `No Random Intro Mon` is the negative GUI option; internally `randomizeIntroMon=true` is the active Randomize Intro Mon path.
+- `MODE-INTRO-RANDOM` sets `randomizeIntroMon=true`; `MODE-NO-RANDOM-INTRO` and `FVX-GEN-003` set `randomizeIntroMon=false`.
+- Status impact: Intro Mon Visual-Source-Diagnose ist verfuegbar, aber sie ist Diagnose-only. Sie bestaetigt keine sichtbare Ingame-Aenderung und enthaelt keinen Writer-/Offset-Fix.
+- Local follow-up should run the opt-in report with private Base/Output ROMs and share only sanitized candidate source names, offsets, decoded species, `changedFromBase` yes/no and observed visible Intro Mon label.
+- Scope boundary: no ROM run by Codex, output ROM, full log, private path, hash, screenshot, save, emulator state, secret, token or `.env` data was documented. No P1 promotion was made.
+
 # Session update - Runtime source trainer randomization smoke evidence refresh
 
 - New branch: `randomizer/sync-runtime-source-trainer-randomization-smoke`.

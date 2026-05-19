@@ -1,3 +1,12 @@
+# Next steps update - Intro Mon visual source diagnostics sync
+
+- Treat UPR-FVX PR #107 as synced into the workspace pin at `a7e098a5158d824b1ddec62a286f2a6ffafce8e4`.
+- Intro Mon Visual-Source-Diagnose is now available for local opt-in checks of known FRLG Intro Mon literals/pointers and optional Base-ROM vs randomized Output-ROM comparison.
+- Keep the semantics explicit: `No Random Intro Mon` is a negative GUI option; `randomizeIntroMon=true` is the active Randomize Intro Mon path; `MODE-INTRO-RANDOM` sets true; `MODE-NO-RANDOM-INTRO` and `FVX-GEN-003` set false.
+- This is diagnosis-only. It does not fix the visible Intro Mon mismatch, does not prove ingame visuals and does not promote P1.
+- Next local evidence should compare private Base/Output ROMs with the opt-in report and share only sanitized source names, hex offsets, raw/decoded species, `changedFromBase=yes/no` and observed visible Intro Mon label.
+- Do not run ROMs through Codex. Continue excluding ROM paths, hashes, full logs, screenshots, output ROMs, saves, emulator states, private paths, secrets, tokens and `.env` data.
+
 # Next steps update - Runtime source trainer randomization smoke evidence refresh
 
 - Treat UPR-FVX PR #105 runtime-source randomization evidence as documented while the workspace remains pinned to PR #106 commit `5bb1d853f132095922be2aceef55af2878192b85` or later.

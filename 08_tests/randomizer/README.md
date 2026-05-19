@@ -1,5 +1,14 @@
 # Current update
 
+- Workspace branch `randomizer/sync-intro-mon-visual-source-diagnostics` pins `02_external/upr-fvx` to merged UPR-FVX PR #107 commit `a7e098a5158d824b1ddec62a286f2a6ffafce8e4`.
+- PR #107 adds an opt-in Intro Mon Visual-Source diagnostic for known FRLG Intro Mon literals/pointers and optional Base-ROM vs randomized Output-ROM comparison.
+- `No Random Intro Mon` is documented as the negative GUI option; `randomizeIntroMon=true` is the active Randomize Intro Mon path.
+- `MODE-INTRO-RANDOM` sets true; `MODE-NO-RANDOM-INTRO` and `FVX-GEN-003` set false.
+- This is diagnosis-only: no visible Intro Mon fix, no ROM run by Codex and no P1 promotion are added.
+- Sanitized future evidence should include only candidate source names, offsets, raw/decoded species, `changedFromBase` yes/no and observed visible Intro Mon label.
+
+# Current update
+
 - `204_runtime_source_trainer_randomization_smoke.md` records expanded sanitized local evidence for merged UPR-FVX PR #105.
 - Workspace branch `randomizer/sync-runtime-source-trainer-randomization-smoke` keeps `02_external/upr-fvx` pinned to PR #106 commit `5bb1d853f132095922be2aceef55af2878192b85`.
 - PR #105 makes generic `RUNTIME-SOURCE` trainers randomizer-eligible as regular trainers while preserving known Rival 2/Brock special tags; this smoke evidence remains compatible with PR #106 post-audit tooling.
