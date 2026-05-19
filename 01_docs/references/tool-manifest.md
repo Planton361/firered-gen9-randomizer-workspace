@@ -1,3 +1,13 @@
+# Tool Manifest Update - 2026-05-19 - Intro Mon visual source fix smoke
+
+- UPR-FVX fork base branch: `compat/firered-gen9-cfru-dpe`.
+- UPR-FVX PR #109: <https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/109>.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX PR #109 commit `a9bb4a5f201c5078ec02fe1f2f8417695448afe9`.
+- Scope: PR #109 syncs the confirmed CFRU/DPE Gen9 BPRE Intro Mon visual source by updating the Nidoran female `PokemonFrontImages` and `PokemonNormalPalettes` entries to the selected intro species' asset pointers during Intro Mon randomization.
+- Status impact: local sanitized evidence confirms the visible Oak intro sprite changed away from Nidoran female, with no crash, freeze or garbled sprite observed.
+- Boundary: targeted ingame smoke only; no full-playthrough claim and no P1 promotion.
+- Safety: no ROM/save/output/log artifact committed, no private path/ROM hash/full log/screenshot documented, no workspace-side UPR-FVX/CFRU/DPE code change and no P1 promotion.
+
 # Tool Manifest Update - 2026-05-19 - Intro Mon visual source diagnostics sync
 
 - UPR-FVX fork base branch: `compat/firered-gen9-cfru-dpe`.

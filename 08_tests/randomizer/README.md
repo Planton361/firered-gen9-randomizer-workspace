@@ -1,5 +1,15 @@
 # Current update
 
+- `205_intro_mon_visual_source_fix_smoke.md` records sanitized local smoke evidence for merged UPR-FVX PR #109.
+- Workspace branch `randomizer/sync-intro-mon-visual-source-fix` pins `02_external/upr-fvx` to merged UPR-FVX PR #109 commit `a9bb4a5f201c5078ec02fe1f2f8417695448afe9`.
+- PR #109 fixes the CFRU/DPE Gen9 BPRE Intro Mon visual mismatch by syncing the Nidoran female `PokemonFrontImages` and `PokemonNormalPalettes` entries to the selected intro species' asset pointers when Intro Mon is randomized.
+- Previous sanitized finding: known FRLG Intro sources changed from Nidoran female to Hitmontop, but the visible ingame Oak intro sprite stayed Nidoran female.
+- Local smoke after PR #109 observed the visible Oak intro sprite changed away from Nidoran female, with no crash, freeze or garbled sprite.
+- Status impact: `FVX-GEN-003` / Intro Mon visual mismatch is locally fixed for the targeted smoke.
+- Caveat: targeted ingame smoke only, not full-playthrough coverage. No ROM run by Codex and no P1 promotion is added.
+
+# Current update
+
 - Workspace branch `randomizer/sync-intro-mon-visual-source-diagnostics` pins `02_external/upr-fvx` to merged UPR-FVX PR #107 commit `a7e098a5158d824b1ddec62a286f2a6ffafce8e4`.
 - PR #107 adds an opt-in Intro Mon Visual-Source diagnostic for known FRLG Intro Mon literals/pointers and optional Base-ROM vs randomized Output-ROM comparison.
 - `No Random Intro Mon` is documented as the negative GUI option; `randomizeIntroMon=true` is the active Randomize Intro Mon path.

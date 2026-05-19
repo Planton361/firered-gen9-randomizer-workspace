@@ -1,3 +1,11 @@
+# Roadmap update - Intro Mon visual source fix smoke
+
+- UPR-FVX PR #109 is merged and the workspace submodule is pinned to `a9bb4a5f201c5078ec02fe1f2f8417695448afe9`.
+- The pinned fix syncs the confirmed CFRU/DPE Gen9 BPRE Intro Mon visual source by updating the Nidoran female `PokemonFrontImages` and `PokemonNormalPalettes` entries to the selected intro species' asset pointers during Intro Mon randomization.
+- Sanitized local smoke confirms the visible Oak intro sprite changed away from Nidoran female and no crash, freeze or garbled sprite was observed.
+- `FVX-GEN-003` / Intro Mon visual mismatch is now locally fixed for the targeted smoke, but this remains below P1 and below full-playthrough coverage.
+- No ROM run by Codex, output ROM, workspace-side UPR-FVX/CFRU/DPE code change or P1 promotion is part of this workspace sync.
+
 # Roadmap update - Intro Mon visual source diagnostics
 
 - UPR-FVX PR #107 is merged and the workspace submodule is pinned to `a7e098a5158d824b1ddec62a286f2a6ffafce8e4`.

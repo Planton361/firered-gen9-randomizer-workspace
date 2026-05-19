@@ -37,10 +37,12 @@ Dieses Repository enthält nicht:
 
 ## Aktueller Randomizer-Pin
 
-- `02_external/upr-fvx` bleibt auf UPR-FVX PR #107 Merge-Commit `a7e098a5158d824b1ddec62a286f2a6ffafce8e4` gepinnt.
-- PR #107 stellt die Intro-Mon Visual-Source-Diagnose bereit: `No Random Intro Mon` ist die negative GUI-Option, intern ist `randomizeIntroMon=true` der aktive Intro-Mon-Randomize-Pfad; `MODE-INTRO-RANDOM` setzt true, `MODE-NO-RANDOM-INTRO` und `FVX-GEN-003` setzen false.
-- Die Diagnose prueft bekannte FRLG-Intro-Literals/Pointer und optional Base-vs-Output. Sie ist Diagnose-only: kein Intro-Mon-Writer-Fix, keine Runtime-Garantie, keine P1-Promotion.
-- PR #105 macht strict geladene generische `RUNTIME-SOURCE`-Trainer randomizer-eligible; diese Evidence bleibt mit dem PR-#106-Post-Audit-Tooling und dem PR-#107-Pin kompatibel.
+- `02_external/upr-fvx` bleibt auf UPR-FVX PR #109 Merge-Commit `a9bb4a5f201c5078ec02fe1f2f8417695448afe9` gepinnt.
+- PR #109 synchronisiert fuer CFRU/DPE Gen9 BPRE die sichtbare Intro-Mon-Visual-Quelle: die Nidoran-female `PokemonFrontImages`- und `PokemonNormalPalettes`-Eintraege werden beim Intro-Mon-Randomize-Pfad auf die Asset-Pointer der Ziel-Spezies gesetzt.
+- Sanitized local evidence bestaetigt: der sichtbare Oak-Intro-Sprite wechselte nach dem Fix weg von Nidoran female; kein Crash, Freeze oder garbled sprite wurde im targeted Ingame-Smoke beobachtet.
+- PR #107/#108 stellen weiterhin die Intro-Mon Visual-Source-Diagnose bereit: `No Random Intro Mon` ist die negative GUI-Option, intern ist `randomizeIntroMon=true` der aktive Intro-Mon-Randomize-Pfad; `MODE-INTRO-RANDOM` setzt true, `MODE-NO-RANDOM-INTRO` und `FVX-GEN-003` setzen false.
+- Intro Mon bleibt targeted-smoke-bestaetigt, nicht Full-Playthrough- oder P1-promoted.
+- PR #105 macht strict geladene generische `RUNTIME-SOURCE`-Trainer randomizer-eligible; diese Evidence bleibt mit dem PR-#106-Post-Audit-Tooling und dem PR-#109-Pin kompatibel.
 - Viridian Forest runtime-source trainer IDs `531/532` sind durch sanitized local evidence fuer Load, Randomize, Save und Ingame-Smoke bestaetigt.
 - Der randomized Output-ROM Audit meldete fuer `unloaded-valid-parties` `total=0`; Rival 2 `329/330/331` und Brock `414` zeigten ebenfalls randomisierte Parties in sanitized local evidence.
 - Loaded-mismatch, invalid-pointer, empty-party, out-of-range Runtime-Rows und Full-Playthrough bleiben Follow-up-Scope. Keine P1-Promotion.
