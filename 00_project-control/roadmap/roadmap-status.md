@@ -1,3 +1,13 @@
+# Roadmap status update - Trainer Class Sprite Sync final smoke
+
+- Synced merged UPR-FVX PR #116 into the workspace pin at `36dd431d059bc69eb1bee3311200e28c872c6cc9`.
+- PR #116 finalizes the opt-in `MODE-TRAINER-CLASS-SPRITE-SYNC` behavior after the per-trainer assignment and Rival/Friend grouped-consistency follow-ups.
+- Semantics: `Randomize Trainer Names` remains personal-name-only; `Randomize Trainer Class Names` remains legacy/textlabel-only without Sprite Sync; with Sprite Sync enabled, class label, `trainerClass` and visible `trainerPic` follow the class assignment.
+- Status impact: Trainer Class Sprite Sync is locally smoke-confirmed for the targeted visual path. Regular trainers use per-trainer class/sprite assignments; Rival/Friend rows keep grouped class/sprite consistency across appearances; runtime-source rows are included where eligible.
+- Sanitized local evidence confirms Viridian Forest Bug Catcher classes randomize per trainer, Rival keeps the first randomized sprite across later appearances, other sampled trainers appeared aligned, and no garbled sprite or crash was reported.
+- Caveat: targeted visual smoke only, not a full playthrough, broad route/category sweep or P1 promotion.
+- No ROM paths, hashes, CRCs, full logs, screenshots, saves, emulator states, output ROMs, workspace-side UPR-FVX/CFRU/DPE code changes or P1 promotion are added.
+
 # Roadmap status update - Trainer Class Sprite Sync
 
 - Synced merged UPR-FVX PR #111 into the workspace pin at `4805a5a930bc97203199816222465c76de2f2150`.
