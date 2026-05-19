@@ -35,6 +35,13 @@ Dieses Repository enthält nicht:
 - private `.env`-Dateien
 - urheberrechtlich relevante Artefakte
 
+## Aktueller Randomizer-Pin
+
+- `02_external/upr-fvx` ist auf UPR-FVX PR #103 Merge-Commit `14c1c8c0c6960f1b4a0cf0246a1117628ca1f3cc` gepinnt.
+- PR #103 stellt einen opt-in Runtime-Trainer-Source-Audit bereit.
+- Der Audit ist Diagnose-only: kein Auto-Sync, keine neue Writer-/Save-Erweiterung und keine P1-Promotion.
+- Weitere Trainer-Runtime-Fixes folgen erst nach sanitized local audit evidence.
+
 ## Wichtige Dateien
 
 - `AGENTS.md` – Regeln für Codex und andere Coding Agents

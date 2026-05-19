@@ -1,3 +1,15 @@
+# Session update - Runtime trainer source audit sync
+
+- New branch: `randomizer/sync-runtime-trainer-source-audit`.
+- Synced `02_external/upr-fvx` to merged UPR-FVX PR #103 commit `14c1c8c0c6960f1b4a0cf0246a1117628ca1f3cc`.
+- PR #103 adds an opt-in global FRLG Trainer Runtime Source Audit to the existing runtime-source diagnostics.
+- The audit is enabled locally through system property `uprfvx.trainerRuntimeSourceAudit` or env `UPRFVX_TRAINER_RUNTIME_SOURCE_AUDIT`.
+- Supported audit modes are `all`, `unloaded-valid-parties`, `loaded-mismatch` and `invalid`.
+- The audit dedupes script-referenced trainer IDs and reports script offsets, battle types, trainer/party pointer metadata, raw/loaded party summaries and classification.
+- Status impact: Runtime Trainer Source Audit is available, but it is audit-only. No automatic sync/write behavior, no SaveTrainers expansion and no normal Randomizer behavior change are documented in this workspace sync.
+- Further fixes for additional vanilla-looking trainers must wait for sanitized local audit evidence proving specific valid in-game runtime rows.
+- Scope boundary: no ROM run, output ROM, full log, private path, hash, screenshot, save, emulator state, secret, token or `.env` data was documented. No P1 promotion was made.
+
 # Session update - Runtime trainer party fix sync
 
 - New branch: `randomizer/sync-runtime-trainer-party-fix`.

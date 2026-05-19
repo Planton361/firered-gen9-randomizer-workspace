@@ -1,3 +1,13 @@
+# Next steps update - Runtime trainer source audit sync
+
+- Treat UPR-FVX PR #103 as synced into the workspace pin at `14c1c8c0c6960f1b4a0cf0246a1117628ca1f3cc`.
+- Runtime Trainer Source Audit is now available through `uprfvx.trainerRuntimeSourceAudit` / `UPRFVX_TRAINER_RUNTIME_SOURCE_AUDIT`.
+- Use `unloaded-valid-parties` first when looking for likely in-game trainer rows that are script-referenced, have valid raw parties and are not present in the normal loaded trainer model.
+- Use `loaded-mismatch` for loaded trainer rows whose raw runtime party differs from the loaded model, and `invalid` to inspect out-of-range, invalid-pointer, empty-party or likely false-positive candidates.
+- Keep this as diagnosis only: no auto-sync, no SaveTrainers expansion and no broader writer change follows from PR #103.
+- Additional runtime-source fixes for trainer battles beyond the already synced Rival 2/Brock fix require sanitized local audit evidence first.
+- Do not run ROMs through Codex. Continue excluding ROM paths, hashes, full logs, screenshots, output ROMs, saves, emulator states, private paths, secrets, tokens and `.env` data. No P1 promotion follows from this sync.
+
 # Next steps update - Runtime trainer party fix sync
 
 - Treat UPR-FVX PR #102 as synced into the workspace pin at `eabbcd7eccb1703f98000f85669d969f516e1247`.
