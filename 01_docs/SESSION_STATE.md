@@ -1,3 +1,13 @@
+# Session update - Runtime trainer post-randomization audit sync
+
+- New branch: `randomizer/sync-runtime-trainer-post-audit`.
+- Synced `02_external/upr-fvx` to merged UPR-FVX PR #106 commit `5bb1d853f132095922be2aceef55af2878192b85`.
+- PR #106 adds an opt-in Pre/Post Runtime-Trainer-Audit for comparing a private base ROM with a private randomized output ROM.
+- The audit reports valid script-referenced runtime trainer rows deduped by `trainerId`, including base/output raw parties, loaded output party, output classification, changed-from-base state and loaded/raw comparison.
+- Status impact: Pre/Post Runtime-Trainer-Audit is available for local verification that valid runtime trainers were loaded, randomized and written back, but this workspace sync documents audit-only behavior.
+- Scope boundary: no new writer, sync or randomizer behavior is added by this workspace PR; no ROM run, output ROM, private path, hash, full log, screenshot, save, emulator state, secret, token or `.env` data was documented. No P1 promotion was made.
+- Local next evidence should compare the user's Base-ROM and randomized Output-ROM through the opt-in audit and share only sanitized trainer IDs, party summaries, classifications, warning markers and pass/fail observations.
+
 # Session update - Runtime source trainer randomization smoke
 
 - New branch: `randomizer/sync-runtime-source-trainer-randomization`.

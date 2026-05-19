@@ -1,3 +1,11 @@
+# Roadmap update - Runtime trainer post-randomization audit
+
+- UPR-FVX PR #106 is merged and the workspace submodule is pinned to `5bb1d853f132095922be2aceef55af2878192b85`.
+- The pinned diagnostics now include an opt-in Pre/Post Runtime-Trainer-Audit for comparing a local Base-ROM with a randomized Output-ROM.
+- The audit helps verify whether valid script-referenced runtime trainer rows changed from base, are loaded in the output model and match the output raw party.
+- This is an audit-only roadmap step: no new writer, sync or randomizer behavior, no ROM run by Codex and no P1 promotion.
+- Next Foe Trainer work should use sanitized local two-ROM audit evidence before opening any follow-up for unchanged, loaded-mismatch or still-not-loaded runtime rows.
+
 # Roadmap update - Runtime source trainer randomization smoke
 
 - UPR-FVX PR #105 is merged and the workspace submodule is pinned to `c0d8e33f3547020c6fd2fe5baffbc80ec93f9197`.

@@ -1,3 +1,12 @@
+# Next steps update - Runtime trainer post-randomization audit sync
+
+- Treat UPR-FVX PR #106 as synced into the workspace pin at `5bb1d853f132095922be2aceef55af2878192b85`.
+- Pre/Post Runtime-Trainer-Audit is now available as an opt-in local diagnostic for comparing a private Base-ROM with a private randomized Output-ROM.
+- Use the audit to review valid script-referenced runtime trainer rows, changed-from-base status, loaded/raw output comparison and warning markers.
+- Keep this as audit-only: PR #106 adds no new writer, auto-sync or randomizer behavior.
+- Local users should run the two-ROM comparison themselves and share only sanitized trainer IDs, party summaries, classifications, warning markers and pass/fail observations.
+- Do not run ROMs through Codex. Continue excluding ROM paths, hashes, full logs, screenshots, output ROMs, saves, emulator states, private paths, secrets, tokens and `.env` data. No P1 promotion follows from this sync.
+
 # Next steps update - Runtime source trainer randomization smoke
 
 - Treat UPR-FVX PR #105 as synced into the workspace pin at `c0d8e33f3547020c6fd2fe5baffbc80ec93f9197`.
