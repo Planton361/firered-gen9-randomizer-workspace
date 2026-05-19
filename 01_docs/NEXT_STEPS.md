@@ -1,3 +1,12 @@
+# Next steps update - Intro Mon visual source fix smoke
+
+- Treat UPR-FVX PR #109 as synced into the workspace pin at `a9bb4a5f201c5078ec02fe1f2f8417695448afe9`.
+- Treat `08_tests/randomizer/205_intro_mon_visual_source_fix_smoke.md` as the sanitized local evidence for the Intro Mon visual-source fix.
+- `FVX-GEN-003` / Intro Mon visual mismatch is locally fixed for the targeted CFRU/DPE Gen9 BPRE smoke: the visible Oak intro sprite changed away from Nidoran female, with no crash, freeze or garbled sprite observed.
+- Keep the caveat explicit: this was targeted ingame smoke, not a full playthrough and not a global visual-source proof.
+- Do not promote P1 unless explicitly approved later.
+- Do not run ROMs through Codex. Continue excluding ROM paths, hashes, full logs, screenshots, output ROMs, saves, emulator states, private paths, secrets, tokens and `.env` data.
+
 # Next steps update - Intro Mon visual source diagnostics sync
 
 - Treat UPR-FVX PR #107 as synced into the workspace pin at `a7e098a5158d824b1ddec62a286f2a6ffafce8e4`.
