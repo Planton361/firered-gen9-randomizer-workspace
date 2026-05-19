@@ -1,3 +1,14 @@
+# Roadmap update - Runtime source trainer randomization smoke evidence refresh
+
+- UPR-FVX PR #105 is merged and the workspace submodule is pinned to `c0d8e33f3547020c6fd2fe5baffbc80ec93f9197`.
+- Generic `RUNTIME-SOURCE` trainers are treated as regular trainers for randomizer eligibility while known special runtime tags remain special.
+- Local sanitized evidence confirms Viridian Forest trainer IDs `531/532` load randomized parties, raw parties match loaded parties, and the observed battle shows randomized Eiscue.
+- The randomized output audit reports `unloaded-valid-parties total=0`, equivalent to no focused valid-runtime-not-loaded rows left in that audit mode.
+- Additional sanitized observations show Rival 2 trainer IDs `329/330/331` randomized and Brock trainer ID `414` randomized to `[Drifloon Lv12, Growlithe Lv14]`.
+- This confirms the targeted runtime-source Trainer Pokemon path, but does not promote broader Trainer/Foe P1 support.
+- Loaded-mismatch, invalid audit classifications, out-of-range rows and full playthrough coverage remain separate follow-up lanes.
+- No ROM run by Codex, output ROM, workspace-side UPR-FVX/CFRU/DPE code change or P1 promotion is part of this workspace sync.
+
 # Roadmap update - Runtime trainer post-randomization audit
 
 - UPR-FVX PR #106 is merged and the workspace submodule is pinned to `5bb1d853f132095922be2aceef55af2878192b85`.

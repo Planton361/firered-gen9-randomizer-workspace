@@ -37,10 +37,11 @@ Dieses Repository enthält nicht:
 
 ## Aktueller Randomizer-Pin
 
-- `02_external/upr-fvx` ist auf UPR-FVX PR #106 Merge-Commit `5bb1d853f132095922be2aceef55af2878192b85` gepinnt.
-- PR #106 ergaenzt den opt-in Pre/Post Runtime-Trainer-Audit fuer den lokalen Vergleich von Base-ROM und randomisierter Output-ROM.
-- Der neue Audit ist Diagnose-only: keine neue Writer-, Sync- oder Randomizer-Aenderung.
-- Runtime-source strict sync plus randomizer eligibility bleibt fuer Viridian Forest `531/532` lokal bestaetigt; breitere `loaded-mismatch`, invalid-pointer, empty-party und out-of-range Runtime-Rows bleiben Follow-up-Scope. Keine P1-Promotion.
+- `02_external/upr-fvx` ist auf UPR-FVX PR #105 Merge-Commit `c0d8e33f3547020c6fd2fe5baffbc80ec93f9197` gepinnt.
+- PR #105 macht strict geladene generische `RUNTIME-SOURCE`-Trainer randomizer-eligible.
+- Viridian Forest runtime-source trainer IDs `531/532` sind durch sanitized local evidence fuer Load, Randomize, Save und Ingame-Smoke bestaetigt.
+- Der randomized Output-ROM Audit meldete fuer `unloaded-valid-parties` `total=0`; Rival 2 `329/330/331` und Brock `414` zeigten ebenfalls randomisierte Parties in sanitized local evidence.
+- Loaded-mismatch, invalid-pointer, empty-party, out-of-range Runtime-Rows und Full-Playthrough bleiben Follow-up-Scope. Keine P1-Promotion.
 
 ## Wichtige Dateien
 
