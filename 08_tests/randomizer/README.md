@@ -1,8 +1,8 @@
 # Current update
 
 - `204_runtime_source_trainer_randomization_smoke.md` records expanded sanitized local evidence for merged UPR-FVX PR #105.
-- Workspace branch `randomizer/sync-runtime-source-trainer-randomization-smoke` pins `02_external/upr-fvx` to merge commit `c0d8e33f3547020c6fd2fe5baffbc80ec93f9197`.
-- PR #105 makes generic `RUNTIME-SOURCE` trainers randomizer-eligible as regular trainers while preserving known Rival 2/Brock special tags.
+- Workspace branch `randomizer/sync-runtime-source-trainer-randomization-smoke` keeps `02_external/upr-fvx` pinned to PR #106 commit `5bb1d853f132095922be2aceef55af2878192b85`.
+- PR #105 makes generic `RUNTIME-SOURCE` trainers randomizer-eligible as regular trainers while preserving known Rival 2/Brock special tags; this smoke evidence remains compatible with PR #106 post-audit tooling.
 - Local targeted audit for Viridian Forest trainer IDs `531/532` showed randomized loaded/raw parties with `loadedRawPartyComparison=match`.
 - Ingame smoke observed the formerly vanilla Metapod/Caterpie Viridian Forest trainer showing Eiscue.
 - Randomized output audit reported `trainer runtime source audit mode=unloaded-valid-parties` with `total=0`.
