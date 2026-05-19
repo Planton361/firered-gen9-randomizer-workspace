@@ -1,3 +1,11 @@
+# Roadmap update - Wild encounter output audit sync
+
+- UPR-FVX PR #118 is merged and the workspace submodule is pinned to `ed692d07bfc81405706f2b94fda06639426e6a75`.
+- The pinned change adds an opt-in Wild Encounter Base-vs-Output Audit for Gen3/FRLG/CFRU-DPE.
+- The audit is diagnostic-only: it compares modeled Gen3 base `WildPokemon` table slots from Base-ROM and Output-ROM and reports changed slots plus summary counts, but it does not change writer or randomizer behavior.
+- CFRU/DPE special/runtime wild sources remain follow-up if audit evidence and ingame observations diverge.
+- No ROM run by Codex, output ROM, workspace-side UPR-FVX/CFRU/DPE code change or P1 promotion is part of this workspace sync.
+
 # Roadmap update - Combined trainer visual runtime smoke
 
 - Added sanitized evidence file `08_tests/randomizer/208_combined_trainer_visual_runtime_smoke.md`.
