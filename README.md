@@ -37,7 +37,12 @@ Dieses Repository enthält nicht:
 
 ## Aktueller Randomizer-Pin
 
-- `02_external/upr-fvx` ist auf UPR-FVX PR #117 Merge-Commit `5983011752273e00c402e25cc1ae1a9baca110f1` gepinnt.
+- `02_external/upr-fvx` ist auf UPR-FVX PR #118 Merge-Commit `ed692d07bfc81405706f2b94fda06639426e6a75` gepinnt.
+- PR #118 ergaenzt einen opt-in Wild Encounter Base-vs-Output Audit fuer Gen3/FRLG/CFRU-DPE.
+- Der Audit ist diagnostic-only: keine Writer-/Randomizer-Verhaltensaenderung, keine P1-Promotion.
+- Scope: modeled Gen3 base `WildPokemon` table path. Der Report vergleicht Base- und Output-ROM lokal pro Encounter-Slot mit Map-/Area-Identifier soweit verfuegbar, Encounter-Typ, Slot-Index, Base-Species, Output-Species und `changedFromBase`, plus Summary fuer total/changed/unchanged/changed percentage.
+- CFRU/DPE special/runtime wild sources bleiben Follow-up, falls Audit und Ingame-Beobachtung auseinanderlaufen.
+- Vorheriger Pin: UPR-FVX PR #117 Merge-Commit `5983011752273e00c402e25cc1ae1a9baca110f1`.
 - PR #117 fixt `Rival Carries Starter Through Game` fuer CFRU/DPE Gen9 BPRE nach Foe-Pokemon-Randomization und verhindert die Intro-Mon-Species-0-Regression im extended BPRE-Pool.
 - Combined Trainer Visual Runtime Smoke ist als `PASS_WITH_CAVEATS` dokumentiert: Intro Mon sichtbar randomisiert, Player Charmander -> Oak-Lab Rival Squirtle und Route-22 Rival Squirtle, Route-22-Rival-Sprite konsistent zum Oak-Lab-Rival-Sprite, Viridian-Forest-Trainer-Sprites randomisiert, keine Crash/Freeze/garbled-sprite-Beobachtung. Route-22 Rival non-starter Pokemon Silvally Lv9 zeigt, dass Rival Carries Starter Through Game den Starter-Slot schuetzt/korrigiert, waehrend Non-Starter-Rival-Pokemon fuer Foe-Pokemon-Randomization eligible bleiben.
 - `08_tests/randomizer/208_combined_trainer_visual_runtime_smoke.md` dokumentiert diesen aktuellen kombinierten Runtime-Smoke.

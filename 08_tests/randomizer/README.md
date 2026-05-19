@@ -1,5 +1,13 @@
 # Current update
 
+- Workspace branch `randomizer/sync-wild-encounter-output-audit` pins `02_external/upr-fvx` to merged UPR-FVX PR #118 commit `ed692d07bfc81405706f2b94fda06639426e6a75`.
+- Wild Encounter Base-vs-Output Audit is available for Gen3/FRLG/CFRU-DPE.
+- The audit is diagnostic-only and does not change writer or randomizer behavior.
+- Scope: modeled Gen3 base `WildPokemon` table path. CFRU/DPE special/runtime wild sources remain follow-up if audit and ingame observations diverge.
+- No ROM run by Codex and no P1 promotion is added.
+
+# Current update
+
 - `208_combined_trainer_visual_runtime_smoke.md` records sanitized local combined trainer visual runtime smoke evidence.
 - Combined trainer visual runtime smoke status is `PASS_WITH_CAVEATS`.
 - Intro Mon was visibly randomized.

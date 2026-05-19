@@ -1,9 +1,19 @@
+# Tool Manifest Update - 2026-05-19 - Wild encounter output audit
+
+- UPR-FVX fork base branch: `compat/firered-gen9-cfru-dpe`.
+- UPR-FVX PR #118: <https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/118>.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX PR #118 commit `ed692d07bfc81405706f2b94fda06639426e6a75`.
+- Scope: PR #118 adds opt-in Wild Encounter Base-vs-Output Audit tooling for Gen3/FRLG/CFRU-DPE.
+- Status impact: diagnostic-only report for the modeled Gen3 base `WildPokemon` table path; no writer/randomizer behavior change and no P1 promotion.
+- Follow-up boundary: CFRU/DPE special/runtime wild sources remain separate if audit results and ingame observations diverge.
+- Safety: no ROM/save/output/log artifact committed, no private path/ROM hash/full log/screenshot documented, no workspace-side UPR-FVX/CFRU/DPE code change and no P1 promotion.
+
 # Tool Manifest Update - 2026-05-19 - Combined trainer visual runtime smoke
 
 - Workspace evidence file: `08_tests/randomizer/208_combined_trainer_visual_runtime_smoke.md`.
 - Scope: sanitized local combined trainer visual runtime smoke on the current UPR-FVX PR #117 workspace pin.
-- Status impact: `PASS_WITH_CAVEATS`; Intro Mon visibly randomized; Player Charmander -> Oak-Lab Rival Squirtle; Route 22 Rival sprite consistent with Oak-Lab Rival sprite; Viridian Forest trainer sprites randomized; no crash/freeze observed.
-- Caveat: Route 22 Rival starter carry remains partial because a randomized non-starter Rival Pokemon, Lv9 Silvally, defeated the player before the starter could be inspected.
+- Status impact: `PASS_WITH_CAVEATS`; Intro Mon visibly randomized; Player Charmander -> Oak-Lab Rival Squirtle and Route 22 Rival Squirtle; Route 22 Rival sprite consistent with Oak-Lab Rival sprite; Viridian Forest trainer sprites randomized; no crash/freeze observed.
+- Caveat: targeted visual/runtime smoke only. Route 22 Rival non-starter Pokemon Silvally Lv9 is documented as a randomized non-starter, while the Rival starter slot stayed Squirtle.
 - Boundary: targeted smoke only, not full-playthrough coverage, all-starter-choice proof or P1 promotion.
 - Safety: no ROM/save/output/log artifact committed, no private path/ROM hash/full log/screenshot documented, no workspace-side UPR-FVX/CFRU/DPE code change and no P1 promotion.
 

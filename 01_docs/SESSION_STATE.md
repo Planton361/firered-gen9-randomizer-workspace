@@ -1,3 +1,13 @@
+# Session update - Wild encounter output audit sync
+
+- New branch: `randomizer/sync-wild-encounter-output-audit`.
+- Synced `02_external/upr-fvx` to merged UPR-FVX PR #118 commit `ed692d07bfc81405706f2b94fda06639426e6a75`.
+- PR #118 adds an opt-in Wild Encounter Base-vs-Output Audit for Gen3/FRLG/CFRU-DPE.
+- Status impact: Wild Encounter Base-vs-Output Audit is available as a diagnostic-only report; it does not change writer or randomizer behavior.
+- Scope: modeled Gen3 base `WildPokemon` table path. The report compares local Base-ROM and Output-ROM slots with map/area identifier where available, encounter type, slot index, base species, output species and `changedFromBase`, plus total/changed/unchanged/changed percentage summary.
+- CFRU/DPE special/runtime wild sources remain follow-up if ingame behavior and the modeled-table audit diverge.
+- Scope boundary: no ROM run by Codex, output ROM, full log, private path, hash, screenshot, save, emulator state, secret, token or `.env` data was documented. No P1 promotion was made.
+
 # Session update - Combined trainer visual runtime smoke
 
 - Follow-up branch: `randomizer/update-route22-rival-starter-evidence`.

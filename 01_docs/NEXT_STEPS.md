@@ -1,3 +1,13 @@
+# Next steps update - Wild encounter output audit sync
+
+- Treat UPR-FVX PR #118 as synced into the workspace pin at `ed692d07bfc81405706f2b94fda06639426e6a75`.
+- Wild Encounter Base-vs-Output Audit is available as an opt-in diagnostic for Gen3/FRLG/CFRU-DPE.
+- Keep the scope explicit: diagnostic-only, no writer/randomizer behavior change and no P1 promotion.
+- The audit covers the modeled Gen3 base `WildPokemon` table path and reports per-slot base-vs-output species deltas plus total/changed/unchanged/changed percentage.
+- If local ingame wild encounters still appear vanilla while the randomizer log says changed, use the private local audit output to compare modeled Base/Output slots and share only sanitized summaries.
+- CFRU/DPE special/runtime wild sources remain the follow-up if the modeled-table audit and ingame behavior diverge.
+- Do not run ROMs through Codex. Continue excluding ROM paths, hashes, full logs, screenshots, output ROMs, saves, emulator states, private paths, secrets, tokens and `.env` data.
+
 # Next steps update - Combined trainer visual runtime smoke
 
 - Treat `08_tests/randomizer/208_combined_trainer_visual_runtime_smoke.md` as the current sanitized evidence file for the combined trainer visual runtime smoke.
