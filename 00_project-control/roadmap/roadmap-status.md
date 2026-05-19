@@ -1,3 +1,12 @@
+# Roadmap status update - Strict runtime trainer source sync
+
+- Synced merged UPR-FVX PR #104 into the workspace pin at `6dcda7e499cd3e22319c447c7d7df9ddbd67de60`.
+- PR #104 replaces the narrow known-ID runtime sync with strict auto-discovery for valid FRLG/CFRU-DPE `trainerbattle` runtime-source `TrainerData` rows classified as `VALID_RUNTIME_NOT_LOADED`.
+- Trainer/Foe remains CLI-log-clean with strict sync pinned, but local private-ROM audit plus ingame smoke is still required before stronger support claims.
+- Viridian Forest trainer IDs `531/532` should be covered by strict sync if they remain `VALID_RUNTIME_NOT_LOADED` in the local audit.
+- Loaded-mismatch, invalid-pointer, empty-party and out-of-range rows remain diagnosis/follow-up scope.
+- No ROM paths, hashes, CRCs, full logs, screenshots, saves, emulator states, output ROMs, workspace-side UPR-FVX/CFRU/DPE code changes or P1 promotion are added.
+
 # Roadmap status update - Runtime trainer source audit sync
 
 - Synced merged UPR-FVX PR #103 into the workspace pin at `14c1c8c0c6960f1b4a0cf0246a1117628ca1f3cc`.

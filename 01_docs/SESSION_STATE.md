@@ -1,3 +1,13 @@
+# Session update - Strict runtime trainer source sync
+
+- New branch: `randomizer/sync-strict-runtime-trainer-source-sync`.
+- Synced `02_external/upr-fvx` to merged UPR-FVX PR #104 commit `6dcda7e499cd3e22319c447c7d7df9ddbd67de60`.
+- PR #104 implements strict auto-sync for FRLG/CFRU-DPE `trainerbattle` runtime-source `TrainerData` rows that the audit classifies as `VALID_RUNTIME_NOT_LOADED`.
+- Strict sync is intentionally constrained to valid in-bounds TrainerData rows with valid party pointers, party size 1..6, readable raw parties and plausible first raw species. Invalid-pointer, empty-party, out-of-range, loaded-mismatch and likely false-positive rows remain diagnosis/follow-up scope.
+- Status impact: Trainer/Foe remains CLI-log-clean, and the strict runtime sync is now merged and pinned, but local private-ROM audit plus ingame smoke is still required before stronger support claims.
+- Viridian Forest trainer IDs `531/532` should be covered by strict sync if local audit still classifies them as `VALID_RUNTIME_NOT_LOADED`.
+- Scope boundary: no ROM run, output ROM, full log, private path, hash, screenshot, save, emulator state, secret, token or `.env` data was documented. No UPR-FVX/CFRU/DPE code change was made in this workspace PR. No P1 promotion was made.
+
 # Session update - Runtime trainer source audit sync
 
 - New branch: `randomizer/sync-runtime-trainer-source-audit`.

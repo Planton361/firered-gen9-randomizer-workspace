@@ -1,3 +1,12 @@
+# Next steps update - Strict runtime trainer source sync
+
+- Treat UPR-FVX PR #104 as synced into the workspace pin at `6dcda7e499cd3e22319c447c7d7df9ddbd67de60`.
+- Strict Runtime Trainer Source Sync is now available for audit candidates classified as `VALID_RUNTIME_NOT_LOADED`.
+- Keep Trainer/Foe as CLI-log-clean but not P1-promoted: local private-ROM audit plus ingame smoke is still required.
+- For Viridian Forest trainer IDs `531/532`, confirm locally that they still appear as `VALID_RUNTIME_NOT_LOADED`; if so, they should be covered by strict sync.
+- Keep `loaded-mismatch`, `invalid`, empty-party and out-of-range audit rows as diagnosis/follow-up scope, not synced coverage.
+- Do not run ROMs through Codex. Continue excluding ROM paths, hashes, full logs, screenshots, output ROMs, saves, emulator states, private paths, secrets, tokens and `.env` data. No P1 promotion follows from this sync.
+
 # Next steps update - Runtime trainer source audit sync
 
 - Treat UPR-FVX PR #103 as synced into the workspace pin at `14c1c8c0c6960f1b4a0cf0246a1117628ca1f3cc`.
