@@ -1,3 +1,12 @@
+# Roadmap status update - Runtime trainer source audit sync
+
+- Synced merged UPR-FVX PR #103 into the workspace pin at `14c1c8c0c6960f1b4a0cf0246a1117628ca1f3cc`.
+- PR #103 adds an opt-in global FRLG Trainer Runtime Source Audit to classify all deduped, script-referenced trainer IDs discovered by the existing `trainerbattle` runtime-source diagnostics.
+- Audit modes are `all`, `unloaded-valid-parties`, `loaded-mismatch` and `invalid`.
+- Foe Trainer status remains caveated: the audit can expose likely runtime rows outside the normal loaded trainer model, but it does not prove ingame behavior by itself and does not write or sync anything.
+- Additional trainer fixes beyond the currently pinned Rival 2/Brock runtime-source party fix require sanitized local audit evidence for each candidate row first.
+- No ROM paths, hashes, CRCs, full logs, screenshots, saves, emulator states, output ROMs, workspace-side UPR-FVX/CFRU/DPE code changes or P1 promotion are added.
+
 # Roadmap status update - Runtime trainer party fix sync
 
 - Synced merged UPR-FVX PR #102 into the workspace pin at `eabbcd7eccb1703f98000f85669d969f516e1247`.

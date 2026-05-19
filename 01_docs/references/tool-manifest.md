@@ -1,3 +1,15 @@
+# Tool Manifest Update - 2026-05-19 - Runtime trainer source audit sync
+
+- Workspace branch: `randomizer/sync-runtime-trainer-source-audit`.
+- UPR-FVX PR #103: <https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/103>.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX PR #103 commit `14c1c8c0c6960f1b4a0cf0246a1117628ca1f3cc`.
+- Scope: PR #103 adds an opt-in global FRLG trainer runtime-source audit to the existing trainer runtime-source diagnostics.
+- Audit enablement: system property `uprfvx.trainerRuntimeSourceAudit` or env `UPRFVX_TRAINER_RUNTIME_SOURCE_AUDIT`.
+- Audit modes: `all`, `unloaded-valid-parties`, `loaded-mismatch` and `invalid`.
+- Status impact: the audit can classify script-referenced trainer IDs as runtime-not-loaded, loaded/runtime match, loaded/runtime mismatch, invalid pointer, empty party, out-of-range or likely false positive. This is audit-only and does not add any automatic sync/write behavior.
+- Follow-up rule: additional trainer runtime-source fixes must wait for sanitized local audit evidence proving specific valid in-game runtime rows.
+- Safety: no ROM/save/output/log artifact committed, no private path/ROM hash/full log/screenshot documented, no workspace-side UPR-FVX/CFRU/DPE code change and no P1 promotion.
+
 # Tool Manifest Update - 2026-05-19 - Runtime trainer party fix sync
 
 - Workspace branch: `randomizer/sync-runtime-trainer-party-fix`.

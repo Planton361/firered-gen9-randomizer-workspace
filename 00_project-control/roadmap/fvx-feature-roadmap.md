@@ -1,3 +1,11 @@
+# Roadmap update - Runtime trainer source audit
+
+- UPR-FVX PR #103 is merged and the workspace submodule is pinned to `14c1c8c0c6960f1b4a0cf0246a1117628ca1f3cc`.
+- The pinned runtime-source diagnostics now include an opt-in global Trainer Runtime Source Audit with modes `all`, `unloaded-valid-parties`, `loaded-mismatch` and `invalid`.
+- The audit classifies deduped script-referenced trainer IDs and highlights valid raw runtime parties that are not loaded into the normal trainer model.
+- This is an audit-only roadmap step: no automatic sync/write behavior, no SaveTrainers expansion, no ROM run and no P1 promotion.
+- Next Foe Trainer work for additional vanilla-looking battles must start from sanitized local audit evidence, then a separate focused UPR-FVX fix PR if a valid runtime row should be synced.
+
 # Roadmap update - Diagnose 179B
 
 - UPR-FVX PR #49 is merged and the workspace submodule is pinned to `bc46fdc49741643d8f09dd302b67b5b2d35d24c5`.
