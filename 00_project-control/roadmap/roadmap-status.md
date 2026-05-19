@@ -1,3 +1,10 @@
+# Roadmap status update - Graphics/Palettes smoke settings prep
+
+- Prepared local ignored manual input `05_builds/randomizer-smoke/settings/manual/graphics_palettes_smoke.rnqs` for a future isolated Graphics/Palettes visual smoke.
+- Source profile is the existing generated `risk_graphics_palettes_visual` settings-profile artifact for `FVX-GFX-001` through `FVX-GFX-004`.
+- Status impact: planning/input prep only. Graphics/Palettes remain caveated and need local visual smoke; no evidence update, no ROM run by Codex and no P1 promotion.
+- Excluded from this smoke scope: Wild, Foe, Items, Misc, TypeEffectiveness/type chaos, Custom Player Graphics and Character-to-Replace.
+
 # Roadmap status update - Wild encounter output audit sync
 
 - Synced merged UPR-FVX PR #118 into the workspace pin at `ed692d07bfc81405706f2b94fda06639426e6a75`.
