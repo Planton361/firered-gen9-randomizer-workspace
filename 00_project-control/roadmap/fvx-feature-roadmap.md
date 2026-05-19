@@ -1,3 +1,11 @@
+# Roadmap update - Intro Mon visual source diagnostics
+
+- UPR-FVX PR #107 is merged and the workspace submodule is pinned to `a7e098a5158d824b1ddec62a286f2a6ffafce8e4`.
+- The pinned diagnostics now include an opt-in Intro Mon Visual-Source report for known FRLG Intro Mon literals/pointers and optional Base-ROM vs randomized Output-ROM comparison.
+- Setting semantics are explicit for future profile work: `No Random Intro Mon` is the negative GUI option, `randomizeIntroMon=true` is the active Randomize Intro Mon path, `MODE-INTRO-RANDOM` sets true, and `MODE-NO-RANDOM-INTRO` / `FVX-GEN-003` set false.
+- This does not fix the visible Intro Mon mismatch and does not prove ingame visuals; it only provides local sanitized evidence to identify whether the known vanilla-style sources changed.
+- No ROM run by Codex, output ROM, workspace-side UPR-FVX/CFRU/DPE code change or P1 promotion is part of this workspace sync.
+
 # Roadmap update - Runtime source trainer randomization smoke evidence refresh
 
 - UPR-FVX PR #105 is merged and its smoke evidence is documented while the workspace submodule remains pinned to PR #106 commit `5bb1d853f132095922be2aceef55af2878192b85`.
