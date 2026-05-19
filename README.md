@@ -37,11 +37,11 @@ Dieses Repository enthält nicht:
 
 ## Aktueller Randomizer-Pin
 
-- `02_external/upr-fvx` ist auf UPR-FVX PR #111 Merge-Commit `4805a5a930bc97203199816222465c76de2f2150` gepinnt.
-- PR #111 fuehrt das opt-in Feature `MODE-TRAINER-CLASS-SPRITE-SYNC` ein. Ohne diesen Modus bleibt `Randomize Trainer Class Names` legacy/textlabel-only; mit Sync folgen `trainerClass` und sichtbarer `trainerPic` der Trainer-Class-Name-Zuordnung. `Randomize Trainer Names` bleibt separat und aendert keine `classId`/`pic`.
-- Ziel ist Class label / classId / pic consistency, nicht Regular-only-Remapping. Special-Zielklassen wie Rival/Gym/Elite/Champion werden nicht pauschal ausgeschlossen; Zielklassen ohne beobachteten validen `trainerPic` werden uebersprungen.
-- Bisherige sanitized Evidence: Regular trainer battle started, visible sprite changed, log showed class/sprite sync markers, and the earlier semantic mismatch was corrected before merge. Final local smoke on the merged PR #111 pin is still needed. Keine P1-Promotion.
-- `08_tests/randomizer/206_trainer_class_sprite_sync.md` dokumentiert den aktuellen Sync- und Handoff-Stand.
+- `02_external/upr-fvx` ist auf UPR-FVX PR #116 Merge-Commit `36dd431d059bc69eb1bee3311200e28c872c6cc9` gepinnt.
+- PR #116 schliesst den finalen `MODE-TRAINER-CLASS-SPRITE-SYNC`-Stand ab. Ohne diesen Modus bleibt `Randomize Trainer Class Names` legacy/textlabel-only; mit Sync folgen `trainerClass` und sichtbarer `trainerPic` der Trainer-Class-Assignment. `Randomize Trainer Names` bleibt separat und aendert keine `classId`/`pic`.
+- Ziel ist Class label / classId / pic consistency, nicht Lore-/Plausibility-Stabilitaet. Regular Trainer werden per-trainer randomisiert; Rival/Friend-Zeilen teilen eine gruppierte Zielklasse/einen gruppierten `trainerPic`; Runtime-Source-Zeilen sind enthalten, wo sie eligible sind.
+- Sanitized local evidence bestaetigt: Viridian-Forest-Bug-Catcher-Klassen werden per-trainer unterschiedlich randomisiert, Rival behaelt seinen ersten randomisierten Sprite ueber spaetere Auftritte, weitere getestete Trainer wirkten passend, und kein garbled sprite / crash wurde gemeldet. Caveat: targeted visual smoke, kein Full-Playthrough. Keine P1-Promotion.
+- `08_tests/randomizer/206_trainer_class_sprite_sync.md` dokumentiert den finalen Sync- und Smoke-Stand.
 - Vorheriger Pin: UPR-FVX PR #109 Merge-Commit `a9bb4a5f201c5078ec02fe1f2f8417695448afe9`.
 - PR #109 synchronisiert fuer CFRU/DPE Gen9 BPRE die sichtbare Intro-Mon-Visual-Quelle: die Nidoran-female `PokemonFrontImages`- und `PokemonNormalPalettes`-Eintraege werden beim Intro-Mon-Randomize-Pfad auf die Asset-Pointer der Ziel-Spezies gesetzt.
 - Sanitized local evidence bestaetigt: der sichtbare Oak-Intro-Sprite wechselte nach dem Fix weg von Nidoran female; kein Crash, Freeze oder garbled sprite wurde im targeted Ingame-Smoke beobachtet.

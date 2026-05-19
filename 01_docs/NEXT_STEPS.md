@@ -1,3 +1,14 @@
+# Next steps update - Trainer Class Sprite Sync final smoke
+
+- Treat UPR-FVX PR #116 as synced into the workspace pin at `36dd431d059bc69eb1bee3311200e28c872c6cc9`.
+- Treat `08_tests/randomizer/206_trainer_class_sprite_sync.md` as the current sanitized evidence file for Trainer Class Sprite Sync.
+- `MODE-TRAINER-CLASS-SPRITE-SYNC` is locally smoke-confirmed for targeted visual consistency.
+- Keep the semantics explicit: `Randomize Trainer Names` only changes trainer personal names; `Randomize Trainer Class Names` remains legacy/textlabel-only unless Sprite Sync is also enabled; with Sprite Sync enabled, class label, `trainerClass` and visible `trainerPic` follow the class assignment.
+- Regular trainers use per-trainer class/sprite assignments. Rival/Friend rows use grouped class/sprite consistency. Runtime-source rows are included where eligible.
+- Caveat: targeted visual smoke only, not a full playthrough, route sweep or global visual-source proof.
+- Recommended next work should not be another semantic correction unless new evidence contradicts the final model. Broader follow-up should sample more trainer categories, eligible runtime-source rows and longer playthrough paths, still with sanitized evidence only.
+- Do not run ROMs through Codex. Continue excluding ROM paths, hashes, full logs, screenshots, output ROMs, saves, emulator states, private paths, secrets, tokens and `.env` data. No P1 promotion follows from this sync.
+
 # Next steps update - Trainer Class Sprite Sync
 
 - Treat UPR-FVX PR #111 as synced into the workspace pin at `4805a5a930bc97203199816222465c76de2f2150`.
