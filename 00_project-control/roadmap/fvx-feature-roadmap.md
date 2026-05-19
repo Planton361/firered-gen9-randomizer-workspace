@@ -2,8 +2,8 @@
 
 - Added sanitized evidence file `08_tests/randomizer/208_combined_trainer_visual_runtime_smoke.md`.
 - Combined trainer visual runtime smoke is `PASS_WITH_CAVEATS`.
-- Sanitized local evidence confirms Intro Mon visibly randomized, Player Charmander -> Oak-Lab Rival Squirtle, Route 22 Rival sprite consistent with Oak-Lab Rival sprite, Viridian Forest trainer sprites randomized and no crash/freeze observed.
-- Route 22 Rival starter carry remains partial because a randomized non-starter Rival Pokemon, Lv9 Silvally, defeated the player before the starter could be inspected.
+- Sanitized local evidence confirms Intro Mon visibly randomized, Player Charmander -> Oak-Lab Rival Squirtle and Route-22 Rival Squirtle, Route 22 Rival sprite consistent with Oak-Lab Rival sprite, Viridian Forest trainer sprites randomized and no crash/freeze/garbled sprite observed.
+- Route 22 Rival non-starter Pokemon observed: Silvally Lv9. Interpretation: Rival Carries Starter Through Game protects/corrects the Rival starter slot only; non-starter Rival Pokemon remain eligible for Foe Pokemon randomization.
 - This strengthens targeted visual/runtime confidence for the combined trainer profile, but remains below full-playthrough coverage and below P1 promotion.
 - No ROM run by Codex, output ROM, workspace-side UPR-FVX/CFRU/DPE code change or P1 promotion is part of this workspace sync.
 

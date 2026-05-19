@@ -1,10 +1,16 @@
 # Session update - Combined trainer visual runtime smoke
 
+- Follow-up branch: `randomizer/update-route22-rival-starter-evidence`.
+- Corrected `08_tests/randomizer/208_combined_trainer_visual_runtime_smoke.md` after additional sanitized local evidence: Player starter Charmander, Oak-Lab Rival starter Squirtle and Route-22 Rival starter Squirtle.
+- Route-22 Rival non-starter Pokemon observed: Silvally Lv9.
+- Interpretation: `Rival Carries Starter Through Game` protects/corrects the Rival starter slot only; non-starter Rival Pokemon remain eligible for Foe Pokemon randomization.
+- Combined trainer visual runtime smoke remains `PASS_WITH_CAVEATS` because it is targeted visual/runtime smoke, not a full playthrough or all-starter-choice matrix.
+- No crash/freeze/garbled sprite was observed. No P1 promotion follows from this correction.
+
 - New branch: `randomizer/record-combined-trainer-visual-runtime-smoke`.
 - Added `08_tests/randomizer/208_combined_trainer_visual_runtime_smoke.md` with sanitized local evidence.
 - Combined trainer visual runtime smoke status: `PASS_WITH_CAVEATS`.
-- Sanitized local evidence: Intro Mon was visibly randomized; player starter was Charmander; Oak-Lab Rival starter was Squirtle; Route 22 Rival sprite was randomized and consistent with the Oak-Lab Rival sprite; Viridian Forest trainer sprites were randomized; no crash/freeze was observed.
-- Caveat: Route 22 Rival starter carry remains partial because the starter was not inspected. A randomized non-starter Rival Pokemon, Lv9 Silvally, defeated the player before full party inspection.
+- Sanitized local evidence: Intro Mon was visibly randomized; player starter was Charmander; Oak-Lab Rival starter was Squirtle; Route 22 Rival starter was Squirtle; Route 22 Rival sprite was randomized and consistent with the Oak-Lab Rival sprite; Viridian Forest trainer sprites were randomized; no crash/freeze/garbled sprite was observed.
 - No P1 promotion follows from this smoke.
 - Scope boundary: no ROM run by Codex, output ROM, full log, private path, hash, screenshot, save, emulator state, secret, token or `.env` data was documented.
 

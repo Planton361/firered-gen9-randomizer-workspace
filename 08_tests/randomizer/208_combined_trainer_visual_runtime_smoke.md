@@ -16,27 +16,28 @@ Available sanitized local evidence:
 - Intro Mon was visibly randomized.
 - Player starter was Charmander.
 - Oak-Lab Rival starter was Squirtle.
-- Route 22 Rival starter could not be fully inspected because a randomized non-starter Rival Pokemon, Lv9 Silvally, defeated the player.
+- Route 22 Rival starter was Squirtle.
+- Route 22 Rival non-starter Pokemon observed: Silvally Lv9.
+- Interpretation: Rival Carries Starter Through Game protects/corrects the Rival starter slot only; non-starter Rival Pokemon remain eligible for Foe Pokemon randomization.
 - Route 22 Rival sprite was randomized and consistent with the Oak-Lab Rival sprite.
 - Viridian Forest trainer sprites were randomized.
-- No crashes or freezes were observed.
+- No crash, freeze or garbled sprite was observed.
 
 ## Status Impact
 
 - Combined trainer visual runtime smoke: `PASS_WITH_CAVEATS`.
 - Intro Mon visual: local pass.
 - Rival Oak-Lab counter-starter: local pass.
+- Rival Route 22 starter carry: local pass.
 - Rival Route 22 sprite consistency: local pass.
-- Route 22 Rival starter carry: partial, because the starter was not inspected.
 - Viridian Forest class/sprite sync: local pass.
-- No crash/freeze observed.
+- No crash/freeze/garbled sprite observed.
 - No P1 promotion.
 
 ## Follow-Up Scope
 
 Future local-only evidence can strengthen confidence by sampling:
 
-- Route 22 Rival starter carry directly, after surviving or otherwise inspecting the full party.
 - additional Rival appearances beyond Route 22.
 - additional player-starter choices.
 - more regular trainer maps/classes with Trainer Class Sprite Sync enabled.

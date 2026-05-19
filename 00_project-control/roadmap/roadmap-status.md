@@ -2,8 +2,9 @@
 
 - Added sanitized evidence file `08_tests/randomizer/208_combined_trainer_visual_runtime_smoke.md`.
 - Combined trainer visual runtime smoke status: `PASS_WITH_CAVEATS`.
-- Status impact: Intro Mon visual local pass; Rival Oak-Lab counter-starter local pass for Player Charmander -> Oak-Lab Rival Squirtle; Route 22 Rival sprite consistency local pass; Viridian Forest class/sprite sync local pass; no crash/freeze observed.
-- Caveat: Route 22 Rival starter carry remains partial because the starter was not inspected. A randomized non-starter Rival Pokemon, Lv9 Silvally, defeated the player before full party inspection.
+- Status impact: Intro Mon visual local pass; Rival Oak-Lab counter-starter local pass for Player Charmander -> Oak-Lab Rival Squirtle; Route 22 Rival starter carry local pass for Player Charmander -> Route-22 Rival Squirtle; Route 22 Rival sprite consistency local pass; Viridian Forest class/sprite sync local pass; no crash/freeze/garbled sprite observed.
+- Route 22 Rival non-starter Pokemon observed: Silvally Lv9. Interpretation: Rival Carries Starter Through Game protects/corrects the Rival starter slot only; non-starter Rival Pokemon remain eligible for Foe Pokemon randomization.
+- Caveat: still targeted visual/runtime smoke only, not a full playthrough, all-starter-choice matrix or P1 promotion.
 - No ROM paths, hashes, CRCs, full logs, screenshots, saves, emulator states, output ROMs, workspace-side UPR-FVX/CFRU/DPE code changes or P1 promotion are added.
 
 # Roadmap status update - Rival counter starter and combined visual smoke
