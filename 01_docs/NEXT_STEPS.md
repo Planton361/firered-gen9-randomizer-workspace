@@ -1,3 +1,11 @@
+# Next steps update - Runtime source trainer randomization smoke
+
+- Treat UPR-FVX PR #105 as synced into the workspace pin at `c0d8e33f3547020c6fd2fe5baffbc80ec93f9197`.
+- Treat `08_tests/randomizer/203_runtime_source_trainer_randomization_smoke.md` as sanitized local evidence for Viridian Forest runtime-source trainer IDs `531/532`.
+- Trainer/Foe runtime-source strict sync plus randomizer eligibility is locally confirmed for this targeted case: audit loaded/raw parties match and the observed Viridian Forest battle now shows randomized Eiscue instead of vanilla Metapod/Caterpie.
+- Keep broader Trainer/Foe caveats: loaded-mismatch, invalid-pointer, empty-party and out-of-range rows remain follow-up scope, and additional suspected runtime-source battles need separate sanitized evidence.
+- Do not run ROMs through Codex. Continue excluding ROM paths, hashes, full logs, screenshots, output ROMs, saves, emulator states, private paths, secrets, tokens and `.env` data. No P1 promotion follows from this smoke.
+
 # Next steps update - Strict runtime trainer source sync
 
 - Treat UPR-FVX PR #104 as synced into the workspace pin at `6dcda7e499cd3e22319c447c7d7df9ddbd67de60`.

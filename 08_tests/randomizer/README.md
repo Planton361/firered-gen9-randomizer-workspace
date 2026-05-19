@@ -1,5 +1,14 @@
 # Current update
 
+- `203_runtime_source_trainer_randomization_smoke.md` records sanitized local evidence for merged UPR-FVX PR #105.
+- Workspace branch `randomizer/sync-runtime-source-trainer-randomization` pins `02_external/upr-fvx` to merge commit `c0d8e33f3547020c6fd2fe5baffbc80ec93f9197`.
+- PR #105 makes generic `RUNTIME-SOURCE` trainers randomizer-eligible as regular trainers while preserving known Rival 2/Brock special tags.
+- Local targeted audit for Viridian Forest trainer IDs `531/532` showed randomized loaded/raw parties with `loadedRawPartyComparison=match`.
+- Ingame smoke observed the formerly vanilla Metapod/Caterpie Viridian Forest trainer showing Eiscue.
+- Loaded-mismatch, invalid-pointer, empty-party and out-of-range rows remain diagnosis/follow-up scope. No ROM run by Codex and no P1 promotion is added.
+
+# Current update
+
 - Workspace branch `randomizer/sync-strict-runtime-trainer-source-sync` pins `02_external/upr-fvx` to merged UPR-FVX PR #104 commit `6dcda7e499cd3e22319c447c7d7df9ddbd67de60`.
 - PR #104 adds strict auto-sync for valid FRLG/CFRU-DPE `trainerbattle` runtime-source TrainerData rows classified as `VALID_RUNTIME_NOT_LOADED`.
 - Trainer/Foe remains CLI-log-clean; local private-ROM audit plus ingame smoke is still required before stronger support claims.
