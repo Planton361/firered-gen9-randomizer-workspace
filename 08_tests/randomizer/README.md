@@ -1,5 +1,16 @@
 # Current update
 
+- `204_runtime_source_trainer_randomization_smoke.md` records expanded sanitized local evidence for merged UPR-FVX PR #105.
+- Workspace branch `randomizer/sync-runtime-source-trainer-randomization-smoke` pins `02_external/upr-fvx` to merge commit `c0d8e33f3547020c6fd2fe5baffbc80ec93f9197`.
+- PR #105 makes generic `RUNTIME-SOURCE` trainers randomizer-eligible as regular trainers while preserving known Rival 2/Brock special tags.
+- Local targeted audit for Viridian Forest trainer IDs `531/532` showed randomized loaded/raw parties with `loadedRawPartyComparison=match`.
+- Ingame smoke observed the formerly vanilla Metapod/Caterpie Viridian Forest trainer showing Eiscue.
+- Randomized output audit reported `trainer runtime source audit mode=unloaded-valid-parties` with `total=0`.
+- Additional sanitized examples: Rival 2 trainer IDs `329/330/331` show randomized parties; Brock trainer ID `414` shows `[Drifloon Lv12, Growlithe Lv14]`.
+- Loaded-mismatch, invalid-pointer, empty-party, out-of-range rows and full playthrough coverage remain follow-up scope. No ROM run by Codex and no P1 promotion is added.
+
+# Current update
+
 - Workspace branch `randomizer/sync-runtime-trainer-post-audit` pins `02_external/upr-fvx` to merged UPR-FVX PR #106 commit `5bb1d853f132095922be2aceef55af2878192b85`.
 - PR #106 adds the opt-in Pre/Post Runtime-Trainer-Audit for local comparison of a private Base-ROM and private randomized Output-ROM.
 - The report is audit-only and helps check valid script-referenced runtime trainer rows for changed-from-base state, loaded/raw output comparison and warning markers.

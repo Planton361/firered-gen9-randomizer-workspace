@@ -1,3 +1,14 @@
+# Roadmap status update - Runtime source trainer randomization smoke evidence refresh
+
+- Synced merged UPR-FVX PR #105 into the workspace pin at `c0d8e33f3547020c6fd2fe5baffbc80ec93f9197`.
+- Added `08_tests/randomizer/204_runtime_source_trainer_randomization_smoke.md`.
+- PR #105 makes generic `RUNTIME-SOURCE` trainers randomizer-eligible as regular trainers while preserving known Rival 2/Brock special tags.
+- Trainer/Foe runtime-source strict sync plus randomizer eligibility is locally confirmed for Viridian Forest trainer IDs `531/532`: targeted audit loaded/raw parties match and the observed battle now shows randomized Eiscue instead of vanilla Metapod/Caterpie.
+- Randomized output audit reported `trainer runtime source audit mode=unloaded-valid-parties` with `total=0`, equivalent to no remaining valid runtime-not-loaded rows in that focused audit view.
+- Additional sanitized examples show Rival 2 trainer IDs `329/330/331` randomized and Brock trainer ID `414` randomized to `[Drifloon Lv12, Growlithe Lv14]`.
+- Loaded-mismatch, invalid-pointer, empty-party, out-of-range rows and full playthrough coverage remain follow-up scope.
+- No ROM paths, hashes, CRCs, full logs, screenshots, saves, emulator states, output ROMs, workspace-side UPR-FVX/CFRU/DPE code changes or P1 promotion are added.
+
 # Roadmap status update - Runtime trainer post-randomization audit sync
 
 - Synced merged UPR-FVX PR #106 into the workspace pin at `5bb1d853f132095922be2aceef55af2878192b85`.

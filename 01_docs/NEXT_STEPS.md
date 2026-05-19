@@ -1,3 +1,13 @@
+# Next steps update - Runtime source trainer randomization smoke evidence refresh
+
+- Treat UPR-FVX PR #105 as synced into the workspace pin at `c0d8e33f3547020c6fd2fe5baffbc80ec93f9197`.
+- Treat `08_tests/randomizer/204_runtime_source_trainer_randomization_smoke.md` as the latest sanitized local evidence for strict runtime-source sync plus `RUNTIME-SOURCE` Trainer Pokemon randomization.
+- Viridian Forest trainer IDs `531/532` are audit-confirmed and ingame-confirmed in the targeted local smoke: loaded/raw parties match, and the formerly vanilla Viridian Forest trainer now shows Eiscue.
+- The randomized output audit reported `trainer runtime source audit mode=unloaded-valid-parties` with `total=0`, equivalent to no remaining valid runtime-not-loaded rows in that focused audit view.
+- Rival 2 trainer IDs `329/330/331` and Brock trainer ID `414` also have sanitized local randomized-party observations.
+- Keep broader Trainer/Foe caveats: loaded-mismatch, invalid-pointer, empty-party, out-of-range rows and full playthrough coverage remain follow-up scope.
+- Do not run ROMs through Codex. Continue excluding ROM paths, hashes, full logs, screenshots, output ROMs, saves, emulator states, private paths, secrets, tokens and `.env` data. No P1 promotion follows from this smoke.
+
 # Next steps update - Runtime trainer post-randomization audit sync
 
 - Treat UPR-FVX PR #106 as synced into the workspace pin at `5bb1d853f132095922be2aceef55af2878192b85`.
