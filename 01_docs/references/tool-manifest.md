@@ -1,3 +1,13 @@
+# Tool Manifest Update - 2026-05-19 - Rival counter starter and combined visual smoke
+
+- UPR-FVX fork base branch: `compat/firered-gen9-cfru-dpe`.
+- UPR-FVX PR #117: <https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/117>.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX PR #117 commit `5983011752273e00c402e25cc1ae1a9baca110f1`.
+- Scope: PR #117 preserves/corrects Rival Carries Starter Through Game after Foe Pokemon randomization and prevents invalid Intro Mon species `0` writes in the extended CFRU/DPE BPRE pool.
+- Status impact: targeted local visual smoke confirms the combined visual Rival test fixed, visible Blissey Intro Mon, Player Charmander -> Rival Squirtle, prior Trainer Class Sprite Sync visual checks still okay, and no reported crash/freeze/garbled sprite.
+- Boundary: targeted smoke only, not full-playthrough coverage, all-starter-choice proof or P1 promotion.
+- Safety: no ROM/save/output/log artifact committed, no private path/ROM hash/full log/screenshot documented, no workspace-side UPR-FVX/CFRU/DPE code change and no P1 promotion.
+
 # Tool Manifest Update - 2026-05-19 - Trainer Class Sprite Sync final smoke
 
 - UPR-FVX fork base branch: `compat/firered-gen9-cfru-dpe`.

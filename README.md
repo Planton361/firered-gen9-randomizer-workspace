@@ -37,7 +37,11 @@ Dieses Repository enthält nicht:
 
 ## Aktueller Randomizer-Pin
 
-- `02_external/upr-fvx` ist auf UPR-FVX PR #116 Merge-Commit `36dd431d059bc69eb1bee3311200e28c872c6cc9` gepinnt.
+- `02_external/upr-fvx` ist auf UPR-FVX PR #117 Merge-Commit `5983011752273e00c402e25cc1ae1a9baca110f1` gepinnt.
+- PR #117 fixt `Rival Carries Starter Through Game` fuer CFRU/DPE Gen9 BPRE nach Foe-Pokemon-Randomization und verhindert die Intro-Mon-Species-0-Regression im extended BPRE-Pool.
+- Sanitized local evidence bestaetigt: Combined visual Rival test fixed, Intro Mon sichtbar Blissey statt Species 0, Player Charmander -> Rival Squirtle, Trainer Class Sprite Sync bleibt visuell okay aus den vorherigen Checks, und kein Crash/Freeze/garbled sprite wurde gemeldet. Caveat: targeted smoke, kein Full-Playthrough. Keine P1-Promotion.
+- `08_tests/randomizer/207_rival_counter_starter_and_combined_visual_smoke.md` dokumentiert den aktuellen Rival-Counter-Starter- und Combined-Visual-Smoke-Stand.
+- Vorheriger Pin: UPR-FVX PR #116 Merge-Commit `36dd431d059bc69eb1bee3311200e28c872c6cc9`.
 - PR #116 schliesst den finalen `MODE-TRAINER-CLASS-SPRITE-SYNC`-Stand ab. Ohne diesen Modus bleibt `Randomize Trainer Class Names` legacy/textlabel-only; mit Sync folgen `trainerClass` und sichtbarer `trainerPic` der Trainer-Class-Assignment. `Randomize Trainer Names` bleibt separat und aendert keine `classId`/`pic`.
 - Ziel ist Class label / classId / pic consistency, nicht Lore-/Plausibility-Stabilitaet. Regular Trainer werden per-trainer randomisiert; Rival/Friend-Zeilen teilen eine gruppierte Zielklasse/einen gruppierten `trainerPic`; Runtime-Source-Zeilen sind enthalten, wo sie eligible sind.
 - Sanitized local evidence bestaetigt: Viridian-Forest-Bug-Catcher-Klassen werden per-trainer unterschiedlich randomisiert, Rival behaelt seinen ersten randomisierten Sprite ueber spaetere Auftritte, weitere getestete Trainer wirkten passend, und kein garbled sprite / crash wurde gemeldet. Caveat: targeted visual smoke, kein Full-Playthrough. Keine P1-Promotion.

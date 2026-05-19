@@ -1,3 +1,14 @@
+# Next steps update - Rival counter starter and combined visual smoke
+
+- Treat UPR-FVX PR #117 as synced into the workspace pin at `5983011752273e00c402e25cc1ae1a9baca110f1`.
+- Treat `08_tests/randomizer/207_rival_counter_starter_and_combined_visual_smoke.md` as the current sanitized evidence file for Rival Carries Starter Through Game plus the combined visual smoke.
+- Rival Carries Starter Through Game is locally smoke-confirmed for the sampled counter path: Player Charmander -> Rival Squirtle.
+- Intro Mon Species `0` regression is fixed in the sampled combined profile; visible Intro Mon was Blissey.
+- Trainer Class Sprite Sync remains visually okay from prior checks: Viridian Forest trainers get per-trainer randomized classes/sprites and Rival keeps a consistent class/sprite across appearances.
+- Caveat: targeted visual smoke only, not a full playthrough, all-starter-choice matrix, global runtime-source proof or P1 promotion.
+- Useful follow-up, if needed, is broader local sampling across all starter choices and later Rival appearances, still with sanitized evidence only.
+- Do not run ROMs through Codex. Continue excluding ROM paths, hashes, full logs, screenshots, output ROMs, saves, emulator states, private paths, secrets, tokens and `.env` data. No P1 promotion follows from this sync.
+
 # Next steps update - Trainer Class Sprite Sync final smoke
 
 - Treat UPR-FVX PR #116 as synced into the workspace pin at `36dd431d059bc69eb1bee3311200e28c872c6cc9`.

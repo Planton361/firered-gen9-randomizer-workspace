@@ -1,5 +1,16 @@
 # Current update
 
+- `207_rival_counter_starter_and_combined_visual_smoke.md` records sanitized local evidence for merged UPR-FVX PR #117.
+- Workspace branch `randomizer/sync-rival-counter-starter-and-visual-smoke` pins `02_external/upr-fvx` to merge commit `5983011752273e00c402e25cc1ae1a9baca110f1`.
+- Rival Carries Starter Through Game is locally smoke-confirmed for the sampled counter path: Player Charmander -> Rival Squirtle.
+- Combined visual profile smoke passed for the targeted checks.
+- Intro Mon Species `0` regression is fixed in the sampled profile; visible Intro Mon was Blissey.
+- Trainer Class Sprite Sync remains visually okay from prior checks: Viridian Forest trainers get per-trainer randomized classes/sprites and Rival keeps a consistent class/sprite across appearances.
+- Caveat: targeted visual smoke only, not full-playthrough coverage or P1 promotion.
+- No ROM run by Codex and no P1 promotion is added.
+
+# Current update
+
 - `206_trainer_class_sprite_sync.md` records the workspace sync for final merged UPR-FVX PR #116.
 - Workspace branch `randomizer/sync-trainer-class-sprite-sync-final` pins `02_external/upr-fvx` to merge commit `36dd431d059bc69eb1bee3311200e28c872c6cc9`.
 - `MODE-TRAINER-CLASS-SPRITE-SYNC` is locally smoke-confirmed for targeted visual consistency.
