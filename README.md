@@ -37,7 +37,12 @@ Dieses Repository enthält nicht:
 
 ## Aktueller Randomizer-Pin
 
-- `02_external/upr-fvx` ist auf UPR-FVX PR #118 Merge-Commit `ed692d07bfc81405706f2b94fda06639426e6a75` gepinnt.
+- `02_external/upr-fvx` ist auf den UPR-FVX PR-#124-Merge-Commit `0eb815418470fa1ac000695b95d09cb084338dca` gepinnt.
+- Dieser Pin enthaelt den PR-#123-Palette-Output-Write-Fix und den PR-#124-Expanded-Trainer-Logging-Fallback.
+- Graphics/Palettes Evidence ist als `08_tests/randomizer/209_graphics_palettes_visual_smoke.md` dokumentiert: `Pokemon Palettes: Randomized/Changed`, CFRU-DPE palette copy save mit `normalPaletteWriteAttempts=841`, Base-vs-Output Palette Audit `sampledCount=21`, `normalChangedCount=21`, `shinyChangedCount=0`, `unchangedCount=0`, und sichtbare geaenderte Paletten.
+- Der finale Lauf meldete kein `Error during logging`.
+- Caveat: targeted visual/audit smoke, keine Full-Playthrough-, breite Shiny- oder P1-Promotion.
+- Vorheriger Pin: UPR-FVX PR #118 Merge-Commit `ed692d07bfc81405706f2b94fda06639426e6a75`.
 - PR #118 ergaenzt einen opt-in Wild Encounter Base-vs-Output Audit fuer Gen3/FRLG/CFRU-DPE.
 - Der Audit ist diagnostic-only: keine Writer-/Randomizer-Verhaltensaenderung, keine P1-Promotion.
 - Scope: modeled Gen3 base `WildPokemon` table path. Der Report vergleicht Base- und Output-ROM lokal pro Encounter-Slot mit Map-/Area-Identifier soweit verfuegbar, Encounter-Typ, Slot-Index, Base-Species, Output-Species und `changedFromBase`, plus Summary fuer total/changed/unchanged/changed percentage.

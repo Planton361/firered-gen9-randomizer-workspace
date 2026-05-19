@@ -1,3 +1,13 @@
+# Roadmap status update - Graphics/Palettes visual smoke
+
+- Synced merged UPR-FVX PR #124 into the workspace pin at `0eb815418470fa1ac000695b95d09cb084338dca`.
+- This pin includes PR #123 Gen3/CFRU-DPE palette output writes and PR #124 expanded trainer logging bounds/fallbacks.
+- Added sanitized evidence file `08_tests/randomizer/209_graphics_palettes_visual_smoke.md`.
+- Status impact: Graphics/Palettes targeted visual/audit smoke is locally passed with caveats. `Pokemon Palettes: Randomized/Changed`, `normalPaletteWriteAttempts=841`, Palette Audit `sampledCount=21`, `normalChangedCount=21`, `shinyChangedCount=0`, `unchangedCount=0`, and sampled normal palettes including Charmander/Squirtle/Caterpie/Pikachu/Blissey changed from base.
+- Changed palettes were visually observed and the final run did not report `Error during logging`.
+- Caveat: targeted visual/audit smoke only, not full-playthrough coverage, broad species/form coverage, shiny behavior proof or P1 promotion.
+- No ROM paths, hashes, CRCs, full logs, screenshots, saves, emulator states, output ROMs, workspace-side UPR-FVX/CFRU/DPE code changes or P1 promotion are added.
+
 # Roadmap status update - Graphics/Palettes smoke settings prep
 
 - Prepared local ignored manual input `05_builds/randomizer-smoke/settings/manual/graphics_palettes_smoke.rnqs` for a future isolated Graphics/Palettes visual smoke.
@@ -957,10 +967,10 @@ Dieses Dokument ist die textbasierte Spiegelung der Excel-Roadmap. GitHub und Co
 | Standardterminal | Linux/CachyOS Shell |
 | Stabiler Branch | `main` |
 | Branch Protection | eingerichtet |
-| Aktueller Branch | `compat/upr-fvx-cfru-dpe-palette-normal-single-owner-write` |
-| Nächster Branch | `test/upr-fvx-cfru-dpe-palette-normal-single-owner-reload-smoke` |
-| Aktueller Fokus | CFRU/DPE Palette Normal Single-owner Write Guard Fix |
-| ROM-/Build-Arbeit | UPR-FVX nicht-ROM Build-Checks; kein ROM-/Reload-Smoke und keine Output-ROMs |
+| Aktueller Branch | `randomizer/sync-graphics-palettes-visual-smoke` |
+| Nächster Branch | bei Bedarf shiny-/species-/forme-fokussierte Graphics/Palettes Evidence oder naechster separater Smoke-Scope |
+| Aktueller Fokus | Graphics/Palettes targeted visual/audit smoke dokumentiert, kein P1 |
+| ROM-/Build-Arbeit | keine ROM-Runs durch Codex; nur sanitized lokale Evidence dokumentiert |
 | Externe Repos | als Submodule auf Planton361-Forks eingebunden |
 | Forks | Planton361-Forks fuer UPR-FVX, DPE Gen9 und CFRU dokumentiert |
 | Installationen | devkitPro/devkitARM lokal dokumentiert; keine Installation in diesem Analyseblock |

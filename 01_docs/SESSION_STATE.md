@@ -1,3 +1,13 @@
+# Session update - Graphics/Palettes visual smoke
+
+- New branch: `randomizer/sync-graphics-palettes-visual-smoke`.
+- Synced `02_external/upr-fvx` to merged UPR-FVX PR #124 commit `0eb815418470fa1ac000695b95d09cb084338dca`.
+- This pin includes UPR-FVX PR #123 for Gen3/CFRU-DPE palette output writes and PR #124 for expanded trainer logging bounds/fallbacks.
+- Added `08_tests/randomizer/209_graphics_palettes_visual_smoke.md` with sanitized local evidence.
+- Sanitized local evidence: `Pokemon Palettes: Randomized/Changed`; CFRU-DPE palette copy save completed with `normalPaletteWriteAttempts=841`; Palette Audit reported `sampledCount=21`, `normalChangedCount=21`, `shinyChangedCount=0`, `unchangedCount=0`; Charmander, Squirtle, Caterpie, Pikachu and Blissey had `normalChangedFromBase=yes`; changed palettes were visually observed; final run had no `Error during logging`.
+- Status impact: Graphics/Palettes targeted visual/audit smoke is locally passed with caveats. Normal palette output writes are evidenced for sampled species; shiny coverage remains caveated by `shinyChangedCount=0`.
+- Scope boundary: no ROM run by Codex, output ROM, full log, private path, hash, screenshot, save, emulator state, secret, token or `.env` data was documented. No P1 promotion was made.
+
 # Session update - Graphics/Palettes smoke settings prep
 
 - New branch: `randomizer/prepare-graphics-palettes-smoke`.
