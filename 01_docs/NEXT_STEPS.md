@@ -1,3 +1,12 @@
+# Next steps update - Combined trainer visual runtime smoke
+
+- Treat `08_tests/randomizer/208_combined_trainer_visual_runtime_smoke.md` as the current sanitized evidence file for the combined trainer visual runtime smoke.
+- Combined trainer visual runtime smoke is `PASS_WITH_CAVEATS`.
+- Confirmed locally in sanitized evidence: Intro Mon visibly randomized; Player Charmander -> Oak-Lab Rival Squirtle; Route 22 Rival sprite consistent with the Oak-Lab Rival sprite; Viridian Forest trainer sprites randomized; no crash/freeze observed.
+- Route 22 Rival starter carry remains partial because the starter was not inspected. A randomized non-starter Rival Pokemon, Lv9 Silvally, defeated the player first.
+- Useful follow-up, if needed, is a focused local Route 22 Rival starter carry inspection plus later Rival appearances, still with sanitized evidence only.
+- Do not run ROMs through Codex. Continue excluding ROM paths, hashes, full logs, screenshots, output ROMs, saves, emulator states, private paths, secrets, tokens and `.env` data. No P1 promotion follows from this smoke.
+
 # Next steps update - Rival counter starter and combined visual smoke
 
 - Treat UPR-FVX PR #117 as synced into the workspace pin at `5983011752273e00c402e25cc1ae1a9baca110f1`.

@@ -39,6 +39,8 @@ Dieses Repository enthält nicht:
 
 - `02_external/upr-fvx` ist auf UPR-FVX PR #117 Merge-Commit `5983011752273e00c402e25cc1ae1a9baca110f1` gepinnt.
 - PR #117 fixt `Rival Carries Starter Through Game` fuer CFRU/DPE Gen9 BPRE nach Foe-Pokemon-Randomization und verhindert die Intro-Mon-Species-0-Regression im extended BPRE-Pool.
+- Combined Trainer Visual Runtime Smoke ist als `PASS_WITH_CAVEATS` dokumentiert: Intro Mon sichtbar randomisiert, Player Charmander -> Oak-Lab Rival Squirtle, Route-22-Rival-Sprite konsistent zum Oak-Lab-Rival-Sprite, Viridian-Forest-Trainer-Sprites randomisiert, keine Crash/Freeze-Beobachtung. Route-22-Rival-Starter-Carry bleibt partial, weil ein randomized non-starter Rival Pokemon, Lv9 Silvally, den Player besiegte, bevor der Starter inspiziert werden konnte.
+- `08_tests/randomizer/208_combined_trainer_visual_runtime_smoke.md` dokumentiert diesen aktuellen kombinierten Runtime-Smoke.
 - Sanitized local evidence bestaetigt: Combined visual Rival test fixed, Intro Mon sichtbar Blissey statt Species 0, Player Charmander -> Rival Squirtle, Trainer Class Sprite Sync bleibt visuell okay aus den vorherigen Checks, und kein Crash/Freeze/garbled sprite wurde gemeldet. Caveat: targeted smoke, kein Full-Playthrough. Keine P1-Promotion.
 - `08_tests/randomizer/207_rival_counter_starter_and_combined_visual_smoke.md` dokumentiert den aktuellen Rival-Counter-Starter- und Combined-Visual-Smoke-Stand.
 - Vorheriger Pin: UPR-FVX PR #116 Merge-Commit `36dd431d059bc69eb1bee3311200e28c872c6cc9`.
