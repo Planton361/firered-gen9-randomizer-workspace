@@ -1,5 +1,17 @@
 # Current update
 
+- `208_combined_trainer_visual_runtime_smoke.md` records sanitized local combined trainer visual runtime smoke evidence.
+- Combined trainer visual runtime smoke status is `PASS_WITH_CAVEATS`.
+- Intro Mon was visibly randomized.
+- Player starter was Charmander and Oak-Lab Rival starter was Squirtle.
+- Route 22 Rival sprite was randomized and consistent with the Oak-Lab Rival sprite.
+- Route 22 Rival starter carry remains partial because a randomized non-starter Rival Pokemon, Lv9 Silvally, defeated the player before the starter could be inspected.
+- Viridian Forest trainer sprites were randomized.
+- No crash/freeze was observed.
+- No ROM run by Codex and no P1 promotion is added.
+
+# Current update
+
 - `207_rival_counter_starter_and_combined_visual_smoke.md` records sanitized local evidence for merged UPR-FVX PR #117.
 - Workspace branch `randomizer/sync-rival-counter-starter-and-visual-smoke` pins `02_external/upr-fvx` to merge commit `5983011752273e00c402e25cc1ae1a9baca110f1`.
 - Rival Carries Starter Through Game is locally smoke-confirmed for the sampled counter path: Player Charmander -> Rival Squirtle.

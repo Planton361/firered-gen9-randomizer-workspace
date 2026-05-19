@@ -1,3 +1,12 @@
+# Tool Manifest Update - 2026-05-19 - Combined trainer visual runtime smoke
+
+- Workspace evidence file: `08_tests/randomizer/208_combined_trainer_visual_runtime_smoke.md`.
+- Scope: sanitized local combined trainer visual runtime smoke on the current UPR-FVX PR #117 workspace pin.
+- Status impact: `PASS_WITH_CAVEATS`; Intro Mon visibly randomized; Player Charmander -> Oak-Lab Rival Squirtle; Route 22 Rival sprite consistent with Oak-Lab Rival sprite; Viridian Forest trainer sprites randomized; no crash/freeze observed.
+- Caveat: Route 22 Rival starter carry remains partial because a randomized non-starter Rival Pokemon, Lv9 Silvally, defeated the player before the starter could be inspected.
+- Boundary: targeted smoke only, not full-playthrough coverage, all-starter-choice proof or P1 promotion.
+- Safety: no ROM/save/output/log artifact committed, no private path/ROM hash/full log/screenshot documented, no workspace-side UPR-FVX/CFRU/DPE code change and no P1 promotion.
+
 # Tool Manifest Update - 2026-05-19 - Rival counter starter and combined visual smoke
 
 - UPR-FVX fork base branch: `compat/firered-gen9-cfru-dpe`.
