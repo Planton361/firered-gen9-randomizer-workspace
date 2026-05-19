@@ -1,3 +1,12 @@
+# Roadmap status update - Rival counter starter and combined visual smoke
+
+- Synced merged UPR-FVX PR #117 into the workspace pin at `5983011752273e00c402e25cc1ae1a9baca110f1`.
+- Added sanitized evidence file `08_tests/randomizer/207_rival_counter_starter_and_combined_visual_smoke.md`.
+- PR #117 preserves/corrects the Rival counter-starter after Foe Pokemon randomization and prevents invalid Intro Mon species `0` writes in the extended CFRU/DPE BPRE pool.
+- Status impact: Rival Carries Starter Through Game is locally smoke-confirmed for the sampled counter path, Player Charmander -> Rival Squirtle. Combined visual profile smoke passed for the targeted checks, including visible Blissey Intro Mon and prior Trainer Class Sprite Sync visual checks.
+- Caveat: targeted visual smoke only, not a full playthrough, all-starter-choice matrix, global runtime-source proof or P1 promotion.
+- No ROM paths, hashes, CRCs, full logs, screenshots, saves, emulator states, output ROMs, workspace-side UPR-FVX/CFRU/DPE code changes or P1 promotion are added.
+
 # Roadmap status update - Trainer Class Sprite Sync final smoke
 
 - Synced merged UPR-FVX PR #116 into the workspace pin at `36dd431d059bc69eb1bee3311200e28c872c6cc9`.

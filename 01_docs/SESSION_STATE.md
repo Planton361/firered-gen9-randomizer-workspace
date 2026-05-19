@@ -1,3 +1,14 @@
+# Session update - Rival counter starter and combined visual smoke
+
+- New branch: `randomizer/sync-rival-counter-starter-and-visual-smoke`.
+- Synced `02_external/upr-fvx` to merged UPR-FVX PR #117 commit `5983011752273e00c402e25cc1ae1a9baca110f1`.
+- Added `08_tests/randomizer/207_rival_counter_starter_and_combined_visual_smoke.md` with sanitized local evidence.
+- PR #117 preserves/corrects the Rival counter-starter after Foe Pokemon randomization and prevents invalid Intro Mon species `0` writes in the extended CFRU/DPE BPRE pool.
+- Sanitized local evidence: combined visual Rival test fixed; Intro Mon was visibly Blissey and Species `0` regression was gone; Player Charmander -> Rival Squirtle; Trainer Class Sprite Sync remained visually okay from prior checks with Viridian Forest per-trainer classes/sprites and Rival grouped sprite/class consistency.
+- No crash, freeze or garbled sprite was reported.
+- Caveat: targeted visual smoke only, not a full playthrough, global runtime-source proof, broad trainer-category sweep or P1 promotion.
+- Scope boundary: no ROM run by Codex, output ROM, full log, private path, hash, screenshot, save, emulator state, secret, token or `.env` data was documented. No P1 promotion was made.
+
 # Session update - Trainer Class Sprite Sync final smoke
 
 - New branch: `randomizer/sync-trainer-class-sprite-sync-final`.
