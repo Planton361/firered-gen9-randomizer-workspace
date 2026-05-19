@@ -1,3 +1,14 @@
+# Session update - Runtime source trainer randomization smoke
+
+- New branch: `randomizer/sync-runtime-source-trainer-randomization`.
+- Synced `02_external/upr-fvx` to merged UPR-FVX PR #105 commit `c0d8e33f3547020c6fd2fe5baffbc80ec93f9197`.
+- PR #105 makes generic `RUNTIME-SOURCE` trainers randomizer-eligible by treating them as regular trainers while preserving known Rival 2/Brock special tags.
+- Added `08_tests/randomizer/203_runtime_source_trainer_randomization_smoke.md`.
+- Sanitized local evidence confirms Viridian Forest runtime-source trainer IDs `531/532` are randomized and saved: `531` loaded/raw party is `[Klawf Lv7, Togepi Lv8]`, `532` loaded/raw party is `[Eiscue Lv7, Rampardos Lv7, Aron Lv7]`, and both loaded/raw comparisons match.
+- Ingame smoke observed the formerly vanilla Metapod/Caterpie Viridian Forest trainer showing Eiscue.
+- Status impact: Trainer/Foe runtime-source strict sync plus randomizer eligibility is locally confirmed for Viridian Forest `531/532`; loaded-mismatch, invalid-pointer, empty-party and out-of-range rows remain follow-up scope.
+- Scope boundary: no ROM run by Codex, output ROM, full log, private path, hash, screenshot, save, emulator state, secret, token or `.env` data was documented. No P1 promotion was made.
+
 # Session update - Strict runtime trainer source sync
 
 - New branch: `randomizer/sync-strict-runtime-trainer-source-sync`.

@@ -37,10 +37,10 @@ Dieses Repository enthält nicht:
 
 ## Aktueller Randomizer-Pin
 
-- `02_external/upr-fvx` ist auf UPR-FVX PR #103 Merge-Commit `14c1c8c0c6960f1b4a0cf0246a1117628ca1f3cc` gepinnt.
-- PR #103 stellt einen opt-in Runtime-Trainer-Source-Audit bereit.
-- Der Audit ist Diagnose-only: kein Auto-Sync, keine neue Writer-/Save-Erweiterung und keine P1-Promotion.
-- Weitere Trainer-Runtime-Fixes folgen erst nach sanitized local audit evidence.
+- `02_external/upr-fvx` ist auf UPR-FVX PR #105 Merge-Commit `c0d8e33f3547020c6fd2fe5baffbc80ec93f9197` gepinnt.
+- PR #105 macht strict geladene generische `RUNTIME-SOURCE`-Trainer randomizer-eligible.
+- Viridian Forest runtime-source trainer IDs `531/532` sind durch sanitized local evidence fuer Load, Randomize, Save und Ingame-Smoke bestaetigt.
+- Loaded-mismatch, invalid-pointer, empty-party und out-of-range Runtime-Rows bleiben Follow-up-Scope. Keine P1-Promotion.
 
 ## Wichtige Dateien
 

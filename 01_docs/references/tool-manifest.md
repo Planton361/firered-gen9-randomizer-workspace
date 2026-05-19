@@ -1,3 +1,13 @@
+# Tool Manifest Update - 2026-05-19 - Runtime source trainer randomization smoke
+
+- UPR-FVX fork base branch: `compat/firered-gen9-cfru-dpe`.
+- UPR-FVX PR #105: <https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/105>.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX PR #105 commit `c0d8e33f3547020c6fd2fe5baffbc80ec93f9197`.
+- Scope: PR #105 makes generic `RUNTIME-SOURCE` trainers randomizer-eligible as regular trainers while preserving known Rival 2/Brock special tags.
+- Status impact: local sanitized evidence confirms Viridian Forest trainer IDs `531/532` are loaded, randomized, saved and observed in-game for the targeted Trainer Pokemon path.
+- Follow-up scope: loaded-mismatch, invalid-pointer, empty-party and out-of-range audit rows remain diagnostic/follow-up work.
+- Safety: no ROM/save/output/log artifact committed, no private path/ROM hash/full log/screenshot documented, no workspace-side UPR-FVX/CFRU/DPE code change and no P1 promotion.
+
 # Tool Manifest Update - 2026-05-19 - Strict runtime trainer source sync
 
 - UPR-FVX fork base branch: `compat/firered-gen9-cfru-dpe`.
