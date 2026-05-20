@@ -1,3 +1,13 @@
+# Roadmap update - Gen Limit / Special Form / Mechanic Item smoke
+
+- UPR-FVX compat commit `765d8ec0ab298bbaab4aa9f8f31b93c7259a47e5` is merged and the workspace submodule is pinned to it.
+- The pin includes the Gen-Limit 1-9, pool filtering, Gen7/8/9 Intro Mon visual candidates, Special-Form filtering/settings/GUI, regional/evolution-relative separation, Trainer Class Sprite Sync GUI exposure, Oak-Lab Rival counter-starter preservation and source-backed CFRU/DPE mechanic item category work through PR #150.
+- Evidence 212 records targeted local Gen Limit / Special Form / Mechanic Item smoke.
+- Gen Limit / Special Form / Mechanic Item Exclusions move to `PASS_TARGETED_LOG_VISUAL_SMOKE_WITH_CAVEATS`.
+- Local checks report no current Pokemon special-form filtering issue; Regional forms are not pulled in by Evolutionary Relatives unless Regional Forms across Gen Limit is enabled; mechanic item filtering now uses source-backed CFRU/DPE categories for Mega/Z/Dynamax-GMax items.
+- Caveats remain: targeted local smoke only, no full playthrough, Plates/Drives/Memories/Nectars have no separate user-facing policies yet, Static Script/Gift/NPC item sources remain caveated when outside replacement pools, and custom/future form encodings outside documented CFRU/DPE identity blocks remain audit-required.
+- No Full-Playthrough or P1 promotion follows from this smoke.
+
 # Roadmap update - Misc Tweaks behavior smoke
 
 - UPR-FVX PR #125, PR #126 and PR #127 are merged and the workspace submodule is pinned to `155fac0b33474f6ed5b3fbaed7dd9bf24b4e1315`.
