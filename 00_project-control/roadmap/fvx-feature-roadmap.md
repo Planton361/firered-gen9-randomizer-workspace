@@ -1,11 +1,11 @@
-# Roadmap update - Gen Limit / Special Form / Mechanic Item smoke
+# Roadmap update - Gen Limit / Special Form / Mechanic Item final smoke
 
-- UPR-FVX compat commit `765d8ec0ab298bbaab4aa9f8f31b93c7259a47e5` is merged and the workspace submodule is pinned to it.
-- The pin includes the Gen-Limit 1-9, pool filtering, Gen7/8/9 Intro Mon visual candidates, Special-Form filtering/settings/GUI, regional/evolution-relative separation, Trainer Class Sprite Sync GUI exposure, Oak-Lab Rival counter-starter preservation and source-backed CFRU/DPE mechanic item category work through PR #150.
+- UPR-FVX compat commit `8349daf5ce005f0defc5674cbc3a3468f009218c` is merged and the workspace submodule is pinned to it.
+- The pin includes the Gen-Limit 1-9, pool filtering, Gen7/8/9 Intro Mon visual candidates, Special-Form filtering/settings/GUI, regional/evolution-relative separation, Trainer Class Sprite Sync GUI exposure, Oak-Lab Rival counter-starter preservation, source-backed CFRU/DPE mechanic item category work and Trainer Held Items / Sensible Items NPE guards through PR #152.
 - Evidence 212 records targeted local Gen Limit / Special Form / Mechanic Item smoke.
 - Gen Limit / Special Form / Mechanic Item Exclusions move to `PASS_TARGETED_LOG_VISUAL_SMOKE_WITH_CAVEATS`.
-- Local checks report no current Pokemon special-form filtering issue; Regional forms are not pulled in by Evolutionary Relatives unless Regional Forms across Gen Limit is enabled; mechanic item filtering now uses source-backed CFRU/DPE categories for Mega/Z/Dynamax-GMax items.
-- Caveats remain: targeted local smoke only, no full playthrough, Plates/Drives/Memories/Nectars have no separate user-facing policies yet, Static Script/Gift/NPC item sources remain caveated when outside replacement pools, and custom/future form encodings outside documented CFRU/DPE identity blocks remain audit-required.
+- Local checks report no current Pokemon special-form filtering issue; Regional forms are not pulled in by Evolutionary Relatives unless Regional Forms across Gen Limit is enabled; mechanic item filtering now uses source-backed CFRU/DPE categories for Mega/Z/Dynamax-GMax items; Trainer Held Items / Sensible Items run without the earlier missing-pool or missing-movepool NPEs; no current crash was observed in the latest GUI smoke.
+- Caveats remain: targeted local smoke only, no full playthrough, no full held-item distribution audit, Plates/Drives/Memories/Nectars have no separate user-facing policies yet, Static Script/Gift/NPC item sources remain caveated when outside replacement pools, and custom/future form encodings outside documented CFRU/DPE identity blocks remain audit-required.
 - No Full-Playthrough or P1 promotion follows from this smoke.
 
 # Roadmap update - Misc Tweaks behavior smoke
