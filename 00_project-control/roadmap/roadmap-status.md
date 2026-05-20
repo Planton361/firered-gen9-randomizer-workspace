@@ -1,3 +1,10 @@
+# Roadmap status update - Misc Tweaks behavior smoke prep
+
+- Prepared local ignored manual input `05_builds/randomizer-smoke/settings/manual/misc_tweaks_behavior_smoke.rnqs` for a future isolated Misc Tweaks behavior smoke.
+- Source/tooling is `UPR-FVX.jar settings-profile` from the existing baseline settings, with explicit overlays for `FVX-MISC-001`, `FVX-MISC-002`, `FVX-MISC-003`, `FVX-MISC-004`, `FVX-MISC-006`, `FVX-MISC-007` and `FVX-MISC-011`.
+- Optional/later local checks remain `FVX-MISC-005` Fast Egg Hatching and `FVX-MISC-012` Forgettable HMs.
+- Status impact: planning/input prep only. Misc Tweaks remain below P1 and still need local behavior-specific ingame/manual smoke. No evidence file, ROM run by Codex, output ROM or P1 promotion is added.
+
 # Roadmap status update - Graphics/Palettes visual smoke
 
 - Synced merged UPR-FVX PR #124 into the workspace pin at `0eb815418470fa1ac000695b95d09cb084338dca`.

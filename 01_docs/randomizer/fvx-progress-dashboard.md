@@ -43,6 +43,14 @@ Markdown bleibt Source of Truth.
 | Keine P1-Promotion | Aktuelle Updates sind Workspace-/Smoke-Status, keine neue P1-Freigabe |
 | Naechster sinnvoller Block | Wenn Graphics/Palettes weiter vertieft wird, shiny-fokussierte Palette-Audit-/Visual-Evidence und breitere Species/Form-Samples lokal und sanitisiert sammeln; wenn Wild-Log und Ingame-Wild auseinanderlaufen, lokalen privaten Base-vs-Output Wild Audit aus PR #118 nutzen und nur sanitized Summaries dokumentieren; CFRU/DPE special/runtime wild sources separat triagieren, falls modeled-table Audit und Ingame divergieren; Rival Carry nur bei breiterer all-starter-/later-appearance-Sampling-Frage erneut vertiefen; Trainer-Class-Sprite-Sync nur noch bei Regression oder breiterer Sampling-Frage weiter vertiefen; danach `loaded-mismatch`/`invalid` Runtime-Source-Rows separat triagieren; weitere suspected runtime-source battles nur mit eigener sanitized Evidence aufnehmen; gezielt Ingame-/Behavior-Smokes isolieren: Trainer Held Items Sensible und Misc Tweaks |
 
+## Misc Tweaks Behavior-Smoke Prep
+
+- Local ignored input prepared: `05_builds/randomizer-smoke/settings/manual/misc_tweaks_behavior_smoke.rnqs`.
+- Created through `UPR-FVX.jar settings-profile` from the existing baseline settings with Feature-ID overlays, not by RNQS byte-patching.
+- Core scope: `FVX-MISC-001` Fastest Text, `FVX-MISC-002` Running Shoes Indoors, `FVX-MISC-003` Randomize PC Potion, `FVX-MISC-004` Give National Dex at Start, `FVX-MISC-006` Lower Case Pokemon Names, `FVX-MISC-007` Randomize Catching Tutorial and `FVX-MISC-011` Reusable TMs.
+- Optional/later checks: `FVX-MISC-005` Fast Egg Hatching and `FVX-MISC-012` Forgettable HMs.
+- No evidence file exists yet for this smoke; no ROM run by Codex and no P1 promotion.
+
 ## Statusmodell
 
 | Status | Bedeutung |
@@ -92,7 +100,7 @@ Markdown bleibt Source of Truth.
 | Items | Working-matrix passed mit Caveats / generated CLI profile passed / exact Batch 02 passed | Field Items basic, Pickup Items, Shop Items | Item single/variant profiles in Batch 02 log-smoke | Required-TM-Field-Item-Zwang kann bei expanded TMs blockieren; supported/special shops bestaetigt | local boot/play or item-specific ingame smoke | 190, 191, 197, 198, 200 |
 | Types | exact coverage passed mit Caveat / optional chaos | `FVX-TYPE-001` bis `003` and exact Random/Random-Balanced/Keep-Identities/Inverse overlays CLI log-smoked | - | TypeEffectiveness bleibt stark gameplayveraendernd und braucht fokussierte Ingame-Validierung fuer staerkere Claims | Statuspflege/Regression | 190, 197, 198, 201 |
 | Graphics | targeted visual/audit smoke passed with caveats / P2 gemischt / no P1 promotion | `FVX-GFX-001` bis `004` Palette Randomization log-smoked ohne Bad Marker; 209 bestaetigt `Pokemon Palettes: Randomized/Changed`, `normalPaletteWriteAttempts=841`, sampled normal palettes changed from base and visible palette changes observed | - | Shiny coverage bleibt caveated (`shinyChangedCount=0`); Custom Player Graphics bleibt manual/out-of-scope; kein Full-Playthrough und keine P1-Promotion | shiny-fokussierte Palette-Audit-/Visual-Evidence und breitere Species/Form-Samples nur lokal und sanitisiert sammeln | 058, 191, 197, 198, 201, 209, PR123, PR124 |
-| Misc Tweaks | exact coverage passed / behavior smoke offen | `FVX-MISC-001` bis `012` log-smoked ohne Bad Marker | - | behavior-spezifische Ingame-/Manual-Smokes fehlen | Misc-Inventar und fokussierte Smokes | 197, 198, 201 |
+| Misc Tweaks | exact coverage passed / behavior smoke vorbereitet | `FVX-MISC-001` bis `012` log-smoked ohne Bad Marker; lokales Manual-Profil fuer Core-Smoke vorbereitet | - | behavior-spezifische Ingame-/Manual-Smokes fehlen; Fast Egg Hatching und Forgettable HMs optional/later | lokalen Core-Smoke ausfuehren und nur sanitized Evidence dokumentieren | 197, 198, 201 |
 
 ## GUI-Feature-Gruppen
 
@@ -116,7 +124,7 @@ Markdown bleibt Source of Truth.
 | TypeEffectiveness | exact coverage passed mit Caveat / optional chaos | Random/Random-Balanced/Keep-Identities/Inverse/Update/Add Immunities CLI log-smoked | - | stark gameplayveraendernd; braucht fokussierte Ingame-Validierung fuer staerkere Claims | Statuspflege |
 | Palettes | targeted visual/audit smoke passed with caveats | Palette Randomization log-smoked; 209 bestaetigt sampled normal palette output changes and visible palette changes | - | Shiny coverage bleibt caveated (`shinyChangedCount=0`); keine Full-Playthrough- oder P1-Promotion | shiny-fokussierte Palette-Audit-/Visual-Evidence und breitere Species/Form-Samples nur lokal und sanitisiert sammeln |
 | Graphics/Sprites | P2 / Nicht begonnen | - | - | Custom Player Graphics, Sprites | P2 |
-| Misc Tweaks | exact coverage passed / behavior smoke offen | 12 Tweaks log-smoked | - | behavior-spezifische Ingame-/Manual-Smokes fehlen | Inventar und fokussierte Smokes |
+| Misc Tweaks | exact coverage passed / behavior smoke vorbereitet | 12 Tweaks log-smoked; Core-Smoke-Profil lokal vorbereitet | - | behavior-spezifische Ingame-/Manual-Smokes fehlen | Core-Smoke lokal ausfuehren; Fast Egg Hatching / Forgettable HMs optional oder spaeter |
 
 ## Vollstaendige Feature-Liste
 
@@ -242,18 +250,18 @@ Diese Tabelle listet alle aktuell erfassten FVX-Features einmal kompakt auf. Sie
 | 116 | `FVX-GFX-004` | Graphics | Palettes: Shiny From Normal | Targeted visual/audit smoke passed with caveats | Shiny sample unchanged; needs shiny-focused follow-up |
 | 117 | `FVX-GFX-005` | Graphics | Custom Player Graphics | Manual/unsupported by generated exact coverage | Manual-only / P2 |
 | 118 | `FVX-GFX-006` | Graphics | Character to Replace | Manual/unsupported by generated exact coverage | Manual-only / P2 |
-| 119 | `FVX-MISC-001` | Misc Tweaks | Fastest Text | Exact coverage CLI passed | Behavior-specific manual/ingame smoke |
-| 120 | `FVX-MISC-002` | Misc Tweaks | Running Shoes Indoors | Exact coverage CLI passed | Behavior-specific manual/ingame smoke |
-| 121 | `FVX-MISC-003` | Misc Tweaks | Randomize PC Potion | Exact coverage CLI passed | Behavior-specific manual/ingame smoke |
-| 122 | `FVX-MISC-004` | Misc Tweaks | Give National Dex at Start | Exact coverage CLI passed | Behavior-specific manual/ingame smoke |
-| 123 | `FVX-MISC-005` | Misc Tweaks | Fast Egg Hatching | Exact coverage CLI passed | Behavior-specific manual/ingame smoke |
-| 124 | `FVX-MISC-006` | Misc Tweaks | Lower Case Pokemon Names | Exact coverage CLI passed | Behavior-specific manual/ingame smoke |
-| 125 | `FVX-MISC-007` | Misc Tweaks | Randomize Catching Tutorial | Exact coverage CLI passed | Behavior-specific manual/ingame smoke |
+| 119 | `FVX-MISC-001` | Misc Tweaks | Fastest Text | Exact coverage CLI passed; manual core smoke input prepared | Behavior-specific manual/ingame smoke |
+| 120 | `FVX-MISC-002` | Misc Tweaks | Running Shoes Indoors | Exact coverage CLI passed; manual core smoke input prepared | Behavior-specific manual/ingame smoke |
+| 121 | `FVX-MISC-003` | Misc Tweaks | Randomize PC Potion | Exact coverage CLI passed; manual core smoke input prepared | Behavior-specific manual/ingame smoke |
+| 122 | `FVX-MISC-004` | Misc Tweaks | Give National Dex at Start | Exact coverage CLI passed; manual core smoke input prepared | Behavior-specific manual/ingame smoke |
+| 123 | `FVX-MISC-005` | Misc Tweaks | Fast Egg Hatching | Exact coverage CLI passed; optional/later behavior check | Behavior-specific manual/ingame smoke |
+| 124 | `FVX-MISC-006` | Misc Tweaks | Lower Case Pokemon Names | Exact coverage CLI passed; manual core smoke input prepared | Behavior-specific manual/ingame smoke |
+| 125 | `FVX-MISC-007` | Misc Tweaks | Randomize Catching Tutorial | Exact coverage CLI passed; manual core smoke input prepared | Behavior-specific manual/ingame smoke |
 | 126 | `FVX-MISC-008` | Misc Tweaks | Ban Lucky Egg | Exact coverage CLI passed | Behavior-specific manual/ingame smoke |
 | 127 | `FVX-MISC-009` | Misc Tweaks | Balance Static Pokemon Levels | Exact coverage CLI passed | Behavior-specific manual/ingame smoke |
 | 128 | `FVX-MISC-010` | Misc Tweaks | Run Without Running Shoes | Exact coverage CLI passed | Behavior-specific manual/ingame smoke |
-| 129 | `FVX-MISC-011` | Misc Tweaks | Reusable TMs | Exact coverage CLI passed | Behavior-specific manual/ingame smoke |
-| 130 | `FVX-MISC-012` | Misc Tweaks | Forgettable HMs | Exact coverage CLI passed | Behavior-specific manual/ingame smoke |
+| 129 | `FVX-MISC-011` | Misc Tweaks | Reusable TMs | Exact coverage CLI passed; manual core smoke input prepared | Behavior-specific manual/ingame smoke |
+| 130 | `FVX-MISC-012` | Misc Tweaks | Forgettable HMs | Exact coverage CLI passed; optional/later behavior check | Behavior-specific manual/ingame smoke |
 
 ## In-Game-Trades Status nach Diagnose 164
 

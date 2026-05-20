@@ -1,3 +1,14 @@
+# Session update - Misc Tweaks behavior smoke prep
+
+- New branch: `randomizer/prepare-misc-tweaks-behavior-smoke`.
+- Prepared local ignored manual settings input `05_builds/randomizer-smoke/settings/manual/misc_tweaks_behavior_smoke.rnqs`.
+- Source/tooling: `UPR-FVX.jar settings-profile` from existing `05_builds/randomizer-smoke/settings/00_baseline.rnqs`; no RNQS byte-patching was done.
+- Core intended behavior-smoke scope: `FVX-MISC-001` Fastest Text, `FVX-MISC-002` Running Shoes Indoors, `FVX-MISC-003` Randomize PC Potion, `FVX-MISC-004` Give National Dex at Start, `FVX-MISC-006` Lower Case Pokemon Names, `FVX-MISC-007` Randomize Catching Tutorial and `FVX-MISC-011` Reusable TMs.
+- Optional/later-check scope: `FVX-MISC-005` Fast Egg Hatching and `FVX-MISC-012` Forgettable HMs, because they are not quick visual/early-game behavior checks.
+- Found existing Batch-10 Misc profiles: single profiles `single_fvx_misc_001` through `single_fvx_misc_012`, group profiles `variant_misc_text_speed_names`, `variant_misc_navigation`, `variant_misc_items_pc_pickup`, `variant_misc_story_dex_tutorial`, `variant_misc_breeding_static_tm_hm`, and broad `10_misc_tweaks`.
+- No evidence file was created because no local ingame behavior smoke exists yet.
+- Scope boundary: no ROM run by Codex, output ROM, full log, private path, hash, screenshot, save, emulator state, secret, token or `.env` data was documented. No P1 promotion was made.
+
 # Session update - Graphics/Palettes visual smoke
 
 - New branch: `randomizer/sync-graphics-palettes-visual-smoke`.

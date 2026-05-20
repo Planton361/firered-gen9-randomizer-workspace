@@ -1,3 +1,13 @@
+# Next steps update - Misc Tweaks behavior smoke prep
+
+- A local ignored manual smoke input is prepared at `05_builds/randomizer-smoke/settings/manual/misc_tweaks_behavior_smoke.rnqs`.
+- The input was generated from the existing baseline settings by `UPR-FVX.jar settings-profile` with explicit Feature-ID overlays, not by RNQS byte-patching.
+- Core smoke scope: `FVX-MISC-001` Fastest Text, `FVX-MISC-002` Running Shoes Indoors, `FVX-MISC-003` Randomize PC Potion, `FVX-MISC-004` Give National Dex at Start, `FVX-MISC-006` Lower Case Pokemon Names, `FVX-MISC-007` Randomize Catching Tutorial and `FVX-MISC-011` Reusable TMs.
+- Optional/later checks: `FVX-MISC-005` Fast Egg Hatching and `FVX-MISC-012` Forgettable HMs. Keep them separate unless the local tester can observe them cleanly in the same run.
+- Excluded from this prepared core smoke: `FVX-MISC-008` Ban Lucky Egg, `FVX-MISC-009` Balance Static Pokemon Levels and `FVX-MISC-010` Run Without Running Shoes.
+- Do not create or update a smoke evidence file until a local ingame/manual behavior smoke exists.
+- Do not run ROMs through Codex. Continue excluding ROM paths, hashes, full logs, screenshots, output ROMs, saves, emulator states, private paths, secrets, tokens and `.env` data. No P1 promotion follows from this prep.
+
 # Next steps update - Graphics/Palettes visual smoke
 
 - Treat UPR-FVX PR #124 as synced into the workspace pin at `0eb815418470fa1ac000695b95d09cb084338dca`; this includes PR #123 palette output writes and PR #124 expanded trainer logging fallback.

@@ -1,3 +1,9 @@
+# Roadmap update - Misc Tweaks behavior smoke prep
+
+- Misc Tweaks behavior-smoke input is prepared locally at `05_builds/randomizer-smoke/settings/manual/misc_tweaks_behavior_smoke.rnqs`.
+- The profile was generated through `UPR-FVX.jar settings-profile` from baseline settings with explicit overlays for `FVX-MISC-001`, `FVX-MISC-002`, `FVX-MISC-003`, `FVX-MISC-004`, `FVX-MISC-006`, `FVX-MISC-007` and `FVX-MISC-011`; no RNQS byte-patching.
+- `FVX-MISC-005` Fast Egg Hatching and `FVX-MISC-012` Forgettable HMs remain optional/later checks. No evidence file, ROM run by Codex or P1 promotion follows from this prep.
+
 # Roadmap update - Graphics/Palettes visual smoke
 
 - UPR-FVX PR #124 is merged and the workspace submodule is pinned to `0eb815418470fa1ac000695b95d09cb084338dca`.
@@ -650,7 +656,7 @@ Die detaillierte Status- und Feature-ID-Matrix bleibt in:
 | Items | 10 | Write modelliert | Field Items, Shops und Pickup als getrennte Writer implementieren/testen |
 | Types | 3 | Getestet | TypeEffectiveness Random, Balanced, Keep Type Identities, Inverse, Add Immunities und Update Type Effectiveness sind einzeln im TypeChart-Scope getestet |
 | Graphics | 6 | Gemischt | PR #123/#124 plus Evidence 209 bestaetigen targeted Graphics/Palettes visual/audit smoke fuer sampled Normal-Paletten; Shiny bleibt caveated (`shinyChangedCount=0`), kein Full-Playthrough und keine P1-Promotion; Custom Player Graphics separat modellieren |
-| Misc Tweaks | 12 | Nicht begonnen | jeden Misc-Tweak als eigenen Patch-/Risk-Scope inventarisieren |
+| Misc Tweaks | 12 | Behavior-Smoke vorbereitet | Core-Smoke lokal ausfuehren; optional Fast Egg Hatching / Forgettable HMs getrennt oder spaeter pruefen |
 | GUI-Suboptions-Regressionsmatrix | n/a | Erledigt | vorhandene Diagnose 060 als technische Regressionssicht nutzen |
 | Regression-Smoke-Plan | n/a | In Arbeit | konkrete Smoke-/Regression-Laeufe aus Feature-IDs ableiten und sanitisiert dokumentieren |
 
@@ -702,7 +708,7 @@ Die detaillierte Status- und Feature-ID-Matrix bleibt in:
 | Paket | Ziel |
 |---|---|
 | General Options | Limit Pokemon und No Premature Evolutions ausserhalb des Starter-Carrier-Smokes weiter pruefen; No Random Intro Mon und Race Mode separat inventarisieren |
-| Misc Tweaks | alle 12 Misc Tweaks inventarisieren und pro Tweak Risiko/Writer bestimmen |
+| Misc Tweaks | Core-Behavior-Smoke fuer Fast Text, Running Shoes Indoors, PC Potion, National Dex at Start, Lowercase names, Catching Tutorial und Reusable TMs lokal und sanitisiert ausfuehren; Fast Egg Hatching und Forgettable HMs optional/later-check |
 | Custom Player Graphics | getrennt von Pokemon-Palette-Randomization modellieren |
 | In-Game Trades Text/Items/IVs | Spezies-, Text-, Item- und IV-Writer getrennt pruefen |
 
