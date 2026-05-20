@@ -1,5 +1,15 @@
 # Current update
 
+- `212_gen_limit_special_form_item_smoke.md` records sanitized local Gen-Limit / Special-Form / Mechanic-Item smoke evidence.
+- Workspace branch `randomizer/sync-gen-limit-special-form-item-smoke` pins `02_external/upr-fvx` to merged UPR-FVX compat commit `765d8ec0ab298bbaab4aa9f8f31b93c7259a47e5`, including the fix chain through PR #150.
+- Gen Limit / Special Form / Mechanic Item Exclusions status is `PASS_TARGETED_LOG_VISUAL_SMOKE_WITH_CAVEATS`.
+- Sanitized local evidence: Gen-Limit 1-9 infrastructure works; Gen1-only and Gen1-6 log smokes looked correct; Gen7/8/9 Intro Mon no longer crashes and supports valid visual-table candidates; Mega/GMax/Regional/Irregular/Special-form filtering works in latest local checks; Evolutionary Relatives remain an explicit cross-gen-family override; Regional forms are not pulled in by Evolutionary Relatives unless Regional Forms across Gen Limit is enabled.
+- Additional evidence: Trainer Class Sprite Sync is GUI-exposed and should be enabled when Trainer Class Names are randomized; Oak-Lab Rival counter-starter is preserved independently of Rival Carries Starter Through Game; mechanic item filtering uses source-backed CFRU/DPE categories for Mega/Z/Dynamax-GMax items; no current Pokemon special-form filtering issue was observed after latest checks.
+- Caveat: targeted local smoke only; no full playthrough; Plates/Drives/Memories/Nectars are categorized but have no separate user-facing policies yet; Static Script/Gift/NPC item sources remain caveated if outside randomizer item replacement pools; custom/future form encodings outside documented CFRU/DPE identity blocks remain audit-required.
+- No ROM run by Codex and no P1 promotion is added.
+
+# Current update
+
 - `210_misc_tweaks_behavior_smoke.md` records sanitized local Misc Tweaks behavior-smoke evidence after the merged UPR-FVX Misc fixes.
 - Workspace branch `randomizer/sync-misc-tweaks-behavior-smoke` pins `02_external/upr-fvx` to merged UPR-FVX PR #127 commit `155fac0b33474f6ed5b3fbaed7dd9bf24b4e1315`, including PR #125 Running Shoes tweaks, PR #126 Catching Tutorial species mapping and PR #127 Fast Egg Hatching missing-`BreedingInfo` guard.
 - Misc Tweaks status is `PASS_TARGETED_BEHAVIOR_SMOKE_WITH_CAVEATS`.

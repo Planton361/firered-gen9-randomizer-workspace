@@ -1,3 +1,14 @@
+# Tool Manifest Update - 2026-05-20 - Gen Limit Special Form Mechanic Item smoke
+
+- UPR-FVX fork base branch: `compat/firered-gen9-cfru-dpe`.
+- UPR-FVX PR #150: <https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/150>.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX compat commit `765d8ec0ab298bbaab4aa9f8f31b93c7259a47e5`.
+- Scope: final merged Gen-Limit 1-9, species pool restriction, Gen7/8/9 Intro Mon visual-candidate, Special-Form filtering/settings/GUI, regional/evolution-relative separation, Trainer Class Sprite Sync GUI, Oak-Lab Rival counter-starter and source-backed CFRU/DPE mechanic item category fixes through PR #150.
+- Workspace evidence file: `08_tests/randomizer/212_gen_limit_special_form_item_smoke.md`.
+- Status impact: `PASS_TARGETED_LOG_VISUAL_SMOKE_WITH_CAVEATS`; local sanitized evidence reports Gen-Limit 1-9 infrastructure pass, Gen1-only and Gen1-6 log-smoke correctness, Gen7/8/9 Intro Mon crash-free valid visual-table candidates, Special-form filtering pass in latest checks, Trainer Class Sprite Sync GUI exposure, Oak-Lab Rival counter-starter preservation and source-backed Mega/Z/Dynamax-GMax item filtering.
+- Boundary: targeted local smoke only; no full playthrough, no P1 promotion, no separate user-facing policies yet for Plates/Drives/Memories/Nectars, Static Script/Gift/NPC item source caveat remains when outside replacement pools, and custom/future form encodings outside documented CFRU/DPE identity blocks remain audit-required.
+- Safety: no ROM/save/output/log artifact committed, no private path/ROM hash/full log/screenshot documented, no workspace-side UPR-FVX/CFRU/DPE code change and no P1 promotion.
+
 # Tool Manifest Update - 2026-05-20 - Type Effectiveness battle smoke
 
 - Workspace evidence file: `08_tests/randomizer/211_type_effectiveness_battle_smoke.md`.

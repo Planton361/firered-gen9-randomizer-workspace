@@ -1,3 +1,13 @@
+# Roadmap status update - Gen Limit / Special Form / Mechanic Item smoke
+
+- Synced merged UPR-FVX compat commit `765d8ec0ab298bbaab4aa9f8f31b93c7259a47e5` into the workspace pin after the Gen-Limit, Special-Form, Trainer-Class-Sprite-Sync, Oak-Lab-Rival and Mechanic-Item fix chain through PR #150.
+- Added sanitized evidence file `08_tests/randomizer/212_gen_limit_special_form_item_smoke.md`.
+- Status impact: Gen Limit / Special Form / Mechanic Item Exclusions are `PASS_TARGETED_LOG_VISUAL_SMOKE_WITH_CAVEATS`.
+- Local evidence: Gen-Limit 1-9 infrastructure works; Gen1-only and Gen1-6 log smokes looked correct; Gen7/8/9 Intro Mon no longer crashes and supports valid visual-table candidates; Mega/GMax/Regional/Irregular/Special-form filtering works in latest local checks; Evolutionary Relatives remain explicit cross-gen-family override; Regional forms are not pulled in by Evolutionary Relatives unless Regional Forms across Gen Limit is enabled.
+- Additional local evidence: Trainer Class Sprite Sync is GUI-exposed and should be enabled when Trainer Class Names are randomized; Oak-Lab Rival counter-starter is preserved independently of Rival Carries Starter Through Game; mechanic item filtering uses source-backed CFRU/DPE categories for Mega/Z/Dynamax-GMax items.
+- Caveat: targeted local smoke only, not full-playthrough coverage and not P1 promotion. Plates/Drives/Memories/Nectars are categorized without separate user-facing policies; Static Script/Gift/NPC item sources remain caveated if they bypass item replacement pools; custom/future form encodings outside documented CFRU/DPE identity blocks remain audit-required.
+- No ROM paths, hashes, CRCs, full logs, screenshots, saves, emulator states, output ROMs, workspace-side UPR-FVX/CFRU/DPE code changes or P1 promotion are added.
+
 # Roadmap status update - Misc Tweaks behavior smoke
 
 - Synced merged UPR-FVX PR #125, PR #126 and PR #127 into the workspace pin at `155fac0b33474f6ed5b3fbaed7dd9bf24b4e1315`.
