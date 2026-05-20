@@ -1,5 +1,15 @@
 # Current update
 
+- `210_misc_tweaks_behavior_smoke.md` records sanitized local Misc Tweaks behavior-smoke evidence after the merged UPR-FVX Misc fixes.
+- Workspace branch `randomizer/sync-misc-tweaks-behavior-smoke` pins `02_external/upr-fvx` to merged UPR-FVX PR #127 commit `155fac0b33474f6ed5b3fbaed7dd9bf24b4e1315`, including PR #125 Running Shoes tweaks, PR #126 Catching Tutorial species mapping and PR #127 Fast Egg Hatching missing-`BreedingInfo` guard.
+- Misc Tweaks status is `PASS_TARGETED_BEHAVIOR_SMOKE_WITH_CAVEATS`.
+- Sanitized local evidence: Fastest Text pass, Randomize PC Potion pass, Run Without Running Shoes pass, Running Shoes Indoors pass, Randomize Catching Tutorial pass with no question-mark sprite/name, Fast Egg Hatching crash-free randomization/output-load and Ban Lucky Egg likely pass / no issue observed.
+- Reusable TMs and Forgettable HMs are CFRU-provided for the stable profile and should not be duplicated by UPR-FVX.
+- Caveat: targeted behavior smoke only; no full playthrough, no full hatch-cycle proof, no dedicated stronger Ban Lucky Egg proof and no P1 promotion.
+- No ROM run by Codex and no P1 promotion is added.
+
+# Current update
+
 - `209_graphics_palettes_visual_smoke.md` records sanitized local Graphics/Palettes visual/audit smoke evidence.
 - Workspace branch `randomizer/sync-graphics-palettes-visual-smoke` pins `02_external/upr-fvx` to merged UPR-FVX PR #124 commit `0eb815418470fa1ac000695b95d09cb084338dca`, including PR #123 palette output writes and PR #124 expanded trainer logging fallback.
 - Graphics/Palettes visual/audit smoke status is local targeted pass with caveats.
@@ -206,7 +216,7 @@
 - `195_fvx_feature_test_status_matrix.md` documents the machine-readable per-feature status matrix.
 - `fvx_feature_test_status_matrix.tsv` tracks all 130 dashboard Feature IDs with profile mapping, log status, ingame status, caveats, blockers, evidence anchors and next steps.
 - The dashboard remains the human overview; the TSV is the CLI-profile-matrix worklist.
-- Current matrix status records the latest sanitized knowledge: Traits tab log-passed including Evolutions with caveats for hard combos, Starters/Statics/Trades log-passed, Starter Held Items log-passed, Moves/Movesets log-passed, Foe base log-passed, Trainer Class Names legacy/textlabel-only without Sync, Trainer Class Sprite Sync targeted-smoke confirmed with no P1 promotion, Trainer held Sensible Items expected-fail, Special-Wild out-of-scope, Graphics/Palettes open and Misc Tweaks not started.
+- This historical matrix-update block recorded the sanitized knowledge at the time; later updates now supersede Graphics/Palettes and Misc Tweaks with targeted smoke caveats, while Trainer Class Names remains legacy/textlabel-only without Sync, Trainer held Sensible Items remains expected-fail, Special-Wild remains out-of-scope and no P1 promotion is made.
 - No ROMs, logs, output ROMs, private paths or P1 promotion are added.
 
 # Current update

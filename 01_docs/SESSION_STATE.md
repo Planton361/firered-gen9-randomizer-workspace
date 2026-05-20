@@ -1,3 +1,15 @@
+# Session update - Misc Tweaks behavior smoke
+
+- New branch: `randomizer/sync-misc-tweaks-behavior-smoke`.
+- Synced `02_external/upr-fvx` to merged UPR-FVX PR #127 commit `155fac0b33474f6ed5b3fbaed7dd9bf24b4e1315`.
+- This pin includes PR #125 for CFRU/DPE BPRE Running Shoes misc tweaks, PR #126 for CFRU/DPE BPRE Catching Tutorial species mapping and PR #127 for Fast Egg Hatching missing-`BreedingInfo` handling.
+- Added `08_tests/randomizer/210_misc_tweaks_behavior_smoke.md` with sanitized local evidence.
+- Local evidence: Fastest Text pass, Randomize PC Potion pass, Ban Lucky Egg likely pass / no issue observed, Run Without Running Shoes pass, Running Shoes Indoors pass, Randomize Catching Tutorial pass with no question-mark sprite/name, Fast Egg Hatching no longer crashes on missing `BreedingInfo` and output loads.
+- Reusable TMs and Forgettable HMs are treated as CFRU-provided behavior and should not be duplicated by the UPR-FVX stable profile.
+- Status impact: Misc Tweaks are `PASS_TARGETED_BEHAVIOR_SMOKE_WITH_CAVEATS`.
+- Caveats: Fast Egg Hatching is crash-free randomization/output-load evidence, not full hatch-cycle proof; Ban Lucky Egg remains likely pass without stronger dedicated evidence; no full playthrough and no P1 promotion.
+- Scope boundary: no ROM run by Codex, output ROM, full log, private path, ROM hash, screenshot, save, emulator state, secret, token or `.env` data was documented.
+
 # Session update - Graphics/Palettes visual smoke
 
 - New branch: `randomizer/sync-graphics-palettes-visual-smoke`.
@@ -277,7 +289,7 @@
 - Added `08_tests/randomizer/fvx_feature_test_status_matrix.tsv` with all 130 Feature IDs from `01_docs/randomizer/fvx-progress-dashboard.md`.
 - Added `08_tests/randomizer/195_fvx_feature_test_status_matrix.md` explaining the matrix purpose, status model, CLI profile relationship and update rules.
 - The TSV maps every Feature ID to a CLI profile, test mode, log status, ingame status, caveat/blocker/evidence fields and next step.
-- Current status captures the latest sanitized evidence: Traits tab log-passed including Evolutions with hard-combo caveats; Starters/Statics/Trades, Moves/Movesets and Foe base log-passed; Trainer Class Names remains textlabel-only; trainer held Sensible Items remains expected-fail; Special-Wild remains out-of-scope; Palettes/Graphics remain open; Misc Tweaks remain not started.
+- This historical matrix-update block captured the sanitized evidence at the time; later updates now supersede Palettes/Graphics and Misc Tweaks with targeted smoke caveats, while Trainer Class Names remains textlabel-only, trainer held Sensible Items remains expected-fail and Special-Wild remains out-of-scope.
 - Dashboard remains the human overview; TSV is the machine-readable worklist for future CLI profile matrix updates.
 - No ROM, output ROM, save, emulator state, screenshot, full log, ROM path, hash, private path, secret, token or `.env` detail was read, copied, changed or documented.
 - No UPR-FVX/CFRU/DPE code change and no P1 promotion was made.

@@ -1,3 +1,13 @@
+# Roadmap status update - Misc Tweaks behavior smoke
+
+- Synced merged UPR-FVX PR #125, PR #126 and PR #127 into the workspace pin at `155fac0b33474f6ed5b3fbaed7dd9bf24b4e1315`.
+- PR #125 fixes CFRU/DPE BPRE Run Without Running Shoes and Running Shoes Indoors behavior, PR #126 fixes CFRU/DPE BPRE Catching Tutorial species mapping, and PR #127 prevents Fast Egg Hatching crashes on species without `BreedingInfo`.
+- Added sanitized evidence file `08_tests/randomizer/210_misc_tweaks_behavior_smoke.md`.
+- Status impact: Misc Tweaks are `PASS_TARGETED_BEHAVIOR_SMOKE_WITH_CAVEATS`. Fastest Text, PC Potion, Run Without Running Shoes, Running Shoes Indoors and Catching Tutorial locally pass in targeted behavior smoke; Fast Egg Hatching is crash-free for randomization/output-load; Ban Lucky Egg is likely pass / no issue observed.
+- Reusable TMs and Forgettable HMs are treated as CFRU-provided and should not be duplicated by the UPR-FVX stable profile.
+- Caveat: targeted behavior smoke only, not full-playthrough coverage, not full hatch-cycle proof, not dedicated Ban-Lucky-Egg proof and not P1 promotion.
+- No ROM paths, hashes, CRCs, full logs, screenshots, saves, emulator states, output ROMs, workspace-side UPR-FVX/CFRU/DPE code changes or P1 promotion are added.
+
 # Roadmap status update - Graphics/Palettes visual smoke
 
 - Synced merged UPR-FVX PR #124 into the workspace pin at `0eb815418470fa1ac000695b95d09cb084338dca`.
@@ -225,7 +235,7 @@
 - `08_tests/randomizer/fvx_feature_test_status_matrix.tsv` contains all 130 dashboard Feature IDs and maps each row to a CLI profile ID, test mode, log status, ingame status, caveat, blocker, evidence and next step.
 - `08_tests/randomizer/195_fvx_feature_test_status_matrix.md` documents the status model and maintenance rules.
 - The dashboard remains the human-readable overview; the TSV is the worklist for future CLI profile matrix runs.
-- Current rows reflect sanitized state only: Traits/Starters/Moves/Foe base logs passed with caveats where needed, Special-Wild remains out-of-scope, Palettes/Graphics remain open, Misc Tweaks remain not started and no P1 promotion is made.
+- This historical matrix-update block reflected the sanitized state at the time; later updates now supersede Graphics/Palettes and Misc Tweaks with targeted smoke caveats, while Special-Wild remains out-of-scope and no P1 promotion is made.
 - No ROM paths, hashes, CRCs, full logs, screenshots, saves, emulator states, output ROMs, UPR-FVX/CFRU/DPE code changes or P1 promotion are added.
 
 # Roadmap status update - CLI profile matrix pipeline

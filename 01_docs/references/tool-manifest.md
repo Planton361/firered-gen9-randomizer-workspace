@@ -1,3 +1,16 @@
+# Tool Manifest Update - 2026-05-20 - Misc Tweaks behavior smoke
+
+- UPR-FVX fork base branch: `compat/firered-gen9-cfru-dpe`.
+- UPR-FVX PR #125: <https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/125>.
+- UPR-FVX PR #126: <https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/126>.
+- UPR-FVX PR #127: <https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/127>.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX PR #127 commit `155fac0b33474f6ed5b3fbaed7dd9bf24b4e1315`.
+- Scope: PR #125 fixes CFRU/DPE BPRE Running Shoes Misc Tweaks, PR #126 maps CFRU/DPE Catching Tutorial species through the valid internal species identity and PR #127 skips expanded-pool Species entries without `BreedingInfo` during Fast Egg Hatching.
+- Workspace evidence file: `08_tests/randomizer/210_misc_tweaks_behavior_smoke.md`.
+- Status impact: `PASS_TARGETED_BEHAVIOR_SMOKE_WITH_CAVEATS`; local sanitized evidence reports Fastest Text pass, Randomize PC Potion pass, Run Without Running Shoes pass, Running Shoes Indoors pass, Randomize Catching Tutorial pass with no question-mark sprite/name, Fast Egg Hatching crash-free randomization/output-load and Ban Lucky Egg likely pass / no issue observed.
+- Boundary: targeted behavior smoke only; no full playthrough, no full hatch-cycle proof, no dedicated stronger Ban Lucky Egg proof and no P1 promotion. Reusable TMs and Forgettable HMs are CFRU-provided for the stable profile and should not be duplicated by UPR-FVX.
+- Safety: no ROM/save/output/log artifact committed, no private path/ROM hash/full log/screenshot documented, no workspace-side UPR-FVX/CFRU/DPE code change and no P1 promotion.
+
 # Tool Manifest Update - 2026-05-20 - Graphics Palettes visual smoke
 
 - UPR-FVX fork base branch: `compat/firered-gen9-cfru-dpe`.
@@ -238,7 +251,7 @@
 - Added `08_tests/randomizer/fvx_feature_test_status_matrix.tsv` with all 130 Feature IDs from the dashboard full feature list.
 - Added `08_tests/randomizer/195_fvx_feature_test_status_matrix.md` documenting the status model, CLI profile mapping, update rules and privacy boundary.
 - Scope: machine-readable status/worklist only. The dashboard remains the human overview and its full feature list is unchanged.
-- Captured current caveats: hard Evolution combinations can fallback under constraints, Trainer Class Names is textlabel-only, trainer held Sensible Items is expected-fail due to `getSensibleHeldItemsFor` NPE, Special-Wild is out-of-scope, Palettes/Graphics remain open and Misc Tweaks are not started.
+- Historical caveats captured at this matrix-update point: hard Evolution combinations can fallback under constraints, Trainer Class Names is textlabel-only, trainer held Sensible Items is expected-fail due to `getSensibleHeldItemsFor` NPE and Special-Wild is out-of-scope. Later updates supersede Palettes/Graphics and Misc Tweaks with targeted smoke caveats.
 - Safety: no ROM/save/output/log/build artifact committed, no private path/ROM hash/full log/screenshot documented, no UPR-FVX/CFRU/DPE code change and no P1 promotion.
 
 # Tool Manifest Update - 2026-05-18 - CLI profile matrix pipeline
