@@ -1,5 +1,14 @@
 # Current update
 
+- Local ignored manual input `05_builds/randomizer-smoke/settings/manual/misc_tweaks_behavior_smoke.rnqs` is prepared for a future isolated Misc Tweaks behavior smoke.
+- It was generated with `UPR-FVX.jar settings-profile` from `05_builds/randomizer-smoke/settings/00_baseline.rnqs`; no RNQS fields were guessed or byte-patched.
+- Intended core Feature-ID scope: `FVX-MISC-001`, `FVX-MISC-002`, `FVX-MISC-003`, `FVX-MISC-004`, `FVX-MISC-006`, `FVX-MISC-007` and `FVX-MISC-011`.
+- Optional/later Feature-ID scope: `FVX-MISC-005` Fast Egg Hatching and `FVX-MISC-012` Forgettable HMs.
+- Found existing Batch-10 inputs: single `FVX-MISC-001` through `FVX-MISC-012`, group variants for text/navigation/items/story/breeding-static-TM-HM, and broad `10_misc_tweaks`.
+- No evidence file is updated, no ROM run by Codex occurred and no P1 promotion is added.
+
+# Current update
+
 - `209_graphics_palettes_visual_smoke.md` records sanitized local Graphics/Palettes visual/audit smoke evidence.
 - Workspace branch `randomizer/sync-graphics-palettes-visual-smoke` pins `02_external/upr-fvx` to merged UPR-FVX PR #124 commit `0eb815418470fa1ac000695b95d09cb084338dca`, including PR #123 palette output writes and PR #124 expanded trainer logging fallback.
 - Graphics/Palettes visual/audit smoke status is local targeted pass with caveats.
