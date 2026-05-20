@@ -1,3 +1,15 @@
+# Tool Manifest Update - 2026-05-20 - Graphics Palettes visual smoke
+
+- UPR-FVX fork base branch: `compat/firered-gen9-cfru-dpe`.
+- UPR-FVX PR #123: <https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/123>.
+- UPR-FVX PR #124: <https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/124>.
+- Workspace submodule `02_external/upr-fvx` now pins merged UPR-FVX PR #124 commit `0eb815418470fa1ac000695b95d09cb084338dca`.
+- Scope: PR #123 writes Gen3/CFRU-DPE palette randomization output; PR #124 guards expanded trainer logging bounds/fallbacks.
+- Workspace evidence file: `08_tests/randomizer/209_graphics_palettes_visual_smoke.md`.
+- Status impact: targeted local Graphics/Palettes visual/audit smoke passes with caveats: `Pokemon Palettes: Randomized/Changed`, `normalPaletteWriteAttempts=841`, Palette Audit `sampledCount=21`, `normalChangedCount=21`, `shinyChangedCount=0`, `unchangedCount=0`, sampled normal palettes changed from base and visible palette changes were observed. Final run had no `Error during logging`.
+- Boundary: targeted smoke only, not full-playthrough coverage, broad species/form coverage, shiny behavior proof or P1 promotion.
+- Safety: no ROM/save/output/log artifact committed, no private path/ROM hash/full log/screenshot documented, no workspace-side UPR-FVX/CFRU/DPE code change and no P1 promotion.
+
 # Tool Manifest Update - 2026-05-19 - Wild encounter output audit
 
 - UPR-FVX fork base branch: `compat/firered-gen9-cfru-dpe`.

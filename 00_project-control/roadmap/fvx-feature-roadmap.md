@@ -1,3 +1,12 @@
+# Roadmap update - Graphics/Palettes visual smoke
+
+- UPR-FVX PR #124 is merged and the workspace submodule is pinned to `0eb815418470fa1ac000695b95d09cb084338dca`.
+- The pin includes PR #123's Gen3/CFRU-DPE palette output write fix and PR #124's expanded trainer logging fallback.
+- Added sanitized evidence file `08_tests/randomizer/209_graphics_palettes_visual_smoke.md`.
+- Sanitized local evidence confirms `Pokemon Palettes: Randomized/Changed`, `normalPaletteWriteAttempts=841`, Palette Audit `sampledCount=21`, `normalChangedCount=21`, `shinyChangedCount=0`, `unchangedCount=0`, sampled normal palettes changed from base, visible palette changes observed, and no final `Error during logging`.
+- Graphics/Palettes moves from prepared-only to targeted visual/audit smoke passed with caveats. Shiny behavior remains separately caveated by the sampled audit.
+- No ROM run by Codex, output ROM, workspace-side UPR-FVX/CFRU/DPE code change or P1 promotion is part of this workspace sync.
+
 # Roadmap update - Graphics/Palettes smoke settings prep
 
 - Local ignored manual smoke input `05_builds/randomizer-smoke/settings/manual/graphics_palettes_smoke.rnqs` is prepared from the generated `risk_graphics_palettes_visual` profile.
@@ -640,7 +649,7 @@ Die detaillierte Status- und Feature-ID-Matrix bleibt in:
 | TM/HMs & Tutors | 15 | Gemischt | TM/Tutor-Tabellen halten; Preserve-/Filter-/Follow-Evolution-Suboptionen testen |
 | Items | 10 | Write modelliert | Field Items, Shops und Pickup als getrennte Writer implementieren/testen |
 | Types | 3 | Getestet | TypeEffectiveness Random, Balanced, Keep Type Identities, Inverse, Add Immunities und Update Type Effectiveness sind einzeln im TypeChart-Scope getestet |
-| Graphics | 6 | Gemischt | Diagnose 095 implementiert den Normal-Palette-Single-owner-Guard; Reload-Smoke steht noch aus, Shiny/shared/invalid/missing/decode-failed bleiben preserve-only, Custom Player Graphics separat modellieren |
+| Graphics | 6 | Gemischt | PR #123/#124 plus Evidence 209 bestaetigen targeted Graphics/Palettes visual/audit smoke fuer sampled Normal-Paletten; Shiny bleibt caveated (`shinyChangedCount=0`), kein Full-Playthrough und keine P1-Promotion; Custom Player Graphics separat modellieren |
 | Misc Tweaks | 12 | Nicht begonnen | jeden Misc-Tweak als eigenen Patch-/Risk-Scope inventarisieren |
 | GUI-Suboptions-Regressionsmatrix | n/a | Erledigt | vorhandene Diagnose 060 als technische Regressionssicht nutzen |
 | Regression-Smoke-Plan | n/a | In Arbeit | konkrete Smoke-/Regression-Laeufe aus Feature-IDs ableiten und sanitisiert dokumentieren |
@@ -673,9 +682,9 @@ Die detaillierte Status- und Feature-ID-Matrix bleibt in:
 | P1.3a | `analysis/upr-fvx-cfru-dpe-palette-pointer-compression-diagnostics-plan` | Graphics | erledigt: Diagnose 092 plant Normal-/Shiny-Palette-Pointer read-only nach dekomprimierbar, single-owner, shared, missing und invalid zu klassifizieren |
 | P1.3b | `test/upr-fvx-cfru-dpe-palette-pointer-compression-diagnostics` | Graphics | erledigt: Diagnose 093 klassifiziert Pointer/Compression; `candidateWritablePalettes=385`, davon `385` Normal und `0` Shiny |
 | P1.3c | `analysis/upr-fvx-cfru-dpe-palette-single-owner-normal-only-fix-scope-plan` | Graphics | erledigt: Diagnose 094 plant den spaeteren Scope nur fuer Normal-Paletten, single-owner, dekomprimierbar, gueltig, non-shared und non-cross-kind; Shiny/shared/invalid/missing/decode-failed preserve-only |
-| P1.3d | `compat/upr-fvx-cfru-dpe-palette-normal-single-owner-write` | Graphics | Review/Test: UPR-FVX PR #35 implementiert den Normal-only-Single-owner-Guard; kein ROM-/Reload-Smoke in diesem Block |
-| P1.3e | `test/upr-fvx-cfru-dpe-palette-normal-single-owner-reload-smoke` | Graphics | naechster Schritt: sanitisierten Reload-Smoke fuer `FVX-GFX-001` Normal-only-Single-owner-Subset ausfuehren |
-| P1.3f | `compat/upr-fvx-cfru-dpe-palette-randomization-preserve-repoint` | Graphics | wartet: breitere Shared-/Shiny-/Repoint-Policy erst nach Normal-Single-owner-Smoke separat planen |
+| P1.3d | `compat/upr-fvx-cfru-dpe-palette-normal-single-owner-write` | Graphics | erledigt/abgeloest durch PR #123/#124 Stand: Palette-Output-Writes und Logging-Fallback im aktuellen FVX-Pin enthalten |
+| P1.3e | `test/upr-fvx-cfru-dpe-palette-normal-single-owner-reload-smoke` | Graphics | Evidence 209: targeted visual/audit smoke passed with caveats; sampled Normal-Paletten changed from base and visually changed, aber kein P1, kein Full-Playthrough, Shiny sample unchanged |
+| P1.3f | `compat/upr-fvx-cfru-dpe-palette-randomization-preserve-repoint` | Graphics | wartet: breitere Shared-/Shiny-/Repoint-Policy nur mit separater shiny-/species-/forme-fokussierter Evidence planen |
 | P1.4 | `compat/upr-fvx-cfru-dpe-field-items-shops-pickup-scope-and-write` | Items | Field Items, Shops und Pickup mit getrennten Reload-Kriterien absichern |
 
 ### P2 - Suboptionen der bereits GUI-kompatiblen Pakete

@@ -1,5 +1,15 @@
 # Current update
 
+- `209_graphics_palettes_visual_smoke.md` records sanitized local Graphics/Palettes visual/audit smoke evidence.
+- Workspace branch `randomizer/sync-graphics-palettes-visual-smoke` pins `02_external/upr-fvx` to merged UPR-FVX PR #124 commit `0eb815418470fa1ac000695b95d09cb084338dca`, including PR #123 palette output writes and PR #124 expanded trainer logging fallback.
+- Graphics/Palettes visual/audit smoke status is local targeted pass with caveats.
+- Sanitized evidence: `Pokemon Palettes: Randomized/Changed`; CFRU-DPE palette copy save `normalPaletteWriteAttempts=841`; Palette Audit `sampledCount=21`, `normalChangedCount=21`, `shinyChangedCount=0`, `unchangedCount=0`; sampled Charmander/Squirtle/Caterpie/Pikachu/Blissey normal palettes changed from base; changed palettes visually observed.
+- Final run had no `Error during logging`.
+- Caveat: targeted visual/audit smoke only, not full-playthrough coverage, broad species/form coverage, shiny behavior proof or P1 promotion.
+- No ROM run by Codex and no P1 promotion is added.
+
+# Current update
+
 - Local ignored manual input `05_builds/randomizer-smoke/settings/manual/graphics_palettes_smoke.rnqs` is prepared for a future isolated Graphics/Palettes visual smoke.
 - It reuses the generated `risk_graphics_palettes_visual` settings-profile artifact; no RNQS fields were guessed or byte-patched.
 - Intended Feature-ID scope: `FVX-GFX-001` through `FVX-GFX-004`.

@@ -1,3 +1,13 @@
+# Next steps update - Graphics/Palettes visual smoke
+
+- Treat UPR-FVX PR #124 as synced into the workspace pin at `0eb815418470fa1ac000695b95d09cb084338dca`; this includes PR #123 palette output writes and PR #124 expanded trainer logging fallback.
+- Treat `08_tests/randomizer/209_graphics_palettes_visual_smoke.md` as the current sanitized evidence file for Graphics/Palettes visual smoke.
+- Graphics/Palettes visual/audit smoke is locally passed with caveats: `Pokemon Palettes: Randomized/Changed`, `normalPaletteWriteAttempts=841`, `sampledCount=21`, `normalChangedCount=21`, `shinyChangedCount=0`, `unchangedCount=0`, sampled normal palettes changed from base and changed palettes were visually observed.
+- The final run had no `Error during logging`.
+- Keep the caveat explicit: targeted visual/audit smoke only, not a full playthrough, broad species/form sweep, shiny behavior proof or P1 promotion.
+- Useful follow-up, if needed, is a separate local shiny-focused palette audit/visual smoke and broader species sampling, still with sanitized evidence only.
+- Do not run ROMs through Codex. Continue excluding ROM paths, hashes, full logs, screenshots, output ROMs, saves, emulator states, private paths, secrets, tokens and `.env` data.
+
 # Next steps update - Graphics/Palettes smoke settings prep
 
 - A local ignored manual smoke input is prepared at `05_builds/randomizer-smoke/settings/manual/graphics_palettes_smoke.rnqs`.
