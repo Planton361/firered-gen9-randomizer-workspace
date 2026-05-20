@@ -43,6 +43,14 @@ Markdown bleibt Source of Truth.
 | Keine P1-Promotion | Aktuelle Updates sind Workspace-/Smoke-Status, keine neue P1-Freigabe |
 | Naechster sinnvoller Block | Misc Tweaks nur bei Regression oder fuer Full-Hatch-/Ban-Lucky-Egg-/nicht beobachtete Detailpfade erneut vertiefen; wenn Graphics/Palettes weiter vertieft wird, shiny-fokussierte Palette-Audit-/Visual-Evidence und breitere Species/Form-Samples lokal und sanitisiert sammeln; wenn Wild-Log und Ingame-Wild auseinanderlaufen, lokalen privaten Base-vs-Output Wild Audit aus PR #118 nutzen und nur sanitized Summaries dokumentieren; CFRU/DPE special/runtime wild sources separat triagieren, falls modeled-table Audit und Ingame divergieren; Rival Carry nur bei breiterer all-starter-/later-appearance-Sampling-Frage erneut vertiefen; Trainer-Class-Sprite-Sync nur noch bei Regression oder breiterer Sampling-Frage weiter vertiefen; danach `loaded-mismatch`/`invalid` Runtime-Source-Rows separat triagieren; weitere suspected runtime-source battles nur mit eigener sanitized Evidence aufnehmen; Trainer Held Items Sensible bleibt ein isolierter Behavior-Smoke-Kandidat |
 
+## Misc Tweaks Behavior-Smoke Prep
+
+- Local ignored input prepared: `05_builds/randomizer-smoke/settings/manual/misc_tweaks_behavior_smoke.rnqs`.
+- Created through `UPR-FVX.jar settings-profile` from the existing baseline settings with Feature-ID overlays, not by RNQS byte-patching.
+- Core scope: `FVX-MISC-001` Fastest Text, `FVX-MISC-002` Running Shoes Indoors, `FVX-MISC-003` Randomize PC Potion, `FVX-MISC-004` Give National Dex at Start, `FVX-MISC-006` Lower Case Pokemon Names, `FVX-MISC-007` Randomize Catching Tutorial and `FVX-MISC-011` Reusable TMs.
+- Optional/later checks: `FVX-MISC-005` Fast Egg Hatching and `FVX-MISC-012` Forgettable HMs.
+- No evidence file exists yet for this smoke; no ROM run by Codex and no P1 promotion.
+
 ## Statusmodell
 
 | Status | Bedeutung |
