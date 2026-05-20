@@ -39,6 +39,8 @@ Dieses Repository enthält nicht:
 
 - `02_external/upr-fvx` ist auf den UPR-FVX PR-#127-Merge-Commit `155fac0b33474f6ed5b3fbaed7dd9bf24b4e1315` gepinnt.
 - Dieser Pin enthaelt zusaetzlich PR #125 Running-Shoes-Misc-Tweaks fuer CFRU/DPE BPRE, PR #126 Catching-Tutorial-Species-Mapping fuer CFRU/DPE BPRE und PR #127 Fast-Egg-Hatching-Null-`BreedingInfo`-Guard.
+- Type Effectiveness Battle Smoke ist als `08_tests/randomizer/211_type_effectiveness_battle_smoke.md` dokumentiert: lokaler Battle-Smoke pass, Effektivitaetsverhalten wirkte passend, keine Battle-Crashes gemeldet.
+- Caveat: targeted battle smoke, keine vollstaendige Type-Matchup-Matrix, kein Full-Playthrough und keine P1-Promotion.
 - Misc Tweaks Behavior Smoke ist als `08_tests/randomizer/210_misc_tweaks_behavior_smoke.md` dokumentiert: Fastest Text pass, PC Potion pass, Run Without Running Shoes pass, Running Shoes Indoors pass, Catching Tutorial pass ohne Fragezeichen-Sprite/-Name, Fast Egg Hatching crash-free randomization smoke mit ladendem Output, Ban Lucky Egg likely pass / no issue observed.
 - Reusable TMs und Forgettable HMs bleiben als CFRU-provided Stable-Profile-Caveat dokumentiert und sollen nicht doppelt durch das UPR-FVX stable profile aktiviert werden.
 - Caveat: targeted behavior smoke, kein Full-Playthrough, kein Full-Hatch-Cycle-Proof, keine dedizierte Ban-Lucky-Egg-Drop-Proof-Evidence und keine P1-Promotion.

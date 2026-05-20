@@ -7,6 +7,13 @@
 - Fast Egg Hatching remains caveated as crash-free randomization/output-load evidence, not full hatch-cycle proof; Ban Lucky Egg is likely pass / no issue observed; Reusable TMs and Forgettable HMs are CFRU-provided and should not be duplicated by the UPR-FVX stable profile.
 - No Full-Playthrough or P1 promotion follows from this smoke.
 
+# Roadmap update - Type Effectiveness battle smoke
+
+- Evidence 211 records targeted local Type Effectiveness battle smoke.
+- Type Effectiveness moves to `PASS_TARGETED_BATTLE_SMOKE_WITH_CAVEATS`.
+- Local evidence: Type Effectiveness was tested in battle, effectiveness behavior looked appropriate and no battle crashes were reported.
+- Caveat: targeted battle smoke only, no full type-chart matchup matrix, no Full-Playthrough and no P1 promotion.
+
 # Roadmap update - Graphics/Palettes visual smoke
 
 - UPR-FVX PR #124 is merged and the workspace submodule is pinned to `0eb815418470fa1ac000695b95d09cb084338dca`.
@@ -657,7 +664,7 @@ Die detaillierte Status- und Feature-ID-Matrix bleibt in:
 | Wild Pokemon | 12 | Gemischt | Standard/Fallback-Wild halten; Similar Strength und Type Restrictions sind nach Diagnose 075 im `FVX-WILD-001` Carrier wieder stabil |
 | TM/HMs & Tutors | 15 | Gemischt | TM/Tutor-Tabellen halten; Preserve-/Filter-/Follow-Evolution-Suboptionen testen |
 | Items | 10 | Write modelliert | Field Items, Shops und Pickup als getrennte Writer implementieren/testen |
-| Types | 3 | Getestet | TypeEffectiveness Random, Balanced, Keep Type Identities, Inverse, Add Immunities und Update Type Effectiveness sind einzeln im TypeChart-Scope getestet |
+| Types | 3 | PASS_TARGETED_BATTLE_SMOKE_WITH_CAVEATS | Evidence 211 bestaetigt targeted Type-Effectiveness-Battle-Smoke ohne Battle-Crash; keine vollstaendige Type-Matchup-Matrix, kein Full-Playthrough und keine P1-Promotion |
 | Graphics | 6 | Gemischt | PR #123/#124 plus Evidence 209 bestaetigen targeted Graphics/Palettes visual/audit smoke fuer sampled Normal-Paletten; Shiny bleibt caveated (`shinyChangedCount=0`), kein Full-Playthrough und keine P1-Promotion; Custom Player Graphics separat modellieren |
 | Misc Tweaks | 12 | PASS_TARGETED_BEHAVIOR_SMOKE_WITH_CAVEATS | Evidence 210 bestaetigt targeted Misc-Tweaks-Behavior-Smoke; Fast Egg Hatching nur crash-free/output-load, Ban Lucky Egg likely pass, Reusable TMs/Forgettable HMs CFRU-provided und nicht doppelt im UPR-FVX stable profile |
 | GUI-Suboptions-Regressionsmatrix | n/a | Erledigt | vorhandene Diagnose 060 als technische Regressionssicht nutzen |
