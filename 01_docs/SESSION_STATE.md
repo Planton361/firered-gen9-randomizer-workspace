@@ -10,6 +10,15 @@
 - Caveats: Fast Egg Hatching is crash-free randomization/output-load evidence, not full hatch-cycle proof; Ban Lucky Egg remains likely pass without stronger dedicated evidence; no full playthrough and no P1 promotion.
 - Scope boundary: no ROM run by Codex, output ROM, full log, private path, ROM hash, screenshot, save, emulator state, secret, token or `.env` data was documented.
 
+# Session update - Type Effectiveness battle smoke
+
+- New branch: `randomizer/record-type-effectiveness-battle-smoke`.
+- Added `08_tests/randomizer/211_type_effectiveness_battle_smoke.md` with sanitized local battle-smoke evidence.
+- Local evidence: Type Effectiveness was tested in battle, effectiveness behavior looked appropriate and no battle crashes were reported.
+- Status impact: Type Effectiveness is `PASS_TARGETED_BATTLE_SMOKE_WITH_CAVEATS`.
+- Caveats: targeted battle smoke only, not a full type-chart matchup matrix, not a full playthrough and not a P1 promotion.
+- Scope boundary: no ROM run by Codex, output ROM, full log, private path, ROM hash, screenshot, save, emulator state, secret, token or `.env` data was documented.
+
 # Session update - Graphics/Palettes visual smoke
 
 - New branch: `randomizer/sync-graphics-palettes-visual-smoke`.

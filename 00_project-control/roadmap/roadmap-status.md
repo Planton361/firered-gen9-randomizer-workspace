@@ -8,6 +8,14 @@
 - Caveat: targeted behavior smoke only, not full-playthrough coverage, not full hatch-cycle proof, not dedicated Ban-Lucky-Egg proof and not P1 promotion.
 - No ROM paths, hashes, CRCs, full logs, screenshots, saves, emulator states, output ROMs, workspace-side UPR-FVX/CFRU/DPE code changes or P1 promotion are added.
 
+# Roadmap status update - Type Effectiveness battle smoke
+
+- Added sanitized evidence file `08_tests/randomizer/211_type_effectiveness_battle_smoke.md`.
+- Status impact: Type Effectiveness is `PASS_TARGETED_BATTLE_SMOKE_WITH_CAVEATS`.
+- Local evidence: Type Effectiveness was tested in battle, effectiveness behavior looked appropriate and no battle crashes were reported.
+- Caveat: targeted battle smoke only, not full type-chart matchup matrix coverage, not full-playthrough coverage and not P1 promotion.
+- No ROM paths, hashes, CRCs, full logs, screenshots, saves, emulator states, output ROMs, workspace-side UPR-FVX/CFRU/DPE code changes or P1 promotion are added.
+
 # Roadmap status update - Graphics/Palettes visual smoke
 
 - Synced merged UPR-FVX PR #124 into the workspace pin at `0eb815418470fa1ac000695b95d09cb084338dca`.

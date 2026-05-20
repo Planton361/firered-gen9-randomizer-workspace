@@ -8,6 +8,14 @@
 - Do not promote Misc Tweaks to P1 from this targeted smoke.
 - Do not run ROMs through Codex. Continue excluding output ROMs, private paths, ROM hashes, full logs, screenshots, saves, emulator states, secrets, tokens and `.env` data.
 
+# Next steps update - Type Effectiveness battle smoke
+
+- Treat `08_tests/randomizer/211_type_effectiveness_battle_smoke.md` as the current sanitized evidence file for Type Effectiveness battle smoke.
+- Type Effectiveness status is `PASS_TARGETED_BATTLE_SMOKE_WITH_CAVEATS`.
+- Confirmed locally in sanitized evidence: Type Effectiveness was tested in battle, effectiveness behavior looked appropriate and no battle crashes were reported.
+- Keep caveats explicit: no full type-chart matchup matrix, targeted battle smoke only, no full playthrough and no P1 promotion.
+- Do not run ROMs through Codex. Continue excluding output ROMs, private paths, ROM hashes, full logs, screenshots, saves, emulator states, secrets, tokens and `.env` data.
+
 # Next steps update - Graphics/Palettes visual smoke
 
 - Treat UPR-FVX PR #124 as synced into the workspace pin at `0eb815418470fa1ac000695b95d09cb084338dca`; this includes PR #123 palette output writes and PR #124 expanded trainer logging fallback.

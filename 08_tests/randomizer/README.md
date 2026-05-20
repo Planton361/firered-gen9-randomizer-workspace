@@ -10,6 +10,14 @@
 
 # Current update
 
+- `211_type_effectiveness_battle_smoke.md` records sanitized local Type Effectiveness battle-smoke evidence.
+- Type Effectiveness status is `PASS_TARGETED_BATTLE_SMOKE_WITH_CAVEATS`.
+- Sanitized local evidence: Type Effectiveness was tested in battle, effectiveness behavior looked appropriate and no battle crashes were reported.
+- Caveat: targeted battle smoke only, not a full type-chart matchup matrix, not a full playthrough and not a P1 promotion.
+- No ROM run by Codex and no P1 promotion is added.
+
+# Current update
+
 - `209_graphics_palettes_visual_smoke.md` records sanitized local Graphics/Palettes visual/audit smoke evidence.
 - Workspace branch `randomizer/sync-graphics-palettes-visual-smoke` pins `02_external/upr-fvx` to merged UPR-FVX PR #124 commit `0eb815418470fa1ac000695b95d09cb084338dca`, including PR #123 palette output writes and PR #124 expanded trainer logging fallback.
 - Graphics/Palettes visual/audit smoke status is local targeted pass with caveats.

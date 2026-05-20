@@ -1,3 +1,11 @@
+# Tool Manifest Update - 2026-05-20 - Type Effectiveness battle smoke
+
+- Workspace evidence file: `08_tests/randomizer/211_type_effectiveness_battle_smoke.md`.
+- Scope: sanitized local Type Effectiveness battle smoke.
+- Status impact: `PASS_TARGETED_BATTLE_SMOKE_WITH_CAVEATS`; local evidence reports Type Effectiveness tested in battle, effectiveness behavior looked appropriate and no battle crashes were reported.
+- Boundary: targeted battle smoke only; no full type-chart matchup matrix, no full playthrough and no P1 promotion.
+- Safety: no ROM/save/output/log artifact committed, no private path/ROM hash/full log/screenshot documented, no workspace-side UPR-FVX/CFRU/DPE code change and no P1 promotion.
+
 # Tool Manifest Update - 2026-05-20 - Misc Tweaks behavior smoke
 
 - UPR-FVX fork base branch: `compat/firered-gen9-cfru-dpe`.
