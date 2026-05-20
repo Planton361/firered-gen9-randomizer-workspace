@@ -1,11 +1,11 @@
 # Current update
 
-- `212_gen_limit_special_form_item_smoke.md` records sanitized local Gen-Limit / Special-Form / Mechanic-Item smoke evidence.
-- Workspace branch `randomizer/sync-gen-limit-special-form-item-smoke` pins `02_external/upr-fvx` to merged UPR-FVX compat commit `765d8ec0ab298bbaab4aa9f8f31b93c7259a47e5`, including the fix chain through PR #150.
+- `212_gen_limit_special_form_item_smoke.md` records sanitized local Gen-Limit / Special-Form / Mechanic-Item / Trainer-Held-Item final-smoke evidence.
+- Workspace branch `randomizer/sync-gen-limit-special-form-item-final-smoke` pins `02_external/upr-fvx` to merged UPR-FVX compat commit `8349daf5ce005f0defc5674cbc3a3468f009218c`, including the fix chain through PR #152.
 - Gen Limit / Special Form / Mechanic Item Exclusions status is `PASS_TARGETED_LOG_VISUAL_SMOKE_WITH_CAVEATS`.
 - Sanitized local evidence: Gen-Limit 1-9 infrastructure works; Gen1-only and Gen1-6 log smokes looked correct; Gen7/8/9 Intro Mon no longer crashes and supports valid visual-table candidates; Mega/GMax/Regional/Irregular/Special-form filtering works in latest local checks; Evolutionary Relatives remain an explicit cross-gen-family override; Regional forms are not pulled in by Evolutionary Relatives unless Regional Forms across Gen Limit is enabled.
-- Additional evidence: Trainer Class Sprite Sync is GUI-exposed and should be enabled when Trainer Class Names are randomized; Oak-Lab Rival counter-starter is preserved independently of Rival Carries Starter Through Game; mechanic item filtering uses source-backed CFRU/DPE categories for Mega/Z/Dynamax-GMax items; no current Pokemon special-form filtering issue was observed after latest checks.
-- Caveat: targeted local smoke only; no full playthrough; Plates/Drives/Memories/Nectars are categorized but have no separate user-facing policies yet; Static Script/Gift/NPC item sources remain caveated if outside randomizer item replacement pools; custom/future form encodings outside documented CFRU/DPE identity blocks remain audit-required.
+- Additional evidence: Trainer Class Sprite Sync is GUI-exposed and should be enabled when Trainer Class Names are randomized; Oak-Lab Rival counter-starter is preserved independently of Rival Carries Starter Through Game; mechanic item filtering uses source-backed CFRU/DPE categories for Mega/Z/Dynamax-GMax items; Trainer Held Items / Sensible Items run without the earlier missing-pool or missing-movepool NPEs; no current crash was observed in the latest GUI smoke; no current Pokemon special-form filtering issue was observed after latest checks.
+- Caveat: targeted local smoke only; no full playthrough; no full held-item distribution audit; Plates/Drives/Memories/Nectars are categorized but have no separate user-facing policies yet; Static Script/Gift/NPC item sources remain caveated if outside randomizer item replacement pools; custom/future form encodings outside documented CFRU/DPE identity blocks remain audit-required.
 - No ROM run by Codex and no P1 promotion is added.
 
 # Current update
