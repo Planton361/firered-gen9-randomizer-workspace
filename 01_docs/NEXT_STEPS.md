@@ -1,12 +1,12 @@
-# Next steps update - Misc Tweaks behavior smoke prep
+# Next steps update - Misc Tweaks behavior smoke
 
-- A local ignored manual smoke input is prepared at `05_builds/randomizer-smoke/settings/manual/misc_tweaks_behavior_smoke.rnqs`.
-- The input was generated from the existing baseline settings by `UPR-FVX.jar settings-profile` with explicit Feature-ID overlays, not by RNQS byte-patching.
-- Core smoke scope: `FVX-MISC-001` Fastest Text, `FVX-MISC-002` Running Shoes Indoors, `FVX-MISC-003` Randomize PC Potion, `FVX-MISC-004` Give National Dex at Start, `FVX-MISC-006` Lower Case Pokemon Names, `FVX-MISC-007` Randomize Catching Tutorial and `FVX-MISC-011` Reusable TMs.
-- Optional/later checks: `FVX-MISC-005` Fast Egg Hatching and `FVX-MISC-012` Forgettable HMs. Keep them separate unless the local tester can observe them cleanly in the same run.
-- Excluded from this prepared core smoke: `FVX-MISC-008` Ban Lucky Egg, `FVX-MISC-009` Balance Static Pokemon Levels and `FVX-MISC-010` Run Without Running Shoes.
-- Do not create or update a smoke evidence file until a local ingame/manual behavior smoke exists.
-- Do not run ROMs through Codex. Continue excluding ROM paths, hashes, full logs, screenshots, output ROMs, saves, emulator states, private paths, secrets, tokens and `.env` data. No P1 promotion follows from this prep.
+- Treat UPR-FVX PR #125, PR #126 and PR #127 as synced into the workspace pin at `155fac0b33474f6ed5b3fbaed7dd9bf24b4e1315`.
+- Treat `08_tests/randomizer/210_misc_tweaks_behavior_smoke.md` as the current sanitized evidence file for Misc Tweaks behavior smoke.
+- Misc Tweaks status is `PASS_TARGETED_BEHAVIOR_SMOKE_WITH_CAVEATS`.
+- Confirmed locally in sanitized evidence: Fastest Text pass, Randomize PC Potion pass, Run Without Running Shoes pass, Running Shoes Indoors pass, Randomize Catching Tutorial pass without question-mark sprite/name, Fast Egg Hatching crash-free randomization with output load, and no crash/freeze in tested paths.
+- Keep caveats explicit: Fast Egg Hatching has no full hatch-cycle proof; Ban Lucky Egg is likely pass / no issue observed rather than dedicated proof; Reusable TMs and Forgettable HMs are CFRU-provided and should not be duplicated by the UPR-FVX stable profile.
+- Do not promote Misc Tweaks to P1 from this targeted smoke.
+- Do not run ROMs through Codex. Continue excluding output ROMs, private paths, ROM hashes, full logs, screenshots, saves, emulator states, secrets, tokens and `.env` data.
 
 # Next steps update - Graphics/Palettes visual smoke
 
@@ -243,7 +243,7 @@
 - Keep `01_docs/randomizer/fvx-progress-dashboard.md` as the human overview and do not shorten its full feature list.
 - When a local CLI matrix run reports sanitized results, update only the affected TSV rows: `log_status`, `ingame_status`, `known_caveat`, `blocker`, `evidence` and `next_step`.
 - Move a row to `PASS_INGAME_SMOKE` only after sanitized local ingame evidence exists for that feature path.
-- Keep Special-Wild out-of-scope, Trainer Class Names textlabel-only, trainer held Sensible Items expected-fail, Palettes/Graphics open and Misc Tweaks not started until separate work changes those rows.
+- Keep Special-Wild out-of-scope, Trainer Class Names textlabel-only and trainer held Sensible Items expected-fail; Graphics/Palettes and Misc Tweaks have since moved to targeted smoke statuses with caveats, and future row changes should stay evidence-scoped.
 - Continue excluding ROM paths, hashes, full logs, screenshots, output ROMs, saves, emulator states, private paths, secrets, tokens and `.env` data.
 - No P1 promotion follows from the matrix alone.
 

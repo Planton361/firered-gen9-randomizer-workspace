@@ -37,8 +37,13 @@ Dieses Repository enthält nicht:
 
 ## Aktueller Randomizer-Pin
 
-- `02_external/upr-fvx` ist auf den UPR-FVX PR-#124-Merge-Commit `0eb815418470fa1ac000695b95d09cb084338dca` gepinnt.
-- Dieser Pin enthaelt den PR-#123-Palette-Output-Write-Fix und den PR-#124-Expanded-Trainer-Logging-Fallback.
+- `02_external/upr-fvx` ist auf den UPR-FVX PR-#127-Merge-Commit `155fac0b33474f6ed5b3fbaed7dd9bf24b4e1315` gepinnt.
+- Dieser Pin enthaelt zusaetzlich PR #125 Running-Shoes-Misc-Tweaks fuer CFRU/DPE BPRE, PR #126 Catching-Tutorial-Species-Mapping fuer CFRU/DPE BPRE und PR #127 Fast-Egg-Hatching-Null-`BreedingInfo`-Guard.
+- Misc Tweaks Behavior Smoke ist als `08_tests/randomizer/210_misc_tweaks_behavior_smoke.md` dokumentiert: Fastest Text pass, PC Potion pass, Run Without Running Shoes pass, Running Shoes Indoors pass, Catching Tutorial pass ohne Fragezeichen-Sprite/-Name, Fast Egg Hatching crash-free randomization smoke mit ladendem Output, Ban Lucky Egg likely pass / no issue observed.
+- Reusable TMs und Forgettable HMs bleiben als CFRU-provided Stable-Profile-Caveat dokumentiert und sollen nicht doppelt durch das UPR-FVX stable profile aktiviert werden.
+- Caveat: targeted behavior smoke, kein Full-Playthrough, kein Full-Hatch-Cycle-Proof, keine dedizierte Ban-Lucky-Egg-Drop-Proof-Evidence und keine P1-Promotion.
+- Vorheriger Pin: UPR-FVX PR #124 Merge-Commit `0eb815418470fa1ac000695b95d09cb084338dca`.
+- PR #124 enthaelt den PR-#123-Palette-Output-Write-Fix und den PR-#124-Expanded-Trainer-Logging-Fallback.
 - Graphics/Palettes Evidence ist als `08_tests/randomizer/209_graphics_palettes_visual_smoke.md` dokumentiert: `Pokemon Palettes: Randomized/Changed`, CFRU-DPE palette copy save mit `normalPaletteWriteAttempts=841`, Base-vs-Output Palette Audit `sampledCount=21`, `normalChangedCount=21`, `shinyChangedCount=0`, `unchangedCount=0`, und sichtbare geaenderte Paletten.
 - Der finale Lauf meldete kein `Error during logging`.
 - Caveat: targeted visual/audit smoke, keine Full-Playthrough-, breite Shiny- oder P1-Promotion.

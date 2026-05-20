@@ -1,8 +1,11 @@
-# Roadmap update - Misc Tweaks behavior smoke prep
+# Roadmap update - Misc Tweaks behavior smoke
 
-- Misc Tweaks behavior-smoke input is prepared locally at `05_builds/randomizer-smoke/settings/manual/misc_tweaks_behavior_smoke.rnqs`.
-- The profile was generated through `UPR-FVX.jar settings-profile` from baseline settings with explicit overlays for `FVX-MISC-001`, `FVX-MISC-002`, `FVX-MISC-003`, `FVX-MISC-004`, `FVX-MISC-006`, `FVX-MISC-007` and `FVX-MISC-011`; no RNQS byte-patching.
-- `FVX-MISC-005` Fast Egg Hatching and `FVX-MISC-012` Forgettable HMs remain optional/later checks. No evidence file, ROM run by Codex or P1 promotion follows from this prep.
+- UPR-FVX PR #125, PR #126 and PR #127 are merged and the workspace submodule is pinned to `155fac0b33474f6ed5b3fbaed7dd9bf24b4e1315`.
+- PR #125 covers CFRU/DPE BPRE Running Shoes misc-tweak behavior, PR #126 covers CFRU/DPE BPRE Catching Tutorial species mapping and PR #127 covers Fast Egg Hatching missing-`BreedingInfo` handling.
+- Evidence 210 records targeted local Misc Tweaks behavior smoke.
+- Misc Tweaks move from behavior-smoke-open to `PASS_TARGETED_BEHAVIOR_SMOKE_WITH_CAVEATS`.
+- Fast Egg Hatching remains caveated as crash-free randomization/output-load evidence, not full hatch-cycle proof; Ban Lucky Egg is likely pass / no issue observed; Reusable TMs and Forgettable HMs are CFRU-provided and should not be duplicated by the UPR-FVX stable profile.
+- No Full-Playthrough or P1 promotion follows from this smoke.
 
 # Roadmap update - Graphics/Palettes visual smoke
 
@@ -656,7 +659,7 @@ Die detaillierte Status- und Feature-ID-Matrix bleibt in:
 | Items | 10 | Write modelliert | Field Items, Shops und Pickup als getrennte Writer implementieren/testen |
 | Types | 3 | Getestet | TypeEffectiveness Random, Balanced, Keep Type Identities, Inverse, Add Immunities und Update Type Effectiveness sind einzeln im TypeChart-Scope getestet |
 | Graphics | 6 | Gemischt | PR #123/#124 plus Evidence 209 bestaetigen targeted Graphics/Palettes visual/audit smoke fuer sampled Normal-Paletten; Shiny bleibt caveated (`shinyChangedCount=0`), kein Full-Playthrough und keine P1-Promotion; Custom Player Graphics separat modellieren |
-| Misc Tweaks | 12 | Behavior-Smoke vorbereitet | Core-Smoke lokal ausfuehren; optional Fast Egg Hatching / Forgettable HMs getrennt oder spaeter pruefen |
+| Misc Tweaks | 12 | PASS_TARGETED_BEHAVIOR_SMOKE_WITH_CAVEATS | Evidence 210 bestaetigt targeted Misc-Tweaks-Behavior-Smoke; Fast Egg Hatching nur crash-free/output-load, Ban Lucky Egg likely pass, Reusable TMs/Forgettable HMs CFRU-provided und nicht doppelt im UPR-FVX stable profile |
 | GUI-Suboptions-Regressionsmatrix | n/a | Erledigt | vorhandene Diagnose 060 als technische Regressionssicht nutzen |
 | Regression-Smoke-Plan | n/a | In Arbeit | konkrete Smoke-/Regression-Laeufe aus Feature-IDs ableiten und sanitisiert dokumentieren |
 
@@ -708,7 +711,7 @@ Die detaillierte Status- und Feature-ID-Matrix bleibt in:
 | Paket | Ziel |
 |---|---|
 | General Options | Limit Pokemon und No Premature Evolutions ausserhalb des Starter-Carrier-Smokes weiter pruefen; No Random Intro Mon und Race Mode separat inventarisieren |
-| Misc Tweaks | Core-Behavior-Smoke fuer Fast Text, Running Shoes Indoors, PC Potion, National Dex at Start, Lowercase names, Catching Tutorial und Reusable TMs lokal und sanitisiert ausfuehren; Fast Egg Hatching und Forgettable HMs optional/later-check |
+| Misc Tweaks | Evidence 210 halten; nur bei Regression oder fuer Full-Hatch-/Ban-Lucky-Egg-/nicht beobachtete Detailpfade separat nachtesten |
 | Custom Player Graphics | getrennt von Pokemon-Palette-Randomization modellieren |
 | In-Game Trades Text/Items/IVs | Spezies-, Text-, Item- und IV-Writer getrennt pruefen |
 
