@@ -12,6 +12,7 @@
 04_private_roms/
 05_builds/
 03_tools/releases/
+.local/
 
 # Local environment
 .env
