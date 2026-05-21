@@ -121,7 +121,43 @@ Runtime-/Script-Quellen sind der eigentliche Kompatibilitaetsbruch gegen Vanilla
 - Targeted Smoke ist kein Ersatz fuer Full Playthrough, breite Distribution-Audits oder komplette
   Matchup-/Palette-Matrizen.
 
-## 3. Feature-/Fix-Erklaerung nach Themen
+## 3. Source-to-ROM-Table-Map: CFRU/DPE-Dateien vs FVX-Tabellen
+
+Der wichtige Unterschied fuer die Bewertung ist:
+
+`CFRU/DPE-Source-Datei` -> der Build erzeugt oder repointet daraus die finale ROM-Tabelle ->
+`UPR-FVX` liest und schreibt nicht die C-Datei, sondern die finale ROM-Tabelle ueber `romEntry`,
+Pointer-Reads oder CFRU/DPE-spezifische Runtime-Pointer.
+
+Harter Befund aus `rg`: mehrere DPE-Tabellen liegen lokal als direkte C-Definitionen vor, zum
+Beispiel `02_external/Dynamic-Pokemon-Expansion-Gen-9/src/Base_Stats.c`, `Learnsets.c`,
+`Evolution Table.c`, `TM_Tutor_Tables.c`, `Front_Pic_Table.c`, `Back_Pic_Table.c`,
+`Palette_Table.c` und `Shiny_Palette_Table.c`. Mehrere CFRU-Tabellen liegen unter
+`02_external/CFRU-expansion/src/Tables/`, darunter `battle_moves.c`, `item_tables.c`,
+`trainer_data.c`, `trainer_parties.h` und `wild_encounter_tables.c`. Interpretation: diese Dateien
+sind die lokale Source-Schicht; FVX muss trotzdem gegen die im gebauten ROM gueltigen Pointer
+arbeiten, weil Repointing und Runtime-Quellen den finalen Ort und teilweise die tatsaechlich
+genutzte Quelle bestimmen.
+
+| Feature | finale ROM-Tabelle / Pointer-Symbol | vermutete lokale Source-Datei(en) | FVX-Codepfad | im Bericht bereits erklaert | offene Verifikation |
+| --- | --- | --- | --- | --- | --- |
+| BaseStats / SpeciesInfo / Abilities | `PokemonStats` in FVX; CFRU/DPE-Symbol `gBaseStats`; CFRU-Alias `gSpeciesInfo`; Ability-IDs in BaseStats, Ability-Namen/-Beschreibungen separat | `02_external/Dynamic-Pokemon-Expansion-Gen-9/src/Base_Stats.c`; CFRU-Consumer/Ability-Code in `02_external/CFRU-expansion/src/ability_util.c` und `include/pokemon.h`; genaue Ability-Tabellenquelle fuer Namen/Beschreibungen: unklar / lokal nachzurecherchieren | `Gen3RomHandler.loadSpeciesStats()`, `loadBasicPokeStats()`, `saveSpeciesStats()`, `generationOf()`, `generationOfSpeciesId()`; `RestrictedSpeciesService`, `SpeciesBaseStatRandomizer`, `SpeciesBaseStatUpdater`, `SpeciesAbilityRandomizer` | teilweise, vor allem SpeciesSet-Identity und Datenqualitaet vs Kompatibilitaet | Final pruefen, ob der konkrete Build `gBaseStats` direkt aus DPE `Base_Stats.c` nutzt oder CFRU-Repointing/aliasing dazwischenliegt; Ability-Namensquellen gesondert mappen |
+| Level-Up Learnsets / `gLevelUpLearnsets` | FVX `PokemonMovesets`; CFRU/DPE `gLevelUpLearnsets` als Pointer-Tabelle | `02_external/Dynamic-Pokemon-Expansion-Gen-9/src/Learnsets.c`; `02_external/CFRU-expansion/src/Tables/level_up_learnsets.c` existiert ebenfalls als CFRU-Tabelle | `Gen3RomHandler.getMovesLearnt()`, `setMovesLearnt()`, `chooseCfruDpeLevelUpLearnsetsOffset()`, `readCfruRuntimeLevelUpLearnsetsOffset()`, `hasValidCfruRuntimeLevelUpLearnsetsPointer()` | teilweise, als statische Tabelle und Datenqualitaets-Scope | Nachweisen, welche Learnset-Quelle im aktuellen finalen BPRE-Build aktiv ist und ob alle expanded species in der Runtime-Pointer-Tabelle abgedeckt sind |
+| Evolutions / `gEvolutionTable` | FVX `PokemonEvolutions`; CFRU/DPE `gEvolutionTable` | `02_external/Dynamic-Pokemon-Expansion-Gen-9/src/Evolution Table.c`; CFRU nutzt/definiert Pointer in `02_external/CFRU-expansion/include/new/rom_locs.h` und Engine-Code wie `src/evolution.c`/`src/mega.c` | `Gen3RomHandler.getEvolutions()`, `setEvolutions()`, `getEvolutionRowOffset()`; relatives/form filtering in `RestrictedSpeciesService` und evolution-related Randomizer-Pfaden | teilweise, bei evolutionaeren Relatives und Regional-Override | Expanded Evolution-Methoden, Mega/GMax-Sondermethoden und custom future encodings muessen gegen die finale Tabelle validiert werden |
+| Move Data / Battle Moves | FVX `MoveData`; CFRU `gBattleMoves` | `02_external/CFRU-expansion/src/Tables/battle_moves.c`; DPE-Source fuer Battle-Move-Daten im lokalen Fork nicht eindeutig gefunden: unklar / lokal nachzurecherchieren | `Gen3RomHandler.getMoves()`, `setMoves()`, `writeGen3BattleMoveData()`; Move-/Type-bezogene Randomizer und Updater | teilweise, ueber Type-Effectiveness-Battle-Smoke und Datenqualitaetsabgrenzung | Vollstaendige Move-Daten-Layout-Kompatibilitaet fuer CFRU/DPE-Felder wie split/category, Z-/Max-Felder und flags ist nicht durch eine komplette Matrix belegt |
+| TM/HM Moves und TM/HM Compatibility | FVX `TmMoves`, ggf. `TmMovesDuplicate`, `TMHMCompatibility`; DPE/CFRU `gTMHMMoves`, `gTMHMLearnsets` | `02_external/Dynamic-Pokemon-Expansion-Gen-9/src/TM_Tutor_Tables.c`; `src/tm_compatibility/`; Generator `02_external/Dynamic-Pokemon-Expansion-Gen-9/scripts/tm_tutor.py`; CFRU-Consumer `02_external/CFRU-expansion/src/item.c` und `include/new/item.h` | `Gen3RomHandler.getTMMoves()`, `setTMMoves()`, `getTMHMCompatibility()`, `setTMHMCompatibility()`; TM/HM/Tutor randomizer paths | nur am Rand, nicht als eigenes P1-Fix-Thema | Exakte Bitbreite/Count der CFRU/DPE-Compatibility und Doppel-Write-Semantik fuer `TmMovesDuplicate` final pruefen |
+| Tutor Moves und Tutor Compatibility | FVX `MoveTutorMoves`, `MoveTutorCompatibility`; DPE/CFRU `gMoveTutorMoves`, `gTutorLearnsets` | `02_external/Dynamic-Pokemon-Expansion-Gen-9/src/TM_Tutor_Tables.c`; `src/tutor_compatibility/`; Generator `scripts/tm_tutor.py`; CFRU-Consumer `02_external/CFRU-expansion/src/item.c` | `Gen3RomHandler.getMoveTutorMoves()`, `setMoveTutorMoves()`, `getMoveTutorCompatibility()`, `setMoveTutorCompatibility()`, `getCfruDpeMoveTutorMovesOffset()`, `getCfruDpeMoveTutorCompatibilityOffset()` | nur am Rand, nicht als eigenes P1-Fix-Thema | Aktive Tutor-Anzahl, expanded compatibility width und Text/Menu-Sources bleiben separat zu validieren |
+| Items / Item Data | FVX `ItemData`; CFRU `gItemData`; weitere Item-Quellen fuer scripts/field/shop/pickup ausserhalb einer einzelnen Tabelle | `02_external/CFRU-expansion/src/Tables/item_tables.c`; Item-Konstanten/Consumer unter `02_external/CFRU-expansion/include/` und `src/item.c`; DPE-spezifische Item-Source: unklar / lokal nachzurecherchieren | `Gen3RomHandler.getAllowedItems()`, ItemData-Lese-/Schreibpfade um `ItemData`; `CfruDpeItemCategories`, `ItemMechanicPredicates`, `ItemRandomizer`, `TrainerPokemonRandomizer.randomizeHeldItems()` | ja, Mechanic Item Filtering und Trainer-Held-Item-NPE-Fixes | Static Script/Gift/NPC item sources, Shop-/Pickup-Verteilungen und vollstaendige Held-Item-Distribution sind noch offen |
+| Wild Encounter Tables | FVX `WildPokemon`; CFRU `gWildMonHeaders` plus runtime/special encounter systems | `02_external/CFRU-expansion/src/Tables/wild_encounter_tables.c`; `02_external/CFRU-expansion/include/wild_encounter.h`; Consumer/Runtime in `02_external/CFRU-expansion/src/wild_encounter.c` | `Gen3RomHandler.getEncounters(false)`, `setEncounters(...)`, `getWildEncounterInternalSpeciesId()`, `buildFrlgWildEncounterOutputAuditRows()`; `WildEncounterRandomizer` | ja, Wild Pokemon Base-vs-Output Audit | Day/Night, Swarms, DexNav, Raids und weitere special wild sources sind nicht durch den Standard-`WildPokemon`-Pfad abgedeckt |
+| TrainerData / Trainer Parties | FVX `TrainerData`, `TrainerCount`, `TrainerEntrySize`; CFRU `gTrainers`; Party-Pointer aus Trainer-Rows | `02_external/CFRU-expansion/src/Tables/trainer_data.c`; `02_external/CFRU-expansion/src/Tables/trainer_parties.h` | `Gen3RomHandler.loadTrainers()`, `readTrainerDataRow()`, `findFrlgTrainerBattleRuntimeSources()`, `loadFrlgRuntimeTrainerSourceRows()`, `saveFrlgRuntimeTrainerSourceRows()`, `saveTrainers()`; `TrainerPokemonRandomizer` | ja, Runtime Source Sync/Randomization, Rival counter-starter, class/sprite sync | `LOADED_AND_RUNTIME_MISMATCH`, invalid/out-of-range script rows und nicht modellierte script-only sources bleiben Audit-/Smoke-Themen |
+| Palette / Sprite pointer tables | FVX `PokemonFrontImages`, `PokemonBackImages`, `PokemonNormalPalettes`, `PokemonShinyPalettes`; DPE `gMonFrontPicTable`, `gMonBackPicTable`, `gMonPaletteTable`, `gMonShinyPaletteTable` | `02_external/Dynamic-Pokemon-Expansion-Gen-9/src/Front_Pic_Table.c`, `Back_Pic_Table.c`, `Palette_Table.c`, `Shiny_Palette_Table.c`; Grafikdaten unter DPE-Graphics-Pfaden; CFRU-Consumer in `src/scripting.c` und Bild-/Palette-Code | `Gen3RomHandler.setIntroPokemon()`, `writeCfruDpeIntroVisualTables()`, `loadPokemonPalettes()`, `savePokemonPalettes()`, `getGen3PaletteOutputAuditForDiagnostics()`, `Gen3to5PaletteRandomizer` | ja, Intro Visual Source und Graphics/Palettes Output Writes | Shiny palette coverage, alle form-/species-spezifischen sprite pointers und Icon-Tabellen sind nicht vollstaendig audited |
+
+Diese Map ist eine Bewertungslandkarte, kein Beweis fuer Ingame-Korrektheit. Sie zeigt, welche lokale
+Source-Schicht wahrscheinlich die finale Tabelle speist und an welcher Stelle FVX tatsaechlich
+liest/schreibt. Eine P1-Promotion wuerde weiterhin finale ROM-Pointer, Randomizer-Output und Ingame-
+Pfad getrennt validieren muessen.
+
+## 4. Feature-/Fix-Erklaerung nach Themen
 
 ### Intro Mon Visual Source / Species-0 Guard
 
@@ -457,7 +493,7 @@ weiterhin mechanic item filters anwenden.
 
 **Caveats:** targeted NPE-free GUI smoke; keine vollstaendige Held-Item-Distribution-Audit.
 
-## 4. Bewertung des bisherigen Ansatzes
+## 5. Bewertung des bisherigen Ansatzes
 
 ### Strukturiert und sinnvoll
 
@@ -506,7 +542,7 @@ weiterhin mechanic item filters anwenden.
 - Repeated "internal species identity for Extended BPRE" Helpers koennten vereinheitlicht werden.
 - Logging-Fallbacks koennten als kleine Format-/SafeAccess-Helper gebuendelt werden.
 
-## 5. Datenqualitaet vs Kompatibilitaet
+## 6. Datenqualitaet vs Kompatibilitaet
 
 Falsche BaseStats, Learnsets, Abilities oder sonstige Pokemon-Daten sind eine andere Problemklasse als
 Randomizer-Kompatibilitaet.
@@ -520,7 +556,7 @@ trotzdem kompatibel arbeiten, solange es den Learnset korrekt laedt, randomisier
 ueberspringt. Eine spaetere Datenkorrektur waere ein getrennter Scope und sollte nicht mit FVX-
 Kompatibilitaetsfixes vermischt werden.
 
-## 6. Empfohlene naechste Bewertungsmatrix
+## 7. Empfohlene naechste Bewertungsmatrix
 
 | Feature | Codepfad | Datenquelle | FVX-Touchpoint | Teststatus | Ingame-Test noetig | Caveat | Empfehlung |
 |---|---|---|---|---|---|---|---|
@@ -538,7 +574,7 @@ Kompatibilitaetsfixes vermischt werden.
 | Mechanic Item Filtering | `ItemMechanicPredicates` | item IDs + decoded names | Item/Trainer item pools | unit + smoke pass | Ja | static item sources offen | Source-backed Kategorien pflegen |
 | Trainer Held Items | `randomizeTrainerHeldItems()` | held item pools + movesets | Trainer item randomizer | NPE-free targeted smoke | Ja | keine Distribution-Audit | Distribution-Audit nur separat |
 
-## 7. Offene Risiken
+## 8. Offene Risiken
 
 - Full Playthrough fehlt.
 - Static Script/Gift/NPC item sources koennen Items ausserhalb normaler Replacement-Pools setzen.
@@ -549,7 +585,7 @@ Kompatibilitaetsfixes vermischt werden.
 - Vollstaendige Type-Matchup-Matrix fehlt.
 - Vollstaendige Held-Item-Distribution-Audit fehlt.
 
-## 8. Fazit
+## 9. Fazit
 
 Der bisherige Weg war effektiv, weil er beobachtete CFRU/DPE-Brueche nicht mit grossen Refactors,
 sondern mit Diagnose, kleinen Writer-/Pool-Fixes und sanitized Evidence bearbeitet hat. Besonders stark
