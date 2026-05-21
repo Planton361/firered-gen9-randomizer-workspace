@@ -155,6 +155,14 @@ def classify_item(item: str) -> PolicyGuess:
         "goldbottlecap": ("BAN", "Gold Bottle Cap is banned from normal pools by Anton review."),
         "sunflute": ("BAN", "Sun Flute is a story/system item."),
         "moonflute": ("BAN", "Moon Flute is a story/system item."),
+        "redflute": ("BAN", "Red Flute is Ban-Bad filtered by current item policy."),
+        "blueflute": ("BAN", "Blue Flute is Ban-Bad filtered by current item policy."),
+        "blackflute": ("BAN", "Black Flute is Ban-Bad filtered by current item policy."),
+        "whiteflute": ("BAN", "White Flute is Ban-Bad filtered by current item policy."),
+        "yellowflute": ("BAN", "Yellow Flute is Ban-Bad filtered by current item policy."),
+        "shinycharm": ("BAN", "Shiny Charm is Ban-Bad filtered by current item policy."),
+        "ovalcharm": ("BAN", "Oval Charm is Ban-Bad filtered by current item policy."),
+        "magmastone": ("BAN", "Magma Stone is Ban-Bad filtered by current item policy."),
         "dnasplicers": ("BAN", "DNA Splicers is a form/system item."),
         "revealglass": ("BAN", "Reveal Glass is a form/system item."),
         "prisonbottle": ("BAN", "Prison Bottle is a form/system item."),
@@ -192,7 +200,7 @@ def classify_item(item: str) -> PolicyGuess:
         return PolicyGuess("MECHANIC_SETTING", True, "Z-Crystal should require Include Z-Crystal Items.", "check include setting")
     if is_mega_stone_name(norm):
         return PolicyGuess("MECHANIC_SETTING", True, "Mega Stone should require Include Mega Items.", "check include setting")
-    if norm in {"dynamaxband", "dynamaxcandy", "wishingpiece", "wishingstar", "maxmushrooms", "maxhoney"}:
+    if norm in {"dynamaxband", "dynamaxcandy", "wishingpiece", "wishpiece", "wishingstar", "maxmushrooms", "maxhoney"}:
         return PolicyGuess("MECHANIC_SETTING", True, "Dynamax/GMax item should require Include Dynamax/GMax Items.", "check include setting")
     if "????" in item or "#" in item or norm.startswith("item") and any(ch.isdigit() for ch in norm):
         return PolicyGuess("REVIEW", True, "Fallback/unknown-looking item name.", "verify final ItemData")
@@ -211,6 +219,7 @@ def is_z_crystal_name(norm: str) -> bool:
         "normaliumz", "firiumz", "wateriumz", "electriumz", "grassiumz", "iciumz", "fightiniumz",
         "poisoniumz", "groundiumz", "flyiniumz", "psychiumz", "buginiumz", "rockiumz", "ghostiumz",
         "dragoniumz", "darkiniumz", "steeliumz", "fairiumz", "pikaniumz", "pikashuniumz",
+        "pikshuniumz",
         "aloraichiumz", "alorichiumz", "araichuniumz", "eeviumz", "mewniumz", "snorliumz",
         "decidiumz", "inciniumz", "primariumz", "tapuniumz", "marshadiumz", "kommoniumz",
         "lycaniumz", "mimikiumz", "solganiumz", "lunaliumz", "ultranecroziumz", "necroziumz",
@@ -223,15 +232,17 @@ def is_mega_stone_name(norm: str) -> bool:
         return False
     known = {
         "venusaurite", "charizarditex", "charizarditey", "blastoisinite", "blastoisnite",
+        "charzarditex", "charzarditey",
         "blastoisenite", "blastoiseite", "beedrillite", "pidgeotite", "alakazite", "slowbronite",
-        "gengarite", "kangaskhanite", "pinsirite", "gyaradosite", "aerodactylite", "mewtwonitex",
+        "gengarite", "kangaskhanite", "kangaskanite", "pinsirite", "gyaradosite", "aerodactylite",
+        "aerodactlite", "mewtwonitex",
         "mewtwonitey", "ampharosite", "scizorite", "heracronite", "houndoominite", "tyranitarite",
-        "sceptilite", "blazikenite", "swampertite", "gardevoirite", "sablenite", "mawilite",
+        "houndoomnite", "sceptilite", "blazikenite", "swampertite", "gardevoirite", "sablenite", "mawilite",
         "aggronite", "medichamite", "manectite", "sharpedonite", "cameruptite", "altarianite",
         "banettite", "absolite", "glalitite", "salamencite", "metagrossite", "latiasite",
         "latiosite", "lucarionite", "abomasite", "galladite", "audinite", "diancite",
     }
-    return norm in known or norm.endswith("ite") and norm not in {"eviolite"}
+    return norm in known
 
 
 def is_allowed_reward_name(norm: str) -> bool:
@@ -251,7 +262,8 @@ def is_allowed_reward_name(norm: str) -> bool:
         "xattack", "xdefend", "xdefense", "xspeed", "xaccuracy", "xspatk", "xspdef", "direhit",
         "guardspec", "floatstone", "twistedspoon", "spelltag", "expertbelt", "icyrock",
         "miracleseed", "clearamulet", "widelens", "throatspray", "punchingglove", "leftovers",
-        "choiceband", "lifeorb", "eviolite",
+        "choiceband", "lifeorb", "eviolite", "absorbbulb", "adrenalorb", "flameorb", "toxicorb",
+        "redcard", "hardstone", "everstone", "blkaugurite", "blackaugurite",
         "firestone", "waterstone", "thunderstone", "leafstone", "moonstone", "sunstone",
         "shinystone", "duskstone", "dawnstone", "icestone", "linkcable", "linkingcord",
         "nugget", "pearl", "bigpearl", "tinymushroom", "bigmushroom",
@@ -261,8 +273,12 @@ def is_allowed_reward_name(norm: str) -> bool:
 
 
 def looks_system_or_form_related(norm: str) -> bool:
-    markers = ("key", "card", "ticket", "charm", "orb", "flute", "stone", "chain", "cube", "gear", "catalog")
-    return any(marker in norm for marker in markers)
+    known_system_names = {
+        "redchain", "zygardegear", "zygardeassemblyunit", "rotomcatalog", "adventureguide",
+        "lookerticket", "eonticket", "ssticket", "elevatorkey",
+        "plasmacard", "discountcoupon", "powerplantpass", "devonscope", "devonparts",
+    }
+    return norm in known_system_names
 
 
 def aggregate(parsed_logs: Sequence[ParsedLog]) -> dict[str, list[dict[str, str]]]:
