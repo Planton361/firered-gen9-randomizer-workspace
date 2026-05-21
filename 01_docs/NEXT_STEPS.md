@@ -1,3 +1,11 @@
+# Next steps update - FVX compatibility implementation report
+
+- Treat `01_docs/randomizer/fvx-compat-implementation-report.md` as the current technical summary of how the UPR-FVX CFRU/DPE compatibility fix stack was implemented through compat commit `8349daf5ce005f0defc5674cbc3a3468f009218c` / PR #152.
+- Use the report for future review/handoff before opening new FVX compatibility work, especially when deciding whether a topic is code-supported, audit-supported, targeted-smoke-supported or still caveated.
+- Keep the report boundaries explicit: no new ROM run, no build, no output artifact, no full-playthrough claim, no broad Type-Matchup/Palette/Held-Item distribution proof and no P1 promotion.
+- Recommended next work remains evidence-driven: only revisit Gen Limit / Special Forms / Mechanic Items / Trainer Held Items / Intro / Rival / Runtime Trainer / Palette / Misc / TypeEffectiveness when a regression, full-playthrough question or a separately scoped audit/smoke is requested.
+- Continue excluding ROM paths, hashes, full logs, screenshots, output ROMs, saves, emulator states, private paths, secrets, tokens and `.env` data from committed documentation.
+
 # Next steps update - Gen Limit / Special Form / Mechanic Item final smoke
 
 - Treat UPR-FVX compat commit `8349daf5ce005f0defc5674cbc3a3468f009218c` as the current workspace pin for the merged Gen-Limit, Special-Form, Trainer-Class-Sprite-Sync, Oak-Lab-Rival, Mechanic-Item and Trainer-Held-Item fix chain through PR #152.

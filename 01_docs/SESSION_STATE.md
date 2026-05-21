@@ -1,3 +1,13 @@
+# Session update - FVX compatibility implementation report
+
+- New branch: `analysis/fvx-compat-implementation-report`.
+- Added `01_docs/randomizer/fvx-compat-implementation-report.md`.
+- Scope: documentation-only technical report explaining the UPR-FVX CFRU/DPE compatibility implementation path through compat commit `8349daf5ce005f0defc5674cbc3a3468f009218c` / PR #152.
+- The report summarizes architecture, affected code paths, PR/evidence references, feature-by-feature fixes, remaining caveats, data-quality vs compatibility separation, and a recommended next evaluation matrix.
+- No UPR-FVX, CFRU/DPE or workspace code was changed.
+- No ROMs, builds, output ROMs, saves, emulator states, screenshots, full logs, private paths, hashes, secrets, tokens or `.env` data were read or documented.
+- No P1 promotion was made.
+
 # Session update - Gen Limit / Special Form / Mechanic Item final smoke
 
 - New branch: `randomizer/sync-gen-limit-special-form-item-final-smoke`.
