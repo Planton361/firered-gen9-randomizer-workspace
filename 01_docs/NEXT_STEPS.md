@@ -1,3 +1,12 @@
+# Next steps update - Rival starter consistency smoke plan
+
+- Treat `08_tests/randomizer/rival_starter_consistency_smoke.md` as the current documentation-only plan for a focused local Rival starter consistency smoke.
+- Existing evidence is enough to run the smoke without inventing a new evidence structure: Oak-Lab Rival counter-slot evidence comes from `192`, Rival carry/counter evidence from `207`, combined Oak-Lab plus Route 22 evidence from `208`, Oak-Lab independence from `212`, and runtime-source/Trainer Pokemon caveats from `202` through `204` plus the TSV and decision matrix.
+- Recommended local settings: randomized Starter Pokemon, randomized Foe/Trainer Pokemon, `Rival Carries Starter Through Game` enabled, Trainer Class Sprite Sync enabled only when Trainer Class Names are randomized, Special-Wild/Day-Night/Swarms off, and unrelated Item/Palette/Misc/TypeEffectiveness variants excluded unless already part of a stable visual profile.
+- PASS remains caveated: Oak-Lab Rival and Route 22 Rival starter must match the expected counter-starter for the sampled player starter, non-starter Rival Pokemon must be interpreted separately, and evidence must stay sanitized.
+- Keep follow-up scope explicit: all-starter-choice matrix, later Rival appearances, broader runtime-source rows and full playthrough are separate optional local work.
+- Do not run ROMs through Codex. Continue excluding ROM paths, hashes, full logs, screenshots, output ROMs, saves, emulator states, private paths, secrets, tokens and `.env` data. No P1 promotion follows from this plan.
+
 # Next steps update - FVX compatibility implementation report
 
 - Treat `01_docs/randomizer/fvx-compat-implementation-report.md` as the current technical summary of how the UPR-FVX CFRU/DPE compatibility fix stack was implemented through compat commit `8349daf5ce005f0defc5674cbc3a3468f009218c` / PR #152.
