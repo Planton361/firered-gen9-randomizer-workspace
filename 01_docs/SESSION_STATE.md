@@ -1,3 +1,13 @@
+# Session update - Rival starter consistency smoke plan
+
+- New branch: `analysis/rival-starter-consistency-smoke`.
+- Added `08_tests/randomizer/rival_starter_consistency_smoke.md`.
+- Scope: documentation-only Rival Starter Consistency Smoke Plan for Oak-Lab Rival counter-starter, Route 22 Rival carry consistency, Rival non-starter randomization interpretation, and runtime-source evidence boundaries.
+- Existing evidence is sufficient for a focused local smoke plan: `192_starter_rival_sync_pass.md`, `207_rival_counter_starter_and_combined_visual_smoke.md`, `208_combined_trainer_visual_runtime_smoke.md`, `212_gen_limit_special_form_item_smoke.md`, runtime-source evidence `202` through `204`, `fvx_feature_test_status_matrix.tsv`, and `fvx-feature-decision-matrix.md`.
+- The plan defines tested settings, expected log/ingame observations, PASS/FAIL/BLOCKED criteria, sanitized evidence requirements and caveats.
+- No ROMs, builds, output ROMs, raw logs, private paths, hashes, screenshots, saves, emulator states, secrets, tokens or `.env` data were read or documented.
+- No UPR-FVX/CFRU/DPE code change and no P1 promotion were made.
+
 # Session update - FVX compatibility implementation report
 
 - New branch: `analysis/fvx-compat-implementation-report`.
