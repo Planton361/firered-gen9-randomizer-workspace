@@ -78,6 +78,7 @@ class RandomizerCoverageAuditorTest(unittest.TestCase):
             self.assertEqual("Bulbasaur", species["SPECIES_BULBASAUR"]["display_name_guess"])
             self.assertEqual("Vivillon", species["SPECIES_VIVILLON"]["form_family"])
             self.assertEqual("TM51", items["ITEM_TM51"]["display_name_guess"])
+            self.assertNotIn("ITEM_USE_PARTY_MENU", items)
             self.assertEqual("yes", items["ITEM_TM51"]["is_tm"])
             self.assertEqual("yes", items["ITEM_HM01_CUT"]["is_hm"])
             self.assertIn("ITEM_TM51", tms)
@@ -109,6 +110,11 @@ class RandomizerCoverageAuditorTest(unittest.TestCase):
         aliases = {
             "Flabébé": "flabebe",
             "Farfetch’d": "farfetchd",
+            "Sirfetch’d": "sirfetchd",
+            "Nidoran♀": "nidoran_f",
+            "Nidoran♂": "nidoran_m",
+            "Unown !": "unown_exclamation",
+            "Unown ?": "unown_question",
             "Squawkbily": "squawkabilly",
             "Baculegion": "basculegion",
             "Dudunsprce": "dudunsparce",
@@ -139,6 +145,11 @@ class RandomizerCoverageAuditorTest(unittest.TestCase):
             "DeepSeaTooth": "deep_sea_tooth",
             "Nevermeltice": "never_melt_ice",
             "ThunderStone": "thunder_stone",
+            "PrisonBottle": "prison_bottle",
+            "Reins Unity": "reins_of_unity",
+            "A-Patch": "ability_patch",
+            "A-Potion": "ability_potion",
+            "Blk Augurite": "black_augurite",
             "BlackGlasses": "black_glasses",
             "TwistedSpoon": "twisted_spoon",
             "SilverPowder": "silver_powder",
@@ -270,10 +281,80 @@ Black Belt Koichi - Machop Lv10
             auditor.compare_all(out)
 
             species = {row["canonical_key"]: row for row in read_tsv(out / "species_coverage.tsv")}
+            coverage_rows = (
+                read_tsv(out / "species_coverage.tsv")
+                + read_tsv(out / "items_coverage.tsv")
+                + read_tsv(out / "tm_hm_coverage.tsv")
+            )
+            hard_failure_count = sum(1 for row in coverage_rows if row["coverage_status"] == "EXPECTED_NOT_LOADED")
             summary = (out / "coverage_summary.md").read_text(encoding="utf-8")
             self.assertEqual("EXPECTED_NOT_LOADED", species["charmander"]["coverage_status"])
-            self.assertIn("Hard failure candidates (`EXPECTED_NOT_LOADED`):", summary)
+            self.assertIn(f"Hard failure candidates (`EXPECTED_NOT_LOADED`): {hard_failure_count}", summary)
             self.assertNotIn("/home/anton/private", summary)
+
+    def test_loaded_species_aliases_and_ids_prevent_false_expected_not_loaded(self):
+        with tempfile.TemporaryDirectory(dir=local_test_root()) as temp_name:
+            root = Path(temp_name)
+            write_source_fixture(root)
+            out = root / ".local" / "coverage"
+            logs = out / "raw-logs"
+            logs.mkdir(parents=True)
+            (logs / "run_0001.log").write_text("", encoding="utf-8")
+
+            auditor.build_expected(out, root)
+            write_tsv_rows(out / "species_observed.tsv", [], auditor.OBSERVED_FIELDS)
+            write_loaded_manifest(out, species_keys=[], item_keys=[], tm_hm_keys=[])
+            (out / "species_loaded.tsv").write_text(
+                "canonical_key\tdisplay_name\tsource_internal_id\tform_family\tis_loaded\n"
+                "nidoran\tNidoran♀\t29\t\tyes\n"
+                "unown\tUnown !\t1024\tUnown\tyes\n"
+                "rotom\tRotom\t714\tRotom\tyes\n",
+                encoding="utf-8",
+            )
+
+            auditor.compare_all(out)
+
+            species = {row["canonical_key"]: row for row in read_tsv(out / "species_coverage.tsv")}
+            self.assertEqual("LOADED_NOT_OBSERVED", species["nidoran_f"]["coverage_status"])
+            self.assertEqual("LOADED_NOT_OBSERVED", species["unown_exclamation"]["coverage_status"])
+            self.assertEqual("LOADED_NOT_OBSERVED", species["rotom_heat"]["coverage_status"])
+
+    def test_loaded_item_aliases_prevent_false_expected_not_loaded(self):
+        with tempfile.TemporaryDirectory(dir=local_test_root()) as temp_name:
+            root = Path(temp_name)
+            write_source_fixture(root)
+            out = root / ".local" / "coverage"
+            logs = out / "raw-logs"
+            logs.mkdir(parents=True)
+            (logs / "run_0001.log").write_text("", encoding="utf-8")
+
+            auditor.build_expected(out, root)
+            write_tsv_rows(out / "items_observed.tsv", [], auditor.OBSERVED_FIELDS)
+            write_tsv_rows(out / "tms_hms_observed.tsv", [], auditor.OBSERVED_FIELDS)
+            write_loaded_manifest(out, species_keys=[], item_keys=[], tm_hm_keys=[])
+            (out / "items_loaded.tsv").write_text(
+                "canonical_key\tdisplay_name\tsource_internal_id\titem_family\tis_loaded\tis_tm\tis_hm\n"
+                "thunderstone\tThunderStone\t0\t\tyes\tno\tno\n"
+                "fight_mem\tFight Mem.\t0\tMemory\tyes\tno\tno\n"
+                "apatch\tA-Patch\t0\t\tyes\tno\tno\n"
+                "blkaugurite\tBlk Augurite\t0\t\tyes\tno\tno\n",
+                encoding="utf-8",
+            )
+            (out / "tms_hms_loaded.tsv").write_text(
+                "canonical_key\tdisplay_name\tsource_internal_id\titem_family\tis_loaded\tis_tm\tis_hm\n"
+                "hm06\tHM06\t0\tHM\tyes\tno\tyes\n",
+                encoding="utf-8",
+            )
+
+            auditor.compare_all(out)
+
+            items = {row["canonical_key"]: row for row in read_tsv(out / "items_coverage.tsv")}
+            tms = {row["canonical_key"]: row for row in read_tsv(out / "tm_hm_coverage.tsv")}
+            self.assertEqual("LOADED_NOT_OBSERVED", items["thunder_stone"]["coverage_status"])
+            self.assertEqual("LOADED_NOT_OBSERVED", items["fighting_memory"]["coverage_status"])
+            self.assertEqual("LOADED_NOT_OBSERVED", items["ability_patch"]["coverage_status"])
+            self.assertEqual("LOADED_NOT_OBSERVED", items["black_augurite"]["coverage_status"])
+            self.assertEqual("LOADED_NOT_OBSERVED", tms["hm06"]["coverage_status"])
 
     def test_loaded_manifest_marks_loaded_not_observed_as_non_hard_status(self):
         with tempfile.TemporaryDirectory(dir=local_test_root()) as temp_name:
@@ -390,7 +471,11 @@ def write_source_fixture(root):
             "#define SPECIES_NONE 0x0",
             "#define SPECIES_BULBASAUR 0x1",
             "#define SPECIES_CHARMANDER 0x4",
+            "#define SPECIES_NIDORAN_F 0x1D",
+            "#define SPECIES_NIDORAN_M 0x20",
             "#define SPECIES_FARFETCHD 0x53",
+            "#define SPECIES_UNOWN_EXCLAMATION 0x400",
+            "#define SPECIES_UNOWN_QUESTION 0x401",
             "#define SPECIES_FLABEBE 0x29D",
             "#define SPECIES_VIVILLON 0x306",
             "#define SPECIES_SQUAWKABILLY 0x3AB",
@@ -398,6 +483,7 @@ def write_source_fixture(root):
             "#define SPECIES_DUDUNSPARCE 0x3D4",
             "#define SPECIES_IRON_THORNS 0x3E3",
             "#define SPECIES_ALCREMIE_BERRY 0x4AC",
+            "#define SPECIES_ROTOM_HEAT 0x2CA",
             "#define SPECIES_ROTOM_WASH 0x2CA",
             "#define SPECIES_COUNT 0x999",
         ]),
@@ -412,6 +498,11 @@ def write_source_fixture(root):
             "#define ITEM_DEEP_SEA_SCALE 0xC4",
             "#define ITEM_BLACK_BELT 0xCF",
             "#define ITEM_ORAN_BERRY 0x8B",
+            "#define ITEM_THUNDER_STONE 0x55",
+            "#define ITEM_FIGHTING_MEMORY 0x205",
+            "#define ITEM_ABILITY_PATCH 0x2C1",
+            "#define ITEM_ABILITY_POTION 0x2C2",
+            "#define ITEM_BLACK_AUGURITE 0x2C3",
             "#define ITEM_FIRE_GEM 0x250",
             "#define ITEM_ELECTRIC_MEMORY 0x206",
             "#define ITEM_UNREMARKABLE_TEACUP 0x2B0",
@@ -419,6 +510,8 @@ def write_source_fixture(root):
             "#define ITEM_TM51 376",
             "#define ITEM_TM52 377",
             "#define ITEM_HM01_CUT 0x153",
+            "#define ITEM_HM06_ROCK_SMASH 0x158",
+            "#define ITEM_USE_PARTY_MENU 0x9990",
             "#define ITEMS_COUNT 0x999",
         ]),
         encoding="utf-8",
@@ -453,6 +546,15 @@ def write_loaded_manifest(out, species_keys, item_keys, tm_hm_keys, include_priv
         + "".join(f"{key}\t{key}\t1\tTM\tyes\tyes\tno\tno\tyes\tno{private_value}\n" for key in tm_hm_keys),
         encoding="utf-8",
     )
+
+
+def write_tsv_rows(path, rows, fields):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", encoding="utf-8", newline="") as handle:
+        writer = csv.DictWriter(handle, fieldnames=fields, delimiter="\t")
+        writer.writeheader()
+        for row in rows:
+            writer.writerow(row)
 
 
 def local_test_root():

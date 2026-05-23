@@ -56,6 +56,11 @@ TM_HM_RE = re.compile(r"\b(?P<label>(?:TM|HM)\d{1,3})(?:[_ -][A-Za-z][A-Za-z0-9'
 SPECIES_ALIAS_DISPLAY = {
     "flabebe": "Flabebe",
     "farfetchd": "Farfetchd",
+    "sirfetchd": "Sirfetchd",
+    "nidoranf": "Nidoran F",
+    "nidoranm": "Nidoran M",
+    "unownexclamation": "Unown Exclamation",
+    "unownquestion": "Unown Question",
     "squawkbily": "Squawkabilly",
     "baculegion": "Basculegion",
     "dudunsprce": "Dudunsparce",
@@ -95,6 +100,15 @@ ITEM_ALIAS_DISPLAY = {
     "deepseatooth": "Deep Sea Tooth",
     "nevermeltice": "Never Melt Ice",
     "thunderstone": "Thunder Stone",
+    "prisonbottle": "Prison Bottle",
+    "reinsunity": "Reins of Unity",
+    "reinsofunity": "Reins of Unity",
+    "apatch": "Ability Patch",
+    "abilitypatch": "Ability Patch",
+    "apotion": "Ability Potion",
+    "abilitypotion": "Ability Potion",
+    "blkaugurite": "Black Augurite",
+    "blackaugurite": "Black Augurite",
     "blackglasses": "Black Glasses",
     "twistedspoon": "Twisted Spoon",
     "silverpowder": "Silver Powder",
@@ -156,6 +170,12 @@ class ObservedOccurrence:
     source_log: str
 
 
+@dataclass
+class LoadedManifestIndex:
+    keys: set[str]
+    source_ids: set[str]
+
+
 def load_item_pool_batch_analyzer():
     module_path = SCRIPT_DIR / "item_pool_batch_analyzer.py"
     spec = importlib.util.spec_from_file_location("item_pool_batch_analyzer", module_path)
@@ -190,6 +210,8 @@ def fold_ascii(value: str) -> str:
         "‑": "-",
         "–": "-",
         "—": "-",
+        "♀": " F",
+        "♂": " M",
     }))
 
 
@@ -199,7 +221,10 @@ def alias_lookup_key(value: str) -> str:
 
 def canonical_key_for_observed(value: str, kind: str) -> str:
     if kind == "species":
-        display = SPECIES_ALIAS_DISPLAY.get(alias_lookup_key(value), value)
+        display = (
+            unown_punctuation_display(value)
+            or SPECIES_ALIAS_DISPLAY.get(alias_lookup_key(value), value)
+        )
         return canonicalize(display)
     if kind == "item":
         display = ITEM_ALIAS_DISPLAY.get(alias_lookup_key(value), value)
@@ -207,9 +232,22 @@ def canonical_key_for_observed(value: str, kind: str) -> str:
     return canonicalize(value)
 
 
+def unown_punctuation_display(value: str) -> str:
+    normalized = re.sub(r"\s+", " ", fold_ascii(value).strip().lower())
+    if normalized in {"unown !", "unown!"}:
+        return "Unown Exclamation"
+    if normalized in {"unown ?", "unown?"}:
+        return "Unown Question"
+    return ""
+
+
+def canonical_key_for_loaded(value: str, kind: str) -> str:
+    return canonical_key_for_observed(value, "item" if kind == "tm_hm" else kind)
+
+
 def display_from_constant(constant: str, prefix: str) -> str:
     raw = constant.removeprefix(prefix)
-    if re.fullmatch(r"TM\d{2,3}", raw) or re.fullmatch(r"HM\d{2,3}(?:_[A-Z0-9]+)?", raw):
+    if re.fullmatch(r"TM\d{2,3}", raw) or re.fullmatch(r"HM\d{2,3}(?:_[A-Z0-9]+)*", raw):
         parts = raw.split("_", 1)
         return parts[0] if len(parts) == 1 else parts[0] + " " + title_from_parts(parts[1])
     return title_from_parts(raw)
@@ -286,7 +324,11 @@ def build_expected(output_dir: Path, source_root: Path = REPO_ROOT) -> dict[str,
 
 def skip_expected_constant(constant: str) -> bool:
     suffix = constant.rsplit("_", 1)[-1]
-    return suffix in {"NONE", "COUNT", "TOTAL", "END"} or constant.endswith("_COUNT")
+    return (
+        suffix in {"NONE", "COUNT", "TOTAL", "END"}
+        or constant.endswith("_COUNT")
+        or constant.startswith("ITEM_USE_")
+    )
 
 
 def species_expected_row(record: ConstantRecord) -> dict[str, str]:
@@ -580,17 +622,21 @@ def observed_confidence(display_name: str) -> str:
 
 
 def compare(expected_path: Path, observed_path: Path, output_path: Path, fields: list[str],
-            loaded_manifest: Path | None = None) -> list[dict[str, str]]:
+            loaded_manifest: Path | None = None, kind: str = "item") -> list[dict[str, str]]:
     expected_rows = read_tsv(expected_path)
     observed_rows = read_tsv(observed_path) if observed_path.exists() else []
     observed_by_key = {row["canonical_key"]: row for row in observed_rows}
-    loaded_keys = load_manifest_keys(loaded_manifest)
+    loaded_index = load_manifest_index(loaded_manifest, kind)
 
     coverage_rows: list[dict[str, str]] = []
     for expected in expected_rows:
         observed = observed_by_key.get(expected["canonical_key"])
         row = dict(expected)
-        if loaded_keys is not None and expected["canonical_key"] not in loaded_keys:
+        if skip_expected_constant(expected.get("source_constant", "")):
+            row["coverage_status"] = "UNKNOWN_REVIEW"
+            row["reason"] = "non-reward/source bookkeeping constant excluded from loaded coverage hard-fail checks"
+            row["confidence"] = "High"
+        elif loaded_index is not None and not expected_loaded_match(expected, loaded_index, kind):
             row["coverage_status"] = "EXPECTED_NOT_LOADED"
             row["reason"] = "expected source constant absent from supplied loaded manifest"
             row["confidence"] = "High"
@@ -601,7 +647,7 @@ def compare(expected_path: Path, observed_path: Path, output_path: Path, fields:
             row["coverage_status"] = "EXPECTED_AND_OBSERVED"
             row["reason"] = "expected source constant was observed in parsed randomizer logs"
             row["confidence"] = merge_confidence(row.get("confidence", ""), observed.get("confidence", ""))
-        elif loaded_keys is not None:
+        elif loaded_index is not None:
             row["coverage_status"] = "LOADED_NOT_OBSERVED"
             row["reason"] = "loaded manifest contains expected row but batch logs did not observe it"
             row["confidence"] = "Medium"
@@ -611,7 +657,7 @@ def compare(expected_path: Path, observed_path: Path, output_path: Path, fields:
             row["confidence"] = "Medium"
         coverage_rows.append(row)
 
-    expected_keys = {row["canonical_key"] for row in expected_rows}
+    expected_keys = {key for row in expected_rows for key in expected_candidate_keys(row, kind)}
     for key, observed in sorted(observed_by_key.items()):
         if key in expected_keys:
             continue
@@ -635,17 +681,95 @@ def observed_not_expected_row(observed: dict[str, str], fields: list[str]) -> di
     return row
 
 
-def load_manifest_keys(path: Path | None) -> set[str] | None:
+def load_manifest_index(path: Path | None, kind: str) -> LoadedManifestIndex | None:
     if path is None:
         return None
     keys: set[str] = set()
+    source_ids: set[str] = set()
     for row in read_tsv(path):
         if row.get("is_loaded", "yes").lower() not in {"yes", "true", "1"}:
             continue
-        key = row.get("canonical_key") or row.get("display_name") or row.get("display_name_guess")
-        if key:
-            keys.add(canonicalize(key) if key != row.get("canonical_key") else key)
-    return keys
+        for key in loaded_row_candidate_keys(row, kind):
+            keys.add(key)
+        if kind == "species":
+            source_id = source_id_from_row(row, kind)
+            if source_id:
+                source_ids.add(source_id)
+    return LoadedManifestIndex(keys, source_ids)
+
+
+def loaded_row_candidate_keys(row: dict[str, str], kind: str) -> set[str]:
+    candidates: set[str] = set()
+    for field in ("canonical_key", "display_name", "display_name_guess", "source_constant"):
+        value = row.get(field, "")
+        if not value:
+            continue
+        candidates.add(canonical_key_for_loaded(value, kind))
+        if kind == "tm_hm":
+            candidates.add(canonicalize(tm_hm_label_from_display(value)))
+    return {candidate for candidate in candidates if candidate}
+
+
+def expected_loaded_match(expected: dict[str, str], loaded_index: LoadedManifestIndex, kind: str) -> bool:
+    if kind == "species":
+        source_id = source_id_from_row(expected, kind)
+        if source_id and source_id in loaded_index.source_ids:
+            return True
+    return bool(expected_candidate_keys(expected, kind) & loaded_index.keys)
+
+
+def expected_candidate_keys(expected: dict[str, str], kind: str) -> set[str]:
+    candidates: set[str] = set()
+    for field in ("canonical_key", "display_name_guess", "source_constant"):
+        value = expected.get(field, "")
+        if not value:
+            continue
+        candidates.add(canonical_key_for_loaded(value, kind))
+        if kind == "tm_hm":
+            candidates.add(canonicalize(tm_hm_label_from_display(value)))
+            candidates.update(tm_hm_constant_candidate_keys(value))
+    if kind == "species":
+        candidates.update(species_constant_candidate_keys(expected.get("source_constant", "")))
+    return {candidate for candidate in candidates if candidate}
+
+
+def species_constant_candidate_keys(constant: str) -> set[str]:
+    aliases = {
+        "SPECIES_NIDORAN_F": {"nidoran_f", "nidoran"},
+        "SPECIES_NIDORAN_M": {"nidoran_m", "nidoran"},
+        "SPECIES_FARFETCHD": {"farfetchd"},
+        "SPECIES_SIRFETCHD": {"sirfetchd"},
+        "SPECIES_UNOWN_EXCLAMATION": {"unown_exclamation", "unown"},
+        "SPECIES_UNOWN_QUESTION": {"unown_question", "unown"},
+    }
+    return aliases.get(constant, set())
+
+
+def tm_hm_constant_candidate_keys(value: str) -> set[str]:
+    match = re.search(r"\b(?:ITEM_)?((?:TM|HM)\d{1,3})\b", value)
+    return {canonicalize(match.group(1))} if match else set()
+
+
+def source_id_from_row(row: dict[str, str], kind: str) -> str:
+    if kind == "species":
+        fields = ("source_internal_id", "dex_number_or_source_id", "internal_id", "source_id")
+    else:
+        fields = ("source_internal_id", "item_id_or_source_id", "internal_id", "source_id")
+    for field in fields:
+        value = row.get(field, "").strip()
+        if value:
+            return normalized_source_id(value)
+    return ""
+
+
+def normalized_source_id(value: str) -> str:
+    text = value.strip().lower()
+    if not text:
+        return ""
+    try:
+        return str(parse_int(text))
+    except ValueError:
+        return text
 
 
 def merge_confidence(left: str, right: str) -> str:
@@ -668,15 +792,18 @@ def compare_all(output_dir: Path, loaded_manifest_dir: Path | None = None) -> di
     outputs = {
         "species_coverage.tsv": compare(
             output_dir / "species_expected.tsv", output_dir / "species_observed.tsv",
-            output_dir / "species_coverage.tsv", SPECIES_FIELDS, loaded_species if loaded_species and loaded_species.exists() else None,
+            output_dir / "species_coverage.tsv", SPECIES_FIELDS,
+            loaded_species if loaded_species and loaded_species.exists() else None, "species",
         ),
         "items_coverage.tsv": compare(
             output_dir / "items_expected.tsv", output_dir / "items_observed.tsv",
-            output_dir / "items_coverage.tsv", ITEM_FIELDS, loaded_items if loaded_items and loaded_items.exists() else None,
+            output_dir / "items_coverage.tsv", ITEM_FIELDS,
+            loaded_items if loaded_items and loaded_items.exists() else None, "item",
         ),
         "tm_hm_coverage.tsv": compare(
             output_dir / "tms_hms_expected.tsv", output_dir / "tms_hms_observed.tsv",
-            output_dir / "tm_hm_coverage.tsv", ITEM_FIELDS, loaded_tms if loaded_tms and loaded_tms.exists() else None,
+            output_dir / "tm_hm_coverage.tsv", ITEM_FIELDS,
+            loaded_tms if loaded_tms and loaded_tms.exists() else None, "tm_hm",
         ),
     }
     write_summary(output_dir / "coverage_summary.md", outputs, loaded_manifest_available)
