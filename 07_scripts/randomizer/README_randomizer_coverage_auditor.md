@@ -20,7 +20,7 @@ It does not prove full gameplay reachability. Random batch observations are usef
 
 `EXPECTED_NOT_OBSERVED` is not a hard error. It only means the label was not seen in the parsed logs.
 
-Only a future sanitized loaded-manifest generated after ROM load can distinguish:
+Sanitized loaded manifests generated after ROM load can distinguish:
 
 - `EXPECTED_NOT_LOADED`: expected source constant was not loaded by UPR-FVX.
 - `LOADED_NOT_OBSERVED`: loaded by UPR-FVX but not seen in batch logs.
@@ -58,6 +58,32 @@ python 07_scripts/randomizer/randomizer_coverage_auditor.py batch-run \
   --seed-base 12000
 ```
 
+Export a sanitized loaded manifest after ROM load:
+
+```sh
+python 07_scripts/randomizer/randomizer_coverage_auditor.py export-loaded \
+  --jar 02_external/upr-fvx/random/build/libs/UPR-FVX.jar \
+  --input-rom /PRIVATE/PATH/input.gba \
+  --output-dir .local/randomizer-coverage
+```
+
+Equivalent direct UPR-FVX command:
+
+```sh
+java -jar 02_external/upr-fvx/random/build/libs/UPR-FVX.jar loaded-manifest \
+  --input-rom /PRIVATE/PATH/input.gba \
+  --output-dir .local/randomizer-coverage
+```
+
+Compare with loaded-manifest files:
+
+```sh
+python 07_scripts/randomizer/randomizer_coverage_auditor.py compare \
+  --output-dir .local/randomizer-coverage
+```
+
+`compare` auto-detects `species_loaded.tsv`, `items_loaded.tsv`, and `tms_hms_loaded.tsv` in the output directory. You can also pass `--loaded-manifest-dir` explicitly.
+
 Full local flow:
 
 ```sh
@@ -78,6 +104,9 @@ Expected indexes:
 - `.local/randomizer-coverage/species_expected.tsv`
 - `.local/randomizer-coverage/items_expected.tsv`
 - `.local/randomizer-coverage/tms_hms_expected.tsv`
+- `.local/randomizer-coverage/species_loaded.tsv`
+- `.local/randomizer-coverage/items_loaded.tsv`
+- `.local/randomizer-coverage/tms_hms_loaded.tsv`
 
 Observed summaries:
 
@@ -130,8 +159,8 @@ Do not share or commit:
 | `EXPECTED_AND_OBSERVED` | A source-derived expected row appeared in parsed Randomizer logs. |
 | `EXPECTED_NOT_OBSERVED` | A source-derived expected row did not appear in parsed logs. This is not a hard failure. |
 | `OBSERVED_NOT_EXPECTED` | A parsed log label did not match the source-derived expected index. Review mapping, spelling, parser logic, or source constants. |
-| `EXPECTED_NOT_LOADED` | Reserved for a future loaded-manifest flow; only valid when a sanitized loaded manifest is supplied. |
-| `LOADED_NOT_OBSERVED` | Reserved for a future loaded-manifest flow; loaded by UPR-FVX but not observed in logs. |
+| `EXPECTED_NOT_LOADED` | A source-derived expected row is absent from the sanitized loaded manifest. This is a hard failure candidate. |
+| `LOADED_NOT_OBSERVED` | Loaded by UPR-FVX but not observed in parsed logs. This is not a hard failure. |
 | `FILTERED_BY_POLICY` | Reserved for later policy-aware reports. |
 | `MECHANIC_GATED` | Reserved for later policy-aware reports, especially Mega/Z/Dynamax/GMax. |
 | `BANNED_EXPECTED` | Reserved for later policy-aware reports. |
@@ -167,12 +196,14 @@ TM/HM labels are counted when they appear in Shop, Pickup, Field, or explicit TM
 
 Do not treat TM/HM `EXPECTED_NOT_OBSERVED` as proof of missing TM/HM loading. It only means the current logs did not contain matching TM/HM observations.
 
-## Loaded Manifest Future Work
+## Loaded Manifest Export
 
-The current UPR-FVX CLI can run randomization and write detailed logs, but this workspace tool does not add a ROM-load diagnostic export. A future UPR-FVX local-only diagnostic could emit sanitized loaded manifests:
+The UPR-FVX local-only `loaded-manifest` command loads a private ROM and writes sanitized loaded manifests:
 
 - `species_loaded.tsv`
 - `items_loaded.tsv`
 - `tms_hms_loaded.tsv`
 
-Those manifests should contain aggregate names/keys only, with no ROM paths, hashes, seeds, raw offsets, full logs, or private filesystem information.
+Those manifests contain aggregate names/keys, internal IDs, family labels, loaded flags, and item policy flags where the ROM model exposes them. They do not contain ROM paths, output-ROM paths, hashes, seeds, raw offsets, full logs, or private filesystem information.
+
+Codex must not run this mode with a ROM. Anton runs it locally and shares or commits only reviewed sanitized TSV summaries when needed.
