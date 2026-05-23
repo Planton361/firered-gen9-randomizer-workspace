@@ -85,6 +85,9 @@ class RandomizerCoverageAuditorTest(unittest.TestCase):
             self.assertNotIn("ITEM_MEGA_CUFF", items)
             self.assertNotIn("ITEM_KEY_CARD_1", items)
             self.assertNotIn("ITEM_POKE_BALL_KEY_ITEM", items)
+            self.assertNotIn("ITEM_ENIGMA_BERRY_OLD", items)
+            self.assertNotIn("ITEM_X_SP_DEF", items)
+            self.assertNotIn("ITEM_ODDISH_LEAF", items)
             self.assertEqual("yes", items["ITEM_TM51"]["is_tm"])
             self.assertEqual("yes", items["ITEM_HM01_CUT"]["is_hm"])
             self.assertIn("ITEM_TM51", tms)
@@ -146,6 +149,19 @@ class RandomizerCoverageAuditorTest(unittest.TestCase):
 
     def test_item_alias_normalization_maps_common_log_labels_to_expected(self):
         aliases = {
+            "RageCandyBar": "rage_candy_bar",
+            "Lumiose Gal.": "lumiose_galette",
+            "ShalourSable": "shalour_sable",
+            "Max Candy": "dynamax_candy",
+            "BalmMushroom": "balm_mushroom",
+            "Whip Dream": "whipped_dream",
+            "Straw. Sweet": "strawberry_sweet",
+            "Galar Cuff": "galarica_cuff",
+            "Galar Wreath": "galarica_wreath",
+            "Rusty Sword": "rusted_sword",
+            "Rusty Shield": "rusted_shield",
+            "Necrozium Z": "ultranecrozium_z",
+            "LuminousMoss": "luminous_moss",
             "Paralyz Heal": "paralyze_heal",
             "Marang Berry": "maranga_berry",
             "King’s Rock": "kings_rock",
@@ -179,7 +195,15 @@ class RandomizerCoverageAuditorTest(unittest.TestCase):
             "Dino Fossil": "fossilized_dino",
             "Wish Piece": "wishing_piece",
             "A-Patch": "ability_patch",
-            "A-Potion": "ability_potion",
+            "A-Potion": "ability_capsule",
+            "Gimmi Coin": "gimmighoul_coin",
+            "Boost Energy": "booster_energy",
+            "Well. Mask": "wellspring_mask",
+            "Heart. Mask": "hearthflame_mask",
+            "Corner. Mask": "cornerstone_mask",
+            "EV-IV Viewer": "eviv_displayer",
+            "CatchingCharm": "catching_charm",
+            "Masp. Teacup": "masterpiece_teacup",
             "Blk Augurite": "black_augurite",
             "BlackGlasses": "black_glasses",
             "TwistedSpoon": "twisted_spoon",
@@ -365,6 +389,19 @@ Black Belt Koichi - Machop Lv10
             write_loaded_manifest(out, species_keys=[], item_keys=[], tm_hm_keys=[])
             (out / "items_loaded.tsv").write_text(
                 "canonical_key\tdisplay_name\tsource_internal_id\titem_family\tis_loaded\tis_tm\tis_hm\n"
+                "ragecandybar\tRageCandyBar\t0\t\tyes\tno\tno\n"
+                "lumiose_gal\tLumiose Gal.\t0\t\tyes\tno\tno\n"
+                "shaloursable\tShalourSable\t0\t\tyes\tno\tno\n"
+                "max_candy\tMax Candy\t0\t\tyes\tno\tno\n"
+                "balmmushroom\tBalmMushroom\t0\t\tyes\tno\tno\n"
+                "whip_dream\tWhip Dream\t0\t\tyes\tno\tno\n"
+                "straw_sweet\tStraw. Sweet\t0\t\tyes\tno\tno\n"
+                "galar_cuff\tGalar Cuff\t0\t\tyes\tno\tno\n"
+                "galar_wreath\tGalar Wreath\t0\t\tyes\tno\tno\n"
+                "rusty_sword\tRusty Sword\t0\t\tyes\tno\tno\n"
+                "rusty_shield\tRusty Shield\t0\t\tyes\tno\tno\n"
+                "necrozium_z\tNecrozium Z\t0\t\tyes\tno\tno\n"
+                "luminousmoss\tLuminousMoss\t0\t\tyes\tno\tno\n"
                 "paralyz_heal\tParalyz Heal\t0\t\tyes\tno\tno\n"
                 "marang_berry\tMarang Berry\t0\tBerry\tyes\tno\tno\n"
                 "kings_rock\tKing’s Rock\t0\t\tyes\tno\tno\n"
@@ -385,6 +422,15 @@ Black Belt Koichi - Machop Lv10
                 "wish_piece\tWish Piece\t0\t\tyes\tno\tno\n"
                 "fight_mem\tFight Mem.\t0\tMemory\tyes\tno\tno\n"
                 "apatch\tA-Patch\t0\t\tyes\tno\tno\n"
+                "apotion\tA-Potion\t0\t\tyes\tno\tno\n"
+                "gimmi_coin\tGimmi Coin\t0\t\tyes\tno\tno\n"
+                "boost_energy\tBoost Energy\t0\t\tyes\tno\tno\n"
+                "well_mask\tWell. Mask\t0\t\tyes\tno\tno\n"
+                "heart_mask\tHeart. Mask\t0\t\tyes\tno\tno\n"
+                "corner_mask\tCorner. Mask\t0\t\tyes\tno\tno\n"
+                "ev_iv_viewer\tEV-IV Viewer\t0\t\tyes\tno\tno\n"
+                "catchingcharm\tCatchingCharm\t0\t\tyes\tno\tno\n"
+                "masp_teacup\tMasp. Teacup\t0\t\tyes\tno\tno\n"
                 "blkaugurite\tBlk Augurite\t0\t\tyes\tno\tno\n",
                 encoding="utf-8",
             )
@@ -399,6 +445,19 @@ Black Belt Koichi - Machop Lv10
 
             items = {row["canonical_key"]: row for row in read_tsv(out / "items_coverage.tsv")}
             tms = {row["canonical_key"]: row for row in read_tsv(out / "tm_hm_coverage.tsv")}
+            self.assertEqual("LOADED_NOT_OBSERVED", items["rage_candy_bar"]["coverage_status"])
+            self.assertEqual("LOADED_NOT_OBSERVED", items["lumiose_galette"]["coverage_status"])
+            self.assertEqual("LOADED_NOT_OBSERVED", items["shalour_sable"]["coverage_status"])
+            self.assertEqual("LOADED_NOT_OBSERVED", items["dynamax_candy"]["coverage_status"])
+            self.assertEqual("LOADED_NOT_OBSERVED", items["balm_mushroom"]["coverage_status"])
+            self.assertEqual("LOADED_NOT_OBSERVED", items["whipped_dream"]["coverage_status"])
+            self.assertEqual("LOADED_NOT_OBSERVED", items["strawberry_sweet"]["coverage_status"])
+            self.assertEqual("LOADED_NOT_OBSERVED", items["galarica_cuff"]["coverage_status"])
+            self.assertEqual("LOADED_NOT_OBSERVED", items["galarica_wreath"]["coverage_status"])
+            self.assertEqual("LOADED_NOT_OBSERVED", items["rusted_sword"]["coverage_status"])
+            self.assertEqual("LOADED_NOT_OBSERVED", items["rusted_shield"]["coverage_status"])
+            self.assertEqual("LOADED_NOT_OBSERVED", items["ultranecrozium_z"]["coverage_status"])
+            self.assertEqual("LOADED_NOT_OBSERVED", items["luminous_moss"]["coverage_status"])
             self.assertEqual("LOADED_NOT_OBSERVED", items["paralyze_heal"]["coverage_status"])
             self.assertEqual("LOADED_NOT_OBSERVED", items["maranga_berry"]["coverage_status"])
             self.assertEqual("LOADED_NOT_OBSERVED", items["kings_rock"]["coverage_status"])
@@ -414,7 +473,18 @@ Black Belt Koichi - Machop Lv10
             self.assertEqual("LOADED_NOT_OBSERVED", items["wishing_piece"]["coverage_status"])
             self.assertEqual("LOADED_NOT_OBSERVED", items["fighting_memory"]["coverage_status"])
             self.assertEqual("LOADED_NOT_OBSERVED", items["ability_patch"]["coverage_status"])
+            self.assertEqual("LOADED_NOT_OBSERVED", items["ability_capsule"]["coverage_status"])
+            self.assertEqual("LOADED_NOT_OBSERVED", items["gimmighoul_coin"]["coverage_status"])
+            self.assertEqual("LOADED_NOT_OBSERVED", items["booster_energy"]["coverage_status"])
+            self.assertEqual("LOADED_NOT_OBSERVED", items["wellspring_mask"]["coverage_status"])
+            self.assertEqual("LOADED_NOT_OBSERVED", items["hearthflame_mask"]["coverage_status"])
+            self.assertEqual("LOADED_NOT_OBSERVED", items["cornerstone_mask"]["coverage_status"])
+            self.assertEqual("LOADED_NOT_OBSERVED", items["eviv_displayer"]["coverage_status"])
+            self.assertEqual("LOADED_NOT_OBSERVED", items["catching_charm"]["coverage_status"])
+            self.assertEqual("LOADED_NOT_OBSERVED", items["masterpiece_teacup"]["coverage_status"])
             self.assertEqual("LOADED_NOT_OBSERVED", items["black_augurite"]["coverage_status"])
+            self.assertNotEqual("EXPECTED_NOT_LOADED", items["hm06"]["coverage_status"])
+            self.assertNotEqual("EXPECTED_NOT_LOADED", items["hm08"]["coverage_status"])
             self.assertEqual("LOADED_NOT_OBSERVED", tms["hm06"]["coverage_status"])
             self.assertEqual("LOADED_NOT_OBSERVED", tms["hm08"]["coverage_status"])
 
@@ -426,16 +496,24 @@ Black Belt Koichi - Machop Lv10
                 field: ""
                 for field in auditor.ITEM_FIELDS
             }
-            expected.update({
-                "canonical_key": "ss_ticket",
-                "source_constant": "ITEM_SS_TICKET",
-                "display_name_guess": "SS Ticket",
-                "item_id_or_source_id": "349",
-                "expected_source": "fixture",
-                "coverage_status": "UNKNOWN_REVIEW",
-                "confidence": "Medium",
-            })
-            write_tsv_rows(out / "items_expected.tsv", [expected], auditor.ITEM_FIELDS)
+            rows = []
+            for key, constant, display in [
+                ("ss_ticket", "ITEM_SS_TICKET", "SS Ticket"),
+                ("enigma_berry_old", "ITEM_ENIGMA_BERRY_OLD", "Enigma Berry Old"),
+                ("oddish_leaf", "ITEM_ODDISH_LEAF", "Oddish Leaf"),
+            ]:
+                row = dict(expected)
+                row.update({
+                    "canonical_key": key,
+                    "source_constant": constant,
+                    "display_name_guess": display,
+                    "item_id_or_source_id": "349",
+                    "expected_source": "fixture",
+                    "coverage_status": "UNKNOWN_REVIEW",
+                    "confidence": "Medium",
+                })
+                rows.append(row)
+            write_tsv_rows(out / "items_expected.tsv", rows, auditor.ITEM_FIELDS)
             write_tsv_rows(out / "items_observed.tsv", [], auditor.OBSERVED_FIELDS)
             (out / "items_loaded.tsv").write_text(
                 "canonical_key\tdisplay_name\tsource_internal_id\titem_family\tis_loaded\tis_tm\tis_hm\n",
@@ -451,8 +529,9 @@ Black Belt Koichi - Machop Lv10
                 "item",
             )
 
-            self.assertEqual("UNKNOWN_REVIEW", rows[0]["coverage_status"])
-            self.assertNotEqual("EXPECTED_NOT_LOADED", rows[0]["coverage_status"])
+            for row in rows:
+                self.assertEqual("UNKNOWN_REVIEW", row["coverage_status"])
+                self.assertNotEqual("EXPECTED_NOT_LOADED", row["coverage_status"])
 
     def test_loaded_manifest_marks_loaded_not_observed_as_non_hard_status(self):
         with tempfile.TemporaryDirectory(dir=local_test_root()) as temp_name:
@@ -634,6 +713,19 @@ def write_source_fixture(root):
         "\n".join([
             "#define ITEM_NONE 0x0",
             "#define ITEM_POTION 0xD",
+            "#define ITEM_RAGE_CANDY_BAR 0x100",
+            "#define ITEM_LUMIOSE_GALETTE 0x101",
+            "#define ITEM_SHALOUR_SABLE 0x102",
+            "#define ITEM_DYNAMAX_CANDY 0x103",
+            "#define ITEM_BALM_MUSHROOM 0x104",
+            "#define ITEM_WHIPPED_DREAM 0x105",
+            "#define ITEM_STRAWBERRY_SWEET 0x106",
+            "#define ITEM_GALARICA_CUFF 0x107",
+            "#define ITEM_GALARICA_WREATH 0x108",
+            "#define ITEM_RUSTED_SWORD 0x109",
+            "#define ITEM_RUSTED_SHIELD 0x10A",
+            "#define ITEM_ULTRANECROZIUM_Z 0x10B",
+            "#define ITEM_LUMINOUS_MOSS 0x10C",
             "#define ITEM_PARALYZE_HEAL 0x12",
             "#define ITEM_MARANGA_BERRY 0xA2",
             "#define ITEM_KINGS_ROCK 0xBB",
@@ -668,7 +760,16 @@ def write_source_fixture(root):
             "#define ITEM_WISHING_PIECE 0x1A0",
             "#define ITEM_FIGHTING_MEMORY 0x205",
             "#define ITEM_ABILITY_PATCH 0x2C1",
+            "#define ITEM_ABILITY_CAPSULE 0x2C0",
             "#define ITEM_ABILITY_POTION 0x2C2",
+            "#define ITEM_GIMMIGHOUL_COIN 0x2D0",
+            "#define ITEM_BOOSTER_ENERGY 0x2D1",
+            "#define ITEM_WELLSPRING_MASK 0x2D2",
+            "#define ITEM_HEARTHFLAME_MASK 0x2D3",
+            "#define ITEM_CORNERSTONE_MASK 0x2D4",
+            "#define ITEM_EVIV_DISPLAYER 0x2D5",
+            "#define ITEM_CATCHING_CHARM 0x2D6",
+            "#define ITEM_MASTERPIECE_TEACUP 0x2D7",
             "#define ITEM_BLACK_AUGURITE 0x2C3",
             "#define ITEM_FIRE_GEM 0x250",
             "#define ITEM_ELECTRIC_MEMORY 0x206",
@@ -692,6 +793,12 @@ def write_source_fixture(root):
             "#define ITEM_MEGA_CUFF 0x189",
             "#define ITEM_KEY_CARD_1 0x18A",
             "#define ITEM_POKE_BALL_KEY_ITEM 0x18B",
+            "#define ITEM_ENIGMA_BERRY_OLD 0x18C",
+            "#define ITEM_X_SP_DEF 0x18D",
+            "#define ITEM_ODDISH_LEAF 0x18E",
+            "#define ITEM_GRUBBY_HANKY 0x18F",
+            "#define ITEM_UNIFORM 0x190",
+            "#define ITEM_SMELLY_SOCKS 0x191",
             "#define ITEMS_COUNT 0x999",
         ]),
         encoding="utf-8",
