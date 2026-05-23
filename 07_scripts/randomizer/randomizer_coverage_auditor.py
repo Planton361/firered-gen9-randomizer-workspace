@@ -42,6 +42,12 @@ OBSERVED_FIELDS = [
     "canonical_key", "display_name", "observed_count_total", "observed_sections",
     "observed_runs_seen", "source_logs_seen", "confidence",
 ]
+SPECIES_ELIGIBLE_FIELDS = [
+    "canonical_key", "display_name", "source_or_internal_id", "form_family", "loaded",
+    "eligible_wild", "eligible_trainer", "eligible_starter", "eligible_static", "eligible_any",
+    "exclusion_reason_wild", "exclusion_reason_trainer", "exclusion_reason_starter",
+    "exclusion_reason_static", "settings_profile_label", "confidence",
+]
 
 DEFINE_RE = re.compile(
     r"^\s*#define\s+(?P<constant>[A-Z][A-Z0-9_]+)\s+(?P<value>0x[0-9A-Fa-f]+|\d+)\b"
@@ -174,6 +180,14 @@ class ObservedOccurrence:
 class LoadedManifestIndex:
     keys: set[str]
     source_ids: set[str]
+
+
+@dataclass
+class EligibilityManifestIndex:
+    keys: set[str]
+    source_ids: set[str]
+    eligible_keys: set[str]
+    eligible_source_ids: set[str]
 
 
 def load_item_pool_batch_analyzer():
@@ -622,11 +636,13 @@ def observed_confidence(display_name: str) -> str:
 
 
 def compare(expected_path: Path, observed_path: Path, output_path: Path, fields: list[str],
-            loaded_manifest: Path | None = None, kind: str = "item") -> list[dict[str, str]]:
+            loaded_manifest: Path | None = None, kind: str = "item",
+            eligibility_manifest: Path | None = None) -> list[dict[str, str]]:
     expected_rows = read_tsv(expected_path)
     observed_rows = read_tsv(observed_path) if observed_path.exists() else []
     observed_by_key = {row["canonical_key"]: row for row in observed_rows}
     loaded_index = load_manifest_index(loaded_manifest, kind)
+    eligibility_index = load_eligibility_index(eligibility_manifest) if kind == "species" else None
 
     coverage_rows: list[dict[str, str]] = []
     for expected in expected_rows:
@@ -640,6 +656,21 @@ def compare(expected_path: Path, observed_path: Path, output_path: Path, fields:
             row["coverage_status"] = "EXPECTED_NOT_LOADED"
             row["reason"] = "expected source constant absent from supplied loaded manifest"
             row["confidence"] = "High"
+        elif eligibility_index is not None and not expected_in_eligibility_manifest(expected, eligibility_index):
+            row["coverage_status"] = "LOADED_NOT_ELIGIBLE"
+            row["reason"] = "loaded manifest contains expected row but supplied eligibility manifest has no eligible counterpart"
+            row["confidence"] = "Medium"
+        elif eligibility_index is not None and not expected_eligible_match(expected, eligibility_index):
+            row["coverage_status"] = "LOADED_NOT_ELIGIBLE"
+            row["reason"] = "loaded species is excluded by settings/profile eligibility filters"
+            row["confidence"] = "Medium"
+        elif observed and eligibility_index is not None:
+            row["observed_count_total"] = observed["observed_count_total"]
+            row["observed_sections"] = observed["observed_sections"]
+            row["observed_runs_seen"] = observed["observed_runs_seen"]
+            row["coverage_status"] = "ELIGIBLE_AND_OBSERVED"
+            row["reason"] = "species is loaded, eligible under supplied settings/profile manifest, and observed in parsed logs"
+            row["confidence"] = merge_confidence(row.get("confidence", ""), observed.get("confidence", ""))
         elif observed:
             row["observed_count_total"] = observed["observed_count_total"]
             row["observed_sections"] = observed["observed_sections"]
@@ -647,6 +678,10 @@ def compare(expected_path: Path, observed_path: Path, output_path: Path, fields:
             row["coverage_status"] = "EXPECTED_AND_OBSERVED"
             row["reason"] = "expected source constant was observed in parsed randomizer logs"
             row["confidence"] = merge_confidence(row.get("confidence", ""), observed.get("confidence", ""))
+        elif eligibility_index is not None:
+            row["coverage_status"] = "ELIGIBLE_NOT_OBSERVED"
+            row["reason"] = "species is loaded and eligible under supplied settings/profile manifest but batch logs did not observe it"
+            row["confidence"] = "Medium"
         elif loaded_index is not None:
             row["coverage_status"] = "LOADED_NOT_OBSERVED"
             row["reason"] = "loaded manifest contains expected row but batch logs did not observe it"
@@ -698,6 +733,28 @@ def load_manifest_index(path: Path | None, kind: str) -> LoadedManifestIndex | N
     return LoadedManifestIndex(keys, source_ids)
 
 
+def load_eligibility_index(path: Path | None) -> EligibilityManifestIndex | None:
+    if path is None:
+        return None
+    keys: set[str] = set()
+    source_ids: set[str] = set()
+    eligible_keys: set[str] = set()
+    eligible_source_ids: set[str] = set()
+    for row in read_tsv(path):
+        if row.get("loaded", "yes").lower() not in {"yes", "true", "1"}:
+            continue
+        row_keys = loaded_row_candidate_keys(row, "species")
+        keys.update(row_keys)
+        source_id = source_id_from_row(row, "species")
+        if source_id:
+            source_ids.add(source_id)
+        if row.get("eligible_any", "").lower() in {"yes", "true", "1"}:
+            eligible_keys.update(row_keys)
+            if source_id:
+                eligible_source_ids.add(source_id)
+    return EligibilityManifestIndex(keys, source_ids, eligible_keys, eligible_source_ids)
+
+
 def loaded_row_candidate_keys(row: dict[str, str], kind: str) -> set[str]:
     candidates: set[str] = set()
     for field in ("canonical_key", "display_name", "display_name_guess", "source_constant"):
@@ -716,6 +773,20 @@ def expected_loaded_match(expected: dict[str, str], loaded_index: LoadedManifest
         if source_id and source_id in loaded_index.source_ids:
             return True
     return bool(expected_candidate_keys(expected, kind) & loaded_index.keys)
+
+
+def expected_in_eligibility_manifest(expected: dict[str, str], eligibility_index: EligibilityManifestIndex) -> bool:
+    source_id = source_id_from_row(expected, "species")
+    if source_id and source_id in eligibility_index.source_ids:
+        return True
+    return bool(expected_candidate_keys(expected, "species") & eligibility_index.keys)
+
+
+def expected_eligible_match(expected: dict[str, str], eligibility_index: EligibilityManifestIndex) -> bool:
+    source_id = source_id_from_row(expected, "species")
+    if source_id and source_id in eligibility_index.eligible_source_ids:
+        return True
+    return bool(expected_candidate_keys(expected, "species") & eligibility_index.eligible_keys)
 
 
 def expected_candidate_keys(expected: dict[str, str], kind: str) -> set[str]:
@@ -752,7 +823,7 @@ def tm_hm_constant_candidate_keys(value: str) -> set[str]:
 
 def source_id_from_row(row: dict[str, str], kind: str) -> str:
     if kind == "species":
-        fields = ("source_internal_id", "dex_number_or_source_id", "internal_id", "source_id")
+        fields = ("source_internal_id", "source_or_internal_id", "dex_number_or_source_id", "internal_id", "source_id")
     else:
         fields = ("source_internal_id", "item_id_or_source_id", "internal_id", "source_id")
     for field in fields:
@@ -780,20 +851,25 @@ def merge_confidence(left: str, right: str) -> str:
     return "Medium"
 
 
-def compare_all(output_dir: Path, loaded_manifest_dir: Path | None = None) -> dict[str, list[dict[str, str]]]:
+def compare_all(output_dir: Path, loaded_manifest_dir: Path | None = None,
+                eligibility_manifest_dir: Path | None = None) -> dict[str, list[dict[str, str]]]:
     loaded_manifest_dir = loaded_manifest_dir or detect_loaded_manifest_dir(output_dir)
+    eligibility_manifest_dir = eligibility_manifest_dir or detect_eligibility_manifest_dir(output_dir)
     loaded_species = loaded_manifest_dir / "species_loaded.tsv" if loaded_manifest_dir else None
     loaded_items = loaded_manifest_dir / "items_loaded.tsv" if loaded_manifest_dir else None
     loaded_tms = loaded_manifest_dir / "tms_hms_loaded.tsv" if loaded_manifest_dir else None
+    eligible_species = eligibility_manifest_dir / "species_eligible.tsv" if eligibility_manifest_dir else None
     loaded_manifest_available = any(
         path is not None and path.exists() for path in (loaded_species, loaded_items, loaded_tms)
     )
+    eligibility_manifest_available = eligible_species is not None and eligible_species.exists()
 
     outputs = {
         "species_coverage.tsv": compare(
             output_dir / "species_expected.tsv", output_dir / "species_observed.tsv",
             output_dir / "species_coverage.tsv", SPECIES_FIELDS,
             loaded_species if loaded_species and loaded_species.exists() else None, "species",
+            eligible_species if eligible_species and eligible_species.exists() else None,
         ),
         "items_coverage.tsv": compare(
             output_dir / "items_expected.tsv", output_dir / "items_observed.tsv",
@@ -806,7 +882,8 @@ def compare_all(output_dir: Path, loaded_manifest_dir: Path | None = None) -> di
             loaded_tms if loaded_tms and loaded_tms.exists() else None, "tm_hm",
         ),
     }
-    write_summary(output_dir / "coverage_summary.md", outputs, loaded_manifest_available)
+    write_summary(output_dir / "coverage_summary.md", outputs, loaded_manifest_available,
+                  eligibility_manifest_available)
     suspicious = suspicious_or_missing_rows(outputs)
     write_tsv(output_dir / "suspicious_or_missing.tsv", suspicious,
               ["scope", "canonical_key", "display_name_guess", "coverage_status", "reason", "confidence"])
@@ -823,12 +900,24 @@ def detect_loaded_manifest_dir(output_dir: Path) -> Path | None:
     return None
 
 
+def detect_eligibility_manifest_dir(output_dir: Path) -> Path | None:
+    if (output_dir / "species_eligible.tsv").exists():
+        return output_dir
+    eligible_subdir = output_dir / "eligibility-manifest"
+    if (eligible_subdir / "species_eligible.tsv").exists():
+        return eligible_subdir
+    return None
+
+
 def suspicious_or_missing_rows(outputs: dict[str, list[dict[str, str]]]) -> list[dict[str, str]]:
     rows = []
     for filename, coverage_rows in outputs.items():
         scope = filename.removesuffix("_coverage.tsv").replace("tm_hm", "tms_hms")
         for row in coverage_rows:
-            if row["coverage_status"] in {"OBSERVED_NOT_EXPECTED", "EXPECTED_NOT_LOADED", "LOADED_NOT_OBSERVED"}:
+            if row["coverage_status"] in {
+                "OBSERVED_NOT_EXPECTED", "EXPECTED_NOT_LOADED", "LOADED_NOT_OBSERVED",
+                "LOADED_NOT_ELIGIBLE", "ELIGIBLE_NOT_OBSERVED",
+            }:
                 rows.append({
                     "scope": scope,
                     "canonical_key": row["canonical_key"],
@@ -849,7 +938,8 @@ def suspicious_or_missing_rows(outputs: dict[str, list[dict[str, str]]]) -> list
     return rows
 
 
-def write_summary(path: Path, outputs: dict[str, list[dict[str, str]]], loaded_manifest_available: bool) -> None:
+def write_summary(path: Path, outputs: dict[str, list[dict[str, str]]], loaded_manifest_available: bool,
+                  eligibility_manifest_available: bool = False) -> None:
     hard_failures = sum(
         1
         for rows in outputs.values()
@@ -860,7 +950,10 @@ def write_summary(path: Path, outputs: dict[str, list[dict[str, str]]], loaded_m
         1
         for rows in outputs.values()
         for row in rows
-        if row["coverage_status"] in {"LOADED_NOT_OBSERVED", "OBSERVED_NOT_EXPECTED", "EXPECTED_NOT_OBSERVED"}
+        if row["coverage_status"] in {
+            "LOADED_NOT_OBSERVED", "LOADED_NOT_ELIGIBLE", "ELIGIBLE_NOT_OBSERVED",
+            "OBSERVED_NOT_EXPECTED", "EXPECTED_NOT_OBSERVED",
+        }
     )
     lines = [
         "# Randomizer Coverage Audit Summary",
@@ -879,12 +972,19 @@ def write_summary(path: Path, outputs: dict[str, list[dict[str, str]]], loaded_m
         "- `EXPECTED_NOT_OBSERVED` is not a hard failure; random runs do not prove non-reachability.",
         "- `EXPECTED_NOT_LOADED` is a hard failure candidate when a loaded manifest was supplied.",
         "- `LOADED_NOT_OBSERVED` is not a hard failure; it means loaded but unseen in the parsed batch logs.",
+        "- `LOADED_NOT_ELIGIBLE` is not a hard failure; it means loaded but excluded by the supplied settings/profile eligibility manifest.",
+        "- `ELIGIBLE_NOT_OBSERVED` is not a hard failure; random runs do not prove an eligible species cannot appear.",
+        "- `ELIGIBLE_AND_OBSERVED` means a species was loaded, eligible, and observed in parsed logs.",
         "- `OBSERVED_NOT_EXPECTED` is a review candidate because a log label did not match the source-derived index.",
     ]
     if loaded_manifest_available:
         lines.append("- Loaded-manifest statuses were enabled for supplied manifest files.")
     else:
         lines.append("- No loaded manifest was supplied, so `EXPECTED_NOT_LOADED` was not assigned.")
+    if eligibility_manifest_available:
+        lines.append("- Species eligibility-manifest statuses were enabled for supplied settings/profile manifest files.")
+    else:
+        lines.append("- No species eligibility manifest was supplied, so eligibility-specific statuses were not assigned.")
     lines.extend([
         "",
         "## Hard Failure Boundary",
@@ -977,6 +1077,30 @@ def export_loaded_manifest(args: argparse.Namespace) -> None:
         raise RuntimeError("UPR-FVX loaded-manifest export failed")
 
 
+def export_eligibility_manifest(args: argparse.Namespace) -> None:
+    output_dir = Path(args.output_dir)
+    ensure_local_output_dir(output_dir)
+    jar = Path(args.jar)
+    input_rom = Path(args.input_rom)
+    settings_file = Path(args.settings_file)
+    if not jar.is_file():
+        raise ValueError("UPR-FVX jar not found")
+    if not input_rom.is_file():
+        raise ValueError("input ROM path does not exist")
+    if not settings_file.is_file():
+        raise ValueError("settings/profile path does not exist")
+    output_dir.mkdir(parents=True, exist_ok=True)
+    command = [
+        "java", "-jar", str(jar), "eligible-manifest",
+        "--input-rom", str(input_rom),
+        "--settings-file", str(settings_file),
+        "--output-dir", str(output_dir),
+    ]
+    completed = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, check=False)
+    if completed.returncode != 0:
+        raise RuntimeError("UPR-FVX eligible-manifest export failed")
+
+
 def seed_for_run(strategy: str, seed_base: int, run_index: int) -> int:
     if strategy == "sequential":
         return seed_base + run_index - 1
@@ -1067,7 +1191,8 @@ def cmd_compare(args: argparse.Namespace) -> int:
     output_dir = Path(args.output_dir)
     ensure_local_output_dir(output_dir)
     loaded_dir = Path(args.loaded_manifest_dir) if args.loaded_manifest_dir else None
-    compare_all(output_dir, loaded_dir)
+    eligibility_dir = Path(args.eligibility_manifest_dir) if args.eligibility_manifest_dir else None
+    compare_all(output_dir, loaded_dir, eligibility_dir)
     print(f"Wrote coverage TSVs and summary to {output_dir}")
     return 0
 
@@ -1075,6 +1200,12 @@ def cmd_compare(args: argparse.Namespace) -> int:
 def cmd_export_loaded(args: argparse.Namespace) -> int:
     export_loaded_manifest(args)
     print("Wrote sanitized loaded manifest TSVs.")
+    return 0
+
+
+def cmd_export_eligible(args: argparse.Namespace) -> int:
+    export_eligibility_manifest(args)
+    print("Wrote sanitized eligibility manifest TSVs.")
     return 0
 
 
@@ -1136,9 +1267,17 @@ def build_parser() -> argparse.ArgumentParser:
     loaded.add_argument("--input-rom", required=True, help="Private input ROM path. Never written to summaries.")
     loaded.set_defaults(func=cmd_export_loaded)
 
+    eligible = subparsers.add_parser("export-eligible", help="Run local UPR-FVX settings-aware eligibility manifest export.")
+    add_common_output(eligible)
+    eligible.add_argument("--jar", required=True, help="Path to local UPR-FVX.jar.")
+    eligible.add_argument("--input-rom", required=True, help="Private input ROM path. Never written to summaries.")
+    eligible.add_argument("--settings-file", required=True, help="Private settings/profile path. Never written to summaries.")
+    eligible.set_defaults(func=cmd_export_eligible)
+
     compare_parser = subparsers.add_parser("compare", help="Compare expected and observed TSVs.")
     add_common_output(compare_parser)
     compare_parser.add_argument("--loaded-manifest-dir", help="Optional sanitized loaded-manifest TSV directory.")
+    compare_parser.add_argument("--eligibility-manifest-dir", help="Optional sanitized eligibility-manifest TSV directory.")
     compare_parser.set_defaults(func=cmd_compare)
 
     all_parser = subparsers.add_parser("all", help="Run build-expected, batch-run, parse, and compare.")

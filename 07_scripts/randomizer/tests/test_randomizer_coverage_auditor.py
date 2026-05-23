@@ -383,6 +383,44 @@ Black Belt Koichi - Machop Lv10
             self.assertIn("`LOADED_NOT_OBSERVED` is not a hard failure", summary)
             self.assertIn("Hard failure candidates (`EXPECTED_NOT_LOADED`):", summary)
 
+    def test_eligibility_manifest_splits_loaded_species_statuses(self):
+        with tempfile.TemporaryDirectory(dir=local_test_root()) as temp_name:
+            root = Path(temp_name)
+            write_source_fixture(root)
+            out = root / ".local" / "coverage"
+            logs = out / "raw-logs"
+            logs.mkdir(parents=True)
+            (logs / "run_0001.log").write_text(SAMPLE_LOG, encoding="utf-8")
+
+            auditor.build_expected(out, root)
+            auditor.parse_logs(logs, out)
+            write_loaded_manifest(
+                out,
+                species_keys=["bulbasaur", "charmander", "rotom_heat", "charizard_mega_x"],
+                item_keys=[],
+                tm_hm_keys=[],
+            )
+            write_eligible_manifest(
+                out,
+                [
+                    eligible_species_row("bulbasaur", 1, True),
+                    eligible_species_row("charmander", 4, True),
+                    eligible_species_row("rotom_heat", 714, False, "excluded_by_broad_settings_or_filters"),
+                    eligible_species_row("charizard_mega_x", 1280, False, "excluded_by_broad_settings_or_filters"),
+                ],
+            )
+
+            auditor.compare_all(out)
+
+            species = {row["canonical_key"]: row for row in read_tsv(out / "species_coverage.tsv")}
+            summary = (out / "coverage_summary.md").read_text(encoding="utf-8")
+            self.assertEqual("ELIGIBLE_AND_OBSERVED", species["bulbasaur"]["coverage_status"])
+            self.assertEqual("ELIGIBLE_NOT_OBSERVED", species["charmander"]["coverage_status"])
+            self.assertEqual("LOADED_NOT_ELIGIBLE", species["rotom_heat"]["coverage_status"])
+            self.assertEqual("LOADED_NOT_ELIGIBLE", species["charizard_mega_x"]["coverage_status"])
+            self.assertIn("- LOADED_NOT_ELIGIBLE: 2", summary)
+            self.assertIn("Species eligibility-manifest statuses were enabled", summary)
+
     def test_compare_ignores_private_path_columns_in_loaded_manifest(self):
         with tempfile.TemporaryDirectory(dir=local_test_root()) as temp_name:
             root = Path(temp_name)
@@ -400,6 +438,10 @@ Black Belt Koichi - Machop Lv10
                 item_keys=["tm51"],
                 tm_hm_keys=["tm51"],
                 include_private_column=True,
+            )
+            write_eligible_manifest(
+                out,
+                [eligible_species_row("bulbasaur", 1, True, private_value="/home/anton/private/input.gba")],
             )
             auditor.compare_all(out)
 
@@ -476,6 +518,7 @@ def write_source_fixture(root):
             "#define SPECIES_FARFETCHD 0x53",
             "#define SPECIES_UNOWN_EXCLAMATION 0x400",
             "#define SPECIES_UNOWN_QUESTION 0x401",
+            "#define SPECIES_CHARIZARD_MEGA_X 0x500",
             "#define SPECIES_FLABEBE 0x29D",
             "#define SPECIES_VIVILLON 0x306",
             "#define SPECIES_SQUAWKABILLY 0x3AB",
@@ -546,6 +589,37 @@ def write_loaded_manifest(out, species_keys, item_keys, tm_hm_keys, include_priv
         + "".join(f"{key}\t{key}\t1\tTM\tyes\tyes\tno\tno\tyes\tno{private_value}\n" for key in tm_hm_keys),
         encoding="utf-8",
     )
+
+
+def eligible_species_row(key, source_id, eligible, reason="", private_value=""):
+    row = {
+        "canonical_key": key,
+        "display_name": key,
+        "source_or_internal_id": str(source_id),
+        "form_family": "",
+        "loaded": "yes",
+        "eligible_wild": "yes" if eligible else "no",
+        "eligible_trainer": "no",
+        "eligible_starter": "no",
+        "eligible_static": "no",
+        "eligible_any": "yes" if eligible else "no",
+        "exclusion_reason_wild": "" if eligible else reason,
+        "exclusion_reason_trainer": "feature_disabled",
+        "exclusion_reason_starter": "feature_disabled",
+        "exclusion_reason_static": "feature_disabled",
+        "settings_profile_label": "fixture",
+        "confidence": "Medium",
+    }
+    if private_value:
+        row["private_path"] = private_value
+    return row
+
+
+def write_eligible_manifest(out, rows):
+    fields = auditor.SPECIES_ELIGIBLE_FIELDS
+    if any(row.get("private_path") for row in rows):
+        fields = fields + ["private_path"]
+    write_tsv_rows(out / "species_eligible.tsv", rows, fields)
 
 
 def write_tsv_rows(path, rows, fields):

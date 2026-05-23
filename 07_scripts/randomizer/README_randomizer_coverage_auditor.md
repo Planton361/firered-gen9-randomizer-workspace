@@ -13,6 +13,7 @@ The auditor answers review questions like:
 - Which Pokemon and items appear in sanitized Randomizer logs across batch runs?
 - Which observed labels do not match the source-derived expected index?
 - Which observed labels are only shortened or normalized in logs and can be mapped back to expected source constants?
+- Which loaded Pokemon are eligible for broad Wild, Trainer, Starter, or Static randomizer pools under a supplied settings/profile file?
 
 It does not prove full gameplay reachability. Random batch observations are useful evidence, but absence from logs is not the same as absence from the loaded ROM or from the game.
 
@@ -25,7 +26,14 @@ Sanitized loaded manifests generated after ROM load can distinguish:
 - `EXPECTED_NOT_LOADED`: expected source constant was not loaded by UPR-FVX.
 - `LOADED_NOT_OBSERVED`: loaded by UPR-FVX but not seen in batch logs.
 
+Sanitized eligibility manifests generated after ROM load plus settings/profile evaluation can further distinguish:
+
+- `LOADED_NOT_ELIGIBLE`: loaded by UPR-FVX but excluded by broad settings/profile eligibility filters.
+- `ELIGIBLE_NOT_OBSERVED`: loaded and eligible, but not seen in parsed batch logs.
+- `ELIGIBLE_AND_OBSERVED`: loaded, eligible, and observed.
+
 Without a loaded manifest, batch runs cannot prove complete Pokemon or item coverage.
+Without an eligibility manifest, `LOADED_NOT_OBSERVED` does not explain whether a loaded Pokemon was actually eligible for the active settings/profile.
 
 ## CLI Examples
 
@@ -75,6 +83,25 @@ java -jar 02_external/upr-fvx/random/build/libs/UPR-FVX.jar loaded-manifest \
   --output-dir .local/randomizer-coverage
 ```
 
+Export a sanitized Species eligibility manifest after ROM load and settings/profile evaluation:
+
+```sh
+python 07_scripts/randomizer/randomizer_coverage_auditor.py export-eligible \
+  --jar 02_external/upr-fvx/random/build/libs/UPR-FVX.jar \
+  --input-rom /PRIVATE/PATH/input.gba \
+  --settings-file /PRIVATE/PATH/profile.rnqs \
+  --output-dir .local/randomizer-coverage
+```
+
+Equivalent direct UPR-FVX command:
+
+```sh
+java -jar 02_external/upr-fvx/random/build/libs/UPR-FVX.jar eligible-manifest \
+  --input-rom /PRIVATE/PATH/input.gba \
+  --settings-file /PRIVATE/PATH/profile.rnqs \
+  --output-dir .local/randomizer-coverage
+```
+
 Compare with loaded-manifest files:
 
 ```sh
@@ -82,7 +109,7 @@ python 07_scripts/randomizer/randomizer_coverage_auditor.py compare \
   --output-dir .local/randomizer-coverage
 ```
 
-`compare` auto-detects `species_loaded.tsv`, `items_loaded.tsv`, and `tms_hms_loaded.tsv` in the output directory. You can also pass `--loaded-manifest-dir` explicitly.
+`compare` auto-detects `species_loaded.tsv`, `items_loaded.tsv`, `tms_hms_loaded.tsv`, and `species_eligible.tsv` in the output directory. You can also pass `--loaded-manifest-dir` and `--eligibility-manifest-dir` explicitly.
 
 Full local flow:
 
@@ -107,6 +134,7 @@ Expected indexes:
 - `.local/randomizer-coverage/species_loaded.tsv`
 - `.local/randomizer-coverage/items_loaded.tsv`
 - `.local/randomizer-coverage/tms_hms_loaded.tsv`
+- `.local/randomizer-coverage/species_eligible.tsv`
 
 Observed summaries:
 
@@ -134,6 +162,8 @@ By default, raw logs and output ROMs are deleted after successful batch analysis
 Only sanitized summaries may be shared or committed after review:
 
 - `*_expected.tsv`
+- `*_loaded.tsv`
+- `*_eligible.tsv`
 - `*_observed.tsv`
 - `*_coverage.tsv`
 - `coverage_summary.md`
@@ -161,6 +191,9 @@ Do not share or commit:
 | `OBSERVED_NOT_EXPECTED` | A parsed log label did not match the source-derived expected index. Review mapping, spelling, parser logic, or source constants. |
 | `EXPECTED_NOT_LOADED` | A source-derived expected row is absent from the sanitized loaded manifest. This is a hard failure candidate. |
 | `LOADED_NOT_OBSERVED` | Loaded by UPR-FVX but not observed in parsed logs. This is not a hard failure. |
+| `LOADED_NOT_ELIGIBLE` | Loaded by UPR-FVX but excluded by the supplied settings/profile eligibility manifest. This is not a hard failure. |
+| `ELIGIBLE_NOT_OBSERVED` | Loaded and eligible under the supplied settings/profile manifest, but not observed in parsed logs. This is not a hard failure. |
+| `ELIGIBLE_AND_OBSERVED` | Loaded, eligible under the supplied settings/profile manifest, and observed in parsed logs. |
 | `FILTERED_BY_POLICY` | Reserved for later policy-aware reports. |
 | `MECHANIC_GATED` | Reserved for later policy-aware reports, especially Mega/Z/Dynamax/GMax. |
 | `BANNED_EXPECTED` | Reserved for later policy-aware reports. |
@@ -211,5 +244,17 @@ The UPR-FVX local-only `loaded-manifest` command loads a private ROM and writes 
 - `tms_hms_loaded.tsv`
 
 Those manifests contain aggregate names/keys, internal IDs, family labels, loaded flags, and item policy flags where the ROM model exposes them. They do not contain ROM paths, output-ROM paths, hashes, seeds, raw offsets, full logs, or private filesystem information.
+
+Codex must not run this mode with a ROM. Anton runs it locally and shares or commits only reviewed sanitized TSV summaries when needed.
+
+## Eligibility Manifest Export
+
+The UPR-FVX local-only `eligible-manifest` command loads a private ROM, reads a private `.rnqs` settings/profile file, sets the same global Species restrictions used before randomization, and writes:
+
+- `species_eligible.tsv`
+
+The current exporter is intentionally conservative. It reports broad Species eligibility for Wild, Trainer, Starter, and Static pools after core settings and randomizer filters such as Gen Limit, Mega/GMax/Regional form options, alternate-form flags, legendary restrictions, ability-dependent/irregular-form bans, known Wild/Trainer/Static bans, starter basic/BST/type constraints, and CFRU/DPE random-pool asset guards where available.
+
+It does not claim exact slot-level eligibility for every route, trainer, type theme, local Pokemon setting, similar-strength window, static restricted list, or per-encounter context. Treat `LOADED_NOT_ELIGIBLE` as an explanation for broad settings/profile exclusion, and treat `ELIGIBLE_NOT_OBSERVED` as non-hard sampling evidence.
 
 Codex must not run this mode with a ROM. Anton runs it locally and shares or commits only reviewed sanitized TSV summaries when needed.
