@@ -105,6 +105,130 @@ class RandomizerCoverageAuditorTest(unittest.TestCase):
             self.assertIn("tm51", tms)
             self.assertIn("hm01", tms)
 
+    def test_species_alias_normalization_maps_common_log_labels_to_expected(self):
+        aliases = {
+            "Flabébé": "flabebe",
+            "Farfetch’d": "farfetchd",
+            "Squawkbily": "squawkabilly",
+            "Baculegion": "basculegion",
+            "Dudunsprce": "dudunsparce",
+            "Corvknight": "corviknight",
+            "Corvsquire": "corvisquire",
+            "Fletchindr": "fletchinder",
+            "Meowscrada": "meowscarada",
+            "Baraskewda": "barraskewda",
+            "Polchgeist": "poltchageist",
+            "Poltegeist": "polteageist",
+            "IronThorns": "iron_thorns",
+            "Iron_Valiant": "iron_valiant",
+            "RoaringMoon": "roaring_moon",
+            "WalkingWake": "walking_wake",
+            "GreatTusk": "great_tusk",
+            "ScreamTail": "scream_tail",
+        }
+
+        for observed, expected_key in aliases.items():
+            with self.subTest(observed=observed):
+                self.assertEqual(expected_key, auditor.canonical_key_for_observed(observed, "species"))
+
+    def test_item_alias_normalization_maps_common_log_labels_to_expected(self):
+        aliases = {
+            "TinyMushroom": "tiny_mushroom",
+            "BrightPowder": "bright_powder",
+            "DeepSeaScale": "deep_sea_scale",
+            "DeepSeaTooth": "deep_sea_tooth",
+            "Nevermeltice": "never_melt_ice",
+            "ThunderStone": "thunder_stone",
+            "BlackGlasses": "black_glasses",
+            "TwistedSpoon": "twisted_spoon",
+            "SilverPowder": "silver_powder",
+            "Unr. Teacup": "unremarkable_teacup",
+            "Protec Pads": "protective_pads",
+            "Ut. Umbrella": "utility_umbrella",
+            "Blunder Pol.": "blunder_policy",
+            "Weakness Pol.": "weakness_policy",
+            "Terrain Ext.": "terrain_extender",
+            "Punch Glove": "punching_glove",
+            "Elect. Seed": "electric_seed",
+            "X Sp. Atk": "x_special",
+            "Fire Mem.": "fire_memory",
+            "Electr Mem.": "electric_memory",
+            "Fight Mem.": "fighting_memory",
+            "Blk Apricorn": "black_apricorn",
+            "Blu Apricorn": "blue_apricorn",
+            "Grn Apricorn": "green_apricorn",
+            "Pnk Apricorn": "pink_apricorn",
+            "Wht Apricorn": "white_apricorn",
+            "Ylw Apricorn": "yellow_apricorn",
+        }
+
+        for observed, expected_key in aliases.items():
+            with self.subTest(observed=observed):
+                self.assertEqual(expected_key, auditor.canonical_key_for_observed(observed, "item"))
+
+    def test_alias_normalization_reduces_observed_not_expected_fixture_rows(self):
+        with tempfile.TemporaryDirectory(dir=local_test_root()) as temp_name:
+            root = Path(temp_name)
+            write_source_fixture(root)
+            out = root / ".local" / "coverage"
+            logs = out / "raw-logs"
+            logs.mkdir(parents=True)
+            (logs / "run_0001.log").write_text(
+                """
+( Wild Pokemon {WDPK} )
+Flabébé Lv4
+Squawkbily Lv4
+Baculegion Lv4
+Dudunsprce Lv4
+IronThorns Lv4
+
+( Field Items {FIIT} )
+1 => TinyMushroom
+2 => BrightPowder
+3 => DeepSeaScale
+4 => Unr. Teacup
+5 => Electr Mem.
+6 => Blk Apricorn
+""",
+                encoding="utf-8",
+            )
+
+            auditor.build_expected(out, root)
+            auditor.parse_logs(logs, out)
+            auditor.compare_all(out)
+
+            species = {row["canonical_key"]: row for row in read_tsv(out / "species_coverage.tsv")}
+            items = {row["canonical_key"]: row for row in read_tsv(out / "items_coverage.tsv")}
+            suspicious_keys = {row["canonical_key"] for row in read_tsv(out / "suspicious_or_missing.tsv")}
+            for key in {"flabebe", "squawkabilly", "basculegion", "dudunsparce", "iron_thorns"}:
+                self.assertEqual("EXPECTED_AND_OBSERVED", species[key]["coverage_status"])
+                self.assertNotIn(key, suspicious_keys)
+            for key in {"tiny_mushroom", "bright_powder", "deep_sea_scale", "unremarkable_teacup",
+                        "electric_memory", "black_apricorn"}:
+                self.assertEqual("EXPECTED_AND_OBSERVED", items[key]["coverage_status"])
+                self.assertNotIn(key, suspicious_keys)
+
+    def test_black_belt_trainerclass_line_is_not_held_item_but_explicit_item_is(self):
+        with tempfile.TemporaryDirectory(dir=local_test_root()) as temp_name:
+            temp_dir = Path(temp_name)
+            logs = temp_dir / ".local" / "coverage" / "raw-logs"
+            out = temp_dir / ".local" / "coverage"
+            logs.mkdir(parents=True)
+            (logs / "run_0001.log").write_text(
+                """
+( Trainer Pokemon {TRPK} )
+Black Belt Koichi - Machop Lv10
+#1 (Black Belt) - Machop@Black Belt Lv10
+""",
+                encoding="utf-8",
+            )
+
+            auditor.parse_logs(logs, out)
+
+            items = {row["canonical_key"]: row for row in read_tsv(out / "items_observed.tsv")}
+            self.assertEqual("1", items["black_belt"]["observed_count_total"])
+            self.assertEqual("trainer_held_item", items["black_belt"]["observed_sections"])
+
     def test_compare_marks_expected_not_observed_as_non_loaded_failure_boundary(self):
         with tempfile.TemporaryDirectory(dir=local_test_root()) as temp_name:
             root = Path(temp_name)
@@ -125,6 +249,11 @@ class RandomizerCoverageAuditorTest(unittest.TestCase):
             self.assertIn("do not prove", species["charmander"]["reason"])
             self.assertEqual("OBSERVED_NOT_EXPECTED", species["deoxys_attack"]["coverage_status"])
             self.assertEqual("EXPECTED_AND_OBSERVED", items["tm51"]["coverage_status"])
+            tms = {row["canonical_key"]: row for row in read_tsv(out / "tm_hm_coverage.tsv")}
+            self.assertEqual("EXPECTED_NOT_OBSERVED", tms["tm52"]["coverage_status"])
+            suspicious = read_tsv(out / "suspicious_or_missing.tsv")
+            suspicious_keys = {row["canonical_key"] for row in suspicious}
+            self.assertNotIn("tm52", suspicious_keys)
 
     def test_parse_logs_can_delete_raw_logs_only_after_success(self):
         with tempfile.TemporaryDirectory(dir=local_test_root()) as temp_name:
@@ -190,7 +319,13 @@ def write_source_fixture(root):
             "#define SPECIES_NONE 0x0",
             "#define SPECIES_BULBASAUR 0x1",
             "#define SPECIES_CHARMANDER 0x4",
+            "#define SPECIES_FARFETCHD 0x53",
+            "#define SPECIES_FLABEBE 0x29D",
             "#define SPECIES_VIVILLON 0x306",
+            "#define SPECIES_SQUAWKABILLY 0x3AB",
+            "#define SPECIES_BASCULEGION 0x386",
+            "#define SPECIES_DUDUNSPARCE 0x3D4",
+            "#define SPECIES_IRON_THORNS 0x3E3",
             "#define SPECIES_ALCREMIE_BERRY 0x4AC",
             "#define SPECIES_ROTOM_WASH 0x2CA",
             "#define SPECIES_COUNT 0x999",
@@ -201,9 +336,17 @@ def write_source_fixture(root):
         "\n".join([
             "#define ITEM_NONE 0x0",
             "#define ITEM_POTION 0xD",
+            "#define ITEM_TINY_MUSHROOM 0x56",
+            "#define ITEM_BRIGHT_POWDER 0xB3",
+            "#define ITEM_DEEP_SEA_SCALE 0xC4",
+            "#define ITEM_BLACK_BELT 0xCF",
             "#define ITEM_ORAN_BERRY 0x8B",
             "#define ITEM_FIRE_GEM 0x250",
+            "#define ITEM_ELECTRIC_MEMORY 0x206",
+            "#define ITEM_UNREMARKABLE_TEACUP 0x2B0",
+            "#define ITEM_BLACK_APRICORN 0x266",
             "#define ITEM_TM51 376",
+            "#define ITEM_TM52 377",
             "#define ITEM_HM01_CUT 0x153",
             "#define ITEMS_COUNT 0x999",
         ]),

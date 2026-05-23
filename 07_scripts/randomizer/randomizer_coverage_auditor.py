@@ -15,6 +15,7 @@ import re
 import shutil
 import subprocess
 import sys
+import unicodedata
 from collections import defaultdict
 from dataclasses import dataclass
 from pathlib import Path
@@ -48,9 +49,96 @@ DEFINE_RE = re.compile(
 SECTION_RE = re.compile(r"^\(\s*(?P<title>.+?)\s+\{[A-Z0-9]+}\s*\)\s*$")
 STARTER_RE = re.compile(r"^Set starter\s+\d+\s+to\s+(?P<species>.+?)(?:,\s+holding\s+(?P<item>.+))?$")
 WILD_RE = re.compile(r"^(?P<species>.+?)\s+Lv(?:s)?\d+(?:-\d+)?$")
-TRAINER_SPECIES_RE = re.compile(r"(?P<species>.+?)(?:@(?P<item>.+?))?\s+Lv\d+\b")
+TRAINER_SPECIES_RE = re.compile(r"^(?P<species>[^@]+?)(?:@(?P<item>[^@,]+?))?\s+Lv\d+\b.*$")
 STATIC_RE = re.compile(r"=>\s*(?P<species>.+)$")
 TM_HM_RE = re.compile(r"\b(?P<label>(?:TM|HM)\d{1,3})(?:[_ -][A-Za-z][A-Za-z0-9' .-]*)?")
+
+SPECIES_ALIAS_DISPLAY = {
+    "flabebe": "Flabebe",
+    "farfetchd": "Farfetchd",
+    "squawkbily": "Squawkabilly",
+    "baculegion": "Basculegion",
+    "dudunsprce": "Dudunsparce",
+    "corvknight": "Corviknight",
+    "corvsquire": "Corvisquire",
+    "fletchindr": "Fletchinder",
+    "meowscrada": "Meowscarada",
+    "baraskewda": "Barraskewda",
+    "polchgeist": "Poltchageist",
+    "poltegeist": "Polteageist",
+    "greattusk": "Great Tusk",
+    "screamtail": "Scream Tail",
+    "brutebonnet": "Brute Bonnet",
+    "fluttermane": "Flutter Mane",
+    "slitherwing": "Slither Wing",
+    "sandyshocks": "Sandy Shocks",
+    "irontreads": "Iron Treads",
+    "ironbundle": "Iron Bundle",
+    "ironhands": "Iron Hands",
+    "ironjugulis": "Iron Jugulis",
+    "ironmoth": "Iron Moth",
+    "ironthorns": "Iron Thorns",
+    "ironvaliant": "Iron Valiant",
+    "walkingwake": "Walking Wake",
+    "ironleaves": "Iron Leaves",
+    "gougingfire": "Gouging Fire",
+    "ragingbolt": "Raging Bolt",
+    "ironboulder": "Iron Boulder",
+    "ironcrown": "Iron Crown",
+    "roaringmoon": "Roaring Moon",
+}
+
+ITEM_ALIAS_DISPLAY = {
+    "tinymushroom": "Tiny Mushroom",
+    "brightpowder": "Bright Powder",
+    "deepseascale": "Deep Sea Scale",
+    "deepseatooth": "Deep Sea Tooth",
+    "nevermeltice": "Never Melt Ice",
+    "thunderstone": "Thunder Stone",
+    "blackglasses": "Black Glasses",
+    "twistedspoon": "Twisted Spoon",
+    "silverpowder": "Silver Powder",
+    "unrteacup": "Unremarkable Teacup",
+    "protecpads": "Protective Pads",
+    "blunderpol": "Blunder Policy",
+    "weaknesspol": "Weakness Policy",
+    "terrainext": "Terrain Extender",
+    "punchglove": "Punching Glove",
+    "utumbrella": "Utility Umbrella",
+    "electseed": "Electric Seed",
+    "xspatk": "X Special",
+    "xspdef": "X Sp Def",
+    "blkapricorn": "Black Apricorn",
+    "bluapricorn": "Blue Apricorn",
+    "grnapricorn": "Green Apricorn",
+    "pnkapricorn": "Pink Apricorn",
+    "redapricorn": "Red Apricorn",
+    "whtapricorn": "White Apricorn",
+    "ylwapricorn": "Yellow Apricorn",
+}
+
+for _type_name, _display_name in {
+    "bug": "Bug",
+    "dark": "Dark",
+    "dragon": "Dragon",
+    "electric": "Electric",
+    "electr": "Electric",
+    "fairy": "Fairy",
+    "fight": "Fighting",
+    "fighting": "Fighting",
+    "fire": "Fire",
+    "flying": "Flying",
+    "ghost": "Ghost",
+    "grass": "Grass",
+    "ground": "Ground",
+    "ice": "Ice",
+    "poison": "Poison",
+    "psychic": "Psychic",
+    "rock": "Rock",
+    "steel": "Steel",
+    "water": "Water",
+}.items():
+    ITEM_ALIAS_DISPLAY[f"{_type_name}mem"] = f"{_display_name} Memory"
 
 
 @dataclass(frozen=True)
@@ -83,11 +171,40 @@ item_analyzer = load_item_pool_batch_analyzer()
 
 
 def canonicalize(value: str) -> str:
-    return re.sub(r"[^a-z0-9]+", "_", value.lower()).strip("_")
+    return re.sub(r"[^a-z0-9]+", "_", fold_ascii(value).lower()).strip("_")
 
 
 def normalize_name(value: str) -> str:
-    return re.sub(r"[^a-z0-9]", "", value.lower())
+    return alias_lookup_key(value)
+
+
+def fold_ascii(value: str) -> str:
+    normalized = unicodedata.normalize("NFKD", value)
+    ascii_text = "".join(char for char in normalized if not unicodedata.combining(char))
+    return ascii_text.translate(str.maketrans({
+        "’": "'",
+        "‘": "'",
+        "`": "'",
+        "´": "'",
+        "‐": "-",
+        "‑": "-",
+        "–": "-",
+        "—": "-",
+    }))
+
+
+def alias_lookup_key(value: str) -> str:
+    return re.sub(r"[^a-z0-9]", "", fold_ascii(value).lower())
+
+
+def canonical_key_for_observed(value: str, kind: str) -> str:
+    if kind == "species":
+        display = SPECIES_ALIAS_DISPLAY.get(alias_lookup_key(value), value)
+        return canonicalize(display)
+    if kind == "item":
+        display = ITEM_ALIAS_DISPLAY.get(alias_lookup_key(value), value)
+        return canonicalize(display)
+    return canonicalize(value)
 
 
 def display_from_constant(constant: str, prefix: str) -> str:
@@ -197,7 +314,7 @@ def item_expected_row(record: ConstantRecord) -> dict[str, str]:
     is_hm = bool(re.match(r"ITEM_HM\d{2,3}(?:_|$)", record.constant))
     category = item_category_guess(record.constant, display)
     return {
-        "canonical_key": canonicalize(display),
+        "canonical_key": canonicalize(tm_hm_label_from_display(display) if is_tm or is_hm else display),
         "source_constant": record.constant,
         "display_name_guess": display,
         "item_id_or_source_id": str(record.value),
@@ -260,6 +377,11 @@ def item_family_guess(constant: str, display: str) -> str:
     return ""
 
 
+def tm_hm_label_from_display(display: str) -> str:
+    match = re.match(r"^((?:TM|HM)\d{1,3})\b", display)
+    return match.group(1) if match else display
+
+
 def item_category_guess(constant: str, display: str) -> str:
     if re.match(r"ITEM_TM\d{2,3}$", constant):
         return "tm"
@@ -303,9 +425,9 @@ def parse_logs(logs_dir: Path, output_dir: Path, delete_raw: bool = False) -> di
         tm_hm_occurrences.extend(parsed["tms_hms"])
 
     outputs = {
-        "species_observed.tsv": aggregate_occurrences(species_occurrences),
-        "items_observed.tsv": aggregate_occurrences(item_occurrences),
-        "tms_hms_observed.tsv": aggregate_occurrences(tm_hm_occurrences),
+        "species_observed.tsv": aggregate_occurrences(species_occurrences, "species"),
+        "items_observed.tsv": aggregate_occurrences(item_occurrences, "item"),
+        "tms_hms_observed.tsv": aggregate_occurrences(tm_hm_occurrences, "tm_hm"),
     }
     write_tsv(output_dir / "species_observed.tsv", outputs["species_observed.tsv"], OBSERVED_FIELDS)
     write_tsv(output_dir / "items_observed.tsv", outputs["items_observed.tsv"], OBSERVED_FIELDS)
@@ -354,11 +476,11 @@ def parse_species_and_misc_log_text(text: str, run_id: str, source_log: str) -> 
             if wild_match and not line.lower().startswith("area #"):
                 species.append(ObservedOccurrence(run_id, "wild", clean_species_name(wild_match.group("species")), source_log))
         elif section == "trainer":
-            if " - " not in line:
+            if not line.startswith("#") or " - " not in line:
                 continue
             party_text = line.split(" - ", 1)[1]
             for party_entry in party_text.split(","):
-                trainer_match = TRAINER_SPECIES_RE.search(party_entry.strip())
+                trainer_match = TRAINER_SPECIES_RE.fullmatch(party_entry.strip())
                 if not trainer_match:
                     continue
                 species.append(ObservedOccurrence(run_id, "trainer", clean_species_name(trainer_match.group("species")), source_log))
@@ -425,13 +547,13 @@ def add_tm_hm_if_needed(occurrences: list[ObservedOccurrence], run_id: str, sect
         occurrences.append(ObservedOccurrence(run_id, section, label, source_log))
 
 
-def aggregate_occurrences(occurrences: Sequence[ObservedOccurrence]) -> list[dict[str, str]]:
+def aggregate_occurrences(occurrences: Sequence[ObservedOccurrence], kind: str) -> list[dict[str, str]]:
     grouped: dict[str, list[ObservedOccurrence]] = defaultdict(list)
     display_by_key: dict[str, str] = {}
     for occurrence in occurrences:
         if not occurrence.display_name:
             continue
-        key = canonicalize(occurrence.display_name)
+        key = canonical_key_for_observed(occurrence.display_name, kind)
         grouped[key].append(occurrence)
         display_by_key.setdefault(key, occurrence.display_name)
 
