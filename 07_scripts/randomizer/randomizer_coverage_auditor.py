@@ -100,6 +100,16 @@ SPECIES_ALIAS_DISPLAY = {
 }
 
 ITEM_ALIAS_DISPLAY = {
+    "paralyzheal": "Paralyze Heal",
+    "marangberry": "Maranga Berry",
+    "kingsrock": "Kings Rock",
+    "kingrock": "Kings Rock",
+    "upgrade": "Up Grade",
+    "adrenalorb": "Adrenaline Orb",
+    "heavydboots": "Heavy Duty Boots",
+    "auspiciousa": "Auspicious Armor",
+    "maliciousa": "Malicious Armor",
+    "gbottlecap": "Gold Bottle Cap",
     "tinymushroom": "Tiny Mushroom",
     "brightpowder": "Bright Powder",
     "deepseascale": "Deep Sea Scale",
@@ -109,6 +119,21 @@ ITEM_ALIAS_DISPLAY = {
     "prisonbottle": "Prison Bottle",
     "reinsunity": "Reins of Unity",
     "reinsofunity": "Reins of Unity",
+    "purplenectar": "Purple Nectar",
+    "yellownectar": "Yellow Nectar",
+    "charzarditex": "Charizardite X",
+    "charzarditey": "Charizardite Y",
+    "blastoisnite": "Blastoisinite",
+    "kangaskanite": "Kangaskhanite",
+    "aerodactlite": "Aerodactylite",
+    "houndoomnite": "Houndoominite",
+    "mewtwonitex": "Mewtwonite X",
+    "mewtwonitey": "Mewtwonite Y",
+    "birdfossil": "Fossilized Bird",
+    "fishfossil": "Fossilized Fish",
+    "drakefossil": "Fossilized Drake",
+    "dinofossil": "Fossilized Dino",
+    "wishpiece": "Wishing Piece",
     "apatch": "Ability Patch",
     "abilitypatch": "Ability Patch",
     "apotion": "Ability Potion",
@@ -159,6 +184,41 @@ for _type_name, _display_name in {
     "water": "Water",
 }.items():
     ITEM_ALIAS_DISPLAY[f"{_type_name}mem"] = f"{_display_name} Memory"
+
+
+NON_REWARD_ITEM_CONSTANTS = {
+    "ITEM_SS_TICKET",
+    "ITEM_S_S_TICKET",
+    "ITEM_POKEBLOCK_CASE",
+    "ITEM_ROOM_1_KEY",
+    "ITEM_ROOM_2_KEY",
+    "ITEM_ROOM_4_KEY",
+    "ITEM_ROOM_6_KEY",
+    "ITEM_OAKS_PARCEL",
+    "ITEM_OAK_PARCEL",
+    "ITEM_DOWSING_MACHINE",
+    "ITEM_FASHION_CASE",
+    "ITEM_QUEST_LOG",
+    "ITEM_COSTUME_BOX",
+    "ITEM_FREE_SPACE1",
+    "ITEM_FREE_SPACE2",
+    "ITEM_FREE_SPACE3",
+    "ITEM_FREE_SPACE_1",
+    "ITEM_FREE_SPACE_2",
+    "ITEM_FREE_SPACE_3",
+    "ITEM_MEGA_CUFF",
+    "ITEM_MEGA_BONNET",
+    "ITEM_MEGA_EARING",
+    "ITEM_MEGA_EARRING",
+    "ITEM_MEGA_CHARM",
+    "ITEM_MEGA_BRACELET",
+    "ITEM_MEGA_ANKLET",
+    "ITEM_MEGA_PENDANT",
+    "ITEM_KEY_CARD_1",
+    "ITEM_KEY_CARD_2",
+    "ITEM_KEY_CARD_3",
+    "ITEM_POKE_BALL_KEY_ITEM",
+}
 
 
 @dataclass(frozen=True)
@@ -342,6 +402,7 @@ def skip_expected_constant(constant: str) -> bool:
         suffix in {"NONE", "COUNT", "TOTAL", "END"}
         or constant.endswith("_COUNT")
         or constant.startswith("ITEM_USE_")
+        or constant in NON_REWARD_ITEM_CONSTANTS
     )
 
 
@@ -434,8 +495,8 @@ def item_family_guess(constant: str, display: str) -> str:
 
 
 def tm_hm_label_from_display(display: str) -> str:
-    match = re.match(r"^((?:TM|HM)\d{1,3})\b", display)
-    return match.group(1) if match else display
+    match = re.match(r"^((?:TM|HM)\d{1,3})(?:\b|_)", display, flags=re.IGNORECASE)
+    return match.group(1).upper() if match else display
 
 
 def item_category_guess(constant: str, display: str) -> str:
@@ -817,8 +878,8 @@ def species_constant_candidate_keys(constant: str) -> set[str]:
 
 
 def tm_hm_constant_candidate_keys(value: str) -> set[str]:
-    match = re.search(r"\b(?:ITEM_)?((?:TM|HM)\d{1,3})\b", value)
-    return {canonicalize(match.group(1))} if match else set()
+    match = re.search(r"\b(?:ITEM_)?((?:TM|HM)\d{1,3})(?:\b|_)", value, flags=re.IGNORECASE)
+    return {canonicalize(match.group(1).upper())} if match else set()
 
 
 def source_id_from_row(row: dict[str, str], kind: str) -> str:
