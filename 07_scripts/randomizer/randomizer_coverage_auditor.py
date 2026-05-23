@@ -100,6 +100,19 @@ SPECIES_ALIAS_DISPLAY = {
 }
 
 ITEM_ALIAS_DISPLAY = {
+    "ragecandybar": "Rage Candy Bar",
+    "lumiosegal": "Lumiose Galette",
+    "shaloursable": "Shalour Sable",
+    "maxcandy": "Dynamax Candy",
+    "balmmushroom": "Balm Mushroom",
+    "whipdream": "Whipped Dream",
+    "strawsweet": "Strawberry Sweet",
+    "galarcuff": "Galarica Cuff",
+    "galarwreath": "Galarica Wreath",
+    "rustysword": "Rusted Sword",
+    "rustyshield": "Rusted Shield",
+    "necroziumz": "Ultranecrozium Z",
+    "luminousmoss": "Luminous Moss",
     "paralyzheal": "Paralyze Heal",
     "marangberry": "Maranga Berry",
     "kingsrock": "Kings Rock",
@@ -136,8 +149,16 @@ ITEM_ALIAS_DISPLAY = {
     "wishpiece": "Wishing Piece",
     "apatch": "Ability Patch",
     "abilitypatch": "Ability Patch",
-    "apotion": "Ability Potion",
+    "apotion": "Ability Capsule",
     "abilitypotion": "Ability Potion",
+    "gimmicoin": "Gimmighoul Coin",
+    "boostenergy": "Booster Energy",
+    "wellmask": "Wellspring Mask",
+    "heartmask": "Hearthflame Mask",
+    "cornermask": "Cornerstone Mask",
+    "evivviewer": "EVIV Displayer",
+    "catchingcharm": "Catching Charm",
+    "maspteacup": "Masterpiece Teacup",
     "blkaugurite": "Black Augurite",
     "blackaugurite": "Black Augurite",
     "blackglasses": "Black Glasses",
@@ -218,6 +239,15 @@ NON_REWARD_ITEM_CONSTANTS = {
     "ITEM_KEY_CARD_2",
     "ITEM_KEY_CARD_3",
     "ITEM_POKE_BALL_KEY_ITEM",
+}
+
+LEGACY_OR_SOURCE_COLLISION_ITEM_CONSTANTS = {
+    "ITEM_ENIGMA_BERRY_OLD",
+    "ITEM_X_SP_DEF",
+    "ITEM_ODDISH_LEAF",
+    "ITEM_GRUBBY_HANKY",
+    "ITEM_UNIFORM",
+    "ITEM_SMELLY_SOCKS",
 }
 
 
@@ -403,6 +433,7 @@ def skip_expected_constant(constant: str) -> bool:
         or constant.endswith("_COUNT")
         or constant.startswith("ITEM_USE_")
         or constant in NON_REWARD_ITEM_CONSTANTS
+        or constant in LEGACY_OR_SOURCE_COLLISION_ITEM_CONSTANTS
     )
 
 
@@ -713,6 +744,10 @@ def compare(expected_path: Path, observed_path: Path, output_path: Path, fields:
             row["coverage_status"] = "UNKNOWN_REVIEW"
             row["reason"] = "non-reward/source bookkeeping constant excluded from loaded coverage hard-fail checks"
             row["confidence"] = "High"
+        elif kind == "item" and loaded_index is not None and is_tm_hm_expected(expected):
+            row["coverage_status"] = "UNKNOWN_REVIEW"
+            row["reason"] = "TM/HM item constants are delegated to tm_hm_coverage for loaded-manifest hard-fail checks"
+            row["confidence"] = "High"
         elif loaded_index is not None and not expected_loaded_match(expected, loaded_index, kind):
             row["coverage_status"] = "EXPECTED_NOT_LOADED"
             row["reason"] = "expected source constant absent from supplied loaded manifest"
@@ -880,6 +915,15 @@ def species_constant_candidate_keys(constant: str) -> set[str]:
 def tm_hm_constant_candidate_keys(value: str) -> set[str]:
     match = re.search(r"\b(?:ITEM_)?((?:TM|HM)\d{1,3})(?:\b|_)", value, flags=re.IGNORECASE)
     return {canonicalize(match.group(1).upper())} if match else set()
+
+
+def is_tm_hm_expected(row: dict[str, str]) -> bool:
+    constant = row.get("source_constant", "")
+    return (
+        row.get("is_tm", "").lower() == "yes"
+        or row.get("is_hm", "").lower() == "yes"
+        or bool(re.match(r"ITEM_(?:TM|HM)\d{1,3}(?:_|$)", constant))
+    )
 
 
 def source_id_from_row(row: dict[str, str], kind: str) -> str:
