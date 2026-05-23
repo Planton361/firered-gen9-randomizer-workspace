@@ -219,11 +219,11 @@ Observed labels are normalized before comparison with expected source constants.
 
 - Accents and typographic punctuation, such as `Flabébé` and `Farfetch’d`.
 - Shortened Species labels, such as `Squawkbily`, `Baculegion`, `Dudunsprce`, and selected Paradox names logged without spaces or underscores.
-- CamelCase or shortened item labels, such as `TinyMushroom`, `BrightPowder`, `DeepSeaScale`, `Nevermeltice`, `Unr. Teacup`, `Protec Pads`, `Ut. Umbrella`, Memory abbreviations, and Apricorn abbreviations.
+- CamelCase or shortened item labels, such as `TinyMushroom`, `BrightPowder`, `DeepSeaScale`, `Nevermeltice`, `Paralyz Heal`, `Marang Berry`, `HeavyDBoots`, `Auspicious-A`, `CharzarditeX`, `Bird Fossil`, `Wish Piece`, `Unr. Teacup`, `Protec Pads`, `Ut. Umbrella`, Memory abbreviations, Nectar abbreviations, and Apricorn abbreviations.
 
 Loaded-manifest comparison uses the same normalization layer. For Species, stable source/internal IDs are also accepted as loaded matches, so form keys such as `rotom_heat` do not become hard `EXPECTED_NOT_LOADED` rows when the manifest uses a base display label with the same internal ID. For Items, matching intentionally prefers canonical/name aliases over raw IDs because source item IDs and loaded manifest IDs may not always be comparable across local tables.
 
-Non-reward bookkeeping constants such as `ITEM_USE_*` are excluded from the expected reward item index. If an older expected TSV still contains such a row, compare mode does not promote it to a hard loaded-manifest failure.
+Non-reward bookkeeping constants such as `ITEM_USE_*`, key-item/system constants, free-space placeholders, and local Mega accessory placeholders are excluded from the expected reward item index. If an older expected TSV still contains such a row, compare mode does not promote it to a hard loaded-manifest failure.
 
 Trainer held items are parsed only from explicit Trainer Pokemon party entries with `Species@Item Lv...` format. Trainer-class labels such as `Black Belt` are not treated as held items unless they appear in that explicit item position.
 
@@ -231,7 +231,7 @@ Trainer held items are parsed only from explicit Trainer Pokemon party entries w
 
 TM/HM labels are counted when they appear in Shop, Pickup, Field, or explicit TM/HM log sections. A batch profile that does not randomize or log TM/HM slots will naturally leave most TM/HM rows as `EXPECTED_NOT_OBSERVED`.
 
-Expected labels such as `ITEM_HM06_ROCK_SMASH` and loaded labels such as `HM06` are treated as the same TM/HM slot during loaded-manifest comparison.
+Expected labels such as `ITEM_HM06_ROCK_SMASH`, `hm06_rock_smash`, `ITEM_HM08_ROCK_CLIMB`, and loaded labels such as `HM06` or `HM08` are matched by TM/HM number during loaded-manifest comparison.
 
 Do not treat TM/HM `EXPECTED_NOT_OBSERVED` as proof of missing TM/HM loading. It only means the current logs did not contain matching TM/HM observations.
 

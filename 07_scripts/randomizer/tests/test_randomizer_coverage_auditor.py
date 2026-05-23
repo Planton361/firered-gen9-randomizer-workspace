@@ -79,10 +79,17 @@ class RandomizerCoverageAuditorTest(unittest.TestCase):
             self.assertEqual("Vivillon", species["SPECIES_VIVILLON"]["form_family"])
             self.assertEqual("TM51", items["ITEM_TM51"]["display_name_guess"])
             self.assertNotIn("ITEM_USE_PARTY_MENU", items)
+            self.assertNotIn("ITEM_SS_TICKET", items)
+            self.assertNotIn("ITEM_ROOM_1_KEY", items)
+            self.assertNotIn("ITEM_FREE_SPACE1", items)
+            self.assertNotIn("ITEM_MEGA_CUFF", items)
+            self.assertNotIn("ITEM_KEY_CARD_1", items)
+            self.assertNotIn("ITEM_POKE_BALL_KEY_ITEM", items)
             self.assertEqual("yes", items["ITEM_TM51"]["is_tm"])
             self.assertEqual("yes", items["ITEM_HM01_CUT"]["is_hm"])
             self.assertIn("ITEM_TM51", tms)
             self.assertIn("ITEM_HM01_CUT", tms)
+            self.assertIn("ITEM_HM08_ROCK_CLIMB", tms)
 
     def test_parse_logs_reuses_shop_pickup_and_reads_species_sections(self):
         with tempfile.TemporaryDirectory(dir=local_test_root()) as temp_name:
@@ -139,6 +146,15 @@ class RandomizerCoverageAuditorTest(unittest.TestCase):
 
     def test_item_alias_normalization_maps_common_log_labels_to_expected(self):
         aliases = {
+            "Paralyz Heal": "paralyze_heal",
+            "Marang Berry": "maranga_berry",
+            "King’s Rock": "kings_rock",
+            "Upgrade": "up_grade",
+            "Adrenal Orb": "adrenaline_orb",
+            "HeavyDBoots": "heavy_duty_boots",
+            "Auspicious-A": "auspicious_armor",
+            "Malicious-A": "malicious_armor",
+            "G.Bottle Cap": "gold_bottle_cap",
             "TinyMushroom": "tiny_mushroom",
             "BrightPowder": "bright_powder",
             "DeepSeaScale": "deep_sea_scale",
@@ -147,6 +163,21 @@ class RandomizerCoverageAuditorTest(unittest.TestCase):
             "ThunderStone": "thunder_stone",
             "PrisonBottle": "prison_bottle",
             "Reins Unity": "reins_of_unity",
+            "PurpleNectar": "purple_nectar",
+            "YellowNectar": "yellow_nectar",
+            "CharzarditeX": "charizardite_x",
+            "CharzarditeY": "charizardite_y",
+            "Blastoisnite": "blastoisinite",
+            "Kangaskanite": "kangaskhanite",
+            "Aerodactlite": "aerodactylite",
+            "Houndoomnite": "houndoominite",
+            "MewtwoniteX": "mewtwonite_x",
+            "MewtwoniteY": "mewtwonite_y",
+            "Bird Fossil": "fossilized_bird",
+            "Fish Fossil": "fossilized_fish",
+            "Drake Fossil": "fossilized_drake",
+            "Dino Fossil": "fossilized_dino",
+            "Wish Piece": "wishing_piece",
             "A-Patch": "ability_patch",
             "A-Potion": "ability_potion",
             "Blk Augurite": "black_augurite",
@@ -334,7 +365,24 @@ Black Belt Koichi - Machop Lv10
             write_loaded_manifest(out, species_keys=[], item_keys=[], tm_hm_keys=[])
             (out / "items_loaded.tsv").write_text(
                 "canonical_key\tdisplay_name\tsource_internal_id\titem_family\tis_loaded\tis_tm\tis_hm\n"
+                "paralyz_heal\tParalyz Heal\t0\t\tyes\tno\tno\n"
+                "marang_berry\tMarang Berry\t0\tBerry\tyes\tno\tno\n"
+                "kings_rock\tKing’s Rock\t0\t\tyes\tno\tno\n"
+                "upgrade\tUpgrade\t0\t\tyes\tno\tno\n"
+                "adrenal_orb\tAdrenal Orb\t0\t\tyes\tno\tno\n"
+                "heavydboots\tHeavyDBoots\t0\t\tyes\tno\tno\n"
+                "auspicious_a\tAuspicious-A\t0\t\tyes\tno\tno\n"
+                "malicious_a\tMalicious-A\t0\t\tyes\tno\tno\n"
+                "gbottlecap\tG.Bottle Cap\t0\t\tyes\tno\tno\n"
                 "thunderstone\tThunderStone\t0\t\tyes\tno\tno\n"
+                "prisonbottle\tPrisonBottle\t0\t\tyes\tno\tno\n"
+                "reinsunity\tReins Unity\t0\t\tyes\tno\tno\n"
+                "purplenectar\tPurpleNectar\t0\tNectar\tyes\tno\tno\n"
+                "yellownectar\tYellowNectar\t0\tNectar\tyes\tno\tno\n"
+                "charzarditex\tCharzarditeX\t0\t\tyes\tno\tno\n"
+                "blastoisnite\tBlastoisnite\t0\t\tyes\tno\tno\n"
+                "bird_fossil\tBird Fossil\t0\t\tyes\tno\tno\n"
+                "wish_piece\tWish Piece\t0\t\tyes\tno\tno\n"
                 "fight_mem\tFight Mem.\t0\tMemory\tyes\tno\tno\n"
                 "apatch\tA-Patch\t0\t\tyes\tno\tno\n"
                 "blkaugurite\tBlk Augurite\t0\t\tyes\tno\tno\n",
@@ -342,7 +390,8 @@ Black Belt Koichi - Machop Lv10
             )
             (out / "tms_hms_loaded.tsv").write_text(
                 "canonical_key\tdisplay_name\tsource_internal_id\titem_family\tis_loaded\tis_tm\tis_hm\n"
-                "hm06\tHM06\t0\tHM\tyes\tno\tyes\n",
+                "hm06\tHM06\t0\tHM\tyes\tno\tyes\n"
+                "hm08\tHM08\t0\tHM\tyes\tno\tyes\n",
                 encoding="utf-8",
             )
 
@@ -350,11 +399,60 @@ Black Belt Koichi - Machop Lv10
 
             items = {row["canonical_key"]: row for row in read_tsv(out / "items_coverage.tsv")}
             tms = {row["canonical_key"]: row for row in read_tsv(out / "tm_hm_coverage.tsv")}
+            self.assertEqual("LOADED_NOT_OBSERVED", items["paralyze_heal"]["coverage_status"])
+            self.assertEqual("LOADED_NOT_OBSERVED", items["maranga_berry"]["coverage_status"])
+            self.assertEqual("LOADED_NOT_OBSERVED", items["kings_rock"]["coverage_status"])
+            self.assertEqual("LOADED_NOT_OBSERVED", items["up_grade"]["coverage_status"])
+            self.assertEqual("LOADED_NOT_OBSERVED", items["heavy_duty_boots"]["coverage_status"])
             self.assertEqual("LOADED_NOT_OBSERVED", items["thunder_stone"]["coverage_status"])
+            self.assertEqual("LOADED_NOT_OBSERVED", items["prison_bottle"]["coverage_status"])
+            self.assertEqual("LOADED_NOT_OBSERVED", items["reins_of_unity"]["coverage_status"])
+            self.assertEqual("LOADED_NOT_OBSERVED", items["purple_nectar"]["coverage_status"])
+            self.assertEqual("LOADED_NOT_OBSERVED", items["charizardite_x"]["coverage_status"])
+            self.assertEqual("LOADED_NOT_OBSERVED", items["blastoisinite"]["coverage_status"])
+            self.assertEqual("LOADED_NOT_OBSERVED", items["fossilized_bird"]["coverage_status"])
+            self.assertEqual("LOADED_NOT_OBSERVED", items["wishing_piece"]["coverage_status"])
             self.assertEqual("LOADED_NOT_OBSERVED", items["fighting_memory"]["coverage_status"])
             self.assertEqual("LOADED_NOT_OBSERVED", items["ability_patch"]["coverage_status"])
             self.assertEqual("LOADED_NOT_OBSERVED", items["black_augurite"]["coverage_status"])
             self.assertEqual("LOADED_NOT_OBSERVED", tms["hm06"]["coverage_status"])
+            self.assertEqual("LOADED_NOT_OBSERVED", tms["hm08"]["coverage_status"])
+
+    def test_old_non_reward_expected_rows_do_not_become_hard_failures(self):
+        with tempfile.TemporaryDirectory(dir=local_test_root()) as temp_name:
+            root = Path(temp_name)
+            out = root / ".local" / "coverage"
+            expected = {
+                field: ""
+                for field in auditor.ITEM_FIELDS
+            }
+            expected.update({
+                "canonical_key": "ss_ticket",
+                "source_constant": "ITEM_SS_TICKET",
+                "display_name_guess": "SS Ticket",
+                "item_id_or_source_id": "349",
+                "expected_source": "fixture",
+                "coverage_status": "UNKNOWN_REVIEW",
+                "confidence": "Medium",
+            })
+            write_tsv_rows(out / "items_expected.tsv", [expected], auditor.ITEM_FIELDS)
+            write_tsv_rows(out / "items_observed.tsv", [], auditor.OBSERVED_FIELDS)
+            (out / "items_loaded.tsv").write_text(
+                "canonical_key\tdisplay_name\tsource_internal_id\titem_family\tis_loaded\tis_tm\tis_hm\n",
+                encoding="utf-8",
+            )
+
+            rows = auditor.compare(
+                out / "items_expected.tsv",
+                out / "items_observed.tsv",
+                out / "items_coverage.tsv",
+                auditor.ITEM_FIELDS,
+                out / "items_loaded.tsv",
+                "item",
+            )
+
+            self.assertEqual("UNKNOWN_REVIEW", rows[0]["coverage_status"])
+            self.assertNotEqual("EXPECTED_NOT_LOADED", rows[0]["coverage_status"])
 
     def test_loaded_manifest_marks_loaded_not_observed_as_non_hard_status(self):
         with tempfile.TemporaryDirectory(dir=local_test_root()) as temp_name:
@@ -536,12 +634,38 @@ def write_source_fixture(root):
         "\n".join([
             "#define ITEM_NONE 0x0",
             "#define ITEM_POTION 0xD",
+            "#define ITEM_PARALYZE_HEAL 0x12",
+            "#define ITEM_MARANGA_BERRY 0xA2",
+            "#define ITEM_KINGS_ROCK 0xBB",
+            "#define ITEM_UP_GRADE 0xFC",
+            "#define ITEM_ADRENALINE_ORB 0x260",
+            "#define ITEM_HEAVY_DUTY_BOOTS 0x261",
+            "#define ITEM_AUSPICIOUS_ARMOR 0x262",
+            "#define ITEM_MALICIOUS_ARMOR 0x263",
+            "#define ITEM_GOLD_BOTTLE_CAP 0x264",
             "#define ITEM_TINY_MUSHROOM 0x56",
             "#define ITEM_BRIGHT_POWDER 0xB3",
             "#define ITEM_DEEP_SEA_SCALE 0xC4",
             "#define ITEM_BLACK_BELT 0xCF",
             "#define ITEM_ORAN_BERRY 0x8B",
             "#define ITEM_THUNDER_STONE 0x55",
+            "#define ITEM_PRISON_BOTTLE 0x190",
+            "#define ITEM_REINS_OF_UNITY 0x191",
+            "#define ITEM_PURPLE_NECTAR 0x192",
+            "#define ITEM_YELLOW_NECTAR 0x193",
+            "#define ITEM_CHARIZARDITE_X 0x194",
+            "#define ITEM_CHARIZARDITE_Y 0x195",
+            "#define ITEM_BLASTOISINITE 0x196",
+            "#define ITEM_KANGASKHANITE 0x197",
+            "#define ITEM_AERODACTYLITE 0x198",
+            "#define ITEM_HOUNDOOMINITE 0x199",
+            "#define ITEM_MEWTWONITE_X 0x19A",
+            "#define ITEM_MEWTWONITE_Y 0x19B",
+            "#define ITEM_FOSSILIZED_BIRD 0x19C",
+            "#define ITEM_FOSSILIZED_FISH 0x19D",
+            "#define ITEM_FOSSILIZED_DRAKE 0x19E",
+            "#define ITEM_FOSSILIZED_DINO 0x19F",
+            "#define ITEM_WISHING_PIECE 0x1A0",
             "#define ITEM_FIGHTING_MEMORY 0x205",
             "#define ITEM_ABILITY_PATCH 0x2C1",
             "#define ITEM_ABILITY_POTION 0x2C2",
@@ -554,7 +678,20 @@ def write_source_fixture(root):
             "#define ITEM_TM52 377",
             "#define ITEM_HM01_CUT 0x153",
             "#define ITEM_HM06_ROCK_SMASH 0x158",
+            "#define ITEM_HM08_ROCK_CLIMB 0x15A",
             "#define ITEM_USE_PARTY_MENU 0x9990",
+            "#define ITEM_SS_TICKET 0x180",
+            "#define ITEM_POKEBLOCK_CASE 0x181",
+            "#define ITEM_ROOM_1_KEY 0x182",
+            "#define ITEM_OAKS_PARCEL 0x183",
+            "#define ITEM_DOWSING_MACHINE 0x184",
+            "#define ITEM_FASHION_CASE 0x185",
+            "#define ITEM_QUEST_LOG 0x186",
+            "#define ITEM_COSTUME_BOX 0x187",
+            "#define ITEM_FREE_SPACE1 0x188",
+            "#define ITEM_MEGA_CUFF 0x189",
+            "#define ITEM_KEY_CARD_1 0x18A",
+            "#define ITEM_POKE_BALL_KEY_ITEM 0x18B",
             "#define ITEMS_COUNT 0x999",
         ]),
         encoding="utf-8",
