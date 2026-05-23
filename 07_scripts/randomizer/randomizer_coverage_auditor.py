@@ -590,17 +590,17 @@ def compare(expected_path: Path, observed_path: Path, output_path: Path, fields:
     for expected in expected_rows:
         observed = observed_by_key.get(expected["canonical_key"])
         row = dict(expected)
-        if observed:
+        if loaded_keys is not None and expected["canonical_key"] not in loaded_keys:
+            row["coverage_status"] = "EXPECTED_NOT_LOADED"
+            row["reason"] = "expected source constant absent from supplied loaded manifest"
+            row["confidence"] = "High"
+        elif observed:
             row["observed_count_total"] = observed["observed_count_total"]
             row["observed_sections"] = observed["observed_sections"]
             row["observed_runs_seen"] = observed["observed_runs_seen"]
             row["coverage_status"] = "EXPECTED_AND_OBSERVED"
             row["reason"] = "expected source constant was observed in parsed randomizer logs"
             row["confidence"] = merge_confidence(row.get("confidence", ""), observed.get("confidence", ""))
-        elif loaded_keys is not None and expected["canonical_key"] not in loaded_keys:
-            row["coverage_status"] = "EXPECTED_NOT_LOADED"
-            row["reason"] = "expected source constant absent from supplied loaded manifest"
-            row["confidence"] = "High"
         elif loaded_keys is not None:
             row["coverage_status"] = "LOADED_NOT_OBSERVED"
             row["reason"] = "loaded manifest contains expected row but batch logs did not observe it"
@@ -638,7 +638,14 @@ def observed_not_expected_row(observed: dict[str, str], fields: list[str]) -> di
 def load_manifest_keys(path: Path | None) -> set[str] | None:
     if path is None:
         return None
-    return {row["canonical_key"] for row in read_tsv(path)}
+    keys: set[str] = set()
+    for row in read_tsv(path):
+        if row.get("is_loaded", "yes").lower() not in {"yes", "true", "1"}:
+            continue
+        key = row.get("canonical_key") or row.get("display_name") or row.get("display_name_guess")
+        if key:
+            keys.add(canonicalize(key) if key != row.get("canonical_key") else key)
+    return keys
 
 
 def merge_confidence(left: str, right: str) -> str:
@@ -650,9 +657,13 @@ def merge_confidence(left: str, right: str) -> str:
 
 
 def compare_all(output_dir: Path, loaded_manifest_dir: Path | None = None) -> dict[str, list[dict[str, str]]]:
+    loaded_manifest_dir = loaded_manifest_dir or detect_loaded_manifest_dir(output_dir)
     loaded_species = loaded_manifest_dir / "species_loaded.tsv" if loaded_manifest_dir else None
     loaded_items = loaded_manifest_dir / "items_loaded.tsv" if loaded_manifest_dir else None
     loaded_tms = loaded_manifest_dir / "tms_hms_loaded.tsv" if loaded_manifest_dir else None
+    loaded_manifest_available = any(
+        path is not None and path.exists() for path in (loaded_species, loaded_items, loaded_tms)
+    )
 
     outputs = {
         "species_coverage.tsv": compare(
@@ -668,11 +679,21 @@ def compare_all(output_dir: Path, loaded_manifest_dir: Path | None = None) -> di
             output_dir / "tm_hm_coverage.tsv", ITEM_FIELDS, loaded_tms if loaded_tms and loaded_tms.exists() else None,
         ),
     }
-    write_summary(output_dir / "coverage_summary.md", outputs, loaded_manifest_dir is not None)
+    write_summary(output_dir / "coverage_summary.md", outputs, loaded_manifest_available)
     suspicious = suspicious_or_missing_rows(outputs)
     write_tsv(output_dir / "suspicious_or_missing.tsv", suspicious,
               ["scope", "canonical_key", "display_name_guess", "coverage_status", "reason", "confidence"])
     return outputs
+
+
+def detect_loaded_manifest_dir(output_dir: Path) -> Path | None:
+    expected_files = ["species_loaded.tsv", "items_loaded.tsv", "tms_hms_loaded.tsv"]
+    if any((output_dir / filename).exists() for filename in expected_files):
+        return output_dir
+    loaded_subdir = output_dir / "loaded-manifest"
+    if any((loaded_subdir / filename).exists() for filename in expected_files):
+        return loaded_subdir
+    return None
 
 
 def suspicious_or_missing_rows(outputs: dict[str, list[dict[str, str]]]) -> list[dict[str, str]]:
@@ -702,6 +723,18 @@ def suspicious_or_missing_rows(outputs: dict[str, list[dict[str, str]]]) -> list
 
 
 def write_summary(path: Path, outputs: dict[str, list[dict[str, str]]], loaded_manifest_available: bool) -> None:
+    hard_failures = sum(
+        1
+        for rows in outputs.values()
+        for row in rows
+        if row["coverage_status"] == "EXPECTED_NOT_LOADED"
+    )
+    review_only = sum(
+        1
+        for rows in outputs.values()
+        for row in rows
+        if row["coverage_status"] in {"LOADED_NOT_OBSERVED", "OBSERVED_NOT_EXPECTED", "EXPECTED_NOT_OBSERVED"}
+    )
     lines = [
         "# Randomizer Coverage Audit Summary",
         "",
@@ -717,13 +750,24 @@ def write_summary(path: Path, outputs: dict[str, list[dict[str, str]]], loaded_m
         "",
         "- `EXPECTED_AND_OBSERVED` means a source-derived expected row appeared in parsed log sections.",
         "- `EXPECTED_NOT_OBSERVED` is not a hard failure; random runs do not prove non-reachability.",
+        "- `EXPECTED_NOT_LOADED` is a hard failure candidate when a loaded manifest was supplied.",
+        "- `LOADED_NOT_OBSERVED` is not a hard failure; it means loaded but unseen in the parsed batch logs.",
         "- `OBSERVED_NOT_EXPECTED` is a review candidate because a log label did not match the source-derived index.",
     ]
     if loaded_manifest_available:
         lines.append("- Loaded-manifest statuses were enabled for supplied manifest files.")
     else:
         lines.append("- No loaded manifest was supplied, so `EXPECTED_NOT_LOADED` was not assigned.")
-    lines.extend(["", "## Counts", ""])
+    lines.extend([
+        "",
+        "## Hard Failure Boundary",
+        "",
+        f"- Hard failure candidates (`EXPECTED_NOT_LOADED`): {hard_failures}",
+        f"- Review-only/non-hard statuses: {review_only}",
+        "",
+        "## Counts",
+        "",
+    ])
     for filename, rows in outputs.items():
         counts: dict[str, int] = defaultdict(int)
         for row in rows:
@@ -784,6 +828,26 @@ def batch_run(args: argparse.Namespace) -> None:
     if not args.keep_raw:
         cleanup_files(raw_logs, raw_logs_dir, allowed_suffixes=LOG_SUFFIXES)
         cleanup_files(output_roms, raw_roms_dir, allowed_suffixes={".gba", ".gb", ".gbc", ".nds", ".cxi"})
+
+
+def export_loaded_manifest(args: argparse.Namespace) -> None:
+    output_dir = Path(args.output_dir)
+    ensure_local_output_dir(output_dir)
+    jar = Path(args.jar)
+    input_rom = Path(args.input_rom)
+    if not jar.is_file():
+        raise ValueError("UPR-FVX jar not found")
+    if not input_rom.is_file():
+        raise ValueError("input ROM path does not exist")
+    output_dir.mkdir(parents=True, exist_ok=True)
+    command = [
+        "java", "-jar", str(jar), "loaded-manifest",
+        "--input-rom", str(input_rom),
+        "--output-dir", str(output_dir),
+    ]
+    completed = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, check=False)
+    if completed.returncode != 0:
+        raise RuntimeError("UPR-FVX loaded-manifest export failed")
 
 
 def seed_for_run(strategy: str, seed_base: int, run_index: int) -> int:
@@ -881,6 +945,12 @@ def cmd_compare(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_export_loaded(args: argparse.Namespace) -> int:
+    export_loaded_manifest(args)
+    print("Wrote sanitized loaded manifest TSVs.")
+    return 0
+
+
 def cmd_batch_run(args: argparse.Namespace) -> int:
     output_dir = Path(args.output_dir)
     ensure_local_output_dir(output_dir)
@@ -933,9 +1003,15 @@ def build_parser() -> argparse.ArgumentParser:
     add_batch_args(batch)
     batch.set_defaults(func=cmd_batch_run)
 
+    loaded = subparsers.add_parser("export-loaded", help="Run local UPR-FVX ROM-load manifest export.")
+    add_common_output(loaded)
+    loaded.add_argument("--jar", required=True, help="Path to local UPR-FVX.jar.")
+    loaded.add_argument("--input-rom", required=True, help="Private input ROM path. Never written to summaries.")
+    loaded.set_defaults(func=cmd_export_loaded)
+
     compare_parser = subparsers.add_parser("compare", help="Compare expected and observed TSVs.")
     add_common_output(compare_parser)
-    compare_parser.add_argument("--loaded-manifest-dir", help="Optional future sanitized loaded-manifest TSV directory.")
+    compare_parser.add_argument("--loaded-manifest-dir", help="Optional sanitized loaded-manifest TSV directory.")
     compare_parser.set_defaults(func=cmd_compare)
 
     all_parser = subparsers.add_parser("all", help="Run build-expected, batch-run, parse, and compare.")

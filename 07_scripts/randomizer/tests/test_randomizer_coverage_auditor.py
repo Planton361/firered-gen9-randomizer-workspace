@@ -255,6 +255,77 @@ Black Belt Koichi - Machop Lv10
             suspicious_keys = {row["canonical_key"] for row in suspicious}
             self.assertNotIn("tm52", suspicious_keys)
 
+    def test_loaded_manifest_marks_expected_not_loaded_as_hard_failure(self):
+        with tempfile.TemporaryDirectory(dir=local_test_root()) as temp_name:
+            root = Path(temp_name)
+            write_source_fixture(root)
+            out = root / ".local" / "coverage"
+            logs = out / "raw-logs"
+            logs.mkdir(parents=True)
+            (logs / "run_0001.log").write_text(SAMPLE_LOG, encoding="utf-8")
+
+            auditor.build_expected(out, root)
+            auditor.parse_logs(logs, out)
+            write_loaded_manifest(out, species_keys=["bulbasaur"], item_keys=["tm51"], tm_hm_keys=["tm51"])
+            auditor.compare_all(out)
+
+            species = {row["canonical_key"]: row for row in read_tsv(out / "species_coverage.tsv")}
+            summary = (out / "coverage_summary.md").read_text(encoding="utf-8")
+            self.assertEqual("EXPECTED_NOT_LOADED", species["charmander"]["coverage_status"])
+            self.assertIn("Hard failure candidates (`EXPECTED_NOT_LOADED`):", summary)
+            self.assertNotIn("/home/anton/private", summary)
+
+    def test_loaded_manifest_marks_loaded_not_observed_as_non_hard_status(self):
+        with tempfile.TemporaryDirectory(dir=local_test_root()) as temp_name:
+            root = Path(temp_name)
+            write_source_fixture(root)
+            out = root / ".local" / "coverage"
+            logs = out / "raw-logs"
+            logs.mkdir(parents=True)
+            (logs / "run_0001.log").write_text(SAMPLE_LOG, encoding="utf-8")
+
+            auditor.build_expected(out, root)
+            auditor.parse_logs(logs, out)
+            write_loaded_manifest(
+                out,
+                species_keys=["bulbasaur", "charmander"],
+                item_keys=["tm51", "potion"],
+                tm_hm_keys=["tm51", "tm52"],
+            )
+            auditor.compare_all(out)
+
+            species = {row["canonical_key"]: row for row in read_tsv(out / "species_coverage.tsv")}
+            tms = {row["canonical_key"]: row for row in read_tsv(out / "tm_hm_coverage.tsv")}
+            summary = (out / "coverage_summary.md").read_text(encoding="utf-8")
+            self.assertEqual("LOADED_NOT_OBSERVED", species["charmander"]["coverage_status"])
+            self.assertEqual("LOADED_NOT_OBSERVED", tms["tm52"]["coverage_status"])
+            self.assertIn("`LOADED_NOT_OBSERVED` is not a hard failure", summary)
+            self.assertIn("Hard failure candidates (`EXPECTED_NOT_LOADED`):", summary)
+
+    def test_compare_ignores_private_path_columns_in_loaded_manifest(self):
+        with tempfile.TemporaryDirectory(dir=local_test_root()) as temp_name:
+            root = Path(temp_name)
+            write_source_fixture(root)
+            out = root / ".local" / "coverage"
+            logs = out / "raw-logs"
+            logs.mkdir(parents=True)
+            (logs / "run_0001.log").write_text(SAMPLE_LOG, encoding="utf-8")
+
+            auditor.build_expected(out, root)
+            auditor.parse_logs(logs, out)
+            write_loaded_manifest(
+                out,
+                species_keys=["bulbasaur", "charmander"],
+                item_keys=["tm51"],
+                tm_hm_keys=["tm51"],
+                include_private_column=True,
+            )
+            auditor.compare_all(out)
+
+            for filename in ["species_coverage.tsv", "items_coverage.tsv", "tm_hm_coverage.tsv",
+                             "coverage_summary.md", "suspicious_or_missing.tsv"]:
+                self.assertNotIn("/home/anton/private", (out / filename).read_text(encoding="utf-8"))
+
     def test_parse_logs_can_delete_raw_logs_only_after_success(self):
         with tempfile.TemporaryDirectory(dir=local_test_root()) as temp_name:
             temp_dir = Path(temp_name)
@@ -359,6 +430,29 @@ def write_source_fixture(root):
 def read_tsv(path):
     with path.open("r", encoding="utf-8", newline="") as handle:
         return list(csv.DictReader(handle, delimiter="\t"))
+
+
+def write_loaded_manifest(out, species_keys, item_keys, tm_hm_keys, include_private_column=False):
+    extra = "\tprivate_path" if include_private_column else ""
+    private_value = "\t/home/anton/private/input.gba" if include_private_column else ""
+    (out / "species_loaded.tsv").write_text(
+        "canonical_key\tdisplay_name\tsource_internal_id\tform_family\tis_loaded\tallowed\tbanned\tmechanic_gated"
+        + extra + "\n"
+        + "".join(f"{key}\t{key}\t1\t\tyes\tyes\tno\tno{private_value}\n" for key in species_keys),
+        encoding="utf-8",
+    )
+    (out / "items_loaded.tsv").write_text(
+        "canonical_key\tdisplay_name\tsource_internal_id\titem_family\tis_loaded\tallowed\tbanned\tmechanic_gated\tis_tm\tis_hm"
+        + extra + "\n"
+        + "".join(f"{key}\t{key}\t1\t\tyes\tyes\tno\tno\tno\tno{private_value}\n" for key in item_keys),
+        encoding="utf-8",
+    )
+    (out / "tms_hms_loaded.tsv").write_text(
+        "canonical_key\tdisplay_name\tsource_internal_id\titem_family\tis_loaded\tallowed\tbanned\tmechanic_gated\tis_tm\tis_hm"
+        + extra + "\n"
+        + "".join(f"{key}\t{key}\t1\tTM\tyes\tyes\tno\tno\tyes\tno{private_value}\n" for key in tm_hm_keys),
+        encoding="utf-8",
+    )
 
 
 def local_test_root():
