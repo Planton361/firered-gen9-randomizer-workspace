@@ -12,6 +12,7 @@ The auditor answers review questions like:
 - Which item and TM/HM constants exist in local CFRU/DPE source files?
 - Which Pokemon and items appear in sanitized Randomizer logs across batch runs?
 - Which observed labels do not match the source-derived expected index?
+- Which observed labels are only shortened or normalized in logs and can be mapped back to expected source constants?
 
 It does not prove full gameplay reachability. Random batch observations are useful evidence, but absence from logs is not the same as absence from the loaded ROM or from the game.
 
@@ -149,6 +150,22 @@ The log parser currently handles:
 - TM/HM labels such as `TM01`, `TM51`, and `HM01` when they appear in item or TM/HM sections.
 
 The parser is intentionally tolerant and review-oriented. If a future UPR-FVX log format changes, `OBSERVED_NOT_EXPECTED` rows should be reviewed before treating them as data bugs.
+
+## Alias Normalization
+
+Observed labels are normalized before comparison with expected source constants. This reduces review noise from:
+
+- Accents and typographic punctuation, such as `Flabébé` and `Farfetch’d`.
+- Shortened Species labels, such as `Squawkbily`, `Baculegion`, `Dudunsprce`, and selected Paradox names logged without spaces or underscores.
+- CamelCase or shortened item labels, such as `TinyMushroom`, `BrightPowder`, `DeepSeaScale`, `Nevermeltice`, `Unr. Teacup`, `Protec Pads`, `Ut. Umbrella`, Memory abbreviations, and Apricorn abbreviations.
+
+Trainer held items are parsed only from explicit Trainer Pokemon party entries with `Species@Item Lv...` format. Trainer-class labels such as `Black Belt` are not treated as held items unless they appear in that explicit item position.
+
+## TM/HM Coverage Caveat
+
+TM/HM labels are counted when they appear in Shop, Pickup, Field, or explicit TM/HM log sections. A batch profile that does not randomize or log TM/HM slots will naturally leave most TM/HM rows as `EXPECTED_NOT_OBSERVED`.
+
+Do not treat TM/HM `EXPECTED_NOT_OBSERVED` as proof of missing TM/HM loading. It only means the current logs did not contain matching TM/HM observations.
 
 ## Loaded Manifest Future Work
 
