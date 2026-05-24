@@ -183,6 +183,10 @@ ITEM_ALIAS_DISPLAY = {
     "ylwapricorn": "Yellow Apricorn",
 }
 
+ITEM_LOADED_ALIAS_DISPLAY = {
+    "safeguard": "Safety Goggles",
+}
+
 for _type_name, _display_name in {
     "bug": "Bug",
     "dark": "Dark",
@@ -346,6 +350,10 @@ def unown_punctuation_display(value: str) -> str:
 
 
 def canonical_key_for_loaded(value: str, kind: str) -> str:
+    if kind == "item":
+        display = ITEM_LOADED_ALIAS_DISPLAY.get(alias_lookup_key(value))
+        if display:
+            return canonicalize(display)
     return canonical_key_for_observed(value, "item" if kind == "tm_hm" else kind)
 
 
