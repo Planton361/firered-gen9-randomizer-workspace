@@ -1,3 +1,14 @@
+# Session update - CFRU Smart AI source-port map
+
+- Branch: `analysis/cfru-runtime-options-map`.
+- Added `01_docs/analysis/cfru-smart-ai-source-port-map.md`.
+- Scope: documentation-only source-port map for a future Smart Trainer AI option that does not set `VAR_GAME_DIFFICULTY` to Hard or Expert.
+- Key finding: the cleanest isolatable CFRU AI behavior is the Hard/Expert trainer branch in `GetAIFlags`, which adds `AI_SCRIPT_SEMI_SMART` when a trainer does not already have `AI_SCRIPT_CHECK_GOOD_MOVE`.
+- Recommendation: prefer a future `VAR_TRAINER_AI_MODE` if tiering is possible, or `FLAG_SMART_TRAINER_AI` for a single binary toggle; keep wild AI separate from trainer AI.
+- Non-goal documented: do not port trainer IV/EV/friendship/PP buffs, level scaling, bag or player-move restrictions, battle-rule changes, wild/raid construction changes, or Expert anti-cheese into the baseline Smart Trainer AI option.
+- Known dirty CFRU submodule state remains local and unmodified. No `02_external/**` changes were made, staged, reset, stashed or committed.
+- No ROMs, saves, emulator states, builds, tool binaries, private paths, secrets, tokens or `.env` files were read or documented.
+
 # Session update - CFRU Smart AI only design
 
 - Branch: `analysis/cfru-runtime-options-map`.
