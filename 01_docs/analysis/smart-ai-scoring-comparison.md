@@ -6,6 +6,8 @@ Stand: 2026-05-24
 
 Der lokale Smoke-Befund, dass CFRU Smart Trainer AI mit `AI_SCRIPT_CHECK_GOOD_MOVE` haeufig Sand Attack oder andere Status-/Utility-Moves nutzt, ist source-backed plausibel.
 
+Follow-up `01_docs/analysis/smart-ai-patch-source-verification.md` bestaetigt zusaetzlich source-backed: der tom-overton FireRed/LeafGreen Smart-AI-Source-Branch aendert die Battle-AI-Scoring-Scripts nicht. Der funktionale Patch erweitert Trainer-`aiFlags` in `src/data/trainers.h` auf die klassische Gen3-Kombination `AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY`.
+
 Die wichtigste Abweichung: NatDex/Ironmon `0x07` ist nicht semantisch identisch mit CFRU `AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_SEMI_SMART | AI_SCRIPT_CHECK_GOOD_MOVE`.
 
 - NatDex/Ironmon `0x07` setzt in der lokalen NatDex-FireRed-Quelle die klassischen Gen3-Scripts `AI_SCRIPT_CHECK_BAD_MOVE`, `AI_SCRIPT_CHECK_VIABILITY` und `AI_SCRIPT_TRY_TO_FAINT`.

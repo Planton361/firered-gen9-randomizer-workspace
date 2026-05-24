@@ -6,6 +6,7 @@ Stand: 2026-05-24
 
 Der source-backed Kern der Ironmon/NatDex-Smart-AI-Variante ist kein CFRU-Difficulty-Modus, sondern ein Trainer-AI-Flag-Upgrade:
 
+- Follow-up `01_docs/analysis/smart-ai-patch-source-verification.md` hat den oeffentlichen `tom-overton/pokefirered` Branch `smart-ai` per GitHub Web/API source-backed geprueft: der funktionale Commit aendert nur `src/data/trainers.h` und erweitert Trainer-`aiFlags` auf `AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY`.
 - Die öffentliche Super-Kaizo-IronMON-Doku beschreibt Smart AI als Regel/Patch-Ziel für alle Trainer und verweist zusätzlich auf einen Smart-AI-Randomizer.
 - Die lokal vorhandene CyanSMP64-NatDex-Randomizer-Quelle implementiert `Smart AI Mode` fuer Gen3, indem sie beim Schreiben jedes Trainerdatensatzes das AI-Flag-Byte mit `0x07` verodert.
 - In der lokalen CyanSMP64-FireRed-NatDex-Quelle entsprechen diese drei Bits `AI_SCRIPT_CHECK_BAD_MOVE`, `AI_SCRIPT_CHECK_VIABILITY` und `AI_SCRIPT_TRY_TO_FAINT`.
@@ -17,7 +18,7 @@ Damit ist unser CFRU-Ansatz `FLAG_SMART_TRAINER_AI` konzeptionell nah, solange e
 
 | Variante | Quelle | Source-backed Befund | Risiko / Grenze |
 |---|---|---|---|
-| Alter BPS/ROM-Patch | `https://github.com/PyroMikeGit/SuperKaizoIronMON` und Release-Seiten | Oeffentliche Regeln sagen, dass jeder Trainer Smart AI hat und fuer FRLG ein ROM-Patch existiert. | BPS/ROM-Patches wurden nicht heruntergeladen, angewendet oder byteweise analysiert. Exakte Patch-Diffs bleiben unbewiesen. |
+| Alter BPS/ROM-Patch | `https://github.com/PyroMikeGit/SuperKaizoIronMON` und Release-Seiten; `https://github.com/tom-overton/pokefirered/tree/smart-ai` | Oeffentliche Regeln sagen, dass jeder Trainer Smart AI hat und fuer FRLG ein ROM-Patch existiert. Der tom-overton Source-Branch zeigt als funktionale Code-Aenderung nur Trainer-`aiFlags`. | BPS/ROM-Patches wurden nicht heruntergeladen, angewendet oder byteweise analysiert. |
 | Smart AI Randomizer | `https://github.com/PyroMikeGit/SuperKaizoIronMON/releases/tag/smart-ai-v2` | Release beschreibt einen Randomizer, der Smart AI fuer Trainer ohne separaten Patch anwenden kann; Gen6/7 und NatDex werden oeffentlich erwaehnt. | Release-Artefakte wurden nicht heruntergeladen. Der lokale source-backed Implementierungsbeleg kommt aus der CyanSMP64-NatDex-Randomizer-Quelle. |
 | NatDex-kompatibler Randomizer | `02_external/references/cyansmp64-upr-zx-natdex/**` | GUI-Text benennt `Smart AI Mode`; Gen3-Schreibpfad setzt `rom[trOffset + (entryLen - 12)] |= 0x07`. | Setting-Name im Code ist legacy `swapTrainerMegaEvos`; GUI-Text/Tooltip nutzen ihn als Smart AI Mode. |
 | FireRed AI-Flag-Semantik | `02_external/references/cyansmp64-pokefirered-natdex/**` | Trainerdaten besitzen `aiFlags`; Battle-AI laedt `gTrainers[gTrainerBattleOpponent_A].aiFlags`; Bits 0-2 sind Bad-Move-Check, Viability-Check, Try-to-Faint. | Das ist die NatDex/pret-nahe Gen3-Semantik, nicht automatisch identisch mit CFRU-Scriptnamen. |
@@ -51,8 +52,7 @@ Die oeffentlichen Seiten beweisen damit das Ziel und den Workflow, aber nicht al
 ## Was nicht source-backed bewiesen ist
 
 - Die BPS/ROM-Patches wurden nicht heruntergeladen, nicht angewendet und nicht byteweise verglichen.
-- Der exakte alte FireRed-v1.0/v1.1-BPS-Diff ist in diesem Arbeitsblock nicht bewiesen.
-- Die oeffentliche `tom-overton/pokefirered`-Branch `smart-ai` wurde nur als Web-Referenz geprueft, nicht geklont oder lokal diff-geprueft.
+- Der exakte alte FireRed-v1.0/v1.1-IPS/BPS-Diff ist in diesem Arbeitsblock nicht bewiesen.
 - Es ist nicht bewiesen, dass alle historischen Smart-AI-Patchvarianten exakt dieselbe `0x07`-Strategie verwenden.
 - Es ist nicht bewiesen, dass die Super-Kaizo-Regeln als Ganzes nur Smart AI betreffen. Die Regel-Doku enthaelt zusaetzliche Challenge-Regeln; diese sind aber Regelwerk/Setup, nicht automatisch Smart-AI-Patchlogik.
 
