@@ -6,7 +6,7 @@ Stand: 2026-05-24
 
 Der source-backed Kern der Ironmon/NatDex-Smart-AI-Variante ist kein CFRU-Difficulty-Modus, sondern ein Trainer-AI-Flag-Upgrade:
 
-- Die oeffentliche Super-Kaizo-IronMON-Doku beschreibt Smart AI als Regel/Patch-Ziel fuer alle Trainer und verweist zusaetzlich auf einen Smart-AI-Randomizer.
+- Die öffentliche Super-Kaizo-IronMON-Doku beschreibt Smart AI als Regel/Patch-Ziel für alle Trainer und verweist zusätzlich auf einen Smart-AI-Randomizer.
 - Die lokal vorhandene CyanSMP64-NatDex-Randomizer-Quelle implementiert `Smart AI Mode` fuer Gen3, indem sie beim Schreiben jedes Trainerdatensatzes das AI-Flag-Byte mit `0x07` verodert.
 - In der lokalen CyanSMP64-FireRed-NatDex-Quelle entsprechen diese drei Bits `AI_SCRIPT_CHECK_BAD_MOVE`, `AI_SCRIPT_CHECK_VIABILITY` und `AI_SCRIPT_TRY_TO_FAINT`.
 - Es gibt in den geprueften Quellen keinen Beleg, dass dieser Smart-AI-Randomizer Trainer-Level, IV/EV, Friendship, PP, Bag-Regeln, Spieler-Move-Restriktionen, Wild/Raid-AI oder CFRU-Battle-Rules veraendert.
@@ -19,7 +19,7 @@ Damit ist unser CFRU-Ansatz `FLAG_SMART_TRAINER_AI` konzeptionell nah, solange e
 |---|---|---|---|
 | Alter BPS/ROM-Patch | `https://github.com/PyroMikeGit/SuperKaizoIronMON` und Release-Seiten | Oeffentliche Regeln sagen, dass jeder Trainer Smart AI hat und fuer FRLG ein ROM-Patch existiert. | BPS/ROM-Patches wurden nicht heruntergeladen, angewendet oder byteweise analysiert. Exakte Patch-Diffs bleiben unbewiesen. |
 | Smart AI Randomizer | `https://github.com/PyroMikeGit/SuperKaizoIronMON/releases/tag/smart-ai-v2` | Release beschreibt einen Randomizer, der Smart AI fuer Trainer ohne separaten Patch anwenden kann; Gen6/7 und NatDex werden oeffentlich erwaehnt. | Release-Artefakte wurden nicht heruntergeladen. Der lokale source-backed Implementierungsbeleg kommt aus der CyanSMP64-NatDex-Randomizer-Quelle. |
-| NatDex-kompatibler Randomizer | `02_external/references/cyansmp64-upr-zx-natdex/**` | GUI-Text benennt `Smart AI Mode`; Gen3-Schreibpfad setzt `rom[trOffset + (entryLen - 12)] |= 0x07`. | Setting-Name im Code ist legacy `swapTrainerMegaEvos`; GUI-Text/Tooltip repurposen ihn als Smart AI Mode. |
+| NatDex-kompatibler Randomizer | `02_external/references/cyansmp64-upr-zx-natdex/**` | GUI-Text benennt `Smart AI Mode`; Gen3-Schreibpfad setzt `rom[trOffset + (entryLen - 12)] |= 0x07`. | Setting-Name im Code ist legacy `swapTrainerMegaEvos`; GUI-Text/Tooltip nutzen ihn als Smart AI Mode. |
 | FireRed AI-Flag-Semantik | `02_external/references/cyansmp64-pokefirered-natdex/**` | Trainerdaten besitzen `aiFlags`; Battle-AI laedt `gTrainers[gTrainerBattleOpponent_A].aiFlags`; Bits 0-2 sind Bad-Move-Check, Viability-Check, Try-to-Faint. | Das ist die NatDex/pret-nahe Gen3-Semantik, nicht automatisch identisch mit CFRU-Scriptnamen. |
 
 ## Was oeffentlich dokumentiert ist
@@ -70,7 +70,7 @@ Nicht belegt als Smart-AI-spezifische Aenderung:
 - Wild-AI oder Raid-AI
 - Battle-Rules wie Singles/Doubles, Switch-Mode oder Item-Verbote
 
-Wichtig: Der Gen3-Handler schreibt im selben `setTrainers`-Pfad auch Trainerparties, wenn andere Randomizer-Einstellungen Trainerdaten veraendern. Der Smart-AI-Zweig selbst ist aber das `0x07`-OR auf dem AI-Flag-Byte.
+Wichtig: Der Gen3-Handler schreibt im selben `setTrainers`-Pfad auch Trainerparties, wenn andere Randomizer-Einstellungen Trainerdaten verändern. Der Smart-AI-Zweig selbst ist aber das `0x07`-OR auf dem AI-Flag-Byte.
 
 ## Move-Auswahl, Switching, Items und Regeln
 

@@ -44,11 +44,11 @@ Arbeitsblock: `analysis/ironmon-smart-ai-patch-map`.
 
 | Bereich | Quelle | URL / lokaler Pfad | Zweck | Read-only-Bewertung | Status |
 |---|---|---|---|---|---|
-| Ironmon Regeln / Patches | PyroMikeGit/SuperKaizoIronMON | https://github.com/PyroMikeGit/SuperKaizoIronMON | Oeffentliche Super-Kaizo-IronMON-Regeln, Smart-AI-Patch-/Randomizer-Hinweise und Release-Links | read-only Web-Pruefung; keine Patch-/Release-Downloads | dokumentiert |
-| Ironmon Smart AI Randomizer | Smart AI Randomizer v2 Release | https://github.com/PyroMikeGit/SuperKaizoIronMON/releases/tag/smart-ai-v2 | Oeffentliche Release-Beschreibung fuer Smart-AI-Randomizer und NatDex-Hinweis | read-only Web-Pruefung; keine Assets heruntergeladen | dokumentiert |
-| FireRed Smart-AI Source Pointer | tom-overton/pokefirered `smart-ai` | https://github.com/tom-overton/pokefirered/tree/smart-ai | Oeffentlicher Source-Pointer fuer historische FireRed-Smart-AI-Arbeit | read-only Web-Pruefung; nicht geklont, nicht gebaut | offen / nicht lokal verifiziert |
-| NatDex Smart AI Randomizer | CyanSMP64 UPR-ZX NatDex | `02_external/references/cyansmp64-upr-zx-natdex` | Lokaler source-backed Beleg: Gen3 Smart AI Mode setzt Trainer-AI-Flag-Byte per `|= 0x07` | read-only Submodule; keine Aenderungen | dokumentiert |
-| NatDex FireRed AI-Flags | CyanSMP64 FireRed NatDex | `02_external/references/cyansmp64-pokefirered-natdex` | Lokaler source-backed Beleg fuer `aiFlags` und Bits 0-2 in Battle-AI | read-only Submodule; keine Aenderungen | dokumentiert |
+| Ironmon Regeln / Patches | PyroMikeGit/SuperKaizoIronMON | https://github.com/PyroMikeGit/SuperKaizoIronMON | Öffentliche Super-Kaizo-IronMON-Regeln, Smart-AI-Patch-/Randomizer-Hinweise und Release-Links | read-only Web-Prüfung; keine Patch-/Release-Downloads | dokumentiert |
+| Ironmon Smart AI Randomizer | Smart AI Randomizer v2 Release | https://github.com/PyroMikeGit/SuperKaizoIronMON/releases/tag/smart-ai-v2 | Öffentliche Release-Beschreibung für Smart-AI-Randomizer und NatDex-Hinweis | read-only Web-Prüfung; keine Assets heruntergeladen | dokumentiert |
+| FireRed Smart-AI Source Pointer | tom-overton/pokefirered `smart-ai` | https://github.com/tom-overton/pokefirered/tree/smart-ai | Öffentlicher Source-Pointer für historische FireRed-Smart-AI-Arbeit | read-only Web-Prüfung; nicht geklont, nicht gebaut | offen / nicht lokal verifiziert |
+| NatDex Smart AI Randomizer | CyanSMP64 UPR-ZX NatDex | `02_external/references/cyansmp64-upr-zx-natdex` | Lokaler source-backed Beleg: Gen3 Smart AI Mode setzt Trainer-AI-Flag-Byte per `|= 0x07` | read-only Submodule; keine Änderungen | dokumentiert |
+| NatDex FireRed AI-Flags | CyanSMP64 FireRed NatDex | `02_external/references/cyansmp64-pokefirered-natdex` | Lokaler source-backed Beleg für `aiFlags` und Bits 0-2 in Battle-AI | read-only Submodule; keine Änderungen | dokumentiert |
 
 
 ## Read-only-Ergebnis 2026-05-10
