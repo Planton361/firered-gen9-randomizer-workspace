@@ -6,7 +6,7 @@ Stand: 2026-05-24
 
 Der source-backed Kern der Ironmon/NatDex-Smart-AI-Variante ist kein CFRU-Difficulty-Modus, sondern ein Trainer-AI-Flag-Upgrade:
 
-- Die oeffentliche Super-Kaizo-IronMON-Doku beschreibt Smart AI als Regel/Patch-Ziel fuer alle Trainer und verweist zusaetzlich auf einen Smart-AI-Randomizer.
+- Die öffentliche Super-Kaizo-IronMON-Doku beschreibt Smart AI als Regel/Patch-Ziel für alle Trainer und verweist zusätzlich auf einen Smart-AI-Randomizer.
 - Die lokal vorhandene CyanSMP64-NatDex-Randomizer-Quelle implementiert `Smart AI Mode` fuer Gen3, indem sie beim Schreiben jedes Trainerdatensatzes das AI-Flag-Byte mit `0x07` verodert.
 - In der lokalen CyanSMP64-FireRed-NatDex-Quelle entsprechen diese drei Bits `AI_SCRIPT_CHECK_BAD_MOVE`, `AI_SCRIPT_CHECK_VIABILITY` und `AI_SCRIPT_TRY_TO_FAINT`.
 - Es gibt in den geprueften Quellen keinen Beleg, dass dieser Smart-AI-Randomizer Trainer-Level, IV/EV, Friendship, PP, Bag-Regeln, Spieler-Move-Restriktionen, Wild/Raid-AI oder CFRU-Battle-Rules veraendert.
