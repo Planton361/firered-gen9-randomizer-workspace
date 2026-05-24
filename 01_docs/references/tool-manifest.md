@@ -1,3 +1,12 @@
+# Tool Manifest Update - 2026-05-24 - CFRU Smart Trainer AI v2 utility-spam reduction
+
+- CFRU fork base branch: `fix/cfru-smart-trainer-ai-v2-reduce-utility-spam`.
+- Workspace submodule `02_external/CFRU-expansion` now pins CFRU commit `992d3dc6a8db33b3c633dd4d504c40fb6efe37d1`.
+- Scope: reduces the project-local `FLAG_SMART_TRAINER_AI` trainer-only `GetAIFlags` hook from `AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_SEMI_SMART | AI_SCRIPT_CHECK_GOOD_MOVE` to `AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_SEMI_SMART`.
+- Status impact: v2 keeps Normal Difficulty and tests a more conservative CFRU-native Smart Trainer AI path after v1 local smoke showed utility/Accuracy-drop spam.
+- Boundary: no `VAR_GAME_DIFFICULTY`, wild/raid AI, trainer IV/EV/friendship/PP, level-scaling, bag/move restriction, battle-rule, Option Menu, Settings NPC, DPE or UPR-FVX code change was included.
+- Safety: no ROM/save/output/log artifact committed, no private path/ROM hash/full log/screenshot documented and no build artifact committed.
+
 # Tool Manifest Update - 2026-05-24 - CFRU Smart Trainer AI smoke confirmation
 
 - CFRU fork base branch: `feature/cfru-smart-trainer-ai-smoke-script`.

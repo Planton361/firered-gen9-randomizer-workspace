@@ -1,3 +1,14 @@
+# Session update - CFRU Smart Trainer AI v2 utility-spam reduction
+
+- Branch: `fix/cfru-smart-trainer-ai-v2-reduce-utility-spam`.
+- CFRU commit: `992d3dc6a8db33b3c633dd4d504c40fb6efe37d1` (`fix: reduce smart trainer ai utility spam`).
+- Scope: reduced only the `FLAG_SMART_TRAINER_AI` hook in CFRU `GetAIFlags`.
+- CFRU v1 was technically active in local smoke, but showed utility/Accuracy-drop spam. Sanitized local observation: an opposing Pidgey/Taubsi used Sand Attack/Sandwirbel four times in a row despite Tackle being available.
+- CFRU v2 changes the trainer flag uplift from `AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_SEMI_SMART | AI_SCRIPT_CHECK_GOOD_MOVE` to `AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_SEMI_SMART`.
+- Behavior boundary: no `VAR_GAME_DIFFICULTY`, wild/raid AI, trainer IV/EV/friendship/PP, level-scaling, bag/move restriction, battle-rule, Option Menu, Settings NPC, or `build_pokemon.c` change was made.
+- Documentation updated in `01_docs/analysis/smart-ai-scoring-comparison.md` and `08_tests/randomizer/cfru-smart-trainer-ai-smoke-plan.md` so the next smoke targets conservative CFRU-native Smart Trainer AI without `CHECK_GOOD_MOVE`.
+- Safety boundary: no ROMs, saves, emulator states, builds, logs, screenshots, tool binaries, private paths, hashes, secrets, tokens or `.env` data were read or documented.
+
 # Session update - Smart AI move scoring comparison
 
 - Branch: `analysis/smart-ai-scoring-comparison`.
