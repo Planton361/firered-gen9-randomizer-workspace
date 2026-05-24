@@ -1,3 +1,13 @@
+# Session update - CFRU Smart AI only design
+
+- Branch: `analysis/cfru-runtime-options-map`.
+- Added `01_docs/analysis/cfru-smart-ai-only-design.md`.
+- Scope: documentation-only follow-up explaining why CFRU `VAR_GAME_DIFFICULTY` is too invasive to label as Smart AI for the Randomizer/Ironmon target.
+- Key finding: the true AI hooks are mainly `GetAIFlags`, `OpponentHandleChooseMove`, `WildMonIsSmart`, `ShouldDoAIShiftSwitch`, switch prediction, and Expert anti-cheese helpers; the same runtime difficulty also changes trainer IV/EV/friendship/PP, level scaling, bag/move restrictions, battle rules, wild encounters, and raid behavior.
+- Recommendation: keep runtime difficulty Normal for the baseline randomizer profile unless a deliberate Hard-mode profile is requested; design any "Smart AI only" behavior as a separate future CFRU source-port with trainer and wild controls separated.
+- Known dirty CFRU submodule state remains local and unmodified. No `02_external/**` changes were made, staged, reset, stashed or committed.
+- No ROMs, saves, emulator states, builds, tool binaries, private paths, secrets, tokens or `.env` files were read or documented.
+
 # Session update - CFRU game difficulty map
 
 - Branch: `analysis/cfru-runtime-options-map`.
