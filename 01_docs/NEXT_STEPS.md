@@ -1,3 +1,19 @@
+# Next steps update - CFRU Smart Trainer AI runtime flag
+
+- Review the CFRU v1 implementation of `FLAG_SMART_TRAINER_AI 0xA0E` on branch `feature/cfru-smart-trainer-ai-mode`.
+- CFRU source commit: `eb1f3bff3fef83b46999e0513a7598b6bde601b8`.
+- Next integration decision: how scripts, an NPC, option menu, or randomizer profile should set/clear the flag. No UI or NPC wiring exists yet.
+- Test focus: compare Normal difficulty with and without `FLAG_SMART_TRAINER_AI`, confirming trainer AI improves while trainer IVs, EVs, friendship, PP, levels, wild/raid behavior, bag access, player move restrictions, battle rules, Expert anti-cheese and shift-switch behavior remain unchanged.
+- Watch specifically for `AI_SCRIPT_CHECK_GOOD_MOVE` side effects, because v1 intentionally chooses NatDex/Ironmon `0x07` closeness over the weaker `AI_SCRIPT_SEMI_SMART`-only uplift.
+
+# Next steps update - CFRU Smart AI flag mapping
+
+- Treat `01_docs/analysis/cfru-smart-ai-source-port-map.md` as updated with the CFRU-side `0x07` mapping.
+- If implementing an Ironmon/NatDex-close v1, keep `VAR_GAME_DIFFICULTY` Normal and add only trainer `GetAIFlags` behavior equivalent to `AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_SEMI_SMART | AI_SCRIPT_CHECK_GOOD_MOVE`.
+- Do not include `AI_SCRIPT_ROAMING`, `AI_SCRIPT_SAFARI`, `AI_SCRIPT_FIRST_BATTLE`, wild/raid smart paths, shift-switch prediction, Expert anti-cheese, trainer IV/EV/friendship/PP buffs, level scaling, player restrictions or battle-rule changes in v1.
+- If choosing the more conservative CFRU-native path, document clearly that `AI_SCRIPT_SEMI_SMART` alone is intentionally weaker than the NatDex/Ironmon `0x07` model.
+- Before implementation, confirm whether the branch should import or wait for the separate `ironmon-smart-ai-patch-map.md` documentation PR, because that file is not currently present on this feature branch.
+
 # Next steps update - CFRU Smart AI source-port map
 
 - Treat `01_docs/analysis/cfru-smart-ai-source-port-map.md` as the current source-backed map for a future Smart Trainer AI only source-port.

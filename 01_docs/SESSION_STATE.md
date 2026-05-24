@@ -1,3 +1,22 @@
+# Session update - CFRU Smart Trainer AI runtime flag
+
+- Branch: `feature/cfru-smart-trainer-ai-mode`.
+- Implemented v1 Smart Trainer AI in CFRU source with project-local `FLAG_SMART_TRAINER_AI 0xA0E`.
+- CFRU commit: `eb1f3bff3fef83b46999e0513a7598b6bde601b8` (`feat: add smart trainer ai runtime flag`).
+- Code scope: `src/config.h` defines the runtime flag; `src/Battle_AI/ai_master.c` adds `AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_SEMI_SMART | AI_SCRIPT_CHECK_GOOD_MOVE` to trainer battle AI flags when the flag is set.
+- Intended behavior: close to NatDex/Ironmon `aiFlags |= 0x07`, while leaving `VAR_GAME_DIFFICULTY` unchanged and avoiding trainer-build, level-scaling, wild/raid, bag/move restriction, battle-rule, Expert anti-cheese and shift-switch changes.
+- Documentation updated in `01_docs/analysis/cfru-smart-ai-source-port-map.md`; the flag currently has no UI/NPC/option-menu/randomizer-profile wiring.
+- Risk to test: `AI_SCRIPT_CHECK_GOOD_MOVE` activates stronger CFRU AI paths than `AI_SCRIPT_SEMI_SMART` alone, so v1 needs focused battle smoke before broader use.
+
+# Session update - CFRU Smart AI flag mapping
+
+- Branch: `feature/cfru-smart-trainer-ai-mode`.
+- Updated `01_docs/analysis/cfru-smart-ai-source-port-map.md` with the CFRU-side mapping for the NatDex/Ironmon `0x07` Smart-AI finding.
+- Key finding: CFRU does not expose `AI_SCRIPT_CHECK_VIABILITY` and `AI_SCRIPT_TRY_TO_FAINT` as runtime battle-AI script names. Runtime CFRU bits 0, 1 and 2 are `AI_SCRIPT_CHECK_BAD_MOVE`, `AI_SCRIPT_SEMI_SMART`, and `AI_SCRIPT_CHECK_GOOD_MOVE`.
+- Recommendation: for closest NatDex/Ironmon `0x07` behavior, v1 should OR trainer flags with `AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_SEMI_SMART | AI_SCRIPT_CHECK_GOOD_MOVE`; `AI_SCRIPT_SEMI_SMART` alone remains a safer CFRU-native uplift but is not the closest `0x07` equivalent.
+- Boundary: no `02_external/**` files were changed. No ROMs, saves, builds, emulator states, tool binaries, external downloads, resets, stashes, cleans or checkouts were used.
+- Note: `01_docs/analysis/ironmon-smart-ai-patch-map.md` was not present on this feature branch, so the mapping used the user-provided `0x07` context plus local CFRU source.
+
 # Session update - CFRU Smart AI source-port map
 
 - Branch: `analysis/cfru-runtime-options-map`.

@@ -1,3 +1,12 @@
+# Tool Manifest Update - 2026-05-24 - CFRU Smart Trainer AI runtime flag
+
+- CFRU fork base branch: `feature/cfru-smart-trainer-ai-mode`.
+- Workspace submodule `02_external/CFRU-expansion` now pins CFRU commit `eb1f3bff3fef83b46999e0513a7598b6bde601b8`.
+- Scope: adds project-local runtime flag `FLAG_SMART_TRAINER_AI 0xA0E` and a trainer-only `GetAIFlags` hook that ORs trainer AI flags with `AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_SEMI_SMART | AI_SCRIPT_CHECK_GOOD_MOVE`.
+- Status impact: v1 Smart Trainer AI only is source-available for scripts or later integration wiring; no UI, NPC, option-menu or randomizer-profile toggle is included.
+- Boundary: `VAR_GAME_DIFFICULTY` remains unchanged; no trainer IV/EV/friendship/PP, level-scaling, wild/raid AI, bag/move restriction, battle-rule, Expert anti-cheese or shift-switch logic was added.
+- Safety: no ROM/save/output/log artifact committed, no private path/ROM hash/full log/screenshot documented and no DPE or UPR-FVX code change.
+
 # Tool Manifest Update - 2026-05-20 - Gen Limit Special Form Mechanic Item final smoke
 
 - UPR-FVX fork base branch: `compat/firered-gen9-cfru-dpe`.
