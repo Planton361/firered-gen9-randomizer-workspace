@@ -1,3 +1,15 @@
+# Session update - CFRU game difficulty map
+
+- Branch: `analysis/cfru-runtime-options-map`.
+- Added `01_docs/analysis/cfru-game-difficulty-map.md`.
+- Scope: source-backed documentation of CFRU `VAR_GAME_DIFFICULTY 0x5157` effects across Normal/Easy/Hard/Expert and comparison against a narrower Ironmon/NatDex Smart-AI-style patch.
+- Key finding: `VAR_GAME_DIFFICULTY` is broader than Smart AI. It affects battle AI, trainer IV/EV/friendship/PP strength, trainer level scaling, player item/move restrictions, wild/raid edge cases, and selected battle calculations/rules.
+- The source uses `OPTIONS_NORMAL_DIFFICULTY`, `OPTIONS_EASY_DIFFICULTY`, `OPTIONS_HARD_DIFFICULTY`, and `OPTIONS_EXPERT_DIFFICULTY`; no `DIFFICULTY_*` symbols were found in the requested source search.
+- DPE Gen9 had no relevant `VAR_GAME_DIFFICULTY` logic in the requested search.
+- Known dirty CFRU submodule state remains local and unmodified: `02_external/CFRU-expansion/src/config.h` has uncommitted config edits, including local `FLAT_EXP_FORMULA` enabled. This is documented as balance-relevant but not directly `VAR_GAME_DIFFICULTY`-specific.
+- No ROMs, saves, emulator states, builds, tool binaries, private paths, secrets, tokens or `.env` files were read or documented.
+- No CFRU/DPE code was changed, staged, reset, stashed or committed.
+
 # Session update - Rival starter consistency smoke plan
 
 - New branch: `analysis/rival-starter-consistency-smoke`.

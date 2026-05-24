@@ -1,3 +1,13 @@
+# Next steps update - CFRU game difficulty map
+
+- Treat `01_docs/analysis/cfru-game-difficulty-map.md` as the current source-backed reference for CFRU `VAR_GAME_DIFFICULTY 0x5157`.
+- Keep the distinction explicit: Hard/Expert overlap with Smart AI but are broader because they also change trainer-mon construction, level scaling, player restrictions, wild/raid behavior, and selected battle rules/calculations.
+- Do not describe `VAR_GAME_DIFFICULTY` as a pure Smart-AI runtime switch.
+- If a pure Smart-AI-only Ironmon-style mode is needed, analyze or implement it separately; the requested source search did not find a pure runtime switch for only Smart AI.
+- Keep local dirty CFRU `src/config.h` edits out of commits. `FLAT_EXP_FORMULA` being locally enabled is balance-relevant but not directly `VAR_GAME_DIFFICULTY`-specific.
+- Useful follow-up: fold `WILD_ALWAYS_SMART`, `FLAG_SMART_WILD`, `TRAINERS_WITH_EVS`, `SCALED_TRAINERS`, and local config overlays into the broader CFRU runtime/config option map without changing CFRU/DPE source.
+- Do not run ROMs through Codex. Continue excluding ROM paths, hashes, full logs, screenshots, output ROMs, saves, emulator states, private paths, secrets, tokens and `.env` data.
+
 # Next steps update - Rival starter consistency smoke plan
 
 - Treat `08_tests/randomizer/rival_starter_consistency_smoke.md` as the current documentation-only plan for a focused local Rival starter consistency smoke.
