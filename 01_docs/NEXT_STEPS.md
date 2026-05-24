@@ -7,6 +7,22 @@
 - Keep Smart Trainer AI testing separate from Tracker compatibility; `FLAG_SMART_TRAINER_AI` changes move choice behavior, not Tracker-readable memory layouts.
 - Continue excluding ROM paths, hashes, full logs, screenshots, output ROMs, saves, emulator states, builds, private paths, tool binaries, patches, secrets, tokens and `.env` data.
 
+# Next steps update - CFRU Expert AI isolation
+
+- Treat `01_docs/analysis/cfru-expert-ai-isolation.md` as the current source-backed reference for Expert Difficulty vs. Smart Trainer AI v2.
+- Do not use Expert Difficulty as a shortcut for Smart Trainer AI. Expert's ordinary trainer flag uplift is already represented by v2, while its broader effects include trainer strength, PP, level scaling, wild AI, player restrictions, battle rules and situational anti-cheese.
+- For the next local smoke, compare Normal flag-off, Normal `FLAG_SMART_TRAINER_AI` v2 flag-on, and Expert only as a diagnostic reference. Record sanitized behavior only and note whether Expert changed levels, stats, evolutions or other non-AI context.
+- If v2 still overuses Sand Attack/Accuracy-down, prefer a targeted utility-scoring or tie-break experiment, or a deeper Vanilla/NatDex `AI_CheckViability` / `AI_TryToFaint` port. Do not re-add `AI_SCRIPT_CHECK_GOOD_MOVE` globally without a focused scoring design.
+- Continue excluding ROM paths, hashes, full logs, screenshots, output ROMs, saves, emulator states, builds, private paths, secrets, tokens and `.env` data.
+
+# Next steps update - Smart AI patch source verification
+
+- Treat `01_docs/analysis/smart-ai-patch-source-verification.md` as the current source-backed reference for original FireRed/LeafGreen Smart-AI patch behavior.
+- Do not describe CFRU v1 as behavior-identical to Ironmon/NatDex `0x07`: tom-overton/NatDex use classic Gen3 `CHECK_BAD_MOVE | CHECK_VIABILITY | TRY_TO_FAINT`, while CFRU v1 used `CHECK_BAD_MOVE | SEMI_SMART | CHECK_GOOD_MOVE`.
+- Keep CFRU v2 as the immediate smoke candidate: `FLAG_SMART_TRAINER_AI` should add `AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_SEMI_SMART` while `VAR_GAME_DIFFICULTY` stays Normal.
+- If v2 is too weak, decide explicitly between a source-port of Vanilla/NatDex `AI_CheckViability` / `AI_TryToFaint` semantics and a separate damage-/KO-oriented CFRU mode. Do not re-enable `CHECK_GOOD_MOVE` just for numeric `0x07` similarity without addressing utility/Accuracy-drop scoring.
+- Continue excluding ROM paths, ROM hashes, full logs, screenshots, output ROMs, saves, emulator states, builds, patch assets, private paths, secrets, tokens and `.env` data.
+
 # Next steps update - CFRU Smart Trainer AI v2 utility-spam reduction
 
 - Treat Smart Trainer AI v2 as the current implementation candidate: `FLAG_SMART_TRAINER_AI` now adds `AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_SEMI_SMART`, not `AI_SCRIPT_CHECK_GOOD_MOVE`.

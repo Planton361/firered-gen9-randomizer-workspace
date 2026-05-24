@@ -8,6 +8,27 @@
 - `FLAG_SMART_TRAINER_AI` is not expected to affect Tracker memory compatibility because it changes battle-time trainer AI flags rather than Pokemon/table layouts.
 - Safety boundary: no ROMs, saves, emulator states, builds, screenshots, raw logs, hashes, private paths, tool binaries, patches, secrets, tokens or `.env` data were read or documented.
 
+# Session update - CFRU Expert AI isolation
+
+- Branch: `analysis/cfru-expert-ai-isolation`.
+- Added `01_docs/analysis/cfru-expert-ai-isolation.md`.
+- Scope: documentation-only source review explaining why CFRU Expert Difficulty can look smarter than `FLAG_SMART_TRAINER_AI` v1/v2 without being a clean Smart-AI-only option.
+- Key finding: for ordinary trainer battles, Expert's `GetAIFlags` uplift is effectively the same conservative trainer path as Smart Trainer AI v2: trainers without `AI_SCRIPT_CHECK_GOOD_MOVE` gain `AI_SCRIPT_SEMI_SMART`. Expert does not globally add `AI_SCRIPT_CHECK_GOOD_MOVE` to regular trainers.
+- Interpretation: if Expert looked smarter in local smoke, the likely source-backed causes are trainer-build/level/stat side effects, context differences, or situational Expert-only behavior rather than a better generic trainer AI flag mix.
+- v3 recommendation: do not copy Expert wholesale; keep `VAR_GAME_DIFFICULTY` Normal and prefer either a targeted Sand Attack / utility scoring adjustment or a deeper Vanilla/NatDex `AI_CheckViability` / `AI_TryToFaint` source-port.
+- Safety boundary: no CFRU/DPE code changes, no ROMs, saves, emulator states, builds, logs, screenshots, hashes, tool binaries, private paths, secrets, tokens or `.env` data were read or documented.
+
+# Session update - Smart AI patch source verification
+
+- Branch: `analysis/smart-ai-patch-source-verification`.
+- Added `01_docs/analysis/smart-ai-patch-source-verification.md`.
+- Scope: documentation-only verification of the original tom-overton FireRed/LeafGreen Smart-AI source branch, CyanSMP64 NatDex randomizer Smart AI integration, and CFRU v1/v2 comparison.
+- Key finding: tom-overton `smart-ai` functional source change is trainer-data-only: `src/data/trainers.h` upgrades trainer `aiFlags` to `AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY`; no Battle-AI scoring scripts or command code changed.
+- NatDex randomizer finding: Gen3 `smartAiMode` sets the trainer AI flag byte with `|= 0x07`, which maps in local NatDex FireRed to `CHECK_BAD_MOVE`, `CHECK_VIABILITY`, and `TRY_TO_FAINT`.
+- CFRU comparison: v1 was only numerically close to `0x07`; CFRU runtime bit 2 is `AI_SCRIPT_CHECK_GOOD_MOVE` / `AIScript_Positives`, not Vanilla/NatDex `TRY_TO_FAINT`. v2 remains the safer current smoke candidate with `AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_SEMI_SMART`.
+- Documentation cross-links updated in `01_docs/analysis/ironmon-smart-ai-patch-map.md`, `01_docs/analysis/smart-ai-scoring-comparison.md`, and `01_docs/references/source-index.md`.
+- Safety boundary: no ROMs, saves, emulator states, builds, screenshots, raw logs, tool binaries, patch assets, private paths, secrets, tokens or `.env` data were read or documented. No external repos were cloned.
+
 # Session update - CFRU Smart Trainer AI v2 utility-spam reduction
 
 - Branch: `fix/cfru-smart-trainer-ai-v2-reduce-utility-spam`.

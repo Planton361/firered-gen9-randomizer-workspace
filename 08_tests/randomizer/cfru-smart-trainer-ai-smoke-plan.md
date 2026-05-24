@@ -81,6 +81,12 @@ Do not commit the built ROMs, saves, output logs, screenshots, emulator state, o
 
 Use one or more early, repeatable trainer battles where the trainer has multiple plausible moves and where a bad move can be distinguished from a stronger move choice.
 
+Expert comparison caveat:
+
+- Expert Difficulty is useful as a diagnostic baseline, but it is not an acceptable Smart Trainer AI profile by itself.
+- Source review in `01_docs/analysis/cfru-expert-ai-isolation.md` found that Expert's ordinary trainer flag uplift is effectively the same conservative `AI_SCRIPT_SEMI_SMART` path v2 already uses for trainers without `AI_SCRIPT_CHECK_GOOD_MOVE`.
+- If Expert appears smarter than v2 in a local smoke, check whether Expert's trainer IV, PP, level-scaling, evolution, wild-AI, shift-switch, anti-cheese, item-knowledge or battle-rule side effects changed the battle context before treating it as a better move-scoring flag mix.
+
 Source-scoring caveat:
 
 - `FLAG_SMART_TRAINER_AI` v1 added `AI_SCRIPT_CHECK_GOOD_MOVE`, which runs CFRU `AIScript_Positives`.
