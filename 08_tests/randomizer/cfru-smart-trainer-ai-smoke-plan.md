@@ -12,7 +12,7 @@ Source baseline:
 
 - `02_external/CFRU-expansion/src/config.h` defines `FLAG_SMART_TRAINER_AI 0xA0E`.
 - `02_external/CFRU-expansion/src/Battle_AI/ai_master.c` / `GetAIFlags` ORs trainer battle flags with `AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_SEMI_SMART | AI_SCRIPT_CHECK_GOOD_MOVE` when `FlagGet(FLAG_SMART_TRAINER_AI)` is true.
-- `02_external/CFRU-expansion/assembly/overworld_scripts/Pallet_town.s` / `EventScript_Pallet_FatGuy` now sets `0xA0E` as a local smoke activation path for `FLAG_SMART_TRAINER_AI`.
+- `02_external/CFRU-expansion/assembly/overworld_scripts/Pallet_town.s` / `EventScript_Pallet_FatGuy` sets `0xA0E` as a local smoke activation path for `FLAG_SMART_TRAINER_AI` and shows `Smart Trainer AI enabled.`.
 - `VAR_GAME_DIFFICULTY` stays independent. Normal difficulty is `OPTIONS_NORMAL_DIFFICULTY = 0`.
 - There is no final UI, settings NPC, option-menu or randomizer-profile wiring for this flag yet.
 
@@ -23,13 +23,14 @@ The current minimal activation path is the existing Pallet Town test script:
 - Script: `EventScript_Pallet_FatGuy`
 - Source: `02_external/CFRU-expansion/assembly/overworld_scripts/Pallet_town.s`
 - Activation line: `setflag 0xA0E @ FLAG_SMART_TRAINER_AI local smoke activation.`
+- Visible confirmation: `Smart Trainer AI enabled.`
 
 This was chosen because the script is already a debug/test-style path: it is wired to the Pallet test NPC entries in `eventscripts`, grants test Pokemon, calls setup specials and shows `gText_TestScript`. It is not a final player-facing Smart AI UX.
 
 For local A/B smoke:
 
 - Flag off: use Normal Difficulty and do not trigger `EventScript_Pallet_FatGuy` before the sampled trainer battle.
-- Flag on: use Normal Difficulty, trigger `EventScript_Pallet_FatGuy` once, then run the same sampled trainer battle route.
+- Flag on: use Normal Difficulty, trigger `EventScript_Pallet_FatGuy` once, confirm the `Smart Trainer AI enabled.` message, then run the same sampled trainer battle route.
 
 Do not interpret this test script as the final activation design. It is only a source-backed local smoke path for verifying the already implemented `GetAIFlags` hook.
 
