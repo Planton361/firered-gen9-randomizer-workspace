@@ -1,3 +1,11 @@
+# Next steps update - CFRU Expert AI isolation
+
+- Treat `01_docs/analysis/cfru-expert-ai-isolation.md` as the current source-backed reference for Expert Difficulty vs. Smart Trainer AI v2.
+- Do not use Expert Difficulty as a shortcut for Smart Trainer AI. Expert's ordinary trainer flag uplift is already represented by v2, while its broader effects include trainer strength, PP, level scaling, wild AI, player restrictions, battle rules and situational anti-cheese.
+- For the next local smoke, compare Normal flag-off, Normal `FLAG_SMART_TRAINER_AI` v2 flag-on, and Expert only as a diagnostic reference. Record sanitized behavior only and note whether Expert changed levels, stats, evolutions or other non-AI context.
+- If v2 still overuses Sand Attack/Accuracy-down, prefer a targeted utility-scoring or tie-break experiment, or a deeper Vanilla/NatDex `AI_CheckViability` / `AI_TryToFaint` port. Do not re-add `AI_SCRIPT_CHECK_GOOD_MOVE` globally without a focused scoring design.
+- Continue excluding ROM paths, hashes, full logs, screenshots, output ROMs, saves, emulator states, builds, private paths, secrets, tokens and `.env` data.
+
 # Next steps update - CFRU Smart Trainer AI v2 utility-spam reduction
 
 - Treat Smart Trainer AI v2 as the current implementation candidate: `FLAG_SMART_TRAINER_AI` now adds `AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_SEMI_SMART`, not `AI_SCRIPT_CHECK_GOOD_MOVE`.

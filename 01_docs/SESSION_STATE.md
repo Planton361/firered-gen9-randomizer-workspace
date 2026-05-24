@@ -1,3 +1,13 @@
+# Session update - CFRU Expert AI isolation
+
+- Branch: `analysis/cfru-expert-ai-isolation`.
+- Added `01_docs/analysis/cfru-expert-ai-isolation.md`.
+- Scope: documentation-only source review explaining why CFRU Expert Difficulty can look smarter than `FLAG_SMART_TRAINER_AI` v1/v2 without being a clean Smart-AI-only option.
+- Key finding: for ordinary trainer battles, Expert's `GetAIFlags` uplift is effectively the same conservative trainer path as Smart Trainer AI v2: trainers without `AI_SCRIPT_CHECK_GOOD_MOVE` gain `AI_SCRIPT_SEMI_SMART`. Expert does not globally add `AI_SCRIPT_CHECK_GOOD_MOVE` to regular trainers.
+- Interpretation: if Expert looked smarter in local smoke, the likely source-backed causes are trainer-build/level/stat side effects, context differences, or situational Expert-only behavior rather than a better generic trainer AI flag mix.
+- v3 recommendation: do not copy Expert wholesale; keep `VAR_GAME_DIFFICULTY` Normal and prefer either a targeted Sand Attack / utility scoring adjustment or a deeper Vanilla/NatDex `AI_CheckViability` / `AI_TryToFaint` source-port.
+- Safety boundary: no CFRU/DPE code changes, no ROMs, saves, emulator states, builds, logs, screenshots, hashes, tool binaries, private paths, secrets, tokens or `.env` data were read or documented.
+
 # Session update - CFRU Smart Trainer AI v2 utility-spam reduction
 
 - Branch: `fix/cfru-smart-trainer-ai-v2-reduce-utility-spam`.
