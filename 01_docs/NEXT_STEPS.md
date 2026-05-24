@@ -1,3 +1,11 @@
+# Next steps update - CFRU Smart Trainer AI activation smoke plan
+
+- Use `08_tests/randomizer/cfru-smart-trainer-ai-smoke-plan.md` as the current minimal test plan for `FLAG_SMART_TRAINER_AI`.
+- Smallest next implementation step: add a tightly scoped early script-set activation for a local smoke profile, not a full Option Menu or Settings NPC UI yet.
+- Run local A/B smoke with Normal Difficulty and flag off/on; share only sanitized pass/fail observations, not ROMs, saves, output logs, screenshots, hashes or private paths.
+- If smoke passes, choose the durable activation surface: Settings NPC for controlled player-facing toggling, Option Menu for broad discoverability, or Randomizer-profile wiring for reproducible Ironmon-style profiles.
+- Keep `VAR_GAME_DIFFICULTY` separate and continue testing that Smart Trainer AI does not affect trainer strength, level scaling, wild/raid behavior, player restrictions, battle rules or Expert anti-cheese paths.
+
 # Next steps update - CFRU Smart Trainer AI runtime flag
 
 - Review the CFRU v1 implementation of `FLAG_SMART_TRAINER_AI 0xA0E` on branch `feature/cfru-smart-trainer-ai-mode`.

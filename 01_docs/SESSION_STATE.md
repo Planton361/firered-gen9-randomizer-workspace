@@ -1,3 +1,12 @@
+# Session update - CFRU Smart Trainer AI activation smoke plan
+
+- Branch: `test/cfru-smart-trainer-ai-activation-plan`.
+- Added `08_tests/randomizer/cfru-smart-trainer-ai-smoke-plan.md`.
+- Scope: documentation-only activation and smoke-test plan for CFRU `FLAG_SMART_TRAINER_AI 0xA0E`; no CFRU/DPE code changes.
+- Recommendation: first local smoke should use an early script-set activation for a dedicated test profile, with a debug setter only for local A/B convenience if needed; Settings NPC, Option Menu and Randomizer-profile wiring should wait until behavior is smoke-confirmed.
+- Smoke matrix: Normal Difficulty + flag off vs. Normal Difficulty + flag on, checking trainer move-choice improvement and explicitly confirming no IV/EV/friendship/PP, level, wild/raid, bag/move restriction, battle-rule, Expert anti-cheese or shift-switch side effects.
+- Safety boundary: no ROMs, saves, emulator states, builds, logs, screenshots, tool binaries, private paths, secrets, tokens or `.env` data were read or documented.
+
 # Session update - CFRU Smart Trainer AI runtime flag
 
 - Branch: `feature/cfru-smart-trainer-ai-mode`.
