@@ -1,3 +1,12 @@
+# Next steps update - Ironmon Tracker CFRU/DPE compatibility
+
+- Treat `01_docs/analysis/ironmon-tracker-cfru-dpe-compat.md` as the current source-backed risk map for Ironmon Tracker / NatDexExtension against CFRU/DPE/Gen9.
+- Treat `08_tests/randomizer/ironmon-tracker-cfru-dpe-compat-plan.md` as the safe local BizHawk smoke plan.
+- Smallest next step: run local BizHawk smoke with standard Ironmon Tracker, then NatDexExtension, and record only sanitized pass/fail notes for player species, moves, stats, ability, held item, enemy battle data and trainer data.
+- Expect NatDexExtension not to be drop-in: it is a CyanSMP64 NatDex extension with hardcoded detection/address/data resources. A future CFRU/DPE extension should start with custom addresses, direct party Pokemon reading and Gen9 species/move/ability/item data.
+- Keep Smart Trainer AI testing separate from Tracker compatibility; `FLAG_SMART_TRAINER_AI` changes move choice behavior, not Tracker-readable memory layouts.
+- Continue excluding ROM paths, hashes, full logs, screenshots, output ROMs, saves, emulator states, builds, private paths, tool binaries, patches, secrets, tokens and `.env` data.
+
 # Next steps update - CFRU Smart Trainer AI v2 utility-spam reduction
 
 - Treat Smart Trainer AI v2 as the current implementation candidate: `FLAG_SMART_TRAINER_AI` now adds `AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_SEMI_SMART`, not `AI_SCRIPT_CHECK_GOOD_MOVE`.
