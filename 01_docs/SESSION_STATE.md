@@ -1,3 +1,13 @@
+# Session update - Ironmon / NatDex Smart AI patch map
+
+- Branch: `analysis/ironmon-smart-ai-patch-map`.
+- Added `01_docs/analysis/ironmon-smart-ai-patch-map.md`.
+- Scope: documentation-only source-backed map of the Ironmon/Super-Kaizo/NatDex Smart-AI patch/randomizer behavior for comparison against the CFRU `FLAG_SMART_TRAINER_AI` design.
+- Key finding: the locally available CyanSMP64 NatDex randomizer implements Gen3 Smart AI Mode by OR-ing each trainer AI flag byte with `0x07`, which maps in the local FireRed NatDex source to `AI_SCRIPT_CHECK_BAD_MOVE`, `AI_SCRIPT_CHECK_VIABILITY`, and `AI_SCRIPT_TRY_TO_FAINT`.
+- Comparison: the CFRU `FLAG_SMART_TRAINER_AI` approach is directionally close if it only extends trainer AI flags and keeps `VAR_GAME_DIFFICULTY` Normal; a pure `AI_SCRIPT_SEMI_SMART` lift is safer but weaker than the NatDex/Ironmon `0x07` evidence.
+- Boundaries: no ROMs, BPS/IPS/UPS patches, randomizer release zips, builds, saves, emulator states, private paths, secrets, tokens or `.env` data were downloaded, read or documented.
+- No code changes were made.
+
 # Session update - CFRU Smart AI source-port map
 
 - Branch: `analysis/cfru-runtime-options-map`.
