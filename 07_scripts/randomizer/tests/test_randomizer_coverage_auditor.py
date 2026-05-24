@@ -232,6 +232,9 @@ class RandomizerCoverageAuditorTest(unittest.TestCase):
             with self.subTest(observed=observed):
                 self.assertEqual(expected_key, auditor.canonical_key_for_observed(observed, "item"))
 
+        self.assertEqual("safety_goggles", auditor.canonical_key_for_loaded("Safe Guard", "item"))
+        self.assertEqual("safe_guard", auditor.canonical_key_for_observed("Safe Guard", "item"))
+
     def test_alias_normalization_reduces_observed_not_expected_fixture_rows(self):
         with tempfile.TemporaryDirectory(dir=local_test_root()) as temp_name:
             root = Path(temp_name)
@@ -402,6 +405,7 @@ Black Belt Koichi - Machop Lv10
                 "rusty_shield\tRusty Shield\t0\t\tyes\tno\tno\n"
                 "necrozium_z\tNecrozium Z\t0\t\tyes\tno\tno\n"
                 "luminousmoss\tLuminousMoss\t0\t\tyes\tno\tno\n"
+                "safe_guard\tSafe Guard\t0\t\tyes\tno\tno\n"
                 "paralyz_heal\tParalyz Heal\t0\t\tyes\tno\tno\n"
                 "marang_berry\tMarang Berry\t0\tBerry\tyes\tno\tno\n"
                 "kings_rock\tKing’s Rock\t0\t\tyes\tno\tno\n"
@@ -458,6 +462,7 @@ Black Belt Koichi - Machop Lv10
             self.assertEqual("LOADED_NOT_OBSERVED", items["rusted_shield"]["coverage_status"])
             self.assertEqual("LOADED_NOT_OBSERVED", items["ultranecrozium_z"]["coverage_status"])
             self.assertEqual("LOADED_NOT_OBSERVED", items["luminous_moss"]["coverage_status"])
+            self.assertEqual("LOADED_NOT_OBSERVED", items["safety_goggles"]["coverage_status"])
             self.assertEqual("LOADED_NOT_OBSERVED", items["paralyze_heal"]["coverage_status"])
             self.assertEqual("LOADED_NOT_OBSERVED", items["maranga_berry"]["coverage_status"])
             self.assertEqual("LOADED_NOT_OBSERVED", items["kings_rock"]["coverage_status"])
@@ -726,6 +731,7 @@ def write_source_fixture(root):
             "#define ITEM_RUSTED_SHIELD 0x10A",
             "#define ITEM_ULTRANECROZIUM_Z 0x10B",
             "#define ITEM_LUMINOUS_MOSS 0x10C",
+            "#define ITEM_SAFETY_GOGGLES 0x10D",
             "#define ITEM_PARALYZE_HEAL 0x12",
             "#define ITEM_MARANGA_BERRY 0xA2",
             "#define ITEM_KINGS_ROCK 0xBB",
