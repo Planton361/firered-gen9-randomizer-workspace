@@ -1,3 +1,13 @@
+# Session update - CFRU Smart Trainer AI smoke activation
+
+- Branch: `feature/cfru-smart-trainer-ai-smoke-script`.
+- Implemented the minimal source-backed test activation path for `FLAG_SMART_TRAINER_AI`.
+- CFRU script scope: `02_external/CFRU-expansion/assembly/overworld_scripts/Pallet_town.s` / `EventScript_Pallet_FatGuy` now sets `0xA0E` as a local smoke activation for `FLAG_SMART_TRAINER_AI`.
+- Rationale: `EventScript_Pallet_FatGuy` is an existing Pallet Town debug/test-style script wired in `eventscripts`, already granting test Pokemon and showing `gText_TestScript`; it is not a final Settings NPC, Option Menu, or player UX path.
+- Behavior boundary: `VAR_GAME_DIFFICULTY` remains unchanged; no trainer-build strength, level scaling, wild/raid AI, bag/move restriction, battle-rule, Expert anti-cheese, shift-switch, or `build_pokemon.c` changes were made.
+- Documentation updated in `08_tests/randomizer/cfru-smart-trainer-ai-smoke-plan.md` with flag-off vs. flag-on local smoke instructions.
+- Safety boundary: no ROMs, saves, emulator states, builds, logs, screenshots, tool binaries, private paths, secrets, tokens or `.env` data were read or documented.
+
 # Session update - CFRU Smart Trainer AI activation smoke plan
 
 - Branch: `test/cfru-smart-trainer-ai-activation-plan`.

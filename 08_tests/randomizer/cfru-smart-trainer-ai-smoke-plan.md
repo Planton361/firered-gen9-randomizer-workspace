@@ -12,8 +12,26 @@ Source baseline:
 
 - `02_external/CFRU-expansion/src/config.h` defines `FLAG_SMART_TRAINER_AI 0xA0E`.
 - `02_external/CFRU-expansion/src/Battle_AI/ai_master.c` / `GetAIFlags` ORs trainer battle flags with `AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_SEMI_SMART | AI_SCRIPT_CHECK_GOOD_MOVE` when `FlagGet(FLAG_SMART_TRAINER_AI)` is true.
+- `02_external/CFRU-expansion/assembly/overworld_scripts/Pallet_town.s` / `EventScript_Pallet_FatGuy` now sets `0xA0E` as a local smoke activation path for `FLAG_SMART_TRAINER_AI`.
 - `VAR_GAME_DIFFICULTY` stays independent. Normal difficulty is `OPTIONS_NORMAL_DIFFICULTY = 0`.
-- There is no UI, NPC, option-menu or randomizer-profile wiring for this flag yet.
+- There is no final UI, settings NPC, option-menu or randomizer-profile wiring for this flag yet.
+
+## Implemented Smoke Activation
+
+The current minimal activation path is the existing Pallet Town test script:
+
+- Script: `EventScript_Pallet_FatGuy`
+- Source: `02_external/CFRU-expansion/assembly/overworld_scripts/Pallet_town.s`
+- Activation line: `setflag 0xA0E @ FLAG_SMART_TRAINER_AI local smoke activation.`
+
+This was chosen because the script is already a debug/test-style path: it is wired to the Pallet test NPC entries in `eventscripts`, grants test Pokemon, calls setup specials and shows `gText_TestScript`. It is not a final player-facing Smart AI UX.
+
+For local A/B smoke:
+
+- Flag off: use Normal Difficulty and do not trigger `EventScript_Pallet_FatGuy` before the sampled trainer battle.
+- Flag on: use Normal Difficulty, trigger `EventScript_Pallet_FatGuy` once, then run the same sampled trainer battle route.
+
+Do not interpret this test script as the final activation design. It is only a source-backed local smoke path for verifying the already implemented `GetAIFlags` hook.
 
 ## Activation Options
 
@@ -27,7 +45,7 @@ Source baseline:
 
 ## Recommended Smallest Next Step
 
-Use an early script-set activation for the first local smoke profile.
+Use the Pallet Town test script activation for the first local smoke profile.
 
 Rationale:
 
@@ -35,11 +53,12 @@ Rationale:
 - It avoids adding permanent player-facing UI before behavior is proven.
 - It keeps Smart Trainer AI separate from `VAR_GAME_DIFFICULTY`.
 - It is simpler than option-menu layout work and safer than presenting an unproven setting to players.
+- It reuses an existing test-script path instead of adding a Settings NPC, Option Menu entry or randomizer-profile writer.
 
 For A/B testing, use two local builds/profiles or one debug-only local setter outside committed evidence:
 
 - Baseline: Normal Difficulty, `FLAG_SMART_TRAINER_AI` clear.
-- Test: Normal Difficulty, `FLAG_SMART_TRAINER_AI` set before the sampled trainer battles.
+- Test: Normal Difficulty, `FLAG_SMART_TRAINER_AI` set through `EventScript_Pallet_FatGuy` before the sampled trainer battles.
 
 Do not commit the built ROMs, saves, output logs, screenshots, emulator state, or private paths used for the smoke.
 
@@ -119,7 +138,8 @@ Do not commit:
 
 ## Open Follow-ups
 
-- Decide whether the first activation should be an always-on early script for a dedicated local smoke branch or a debug-only set/clear path.
+- Run the first local A/B smoke through `EventScript_Pallet_FatGuy` and document only sanitized pass/fail observations.
+- Decide whether a later set/clear helper is needed for faster repeated A/B testing.
 - After smoke, decide whether the user-facing activation should be Settings NPC, Option Menu, or randomizer-profile wiring.
 - If adding UI later, keep wording separate from CFRU Game Difficulty and avoid describing `VAR_GAME_DIFFICULTY` as Smart AI.
 - If randomizer-profile wiring is chosen, define how UPR-FVX/workspace tooling records CFRU runtime flags without committing ROM artifacts.

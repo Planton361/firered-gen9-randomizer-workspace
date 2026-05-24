@@ -1,3 +1,11 @@
+# Next steps update - CFRU Smart Trainer AI smoke activation
+
+- Treat `EventScript_Pallet_FatGuy` in `02_external/CFRU-expansion/assembly/overworld_scripts/Pallet_town.s` as the current local-only smoke activation path for `FLAG_SMART_TRAINER_AI`.
+- Run the local A/B smoke on Normal Difficulty: baseline with the Pallet test script not triggered, then flag-on after triggering the Pallet test script once.
+- Confirm only trainer move-choice behavior changes; trainer IVs, EVs, friendship, PP, levels, wild/raid behavior, bag access, player move restrictions, battle rules, Expert anti-cheese and shift-switch behavior must remain unchanged.
+- Do not treat the Pallet test script as final UX. If the smoke passes, decide separately between Settings NPC, Option Menu, or randomizer-profile wiring.
+- Continue excluding ROM paths, hashes, full logs, screenshots, output ROMs, saves, emulator states, builds, private paths, secrets, tokens and `.env` data.
+
 # Next steps update - CFRU Smart Trainer AI activation smoke plan
 
 - Use `08_tests/randomizer/cfru-smart-trainer-ai-smoke-plan.md` as the current minimal test plan for `FLAG_SMART_TRAINER_AI`.
