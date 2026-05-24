@@ -1,3 +1,12 @@
+# Next steps update - CFRU Smart Trainer AI v2 utility-spam reduction
+
+- Treat Smart Trainer AI v2 as the current implementation candidate: `FLAG_SMART_TRAINER_AI` now adds `AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_SEMI_SMART`, not `AI_SCRIPT_CHECK_GOOD_MOVE`.
+- Run the Pallet smoke path again on Normal Difficulty and compare flag off vs. flag on.
+- Specific v2 regression focus: the earlier sanitized v1 observation was opposing Pidgey/Taubsi using Sand Attack/Sandwirbel four times despite Tackle being available. v2 should be checked for reduced Sand Attack/Accuracy-drop/utility spam while still avoiding clearly bad moves.
+- Keep confirming that `VAR_GAME_DIFFICULTY`, trainer IVs, EVs, friendship, PP, levels, wild/raid AI, player bag access, player move restrictions, battle rules, Expert anti-cheese, Option Menu and Settings NPC behavior remain unchanged.
+- If v2 is too weak, decide between a targeted scoring adjustment and a deeper NatDex/Ironmon `AI_CheckViability` / `AI_TryToFaint` source-port; do not re-enable Hard/Expert Difficulty as a shortcut.
+- Continue excluding ROM paths, hashes, full logs, screenshots, output ROMs, saves, emulator states, builds, private paths, secrets, tokens and `.env` data.
+
 # Next steps update - Smart AI move scoring comparison
 
 - Treat `01_docs/analysis/smart-ai-scoring-comparison.md` as the current source-backed reference for why CFRU v1 Smart Trainer AI can prefer Sand Attack/status-style moves.

@@ -11,10 +11,17 @@ No ROMs, output ROMs, saves, emulator states, builds, full logs, screenshots, to
 Source baseline:
 
 - `02_external/CFRU-expansion/src/config.h` defines `FLAG_SMART_TRAINER_AI 0xA0E`.
-- `02_external/CFRU-expansion/src/Battle_AI/ai_master.c` / `GetAIFlags` ORs trainer battle flags with `AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_SEMI_SMART | AI_SCRIPT_CHECK_GOOD_MOVE` when `FlagGet(FLAG_SMART_TRAINER_AI)` is true.
+- `02_external/CFRU-expansion/src/Battle_AI/ai_master.c` / `GetAIFlags` ORs trainer battle flags with `AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_SEMI_SMART` when `FlagGet(FLAG_SMART_TRAINER_AI)` is true.
 - `02_external/CFRU-expansion/assembly/overworld_scripts/Pallet_town.s` / `EventScript_Pallet_FatGuy` sets `0xA0E` as a local smoke activation path for `FLAG_SMART_TRAINER_AI` and shows `Smart Trainer AI enabled.`.
 - `VAR_GAME_DIFFICULTY` stays independent. Normal difficulty is `OPTIONS_NORMAL_DIFFICULTY = 0`.
 - There is no final UI, settings NPC, option-menu or randomizer-profile wiring for this flag yet.
+
+Version note:
+
+- v1 used `AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_SEMI_SMART | AI_SCRIPT_CHECK_GOOD_MOVE`.
+- v1 was technically active in local smoke, but showed utility/Accuracy-drop spam.
+- Sanitized local observation: an opposing Pidgey/Taubsi used Sand Attack/Sandwirbel four times in a row despite Tackle being available.
+- v2 removes `AI_SCRIPT_CHECK_GOOD_MOVE` from the hook and tests the more conservative CFRU-native `AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_SEMI_SMART` combination.
 
 ## Implemented Smoke Activation
 
@@ -68,7 +75,7 @@ Do not commit the built ROMs, saves, output logs, screenshots, emulator state, o
 | Case | Runtime difficulty | Smart Trainer AI flag | Expected AI | Must remain unchanged |
 | --- | --- | --- | --- | --- |
 | A: Baseline | Normal / `OPTIONS_NORMAL_DIFFICULTY` | Off / clear | Trainer AI uses existing trainer `aiFlags` only. | Trainer stats, levels, moves, PP, bag access, player move access, wild/raid behavior and battle rules match current Normal behavior. |
-| B: Smart Trainer AI | Normal / `OPTIONS_NORMAL_DIFFICULTY` | On / set | Trainer battles get `AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_SEMI_SMART | AI_SCRIPT_CHECK_GOOD_MOVE` added to their trainer AI flags. | Same non-AI behavior as Case A. |
+| B: Smart Trainer AI v2 | Normal / `OPTIONS_NORMAL_DIFFICULTY` | On / set | Trainer battles get `AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_SEMI_SMART` added to their trainer AI flags. | Same non-AI behavior as Case A. |
 
 ## Battle Behavior Checks
 
@@ -76,9 +83,10 @@ Use one or more early, repeatable trainer battles where the trainer has multiple
 
 Source-scoring caveat:
 
-- `FLAG_SMART_TRAINER_AI` currently adds `AI_SCRIPT_CHECK_GOOD_MOVE`, which runs CFRU `AIScript_Positives`.
+- `FLAG_SMART_TRAINER_AI` v1 added `AI_SCRIPT_CHECK_GOOD_MOVE`, which runs CFRU `AIScript_Positives`.
 - CFRU positive scoring can value Accuracy-down and other status/utility moves when they are technically useful.
-- A flag-on trainer repeatedly choosing Sand Attack or similar utility moves is therefore not automatically a hook failure; it may be the expected result of CFRU scoring.
+- The local v1 smoke observed an opposing Pidgey/Taubsi using Sand Attack/Sandwirbel four times in a row despite Tackle being available.
+- v2 deliberately removes `AI_SCRIPT_CHECK_GOOD_MOVE`; repeated Sand Attack or similar utility spam should be treated as a v2 behavior risk to retest, not as the expected target behavior.
 - Do not describe that behavior as exact Ironmon/NatDex Smart-AI equivalence without the separate scoring comparison in `01_docs/analysis/smart-ai-scoring-comparison.md`.
 
 For each sampled trainer:

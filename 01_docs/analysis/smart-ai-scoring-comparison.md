@@ -16,6 +16,8 @@ Die wichtigste Abweichung: NatDex/Ironmon `0x07` ist nicht semantisch identisch 
 
 Fazit: Der aktuelle CFRU-v1-Schalter ist source-backed nahe an der numerischen NatDex/Ironmon-`0x07`-Idee, aber nicht verhaltensgleich. Fuer eine Ironmon/NatDex-naehere Version reicht ein reines Flag-Mapping wahrscheinlich nicht; entweder muss die Flag-Kombination konservativer getestet werden oder die alte Gen3-Scriptlogik tiefer portiert/nachgebildet werden.
 
+Follow-up nach lokalem Smoke: v1 war technisch aktiv, zeigte aber im beobachteten Test den erwarteten Utility-/Accuracy-Drop-Spam. Sanitized Befund: ein gegnerisches Taubsi nutzte viermal hintereinander Sandwirbel, obwohl Tackle verfuegbar war. Smart Trainer AI v2 entfernt deshalb `AI_SCRIPT_CHECK_GOOD_MOVE` aus dem `FLAG_SMART_TRAINER_AI`-Hook und testet konservativer `AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_SEMI_SMART`.
+
 ## Scope
 
 Untersucht wurden nur Source- und Dokumentationsquellen. Keine ROMs, Saves, Emulator States, Builds, Tool-Binaries, Screenshots, raw Logs, private Pfade oder Patches wurden gelesen, erzeugt oder dokumentiert.
@@ -27,7 +29,7 @@ Untersucht wurden nur Source- und Dokumentationsquellen. Keine ROMs, Saves, Emul
 | `02_external/CFRU-expansion/include/battle.h:523-525` | Runtime-CFRU definiert `AI_SCRIPT_CHECK_BAD_MOVE`, `AI_SCRIPT_SEMI_SMART`, `AI_SCRIPT_CHECK_GOOD_MOVE` als Bits 0, 1, 2. | Das sind die Flags, die `GetAIFlags` und der v1-Schalter wirklich nutzen. |
 | `02_external/CFRU-expansion/src/Battle_AI/ai_master.c:44-48` | `sBattleAIScriptTable` mappt Bit 0 auf `AIScript_Negatives`, Bit 1 auf `AIScript_SemiSmart`, Bit 2 auf `AIScript_Positives`. | CFRU Bit 2 ist keine alte Gen3-`TRY_TO_FAINT`-Routine, sondern die CFRU-Positive-Utility-Heuristik. |
 | `02_external/CFRU-expansion/src/Battle_AI/ai_master.c:122-130` | Verwendbare Moves starten mit Score `100`; blockierte Moves werden spaeter auf `0` gesetzt. | Kleine Score-Erhoehungen koennen reichen, wenn Damage-Moves keinen groesseren Boost bekommen. |
-| `02_external/CFRU-expansion/src/Battle_AI/ai_master.c:165-238` | `GetAIFlags` liest `VAR_GAME_DIFFICULTY`, laedt Trainer-Flags, aendert sie je nach Difficulty und ORt bei `FLAG_SMART_TRAINER_AI` die drei v1-Flags dazu. | Der v1-Schalter aendert Trainer-AI-Flags, nicht `VAR_GAME_DIFFICULTY`. |
+| `02_external/CFRU-expansion/src/Battle_AI/ai_master.c:165-238` | `GetAIFlags` liest `VAR_GAME_DIFFICULTY`, laedt Trainer-Flags, aendert sie je nach Difficulty und ORt bei `FLAG_SMART_TRAINER_AI` die Smart-Trainer-AI-Flags dazu. | Der Schalter aendert Trainer-AI-Flags, nicht `VAR_GAME_DIFFICULTY`. |
 | `02_external/CFRU-expansion/src/Battle_AI/ai_master.c:880-909` | CFRU fuehrt pro Flag/Funktion C-Heuristiken aus und ersetzt den Move-Score mit dem Rueckgabewert. | Das ist nicht die alte Gen3-AI-Bytecode-Ausfuehrung. |
 
 ## CFRU Difficulty-Stufen und AI-Flags
@@ -39,6 +41,7 @@ Untersucht wurden nur Source- und Dokumentationsquellen. Keine ROMs, Saves, Emul
 | Hard / `2` | `OPTIONS_HARD_DIFFICULTY` | Fuegt normalen Trainern `AI_SCRIPT_SEMI_SMART` hinzu, wenn sie nicht schon `AI_SCRIPT_CHECK_GOOD_MOVE` haben. | Keine automatische `CHECK_GOOD_MOVE`-Anhebung fuer alle Trainer. |
 | Expert / `3` | `OPTIONS_EXPERT_DIFFICULTY` | Trainer wie Hard; wild Pokemon erhalten zusaetzlich `AI_SCRIPT_CHECK_BAD_MOVE | WildMonIsSmart(...)`. | Expert hat weitere Nicht-AI-Nebeneffekte in anderen Dateien. |
 | Smart Trainer AI v1 | `FLAG_SMART_TRAINER_AI` | ORt in Trainerkaempfen `AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_SEMI_SMART | AI_SCRIPT_CHECK_GOOD_MOVE`. | Bleibt numerisch `0x07`-nah, aber aktiviert CFRU-`AIScript_Positives`. |
+| Smart Trainer AI v2 | `FLAG_SMART_TRAINER_AI` | ORt in Trainerkaempfen `AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_SEMI_SMART`. | Weniger NatDex-`0x07`-nah, aber vermeidet den `AIScript_Positives`-Pfad, der Accuracy-/Utility-Spam ausloesen kann. |
 
 ## CFRU Move-Scoring: Sand Attack und Status
 
@@ -120,7 +123,7 @@ Interpretation: NatDex/Ironmon `0x07` kann Sand Attack zulassen und in bestimmte
 
 ## Was der lokale Smoke wahrscheinlich gesehen hat
 
-Bei Normal Difficulty plus `FLAG_SMART_TRAINER_AI` passiert in Trainerkaempfen:
+Bei Normal Difficulty plus v1 `FLAG_SMART_TRAINER_AI` passierte in Trainerkaempfen:
 
 1. `GetAIFlags` ORt `AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_SEMI_SMART | AI_SCRIPT_CHECK_GOOD_MOVE`.
 2. Die negative Pruefung verhindert klar schlechte Moves, aber laesst Sand Attack zu, wenn Accuracy-Senkung moeglich ist.
@@ -130,6 +133,8 @@ Bei Normal Difficulty plus `FLAG_SMART_TRAINER_AI` passiert in Trainerkaempfen:
 
 Das erklaert, warum ein Trainer mit Sand Attack und einem maessigen Angriff haeufig Sand Attack waehlen kann, obwohl ein menschlicher Ironmon-Spieler "Smart AI" eher als damage-orientierter erwartet.
 
+Der lokale Smoke bestaetigte diesen Risikopfad praktisch: ein gegnerisches Taubsi nutzte viermal hintereinander Sandwirbel trotz verfuegbarem Tackle. Das beweist nicht, dass jeder v1-Kampf statuslastig ist, reicht aber als gezielter Regressionsgrund fuer eine konservativere v2-Flag-Kombination ohne `AI_SCRIPT_CHECK_GOOD_MOVE`.
+
 ## Bewertung fuer das Projekt
 
 Empfehlung: v1 nicht als "exakter Ironmon/NatDex Smart-AI-Port" beschreiben.
@@ -138,15 +143,15 @@ Pragmatische Optionen:
 
 | Option | Bewertung |
 | --- | --- |
-| v1 behalten | Vertretbar, wenn das Ziel "CFRU strong utility AI" ist und statuslastige Entscheidungen akzeptiert werden. Dokumentation und Smoke-Plan muessen diesen Charakter klar nennen. |
-| Flag-Kombination fuer v1 aendern | Sinnvoll zu testen, wenn das Ziel "weniger Sand-Attack-/Status-lastig" ist. Ein naheliegender A/B-Kandidat waere ohne `AI_SCRIPT_CHECK_GOOD_MOVE`, aber das waere numerisch nicht mehr NatDex `0x07`-nah. Keine Codeaenderung in diesem Arbeitsblock. |
+| v1 behalten | Nicht empfohlen als Randomizer-Default nach dem Sandwirbel-Smoke, ausser das Ziel ist bewusst "CFRU strong utility AI". |
+| v2 ohne `CHECK_GOOD_MOVE` | Empfohlen fuer den naechsten Smoke: `AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_SEMI_SMART`. Das ist weniger NatDex-`0x07`-nah, aber besser passend zum Ziel "bessere offensive Move-Auswahl ohne Utility-Spam". |
 | Tieferer Port | Noetig, wenn das Ziel "Ironmon/NatDex `0x07` verhaltensnah" ist. Dann reicht das CFRU-Bit-Mapping nicht; man muesste die NatDex `AI_CheckViability` / `AI_TryToFaint`-Semantik nachbilden oder gezielt anpassen. |
 
 Projekt-Empfehlung fuer den naechsten Schritt:
 
-- Aktuellen v1-Schalter fuer Smoke nicht sofort verwerfen.
-- Den Smoke explizit auf statuslastige Move-Auswahl ausweiten: Sand Attack, Accuracy-Drops, Status, Setup, sicherer KO, staerkster Damage-Move.
-- Danach entscheiden, ob die Randomizer-/Ironmon-Default-Option lieber CFRU-`CHECK_GOOD_MOVE` nutzt oder eine konservativere Kombination testet.
+- v2-Schalter mit `AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_SEMI_SMART` smoke-testen.
+- Den Smoke explizit auf statuslastige Move-Auswahl ausweiten: Sand Attack/Sandwirbel, Accuracy-Drops, Status, Setup, sicherer KO, staerkster Damage-Move.
+- Danach entscheiden, ob diese konservativere CFRU-native AI fuer den Randomizer-Default ausreicht oder ob ein tieferer NatDex/Ironmon-Port noetig ist.
 - Keine Difficulty-Hard/Expert-Nebeneffekte als Ausweichloesung verwenden.
 
 ## Risiken und Annahmen
@@ -160,8 +165,8 @@ Projekt-Empfehlung fuer den naechsten Schritt:
 
 - A/B-Smoke mit denselben Trainern und Movesets:
   - Flag off
-  - v1 all-three-flags
-  - optional spaeter eine konservativere Testkombination ohne `AI_SCRIPT_CHECK_GOOD_MOVE`
+  - v2 `AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_SEMI_SMART`
+  - bei Bedarf Vergleich gegen v1 all-three-flags als bekannte utility-lastige Referenz
 - Fuer jeden Sample-Trainermove dokumentieren: sicherer KO, staerkster Damage, Status/Accuracy-Drop, Setup, Typeneffekt.
 - Source-seitig pruefen, ob eine kleine CFRU-native Tuning-Stelle fuer Accuracy-Drops existiert, ohne NatDex/Ironmon-Naehenaussage zu vermischen.
 - Wenn exakte Ironmon-Naehe erforderlich wird, Design fuer einen tieferen Port von `AI_CheckViability` und `AI_TryToFaint` ausarbeiten.
