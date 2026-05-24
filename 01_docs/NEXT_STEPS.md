@@ -6,6 +6,14 @@
 - If v2 still overuses Sand Attack/Accuracy-down, prefer a targeted utility-scoring or tie-break experiment, or a deeper Vanilla/NatDex `AI_CheckViability` / `AI_TryToFaint` port. Do not re-add `AI_SCRIPT_CHECK_GOOD_MOVE` globally without a focused scoring design.
 - Continue excluding ROM paths, hashes, full logs, screenshots, output ROMs, saves, emulator states, builds, private paths, secrets, tokens and `.env` data.
 
+# Next steps update - Smart AI patch source verification
+
+- Treat `01_docs/analysis/smart-ai-patch-source-verification.md` as the current source-backed reference for original FireRed/LeafGreen Smart-AI patch behavior.
+- Do not describe CFRU v1 as behavior-identical to Ironmon/NatDex `0x07`: tom-overton/NatDex use classic Gen3 `CHECK_BAD_MOVE | CHECK_VIABILITY | TRY_TO_FAINT`, while CFRU v1 used `CHECK_BAD_MOVE | SEMI_SMART | CHECK_GOOD_MOVE`.
+- Keep CFRU v2 as the immediate smoke candidate: `FLAG_SMART_TRAINER_AI` should add `AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_SEMI_SMART` while `VAR_GAME_DIFFICULTY` stays Normal.
+- If v2 is too weak, decide explicitly between a source-port of Vanilla/NatDex `AI_CheckViability` / `AI_TryToFaint` semantics and a separate damage-/KO-oriented CFRU mode. Do not re-enable `CHECK_GOOD_MOVE` just for numeric `0x07` similarity without addressing utility/Accuracy-drop scoring.
+- Continue excluding ROM paths, ROM hashes, full logs, screenshots, output ROMs, saves, emulator states, builds, patch assets, private paths, secrets, tokens and `.env` data.
+
 # Next steps update - CFRU Smart Trainer AI v2 utility-spam reduction
 
 - Treat Smart Trainer AI v2 as the current implementation candidate: `FLAG_SMART_TRAINER_AI` now adds `AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_SEMI_SMART`, not `AI_SCRIPT_CHECK_GOOD_MOVE`.
