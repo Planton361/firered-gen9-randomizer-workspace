@@ -1,3 +1,12 @@
+# Session update - CFRU Smart Trainer AI smoke confirmation
+
+- Branch: `feature/cfru-smart-trainer-ai-smoke-script`.
+- Added a visible confirmation to the existing Pallet smoke activation path.
+- CFRU script scope: `EventScript_Pallet_FatGuy` still sets `0xA0E` for `FLAG_SMART_TRAINER_AI`, then shows `Smart Trainer AI enabled.` through the Pallet script string table.
+- Behavior boundary: no `VAR_GAME_DIFFICULTY`, Battle AI, trainer-build, wild/raid AI, Option Menu, Settings NPC, toggle, or `build_pokemon.c` change was made.
+- Documentation updated in `08_tests/randomizer/cfru-smart-trainer-ai-smoke-plan.md` so local flag-on smoke expects the visible confirmation before sampled trainer battles.
+- Safety boundary: no ROMs, saves, emulator states, builds, logs, screenshots, tool binaries, private paths, secrets, tokens or `.env` data were read or documented.
+
 # Session update - CFRU Smart Trainer AI smoke activation
 
 - Branch: `feature/cfru-smart-trainer-ai-smoke-script`.

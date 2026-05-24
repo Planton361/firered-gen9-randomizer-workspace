@@ -1,3 +1,10 @@
+# Next steps update - CFRU Smart Trainer AI smoke confirmation
+
+- In local flag-on smoke, trigger `EventScript_Pallet_FatGuy` and confirm the visible message `Smart Trainer AI enabled.` before entering sampled trainer battles.
+- Keep the A/B split unchanged: baseline is Normal Difficulty without triggering the Pallet smoke script; test case is Normal Difficulty after the Pallet smoke script.
+- Continue verifying that only trainer AI behavior changes and that `VAR_GAME_DIFFICULTY`, trainer stats, levels, wild/raid behavior, player restrictions, battle rules, Expert anti-cheese and shift-switch behavior remain Normal-equivalent.
+- Do not treat this confirmation as final UX; Settings NPC, Option Menu, toggle and randomizer-profile wiring remain separate decisions after smoke evidence.
+
 # Next steps update - CFRU Smart Trainer AI smoke activation
 
 - Treat `EventScript_Pallet_FatGuy` in `02_external/CFRU-expansion/assembly/overworld_scripts/Pallet_town.s` as the current local-only smoke activation path for `FLAG_SMART_TRAINER_AI`.

@@ -1,3 +1,12 @@
+# Tool Manifest Update - 2026-05-24 - CFRU Smart Trainer AI smoke confirmation
+
+- CFRU fork base branch: `feature/cfru-smart-trainer-ai-smoke-script`.
+- Workspace submodule `02_external/CFRU-expansion` now pins CFRU commit `b0b750faa66700dfb923b76e6302291ca248193e`.
+- Scope: adds a visible Pallet smoke confirmation after `FLAG_SMART_TRAINER_AI` activation: `Smart Trainer AI enabled.`
+- Status impact: local testers can visually confirm the flag-on smoke path before entering sampled trainer battles.
+- Boundary: this is not final player UX. No Settings NPC, Option Menu, toggle, randomizer-profile wiring, `VAR_GAME_DIFFICULTY`, Battle AI, trainer-build, level-scaling, wild/raid AI, bag/move restriction, battle-rule, Expert anti-cheese, shift-switch, DPE or UPR-FVX code change was included.
+- Safety: no ROM/save/output/log artifact committed, no private path/ROM hash/full log/screenshot documented and no build artifact committed.
+
 # Tool Manifest Update - 2026-05-24 - CFRU Smart Trainer AI smoke activation
 
 - CFRU fork base branch: `feature/cfru-smart-trainer-ai-smoke-script`.
