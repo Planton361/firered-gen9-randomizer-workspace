@@ -1,3 +1,13 @@
+# Session update - Ironmon Tracker CFRU/DPE compatibility
+
+- Branch: `analysis/ironmon-tracker-cfru-dpe-compat`.
+- Added `01_docs/analysis/ironmon-tracker-cfru-dpe-compat.md` and `08_tests/randomizer/ironmon-tracker-cfru-dpe-compat-plan.md`.
+- Scope: documentation-only, source-backed assessment of Ironmon Tracker / NatDexExtension compatibility risks for the CFRU/DPE/Gen9 FireRed target.
+- Key finding: stock Ironmon Tracker is not expected to be drop-in compatible because it reads vanilla Gen 3 encrypted party Pokemon substructures, stock address profiles and stock data lists, while CFRU/DPE uses expanded direct Pokemon structs, Gen9 species/move/item data, repointed tables and expanded trainer party layouts.
+- NatDexExtension is useful as an extension pattern, but its detection, hardcoded addresses and resources are CyanSMP64 NatDex-specific and not a direct CFRU/DPE solution.
+- `FLAG_SMART_TRAINER_AI` is not expected to affect Tracker memory compatibility because it changes battle-time trainer AI flags rather than Pokemon/table layouts.
+- Safety boundary: no ROMs, saves, emulator states, builds, screenshots, raw logs, hashes, private paths, tool binaries, patches, secrets, tokens or `.env` data were read or documented.
+
 # Session update - CFRU Expert AI isolation
 
 - Branch: `analysis/cfru-expert-ai-isolation`.
