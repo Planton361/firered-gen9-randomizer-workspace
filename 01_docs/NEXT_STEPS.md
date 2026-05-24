@@ -1,3 +1,11 @@
+# Next steps update - Tracker source references
+
+- Treat `01_docs/analysis/tracker-source-reference-map.md` as the current source map for Ironmon Tracker, NatDexExtension `dev_new`, and BizHawk local-tool boundaries.
+- Use `02_external/Ironmon-Tracker/ironmon_tracker/TrackerAPI.lua` first for Tracker API compatibility analysis, then inspect `Memory.lua`, `GameSettings.lua`, `Program.lua`, and `ironmon_tracker/data/PokemonData.lua`, `MoveData.lua`, `AbilityData.lua`, and `TrainerData.lua` as needed.
+- Use `02_external/NatDexExtension/NatDexExtension.lua` as the `dev_new` extension entry point, but keep it as a CyanSMP64/NatDex reference rather than assuming it is a drop-in CFRU/DPE/Gen9 compatibility layer.
+- Keep BizHawk local and ignored. Do not add a BizHawk source submodule or commit release zips, AppImages, builds, tool binaries, screenshots, raw logs, ROM paths, hashes, saves or emulator states.
+- Recommended next analysis block: compare Tracker API and memory reads against CFRU/DPE/Gen9 species, moves, abilities, item IDs and battle/party memory assumptions.
+
 # Next steps update - CFRU Expert AI isolation
 
 - Treat `01_docs/analysis/cfru-expert-ai-isolation.md` as the current source-backed reference for Expert Difficulty vs. Smart Trainer AI v2.
