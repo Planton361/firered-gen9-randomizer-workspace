@@ -223,6 +223,8 @@ Observed labels are normalized before comparison with expected source constants.
 
 Loaded-manifest comparison uses the same normalization layer. For Species, stable source/internal IDs are also accepted as loaded matches, so form keys such as `rotom_heat` do not become hard `EXPECTED_NOT_LOADED` rows when the manifest uses a base display label with the same internal ID. For Items, matching intentionally prefers canonical/name aliases over raw IDs because source item IDs and loaded manifest IDs may not always be comparable across local tables.
 
+Loaded-item aliases may also include manifest-only local display names such as `Safe Guard` for source-expected `Safety Goggles`. Those aliases are not applied to Pokemon, moves, or TM/HM move-name parsing.
+
 Non-reward bookkeeping constants such as `ITEM_USE_*`, key-item/system constants, free-space placeholders, local Mega accessory placeholders, and reviewed legacy/source-collision constants are excluded from the expected reward item index. If an older expected TSV still contains such a row, compare mode does not promote it to a hard loaded-manifest failure.
 
 Trainer held items are parsed only from explicit Trainer Pokemon party entries with `Species@Item Lv...` format. Trainer-class labels such as `Black Belt` are not treated as held items unless they appear in that explicit item position.

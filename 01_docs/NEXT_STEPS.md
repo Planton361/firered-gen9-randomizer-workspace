@@ -14,6 +14,14 @@
 - If choosing the more conservative CFRU-native path, document clearly that `AI_SCRIPT_SEMI_SMART` alone is intentionally weaker than the NatDex/Ironmon `0x07` model.
 - Before implementation, confirm whether the branch should import or wait for the separate `ironmon-smart-ai-patch-map.md` documentation PR, because that file is not currently present on this feature branch.
 
+# Next steps update - Ironmon / NatDex Smart AI patch map
+
+- Treat `01_docs/analysis/ironmon-smart-ai-patch-map.md` as the current source-backed comparison reference for Ironmon/Super-Kaizo/NatDex Smart AI.
+- Baseline conclusion: do not use CFRU `VAR_GAME_DIFFICULTY` as a Smart-AI proxy. The NatDex/Ironmon source-backed behavior is trainer-AI-flag focused, while CFRU Difficulty also changes trainer strength, level scaling, player restrictions, wild/raid behavior and battle rules.
+- If implementing CFRU Smart Trainer AI, decide whether v1 is conservative (`AI_SCRIPT_SEMI_SMART` only) or closer to the NatDex/Ironmon `0x07` model by setting the nearest CFRU equivalents of Bad-Move, Semi-Smart/Viability and Good-Move/Try-to-Faint behavior.
+- Keep wild AI, Expert anti-cheese, trainer build strength, bag restrictions, move restrictions and battle-rule changes out of the baseline Smart Trainer AI option unless separately requested.
+- Do not download, apply or commit ROM patches or randomizer release zips. Continue excluding ROMs, output ROMs, saves, emulator states, builds, tool binaries, private paths, hashes, full logs, secrets, tokens and `.env` data.
+
 # Next steps update - CFRU Smart AI source-port map
 
 - Treat `01_docs/analysis/cfru-smart-ai-source-port-map.md` as the current source-backed map for a future Smart Trainer AI only source-port.
