@@ -1,3 +1,12 @@
+# Tool Manifest Update - 2026-05-25 - Tracker source references
+
+- Workspace branch: `setup/tracker-source-references`.
+- Added read-only source submodule reference `02_external/Ironmon-Tracker` on branch `main` at commit `c450ecaee2d8131a2789bb656e3be792a93712fb`.
+- Added read-only source submodule reference `02_external/NatDexExtension` on branch `dev_new` at commit `a94b8844800308248bb5090b6c36c8b2d7e5d7b9`.
+- Central Tracker API analysis source: `02_external/Ironmon-Tracker/ironmon_tracker/TrackerAPI.lua`, corresponding to the project shorthand `IronmonTrackerAPI.lua`.
+- BizHawk remains a local tool target only. No BizHawk source submodule, release zip, AppImage, build output or binary is added to the repo.
+- Safety: no ROMs, saves, emulator states, builds, tool binaries, screenshots, raw logs, hashes, private paths, secrets, tokens or `.env` data were read or documented.
+
 # Tool Manifest Update - 2026-05-24 - CFRU Smart Trainer AI v2 utility-spam reduction
 
 - CFRU fork base branch: `fix/cfru-smart-trainer-ai-v2-reduce-utility-spam`.
@@ -877,11 +886,11 @@ Der aktuelle Arbeitsblock pinnt den Workspace auf den UPR-FVX-Normal-Palette-Sin
 | DPE Gen9 | Pokémon Expansion | https://github.com/Shiny-Miner/Dynamic-Pokemon-Expansion-Gen-9 | offen | `02_external/Dynamic-Pokemon-Expansion-Gen-9` | offen | offen | nur nach Freigabe | Hauptbasis-Kandidat; nicht geklont |
 | Skeli789 CFRU | Upstream CFRU-Referenz | https://github.com/Skeli789/Complete-Fire-Red-Upgrade | n/a | `02_external/Complete-Fire-Red-Upgrade` | offen | offen | nein, Referenz zuerst | read-only geprüft; nicht geklont |
 | Skeli789 DPE | Upstream DPE-Referenz | https://github.com/Skeli789/Dynamic-Pokemon-Expansion | n/a | `02_external/Dynamic-Pokemon-Expansion` | offen | offen | nein, Referenz zuerst | read-only geprüft; nicht geklont |
-| CyanSMP64 NatDexExtension | IronMON/NatDex-Referenz | https://github.com/CyanSMP64/NatDexExtension | offen | `02_external/NatDexExtension` | offen | offen | nur nach Freigabe | read-only geprüft; nicht geklont |
+| CyanSMP64 NatDexExtension | IronMON/NatDex-Referenz | https://github.com/CyanSMP64/NatDexExtension | offen | `02_external/NatDexExtension` | `dev_new` | `a94b8844800308248bb5090b6c36c8b2d7e5d7b9` | nein, read-only Referenz | read-only Source-Submodule; Analysevorlage, keine Drop-in-Annahme fuer CFRU/DPE |
 | pret/pokefirered | FireRed Decomp-Referenz | https://github.com/pret/pokefirered | n/a | `02_external/pokefirered` | offen | offen | nein, Referenz zuerst | read-only geprüft; nicht geklont |
 | Hex Maniac Advance | ROM-Analyse | offen | n/a | `03_tools/releases` | n/a | n/a | nein | Quelle offen; Tool-Binary nicht committen |
-| BizHawk | Emulator | https://github.com/TASEmulators/BizHawk | n/a | `03_tools/releases` | n/a | n/a | nein | read-only geprüft; Tool-Binary nicht committen |
-| Ironmon Tracker | Tracker | https://github.com/besteon/Ironmon-Tracker | offen | `02_external/Ironmon-Tracker` | offen | offen | nur nach Freigabe | read-only geprüft; nicht geklont |
+| BizHawk | Emulator | https://github.com/TASEmulators/BizHawk | n/a | `03_tools/releases` oder lokale User-Installation | n/a | n/a | nein | lokales Toolziel; kein Source-Submodule, keine Release-Zips/AppImages/Binaries committen |
+| Ironmon Tracker | Tracker | https://github.com/besteon/Ironmon-Tracker | offen | `02_external/Ironmon-Tracker` | `main` | `c450ecaee2d8131a2789bb656e3be792a93712fb` | nein, read-only Referenz | read-only Source-Submodule; zentrale API-Quelle `ironmon_tracker/TrackerAPI.lua` |
 
 ## Lokale Submodule-Pins 2026-05-14
 

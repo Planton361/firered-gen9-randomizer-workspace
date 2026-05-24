@@ -8,6 +8,17 @@
 - `FLAG_SMART_TRAINER_AI` is not expected to affect Tracker memory compatibility because it changes battle-time trainer AI flags rather than Pokemon/table layouts.
 - Safety boundary: no ROMs, saves, emulator states, builds, screenshots, raw logs, hashes, private paths, tool binaries, patches, secrets, tokens or `.env` data were read or documented.
 
+# Session update - Tracker source references
+
+- Branch: `setup/tracker-source-references`.
+- Added workspace documentation for the new read-only source submodules `02_external/Ironmon-Tracker` and `02_external/NatDexExtension`.
+- Ironmon Tracker is documented on branch `main` at commit `c450ecaee2d8131a2789bb656e3be792a93712fb`.
+- NatDexExtension is documented as the `dev_new` source on commit `a94b8844800308248bb5090b6c36c8b2d7e5d7b9`.
+- BizHawk remains a local tool target only: no BizHawk source submodule, release zip, AppImage, build output or binary is part of the repo.
+- `02_external/Ironmon-Tracker/ironmon_tracker/TrackerAPI.lua` is now documented as the central Tracker API analysis source; this corresponds to the project shorthand `IronmonTrackerAPI.lua`.
+- `.gitmodules` was synchronized so existing CFRU/DPE/UPR/reference mappings remain present while the two tracker references are added.
+- Safety boundary: no ROMs, saves, emulator states, builds, tool binaries, screenshots, raw logs, hashes, private paths, secrets, tokens or `.env` data were read or documented.
+
 # Session update - CFRU Expert AI isolation
 
 - Branch: `analysis/cfru-expert-ai-isolation`.

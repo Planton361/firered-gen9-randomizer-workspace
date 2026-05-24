@@ -1,7 +1,34 @@
+[submodule "02_external/upr-fvx"]
+	path = 02_external/upr-fvx
+	url = https://github.com/Planton361/universal-pokemon-randomizer-fvx.git
+[submodule "02_external/Dynamic-Pokemon-Expansion-Gen-9"]
+	path = 02_external/Dynamic-Pokemon-Expansion-Gen-9
+	url = https://github.com/Planton361/Dynamic-Pokemon-Expansion-Gen-9.git
+[submodule "02_external/CFRU-expansion"]
+	path = 02_external/CFRU-expansion
+	url = https://github.com/Planton361/CFRU-expansion.git
+[submodule "02_external/references/cyansmp64-upr-zx-natdex"]
+	path = 02_external/references/cyansmp64-upr-zx-natdex
+	url = https://github.com/CyanSMP64/universal-pokemon-randomizer-zx.git
+	branch = natdex
+[submodule "02_external/references/cyansmp64-pokefirered-natdex"]
+	path = 02_external/references/cyansmp64-pokefirered-natdex
+	url = https://github.com/CyanSMP64/pokefirered.git
+	branch = natdex
+[submodule "02_external/references/upr-fvx-upstream"]
+	path = 02_external/references/upr-fvx-upstream
+	url = https://github.com/upr-fvx/universal-pokemon-randomizer-fvx.git
+[submodule "02_external/references/upr-zx-ajarmar"]
+	path = 02_external/references/upr-zx-ajarmar
+	url = https://github.com/Ajarmar/universal-pokemon-randomizer-zx.git
+[submodule "02_external/references/pret-pokefirered"]
+	path = 02_external/references/pret-pokefirered
+	url = https://github.com/pret/pokefirered.git
 [submodule "02_external/Ironmon-Tracker"]
-path = 02_external/Ironmon-Tracker
-url = https://github.com/besteon/Ironmon-Tracker.git
+	path = 02_external/Ironmon-Tracker
+	url = https://github.com/besteon/Ironmon-Tracker.git
+	branch = main
 [submodule "02_external/NatDexExtension"]
-path = 02_external/NatDexExtension
-url = https://github.com/CyanSMP64/NatDexExtension.git
-branch = dev_new
+	path = 02_external/NatDexExtension
+	url = https://github.com/CyanSMP64/NatDexExtension.git
+	branch = dev_new

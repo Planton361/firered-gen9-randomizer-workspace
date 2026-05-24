@@ -22,13 +22,13 @@ Dieser Arbeitsblock ist read-only/planend:
 | FireRed Gen9 | Shiny-Miner/Dynamic-Pokemon-Expansion-Gen-9 | https://github.com/Shiny-Miner/Dynamic-Pokemon-Expansion-Gen-9 | DPE-/Gen9-Basis prüfen | Fork von Skeli789/Dynamic-Pokemon-Expansion; Kandidat, aber vor Nutzung Commit/Branch pinnen | read-only geprüft; Hauptbasis-Kandidat |
 | Upstream | Skeli789/Complete-Fire-Red-Upgrade | https://github.com/Skeli789/Complete-Fire-Red-Upgrade | CFRU-Referenz | enthält FireRed-Upgrade/Battle-Engine-Referenz; Build erfordert später lokale ROM und Toolchain, daher aktuell nur Doku/Code-Referenz | read-only geprüft; Upstream-Referenz |
 | Upstream | Skeli789/Dynamic-Pokemon-Expansion | https://github.com/Skeli789/Dynamic-Pokemon-Expansion | DPE-Referenz | dynamische FireRed-Pokémon-Erweiterung; soll mit CFRU genutzt werden | read-only geprüft; Upstream-Referenz |
-| NatDex/IronMON | CyanSMP64/NatDexExtension | https://github.com/CyanSMP64/NatDexExtension | NatDex-/Randomizer-/Tracker-nahe Referenz | aktuelle Referenz für IronMON NatDex-Erweiterung; relevant wegen FireRed, 1209 Pokémon und Tracker-/BizHawk-Anforderungen | read-only geprüft |
+| NatDex/IronMON | CyanSMP64/NatDexExtension | https://github.com/CyanSMP64/NatDexExtension | NatDex-/Randomizer-/Tracker-nahe Referenz | aktuelle Referenz für IronMON NatDex-Erweiterung; relevant wegen FireRed, 1209 Pokémon und Tracker-/BizHawk-Anforderungen | read-only Submodule aktiv; `dev_new` gepinnt |
 | NatDex Referenz | CyanSMP64/pokefirered | https://github.com/CyanSMP64/pokefirered | FireRed/NatDex-Referenz | Fork von pret/pokefirered; erst nach genauer Branch-/Commit-Prüfung nutzen | offen |
 | Randomizer Referenz | CyanSMP64/universal-pokemon-randomizer-zx | https://github.com/CyanSMP64/universal-pokemon-randomizer-zx | Randomizer-Referenz | nur relevant, falls NatDexExtension auf eigene Randomizer-Änderungen verweist | offen |
 | Decomp Referenz | pret/pokefirered | https://github.com/pret/pokefirered | FireRed-Architektur/Symbole | englische FireRed/LeafGreen-Decompilation; gute Referenz für Strukturen, Builds erst später | read-only geprüft |
 | Editor | Hex Maniac Advance | offen | ROM-Analyse und Tabellenprüfung | Quelle/Release muss noch eindeutig festgelegt werden; keine Tool-Binaries committen | offen |
-| Emulator | BizHawk | https://github.com/TASEmulators/BizHawk | Emulatorziel | multi-system Emulator; relevant für IronMON Tracker und spätere Smoke-Tests | read-only geprüft |
-| Tracker | Ironmon Tracker | https://github.com/besteon/Ironmon-Tracker | Trackerziel | Lua-Tracker für BizHawk/mGBA; unterstützt FireRed/LeafGreen/RSE; Contributions gehen laut Repo-Prozess gegen Dev | read-only geprüft |
+| Emulator | BizHawk | https://github.com/TASEmulators/BizHawk | Emulatorziel | multi-system Emulator; relevant für IronMON Tracker und spätere Smoke-Tests | lokales Toolziel; kein Source-Submodule, keine Binaries im Repo |
+| Tracker | Ironmon Tracker | https://github.com/besteon/Ironmon-Tracker | Trackerziel | Lua-Tracker für BizHawk/mGBA; unterstützt FireRed/LeafGreen/RSE; Contributions gehen laut Repo-Prozess gegen Dev | read-only Submodule aktiv; `main` gepinnt |
 | Toolchain | devkitPro/devkitARM | https://devkitpro.org/ | GBA-Build-Toolchain | erst später lokal prüfen; keine Installation in diesem Block | Plan dokumentiert; Installations-/Versionscheck spaeter |
 | Agent Workflow | OpenAI Codex AGENTS.md | https://github.com/openai/codex | Agent-Regeln | nur für Workflow-Regeln relevant | offen |
 | Git Workflow | GitHub Docs | https://docs.github.com/ | Branches, PRs, Forks, Schutzregeln | nur Doku-Referenz | offen |
@@ -37,6 +37,17 @@ Dieser Arbeitsblock ist read-only/planend:
 | Referenz | UPR-FVX Upstream | https://github.com/upr-fvx/universal-pokemon-randomizer-fvx | Upstream-Vergleich gegen Planton361-Fork; keine Änderungen | read-only Submodule | aktiv |
 | Referenz | Ajarmar UPR-ZX | https://github.com/Ajarmar/universal-pokemon-randomizer-zx | historische Randomizer-Basis; Vergleich zu FVX und CyanSMP64-NatDex-Fork | read-only Submodule | aktiv |
 | Referenz | pret FireRed | https://github.com/pret/pokefirered | Vanilla-FireRed-Decomp-Baseline für BPRE-Datenstrukturen | read-only Submodule | aktiv |
+
+## Tracker-Source-Referenzen 2026-05-25
+
+Arbeitsblock: `setup/tracker-source-references`.
+
+| Bereich | Quelle | URL / lokaler Pfad | Branch / Commit | Zweck | Status |
+|---|---|---|---|---|---|
+| Tracker | Ironmon Tracker | `02_external/Ironmon-Tracker` / https://github.com/besteon/Ironmon-Tracker | `main` / `c450ecaee2d8131a2789bb656e3be792a93712fb` | Source-Referenz für Tracker-Lua, BizHawk-/mGBA-Integration und Memory/API-Kompatibilitätsanalyse | read-only Submodule |
+| Tracker API | `TrackerAPI.lua` | `02_external/Ironmon-Tracker/ironmon_tracker/TrackerAPI.lua` | Teil von Ironmon Tracker `c450ecaee2d8131a2789bb656e3be792a93712fb` | Zentrale Tracker-API-Analysequelle; im Projektkontext als `IronmonTrackerAPI.lua` benannt | read-only Source |
+| NatDex Tracker Extension | CyanSMP64 NatDexExtension | `02_external/NatDexExtension` / https://github.com/CyanSMP64/NatDexExtension | `dev_new` / `a94b8844800308248bb5090b6c36c8b2d7e5d7b9` | Source-Referenz für NatDex-/Ironmon-Tracker-Erweiterung; keine Drop-in-Annahme für CFRU/DPE/Gen9 | read-only Submodule |
+| Emulator Tool | BizHawk | https://github.com/TASEmulators/BizHawk | n/a | Lokales Toolziel für spätere Tracker-Smokes | kein Source-Submodule; keine Release-Zips, AppImages oder Binaries im Repo |
 
 ## Ironmon / Smart AI Referenzen 2026-05-24
 
