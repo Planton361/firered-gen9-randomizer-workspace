@@ -1,3 +1,13 @@
+# Session update - Smart AI move scoring comparison
+
+- Branch: `analysis/smart-ai-scoring-comparison`.
+- Added `01_docs/analysis/smart-ai-scoring-comparison.md`.
+- Scope: documentation-only comparison of NatDex/Ironmon Smart AI `0x07` move scoring vs. CFRU `FLAG_SMART_TRAINER_AI` v1 scoring.
+- Key finding: CFRU v1 is numerically close to NatDex/Ironmon `0x07`, but not behavior-identical. CFRU `AI_SCRIPT_CHECK_GOOD_MOVE` runs `AIScript_Positives`, a broader utility/status scoring path; NatDex `0x07` runs classic `AI_CheckBadMove`, `AI_CheckViability`, and `AI_TryToFaint`.
+- Sand Attack explanation: CFRU does not penalize Accuracy-down when it is technically possible, and `AIScript_Positives` can boost it through `GoodIdeaToLowerAccuracy` plus class-based `IncreaseStatusViability`; this can outscore non-KO damage moves.
+- Updated `08_tests/randomizer/cfru-smart-trainer-ai-smoke-plan.md` so future smoke treats Sand Attack/status-heavy behavior as a scoring question, not automatically as hook failure or exact Ironmon equivalence.
+- Safety boundary: no CFRU/DPE source changes, no ROMs, saves, emulator states, builds, logs, screenshots, tool binaries, private paths, secrets, tokens or `.env` data were read or documented.
+
 # Session update - CFRU Smart Trainer AI smoke confirmation
 
 - Branch: `feature/cfru-smart-trainer-ai-smoke-script`.
