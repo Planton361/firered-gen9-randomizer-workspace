@@ -74,13 +74,21 @@ Do not commit the built ROMs, saves, output logs, screenshots, emulator state, o
 
 Use one or more early, repeatable trainer battles where the trainer has multiple plausible moves and where a bad move can be distinguished from a stronger move choice.
 
+Source-scoring caveat:
+
+- `FLAG_SMART_TRAINER_AI` currently adds `AI_SCRIPT_CHECK_GOOD_MOVE`, which runs CFRU `AIScript_Positives`.
+- CFRU positive scoring can value Accuracy-down and other status/utility moves when they are technically useful.
+- A flag-on trainer repeatedly choosing Sand Attack or similar utility moves is therefore not automatically a hook failure; it may be the expected result of CFRU scoring.
+- Do not describe that behavior as exact Ironmon/NatDex Smart-AI equivalence without the separate scoring comparison in `01_docs/analysis/smart-ai-scoring-comparison.md`.
+
 For each sampled trainer:
 
 1. Record sanitized setup only: trainer label/route category, difficulty Normal, flag state off/on, and a verbal move-choice observation.
 2. Run Case A with flag off.
 3. Run Case B with flag on under the same randomizer/profile conditions as far as practical.
 4. Check whether the flag-on case avoids clearly bad moves or chooses more threatening moves more often.
-5. Do not overclaim from one battle. Treat this as targeted smoke, not a statistical AI evaluation.
+5. Separately note whether the flag-on case prefers status/utility over direct damage, especially Sand Attack, Accuracy-down, evasion, setup, sleep, poison, paralysis, confusion, or leech-style moves.
+6. Do not overclaim from one battle. Treat this as targeted smoke, not a statistical AI evaluation.
 
 Acceptable evidence format:
 

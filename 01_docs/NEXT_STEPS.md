@@ -1,3 +1,12 @@
+# Next steps update - Smart AI move scoring comparison
+
+- Treat `01_docs/analysis/smart-ai-scoring-comparison.md` as the current source-backed reference for why CFRU v1 Smart Trainer AI can prefer Sand Attack/status-style moves.
+- Do not describe the current CFRU `FLAG_SMART_TRAINER_AI` v1 behavior as an exact Ironmon/NatDex Smart-AI port. It is numerically close to `0x07`, but CFRU `AI_SCRIPT_CHECK_GOOD_MOVE` uses broader positive utility scoring than NatDex `AI_CheckViability` / `AI_TryToFaint`.
+- Next local smoke should explicitly record whether flag-on trainers prefer Accuracy-down/status/setup over direct damage, and separate "not bad move" from "damage-oriented smart move".
+- If the project wants closer Ironmon/NatDex behavior, compare the current all-three-flags v1 against a conservative CFRU flag combination or design a deeper source-port of NatDex `AI_CheckViability` / `AI_TryToFaint` semantics.
+- Continue keeping `VAR_GAME_DIFFICULTY` Normal and do not use Hard/Expert difficulty as a Smart-AI shortcut.
+- Continue excluding ROM paths, hashes, full logs, screenshots, output ROMs, saves, emulator states, builds, private paths, secrets, tokens and `.env` data.
+
 # Next steps update - CFRU Smart Trainer AI smoke confirmation
 
 - In local flag-on smoke, trigger `EventScript_Pallet_FatGuy` and confirm the visible message `Smart Trainer AI enabled.` before entering sampled trainer battles.
