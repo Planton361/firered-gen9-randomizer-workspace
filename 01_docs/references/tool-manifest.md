@@ -1,3 +1,12 @@
+# Tool Manifest Update - 2026-05-24 - CFRU Smart Trainer AI smoke activation
+
+- CFRU fork base branch: `feature/cfru-smart-trainer-ai-smoke-script`.
+- Workspace submodule `02_external/CFRU-expansion` now pins CFRU commit `8f909da1abef6adabbfccf8767544924d114b287`.
+- Scope: adds a local smoke activation line to `EventScript_Pallet_FatGuy` in `assembly/overworld_scripts/Pallet_town.s`, setting `0xA0E` for `FLAG_SMART_TRAINER_AI`.
+- Status impact: local testers can run Normal Difficulty with the flag off by not triggering the Pallet test script, or flag on by triggering the existing Pallet test script once before sampled trainer battles.
+- Boundary: this is not final player UX. No Settings NPC, Option Menu, randomizer-profile wiring, `VAR_GAME_DIFFICULTY`, trainer-build, level-scaling, wild/raid AI, bag/move restriction, battle-rule, Expert anti-cheese, shift-switch, DPE or UPR-FVX code change was included.
+- Safety: no ROM/save/output/log artifact committed, no private path/ROM hash/full log/screenshot documented and no build artifact committed.
+
 # Tool Manifest Update - 2026-05-24 - CFRU Smart Trainer AI runtime flag
 
 - CFRU fork base branch: `feature/cfru-smart-trainer-ai-mode`.
