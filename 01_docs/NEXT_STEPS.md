@@ -1,3 +1,12 @@
+# Next steps update - CFRU Smart AI only design
+
+- Treat `01_docs/analysis/cfru-smart-ai-only-design.md` as the current source-backed policy note for Smart AI only vs CFRU runtime difficulty.
+- Baseline recommendation: do not expose `VAR_GAME_DIFFICULTY` as a Smart-AI randomizer option. Keep runtime difficulty Normal unless a user explicitly chooses a Hard-mode profile.
+- If Smart AI only becomes implementation work, keep trainer AI and wild AI separate. Start with `GetAIFlags` for trainer move-choice behavior, then decide separately on `ShouldDoAIShiftSwitch`, switch prediction, Expert anti-cheese, `WILD_ALWAYS_SMART`, and `FLAG_SMART_WILD`.
+- Future code work must prove it does not change trainer IVs, EVs, friendship, PP, level scaling, bag restrictions, move restrictions, battle rules, wild encounter builds, or raid behavior unless those are explicitly requested.
+- Keep the known dirty CFRU `src/config.h` state out of commits. Do not stage or modify `02_external/**`.
+- Do not run ROMs through Codex. Continue excluding ROM paths, hashes, full logs, screenshots, output ROMs, saves, emulator states, private paths, secrets, tokens and `.env` data.
+
 # Next steps update - CFRU game difficulty map
 
 - Treat `01_docs/analysis/cfru-game-difficulty-map.md` as the current source-backed reference for CFRU `VAR_GAME_DIFFICULTY 0x5157`.
