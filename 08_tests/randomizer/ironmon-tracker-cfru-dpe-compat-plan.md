@@ -1,58 +1,42 @@
-# Ironmon Tracker CFRU/DPE Local Compatibility Smoke Plan
+# Ironmon Tracker CFRU/DPE Compatibility Smoke Plan
 
-Date: 2026-05-25
-Branch: `analysis/ironmon-tracker-cfru-dpe-compat`
-Scope: local plan only. Do not commit ROMs, output ROMs, saves, emulator states, builds, screenshots, raw logs, hashes, private paths, tool binaries, secrets, tokens, or `.env` data.
+Status: local manual plan only. Do not commit ROMs, saves, emulator states, builds, screenshots, raw logs, hashes, private paths or tool binaries.
 
-## Goal
+## Purpose
 
-Determine how far the current Ironmon Tracker and NatDexExtension can read a local CFRU/DPE/Gen9 FireRed build, and identify the smallest extension/address-profile work needed for useful Tracker compatibility.
+Validate whether stock Ironmon Tracker, NatDexExtension `dev_new`, or a future CFRU/DPE-specific extension can read a CFRU/DPE/Gen9 FireRed-based ROM plausibly.
 
-## Preconditions
+The source map in `01_docs/analysis/tracker-memory-api-map.md` predicts that stock Tracker/NatDexExtension will not be sufficient without CFRU/DPE-specific address and data metadata.
 
-- Use a local ignored ROM/output ROM only.
-- Use a local ignored Tracker install or release folder; do not commit it.
-- Prefer BizHawk for first smoke because the Tracker README documents full graphical support there. mGBA can be a secondary text-window smoke.
-- Keep all notes sanitized: pass/fail summaries only, no full logs, screenshots, file paths, ROM hashes, or private data.
+## Safety boundaries
 
-## Smoke Matrix
+- Use local ROMs and emulator state only outside committed artifacts.
+- Record only sanitized pass/fail notes.
+- Do not document ROM paths, ROM hashes, private directories, screenshots, raw logs, save data or emulator states.
+- Do not force Tracker memory writes as part of compatibility smoke.
+- BizHawk remains a local tool; no BizHawk binaries or source are added to the repo.
 
-| Case | Setup | Expected observation | Pass/fail signal |
+## Smoke matrix
+
+| Case | Setup | What to check | Expected current result |
 | --- | --- | --- | --- |
-| Standard Tracker only | Load local CFRU/DPE/Gen9 ROM in BizHawk, then load Ironmon Tracker Lua without NatDexExtension. | Tracker may identify FireRed by header, but vanilla addresses/data are likely wrong or incomplete. | PASS only if current player Pokemon, moves, stats, and enemy data are plausible. FAIL if species/moves/items show as unknown, wrong, or unstable. |
-| Standard Tracker + NatDexExtension | Enable NatDexExtension with the same local ROM. | Extension may not detect the ROM because it expects CyanSMP64 NatDex count/address values. | PASS only if extension activates and improves species/move/resource display. Expected result is likely FAIL/BLOCKED for drop-in use. |
-| Battle-only observation | Enter a simple wild battle and a trainer battle. | Battle memory may be closer to Tracker expectations than party memory. | Record whether active enemy species, enemy moves used, HP/status/types and current player mon look plausible. |
-| Smart Trainer AI flag off/on | On Normal Difficulty, compare without and with local `FLAG_SMART_TRAINER_AI` smoke activation. | Tracker reading should not change except for observed enemy move choices during battle. | PASS if Tracker data display is stable across flag off/on; AI behavior differences are separate from compatibility. |
-| Custom-extension future baseline | After a future CFRU/DPE extension exists, repeat with custom addresses and data resources. | Species, moves, abilities, items, party and battle data should become plausible. | PASS only with source-backed address/data mapping and sanitized local observations. |
+| Stock Tracker | Load the CFRU/DPE/Gen9 ROM with Ironmon Tracker only. | Whether Tracker recognizes the game; whether player species, level, current HP, moves and ability display plausibly. | Likely unsupported or partially wrong if vanilla FireRed address JSON is applied to repointed CFRU/DPE tables. |
+| Stock Tracker battle read | Enter a simple trainer/wild battle locally. | Active player/enemy Pokemon, battle HP, status, types and enemy move display. | Requires validation; stock offsets may miss CFRU/DPE expanded fields. |
+| NatDexExtension dev_new | Enable the local NatDexExtension source in Tracker. | Whether the extension detects the ROM as NatDex and runs its address/data updates. | Expected not to activate unless `Memory.read32(0x08000170) == 1258`; do not force it on without a separate source-backed experiment. |
+| NatDexExtension data sanity | If it activates naturally, inspect species/move/ability names for DPE Gen9 examples. | Gen9 species, moves, abilities, items and forms should match CFRU/DPE source IDs. | Likely mismatch unless the ROM uses CyanSMP64 NatDex metadata and ID maps. |
+| Future CFRU/DPE extension | Load a purpose-built CFRU/DPE extension or custom address JSON. | Player party, enemy party, active battle Pokemon, species names, moves, abilities, held items, bag items and trainer data. | Target path. Requires generated CFRU/DPE metadata first. |
 
-## Data To Check In Game
+## Pass criteria for a future CFRU/DPE extension
 
-| Data | Local check | Notes |
-| --- | --- | --- |
-| Player lead species | Compare Tracker species/name/icon with in-game summary. | Important because CFRU direct party struct likely differs from Tracker vanilla encrypted read logic. |
-| Player moves and PP | Compare four moves and PP with in-game summary. | Move IDs beyond stock Tracker need Gen9 move data. |
-| Player stats | Compare HP/Attack/Defense/Speed/Sp. Atk/Sp. Def with in-game summary. | Stat offsets may still be plausible even if species/moves fail. |
-| Ability | Compare ability text with in-game summary. | Hidden ability and Gen9 ability mapping need attention. |
-| Held item | Compare held item ID/name/category with in-game summary. | Expanded CFRU/DPE item IDs likely require item data extension. |
-| Wild enemy | Enter one wild battle and compare active enemy species, HP/status/types and used moves. | Avoid documenting encounter table dumps or raw addresses. |
-| Trainer enemy | Enter one trainer battle and compare active enemy species, move use, and trainer metadata if visible. | Trainer table address and custom party layout are likely risk areas. |
-| Level-up move display | If Tracker shows learned moves, compare a small sample against in-game/source expectations. | CFRU `struct LevelUpMove` is 3 bytes, while Tracker assumes vanilla packed 2 bytes. |
+- Player party species/name/level/current HP/max HP/moves/PP/held item are plausible for all occupied slots.
+- Ability display handles ability 1, ability 2 and hidden ability cases.
+- Active battle reads show correct player and opponent species, HP, status and dynamic types.
+- Move names/types/power/accuracy/PP match CFRU/DPE source data for sampled Gen1, mid-dex and Gen9 moves.
+- Item names/categories match DPE item IDs for sampled bag and held items.
+- Trainer lookup identifies the active trainer and does not claim static party details that runtime randomizer/CFRU build logic can invalidate.
 
-## Recommended Smallest Next Step
+## Recommended next implementation step
 
-Run a local BizHawk smoke with standard Ironmon Tracker only, then with NatDexExtension enabled, and record sanitized pass/fail notes. Do not build a custom extension before confirming which parts fail in practice.
+Do not patch stock Tracker first. Build a small source-derived data/address manifest for CFRU/DPE, then prototype a minimal Tracker extension that loads those values through `TrackerAPI.loadGameSettingsFromJson`, `TrackerAPI.loadTrackerOverridesFromJson`, or NatDexExtension-style overrides.
 
-If standard/NatDex smoke fails as expected, the next implementation step should be a documentation-only design for a CFRU/DPE Tracker extension that first targets:
-
-1. address profile / table pointers,
-2. CFRU party Pokemon reader,
-3. species/move/ability/item text data,
-4. battle data verification,
-5. trainer custom party parser.
-
-## Safety Rules
-
-- Do not commit Tracker release folders, generated files, ROMs, saves, states, screenshots, builds, logs, hashes, private paths, or tool binaries.
-- Do not apply BPS/IPS/UPS patches in this repo.
-- Do not clone new external repos without explicit approval.
-- Keep `FLAG_SMART_TRAINER_AI` testing separate from Tracker compatibility: it is an AI behavior switch, not a memory-layout change.
+The first prototype should target read-only display correctness for party, active battle, move names and abilities. Trainer-party fidelity and full item categorization can follow after the basic memory map is proven.
