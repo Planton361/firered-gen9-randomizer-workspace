@@ -1,11 +1,10 @@
-# Next steps update - Ironmon Tracker CFRU/DPE compatibility
+# Next steps update - Tracker memory API map
 
-- Treat `01_docs/analysis/ironmon-tracker-cfru-dpe-compat.md` as the current source-backed risk map for Ironmon Tracker / NatDexExtension against CFRU/DPE/Gen9.
-- Treat `08_tests/randomizer/ironmon-tracker-cfru-dpe-compat-plan.md` as the safe local BizHawk smoke plan.
-- Smallest next step: run local BizHawk smoke with standard Ironmon Tracker, then NatDexExtension, and record only sanitized pass/fail notes for player species, moves, stats, ability, held item, enemy battle data and trainer data.
-- Expect NatDexExtension not to be drop-in: it is a CyanSMP64 NatDex extension with hardcoded detection/address/data resources. A future CFRU/DPE extension should start with custom addresses, direct party Pokemon reading and Gen9 species/move/ability/item data.
-- Keep Smart Trainer AI testing separate from Tracker compatibility; `FLAG_SMART_TRAINER_AI` changes move choice behavior, not Tracker-readable memory layouts.
-- Continue excluding ROM paths, hashes, full logs, screenshots, output ROMs, saves, emulator states, builds, private paths, tool binaries, patches, secrets, tokens and `.env` data.
+- Treat `01_docs/analysis/tracker-memory-api-map.md` as the current source-backed map for why stock Ironmon Tracker and NatDexExtension do not yet read CFRU/DPE/Gen9 correctly.
+- Use `08_tests/randomizer/ironmon-tracker-cfru-dpe-compat-plan.md` for local sanitized Tracker smoke. Do not commit ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds or tool binaries.
+- Preferred next technical step: generate or curate a small CFRU/DPE address/data manifest for Tracker consumption, then prototype a read-only CFRU/DPE Tracker extension.
+- Do not force NatDexExtension on as a shortcut. Its detection marker, pointer metadata and ID maps are NatDex-specific unless proven otherwise for the local CFRU/DPE ROM.
+- First extension smoke should prove player party, enemy party, active battle Pokemon, move names, ability names including hidden ability, and item names before claiming trainer-team fidelity.
 
 # Next steps update - Tracker source references
 

@@ -1,12 +1,13 @@
-# Session update - Ironmon Tracker CFRU/DPE compatibility
+# Session update - Tracker memory API map
 
-- Branch: `analysis/ironmon-tracker-cfru-dpe-compat`.
-- Added `01_docs/analysis/ironmon-tracker-cfru-dpe-compat.md` and `08_tests/randomizer/ironmon-tracker-cfru-dpe-compat-plan.md`.
-- Scope: documentation-only, source-backed assessment of Ironmon Tracker / NatDexExtension compatibility risks for the CFRU/DPE/Gen9 FireRed target.
-- Key finding: stock Ironmon Tracker is not expected to be drop-in compatible because it reads vanilla Gen 3 encrypted party Pokemon substructures, stock address profiles and stock data lists, while CFRU/DPE uses expanded direct Pokemon structs, Gen9 species/move/item data, repointed tables and expanded trainer party layouts.
-- NatDexExtension is useful as an extension pattern, but its detection, hardcoded addresses and resources are CyanSMP64 NatDex-specific and not a direct CFRU/DPE solution.
-- `FLAG_SMART_TRAINER_AI` is not expected to affect Tracker memory compatibility because it changes battle-time trainer AI flags rather than Pokemon/table layouts.
-- Safety boundary: no ROMs, saves, emulator states, builds, screenshots, raw logs, hashes, private paths, tool binaries, patches, secrets, tokens or `.env` data were read or documented.
+- Branch: `analysis/tracker-memory-api-map`.
+- Added `01_docs/analysis/tracker-memory-api-map.md` and `08_tests/randomizer/ironmon-tracker-cfru-dpe-compat-plan.md`.
+- Scope: documentation-only source review of Ironmon Tracker, NatDexExtension `dev_new`, and CFRU/DPE/Gen9 memory/data assumptions.
+- Key finding: stock Ironmon Tracker relies on vanilla Gen 3 ROM detection, address JSON, static Pokemon/move/ability/item/trainer tables, and vanilla party/battle/trainer layouts. CFRU/DPE/Gen9 breaks those assumptions through expanded species/moves/items/abilities, hidden ability, Tera/Gigantamax fields, and richer trainer-party/runtime build logic.
+- NatDexExtension is documented as a useful extension pattern, not a drop-in CFRU/DPE adapter: it activates on `Memory.read32(0x08000170) == 1258` and expects CyanSMP64/NatDex-specific pointer metadata.
+- Recommendation: prefer a small CFRU/DPE Tracker extension or source-derived address/data manifest over forcing stock NatDexExtension.
+- Note: the requested prior files `01_docs/analysis/ironmon-tracker-cfru-dpe-compat.md` and `08_tests/randomizer/ironmon-tracker-cfru-dpe-compat-plan.md` were not present at task start; the compat plan was created in this block.
+- Safety boundary: no `02_external/**` files were changed; no ROMs, saves, emulator states, builds, screenshots, raw logs, hashes, private paths, tool binaries, secrets, tokens or `.env` data were read or documented.
 
 # Session update - Tracker source references
 
