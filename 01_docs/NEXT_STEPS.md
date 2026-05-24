@@ -1,3 +1,14 @@
+# Next steps update - CFRU Smart AI source-port map
+
+- Treat `01_docs/analysis/cfru-smart-ai-source-port-map.md` as the current source-backed map for a future Smart Trainer AI only source-port.
+- Preferred design: keep `VAR_GAME_DIFFICULTY` Normal for the Randomizer/Ironmon baseline and introduce a separate trainer-AI option, preferably `VAR_TRAINER_AI_MODE` if future tiers are likely.
+- Minimal future implementation should start in `GetAIFlags`: for trainer battles, add `AI_SCRIPT_SEMI_SMART` when the new trainer-AI option is enabled and `AI_SCRIPT_CHECK_GOOD_MOVE` is absent.
+- Keep wild AI separate. Do not reuse CFRU `FLAG_SMART_WILD` as the global trainer toggle because it is an existing one-time wild state cleared after battle.
+- Do not include Expert anti-cheese, switch prediction, shift-switch behavior, raid behavior or wild special cases in the baseline without a separate design decision and targeted tests.
+- Future tests must prove trainer IVs, EVs, friendship, PP, levels, player bag access, player move access, battle rules, wild construction and raid behavior remain Normal-equivalent.
+- Keep the known dirty CFRU `src/config.h` state out of commits. Do not stage or modify `02_external/**`.
+- Do not run ROMs through Codex. Continue excluding ROM paths, hashes, full logs, screenshots, output ROMs, saves, emulator states, private paths, secrets, tokens and `.env` data.
+
 # Next steps update - CFRU Smart AI only design
 
 - Treat `01_docs/analysis/cfru-smart-ai-only-design.md` as the current source-backed policy note for Smart AI only vs CFRU runtime difficulty.
