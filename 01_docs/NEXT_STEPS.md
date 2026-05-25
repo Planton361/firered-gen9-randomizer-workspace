@@ -1,3 +1,11 @@
+# Next steps update - UPR-FVX Rival starter / trainer move-slot regression
+
+- Treat the UPR-FVX move-slot follow-up as the current implementation candidate: Better Movesets must compact away `MOVE_NONE` before writing trainer custom moves and clearing `resetMoves`.
+- Re-run the local sanitized Trainer Species plus Better Movesets smoke with `gBattleMons`, focusing on formerly observed `[-/Lick/Tackle/Ember]`-style rows. Slot 0 should not be empty when later slots are populated from a valid move pool.
+- For Route-22 Rival observations, record whether the visible enemy is the protected starter slot or a randomizable nonstarter slot before labeling it a carryover failure.
+- Keep `TrainerSpecialRulesTest` as the ROM-free guardrail for Route-22-style equal-level Rival teams; broaden local smoke across all starter choices only if sanitized evidence still contradicts the guarded behavior.
+- Continue excluding ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, local addresses, secrets, tokens and `.env` data.
+
 # Next steps update - UPR-FVX Trainer Better Movesets empty-pool fix
 
 - Treat the UPR-FVX empty-pool fix as the current implementation candidate: Better Movesets only clears `resetMoves` after writing at least one move.

@@ -64,6 +64,7 @@ Nach einem Fix sollte ein fokussierter Test bestaetigen:
 - `TrainerPokemonRandomizer` setzt nach Species-Ersatz weiterhin `resetMoves=true`.
 - `TrainerMovesetRandomizer` setzt `resetMoves=false` erst, wenn ein nichtleerer Pool tatsaechlich Move-Slots geschrieben hat.
 - Bei leerem Pool bleibt der Gen3-Writer-Fallback aktiv oder es wird ein expliziter sicherer Fallback geschrieben.
+- Bei einem nichtleeren Pool mit `MOVE_NONE` / leerem Slot-Kandidaten werden nur echte Moves geschrieben und nach vorne kompaktiert; ein Ergebnis wie `[-/Move/Move/Move]` ist ein Fail.
 - Reload bleibt ohne Species-/Move-Mismatches.
 - `gBattleMons` zeigt im Kampf die final erwarteten Moves.
 
@@ -78,6 +79,14 @@ UPR-FVX Fix-Branch `fix/trainer-better-movesets-empty-pool`:
   - nichtleerer Pool schreibt neue Moves und setzt `resetMoves=false`.
 
 Der lokale Gameplay-Smoke mit privatem Output-ROM bleibt der naechste Schritt.
+
+UPR-FVX Follow-up-Branch `fix/rival-starter-trainer-moveslot-regression`:
+
+- Better Movesets filtert `MOVE_NONE` / null moves vor dem Custom-Move-Write und kompaktiert echte Moves nach vorne.
+- ROM-freie Regression deckt ab:
+  - ein nichtleerer Better-Movesets-Pool mit `MOVE_NONE` schreibt `[move1, move2, move3, 0]`.
+  - ein Route-22-artiger Rival mit zwei gleichleveligen Slots behaelt den Counter-Starter im geschuetzten letzten Slot, waehrend der Nichtstarter-Slot weiterhin randomisiert sein darf.
+- Lokaler Re-Smoke sollte die sanitized Beispiele `[-/Lick/Tackle/Ember]` und `[-/Astonish/Mudslap/Pound]` erneut pruefen.
 
 ## Offene Smoke-Notizen
 
