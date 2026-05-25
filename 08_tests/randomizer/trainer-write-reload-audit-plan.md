@@ -44,6 +44,13 @@ Suggested command shape from `02_external/upr-fvx`:
 ```
 
 Inspect the local report under UPR-FVX `build/reports/diagnostics/`.
+The test also prints a sanitized line with the relative report path, for example:
+
+```text
+[UPRFVX-DIAG] reportPath=build/reports/diagnostics/trainer-runtime-source-post-randomization-audit-report.txt
+```
+
+The post-randomization audit prints a sanitized summary and any core warnings to the test output. If the report cannot be written, the test fails with the relative target path.
 
 Interpretation:
 

@@ -1,3 +1,11 @@
+# Next steps update - UPR-FVX trainer audit report output
+
+- Re-run the opt-in private-ROM post-randomization audit from `02_external/upr-fvx`.
+- If the report is hard to locate, use the printed sanitized `reportPath=build/reports/diagnostics/trainer-runtime-source-post-randomization-audit-report.txt` line from test output.
+- Use the printed summary and warning lines only to classify the layer; inspect the full local report privately for row details.
+- If the test fails on report writing, treat that as an infrastructure problem before interpreting any Route-22/Rival/Better-Movesets evidence.
+- Continue excluding ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, local addresses, secrets, tokens and `.env` data.
+
 # Next steps update - UPR-FVX trainer write/reload audit
 
 - Use the new post-randomization runtime-source audit before any further Route-22/Rival/Better-Movesets fixes.
