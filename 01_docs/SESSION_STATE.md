@@ -1,3 +1,11 @@
+# Session update - UPR-FVX trainer-load raw slot diagnostics
+
+- Branch: `analysis/upr-fvx-trainer-load-slot-raw-values` / UPR-FVX `analysis/upr-fvx-trainer-load-slot-raw-values`.
+- Extended the diagnostic-only trainer-load bounds context with sanitized raw values for the failing slot.
+- New fields include `rawSpecies` plus `speciesStatus`, optional `rawItem` plus `itemStatus`, `rawMoves=[...]` plus per-slot `moveStatus=[...]`, `expectedLayout`, and `bytesPerSlot`.
+- This targets the current private-ROM audit failure where trainer `1`, slot `0`, `custom-moves` layout has in-ROM trainer/party/slot offsets but still crashes with `ArrayIndexOutOfBoundsException`.
+- Scope remains reload/audit diagnosis only. No Randomizer behavior, CFRU/DPE code, Tracker code, ROM, save, build, screenshot, raw log, hash, private path, secret, token, or `.env` data was changed or documented.
+
 # Session update - UPR-FVX trainer-load bounds diagnostics
 
 - Branch: `analysis/upr-fvx-trainer-load-bounds-diagnostics` / UPR-FVX `analysis/upr-fvx-trainer-load-bounds-diagnostics`.
