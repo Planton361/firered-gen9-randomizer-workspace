@@ -1,3 +1,11 @@
+# Session update - CFRU/DPE Tracker manifest loader smoke
+
+- Branch: `feature/cfru-dpe-extension-manifest-loader-smoke`.
+- Extended `03_tools/tracker-extensions/CFRUDPEExtension/CFRUDPEExtension.lua` so startup reads committed `data/source-data.json` and logs source-derived counts.
+- Local manifest filenames are now explicit and ignored: `data/game-addresses.local.json` and `data/tracker-overrides.local.json`.
+- Loader behavior: missing local manifests are reported as missing without failing extension startup; present local manifests are passed to `TrackerAPI.loadGameSettingsFromJson` and `TrackerAPI.loadTrackerOverridesFromJson` with explicit paths and logged return status.
+- Scope remains loader smoke only. No Tracker-core fork, NatDexExtension change, `02_external/**` edit, ROM, save, emulator state, build, screenshot, raw log, hash, private path, `offsets.ini` data or real runtime address was added.
+
 # Session update - CFRU/DPE Tracker layout overrides
 
 - Branch: `analysis/cfru-dpe-tracker-layout-overrides`.
