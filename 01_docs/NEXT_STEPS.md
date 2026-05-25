@@ -1,3 +1,11 @@
+# Next steps update - UPR-FVX CFRU held-item custom-move rows
+
+- Treat the CFRU/DPE `partyFlags=3` expanded writer/reloader as the current implementation candidate for held-item custom-move rows.
+- Re-run the local sanitized Trainer Better Movesets smoke with a freshly built UPR-FVX jar and fresh output ROM. Focus on enemy rows that have both held items and custom moves; expected result is no leading empty move slot caused by the old classic 16-byte decode/write.
+- Re-run the private trainer write/reload audit. Expected row context for CFRU/DPE held-item custom moves is `layout=cfru-held-item-custom-moves`, `bytesPerSlot=32`, item offset `20`, move offset `22`, and no raw output mismatch warnings.
+- If `gBattleMons` still shows `[-/Move/Move/Move]` after the audit stays clean, re-check whether `FLAG_POKEMON_RANDOMIZER` causes CFRU to skip custom trainer moves and generate/default moves at runtime.
+- Continue excluding ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, local addresses, `.local.json`, secrets, tokens and `.env` data from commits.
+
 # Next steps update - CFRU runtime custom move construction
 
 - Treat `01_docs/analysis/cfru-runtime-custom-move-construction.md` as the current source-backed split between UPR-FVX raw trainer audit, CFRU runtime trainer construction, and Tracker `gBattleMons` reads.

@@ -1,3 +1,11 @@
+# Session update - UPR-FVX CFRU held-item custom-move rows
+
+- Branch: `diagnosis/upr-fvx-cfru-held-item-custom-moves` / UPR-FVX `diagnosis/upr-fvx-cfru-held-item-custom-moves`.
+- Confirmed the source-backed layout mismatch for Trainer rows with held item plus custom moves: classic Gen3 uses `partyFlags=3` as a 16-byte row with item at `+6` and moves at `+8`, while CFRU `TrainerMonItemCustomMoves` is a 32-byte row with ability/nature/IV/EV fields, held item at `+20`, moves at `+22`, and tera type at `+30`.
+- Updated UPR-FVX Gen3 trainer load/write diagnostics and CFRU/DPE mode writer/reloader to use the expanded `partyFlags=3` layout while keeping no-item custom rows and held-item default rows on their existing layouts.
+- Added ROM-free coverage for classic-vs-CFRU decode divergence and for the CFRU/DPE held-item custom-move writer shape.
+- Safety boundary: no CFRU/DPE or Tracker files were changed; no ROMs, saves, emulator states, builds, screenshots, raw logs, hashes, private paths, tool binaries, local addresses, secrets, tokens, or `.env` data were committed or documented.
+
 # Session update - CFRU runtime custom move construction
 
 - Branch: `analysis/cfru-runtime-custom-move-construction`.

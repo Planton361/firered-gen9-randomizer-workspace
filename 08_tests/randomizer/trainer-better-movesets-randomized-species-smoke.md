@@ -70,12 +70,20 @@ Nach einem Fix sollte ein fokussierter Test bestaetigen:
 
 ## Implementierungsstand
 
+CFRU/DPE held-item custom-move row fix candidate:
+
+- Source-backed Ursache fuer einen weiteren `[-/Move/Move/Move]`-Pfad: CFRU `TrainerMonItemCustomMoves` ist ein erweitertes 32-Byte-Layout, waehrend UPR-FVX `partyFlags=3` bisher wie klassisches Gen3 mit 16 Byte geschrieben/gelesen hat.
+- Klassisches Gen3 `partyFlags=3`: row size 16, item offset 6, move offset 8.
+- CFRU/DPE expanded `partyFlags=3`: row size 32, ability/nature/IV/EV-Felder vor dem Item, item offset 20, move offset 22, tera type offset 30.
+- UPR-FVX schreibt und reloaded CFRU/DPE `partyFlags=3` nun mit dem expanded Layout; no-item custom rows und held-item default rows bleiben beim bestehenden kompatiblen Layout.
+- Der private Re-Smoke sollte gezielt Trainer mit Item plus Custom-Moves pruefen und nur sanitized notieren, ob `gBattleMons` weiterhin fuehrende leere Move-Slots zeigt.
+
 CFRU runtime custom-move construction analysis:
 
 - UPR-FVX Write/Reload-Audit fuer die exakt getestete Output-ROM kann sauber sein, waehrend CFRU runtime trotzdem andere `gBattleMons`-Moves baut.
 - CFRU `SET_MOVES` kopiert Custom-Moves 0-basiert und exakt; ein fuehrender `MOVE_NONE` wuerde nicht kompaktiert.
 - CFRU `CreateNPCTrainerParty` kann Custom-Moves bei aktivem `FLAG_POKEMON_RANDOMIZER` bewusst ignorieren. Dann prueft der Smoke nicht Better-Movesets-Custom-Rows, sondern CFRUs generierte/default Move-Zuweisung.
-- Layout-Risiko: no-item custom rows sind zwischen UPR-FVX und CFRU kompatibel; held-item + custom-moves rows sind es vermutlich nicht, weil CFRU `TrainerMonItemCustomMoves` ein erweitertes Layout nutzt.
+- Layout-Risiko: no-item custom rows sind zwischen UPR-FVX und CFRU kompatibel; held-item + custom-moves rows benoetigen das CFRU-expanded Layout.
 - Naechster Smoke sollte fuer betroffene Trainer nur sanitized erfassen: Trainer-Kontext, Party-Slot, partyFlags-Kategorie, ob Item+Custom aktiv ist, Species/Level und Move-Namen.
 
 UPR-FVX Follow-up-Branch `fix/route22-rival-starter-slot-actual`:

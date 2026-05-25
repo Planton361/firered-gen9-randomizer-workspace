@@ -15,11 +15,13 @@ No ROMs, saves, screenshots, raw logs, hashes, private paths, or generated build
 UPR-FVX now extends the existing FRLG runtime trainer-source diagnostics:
 
 - `Gen3RomHandler.FrlgRawTrainerPokemonDiagnostics` includes raw custom move words when the trainer party has custom moves.
+- CFRU/DPE `partyFlags=3` rows are decoded as the CFRU expanded held-item custom-move layout: row size `32`, held item offset `20`, move offset `22`.
+- The diagnostics can compare classic Gen3 held-item custom-move decoding against CFRU expanded decoding and mark `decodeDiverges=true` when the row would produce different move words.
 - Post-randomization runtime-source audit rows include raw move lists in `outputRawParty` formatting.
 - The audit warns when raw output trainer data has `MOVE_NONE` in slot 0 while later slots contain real moves.
 - The audit warns when a Route-22 protected Rival starter slot does not match the final Oak-Lab opening Rival starter raw Species.
 
-This is diagnostic-only. It does not change Trainer randomization, Better Movesets, writer normalization, CFRU runtime, or Tracker code.
+The CFRU/DPE held-item custom-move branch also uses the expanded row for reload/write compatibility. It does not change Trainer randomization, Better Movesets selection, CFRU runtime, or Tracker code.
 
 ## ROM-Free Regression Checks
 
@@ -28,8 +30,9 @@ The synthetic `Gen3OakLabRivalScriptTest` additions prove that:
 - raw trainer diagnostics decode custom move slots,
 - `[-/Move/Move/Move]` raw rows are flagged,
 - Route-22 protected starter mismatch is flagged at the raw trainer-source layer.
+- CFRU/DPE `partyFlags=3` diagnostics read moves from the expanded CFRU offsets, while still showing the classic 16-byte interpretation for comparison.
 
-These tests do not prove a private output ROM was generated from the current jar/settings. They prove the audit can identify the relevant failures when they exist in raw trainer data.
+`Gen3SensibleHeldItemsTest` also covers the CFRU/DPE writer shape for held-item custom-move rows. These tests do not prove a private output ROM was generated from the current jar/settings. They prove the audit/writer can identify and avoid the relevant layout failure when it exists in raw trainer data.
 
 ## Local Private-ROM Audit
 
@@ -70,6 +73,7 @@ Trainer-load bounds failures also include sanitized loaded table state:
 `cfruDpeMode=<true|false> loadedSpeciesCount=<n|unavailable> loadedMoveCount=<n|unavailable>`.
 For CFRU/DPE Gen9 output-ROM reloads, expected expanded counts are Species `1440` and Moves `992`; smaller counts indicate the reload did not activate the expanded CFRU/DPE bounds before trainer rows were decoded.
 Current reload detection no longer relies only on the full species-name scan. If a randomized output ROM has a shortened or broken name-scan boundary but still has plausible CFRU/DPE Gen9 BaseStats anchors and source-backed CFRU/DPE table pointers, UPR-FVX should keep CFRU/DPE mode active and restore expanded Species/Move bounds before trainer rows are decoded.
+For `partyFlags=3` trainer rows in CFRU/DPE mode, expected row context is `layout=cfru-held-item-custom-moves`, `bytesPerSlot=32`, held item at row offset `20`, and moves at row offset `22`. If the report shows `decodeDiverges=true`, inspect the CFRU expanded decode first; the classic 16-byte decode is only a compatibility comparison.
 
 Interpretation:
 
