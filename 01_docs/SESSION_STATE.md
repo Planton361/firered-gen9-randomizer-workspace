@@ -1,3 +1,12 @@
+# Session update - CFRU/DPE local address generator
+
+- Branch: `feature/cfru-dpe-address-local-generator`.
+- Added `07_scripts/tracker/generate_cfru_dpe_game_addresses_local.py` to generate ignored `CFRUDPEExtension/data/game-addresses.local.json` from a local read-only `offsets.ini`.
+- Scope: local Tracker smoke helper only. The generator omits the input path from JSON, writes no committed real addresses, and reports missing live RAM/SaveBlock/bag symbols as warnings.
+- Recognized symbol targets include CFRU/DPE table and name symbols such as `gBattleMoves`, `gMoveNames`, `gAbilityNames`, `gTrainers`, `gLevelUpLearnsets`, `gTrainerClassNames`, `gTypeNames`, `gBaseStats`, `gSpeciesInfo`, `gSpeciesNames`, and `sTMHMMoves` when present.
+- Updated the extension README and Tracker smoke plan with local-only generation and install steps.
+- Safety boundary: no `02_external/**` files were changed; no ROMs, saves, emulator states, builds, screenshots, raw logs, hashes, private paths, tool binaries, secrets, tokens, `.env` data, `offsets.ini`, or generated local address JSON were committed.
+
 # Session update - CFRU/DPE Tracker manifest path resolution
 
 - Branch: `feature/cfru-dpe-extension-manifest-loader-smoke`.

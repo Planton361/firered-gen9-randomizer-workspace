@@ -22,6 +22,9 @@
 03_tools/tracker-extensions/CFRUDPEExtension/data/game-addresses.local.json
 03_tools/tracker-extensions/CFRUDPEExtension/data/tracker-overrides.local.json
 
+# Local generated symbol artifacts
+offsets.ini
+
 # Tool binaries / archives
 *.zip
 *.7z

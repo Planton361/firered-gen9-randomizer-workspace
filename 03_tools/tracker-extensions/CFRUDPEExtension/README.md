@@ -101,3 +101,25 @@ cp data/tracker-overrides.example.json data/tracker-overrides.local.json
 ```
 
 Then replace TODOs locally from safe source metadata or sanitized local validation. Do not commit these `.local.json` files.
+
+### Generate local game addresses from offsets.ini
+
+For local smoke, a generated CFRU/DPE `offsets.ini` can seed the ignored address manifest:
+
+```sh
+python3 07_scripts/tracker/generate_cfru_dpe_game_addresses_local.py --offsets path/to/offsets.ini
+```
+
+If CFRU and DPE produced separate local symbol files, repeat `--offsets` and the generator will merge recognized symbols:
+
+```sh
+python3 07_scripts/tracker/generate_cfru_dpe_game_addresses_local.py --offsets path/to/cfru-offsets.ini --offsets path/to/dpe-offsets.ini
+```
+
+Default output:
+
+```sh
+03_tools/tracker-extensions/CFRUDPEExtension/data/game-addresses.local.json
+```
+
+The generated file is local-only and ignored by Git. It may include table/name symbols such as `gBattleMoves`, `gMoveNames`, `gAbilityNames`, `gTrainers`, `gLevelUpLearnsets`, `gTrainerClassNames`, `gTypeNames`, `gBaseStats`, `gSpeciesInfo`, `gSpeciesNames`, and `sTMHMMoves` when present in the input. Missing live RAM symbols such as `gPlayerParty`, `gEnemyParty`, `gBattleMons`, SaveBlock, or bag-pocket symbols remain warnings and must be solved before claiming party, battle, or bag correctness.

@@ -117,3 +117,17 @@ The minimal loader smoke uses committed `source-data.json` plus optional ignored
 The extension resolves `data/` relative to the actual loaded `CFRUDPEExtension.lua` file first, then falls back to Tracker's `FileManager.getExtensionsFolderPath()`. This supports a Tracker install that is outside the workspace, with `CFRUDPEExtension.lua` directly in `Lua/extensions/` and manifests in `Lua/extensions/data/`.
 
 This smoke still proves only extension load/unload, source-data availability and manifest-loader wiring. Live party, battle, trainer and bag correctness require a separate local address smoke after safe local manifests exist.
+
+## Local address generator smoke
+
+Use `07_scripts/tracker/generate_cfru_dpe_game_addresses_local.py` only with a local generated `offsets.ini` artifact. The script writes the ignored `03_tools/tracker-extensions/CFRUDPEExtension/data/game-addresses.local.json` by default and does not write the input path into the JSON.
+
+Minimal local steps:
+
+1. Run `python3 07_scripts/tracker/generate_cfru_dpe_game_addresses_local.py --offsets path/to/offsets.ini`.
+2. If CFRU and DPE produced separate local symbol files, repeat `--offsets` in the same command to merge them into one local manifest.
+3. Verify `game-addresses.local.json` remains unstaged and ignored.
+4. Copy the generated local file into the installed Tracker extension `Lua/extensions/data/` folder only for local smoke.
+5. Start Tracker and confirm the extension reports `game-addresses.local=loaded` or a clear loader status.
+
+Expected first result: table/name symbols may load when present in `offsets.ini`, but missing `gPlayerParty`, `gEnemyParty`, `gBattleMons`, SaveBlock, or bag-pocket warnings mean live party, battle, and bag correctness is not proven yet.
