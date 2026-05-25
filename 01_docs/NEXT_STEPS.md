@@ -1,3 +1,11 @@
+# Next steps update - CFRU/DPE Tracker extension design
+
+- Treat `01_docs/analysis/cfru-dpe-tracker-extension-design.md` as the current implementation concept for a future public CFRU/DPE/Gen9 Ironmon Tracker extension.
+- Do not fork Tracker core first. Prototype an external `CFRUDPEExtension.lua` that loads source-derived CFRU/DPE address/data manifests and restores any wrapped functions on unload.
+- v1 should use manual profile activation unless a robust source-backed CFRU/DPE marker is identified. Do not reuse NatDexExtension's NatDex-specific mon-count detection without proof.
+- First implementation smoke should prove species/move/ability/item mappings plus player party and live enemy battle data. Keep static trainer-party display caveated until runtime construction and randomizer behavior are validated.
+- Keep BizHawk local only. Continue excluding ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, secrets, tokens and `.env` data.
+
 # Next steps update - Tracker memory API map
 
 - Treat `01_docs/analysis/tracker-memory-api-map.md` as the current source-backed map for why stock Ironmon Tracker and NatDexExtension do not yet read CFRU/DPE/Gen9 correctly.

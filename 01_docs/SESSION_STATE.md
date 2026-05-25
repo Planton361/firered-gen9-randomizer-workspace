@@ -1,3 +1,13 @@
+# Session update - CFRU/DPE Tracker extension design
+
+- Branch: `analysis/cfru-dpe-tracker-extension-design`.
+- Added `01_docs/analysis/cfru-dpe-tracker-extension-design.md`.
+- Scope: documentation-only design for a future external `CFRUDPEExtension.lua` after the NatDexExtension pattern, without Tracker-core fork or implementation.
+- Key recommendation: use a two-artifact approach: a small read-only Tracker extension plus source-derived CFRU/DPE profile manifests for addresses, sizes, offsets, counts and species/move/ability/item mappings.
+- v1 target: manual profile activation first, then prove species/move/ability/item data plus player party and live enemy battle data. Static trainer-party data remains caveated because CFRU/randomizer runtime construction can change the final battle Pokemon.
+- Updated `08_tests/randomizer/ironmon-tracker-cfru-dpe-compat-plan.md` with the extension-design follow-up and minimal smoke focus.
+- Safety boundary: no `02_external/**` files were changed; no ROMs, saves, emulator states, builds, screenshots, raw logs, hashes, private paths, tool binaries, secrets, tokens or `.env` data were read or documented.
+
 # Session update - Tracker memory API map
 
 - Branch: `analysis/tracker-memory-api-map`.
