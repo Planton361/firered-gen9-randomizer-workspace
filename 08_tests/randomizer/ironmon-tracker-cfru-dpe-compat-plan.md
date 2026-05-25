@@ -60,8 +60,8 @@ Workspace skeleton path: `03_tools/tracker-extensions/CFRUDPEExtension/`.
 
 For local Tracker-only smoke, install the skeleton outside Git-managed Tracker sources:
 
-1. Copy `CFRUDPEExtension.lua` into the Ironmon Tracker custom extension folder.
-2. Copy the `data/` folder as `CFRUDPEExtension/data/` next to that extension file.
+1. Copy `CFRUDPEExtension.lua` directly into the Ironmon Tracker extension folder, for example `Lua/extensions/CFRUDPEExtension.lua`.
+2. Copy the `data/` folder next to that extension file, for example `Lua/extensions/data/`.
 3. Enable `CFRUDPEExtension` in the Tracker UI.
 
 Expected skeleton-only result:
@@ -73,8 +73,8 @@ Expected skeleton-only result:
 
 Next local manifest smoke requires filled, local non-example files:
 
-- `CFRUDPEExtension/data/game-addresses.local.json`
-- `CFRUDPEExtension/data/tracker-overrides.local.json`
+- `data/game-addresses.local.json`
+- `data/tracker-overrides.local.json`
 
 Those files should be produced from source-derived values and sanitized local validation. Do not commit private paths, ROM hashes, runtime logs, saves or emulator states.
 
@@ -113,5 +113,7 @@ The minimal loader smoke uses committed `source-data.json` plus optional ignored
 - committed `CFRUDPEExtension/data/source-data.json` should load and report counts;
 - missing `game-addresses.local.json` and `tracker-overrides.local.json` should be reported as missing, not as extension failure;
 - if local `.local.json` files exist, the extension should call TrackerAPI's explicit-path JSON loaders and log each return status.
+
+The extension resolves `data/` relative to the actual loaded `CFRUDPEExtension.lua` file first, then falls back to Tracker's `FileManager.getExtensionsFolderPath()`. This supports a Tracker install that is outside the workspace, with `CFRUDPEExtension.lua` directly in `Lua/extensions/` and manifests in `Lua/extensions/data/`.
 
 This smoke still proves only extension load/unload, source-data availability and manifest-loader wiring. Live party, battle, trainer and bag correctness require a separate local address smoke after safe local manifests exist.

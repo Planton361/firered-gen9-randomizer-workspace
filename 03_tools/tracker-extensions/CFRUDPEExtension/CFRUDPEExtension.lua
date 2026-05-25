@@ -1,9 +1,9 @@
 -- CFRU/DPE/Gen9 Ironmon Tracker extension skeleton.
 --
--- Install locally by copying this file to the Tracker Custom folder as:
---   Custom/CFRUDPEExtension.lua
--- and copying this directory's data folder to:
---   Custom/CFRUDPEExtension/data/
+-- Install locally by copying this file to the Tracker extension folder as:
+--   Lua/extensions/CFRUDPEExtension.lua
+-- and copying this directory's data folder next to it as:
+--   Lua/extensions/data/
 --
 -- This skeleton does not modify Tracker core files, does not depend on
 -- NatDexExtension, and does not read or write emulator memory by itself.
@@ -37,6 +37,37 @@ local function joinPath(...)
 		end
 	end
 	return path
+end
+
+local function normalizeSeparators(path)
+	if path == nil then
+		return nil
+	end
+	return string.gsub(tostring(path), "[/\\]", getSlash())
+end
+
+local function dirname(filepath)
+	filepath = string.gsub(tostring(filepath or ""), "\\", "/")
+	if filepath == nil or filepath == "" then
+		return nil
+	end
+	local directory = string.match(filepath, "^(.*)/[^/]*$")
+	if directory ~= nil and directory ~= "" then
+		return normalizeSeparators(directory)
+	end
+	return nil
+end
+
+local function getLoadedFileDirectory()
+	if debug == nil or type(debug.getinfo) ~= "function" then
+		return nil
+	end
+	local info = debug.getinfo(1, "S")
+	local source = info and info.source
+	if type(source) ~= "string" or string.sub(source, 1, 1) ~= "@" then
+		return nil
+	end
+	return dirname(string.sub(source, 2))
 end
 
 local function log(message)
@@ -81,10 +112,14 @@ extension.ManifestFiles = {
 }
 
 function extension.getExtensionRoot()
-	if FileManager ~= nil and type(FileManager.getExtensionsFolderPath) == "function" then
-		return joinPath(FileManager.getExtensionsFolderPath(), EXT_KEY)
+	local loadedFileDirectory = getLoadedFileDirectory()
+	if loadedFileDirectory ~= nil then
+		return loadedFileDirectory
 	end
-	return EXT_KEY
+	if FileManager ~= nil and type(FileManager.getExtensionsFolderPath) == "function" then
+		return FileManager.getExtensionsFolderPath()
+	end
+	return "."
 end
 
 function extension.getDataRoot()

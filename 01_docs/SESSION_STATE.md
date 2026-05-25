@@ -1,3 +1,11 @@
+# Session update - CFRU/DPE Tracker manifest path resolution
+
+- Branch: `feature/cfru-dpe-extension-manifest-loader-smoke`.
+- Fixed `CFRUDPEExtension.lua` manifest path resolution for real Tracker installs outside the workspace.
+- The extension now resolves `data/` relative to the loaded `CFRUDPEExtension.lua` file via `debug.getinfo(1, "S").source`, then falls back to `FileManager.getExtensionsFolderPath()` if needed.
+- Local install shape is now documented as `Lua/extensions/CFRUDPEExtension.lua` plus `Lua/extensions/data/source-data.json` and optional `.local.json` files.
+- Scope remains loader/path smoke only. No Tracker-core fork, NatDexExtension change, `02_external/**` edit, ROM, save, emulator state, build, screenshot, raw log, hash, private path, `offsets.ini` data or real runtime address was added.
+
 # Session update - CFRU/DPE Tracker manifest loader smoke
 
 - Branch: `feature/cfru-dpe-extension-manifest-loader-smoke`.

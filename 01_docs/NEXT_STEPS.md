@@ -1,3 +1,11 @@
+# Next steps update - CFRU/DPE Tracker manifest path resolution
+
+- For local Tracker smoke, install `CFRUDPEExtension.lua` directly in `Lua/extensions/` and copy committed source data to `Lua/extensions/data/source-data.json`.
+- Optional private local manifests should live beside it as `Lua/extensions/data/game-addresses.local.json` and `Lua/extensions/data/tracker-overrides.local.json`.
+- Re-test that `source-data.json` is found and logs counts. Missing `.local.json` files should still log as missing without failing startup.
+- If source-data is still missing, inspect the extension console status and verify that the copied `data/` folder is directly below the folder containing `CFRUDPEExtension.lua`, not nested under `CFRUDPEExtension/data/`.
+- Continue excluding local `.local.json` manifests, ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, `offsets.ini`, secrets, tokens and `.env` data from commits.
+
 # Next steps update - CFRU/DPE Tracker manifest loader smoke
 
 - Treat `CFRUDPEExtension.lua` as the current loader-smoke implementation: it reads committed `source-data.json`, reports counts, and optionally loads ignored `game-addresses.local.json` / `tracker-overrides.local.json`.
