@@ -66,6 +66,9 @@ Offset and pointer values are classified as `in-rom`, `out-of-rom`, `<missing>`,
 When the failing slot offset is in-ROM, the diagnostic also includes numeric slot-only values:
 `rawSpecies=<id> speciesStatus=<status> rawItem=<id|not-present> itemStatus=<status> rawMoves=[...] moveStatus=[...] expectedLayout=<layout> bytesPerSlot=<n>`.
 Move status values are `none`, `in-bounds`, `out-of-bounds`, `<missing>`, or `null-slot`.
+Trainer-load bounds failures also include sanitized loaded table state:
+`cfruDpeMode=<true|false> loadedSpeciesCount=<n|unavailable> loadedMoveCount=<n|unavailable>`.
+For CFRU/DPE Gen9 output-ROM reloads, expected expanded counts are Species `1440` and Moves `992`; smaller counts indicate the reload did not activate the expanded CFRU/DPE bounds before trainer rows were decoded.
 
 Interpretation:
 
