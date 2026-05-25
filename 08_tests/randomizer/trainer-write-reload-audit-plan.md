@@ -56,8 +56,10 @@ The test also prints a sanitized line with the relative report path, for example
 
 The post-randomization audit prints a sanitized summary and any core warnings to the test output. If the report cannot be written, the test fails with the relative target path.
 If a configured ROM crashes during load, the test should fail without printing the private path and identify the role:
-`Configured base ROM could not be loaded: <ExceptionClass>` or
-`Configured randomized ROM could not be loaded: <ExceptionClass>`.
+`Configured base ROM could not be loaded during <phase>: <ExceptionClass>` or
+`Configured randomized ROM could not be loaded during <phase>: <ExceptionClass>`.
+Current sanitized load phases include detection, setup, item table load, pokemon data load, evolution load, move table
+load, pokemon palette load, trainer load, ability table load, and evolution-level estimate.
 
 Interpretation:
 

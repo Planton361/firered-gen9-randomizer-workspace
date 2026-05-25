@@ -1,3 +1,11 @@
+# Next steps update - UPR-FVX randomized output ROM reload diagnostics
+
+- Re-run the private-ROM trainer write/reload audit with both `-D` paths from the current UPR-FVX branch.
+- Expected failure shape now includes a sanitized load phase: `Configured randomized ROM could not be loaded during <phase>: <ExceptionClass>`.
+- If the phase is `trainer load`, focus next on raw trainer pointer/species/item/move bounds during reload of the output ROM. If it is an earlier data-table phase, audit that table's repointed offset/count assumptions first.
+- Once the randomized output ROM loads, continue with the raw output trainer audit before changing Randomizer behavior or CFRU runtime code.
+- Continue excluding ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, local addresses, secrets, tokens and `.env` data.
+
 # Next steps update - UPR-FVX trainer audit ROM loading hardening
 
 - Re-run the private-ROM audit with both `-D` paths.
