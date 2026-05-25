@@ -70,6 +70,17 @@ Nach einem Fix sollte ein fokussierter Test bestaetigen:
 
 ## Implementierungsstand
 
+UPR-FVX Follow-up-Branch `fix/route22-rival-starter-slot-actual`:
+
+- Dieser Block aendert keine Move-Slot- oder Better-Movesets-Logik.
+- Sanitized lokaler Befund: Oak-Lab-Rival-Starter `Magcargo Lv5`, spaeterer Route-22-Rival-Starter-Kontext `Arctozolt Lv9`.
+- Source-backed Slots:
+  - Oak Lab Rival `326/327/328`: Starter Slot 0.
+  - Route 22 weak Rival `329/330/331`: Starter Slot 1.
+  - Route 22 strong Rival `435/436/437`: Starter Slot 5.
+- UPR-FVX synchronisiert Route 22 jetzt nach der finalen Oak-Lab-`RIVAL1-x`-Korrektur aus dem tatsaechlichen finalen Opening-Rival-Starter, nicht nur aus dem vorherigen generischen Rival-Carryover-Pfad.
+- Nichtstarter-Slots bleiben randomisierbar.
+
 UPR-FVX Follow-up-Branch `fix/route22-rival-starter-carryover`:
 
 - Die Move-Slot-Normalisierung gilt nach lokalem Smoke als aktuell behoben; dieser Follow-up fokussiert nur den geschuetzten Rival-Starter-Slot.
