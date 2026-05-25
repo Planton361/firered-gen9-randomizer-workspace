@@ -1,3 +1,12 @@
+# Session update - CFRU/DPE local tracker overrides generator
+
+- Branch: `feature/cfru-dpe-tracker-overrides-local-generator`.
+- Added `07_scripts/tracker/generate_cfru_dpe_tracker_overrides_local.py` to generate ignored `CFRUDPEExtension/data/tracker-overrides.local.json`.
+- Scope: local Tracker layout-smoke helper only. The generator emits source-backed layout candidates for recognized `Program`, `PokemonData`, and `MoveData` override sections and no ROM/RAM/runtime/build addresses.
+- Generated categories include `BattleMove`, `BattlePokemon`, `BaseStats`, and Trainer header sizes/offsets. Bag item slot/pocket candidates and CFRU-only layout risks are documented in manifest metadata, not emitted as effective overrides.
+- Caveat remains: TrackerAPI accepts tracker override JSON, but local smoke must verify whether imported keys update the effective nested `*.Addresses` tables consumed by Tracker read paths.
+- Safety boundary: no `02_external/**` files were changed; no ROMs, saves, emulator states, builds, screenshots, raw logs, hashes, private paths, tool binaries, secrets, tokens, `.env` data, `offsets.ini`, or generated local override JSON were committed.
+
 # Session update - CFRU/DPE local address generator
 
 - Branch: `feature/cfru-dpe-address-local-generator`.

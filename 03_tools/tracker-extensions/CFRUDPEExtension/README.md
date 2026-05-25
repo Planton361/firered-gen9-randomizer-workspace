@@ -123,3 +123,21 @@ Default output:
 ```
 
 The generated file is local-only and ignored by Git. It may include table/name symbols such as `gBattleMoves`, `gMoveNames`, `gAbilityNames`, `gTrainers`, `gLevelUpLearnsets`, `gTrainerClassNames`, `gTypeNames`, `gBaseStats`, `gSpeciesInfo`, `gSpeciesNames`, and `sTMHMMoves` when present in the input. Missing live RAM symbols such as `gPlayerParty`, `gEnemyParty`, `gBattleMons`, SaveBlock, or bag-pocket symbols remain warnings and must be solved before claiming party, battle, or bag correctness.
+
+### Generate local tracker overrides
+
+For local layout smoke, generate the ignored override manifest from source-backed CFRU/DPE layout candidates:
+
+```sh
+python3 07_scripts/tracker/generate_cfru_dpe_tracker_overrides_local.py
+```
+
+Default output:
+
+```sh
+03_tools/tracker-extensions/CFRUDPEExtension/data/tracker-overrides.local.json
+```
+
+The generated override file contains only layout values for recognized Tracker sections: `Program`, `PokemonData`, and `MoveData`. It includes candidates for `BattleMove`, `BattlePokemon`, `BaseStats`, and Trainer header sizes/offsets. It intentionally does not emit ROM/RAM addresses, `offsets.ini` values, party `struct Pokemon` overrides, final bag SaveBlock addresses, or expanded CFRU TrainerMon support.
+
+Before relying on it in Tracker, locally verify that `TrackerAPI.loadTrackerOverridesFromJson` updates the effective nested `*.Addresses` fields consumed by the read paths.
