@@ -1,3 +1,11 @@
+# Next steps update - UPR-FVX CFRU/DPE output ROM reload detection
+
+- Re-run the private-ROM trainer write/reload audit with both `-D` paths from the current UPR-FVX branch.
+- Expected result after the reload-detection fix: randomized output-ROM trainer load should keep `cfruDpeMode=true` and no longer classify expanded trainer raw IDs such as `rawSpecies=1375` or `rawMove=643` as out-of-bounds due to small reload bounds.
+- If the audit still fails with `cfruDpeMode=false`, inspect which table-profile condition failed: Gen9 BaseStats anchors, `gLevelUpLearnsets`, `gTMHMLearnsets`, `gTMHMMoves`, `gMoveNames`, or `gBattleMoves`.
+- If reload succeeds, continue the raw trainer write/reload audit before making any further Rival or Better-Movesets changes.
+- Continue excluding ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, local addresses, secrets, tokens and `.env` data.
+
 # Next steps update - UPR-FVX output ROM expanded bounds reload
 
 - Re-run the private-ROM trainer write/reload audit with both `-D` paths from the current UPR-FVX branch.

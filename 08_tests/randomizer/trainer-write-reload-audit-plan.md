@@ -69,6 +69,7 @@ Move status values are `none`, `in-bounds`, `out-of-bounds`, `<missing>`, or `nu
 Trainer-load bounds failures also include sanitized loaded table state:
 `cfruDpeMode=<true|false> loadedSpeciesCount=<n|unavailable> loadedMoveCount=<n|unavailable>`.
 For CFRU/DPE Gen9 output-ROM reloads, expected expanded counts are Species `1440` and Moves `992`; smaller counts indicate the reload did not activate the expanded CFRU/DPE bounds before trainer rows were decoded.
+Current reload detection no longer relies only on the full species-name scan. If a randomized output ROM has a shortened or broken name-scan boundary but still has plausible CFRU/DPE Gen9 BaseStats anchors and source-backed CFRU/DPE table pointers, UPR-FVX should keep CFRU/DPE mode active and restore expanded Species/Move bounds before trainer rows are decoded.
 
 Interpretation:
 
