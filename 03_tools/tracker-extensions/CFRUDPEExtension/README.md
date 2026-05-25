@@ -103,7 +103,7 @@ Optional local manifest key:
 
 - `Addresses.gBattlersCount`, used only to avoid reading stale rows before at least two battlers are active
 
-When `gBattleMons` is available, the extension reads the left player and left opponent `BattlePokemon` rows using the source-backed row size `0x58`. The v1 fields are species, level, current HP, max HP, four moves, PP, ability, and held item. Species, move, ability, and item IDs are mapped through committed `data/source-data.json`.
+When `gBattleMons` is available, the extension reads the left player and left opponent `BattlePokemon` rows using the source-backed row size `0x58`. The current diagnostic fields are species, level, current HP, max HP, types, four moves, PP, ability, held item, and primary status. Species, move, ability, and item IDs are mapped through committed `data/source-data.json`. Type names use `source-data.json` if a future generator provides type mappings; otherwise the extension falls back to the CFRU/DPE type constants from `include/pokemon.h`.
 
 Expected local status messages:
 
@@ -114,7 +114,17 @@ Expected local status messages:
 - `active-battle=loaded rows=...` when one or both left-side rows look plausible;
 - `active-battle=snapshot P:... | E:...` when the formatted battle snapshot changes.
 
-The snapshot includes player/enemy species, level, HP/max HP, and four move slots with current PP where available. Snapshot logging is change-based, so repeated identical frames should not spam the Tracker console.
+The snapshot includes player/enemy species, level, HP/max HP, type pair, ability, held item, primary status, and four move slots with current PP where available. Snapshot logging is change-based, so repeated identical frames should not spam the Tracker console.
+
+Source-backed offsets currently used from CFRU `struct BattlePokemon`:
+
+- `type3` at `0x18`
+- `ability` at `0x20`
+- `type1` / `type2` at `0x21` / `0x22`
+- `item` at `0x2E`
+- `status1` / `status2` at `0x4C` / `0x50`
+
+Primary status is decoded from CFRU `STATUS1_*` masks. `status2` is read into extension state as raw diagnostic data only and is not formatted yet. `type3` is also stored separately and remains caveated until local smoke needs and validates display semantics for temporary extra-type effects.
 
 This is a diagnostic/helper state only. Read data is stored in `extension.state.activeBattleMons`, exposed through `extension.getActiveBattleMons()`, and formatted by `extension.formatActiveBattleMons()` for later extension-owned UI work.
 
@@ -132,7 +142,7 @@ Expected sanitized debug output in battle is shaped like:
 
 ```text
 active-battle=loaded rows=2
-active-battle=snapshot P:<species> L<level> HP <hp>/<max> moves[...] | E:<species> L<level> HP <hp>/<max> moves[...]
+active-battle=snapshot P:<species> L<level> HP <hp>/<max> type[...] ability[...] item[...] status[...] moves[...] | E:<species> L<level> HP <hp>/<max> type[...] ability[...] item[...] status[...] moves[...]
 ```
 
 Do not copy real address values, local JSON contents, ROM paths, raw logs, screenshots, hashes, saves, emulator states, or private paths into committed files.

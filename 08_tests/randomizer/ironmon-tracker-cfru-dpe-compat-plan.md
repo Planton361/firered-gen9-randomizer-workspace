@@ -195,8 +195,9 @@ Expected pass criteria:
 - Without `gBattleMons`, the extension reports `active-battle=missing gBattleMons` and keeps running.
 - Outside battle, optional `gBattlersCount` may produce `active-battle=waiting battlers=...`.
 - During transition/no-battle states, `active-battle=idle/no valid rows` is acceptable and should not be treated as a test failure by itself.
-- In a wild or trainer battle, the extension reports `active-battle=loaded rows=...` plus a change-based `active-battle=snapshot P:... | E:...` status with species, level, HP/max HP, and moves/PP.
-- `extension.state.activeBattleMons` contains player-left and opponent-left diagnostic rows with plausible species, level, HP/max HP, moves, PP, ability and held item fields.
+- In a wild or trainer battle, the extension reports `active-battle=loaded rows=...` plus a change-based `active-battle=snapshot P:... | E:...` status with species, level, HP/max HP, type pair, ability, held item, primary status, and moves/PP.
+- `extension.state.activeBattleMons` contains player-left and opponent-left diagnostic rows with plausible species, level, HP/max HP, moves, PP, types, ability, held item, and primary status fields.
+- `type3` and raw `status2` are extension-state diagnostics only. Do not treat them as a pass/fail surface until a separate local smoke validates their display semantics.
 
 Expected fail criteria:
 
