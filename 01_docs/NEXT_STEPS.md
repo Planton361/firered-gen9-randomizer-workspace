@@ -1,3 +1,11 @@
+# Next steps update - UPR-FVX trainer-load bounds diagnostics
+
+- Re-run the private-ROM trainer write/reload audit with both `-D` paths from the current UPR-FVX branch.
+- Expected trainer-load failure shape now includes sanitized row context: `trainer=<id>`, `slot=<slot-or-header>`, `layout=<layout>`, `partyFlags=<flags>`, `partyCount=<count>`, and offset/pointer classes.
+- If `partyPointer` or `slotOffset` is `out-of-rom`, inspect trainer-party pointer writing/repointing for that trainer ID before changing Rival or Better-Movesets logic.
+- If offsets are `in-rom` but the exception remains, inspect species/item/move raw value bounds for that trainer layout and slot.
+- Continue excluding ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, local addresses, secrets, tokens and `.env` data.
+
 # Next steps update - UPR-FVX randomized output ROM reload diagnostics
 
 - Re-run the private-ROM trainer write/reload audit with both `-D` paths from the current UPR-FVX branch.
