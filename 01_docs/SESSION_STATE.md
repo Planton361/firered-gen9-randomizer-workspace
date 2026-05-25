@@ -1,3 +1,19 @@
+# Session update - UPR-FVX randomized output ROM reload diagnostics
+
+- Branch: `analysis/upr-fvx-output-rom-reload-failure` / UPR-FVX `analysis/upr-fvx-output-rom-reload-failure`.
+- Added diagnostic-only phase reporting for Gen3 ROM loading used by the private-ROM trainer write/reload audit.
+- Source-backed load phases now distinguish detection, setup, item table load, pokemon data load, evolution load, move table load, pokemon palette load, trainer load, ability table load, and evolution-level estimate.
+- The private-ROM audit keeps paths redacted but can now fail with role plus phase, e.g. `Configured randomized ROM could not be loaded during trainer load: ArrayIndexOutOfBoundsException`.
+- Scope is reload/audit diagnosis only. No Randomizer behavior, CFRU/DPE code, Tracker code, ROM, save, build, screenshot, raw log, hash, private path, secret, token, or `.env` data was changed or documented.
+
+# Session update - UPR-FVX trainer audit ROM loading hardening
+
+- Branch: `fix/upr-fvx-trainer-audit-report-output` / UPR-FVX `test/trainer-audit-report-output`.
+- Hardened `Gen3OakLabRivalRuntimeSourceRomTest` ROM loading for opt-in private-ROM audits.
+- `loadGen3Rom` now accepts a role (`single`, `base`, `randomized`) and wraps both `factory.isLoadable(...)` and `romHandler.loadRom(...)` failures with path-free messages.
+- Expected failure shape is role-specific and sanitized, e.g. `Configured base ROM could not be loaded: ArrayIndexOutOfBoundsException`.
+- Scope is test/diagnostic output only. No Randomizer behavior, CFRU/DPE code, Tracker code, ROM, save, build, screenshot, raw log, hash, private path, secret, token, or `.env` data was changed or documented.
+
 # Session update - UPR-FVX trainer audit property forwarding
 
 - Branch: `fix/upr-fvx-trainer-audit-report-output` / UPR-FVX `test/trainer-audit-report-output`.
