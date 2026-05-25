@@ -43,6 +43,10 @@ Suggested command shape from `02_external/upr-fvx`:
   -Duprfvx.trainerRuntimeSourceRandomizedRom=<private-output-rom>
 ```
 
+The `romio:test` Gradle task forwards these two `-D` properties into the forked test JVM. If the test is still
+reported as `SKIPPED`, inspect the local Gradle test XML/HTML first to confirm whether the test executor received both
+properties before interpreting missing report files as audit logic failure.
+
 Inspect the local report under UPR-FVX `build/reports/diagnostics/`.
 The test also prints a sanitized line with the relative report path, for example:
 
