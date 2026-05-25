@@ -1,3 +1,12 @@
+# Session update - CFRU/DPE gBattleMons reader design
+
+- Branch: `analysis/cfru-dpe-gbattlemons-reader-design`.
+- Added `01_docs/analysis/cfru-dpe-gbattlemons-reader-design.md`.
+- Scope: documentation-only design for a minimal extension-owned CFRU/DPE active-battle reader over `gBattleMons`; no code, no Tracker-core fork and no `02_external/**` changes.
+- Key recommendation: do not depend on stock `TrackerAPI.getActiveBattlePokemon` for v1 because it returns party objects populated by the vanilla `Program.readNewPokemon` path. Instead, read CFRU `struct BattlePokemon` rows directly into extension-owned state.
+- v1 target: require local `gBattleMons`, prefer `gBattlersCount`, use source-backed `BattlePokemon` size `0x58`, and display player-left/enemy-left species, level, HP, moves, PP, ability and item as a read-only diagnostic.
+- Safety boundary: no ROMs, saves, emulator states, builds, screenshots, raw logs, hashes, private paths, tool binaries, `offsets.ini`, real local addresses, secrets, tokens, or `.env` data were committed or documented.
+
 # Session update - CFRU/DPE Tracker live RAM anchors
 
 - Branch: `analysis/cfru-dpe-tracker-live-ram-anchors`.
