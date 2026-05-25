@@ -1,3 +1,11 @@
+# Next steps update - CFRU/DPE Tracker extension skeleton
+
+- Treat `03_tools/tracker-extensions/CFRUDPEExtension/CFRUDPEExtension.lua` as the current external Tracker extension skeleton.
+- The skeleton is load/unload and manifest-path plumbing only. It does not yet provide real CFRU/DPE species, move, ability, item, party, enemy, trainer or battle data.
+- Next minimal implementation step: generate or manually curate local source-derived `game-addresses.json` and `tracker-overrides.json` from CFRU/DPE symbols, struct layouts and Tracker override fields.
+- Keep committed files example-only until values are source-backed and sanitized. Do not commit ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, secrets, tokens or `.env` data.
+- First local smoke should only claim extension load/unload and prepared manual profile. Data correctness requires filled non-example manifests and separate sanitized validation.
+
 # Next steps update - CFRU/DPE Tracker extension design
 
 - Treat `01_docs/analysis/cfru-dpe-tracker-extension-design.md` as the current implementation concept for a future public CFRU/DPE/Gen9 Ironmon Tracker extension.

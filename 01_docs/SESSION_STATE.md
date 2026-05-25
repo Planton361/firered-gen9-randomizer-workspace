@@ -1,3 +1,13 @@
+# Session update - CFRU/DPE Tracker extension skeleton
+
+- Branch: `feature/cfru-dpe-tracker-extension-skeleton`.
+- Added the first workspace-owned external Tracker extension skeleton under `03_tools/tracker-extensions/CFRUDPEExtension/`.
+- Files added: `CFRUDPEExtension.lua`, `data/game-addresses.example.json`, `data/tracker-overrides.example.json`, and `data/source-data.example.json`.
+- Scope: minimal external Ironmon Tracker extension skeleton plus manifest prototypes only. No Tracker-core fork, no NatDexExtension modification, no `02_external/**` changes.
+- Behavior: the skeleton defines metadata and hooks, prepares a manual CFRU/DPE profile path, and only loads real non-example local manifests named `data/game-addresses.json` and `data/tracker-overrides.json` if the user provides them.
+- Documentation updated with local install shape, skeleton-only smoke expectations, required future manifest values, and current limitations.
+- Safety boundary: no ROMs, saves, emulator states, builds, screenshots, raw logs, hashes, private paths, tool binaries, secrets, tokens or `.env` data were read or documented.
+
 # Session update - CFRU/DPE Tracker extension design
 
 - Branch: `analysis/cfru-dpe-tracker-extension-design`.
