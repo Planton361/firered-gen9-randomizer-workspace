@@ -1,0 +1,50 @@
+{
+  "schema": "cfru-dpe-tracker-source-data-example-v1",
+  "status": "example-only",
+  "notes": [
+    "This file documents the source-derived data that a generator or curator should provide later.",
+    "It is not consumed by the skeleton extension yet.",
+    "Keep generated data source-derived; do not include ROMs, saves, raw logs, private paths or hashes."
+  ],
+  "counts": {
+    "species": "TODO_FROM_NUM_SPECIES",
+    "moves": "TODO_FROM_MOVES_COUNT",
+    "abilities": "TODO_FROM_ABILITIES_COUNT",
+    "items": "TODO_FROM_ITEMS_COUNT"
+  },
+  "mappings": {
+    "species": {
+      "format": {
+        "id": "number",
+        "constant": "SPECIES_*",
+        "name": "display name"
+      },
+      "values": []
+    },
+    "moves": {
+      "format": {
+        "id": "number",
+        "constant": "MOVE_*",
+        "name": "display name"
+      },
+      "values": []
+    },
+    "abilities": {
+      "format": {
+        "id": "number",
+        "constant": "ABILITY_*",
+        "name": "display name"
+      },
+      "values": []
+    },
+    "items": {
+      "format": {
+        "id": "number",
+        "constant": "ITEM_*",
+        "name": "display name",
+        "category": "optional tracker category"
+      },
+      "values": []
+    }
+  }
+}

@@ -53,3 +53,27 @@ Minimal extension smoke should use an external `CFRUDPEExtension.lua` plus sourc
 - species, move, ability and item names for sampled stock and Gen9 IDs.
 
 Static trainer-party data should remain caveated. CFRU and the randomizer can construct or alter actual trainer Pokemon at runtime, so live `gEnemyParty`/`gBattleMons` data is the first source of truth for battle display.
+
+## Skeleton extension smoke
+
+Workspace skeleton path: `03_tools/tracker-extensions/CFRUDPEExtension/`.
+
+For local Tracker-only smoke, install the skeleton outside Git-managed Tracker sources:
+
+1. Copy `CFRUDPEExtension.lua` into the Ironmon Tracker custom extension folder.
+2. Copy the `data/` folder as `CFRUDPEExtension/data/` next to that extension file.
+3. Enable `CFRUDPEExtension` in the Tracker UI.
+
+Expected skeleton-only result:
+
+- Tracker lists and enables the extension.
+- The extension logs that the manual CFRU/DPE profile is prepared.
+- No Tracker core file, NatDexExtension file, ROM, save, emulator state, build, raw log, screenshot, hash or private path is changed or committed.
+- Without real `game-addresses.json` and `tracker-overrides.json`, no CFRU/DPE data correctness should be claimed.
+
+Next local manifest smoke requires filled, local non-example files:
+
+- `CFRUDPEExtension/data/game-addresses.json`
+- `CFRUDPEExtension/data/tracker-overrides.json`
+
+Those files should be produced from source-derived values and sanitized local validation. Do not commit private paths, ROM hashes, runtime logs, saves or emulator states.

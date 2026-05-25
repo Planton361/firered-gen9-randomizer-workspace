@@ -1,0 +1,91 @@
+{
+  "CFRUDPEManifest": {
+    "schema": "cfru-dpe-tracker-overrides-example-v1",
+    "status": "example-only",
+    "notes": [
+      "Copy this file to tracker-overrides.json before local use.",
+      "Replace TODO values with source-derived struct sizes and offsets.",
+      "The skeleton extension does not auto-load this example file."
+    ],
+    "sourceDerivedFrom": [
+      "02_external/Ironmon-Tracker/ironmon_tracker/GameSettings.lua",
+      "02_external/Ironmon-Tracker/ironmon_tracker/Program.lua",
+      "02_external/Ironmon-Tracker/ironmon_tracker/data/PokemonData.lua",
+      "02_external/Ironmon-Tracker/ironmon_tracker/data/MoveData.lua",
+      "02_external/CFRU-expansion/include/pokemon.h",
+      "02_external/CFRU-expansion/include/battle.h",
+      "02_external/Dynamic-Pokemon-Expansion-Gen-9/include/base_stats.h"
+    ]
+  },
+  "Program": {
+    "Addresses": {
+      "offsetPokemonSubstruct": "TODO_SOURCE_DERIVED",
+      "offsetPokemonStatus": "TODO_SOURCE_DERIVED",
+      "offsetPokemonStatsLvCurHp": "TODO_SOURCE_DERIVED",
+      "offsetPokemonStatsMaxHpAtk": "TODO_SOURCE_DERIVED",
+      "offsetPokemonStatsDefSpe": "TODO_SOURCE_DERIVED",
+      "offsetPokemonStatsSpaSpd": "TODO_SOURCE_DERIVED",
+      "offsetBattlePokemonTypes": "TODO_SOURCE_DERIVED",
+      "offsetBattlePokemonStatStages": "TODO_SOURCE_DERIVED",
+      "offsetBattleMoves": "TODO_SOURCE_DERIVED",
+      "offsetBattleMoveFlags": "TODO_SOURCE_DERIVED",
+      "offsetTrainerClass": "TODO_SOURCE_DERIVED",
+      "offsetTrainerGender": "TODO_SOURCE_DERIVED",
+      "offsetTrainerPic": "TODO_SOURCE_DERIVED",
+      "offsetTrainerName": "TODO_SOURCE_DERIVED",
+      "offsetTrainerItems": "TODO_SOURCE_DERIVED",
+      "offsetTrainerDoubleBattle": "TODO_SOURCE_DERIVED",
+      "offsetTrainerFlagsAI": "TODO_SOURCE_DERIVED",
+      "offsetTrainerPartySize": "TODO_SOURCE_DERIVED",
+      "offsetTrainerPartyPtr": "TODO_SOURCE_DERIVED",
+      "offsetTrainerMonLevel": "TODO_SOURCE_DERIVED",
+      "offsetTrainerMonSpecies": "TODO_SOURCE_DERIVED",
+      "offsetTrainerMonItem": "TODO_SOURCE_DERIVED",
+      "offsetTrainerMonNoItemMove1": "TODO_SOURCE_DERIVED",
+      "offsetTrainerMonItemMove1": "TODO_SOURCE_DERIVED",
+      "sizeofPokemonStruct": "TODO_SOURCE_DERIVED",
+      "sizeofBattlePokemon": "TODO_SOURCE_DERIVED",
+      "sizeofBattleMove": "TODO_SOURCE_DERIVED",
+      "sizeofBaseStatsPokemon": "TODO_SOURCE_DERIVED",
+      "sizeofTrainer": "TODO_SOURCE_DERIVED",
+      "sizeofTrainerName": "TODO_SOURCE_DERIVED",
+      "sizeofTrainerClass": "TODO_SOURCE_DERIVED",
+      "sizeofTrainerMonWithDefaultMoves": "TODO_SOURCE_DERIVED",
+      "sizeofTrainerMonWithCustomMoves": "TODO_SOURCE_DERIVED",
+      "sizeofTrainerItem": "TODO_SOURCE_DERIVED",
+      "sizeofTrainerMonCustomMove": "TODO_SOURCE_DERIVED"
+    },
+    "Values": {}
+  },
+  "PokemonData": {
+    "Addresses": {
+      "offsetBaseStats": "TODO_SOURCE_DERIVED",
+      "offsetTypes": "TODO_SOURCE_DERIVED",
+      "offsetCatchRate": "TODO_SOURCE_DERIVED",
+      "offsetExpYield": "TODO_SOURCE_DERIVED",
+      "offsetBaseFriendship": "TODO_SOURCE_DERIVED",
+      "offsetAbilities": "TODO_SOURCE_DERIVED",
+      "sizeofAbilityInBytes": "TODO_SOURCE_DERIVED"
+    },
+    "Values": {}
+  },
+  "MoveData": {
+    "Addresses": {
+      "offsetMovePower": "TODO_SOURCE_DERIVED",
+      "sizeofMovePower": "TODO_SOURCE_DERIVED",
+      "offsetMoveType": "TODO_SOURCE_DERIVED",
+      "sizeofMoveType": "TODO_SOURCE_DERIVED",
+      "offsetMoveAccuracy": "TODO_SOURCE_DERIVED",
+      "sizeofMoveAccuracy": "TODO_SOURCE_DERIVED",
+      "offsetMovePP": "TODO_SOURCE_DERIVED",
+      "sizeofMovePP": "TODO_SOURCE_DERIVED",
+      "offsetMoveFlagsCategory": "TODO_SOURCE_DERIVED",
+      "sizeofMoveFlagsCategory": "TODO_SOURCE_DERIVED"
+    },
+    "Values": {}
+  },
+  "AbilityData": {
+    "Addresses": {},
+    "Values": {}
+  }
+}

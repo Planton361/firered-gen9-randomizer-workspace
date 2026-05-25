@@ -223,3 +223,27 @@ Do not reuse NatDexExtension's `Memory.read32(0x08000170) == 1258` marker unless
 ## Recommended next step
 
 Create a source-derived CFRU/DPE manifest prototype, then implement the smallest external `CFRUDPEExtension.lua` that manually loads that profile and proves player party plus active enemy battle display. Keep BizHawk local and do not fork Tracker core unless the extension API proves insufficient.
+
+## Skeleton implementation note
+
+Branch `feature/cfru-dpe-tracker-extension-skeleton` adds the first workspace-owned skeleton under `03_tools/tracker-extensions/CFRUDPEExtension/`.
+
+The skeleton is intentionally conservative:
+
+- `CFRUDPEExtension.lua` defines Tracker extension metadata and hooks.
+- It does not modify Tracker core files.
+- It does not require or modify NatDexExtension.
+- It does not read or write emulator memory by itself.
+- It prepares a manual CFRU/DPE profile and looks for real local manifests named `data/game-addresses.json` and `data/tracker-overrides.json`.
+- It does not auto-load the committed `.example.json` files.
+
+Local install shape for a manual Tracker smoke:
+
+1. Copy `03_tools/tracker-extensions/CFRUDPEExtension/CFRUDPEExtension.lua` to the Ironmon Tracker custom extension folder as `CFRUDPEExtension.lua`.
+2. Copy `03_tools/tracker-extensions/CFRUDPEExtension/data/` to a sibling folder named `CFRUDPEExtension/data/` inside that same Tracker custom extension folder.
+3. Copy the example manifests to local non-example names only after filling real source-derived values:
+   - `game-addresses.example.json` -> `game-addresses.json`
+   - `tracker-overrides.example.json` -> `tracker-overrides.json`
+4. Enable `CFRUDPEExtension` in Ironmon Tracker.
+
+The current skeleton can prove extension loading/unloading and manifest path preparation. It cannot yet prove species/move/ability/item correctness, player party correctness, enemy battle correctness, hidden ability handling, Tera/Gigantamax fields or trainer-party fidelity until real manifest values and data mappings exist.
