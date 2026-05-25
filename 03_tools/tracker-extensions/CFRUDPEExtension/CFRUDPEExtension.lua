@@ -120,6 +120,7 @@ local extension = {
 		lastLoadStatus = "not started",
 		activeBattleMons = {},
 		activeBattleStatus = "active-battle=not checked",
+		activeBattleSnapshot = nil,
 	},
 }
 
@@ -283,6 +284,48 @@ local function setActiveBattleStatus(status)
 	end
 end
 
+local function getResolvedName(resolved)
+	if type(resolved) ~= "table" then
+		return "?"
+	end
+	return tostring(resolved.name or resolved.id or "?")
+end
+
+local function formatMove(move)
+	if type(move) ~= "table" or move.id == nil or move.id == 0 then
+		return "-"
+	end
+	local name = move.name or ("move#" .. tostring(move.id))
+	local pp = move.pp
+	if pp == nil then
+		return name
+	end
+	return string.format("%s(%s)", name, tostring(pp))
+end
+
+local function formatMoves(moves)
+	local formatted = {}
+	for moveIndex = 1, 4 do
+		table.insert(formatted, formatMove(moves and moves[moveIndex]))
+	end
+	return table.concat(formatted, "/")
+end
+
+local function formatBattleMonSummary(mon, label)
+	if type(mon) ~= "table" or not mon.valid then
+		return string.format("%s:-", label)
+	end
+	return string.format(
+		"%s:%s L%s HP %s/%s moves[%s]",
+		label,
+		getResolvedName(mon.species),
+		tostring(mon.level or "?"),
+		tostring(mon.hp or "?"),
+		tostring(mon.maxHP or "?"),
+		formatMoves(mon.moves)
+	)
+end
+
 local function isPlausibleBattleMon(mon)
 	local speciesCount = getCountValue(extension.state.sourceData, "species")
 	return mon.species.id ~= nil
@@ -333,9 +376,29 @@ function extension.readBattleMon(baseAddress, slotInfo)
 	return mon
 end
 
+function extension.formatActiveBattleMons(activeBattleMons)
+	activeBattleMons = activeBattleMons or extension.state.activeBattleMons or {}
+	return string.format(
+		"active-battle=snapshot %s | %s",
+		formatBattleMonSummary(activeBattleMons.playerLeft, "P"),
+		formatBattleMonSummary(activeBattleMons.opponentLeft, "E")
+	)
+end
+
+function extension.logActiveBattleSnapshot(activeBattleMons)
+	local snapshot = extension.formatActiveBattleMons(activeBattleMons)
+	extension.state.activeBattleSnapshot = snapshot
+	if extension.state.lastActiveBattleSnapshot ~= snapshot then
+		extension.state.lastActiveBattleSnapshot = snapshot
+		log(snapshot)
+	end
+end
+
 function extension.readActiveBattleMons()
 	if not extension.state.sourceDataLoaded then
 		extension.state.activeBattleMons = {}
+		extension.state.activeBattleSnapshot = nil
+		extension.state.lastActiveBattleSnapshot = nil
 		setActiveBattleStatus("active-battle=source-data missing")
 		return false
 	end
@@ -343,11 +406,15 @@ function extension.readActiveBattleMons()
 	local battleMonsAddress = getConfiguredAddress("gBattleMons")
 	if battleMonsAddress == nil then
 		extension.state.activeBattleMons = {}
+		extension.state.activeBattleSnapshot = nil
+		extension.state.lastActiveBattleSnapshot = nil
 		setActiveBattleStatus("active-battle=missing gBattleMons")
 		return false
 	end
 	if Memory == nil or type(Memory.readbyte) ~= "function" or type(Memory.readword) ~= "function" then
 		extension.state.activeBattleMons = {}
+		extension.state.activeBattleSnapshot = nil
+		extension.state.lastActiveBattleSnapshot = nil
 		setActiveBattleStatus("active-battle=memory reader unavailable")
 		return false
 	end
@@ -357,6 +424,8 @@ function extension.readActiveBattleMons()
 		local battlersCount = readU8(battlersCountAddress)
 		if battlersCount ~= nil and battlersCount < 2 then
 			extension.state.activeBattleMons = {}
+			extension.state.activeBattleSnapshot = nil
+			extension.state.lastActiveBattleSnapshot = nil
 			setActiveBattleStatus(string.format("active-battle=waiting battlers=%s", tostring(battlersCount)))
 			return false
 		end
@@ -375,18 +444,14 @@ function extension.readActiveBattleMons()
 
 	extension.state.activeBattleMons = active
 	if validRows == 0 then
-		setActiveBattleStatus("active-battle=no valid rows")
+		extension.state.activeBattleSnapshot = nil
+		extension.state.lastActiveBattleSnapshot = nil
+		setActiveBattleStatus("active-battle=idle/no valid rows")
 		return false
 	end
 
-	local player = active.playerLeft and active.playerLeft.species or {}
-	local opponent = active.opponentLeft and active.opponentLeft.species or {}
-	setActiveBattleStatus(string.format(
-		"active-battle=loaded rows=%d player-left=%s opponent-left=%s",
-		validRows,
-		tostring(player.name or player.id or "?"),
-		tostring(opponent.name or opponent.id or "?")
-	))
+	setActiveBattleStatus(string.format("active-battle=loaded rows=%d", validRows))
+	extension.logActiveBattleSnapshot(active)
 	return true
 end
 
@@ -508,7 +573,9 @@ function extension.unload()
 	extension.state.lastLoadStatus = "unloaded"
 	extension.state.activeBattleMons = {}
 	extension.state.activeBattleStatus = "active-battle=unloaded"
+	extension.state.activeBattleSnapshot = nil
 	extension.state.lastActiveBattleStatus = nil
+	extension.state.lastActiveBattleSnapshot = nil
 	log("unloaded; no Tracker core overrides to restore")
 end
 

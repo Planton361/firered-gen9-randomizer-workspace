@@ -110,9 +110,32 @@ Expected local status messages:
 - `active-battle=missing gBattleMons` when the local address manifest does not provide the key;
 - `active-battle=memory reader unavailable` if Tracker has not exposed its read API yet;
 - `active-battle=waiting battlers=0` or similar when optional `gBattlersCount` says no battle is active;
-- `active-battle=loaded rows=...` when one or both left-side rows look plausible.
+- `active-battle=idle/no valid rows` during no-battle or battle-transition states;
+- `active-battle=loaded rows=...` when one or both left-side rows look plausible;
+- `active-battle=snapshot P:... | E:...` when the formatted battle snapshot changes.
 
-This is a diagnostic/helper state only. Read data is stored in `extension.state.activeBattleMons` and exposed through `extension.getActiveBattleMons()` for later extension-owned UI work.
+The snapshot includes player/enemy species, level, HP/max HP, and four move slots with current PP where available. Snapshot logging is change-based, so repeated identical frames should not spam the Tracker console.
+
+This is a diagnostic/helper state only. Read data is stored in `extension.state.activeBattleMons`, exposed through `extension.getActiveBattleMons()`, and formatted by `extension.formatActiveBattleMons()` for later extension-owned UI work.
+
+### Local active battle debug smoke
+
+Install/update these files in the local Tracker extension layout:
+
+1. Copy `CFRUDPEExtension.lua` to `Lua/extensions/CFRUDPEExtension.lua`.
+2. Copy committed `data/source-data.json` to `Lua/extensions/data/source-data.json`.
+3. Provide local ignored `Lua/extensions/data/game-addresses.local.json` with `Addresses.gBattleMons`.
+4. Keep local ignored `Lua/extensions/data/tracker-overrides.local.json` beside it if testing other layout overrides.
+5. Optional: include `Addresses.gBattlersCount` to reduce transition/no-battle noise.
+
+Expected sanitized debug output in battle is shaped like:
+
+```text
+active-battle=loaded rows=2
+active-battle=snapshot P:<species> L<level> HP <hp>/<max> moves[...] | E:<species> L<level> HP <hp>/<max> moves[...]
+```
+
+Do not copy real address values, local JSON contents, ROM paths, raw logs, screenshots, hashes, saves, emulator states, or private paths into committed files.
 
 ## Local address manifests
 

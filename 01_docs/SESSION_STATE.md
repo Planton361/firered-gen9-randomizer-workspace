@@ -1,3 +1,13 @@
+# Session update - CFRU/DPE battle reader debug view
+
+- Branch: `feature/cfru-dpe-battle-reader-debug-view`.
+- Extended `03_tools/tracker-extensions/CFRUDPEExtension/CFRUDPEExtension.lua` with an extension-owned active-battle snapshot formatter and change-based debug logging.
+- Scope: no Tracker-core fork, no NatDexExtension changes, no memory writes, no `02_external/**` edits, and no stock Tracker screen injection.
+- Behavior: valid `gBattleMons` snapshots now log a compact `active-battle=snapshot P:... | E:...` line with species, level, HP/max HP, and move/PP slots. Repeated identical snapshots are not re-logged.
+- State transitions: no-battle/transition reads now report `active-battle=idle/no valid rows`, treated as a non-error diagnostic state.
+- Updated README and Tracker compat smoke plan with local copy steps and expected sanitized status output.
+- Safety boundary: no ROMs, saves, emulator states, builds, screenshots, raw logs, hashes, private paths, real addresses, local JSON values, `offsets.ini`, tool binaries, secrets, tokens, or `.env` data were committed or documented.
+
 # Session update - CFRU/DPE gBattleMons reader smoke results
 
 - Branch: `test/cfru-dpe-gbattlemons-reader-results`.

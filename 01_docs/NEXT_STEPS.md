@@ -1,3 +1,11 @@
+# Next steps update - CFRU/DPE battle reader debug view
+
+- Treat the updated `CFRUDPEExtension.lua` snapshot logging as the current local debug surface for `gBattleMons` active-battle reads.
+- Local smoke should now look for `active-battle=loaded rows=...` followed by `active-battle=snapshot P:... | E:...` with species, level, HP/max HP, and move/PP slots.
+- `active-battle=idle/no valid rows` is acceptable outside battle or during state transitions and should not be treated as a failure by itself.
+- The reader still does not update stock Tracker UI. Next options are broader sanitized field validation, a safer battle-state gate, or an extension-owned visual/status panel.
+- Continue excluding real local addresses, local JSON values, `offsets.ini`, ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, secrets, tokens and `.env` data.
+
 # Next steps update - CFRU/DPE gBattleMons reader smoke results
 
 - Treat `08_tests/randomizer/cfru-dpe-gbattlemons-reader-smoke-results.md` as the current sanitized local evidence for the v1 extension-owned `gBattleMons` reader.
