@@ -1,3 +1,11 @@
+# Session update - UPR-FVX trainer-load bounds diagnostics
+
+- Branch: `analysis/upr-fvx-trainer-load-bounds-diagnostics` / UPR-FVX `analysis/upr-fvx-trainer-load-bounds-diagnostics`.
+- Extended the diagnostic-only Gen3 ROM load path for trainer-load bounds failures.
+- When a randomized output ROM crashes during `trainer load`, the private-ROM audit can now report sanitized row context: trainer ID, slot or header, trainer party layout, party flags, party count, and classified trainer/party/slot offset state.
+- Expected failure shape is now `Configured randomized ROM could not be loaded during trainer load at trainer=<id> slot=<slot> layout=<layout> ... reason=<ExceptionClass>`.
+- Scope remains reload/audit diagnosis only. No Randomizer behavior, CFRU/DPE code, Tracker code, ROM, save, build, screenshot, raw log, hash, private path, secret, token, or `.env` data was changed or documented.
+
 # Session update - UPR-FVX randomized output ROM reload diagnostics
 
 - Branch: `analysis/upr-fvx-output-rom-reload-failure` / UPR-FVX `analysis/upr-fvx-output-rom-reload-failure`.

@@ -60,6 +60,9 @@ If a configured ROM crashes during load, the test should fail without printing t
 `Configured randomized ROM could not be loaded during <phase>: <ExceptionClass>`.
 Current sanitized load phases include detection, setup, item table load, pokemon data load, evolution load, move table
 load, pokemon palette load, trainer load, ability table load, and evolution-level estimate.
+Trainer-load bounds failures add a compact row context when available:
+`Configured randomized ROM could not be loaded during trainer load at trainer=<id> slot=<slot> layout=<layout> partyFlags=<flags> partyCount=<count> trainerOffset=<class> partyPointer=<class> slotOffset=<class> reason=<ExceptionClass>`.
+Offset and pointer values are classified as `in-rom`, `out-of-rom`, `<missing>`, or `<invalid-length>` instead of dumping raw private ROM addresses.
 
 Interpretation:
 
