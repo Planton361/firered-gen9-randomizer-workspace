@@ -1,3 +1,10 @@
+# Next steps update - UPR-FVX Route-22 Rival starter carryover
+
+- Treat the explicit FRLG Rival force-slot metadata as the current implementation candidate for the remaining Route-22 starter-carryover failure.
+- Re-run the local sanitized Route-22 Rival smoke with a freshly built UPR-FVX jar and freshly generated output ROM. Expected result: the weak Route-22 protected starter slot carries the lab Rival counter-starter; nonstarter Route-22 slots may still randomize.
+- Keep Better Movesets validation separate: move slots should remain compact from the previous final normalization fix, and Better Movesets should compute moves for the final Route-22 starter Species after carryover.
+- If the Route-22 starter still mismatches, capture only sanitized trainer context, starter choice, party slot, Species, Level, and move names. Do not copy raw logs, screenshots, hashes, paths, local addresses, ROMs, saves, emulator states, builds, tool binaries, secrets, tokens, or `.env` data.
+
 # Next steps update - UPR-FVX final trainer move normalization
 
 - Treat the new final pre-write normalization as the current implementation candidate for lingering `[-/Move/Move/Move]` trainer rows after Better Movesets.
