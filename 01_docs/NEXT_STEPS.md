@@ -1,3 +1,12 @@
+# Next steps update - CFRU/DPE Tracker manifest source map
+
+- Treat `01_docs/analysis/cfru-dpe-tracker-manifest-source-map.md` as the current source-backed boundary for Tracker manifest generation.
+- Commit-safe next data is source-derived only: counts, enum mappings, display-name mappings from source, layout candidates and pointer-slot metadata.
+- Keep actual target addresses for party, battle, trainer, saveblock and repointed data tables in local ignored `game-addresses.json` / `tracker-overrides.json` until a public symbol source or CFRU/DPE metadata table exists.
+- Reconcile DPE item count 799 vs. CFRU constants item count 779 before generating final item mappings.
+- Preferred next implementation step: write a small generator for source-derived `source-data.json`, then separately design a CFRU metadata table or symbol-map reader for runtime addresses.
+- Continue excluding ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, secrets, tokens and `.env` data.
+
 # Next steps update - CFRU/DPE Tracker extension skeleton
 
 - Treat `03_tools/tracker-extensions/CFRUDPEExtension/CFRUDPEExtension.lua` as the current external Tracker extension skeleton.

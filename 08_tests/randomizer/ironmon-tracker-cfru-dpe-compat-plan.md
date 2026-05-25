@@ -77,3 +77,9 @@ Next local manifest smoke requires filled, local non-example files:
 - `CFRUDPEExtension/data/tracker-overrides.json`
 
 Those files should be produced from source-derived values and sanitized local validation. Do not commit private paths, ROM hashes, runtime logs, saves or emulator states.
+
+## Manifest source-map follow-up
+
+Use `01_docs/analysis/cfru-dpe-tracker-manifest-source-map.md` before filling local manifests.
+
+Safe committed data starts with source-derived counts, enum mappings and layout candidates. Runtime/table target addresses for `gPlayerParty`, `gEnemyParty`, `gBattleMons`, `gBattleMoves`, `gBaseStats`, names, items, trainers, TM/HM moves and saveblock data should stay in local ignored JSON until they are available from a public symbol source or CFRU/DPE metadata table.
