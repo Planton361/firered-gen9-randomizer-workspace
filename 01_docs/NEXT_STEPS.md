@@ -1,3 +1,11 @@
+# Next steps update - CFRU runtime custom move construction
+
+- Treat `01_docs/analysis/cfru-runtime-custom-move-construction.md` as the current source-backed split between UPR-FVX raw trainer audit, CFRU runtime trainer construction, and Tracker `gBattleMons` reads.
+- Next minimal diagnostic branch should report the affected trainer id/slot plus sanitized `partyFlags`, has-item/custom-move state, writer row size, writer move offset, and whether the row is decoded as classic Gen3 or CFRU expanded layout.
+- Prioritize the CFRU/DPE held-item custom-move layout mismatch: UPR-FVX no-item custom rows match CFRU, but held-item custom rows likely need a CFRU/DPE-specific 32-byte writer/reloader.
+- Also verify whether `FLAG_POKEMON_RANDOMIZER` is active in the local smoke, because CFRU can skip applying custom trainer moves under that flag; if so, inspect generated move assignment separately from Better Movesets.
+- Continue excluding ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, local addresses, `.local.json`, secrets, tokens and `.env` data.
+
 # Next steps update - CFRU runtime trainer vs Tracker slot
 
 - Install the updated `CFRUDPEExtension.lua` and rerun the sanitized local Route-22 Rival smoke with local ignored keys for `gBattleMons`, `gBattlerPartyIndexes`, `gBattleTypeFlags`, and `gTrainerBattleOpponent_A`.

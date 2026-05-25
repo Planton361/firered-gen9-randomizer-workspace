@@ -70,6 +70,14 @@ Nach einem Fix sollte ein fokussierter Test bestaetigen:
 
 ## Implementierungsstand
 
+CFRU runtime custom-move construction analysis:
+
+- UPR-FVX Write/Reload-Audit fuer die exakt getestete Output-ROM kann sauber sein, waehrend CFRU runtime trotzdem andere `gBattleMons`-Moves baut.
+- CFRU `SET_MOVES` kopiert Custom-Moves 0-basiert und exakt; ein fuehrender `MOVE_NONE` wuerde nicht kompaktiert.
+- CFRU `CreateNPCTrainerParty` kann Custom-Moves bei aktivem `FLAG_POKEMON_RANDOMIZER` bewusst ignorieren. Dann prueft der Smoke nicht Better-Movesets-Custom-Rows, sondern CFRUs generierte/default Move-Zuweisung.
+- Layout-Risiko: no-item custom rows sind zwischen UPR-FVX und CFRU kompatibel; held-item + custom-moves rows sind es vermutlich nicht, weil CFRU `TrainerMonItemCustomMoves` ein erweitertes Layout nutzt.
+- Naechster Smoke sollte fuer betroffene Trainer nur sanitized erfassen: Trainer-Kontext, Party-Slot, partyFlags-Kategorie, ob Item+Custom aktiv ist, Species/Level und Move-Namen.
+
 UPR-FVX Follow-up-Branch `fix/route22-rival-starter-slot-actual`:
 
 - Dieser Block aendert keine Move-Slot- oder Better-Movesets-Logik.

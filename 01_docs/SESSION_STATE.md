@@ -1,3 +1,12 @@
+# Session update - CFRU runtime custom move construction
+
+- Branch: `analysis/cfru-runtime-custom-move-construction`.
+- Added `01_docs/analysis/cfru-runtime-custom-move-construction.md` to explain why the UPR-FVX write/reload audit can be clean while CFRU runtime `gBattleMons` still shows leading empty move slots.
+- Source-backed finding: CFRU `SET_MOVES` copies custom trainer moves 0-based and exactly; it does not compact `MOVE_NONE` out of slot 0.
+- Source-backed finding: CFRU `CreateNPCTrainerParty` skips applying custom trainer moves when `FLAG_POKEMON_RANDOMIZER` is active, unless Battle Facility or temp-disable-randomizer applies.
+- Source-backed layout risk: UPR-FVX currently writes/reloads classic 16-byte held-item custom-move rows, while CFRU `TrainerMonItemCustomMoves` is an expanded layout with ability/nature/IV/EV fields, held item, moves, and tera type.
+- Scope is documentation-only. No UPR-FVX behavior, CFRU/DPE code, Tracker extension, ROM, save, build, screenshot, raw log, hash, private path, local address, `.local.json`, secret, token, or `.env` data was changed or documented.
+
 # Session update - CFRU runtime trainer vs Tracker slot
 
 - Branch: `analysis/cfru-runtime-trainer-vs-tracker-slot`.
