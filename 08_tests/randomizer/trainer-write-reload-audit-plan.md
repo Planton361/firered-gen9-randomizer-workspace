@@ -23,6 +23,12 @@ UPR-FVX now extends the existing FRLG runtime trainer-source diagnostics:
 
 The CFRU/DPE held-item custom-move branch also uses the expanded row for reload/write compatibility. It does not change Trainer randomization, Better Movesets selection, CFRU runtime, or Tracker code.
 
+Follow-up save-path guard:
+
+- Runtime Trainer Source rows are saved after the normally loaded Trainer table.
+- When several runtime rows point at shared or overlapping old party data, UPR-FVX now collects their old party ranges before writing, merges overlapping ranges, frees each merged range once, and then repoints/writes each row without a second per-row free.
+- This keeps the `FreedSpace` overlap safety check intact and avoids the save-time failure shape `Can't free a space that is already freed` for overlapping runtime trainer source rows.
+
 ## ROM-Free Regression Checks
 
 The synthetic `Gen3OakLabRivalScriptTest` additions prove that:
@@ -33,6 +39,8 @@ The synthetic `Gen3OakLabRivalScriptTest` additions prove that:
 - CFRU/DPE `partyFlags=3` diagnostics read moves from the expanded CFRU offsets, while still showing the classic 16-byte interpretation for comparison.
 
 `Gen3SensibleHeldItemsTest` also covers the CFRU/DPE writer shape for held-item custom-move rows. These tests do not prove a private output ROM was generated from the current jar/settings. They prove the audit/writer can identify and avoid the relevant layout failure when it exists in raw trainer data.
+
+`Gen3OakLabRivalScriptTest` additionally covers overlapping runtime-source old party ranges. The synthetic case uses two CFRU/DPE `partyFlags=3` source rows whose old 32-byte-stride party ranges overlap; save must merge/free the old range once and complete without weakening `FreedSpace`.
 
 ## Local Private-ROM Audit
 

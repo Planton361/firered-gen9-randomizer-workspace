@@ -1,3 +1,11 @@
+# Next steps update - UPR-FVX runtime trainer source overlap-free save
+
+- Treat the merged old-range runtime trainer source save as the current implementation candidate for the saveRom crash after the CFRU/DPE `partyFlags=3` 32-byte layout fix.
+- Re-run the local private randomizer save that previously failed with `Can't free a space that is already freed`. Expected result: save completes without weakening `FreedSpace`.
+- Then rerun the private trainer write/reload audit and the sanitized gBattleMons smoke for held-item custom-move trainers. Expected result: no raw output mismatch warnings and no leading empty move slot caused by the old classic layout.
+- If save still fails, capture only sanitized trainer id, partyFlags category, old range length class, and overlap yes/no; do not document raw addresses, paths, logs, ROMs, saves, builds, hashes, screenshots, local addresses, secrets, tokens or `.env` data.
+- Continue excluding ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, local addresses, `.local.json`, secrets, tokens and `.env` data from commits.
+
 # Next steps update - UPR-FVX CFRU held-item custom-move rows
 
 - Treat the CFRU/DPE `partyFlags=3` expanded writer/reloader as the current implementation candidate for held-item custom-move rows.

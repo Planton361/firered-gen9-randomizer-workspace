@@ -1,3 +1,11 @@
+# Session update - UPR-FVX runtime trainer source overlap-free save
+
+- Branch: `fix/upr-fvx-runtime-trainer-source-overlap-free` / UPR-FVX `fix/upr-fvx-runtime-trainer-source-overlap-free`.
+- Confirmed the save-crash cause in the Runtime Trainer Source save path: after CFRU/DPE `partyFlags=3` rows became 32-byte rows, multiple runtime source rows can expose shared or overlapping old party ranges. The per-row `DataRewriter` then tries to `free()` an overlapping range more than once and `FreedSpace` correctly aborts with `Can't free a space that is already freed`.
+- Fix scope: runtime source rows now collect old party ranges before writing, merge overlaps, free each merged old range once, and then repoint/write each runtime row without a second per-row free. The `FreedSpace` safety check remains unchanged.
+- Added ROM-free coverage for overlapping CFRU/DPE held-item custom-move runtime source rows.
+- Safety boundary: no CFRU/DPE or Tracker files were changed; no ROMs, saves, emulator states, builds, screenshots, raw logs, hashes, private paths, tool binaries, local addresses, secrets, tokens, or `.env` data were committed or documented.
+
 # Session update - UPR-FVX CFRU held-item custom-move rows
 
 - Branch: `diagnosis/upr-fvx-cfru-held-item-custom-moves` / UPR-FVX `diagnosis/upr-fvx-cfru-held-item-custom-moves`.

@@ -76,6 +76,7 @@ CFRU/DPE held-item custom-move row fix candidate:
 - Klassisches Gen3 `partyFlags=3`: row size 16, item offset 6, move offset 8.
 - CFRU/DPE expanded `partyFlags=3`: row size 32, ability/nature/IV/EV-Felder vor dem Item, item offset 20, move offset 22, tera type offset 30.
 - UPR-FVX schreibt und reloaded CFRU/DPE `partyFlags=3` nun mit dem expanded Layout; no-item custom rows und held-item default rows bleiben beim bestehenden kompatiblen Layout.
+- Runtime-Trainer-Source-Save merged ueberlappende alte Party-Ranges vor dem Repoint/Write, damit shared/overlap Source Rows nicht doppelt gefreed werden.
 - Der private Re-Smoke sollte gezielt Trainer mit Item plus Custom-Moves pruefen und nur sanitized notieren, ob `gBattleMons` weiterhin fuehrende leere Move-Slots zeigt.
 
 CFRU runtime custom-move construction analysis:
