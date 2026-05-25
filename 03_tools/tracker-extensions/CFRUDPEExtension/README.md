@@ -76,8 +76,8 @@ It does not contain:
 
 For local extension-load smoke, copy this extension outside Git-managed Tracker sources:
 
-1. Copy `CFRUDPEExtension.lua` into the Ironmon Tracker custom extension folder.
-2. Copy this `data/` folder next to it as `CFRUDPEExtension/data/`.
+1. Copy `CFRUDPEExtension.lua` directly into the Ironmon Tracker extension folder, for example `Lua/extensions/CFRUDPEExtension.lua`.
+2. Copy this `data/` folder next to it, for example `Lua/extensions/data/`.
 3. Enable `CFRUDPEExtension` in Tracker.
 
 Expected loader-only result:
@@ -88,6 +88,8 @@ Expected loader-only result:
 - if local files are present, the extension calls `TrackerAPI.loadGameSettingsFromJson` and `TrackerAPI.loadTrackerOverridesFromJson` with those explicit paths and logs each return status.
 
 Without local non-example `.local.json` manifests, the extension can only prove load/unload and source-data availability. It cannot yet prove live party, battle or trainer data correctness.
+
+Manifest path resolution is relative to the folder containing the loaded `CFRUDPEExtension.lua` file. If that cannot be detected, the extension falls back to `FileManager.getExtensionsFolderPath()`. In both cases, manifest files are expected under `data/` directly below the extension folder.
 
 ## Local address manifests
 
