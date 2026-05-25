@@ -1,3 +1,11 @@
+# Session update - UPR-FVX output ROM expanded bounds reload
+
+- Branch: `analysis/upr-fvx-output-rom-expanded-bounds-reload` / UPR-FVX `analysis/upr-fvx-output-rom-expanded-bounds-reload`.
+- Extended the trainer-load bounds diagnostics for randomized CFRU/DPE output-ROM reloads with sanitized loaded table state.
+- New fields include `cfruDpeMode`, `loadedSpeciesCount`, and `loadedMoveCount` alongside the existing raw failing-slot Species/Item/Move values.
+- This targets the current private-ROM audit failure where `rawSpecies=1375` and `rawMove=643` should be valid for CFRU/DPE Gen9 counts but are reported out-of-bounds during output-ROM reload.
+- Scope remains reload/audit diagnosis only. No Randomizer behavior, CFRU/DPE code, Tracker code, ROM, save, build, screenshot, raw log, hash, private path, secret, token, or `.env` data was changed or documented.
+
 # Session update - UPR-FVX trainer-load raw slot diagnostics
 
 - Branch: `analysis/upr-fvx-trainer-load-slot-raw-values` / UPR-FVX `analysis/upr-fvx-trainer-load-slot-raw-values`.

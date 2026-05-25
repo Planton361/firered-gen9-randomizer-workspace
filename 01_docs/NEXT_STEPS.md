@@ -1,3 +1,11 @@
+# Next steps update - UPR-FVX output ROM expanded bounds reload
+
+- Re-run the private-ROM trainer write/reload audit with both `-D` paths from the current UPR-FVX branch.
+- Expected trainer-load failure context now includes `cfruDpeMode`, `loadedSpeciesCount`, and `loadedMoveCount`.
+- If `cfruDpeMode=false` or counts are below CFRU/DPE Gen9 expectations (`loadedSpeciesCount=1440`, `loadedMoveCount=992`), inspect why randomized output-ROM reload did not activate expanded CFRU/DPE detection before trainer rows were decoded.
+- If counts are correct but `rawSpecies=1375` or `rawMove=643` still report out-of-bounds, inspect array population/null slots rather than Rival or Better-Movesets logic.
+- Continue excluding ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, local addresses, secrets, tokens and `.env` data.
+
 # Next steps update - UPR-FVX trainer-load raw slot diagnostics
 
 - Re-run the private-ROM trainer write/reload audit with both `-D` paths from the current UPR-FVX branch.
