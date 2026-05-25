@@ -88,6 +88,16 @@ UPR-FVX Follow-up-Branch `fix/rival-starter-trainer-moveslot-regression`:
   - ein Route-22-artiger Rival mit zwei gleichleveligen Slots behaelt den Counter-Starter im geschuetzten letzten Slot, waehrend der Nichtstarter-Slot weiterhin randomisiert sein darf.
 - Lokaler Re-Smoke sollte die sanitized Beispiele `[-/Lick/Tackle/Ember]` und `[-/Astonish/Mudslap/Pound]` erneut pruefen.
 
+UPR-FVX Follow-up-Branch `fix/route22-rival-final-moveslots`:
+
+- Der verbleibende `[-/Move/Move/Move]`-Pfad kann aus dem finalen Reset-Move-Fallback / Gen3-Writer kommen, nicht nur aus Better Movesets.
+- `getMovesAtLevel()` ignoriert jetzt `MOVE_NONE`-Platzhalter; der Gen3-Trainer-Writer normalisiert Fallback- und Custom-Move-Slots direkt vor dem Write.
+- ROM-freie Regression deckt ab:
+  - `MoveLearnt(0, ...)` erzeugt keinen fuehrenden leeren Slot im Level-Fallback.
+  - `[0, Blizzard, Crunch, Psycho Cut]` wird vor dem Gen3-Trainer-Write zu `[Blizzard, Crunch, Psycho Cut, 0]` normalisiert.
+  - ein Route-22-artiger Rival mit Level-9-Starter-Slot behaelt die schwache Starterstufe und wird nicht durch einen spaeteren/evolvierten Rival-Kontext ersetzt.
+- Lokaler Re-Smoke sollte das sanitized Beispiel `Decidueye Lv47` mit `moves[-/Blizzard/Crunch/Psychocut]` erneut pruefen. Wenn weiterhin ein Level-47-Rival im Route-22-Kontext erscheint, ist das separat als Script-/Trainerbattle-Quellkontext zu analysieren.
+
 ## Offene Smoke-Notizen
 
 - Kein lokaler Pfad, keine Seed-Strings, keine ROM-Hashes und keine raw Logs in diese Datei kopieren.
