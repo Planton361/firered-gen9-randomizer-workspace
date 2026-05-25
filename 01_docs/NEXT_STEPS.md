@@ -1,3 +1,11 @@
+# Next steps update - UPR-FVX trainer audit ROM loading hardening
+
+- Re-run the private-ROM audit with both `-D` paths.
+- If ROM loading still fails, use the role in the sanitized failure message to decide whether the base ROM or randomized ROM is the failing input.
+- Expected failure shape is `Configured base ROM could not be loaded: <ExceptionClass>` or `Configured randomized ROM could not be loaded: <ExceptionClass>`, with no private path printed.
+- Once both ROMs load, continue with the audit report classification before any further UPR-FVX or CFRU runtime changes.
+- Continue excluding ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, local addresses, secrets, tokens and `.env` data.
+
 # Next steps update - UPR-FVX trainer audit property forwarding
 
 - Re-run the private-ROM audit with regular `-D` properties from `02_external/upr-fvx`; the `romio:test` task now forwards the two audit ROM properties into the forked test JVM.

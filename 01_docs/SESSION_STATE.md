@@ -1,3 +1,11 @@
+# Session update - UPR-FVX trainer audit ROM loading hardening
+
+- Branch: `fix/upr-fvx-trainer-audit-report-output` / UPR-FVX `test/trainer-audit-report-output`.
+- Hardened `Gen3OakLabRivalRuntimeSourceRomTest` ROM loading for opt-in private-ROM audits.
+- `loadGen3Rom` now accepts a role (`single`, `base`, `randomized`) and wraps both `factory.isLoadable(...)` and `romHandler.loadRom(...)` failures with path-free messages.
+- Expected failure shape is role-specific and sanitized, e.g. `Configured base ROM could not be loaded: ArrayIndexOutOfBoundsException`.
+- Scope is test/diagnostic output only. No Randomizer behavior, CFRU/DPE code, Tracker code, ROM, save, build, screenshot, raw log, hash, private path, secret, token, or `.env` data was changed or documented.
+
 # Session update - UPR-FVX trainer audit property forwarding
 
 - Branch: `fix/upr-fvx-trainer-audit-report-output` / UPR-FVX `test/trainer-audit-report-output`.

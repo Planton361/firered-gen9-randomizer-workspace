@@ -55,6 +55,9 @@ The test also prints a sanitized line with the relative report path, for example
 ```
 
 The post-randomization audit prints a sanitized summary and any core warnings to the test output. If the report cannot be written, the test fails with the relative target path.
+If a configured ROM crashes during load, the test should fail without printing the private path and identify the role:
+`Configured base ROM could not be loaded: <ExceptionClass>` or
+`Configured randomized ROM could not be loaded: <ExceptionClass>`.
 
 Interpretation:
 
