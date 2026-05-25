@@ -1,3 +1,13 @@
+# Session update - CFRU/DPE tracker extension readers
+
+- Branch: `feature/cfru-dpe-tracker-extension-readers`.
+- Extended `03_tools/tracker-extensions/CFRUDPEExtension/CFRUDPEExtension.lua` so the extension-owned `gBattleMons` debug snapshot includes source-backed `BattlePokemon` fields for type pair, ability, held item, and primary status.
+- Source-backed offsets used: `type3 0x18`, `ability 0x20`, `type1/type2 0x21/0x22`, `item 0x2E`, and `status1/status2 0x4C/0x50` from CFRU `include/pokemon.h`.
+- Type names use `source-data.json` if future type mappings exist, otherwise CFRU/DPE type constants are used as a local fallback. Ability and item names continue to resolve through committed `source-data.json`.
+- Logging remains change-based; `idle/no valid rows` remains a non-error no-battle/transition state. `type3` and raw `status2` are stored as diagnostics but not formatted as pass/fail fields yet.
+- Scope: no Tracker-core fork, no NatDexExtension changes, no `Program.readNewPokemon` changes, no memory writes, and no `02_external/**` edits.
+- Safety boundary: no ROMs, saves, emulator states, builds, screenshots, raw logs, hashes, private paths, real addresses, local JSON values, `offsets.ini`, tool binaries, secrets, tokens, or `.env` data were committed or documented.
+
 # Session update - CFRU/DPE battle reader debug view
 
 - Branch: `feature/cfru-dpe-battle-reader-debug-view`.

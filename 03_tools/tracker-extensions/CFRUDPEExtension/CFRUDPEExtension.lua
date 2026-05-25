@@ -20,12 +20,49 @@ local ACTIVE_BATTLE_SLOTS = {
 local BATTLE_MON_OFFSETS = {
 	species = 0x00,
 	moves = 0x0C,
+	type3 = 0x18,
 	ability = 0x20,
+	type1 = 0x21,
+	type2 = 0x22,
 	pp = 0x24,
 	hp = 0x28,
 	level = 0x2A,
 	maxHP = 0x2C,
 	item = 0x2E,
+	status1 = 0x4C,
+	status2 = 0x50,
+}
+local TYPE_NAMES = {
+	[0x00] = "Normal",
+	[0x01] = "Fighting",
+	[0x02] = "Flying",
+	[0x03] = "Poison",
+	[0x04] = "Ground",
+	[0x05] = "Rock",
+	[0x06] = "Bug",
+	[0x07] = "Ghost",
+	[0x08] = "Steel",
+	[0x09] = "Mystery",
+	[0x0A] = "Fire",
+	[0x0B] = "Water",
+	[0x0C] = "Grass",
+	[0x0D] = "Electric",
+	[0x0E] = "Psychic",
+	[0x0F] = "Ice",
+	[0x10] = "Dragon",
+	[0x11] = "Dark",
+	[0x13] = "Roostless",
+	[0x14] = "Blank",
+	[0x17] = "Fairy",
+	[0x18] = "Stellar",
+}
+local STATUS1_FLAGS = {
+	sleep = 0x07,
+	poison = 0x08,
+	burn = 0x10,
+	freeze = 0x20,
+	paralysis = 0x40,
+	toxic = 0x80,
 }
 
 local function getSlash()
@@ -220,6 +257,7 @@ function extension.buildSourceLookups()
 		moves = buildIdLookup(sourceData.moves),
 		abilities = buildIdLookup(sourceData.abilities),
 		items = buildIdLookup(sourceData.items),
+		types = buildIdLookup(sourceData.types),
 	}
 end
 
@@ -236,6 +274,86 @@ local function resolveId(section, id)
 	return {
 		id = id,
 		name = getDisplayName(section, id),
+	}
+end
+
+local function resolveType(id)
+	return {
+		id = id,
+		name = getDisplayName("types", id) or TYPE_NAMES[id],
+	}
+end
+
+local function hasSingleBitFlag(value, mask)
+	if type(value) ~= "number" or type(mask) ~= "number" or mask <= 0 then
+		return false
+	end
+	return math.floor(value / mask) % 2 == 1
+end
+
+local function resolvePrimaryStatus(status1)
+	if type(status1) ~= "number" then
+		return {
+			raw = status1,
+			name = "?",
+		}
+	end
+	if status1 == 0 then
+		return {
+			raw = status1,
+			key = "none",
+			name = "OK",
+		}
+	end
+
+	local sleepCounter = status1 % (STATUS1_FLAGS.sleep + 1)
+	if sleepCounter > 0 then
+		return {
+			raw = status1,
+			key = "sleep",
+			name = "Sleep",
+			turns = sleepCounter,
+		}
+	end
+	if hasSingleBitFlag(status1, STATUS1_FLAGS.toxic) then
+		return {
+			raw = status1,
+			key = "toxic",
+			name = "Toxic",
+		}
+	end
+	if hasSingleBitFlag(status1, STATUS1_FLAGS.poison) then
+		return {
+			raw = status1,
+			key = "poison",
+			name = "Poison",
+		}
+	end
+	if hasSingleBitFlag(status1, STATUS1_FLAGS.burn) then
+		return {
+			raw = status1,
+			key = "burn",
+			name = "Burn",
+		}
+	end
+	if hasSingleBitFlag(status1, STATUS1_FLAGS.freeze) then
+		return {
+			raw = status1,
+			key = "freeze",
+			name = "Freeze",
+		}
+	end
+	if hasSingleBitFlag(status1, STATUS1_FLAGS.paralysis) then
+		return {
+			raw = status1,
+			key = "paralysis",
+			name = "Paralysis",
+		}
+	end
+	return {
+		raw = status1,
+		key = "other",
+		name = "Other",
 	}
 end
 
@@ -276,6 +394,15 @@ local function readU16(address)
 	return safeRead(Memory.readword, address)
 end
 
+local function readU32(address)
+	local lo = readU16(address)
+	local hi = readU16(address + 2)
+	if lo == nil or hi == nil then
+		return nil
+	end
+	return lo + (hi * 0x10000)
+end
+
 local function setActiveBattleStatus(status)
 	extension.state.activeBattleStatus = status
 	if extension.state.lastActiveBattleStatus ~= status then
@@ -311,17 +438,40 @@ local function formatMoves(moves)
 	return table.concat(formatted, "/")
 end
 
+local function formatTypes(types)
+	if type(types) ~= "table" then
+		return "?"
+	end
+	local type1 = getResolvedName(types[1])
+	local type2 = getResolvedName(types[2])
+	if type1 == type2 or type2 == "?" then
+		return type1
+	end
+	return string.format("%s/%s", type1, type2)
+end
+
+local function formatStatus(status)
+	if type(status) ~= "table" then
+		return "?"
+	end
+	return tostring(status.name or status.key or status.raw or "?")
+end
+
 local function formatBattleMonSummary(mon, label)
 	if type(mon) ~= "table" or not mon.valid then
 		return string.format("%s:-", label)
 	end
 	return string.format(
-		"%s:%s L%s HP %s/%s moves[%s]",
+		"%s:%s L%s HP %s/%s type[%s] ability[%s] item[%s] status[%s] moves[%s]",
 		label,
 		getResolvedName(mon.species),
 		tostring(mon.level or "?"),
 		tostring(mon.hp or "?"),
 		tostring(mon.maxHP or "?"),
+		formatTypes(mon.types),
+		getResolvedName(mon.ability),
+		getResolvedName(mon.heldItem),
+		formatStatus(mon.status),
 		formatMoves(mon.moves)
 	)
 end
@@ -354,6 +504,10 @@ function extension.readBattleMon(baseAddress, slotInfo)
 	local speciesId = readU16(baseAddress + BATTLE_MON_OFFSETS.species)
 	local abilityId = readU8(baseAddress + BATTLE_MON_OFFSETS.ability)
 	local itemId = readU16(baseAddress + BATTLE_MON_OFFSETS.item)
+	local type1Id = readU8(baseAddress + BATTLE_MON_OFFSETS.type1)
+	local type2Id = readU8(baseAddress + BATTLE_MON_OFFSETS.type2)
+	local type3Id = readU8(baseAddress + BATTLE_MON_OFFSETS.type3)
+	local status1 = readU32(baseAddress + BATTLE_MON_OFFSETS.status1)
 	local mon = {
 		slot = slotInfo.label,
 		key = slotInfo.key,
@@ -369,8 +523,15 @@ function extension.readBattleMon(baseAddress, slotInfo)
 			moves[3].pp,
 			moves[4].pp,
 		},
+		types = {
+			resolveType(type1Id),
+			resolveType(type2Id),
+		},
+		type3 = resolveType(type3Id),
 		ability = resolveId("abilities", abilityId),
 		heldItem = resolveId("items", itemId),
+		status = resolvePrimaryStatus(status1),
+		status2Raw = readU32(baseAddress + BATTLE_MON_OFFSETS.status2),
 	}
 	mon.valid = isPlausibleBattleMon(mon)
 	return mon

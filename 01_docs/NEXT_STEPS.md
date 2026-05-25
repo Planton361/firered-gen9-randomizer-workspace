@@ -1,3 +1,12 @@
+# Next steps update - CFRU/DPE tracker extension readers
+
+- Treat the updated `CFRUDPEExtension.lua` snapshot as the current active-battle debug surface for sampled live `BattlePokemon` fields.
+- Local smoke should now look for change-based `active-battle=snapshot P:... | E:...` lines with species, level, HP/max HP, type pair, ability, held item, primary status, and move/PP slots.
+- Validate sanitized field plausibility in both wild and trainer battle states. Specifically compare type pair, ability name, held item name, and status changes against in-game-visible behavior without copying raw logs, screenshots, private paths, real addresses, or local JSON values.
+- `type3` and raw `status2` are available in extension state but remain caveated until a later smoke decides how to display temporary extra-type and volatile status state.
+- Stock Tracker UI still is not updated. Next options remain broader sanitized field validation, a safer battle-state gate, or an extension-owned visual/status panel.
+- Continue excluding ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, `offsets.ini`, generated `.local.json`, real local addresses, secrets, tokens and `.env` data.
+
 # Next steps update - CFRU/DPE battle reader debug view
 
 - Treat the updated `CFRUDPEExtension.lua` snapshot logging as the current local debug surface for `gBattleMons` active-battle reads.
