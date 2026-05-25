@@ -131,3 +131,21 @@ Minimal local steps:
 5. Start Tracker and confirm the extension reports `game-addresses.local=loaded` or a clear loader status.
 
 Expected first result: table/name symbols may load when present in `offsets.ini`, but missing `gPlayerParty`, `gEnemyParty`, `gBattleMons`, SaveBlock, or bag-pocket warnings mean live party, battle, and bag correctness is not proven yet.
+
+## Local tracker-overrides generator smoke
+
+Use `07_scripts/tracker/generate_cfru_dpe_tracker_overrides_local.py` to create the ignored local layout manifest:
+
+```sh
+python3 07_scripts/tracker/generate_cfru_dpe_tracker_overrides_local.py
+```
+
+Expected output is `03_tools/tracker-extensions/CFRUDPEExtension/data/tracker-overrides.local.json`, which must remain ignored and unstaged.
+
+The generated file includes only source-backed layout candidates for recognized Tracker override sections:
+
+- `Program`: BattlePokemon, BattleMove, BaseStats row size, and Trainer header offsets/sizes.
+- `PokemonData`: BaseStats core byte offsets and ability byte size.
+- `MoveData`: bit offsets/sizes used when Tracker reads power/type/accuracy/PP/category from `gBattleMoves`.
+
+Do not treat this as a complete compatibility proof. It does not solve CFRU party `struct Pokemon` decoding, SaveBlock/bag runtime addresses, expanded TrainerMon variants, hidden ability UI behavior, or whether the Tracker override loader updates the nested `*.Addresses` tables used by read paths. Validate loader behavior locally and record only sanitized pass/fail notes.

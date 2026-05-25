@@ -1,3 +1,11 @@
+# Next steps update - CFRU/DPE local tracker overrides generator
+
+- Use `07_scripts/tracker/generate_cfru_dpe_tracker_overrides_local.py` to create a private ignored `tracker-overrides.local.json` for local Tracker layout smoke.
+- Treat the generated file as local-only. Do not commit it or use it as proof of party, battle, trainer-party or bag correctness.
+- Pair it with `source-data.json` and optional `game-addresses.local.json`, then verify locally whether `TrackerAPI.loadTrackerOverridesFromJson` updates the nested `Program.Addresses`, `PokemonData.Addresses`, and `MoveData.Addresses` fields actually consumed by read paths.
+- Remaining blockers: CFRU party `struct Pokemon` decoding, live RAM addresses, SaveBlock/bag metadata, expanded TrainerMon support, hidden ability display, and move split/category behavior.
+- Continue excluding ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, `offsets.ini`, generated `.local.json`, secrets, tokens and `.env` data from commits.
+
 # Next steps update - CFRU/DPE local address generator
 
 - Use `07_scripts/tracker/generate_cfru_dpe_game_addresses_local.py --offsets path/to/offsets.ini` to create a private ignored `game-addresses.local.json` for local Tracker smoke.
