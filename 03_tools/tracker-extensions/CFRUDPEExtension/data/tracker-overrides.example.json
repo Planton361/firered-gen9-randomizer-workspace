@@ -6,7 +6,9 @@
       "Copy this file to tracker-overrides.json before local use.",
       "Replace TODO values with source-derived struct sizes and offsets.",
       "The skeleton extension does not auto-load this example file.",
-      "Values in sourceDerivedCandidates are layout candidates from source comments/fields; keep ABI-sensitive values validated before relying on them for a public profile."
+      "Values in sourceDerivedCandidates are layout candidates from source comments/fields; keep ABI-sensitive values validated before relying on them for a public profile.",
+      "These values are not ROM or RAM target addresses.",
+      "Validate Tracker override loading before relying on this shape: inspected Tracker consumers read nested *.Addresses fields, while the import loop must be proven to update those effective fields."
     ],
     "sourceDerivedFrom": [
       "02_external/Ironmon-Tracker/ironmon_tracker/GameSettings.lua",
@@ -15,8 +17,10 @@
       "02_external/Ironmon-Tracker/ironmon_tracker/data/MoveData.lua",
       "02_external/CFRU-expansion/include/pokemon.h",
       "02_external/CFRU-expansion/include/battle.h",
+      "02_external/CFRU-expansion/include/global.h",
       "02_external/Dynamic-Pokemon-Expansion-Gen-9/include/base_stats.h"
     ],
+    "notAddressData": true,
     "sourceDerivedCandidates": {
       "sizeofBattleMove": "0x0C",
       "sizeofBattlePokemon": "0x58",
@@ -29,7 +33,8 @@
       "sizeofTrainerMonItemCustomMovesCFRUExpandedCandidate": "0x1C",
       "offsetBattlePokemonTypes": "0x21",
       "offsetBattlePokemonStatStages": "0x19",
-      "offsetBattleMoves": "0x0C",
+      "offsetBattlePokemonMoves": "0x0C",
+      "offsetBattleMoves": "0x01",
       "offsetBattleMoveFlags": "0x08",
       "offsetTrainerClass": "0x01",
       "offsetTrainerGender": "0x02",
@@ -46,16 +51,44 @@
       "offsetExpYield": "0x09",
       "offsetBaseFriendship": "0x12",
       "offsetAbilities": "0x16",
-      "offsetMovePower": "0x01",
-      "offsetMoveType": "0x02",
-      "offsetMoveAccuracy": "0x03",
-      "offsetMovePP": "0x04",
-      "offsetMoveFlagsCategory": "0x0A"
+      "offsetMovePowerByte": "0x01",
+      "offsetMoveTypeByte": "0x02",
+      "offsetMoveAccuracyByte": "0x03",
+      "offsetMovePPByte": "0x04",
+      "offsetMoveSplitByte": "0x0A",
+      "trackerMoveDataBitOffsetPower": 0,
+      "trackerMoveDataBitOffsetType": 8,
+      "trackerMoveDataBitOffsetAccuracy": 16,
+      "trackerMoveDataBitOffsetPP": 24,
+      "sizeofItemSlot": "0x04",
+      "bagItemsCount": 42,
+      "bagKeyItemsCount": 30,
+      "bagPokeBallsCount": 13,
+      "bagTmHmCount": 58,
+      "bagBerriesCount": 43
+    },
+    "safeCandidateStatus": {
+      "highConfidence": [
+        "BattleMove byte offsets and size",
+        "BattlePokemon type/stat-stage offsets and size candidate",
+        "Trainer header offsets and size candidate",
+        "BaseStats core byte offsets",
+        "Bag ItemSlot size and pocket counts"
+      ],
+      "needsValidation": [
+        "CFRU struct Pokemon live party reader compatibility",
+        "BaseStats natural alignment and hiddenAbility row size",
+        "CFRU BattleMove split/category handling in stock Tracker",
+        "Tracker override JSON effective assignment into nested *.Addresses tables",
+        "Expanded TrainerMon item/custom row support"
+      ]
     },
     "layoutRisks": [
       "CFRU struct Pokemon is expanded and not safely equivalent to vanilla encrypted party layout.",
       "CFRU expanded custom TrainerMon rows include ability, nature, IV spread, EV spread and Tera type; stock Tracker custom trainer-mon size is not enough for that variant.",
-      "Bitfields and natural C alignment should be validated by generated metadata or compiler-derived symbols before final public overrides."
+      "Bitfields and natural C alignment should be validated by generated metadata or compiler-derived symbols before final public overrides.",
+      "Move category display may need CFRU split-byte handling instead of stock flags-bit extraction.",
+      "SaveBlock and bag support still needs safe runtime pointer/address metadata."
     ]
   },
   "Program": {

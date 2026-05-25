@@ -1,3 +1,12 @@
+# Next steps update - CFRU/DPE Tracker layout overrides
+
+- Treat `01_docs/analysis/cfru-dpe-tracker-layout-overrides.md` as the current source-backed boundary for Tracker layout/override candidates.
+- Safe next generator work can emit layout candidates for `BattleMove`, `BattlePokemon`, `BaseStats`, `Trainer`, simple TrainerMon rows and bag `ItemSlot`/pocket counts, but must keep real ROM/RAM addresses local or metadata-derived.
+- Do not treat `sizeofPokemonStruct` / `offsetPokemonSubstruct` as enough to fix CFRU party reads. CFRU `struct Pokemon` is expanded and direct, while stock Tracker `Program.readNewPokemon` expects vanilla encrypted substruct decoding.
+- Before a local manifest smoke claims correctness, validate whether `TrackerAPI.loadTrackerOverridesFromJson` updates the nested `Program.Addresses`, `PokemonData.Addresses`, and `MoveData.Addresses` fields actually consumed by read paths. If not, use explicit extension-side nested assignment.
+- Move category display needs specific validation because CFRU has a `BattleMove.split` byte while stock Tracker reads category bits from a flags byte.
+- Continue excluding ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, `offsets.ini`, secrets, tokens and `.env` data.
+
 # Next steps update - CFRU/DPE Tracker source-data generator
 
 - Treat `07_scripts/tracker/generate_cfru_dpe_source_data.py` as the current source-derived generator for `CFRUDPEExtension/data/source-data.json`.
