@@ -194,7 +194,9 @@ Expected pass criteria:
 - Loader reports local manifest status without exceptions.
 - Without `gBattleMons`, the extension reports `active-battle=missing gBattleMons` and keeps running.
 - Outside battle, optional `gBattlersCount` may produce `active-battle=waiting battlers=...`.
-- In a wild or trainer battle, the extension reports `active-battle=loaded rows=...` and `extension.state.activeBattleMons` contains player-left and opponent-left diagnostic rows with plausible species, level, HP/max HP, moves, PP, ability and held item fields.
+- During transition/no-battle states, `active-battle=idle/no valid rows` is acceptable and should not be treated as a test failure by itself.
+- In a wild or trainer battle, the extension reports `active-battle=loaded rows=...` plus a change-based `active-battle=snapshot P:... | E:...` status with species, level, HP/max HP, and moves/PP.
+- `extension.state.activeBattleMons` contains player-left and opponent-left diagnostic rows with plausible species, level, HP/max HP, moves, PP, ability and held item fields.
 
 Expected fail criteria:
 
@@ -202,3 +204,11 @@ Expected fail criteria:
 - Memory writes or Tracker-core file changes.
 - Real local addresses, ROM paths, screenshots, raw logs, hashes, saves or emulator-state data appear in committed files.
 - Stock Tracker team screens remain wrong: this is not a failure of this smoke, because v1 does not inject into `Program.readNewPokemon`, `TrackerAPI.getActiveBattlePokemon`, or stock team state.
+
+Debug-view install reminder:
+
+1. Copy `CFRUDPEExtension.lua` to the local Tracker `Lua/extensions/` folder.
+2. Copy committed `source-data.json` to `Lua/extensions/data/`.
+3. Provide local ignored `game-addresses.local.json` with `Addresses.gBattleMons`.
+4. Optional but recommended: local ignored `tracker-overrides.local.json` and `Addresses.gBattlersCount`.
+5. Record only sanitized pass/fail observations; do not commit raw console logs or local values.
