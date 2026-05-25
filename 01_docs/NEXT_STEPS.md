@@ -1,3 +1,12 @@
+# Next steps update - UPR-FVX trainer write/reload audit
+
+- Use the new post-randomization runtime-source audit before any further Route-22/Rival/Better-Movesets fixes.
+- First prove the local smoke uses a freshly generated output ROM from the current UPR-FVX branch. Then run the opt-in private-ROM audit and inspect only sanitized local findings.
+- If `outputRawParty` shows `moves=[0, ...]`, classify the failure as output-ROM trainer data or stale generation context, not CFRU runtime.
+- If the audit warns that the Route-22 protected starter differs from the Oak-Lab opening Rival starter, continue in UPR-FVX route/source-row handling.
+- If raw output trainer data is compact and protected starter slots match, investigate CFRU runtime trainer construction or the local smoke context before changing UPR-FVX again.
+- Continue excluding ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, local addresses, secrets, tokens and `.env` data.
+
 # Next steps update - UPR-FVX actual Route-22 Rival starter slot
 
 - Treat the FRLG Route-22 post-opening sync as the current implementation candidate for the confirmed Oak Lab `Magcargo Lv5` -> Route-22 `Arctozolt Lv9` mismatch.
