@@ -1,3 +1,11 @@
+# Session update - CFRU runtime trainer vs Tracker slot
+
+- Branch: `analysis/cfru-runtime-trainer-vs-tracker-slot`.
+- Added `01_docs/analysis/cfru-runtime-trainer-vs-tracker-slot.md` to separate clean UPR-FVX trainer write/reload evidence from CFRU runtime trainer construction and Tracker live-reader risks.
+- Source-backed finding: CFRU `struct BattlePokemon` has `moves[4]` at offset `0x0C` and row size `0x58`, so the extension's move offsets/order are plausible; CFRU `gBattlerPartyIndexes` is `u16[MAX_BATTLERS_COUNT]`, so the prior byte reader made `partySlot` unreliable.
+- Hardened `CFRUDPEExtension` diagnostics to read party indexes as 16-bit slots, only display plausible slots `0..5`, and optionally include `gBattleTypeFlags` plus `gTrainerBattleOpponent_A/B` in the active-battle snapshot.
+- Scope remains diagnostic/Tracker-extension-only. No UPR-FVX behavior, CFRU/DPE code, Tracker core, NatDexExtension, ROM, save, build, screenshot, raw log, hash, private path, local `.local.json`, secret, token, or `.env` data was changed or documented.
+
 # Session update - CFRU/DPE Tracker party-index snapshot
 
 - Branch: `feature/cfru-dpe-tracker-party-index-snapshot`.

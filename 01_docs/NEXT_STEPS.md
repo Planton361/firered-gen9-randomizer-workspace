@@ -1,3 +1,11 @@
+# Next steps update - CFRU runtime trainer vs Tracker slot
+
+- Install the updated `CFRUDPEExtension.lua` and rerun the sanitized local Route-22 Rival smoke with local ignored keys for `gBattleMons`, `gBattlerPartyIndexes`, `gBattleTypeFlags`, and `gTrainerBattleOpponent_A`.
+- Expected diagnostic improvement: `partySlot[...]` now reflects CFRU's 16-bit `gBattlerPartyIndexes` slots and shows `-` when absent/out of range; snapshot context shows raw battle flags and trainer IDs when local keys are present.
+- Interpret weak Route-22 slot-aware evidence as follows: slot `0` may be randomizable, while protected starter carryover is slot `1`.
+- If a stable `partySlot[1]` observation still contradicts the clean UPR-FVX write/reload audit, investigate CFRU runtime trainer construction next, especially `setCustomMoves`, randomizer flags, and battle transition timing.
+- Continue excluding ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, local addresses, `.local.json`, secrets, tokens and `.env` data from commits.
+
 # Next steps update - CFRU/DPE Tracker party-index snapshot
 
 - Install the updated `CFRUDPEExtension.lua` plus committed `source-data.json` into the local Tracker extension folder.
