@@ -1,3 +1,13 @@
+# Session update - CFRU/DPE Tracker layout overrides
+
+- Branch: `analysis/cfru-dpe-tracker-layout-overrides`.
+- Added `01_docs/analysis/cfru-dpe-tracker-layout-overrides.md`.
+- Scope: documentation-only source review of CFRU/DPE struct layouts and Ironmon Tracker override fields. No ROMs, saves, emulator states, builds, screenshots, raw logs, hashes, private paths, `offsets.ini` data, real addresses or `02_external/**` edits were used.
+- Key finding: `BattleMove`, `BattlePokemon`, `BaseStats`, `Trainer` header fields, simple TrainerMon row sizes, bag `ItemSlot`, and bag pocket counts have source-derived layout candidates suitable for example manifests.
+- Key risk: CFRU `struct Pokemon` is a direct expanded layout and does not match the vanilla encrypted party substruct model that stock `Program.readNewPokemon` decodes. Player/enemy party correctness likely needs a CFRU-aware reader or metadata-backed extension logic, not only offset overrides.
+- Tracker override caveat: inspected Tracker consumers read nested `*.Addresses` tables, while `GameSettings.importTrackerOverridesFromJson` must be locally validated to prove the example JSON shape updates those effective fields.
+- Updated `tracker-overrides.example.json` with safe candidate status, explicit non-address policy, bag layout candidates and validation notes.
+
 # Session update - CFRU/DPE Tracker source-data generator
 
 - Branch: `feature/cfru-dpe-source-data-generator`.

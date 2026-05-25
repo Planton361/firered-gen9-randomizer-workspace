@@ -95,3 +95,13 @@ The recommended order is source-data first, then layouts, then local ignored add
 Use `07_scripts/tracker/generate_cfru_dpe_source_data.py` to regenerate `03_tools/tracker-extensions/CFRUDPEExtension/data/source-data.json` from source headers.
 
 This generated JSON is safe for committed source-data smoke because it contains only counts, ID mappings, macro-derived fallback names and warnings. It still does not make the extension live-data-capable. Real local `game-addresses.json` and `tracker-overrides.json` remain separate ignored smoke inputs until a public metadata or symbol path exists.
+
+## Layout override follow-up
+
+Use `01_docs/analysis/cfru-dpe-tracker-layout-overrides.md` before filling or generating `tracker-overrides.json`.
+
+Safe layout candidates exist for `BattleMove`, `BattlePokemon`, `BaseStats`, `Trainer`, simple TrainerMon rows, bag `ItemSlot`, and bag pocket counts. These are offsets/sizes only, not ROM/RAM addresses.
+
+Do not assume stock party reads are fixed by layout overrides alone. CFRU `struct Pokemon` differs from vanilla encrypted Gen 3 party data, while Ironmon Tracker's `Program.readNewPokemon` decodes vanilla encrypted/reordered substructs. A real party/battle smoke should validate either a CFRU-aware reader or source-backed metadata path.
+
+Before relying on `TrackerAPI.loadTrackerOverridesFromJson`, verify locally that override JSON updates the nested fields consumed by Tracker read paths, such as `Program.Addresses.*`, `PokemonData.Addresses.*`, and `MoveData.Addresses.*`. Record only sanitized pass/fail notes.
