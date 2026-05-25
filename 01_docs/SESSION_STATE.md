@@ -1,3 +1,12 @@
+# Session update - UPR-FVX final trainer move normalization
+
+- Branch: `fix/upr-fvx-final-trainer-move-normalization`.
+- Implemented a final UPR-FVX guard for lingering Trainer Better Movesets / trainer custom-move rows with a leading empty slot, e.g. sanitized local `moves[-/Tackle/Growl/Sandattack]`.
+- Source-backed cause: PR #170 normalized moves inside the normal Gen3 trainer byte writer, but the trainer custom-move decision still used pre-normalized `TrainerPokemon` state and the Emerald Steven special writer still wrote `tp.getMoves()` directly.
+- Fix scope: Gen3 trainer saves now normalize non-reset custom moves before deciding party row width; real moves compact forward, empty slots trail, and all-empty custom rows restore `resetMoves=true`. The Emerald Steven special writer now uses the same normalized/fallback move resolution.
+- Added ROM-free regressions for stale original-Pidgey-style moves, all-empty custom moves, Better Movesets empty pool with leading stale moves, and Better Movesets off preserving trainer state.
+- Safety boundary: no CFRU/DPE or Tracker files were changed; no ROMs, saves, emulator states, builds, screenshots, raw logs, hashes, private paths, tool binaries, local addresses, secrets, tokens, or `.env` data were committed or documented.
+
 # Session update - UPR-FVX Route-22 Rival final moveslot normalization
 
 - Branch: `fix/upr-fvx-route22-rival-final-moveslots`.

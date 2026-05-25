@@ -70,6 +70,19 @@ Nach einem Fix sollte ein fokussierter Test bestaetigen:
 
 ## Implementierungsstand
 
+UPR-FVX Follow-up-Branch `fix/final-trainer-move-normalization`:
+
+- Der verbleibende sanitized Befund `Dragalge Lv9` mit `moves[-/Tackle/Growl/Sandattack]` weist auf einen finalen Trainer-Write-/frischen-Artefakt-Kontext hin, nicht auf einen Tracker-UI-Befund.
+- Der Gen3-Trainer-Save normalisiert jetzt non-reset Custom-Move-State vor der Entscheidung, ob der Trainer als Custom-Move-Party geschrieben wird.
+- Reale Moves werden nach vorne kompaktiert, leere Slots bleiben hinten; wenn keine echten Custom-Moves uebrig bleiben, wird `resetMoves=true` wiederhergestellt.
+- Der Emerald-Steven-Spezialschreiber nutzt ebenfalls normalisierte bzw. reset-basierte Move-Slots statt `tp.getMoves()` direkt zu schreiben.
+- ROM-freie Regression deckt ab:
+  - `[-/Tackle/Growl/Sandattack]` wird als finaler Custom-Move-State zu `[Tackle/Growl/Sandattack/-]` normalisiert.
+  - all-empty Custom-Moves stellen `resetMoves=true` wieder her.
+  - Better Movesets empty-pool aktiviert fuehrende stale Pidgey-Moves nicht.
+  - Better Movesets off schreibt im Randomizer-Schritt keine Trainer-Moves um.
+- Lokaler Re-Smoke muss sicherstellen, dass ein frisch gebautes UPR-FVX-Jar, ein frisch erzeugtes Output-ROM und ein passender frischer Spielstand/State verwendet werden.
+
 UPR-FVX Fix-Branch `fix/trainer-better-movesets-empty-pool`:
 
 - Better Movesets schreibt Move-Slots nur noch ueber einen zentralen Helper, der danach `resetMoves=false` setzt.
