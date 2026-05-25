@@ -13,6 +13,7 @@
 
 local EXT_KEY = "CFRUDPEExtension"
 local BATTLE_MON_SIZE = 0x58
+local PARTY_SIZE = 6
 local ACTIVE_BATTLE_SLOTS = {
 	{ key = "playerLeft", label = "player-left", battlerIndex = 0 },
 	{ key = "opponentLeft", label = "opponent-left", battlerIndex = 1 },
@@ -464,14 +465,41 @@ local function formatPartySlot(partySlot)
 	return tostring(partySlot)
 end
 
+local function formatHex32(value)
+	if type(value) ~= "number" then
+		return "-"
+	end
+	return string.format("0x%08X", value)
+end
+
+local function formatTrainerId(value)
+	if type(value) ~= "number" or value == 0 then
+		return "-"
+	end
+	return tostring(value)
+end
+
+local function formatBattleContext(context)
+	if type(context) ~= "table" then
+		return "ctx[flags=- trainerA=- trainerB=-]"
+	end
+	return string.format(
+		"ctx[flags=%s trainerA=%s trainerB=%s]",
+		formatHex32(context.battleTypeFlags),
+		formatTrainerId(context.trainerA),
+		formatTrainerId(context.trainerB)
+	)
+end
+
 local function formatBattleMonSummary(mon, label)
 	if type(mon) ~= "table" or not mon.valid then
 		return string.format("%s:-", label)
 	end
 	return string.format(
-		"%s:%s partySlot[%s] L%s HP %s/%s type[%s] ability[%s] item[%s] status[%s] moves[%s]",
+		"%s:%s trainer[%s] partySlot[%s] L%s HP %s/%s type[%s] ability[%s] item[%s] status[%s] moves[%s]",
 		label,
 		getResolvedName(mon.species),
+		formatTrainerId(mon.trainerId),
 		formatPartySlot(mon.partySlot),
 		tostring(mon.level or "?"),
 		tostring(mon.hp or "?"),
@@ -500,10 +528,49 @@ function extension.readBattlerPartySlot(battlerPartyIndexesAddress, battlerIndex
 	if type(battlerPartyIndexesAddress) ~= "number" or type(battlerIndex) ~= "number" then
 		return nil
 	end
-	return readU8(battlerPartyIndexesAddress + battlerIndex)
+	local partySlot = readU16(battlerPartyIndexesAddress + (battlerIndex * 2))
+	if type(partySlot) ~= "number" or partySlot < 0 or partySlot >= PARTY_SIZE then
+		return nil
+	end
+	return partySlot
 end
 
-function extension.readBattleMon(baseAddress, slotInfo, partySlot)
+function extension.readBattleContext()
+	local context = {
+		battleTypeFlags = nil,
+		trainerA = nil,
+		trainerB = nil,
+	}
+
+	local battleTypeFlagsAddress = getConfiguredAddress("gBattleTypeFlags")
+	if battleTypeFlagsAddress ~= nil then
+		context.battleTypeFlags = readU32(battleTypeFlagsAddress)
+	end
+
+	local trainerAAddress = getConfiguredAddress("gTrainerBattleOpponent_A")
+	if trainerAAddress ~= nil then
+		context.trainerA = readU16(trainerAAddress)
+	end
+
+	local trainerBAddress = getConfiguredAddress("gTrainerBattleOpponent_B")
+	if trainerBAddress ~= nil then
+		context.trainerB = readU16(trainerBAddress)
+	end
+
+	return context
+end
+
+function extension.getTrainerIdForBattleSlot(slotInfo, context)
+	if type(slotInfo) ~= "table" or type(context) ~= "table" then
+		return nil
+	end
+	if slotInfo.key == "opponentLeft" then
+		return context.trainerA
+	end
+	return nil
+end
+
+function extension.readBattleMon(baseAddress, slotInfo, partySlot, trainerId)
 	local moves = {}
 	for moveIndex = 0, 3 do
 		local moveId = readU16(baseAddress + BATTLE_MON_OFFSETS.moves + (moveIndex * 2))
@@ -528,6 +595,7 @@ function extension.readBattleMon(baseAddress, slotInfo, partySlot)
 		key = slotInfo.key,
 		battlerIndex = slotInfo.battlerIndex,
 		partySlot = partySlot,
+		trainerId = trainerId,
 		species = resolveId("species", speciesId),
 		level = readU8(baseAddress + BATTLE_MON_OFFSETS.level),
 		hp = readU16(baseAddress + BATTLE_MON_OFFSETS.hp),
@@ -556,7 +624,8 @@ end
 function extension.formatActiveBattleMons(activeBattleMons)
 	activeBattleMons = activeBattleMons or extension.state.activeBattleMons or {}
 	return string.format(
-		"active-battle=snapshot %s | %s",
+		"active-battle=snapshot %s %s | %s",
+		formatBattleContext(activeBattleMons.context),
 		formatBattleMonSummary(activeBattleMons.playerLeft, "P"),
 		formatBattleMonSummary(activeBattleMons.opponentLeft, "E")
 	)
@@ -611,10 +680,12 @@ function extension.readActiveBattleMons()
 	local active = {}
 	local validRows = 0
 	local battlerPartyIndexesAddress = getConfiguredAddress("gBattlerPartyIndexes")
+	active.context = extension.readBattleContext()
 	for _, slotInfo in ipairs(ACTIVE_BATTLE_SLOTS) do
 		local rowAddress = battleMonsAddress + (slotInfo.battlerIndex * BATTLE_MON_SIZE)
 		local partySlot = extension.readBattlerPartySlot(battlerPartyIndexesAddress, slotInfo.battlerIndex)
-		local mon = extension.readBattleMon(rowAddress, slotInfo, partySlot)
+		local trainerId = extension.getTrainerIdForBattleSlot(slotInfo, active.context)
+		local mon = extension.readBattleMon(rowAddress, slotInfo, partySlot, trainerId)
 		active[slotInfo.key] = mon
 		if mon.valid then
 			validRows = validRows + 1

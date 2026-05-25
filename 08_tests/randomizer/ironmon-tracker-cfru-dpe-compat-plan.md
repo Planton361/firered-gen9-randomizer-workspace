@@ -186,7 +186,8 @@ Local prerequisites:
 - `Lua/extensions/data/source-data.json` installed next to it.
 - `Lua/extensions/data/game-addresses.local.json` present with `Addresses.gBattleMons`.
 - Optional: `Addresses.gBattlersCount` for cleaner no-battle/stale-row filtering.
-- Optional: `Addresses.gBattlerPartyIndexes` for zero-based active battler party-slot display.
+- Optional: `Addresses.gBattlerPartyIndexes` for zero-based active battler party-slot display. CFRU declares this as `u16[MAX_BATTLERS_COUNT]`, so the extension should display only plausible slots `0..5`.
+- Optional: `Addresses.gBattleTypeFlags`, `Addresses.gTrainerBattleOpponent_A`, and `Addresses.gTrainerBattleOpponent_B` for active battle context.
 - Optional but recommended: `tracker-overrides.local.json` loaded for other Tracker layout smoke, even though the extension-owned `gBattleMons` reader uses its own source-backed `BattlePokemon` row offsets.
 
 Expected pass criteria:
@@ -199,6 +200,7 @@ Expected pass criteria:
 - In a wild or trainer battle, the extension reports `active-battle=loaded rows=...` plus a change-based `active-battle=snapshot P:... | E:...` status with species, level, HP/max HP, type pair, ability, held item, primary status, and moves/PP.
 - `extension.state.activeBattleMons` contains player-left and opponent-left diagnostic rows with plausible species, level, HP/max HP, moves, PP, types, ability, held item, and primary status fields.
 - If `Addresses.gBattlerPartyIndexes` is present, the snapshot and `extension.state.activeBattleMons.*.partySlot` show the zero-based party slot for each active battler. If absent, `partySlot[-]` is acceptable and the rest of the snapshot should still load.
+- If battle context keys are present, the snapshot includes `ctx[flags=0x... trainerA=... trainerB=...]`, and the opponent-left row includes `trainer[...]` from `gTrainerBattleOpponent_A`. Missing keys should show `-`, not throw.
 - `type3` and raw `status2` are extension-state diagnostics only. Do not treat them as a pass/fail surface until a separate local smoke validates their display semantics.
 
 Expected fail criteria:
@@ -213,5 +215,5 @@ Debug-view install reminder:
 1. Copy `CFRUDPEExtension.lua` to the local Tracker `Lua/extensions/` folder.
 2. Copy committed `source-data.json` to `Lua/extensions/data/`.
 3. Provide local ignored `game-addresses.local.json` with `Addresses.gBattleMons`.
-4. Optional but recommended: local ignored `tracker-overrides.local.json`, `Addresses.gBattlersCount`, and `Addresses.gBattlerPartyIndexes`.
+4. Optional but recommended: local ignored `tracker-overrides.local.json`, `Addresses.gBattlersCount`, `Addresses.gBattlerPartyIndexes`, `Addresses.gBattleTypeFlags`, `Addresses.gTrainerBattleOpponent_A`, and `Addresses.gTrainerBattleOpponent_B`.
 5. Record only sanitized pass/fail observations; do not commit raw console logs or local values.
