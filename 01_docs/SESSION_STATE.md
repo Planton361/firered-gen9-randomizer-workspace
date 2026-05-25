@@ -1,3 +1,13 @@
+# Session update - UPR-FVX actual Route-22 Rival starter slot
+
+- Branch: `fix/upr-fvx-route22-rival-starter-slot-actual`.
+- Implemented a follow-up for the actual Route-22 Rival starter carryover failure after local smoke showed Oak Lab Rival starter `Magcargo Lv5` but Route-22 Rival starter context `Arctozolt Lv9`.
+- Source-backed trainer IDs and slots: Oak Lab Rival `326/327/328` use starter slot `0`; weak Route 22 `329/330/331` uses protected starter slot `1`; strong Route 22 `435/436/437` uses protected starter slot `5`.
+- Source-backed cause: `GameRandomizer` corrected all Rival carryover before the FRLG-specific opening Rival sync, then `makeFirstRivalCarryStarter()` could finalize Oak Lab from the actual FRLG opening trainer source without propagating that final `RIVAL1-x` Species to Route 22.
+- Fix scope: when `Rival Carries Starter Through Game` is enabled, FRLG now syncs weak and strong Route-22 protected slots from the final `RIVAL1-x` opening Rival starter after the Oak Lab reapply. Nonstarter slots remain randomizable.
+- Added ROM-free regressions for concrete weak Route-22 ID `0x149` / slot `1` and strong Route-22 ID `0x1B3` / slot `5`.
+- Safety boundary: no CFRU/DPE or Tracker files were changed; no ROMs, saves, emulator states, builds, screenshots, raw logs, hashes, private paths, tool binaries, local addresses, secrets, tokens, or `.env` data were committed or documented.
+
 # Session update - UPR-FVX Route-22 Rival starter carryover
 
 - Branch: `fix/upr-fvx-route22-rival-starter-carryover`.

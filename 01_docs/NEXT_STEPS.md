@@ -1,3 +1,11 @@
+# Next steps update - UPR-FVX actual Route-22 Rival starter slot
+
+- Treat the FRLG Route-22 post-opening sync as the current implementation candidate for the confirmed Oak Lab `Magcargo Lv5` -> Route-22 `Arctozolt Lv9` mismatch.
+- Re-run the local sanitized Route-22 Rival smoke with a freshly built UPR-FVX jar and freshly generated output ROM. Expected result: the weak Route-22 protected starter slot carries the final Oak Lab Rival starter Species; nonstarter Route-22 slots may still randomize.
+- Validate both early Route 22 and, if reachable, late Route 22: early protected slot is `1`, late protected slot is `5`.
+- Keep this separate from Move-Slot/Better-Movesets validation, which is not changed in this block.
+- Continue excluding ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, local addresses, secrets, tokens and `.env` data.
+
 # Next steps update - UPR-FVX Route-22 Rival starter carryover
 
 - Treat the explicit FRLG Rival force-slot metadata as the current implementation candidate for the remaining Route-22 starter-carryover failure.
