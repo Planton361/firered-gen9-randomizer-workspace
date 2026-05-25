@@ -1,3 +1,11 @@
+# Next steps update - UPR-FVX Route-22 Rival final moveslot normalization
+
+- Treat the final writer/fallback normalization as the current implementation candidate for remaining `[-/Move/Move/Move]` trainer rows.
+- Re-run the local sanitized Route-22/Rival smoke that produced `Decidueye Lv47` with `moves[-/Blizzard/Crunch/Psychocut]`; expected result is that any real moves are compacted into slot 0 onward.
+- Continue recording Route-22 Rival observations with trainer context, party slot, level and whether the observed Pokemon is the protected starter slot or a randomizable nonstarter.
+- If a Level-47 Rival still appears in the Route-22 context after this fix, investigate script/trainerbattle source selection separately from move-slot normalization.
+- Continue excluding ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, local addresses, secrets, tokens and `.env` data.
+
 # Next steps update - UPR-FVX Rival starter / trainer move-slot regression
 
 - Treat the UPR-FVX move-slot follow-up as the current implementation candidate: Better Movesets must compact away `MOVE_NONE` before writing trainer custom moves and clearing `resetMoves`.

@@ -1,3 +1,12 @@
+# Session update - UPR-FVX Route-22 Rival final moveslot normalization
+
+- Branch: `fix/upr-fvx-route22-rival-final-moveslots`.
+- Implemented a final UPR-FVX move-slot guard after the local follow-up smoke still showed a live `gBattleMons` row like `Decidueye Lv47` with `moves[-/Blizzard/Crunch/Psychocut]`.
+- Confirmed source-backed cause for the remaining leading-empty-slot path: `AbstractRomHandler.getMovesAtLevel()` could include `MoveLearnt.move == 0` in a reset-move fallback array, and `Gen3RomHandler.trainerPokemonToBytes()` wrote fallback/custom move arrays exactly as provided.
+- Fix scope: `getMovesAtLevel()` skips `MOVE_NONE` placeholders; Gen3 trainer custom-move writing normalizes move slots immediately before writing so real moves are compacted forward and empty slots trail.
+- Added ROM-free tests for `MOVE_NONE` placeholder skipping, final move-slot normalization, and a Route-22-style low-level Rival starter staying weak-stage instead of inheriting a later/evolved Rival context.
+- Safety boundary: no CFRU/DPE or Tracker files were changed; no ROMs, saves, emulator states, builds, screenshots, raw logs, hashes, private paths, tool binaries, local addresses, secrets, tokens, or `.env` data were committed or documented.
+
 # Session update - UPR-FVX Rival starter / trainer move-slot regression
 
 - Branch: `fix/upr-fvx-rival-starter-moveslot-regression`.
