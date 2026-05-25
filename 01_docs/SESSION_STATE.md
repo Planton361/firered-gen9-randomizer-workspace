@@ -1,3 +1,12 @@
+# Session update - UPR-FVX Trainer Better Movesets with randomized species
+
+- Branch: `analysis/upr-fvx-trainer-better-movesets-randomized-species`.
+- Added source-backed analysis for the local `gBattleMons` smoke where a randomized trainer Pokemon could appear with stale/original moves despite Better Movesets being enabled.
+- Key finding: `GameRandomizer` orders Trainer Pokemon randomization before Trainer Better Movesets, so the likely issue is not global ordering. The risky path is `TrainerMovesetRandomizer` setting `resetMoves=false` before proving a non-empty replacement move pool, allowing old `tp.getMoves()` to be written when the pool is empty.
+- Rival starter logic remains separately source-backed: opening and through-game Rival starter correction is reapplied after Trainer Pokemon randomization. The current Incineroar smoke needs trainer ID/slot context before it can be called a Rival-starter failure.
+- Added a sanitized smoke plan for randomized Trainer Species plus Better Movesets, Rival starter slot checks, and `gBattleMons` validation.
+- Safety boundary: no `02_external/**` files were changed; no ROMs, saves, emulator states, builds, screenshots, raw logs, hashes, private paths, tool binaries, local addresses, secrets, tokens, or `.env` data were read or documented.
+
 # Session update - CFRU/DPE tracker extension readers
 
 - Branch: `feature/cfru-dpe-tracker-extension-readers`.

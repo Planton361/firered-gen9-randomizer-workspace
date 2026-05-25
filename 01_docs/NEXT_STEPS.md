@@ -1,3 +1,12 @@
+# Next steps update - UPR-FVX Trainer Better Movesets with randomized species
+
+- Treat `01_docs/analysis/upr-fvx-trainer-better-movesets-randomized-species.md` as the current source-backed diagnosis for stale/original trainer moves after Species randomization plus Better Movesets.
+- Preferred implementation next step: in `TrainerMovesetRandomizer`, keep `resetMoves=true` until a non-empty Better-Movesets pool has actually written new move slots. Add a focused regression for the empty-pool path.
+- Also audit the Gen3/CFRU-DPE fallback path around `getMovesAtLevel(tp.getSpecies().getNumber(), ...)` to confirm expanded Species identity handling is correct for random Trainer Species.
+- Run the smoke plan in `08_tests/randomizer/trainer-better-movesets-randomized-species-smoke.md`: separate regular trainer, Rival forced-starter slot, and Rival/Trainer nonstarter findings, using only sanitized `gBattleMons` observations.
+- Do not classify the current `Incineroar Lv6` observation as a Rival-starter failure until the trainer ID and party slot are identified.
+- Continue excluding ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, local addresses, secrets, tokens and `.env` data.
+
 # Next steps update - CFRU/DPE tracker extension readers
 
 - Treat the updated `CFRUDPEExtension.lua` snapshot as the current active-battle debug surface for sampled live `BattlePokemon` fields.
