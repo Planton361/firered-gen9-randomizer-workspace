@@ -1,3 +1,12 @@
+# Session update - UPR-FVX trainer write/reload audit
+
+- Branch: `analysis/upr-fvx-trainer-write-reload-audit`.
+- Added diagnostic-only UPR-FVX coverage to separate final in-memory trainer state, raw output-ROM trainer rows, and CFRU runtime `gBattleMons` observations for the remaining Route-22 Rival / Better-Movesets symptoms.
+- Source-backed diagnostic scope: FRLG raw trainer-party diagnostics now include raw custom move words, post-randomization runtime-source audit reports warn on `MOVE_NONE` in slot 0 with later real moves, and Route-22 protected Rival starter slots are compared against the final Oak-Lab opening Rival starter raw Species.
+- Added ROM-free regression coverage proving the audit catches raw `[-/Move/Move/Move]` rows and Route-22 protected starter mismatches. This does not change trainer randomization, Better Movesets, writer normalization, CFRU runtime, or Tracker code.
+- Added `08_tests/randomizer/trainer-write-reload-audit-plan.md` with local private-ROM audit instructions and sanitized interpretation rules.
+- Safety boundary: no CFRU/DPE or Tracker files were changed; no ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, tool binaries, local addresses, secrets, tokens, or `.env` data were committed or documented.
+
 # Session update - UPR-FVX actual Route-22 Rival starter slot
 
 - Branch: `fix/upr-fvx-route22-rival-starter-slot-actual`.
