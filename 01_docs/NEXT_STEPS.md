@@ -1,3 +1,11 @@
+# Next steps update - UPR-FVX final trainer move normalization
+
+- Treat the new final pre-write normalization as the current implementation candidate for lingering `[-/Move/Move/Move]` trainer rows after Better Movesets.
+- Re-run the local sanitized Route-22/Rival smoke with a freshly built UPR-FVX jar and freshly generated output ROM; expected result is that a randomizable Pidgey-slot replacement cannot enter battle with `moves[-/Tackle/Growl/Sandattack]`.
+- If a leading empty slot still appears after confirming a fresh jar/output/save context, investigate CFRU runtime trainer construction or another non-UPR writer path separately.
+- Keep Rival starter interpretation slot-aware: Route-22 nonstarter slots may randomize, while only the protected starter slot must match the starterbattle carryover.
+- Continue excluding ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, local addresses, secrets, tokens and `.env` data.
+
 # Next steps update - UPR-FVX Route-22 Rival final moveslot normalization
 
 - Treat the final writer/fallback normalization as the current implementation candidate for remaining `[-/Move/Move/Move]` trainer rows.
