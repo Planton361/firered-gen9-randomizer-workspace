@@ -1,3 +1,11 @@
+# Session update - UPR-FVX CFRU/DPE output ROM reload detection
+
+- Branch: `fix/upr-fvx-output-rom-cfru-dpe-reload-detection` / UPR-FVX `fix/upr-fvx-output-rom-cfru-dpe-reload-detection`.
+- Fixed the randomized CFRU/DPE output-ROM reload path so expanded mode is not lost when the species-name scan stops before Gen9.
+- Source-backed cause: CFRU/DPE mode previously required a fully detected name-count plus specific Gen9 names/BaseStats; the private audit showed the output ROM reloaded with `cfruDpeMode=false`, `loadedSpeciesCount=823`, and `loadedMoveCount=558`, so trainer Species/Move IDs from the expanded pool were then treated as out-of-bounds.
+- Fix scope: a second CFRU/DPE table-profile detector now accepts plausible Gen9 BaseStats anchors plus known CFRU/DPE pointer tables and raises the reload Species bound to DPE `NUM_SPECIES` before trainer rows are decoded.
+- Scope remains reload detection only. No Rival logic, Better Movesets logic, trainer writer normalization, CFRU/DPE code, Tracker code, ROM, save, build, screenshot, raw log, hash, private path, secret, token, or `.env` data was changed or documented.
+
 # Session update - UPR-FVX output ROM expanded bounds reload
 
 - Branch: `analysis/upr-fvx-output-rom-expanded-bounds-reload` / UPR-FVX `analysis/upr-fvx-output-rom-expanded-bounds-reload`.
