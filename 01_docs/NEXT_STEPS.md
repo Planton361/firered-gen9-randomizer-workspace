@@ -1,3 +1,11 @@
+# Next steps update - CFRU/DPE Tracker source-data generator
+
+- Treat `07_scripts/tracker/generate_cfru_dpe_source_data.py` as the current source-derived generator for `CFRUDPEExtension/data/source-data.json`.
+- Regenerate with `python3 07_scripts/tracker/generate_cfru_dpe_source_data.py` after CFRU/DPE header updates.
+- Generated data is counts, ID mappings, macro-derived fallback names and warnings only. It does not include real local addresses or values from `offsets.ini`.
+- Next technical step is either layout generation/validation for Tracker overrides or a local ignored address smoke. Do not commit `game-addresses.json` / `tracker-overrides.json` with local values.
+- Reconcile DPE item count `799` vs CFRU constants item count `779` before treating item mappings as final Tracker truth.
+
 # Next steps update - Tracker Lua source inventory
 
 - Treat `01_docs/analysis/tracker-lua-source-inventory.md` as the current checklist of inputs for the CFRU/DPE/Gen9 Tracker extension.
