@@ -1,3 +1,12 @@
+# Session update - UPR-FVX Rival starter / trainer move-slot regression
+
+- Branch: `fix/upr-fvx-rival-starter-moveslot-regression`.
+- Implemented a focused UPR-FVX follow-up in `TrainerMovesetRandomizer`: Better Movesets now filters `MOVE_NONE` / null moves before clearing `resetMoves` and writes compact nonzero move slots.
+- Added ROM-free `TrainerMovesetDecisionTest` coverage for a non-empty Better-Movesets pool that includes `MOVE_NONE`; expected output now compacts to `[move1, move2, move3, 0]`, not `[0, move1, move2, move3]`.
+- Added a Route-22-style Rival guardrail in `TrainerSpecialRulesTest`: after Foe Pokemon randomization and Rival carry reapply, the equal-level last starter slot remains the counter-starter while the nonstarter slot can still be randomized.
+- Source-backed interpretation: Route-22 active enemy sightings must identify the party slot before being classified as Rival-starter failure; nonstarter Rival Pokemon remain eligible for Foe Pokemon randomization by design.
+- Safety boundary: no CFRU/DPE or Tracker files were changed; no ROMs, saves, emulator states, builds, screenshots, raw logs, hashes, private paths, tool binaries, local addresses, secrets, tokens, or `.env` data were committed or documented.
+
 # Session update - UPR-FVX Trainer Better Movesets empty-pool fix
 
 - Branch: `fix/upr-fvx-trainer-better-movesets-empty-pool`.
