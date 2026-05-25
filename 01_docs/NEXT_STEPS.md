@@ -1,3 +1,11 @@
+# Next steps update - CFRU/DPE local address generator
+
+- Use `07_scripts/tracker/generate_cfru_dpe_game_addresses_local.py --offsets path/to/offsets.ini` to create a private ignored `game-addresses.local.json` for local Tracker smoke.
+- Treat the generated file as local-only. Do not commit it, copy address values into docs, or use it as public truth.
+- First smoke should confirm the extension loads `source-data.json` and optional `game-addresses.local.json`, then separately check warnings for missing `gPlayerParty`, `gEnemyParty`, `gBattleMons`, SaveBlock, and bag-pocket symbols.
+- Live party, enemy, battle, and bag correctness remains blocked until those RAM/runtime symbols come from safe local metadata, a public symbol source, or a CFRU/DPE metadata table.
+- Continue excluding ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, `offsets.ini`, generated `.local.json`, secrets, tokens and `.env` data from commits.
+
 # Next steps update - CFRU/DPE Tracker manifest path resolution
 
 - For local Tracker smoke, install `CFRUDPEExtension.lua` directly in `Lua/extensions/` and copy committed source data to `Lua/extensions/data/source-data.json`.
