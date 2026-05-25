@@ -5,7 +5,8 @@
     "notes": [
       "Copy this file to tracker-overrides.json before local use.",
       "Replace TODO values with source-derived struct sizes and offsets.",
-      "The skeleton extension does not auto-load this example file."
+      "The skeleton extension does not auto-load this example file.",
+      "Values in sourceDerivedCandidates are layout candidates from source comments/fields; keep ABI-sensitive values validated before relying on them for a public profile."
     ],
     "sourceDerivedFrom": [
       "02_external/Ironmon-Tracker/ironmon_tracker/GameSettings.lua",
@@ -15,6 +16,46 @@
       "02_external/CFRU-expansion/include/pokemon.h",
       "02_external/CFRU-expansion/include/battle.h",
       "02_external/Dynamic-Pokemon-Expansion-Gen-9/include/base_stats.h"
+    ],
+    "sourceDerivedCandidates": {
+      "sizeofBattleMove": "0x0C",
+      "sizeofBattlePokemon": "0x58",
+      "sizeofBaseStatsPokemon": "0x1C",
+      "sizeofTrainer": "0x28",
+      "sizeofTrainerName": "0x0C",
+      "sizeofTrainerItem": "0x02",
+      "sizeofTrainerMonWithDefaultMoves": "0x08",
+      "sizeofTrainerMonWithCustomMovesStockTracker": "0x10",
+      "sizeofTrainerMonItemCustomMovesCFRUExpandedCandidate": "0x1C",
+      "offsetBattlePokemonTypes": "0x21",
+      "offsetBattlePokemonStatStages": "0x19",
+      "offsetBattleMoves": "0x0C",
+      "offsetBattleMoveFlags": "0x08",
+      "offsetTrainerClass": "0x01",
+      "offsetTrainerGender": "0x02",
+      "offsetTrainerPic": "0x03",
+      "offsetTrainerName": "0x04",
+      "offsetTrainerItems": "0x10",
+      "offsetTrainerDoubleBattle": "0x18",
+      "offsetTrainerFlagsAI": "0x1C",
+      "offsetTrainerPartySize": "0x20",
+      "offsetTrainerPartyPtr": "0x24",
+      "offsetBaseStats": "0x00",
+      "offsetTypes": "0x06",
+      "offsetCatchRate": "0x08",
+      "offsetExpYield": "0x09",
+      "offsetBaseFriendship": "0x12",
+      "offsetAbilities": "0x16",
+      "offsetMovePower": "0x01",
+      "offsetMoveType": "0x02",
+      "offsetMoveAccuracy": "0x03",
+      "offsetMovePP": "0x04",
+      "offsetMoveFlagsCategory": "0x0A"
+    },
+    "layoutRisks": [
+      "CFRU struct Pokemon is expanded and not safely equivalent to vanilla encrypted party layout.",
+      "CFRU expanded custom TrainerMon rows include ability, nature, IV spread, EV spread and Tera type; stock Tracker custom trainer-mon size is not enough for that variant.",
+      "Bitfields and natural C alignment should be validated by generated metadata or compiler-derived symbols before final public overrides."
     ]
   },
   "Program": {

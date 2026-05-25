@@ -1,3 +1,13 @@
+# Session update - CFRU/DPE Tracker manifest source map
+
+- Branch: `analysis/cfru-dpe-tracker-manifest-source-map`.
+- Added `01_docs/analysis/cfru-dpe-tracker-manifest-source-map.md`.
+- Scope: documentation-only source map for CFRU/DPE/Gen9 Tracker manifest values; no ROMs, builds, saves, emulator states, raw logs, hashes, private paths or generated artifacts were used.
+- Key finding: species, move, ability counts, many enum mappings, layout candidates and source-declared pointer slots are commit-safe as source-derived data. Actual target addresses for party, battle, trainer, saveblock and repointed tables remain local override / build-symbol / metadata-table values.
+- Updated the CFRU/DPE Tracker extension example JSONs with source-derived count candidates, pointer-slot metadata and layout-candidate notes while keeping all real address fields as TODOs.
+- Item-count caveat: DPE item headers imply 799 IDs while CFRU constants imply 779 IDs; a generator must reconcile the final source of truth before committing item mappings.
+- Safety boundary: no `02_external/**` files were changed; no ROMs, saves, emulator states, builds, screenshots, raw logs, hashes, private paths, tool binaries, secrets, tokens or `.env` data were read or documented.
+
 # Session update - CFRU/DPE Tracker extension skeleton
 
 - Branch: `feature/cfru-dpe-tracker-extension-skeleton`.

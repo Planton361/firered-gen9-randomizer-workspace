@@ -5,7 +5,8 @@
     "notes": [
       "Copy this file to game-addresses.json before local use.",
       "Replace every TODO value with source-derived or runtime-validated values.",
-      "Do not commit ROM paths, ROM hashes, saves, emulator states, raw logs or private paths."
+      "Do not commit ROM paths, ROM hashes, saves, emulator states, raw logs or private paths.",
+      "Pointer slots listed here are source-backed metadata locations; they are not the final table target addresses expected by stock Tracker fields unless the extension dereferences them first."
     ],
     "sourceDerivedFrom": [
       "02_external/CFRU-expansion/repointall",
@@ -30,6 +31,21 @@
       "gTrainers",
       "gTrainerClassNames",
       "sTMHMMoves"
+    ],
+    "sourceBackedPointerSlots": {
+      "gSpeciesNames": "0x08000144",
+      "gBaseStats": "0x080001BC",
+      "gItems": "0x080001C8",
+      "gBattleMoves": "0x080001CC",
+      "gAbilityNames": "0x080001C0",
+      "gMoveNames": "0x0804EF84"
+    },
+    "sourceBackedAnchorsNeedingValidation": {
+      "gTrainers": "0x0800FC00"
+    },
+    "localOnlyAddressPolicy": [
+      "Do not commit target addresses read from a local ROM, emulator memory, private build map or private logs.",
+      "Use local ignored game-addresses.json for smoke testing until a public CFRU/DPE metadata table or safe symbol source exists."
     ]
   },
   "GameInfo": {
