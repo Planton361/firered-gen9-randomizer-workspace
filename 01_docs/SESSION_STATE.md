@@ -1,3 +1,13 @@
+# Session update - Tracker Lua source inventory
+
+- Branch: `analysis/tracker-lua-source-inventory`.
+- Added `01_docs/analysis/tracker-lua-source-inventory.md`.
+- Scope: documentation-only inventory of existing source inputs for a future CFRU/DPE/Gen9 Ironmon Tracker Lua extension. No implementation, generator, real manifest data, ROMs, builds, saves, emulator states, raw logs, hashes or private paths were added.
+- Key finding: high-priority v1 inputs are Tracker `TrackerAPI.lua`/`CustomCode.lua`/`GameSettings.lua`/`Program.lua`, NatDexExtension as a pattern, CFRU/DPE ID headers, CFRU struct headers, CFRU/DPE source tables, and the current `CFRUDPEExtension` skeleton/example JSONs.
+- Local `offsets.ini` files exist under CFRU and DPE and contain useful symbol classes for table/name addresses, but they are ignored/generated local artifacts. They must remain local-only and are not sufficient by themselves for live party/battle RAM and SaveBlock support.
+- Updated the Tracker compat smoke plan with the source-inventory boundary and next implementation order.
+- Safety boundary: no `02_external/**` files were changed; no ROMs, saves, emulator states, builds, screenshots, raw logs, hashes, private paths, tool binaries, secrets, tokens or `.env` data were read or documented.
+
 # Session update - CFRU/DPE Tracker manifest source map
 
 - Branch: `analysis/cfru-dpe-tracker-manifest-source-map`.

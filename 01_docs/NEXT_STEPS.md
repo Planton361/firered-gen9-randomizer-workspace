@@ -1,3 +1,12 @@
+# Next steps update - Tracker Lua source inventory
+
+- Treat `01_docs/analysis/tracker-lua-source-inventory.md` as the current checklist of inputs for the CFRU/DPE/Gen9 Tracker extension.
+- Next implementation should start with a source-derived data generator for counts and ID mappings, not with Tracker-core edits.
+- Use `TrackerAPI.lua`, `CustomCode.lua`, `GameSettings.lua`, `Program.lua`, NatDexExtension, CFRU/DPE headers and CFRU/DPE tables as source inputs.
+- Keep local `offsets.ini` and `generatedrepoints` as diagnostic/local-override aids only. Do not commit them or copy full symbol dumps into documentation.
+- First real manifest work should still avoid final local addresses; use ignored local `game-addresses.json` / `tracker-overrides.json` only for smoke until a public metadata/symbol path exists.
+- Continue excluding ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, secrets, tokens and `.env` data.
+
 # Next steps update - CFRU/DPE Tracker manifest source map
 
 - Treat `01_docs/analysis/cfru-dpe-tracker-manifest-source-map.md` as the current source-backed boundary for Tracker manifest generation.
