@@ -175,3 +175,30 @@ The recommended smoke target is extension-owned state, not stock Tracker team in
 - do not write emulator memory and do not wrap Tracker core readers in the first implementation.
 
 If `gBattleMons` is not available from local symbols, stop and identify a safe alternate local symbol source or a future CFRU/DPE metadata-table path. Do not copy address values into documentation.
+
+## gBattleMons reader smoke
+
+Current implementation target: `03_tools/tracker-extensions/CFRUDPEExtension/CFRUDPEExtension.lua`.
+
+Local prerequisites:
+
+- `Lua/extensions/CFRUDPEExtension.lua` installed in the local Tracker extension folder.
+- `Lua/extensions/data/source-data.json` installed next to it.
+- `Lua/extensions/data/game-addresses.local.json` present with `Addresses.gBattleMons`.
+- Optional: `Addresses.gBattlersCount` for cleaner no-battle/stale-row filtering.
+- Optional but recommended: `tracker-overrides.local.json` loaded for other Tracker layout smoke, even though the extension-owned `gBattleMons` reader uses its own source-backed `BattlePokemon` row offsets.
+
+Expected pass criteria:
+
+- Loader still reports `source-data=loaded` with the committed counts.
+- Loader reports local manifest status without exceptions.
+- Without `gBattleMons`, the extension reports `active-battle=missing gBattleMons` and keeps running.
+- Outside battle, optional `gBattlersCount` may produce `active-battle=waiting battlers=...`.
+- In a wild or trainer battle, the extension reports `active-battle=loaded rows=...` and `extension.state.activeBattleMons` contains player-left and opponent-left diagnostic rows with plausible species, level, HP/max HP, moves, PP, ability and held item fields.
+
+Expected fail criteria:
+
+- Any Lua exception during load/update/unload.
+- Memory writes or Tracker-core file changes.
+- Real local addresses, ROM paths, screenshots, raw logs, hashes, saves or emulator-state data appear in committed files.
+- Stock Tracker team screens remain wrong: this is not a failure of this smoke, because v1 does not inject into `Program.readNewPokemon`, `TrackerAPI.getActiveBattlePokemon`, or stock team state.

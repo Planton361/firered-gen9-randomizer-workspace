@@ -1,3 +1,12 @@
+# Session update - CFRU/DPE gBattleMons reader
+
+- Branch: `feature/cfru-dpe-gbattlemons-reader`.
+- Extended `03_tools/tracker-extensions/CFRUDPEExtension/CFRUDPEExtension.lua` with an extension-owned, read-only `gBattleMons` active-battle diagnostic reader.
+- Scope: no Tracker-core fork, no NatDexExtension changes, no memory writes and no `02_external/**` edits.
+- Behavior: when local `game-addresses.local.json` provides `gBattleMons`, the extension reads player-left and opponent-left `BattlePokemon` rows using source-backed size `0x58`, maps IDs through `source-data.json`, and stores results in `extension.state.activeBattleMons`.
+- Local manifest boundary: `gBattleMons` is required for the reader; `gBattlersCount` is optional for stale-row filtering. Real address values remain local-only and ignored.
+- Updated the extension README and Tracker smoke plan with loader plus `gBattleMons` smoke expectations.
+
 # Session update - CFRU/DPE gBattleMons reader design
 
 - Branch: `analysis/cfru-dpe-gbattlemons-reader-design`.

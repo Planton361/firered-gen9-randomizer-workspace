@@ -1,3 +1,11 @@
+# Next steps update - CFRU/DPE gBattleMons reader
+
+- Install the updated `CFRUDPEExtension.lua` and `data/source-data.json` into the local Tracker `Lua/extensions/` layout.
+- Provide ignored local `data/game-addresses.local.json` with `Addresses.gBattleMons`; add `Addresses.gBattlersCount` if a safe local symbol source provides it.
+- Run the local smoke in a wild or trainer battle and inspect only sanitized status: `source-data=loaded`, manifest load state, and `active-battle=loaded rows=...` with plausible player-left/opponent-left fields.
+- Do not expect stock Tracker team screens to update yet. The v1 reader stores data in `extension.state.activeBattleMons` and intentionally does not patch `Program.readNewPokemon` or `TrackerAPI.getActiveBattlePokemon`.
+- Keep real local addresses, `offsets.ini`, ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, secrets, tokens and `.env` data out of commits and documentation.
+
 # Next steps update - CFRU/DPE gBattleMons reader design
 
 - Treat `01_docs/analysis/cfru-dpe-gbattlemons-reader-design.md` as the current design boundary for the first CFRU/DPE active-battle live-data reader.
