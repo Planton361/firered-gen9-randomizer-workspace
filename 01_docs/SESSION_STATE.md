@@ -1,3 +1,12 @@
+# Session update - CFRU/DPE Tracker live RAM anchors
+
+- Branch: `analysis/cfru-dpe-tracker-live-ram-anchors`.
+- Added `01_docs/analysis/cfru-dpe-tracker-live-ram-anchors.md`.
+- Scope: documentation-only source review of why the CFRUDPEExtension can load `source-data`, `game-addresses.local`, and `tracker-overrides.local` while Player/Starter and Wild battle data remain unreadable.
+- Key finding: the current failure is primarily live-RAM anchoring plus stock-reader assumptions. Ironmon Tracker needs `pstats`/`gPlayerParty`, `estats`/`gEnemyParty`, `gBattleMons`, and battle-state anchors, while CFRU's direct expanded `struct Pokemon` does not match Tracker's vanilla encrypted Gen III party decoder.
+- Recommended v1 direction: validate required local symbol presence without documenting values, then implement a CFRU/DPE active battle reader around `gBattleMons` before full party, bag, or SaveBlock support.
+- Safety boundary: no `02_external/**` files were changed; no ROMs, saves, emulator states, builds, screenshots, raw logs, hashes, private paths, tool binaries, `offsets.ini`, real local addresses, secrets, tokens, or `.env` data were committed or documented.
+
 # Session update - CFRU/DPE local tracker overrides generator
 
 - Branch: `feature/cfru-dpe-tracker-overrides-local-generator`.
