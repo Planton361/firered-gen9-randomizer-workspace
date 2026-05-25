@@ -1,3 +1,11 @@
+# Next steps update - CFRU/DPE gBattleMons reader smoke results
+
+- Treat `08_tests/randomizer/cfru-dpe-gbattlemons-reader-smoke-results.md` as the current sanitized local evidence for the v1 extension-owned `gBattleMons` reader.
+- Current result is `PASS_TARGETED_LOCAL_SMOKE_WITH_CAVEATS`: source data and local ignored manifests load, and active-battle rows can plausibly report player-left/opponent-left species.
+- Do not interpret this as stock Tracker UI support. v1 still stores data only in `extension.state.activeBattleMons`.
+- Next useful follow-up is either a safer battle-state gate, an extension-owned debug/status display, or a broader sanitized smoke for HP, PP, move names, ability, and held item fields.
+- Continue excluding real local addresses, local JSON values, `offsets.ini`, ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, secrets, tokens and `.env` data.
+
 # Next steps update - CFRU/DPE gBattleMons reader
 
 - Install the updated `CFRUDPEExtension.lua` and `data/source-data.json` into the local Tracker `Lua/extensions/` layout.

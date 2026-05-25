@@ -1,3 +1,13 @@
+# Session update - CFRU/DPE gBattleMons reader smoke results
+
+- Branch: `test/cfru-dpe-gbattlemons-reader-results`.
+- Added `08_tests/randomizer/cfru-dpe-gbattlemons-reader-smoke-results.md`.
+- Scope: documentation-only sanitized local smoke results for the extension-owned `gBattleMons` active-battle reader; no code changes.
+- Result: `PASS_TARGETED_LOCAL_SMOKE_WITH_CAVEATS`.
+- Sanitized observations: the installed Tracker loaded the extension, `source-data.json` reported species `1440`, moves `992`, abilities `255`, items `799`, both local ignored manifests loaded, and active-battle rows plausibly reported player-left `Charmander` plus opponent-left `Rattata` / `Pidgey` in local battles.
+- Caveat: `active-battle=no valid rows` can appear outside valid battle state or during transitions; stock Tracker UI remains unchanged because v1 only fills `extension.state.activeBattleMons`.
+- Safety boundary: no ROMs, saves, emulator states, builds, screenshots, raw logs, hashes, private paths, real addresses, local JSON values, `offsets.ini`, tool binaries, secrets, tokens, `.env` data, or code changes were committed or documented.
+
 # Session update - CFRU/DPE gBattleMons reader
 
 - Branch: `feature/cfru-dpe-gbattlemons-reader`.
