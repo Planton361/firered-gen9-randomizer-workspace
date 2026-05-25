@@ -1,3 +1,13 @@
+# Session update - CFRU/DPE Tracker source-data generator
+
+- Branch: `feature/cfru-dpe-source-data-generator`.
+- Added `07_scripts/tracker/generate_cfru_dpe_source_data.py`.
+- Generated `03_tools/tracker-extensions/CFRUDPEExtension/data/source-data.json` from CFRU/DPE source headers only.
+- Scope: counts and ID mappings only. No ROMs, saves, emulator states, builds, raw logs, hashes, private paths, `offsets.ini` data, real addresses, Tracker-core changes, NatDexExtension changes or `02_external/**` edits.
+- Current generated counts: species `1440`, moves `992`, abilities `255`, items `799`.
+- Warnings document DPE/CFRU item-count conflict (`799` vs `779`) and duplicate/alias constants.
+- Added `03_tools/tracker-extensions/CFRUDPEExtension/README.md` with generator usage and current extension/data boundaries.
+
 # Session update - Tracker Lua source inventory
 
 - Branch: `analysis/tracker-lua-source-inventory`.

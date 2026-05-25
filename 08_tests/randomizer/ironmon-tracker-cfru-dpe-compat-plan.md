@@ -89,3 +89,9 @@ Safe committed data starts with source-derived counts, enum mappings and layout 
 Use `01_docs/analysis/tracker-lua-source-inventory.md` before implementing the next extension or generator step.
 
 The recommended order is source-data first, then layouts, then local ignored address overrides, then extension smoke. Local CFRU/DPE `offsets.ini` files may help seed table/name addresses for local smoke, but they are ignored/generated artifacts and should not be committed or copied wholesale. They also do not appear to solve all live party, battle RAM, SaveBlock or bag addresses by themselves.
+
+## Source-data generator
+
+Use `07_scripts/tracker/generate_cfru_dpe_source_data.py` to regenerate `03_tools/tracker-extensions/CFRUDPEExtension/data/source-data.json` from source headers.
+
+This generated JSON is safe for committed source-data smoke because it contains only counts, ID mappings, macro-derived fallback names and warnings. It still does not make the extension live-data-capable. Real local `game-addresses.json` and `tracker-overrides.json` remain separate ignored smoke inputs until a public metadata or symbol path exists.

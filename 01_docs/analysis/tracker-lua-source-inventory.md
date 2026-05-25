@@ -95,9 +95,11 @@ The scan did not identify a simple committed C array for all species names equiv
    - Do not add true local addresses yet.
 
 2. **Source-derived data generator**
-   - Parse species, move, ability and item constants.
-   - Emit counts and ID mappings into a source-data format.
-   - Report DPE/CFRU item-count mismatch explicitly.
+   - Implemented as `07_scripts/tracker/generate_cfru_dpe_source_data.py`.
+   - Parses species, move, ability and item constants from DPE headers.
+   - Emits `03_tools/tracker-extensions/CFRUDPEExtension/data/source-data.json` with metadata, counts, ID mappings and warnings.
+   - Reports the DPE/CFRU item-count mismatch explicitly.
+   - Does not read ROMs, builds, `offsets.ini`, private paths or real local addresses.
 
 3. **Layout candidate generator**
    - Parse or curate struct offsets for `BattleMove`, `BattlePokemon`, `BaseStats`, `Trainer` and TrainerMon variants.
@@ -121,6 +123,7 @@ The scan did not identify a simple committed C array for all species names equiv
 - `offsets.ini` and `generatedrepoints` are useful but local/generated/ignored; they are not public source-of-truth inputs.
 - DPE/CFRU item count disagreement remains unresolved.
 - Species names need a stronger source-derived path than just ID constants.
+- Generated names are fallback labels derived from macro constants, not authoritative in-game string-table names.
 - Live party and battle RAM addresses are not fully solved by the currently found local `offsets.ini` symbols.
 - Static trainer tables are useful for identity/context but not final randomized battle truth.
 - No code implementation should start by modifying Tracker core; use the external extension and manifests first.
