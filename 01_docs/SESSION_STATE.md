@@ -1,3 +1,12 @@
+# Session update - UPR-FVX Trainer Better Movesets empty-pool fix
+
+- Branch: `fix/upr-fvx-trainer-better-movesets-empty-pool`.
+- Implemented the UPR-FVX fix in `TrainerMovesetRandomizer`: Better Movesets no longer clears `resetMoves` before a non-empty move pool actually writes move slots.
+- `trimMoveList()` now returns the reduced candidate list instead of writing moves directly, so all Better-Movesets writes go through one helper that writes slots and then clears `resetMoves`.
+- Added ROM-free `TrainerMovesetDecisionTest` coverage for the empty-pool case and the non-empty-pool case.
+- Source-backed fallback audit: `Gen3RomHandler.getMovesAtLevel()` already maps external species numbers through `pokedexToInternal` for CFRU/DPE Gen9 when the moveset map lacks the external key and contains the internal key.
+- Safety boundary: no CFRU/DPE or Tracker files were changed; no ROMs, saves, emulator states, builds, screenshots, raw logs, hashes, private paths, tool binaries, local addresses, secrets, tokens, or `.env` data were committed or documented.
+
 # Session update - UPR-FVX Trainer Better Movesets with randomized species
 
 - Branch: `analysis/upr-fvx-trainer-better-movesets-randomized-species`.
