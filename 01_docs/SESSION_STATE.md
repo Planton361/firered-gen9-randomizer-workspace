@@ -1,3 +1,11 @@
+# Session update - UPR-FVX trainer audit report output
+
+- Branch: `fix/upr-fvx-trainer-audit-report-output`.
+- Updated the opt-in `Gen3OakLabRivalRuntimeSourceRomTest` diagnostics so report writes are easier to find and harder to miss.
+- The diagnostic writer now creates the report directory, writes the report, verifies the file exists and is non-empty, and fails with a relative report path if writing fails.
+- The post-randomization private-ROM audit prints a sanitized relative `build/reports/diagnostics/...` report path, summary counts, and core warning lines to test output.
+- Scope is test/diagnostic output only. No Randomizer behavior, CFRU/DPE code, Tracker code, ROM, save, build, screenshot, raw log, hash, private path, secret, token, or `.env` data was changed or documented.
+
 # Session update - UPR-FVX trainer write/reload audit
 
 - Branch: `analysis/upr-fvx-trainer-write-reload-audit`.
