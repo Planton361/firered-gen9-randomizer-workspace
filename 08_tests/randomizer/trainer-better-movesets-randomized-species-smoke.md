@@ -70,6 +70,15 @@ Nach einem Fix sollte ein fokussierter Test bestaetigen:
 
 ## Implementierungsstand
 
+UPR-FVX Follow-up-Branch `fix/route22-rival-starter-carryover`:
+
+- Die Move-Slot-Normalisierung gilt nach lokalem Smoke als aktuell behoben; dieser Follow-up fokussiert nur den geschuetzten Rival-Starter-Slot.
+- FRLG Rival-Tag-Metadaten setzen jetzt explizite force-starter Slots fuer Oak Lab (`RIVAL1`, Slot 0), schwache Route 22 (`RIVAL2`, Slot 1) und starke Route 22 (`RIVAL7`, Slot 5).
+- Runtime FRLG Trainer-Source-Rows bekommen dieselbe Metadatenlogik, damit Route-22-CFRU/DPE-Quelltrainer nicht nur per generischem Highest-Level/Last-Slot-Heuristik behandelt werden.
+- ROM-freie Regression deckt ab:
+  - der schwache Route-22-Starter-Slot behaelt den Labor-Rival-Counter-Starter auch wenn der Nichtstarter-Slot hoeher gelevelt ist.
+  - der Nichtstarter-Slot bleibt randomisierbar.
+
 UPR-FVX Follow-up-Branch `fix/final-trainer-move-normalization`:
 
 - Der verbleibende sanitized Befund `Dragalge Lv9` mit `moves[-/Tackle/Growl/Sandattack]` weist auf einen finalen Trainer-Write-/frischen-Artefakt-Kontext hin, nicht auf einen Tracker-UI-Befund.

@@ -1,3 +1,12 @@
+# Session update - UPR-FVX Route-22 Rival starter carryover
+
+- Branch: `fix/upr-fvx-route22-rival-starter-carryover`.
+- Implemented a focused UPR-FVX fix for the remaining Route-22 Rival carryover issue after final trainer custom-move normalization.
+- Source-backed cause: FRLG Rival tags identified Route-22 battles but did not carry explicit protected starter-slot metadata. The generic Rival carryover heuristic can pick the wrong party member when the nonstarter slot is higher level or when runtime FRLG trainer-source rows are loaded without force-slot metadata.
+- Fix scope: FRLG Rival tag assignment now applies explicit force starter positions for Oak Lab (`RIVAL1`, slot 0), weak Route 22 (`RIVAL2`, slot 1), and strong Route 22 (`RIVAL7`, slot 5). Runtime FRLG trainer-source rows now receive the same tag metadata.
+- Added ROM-free regressions proving the weak Route-22 protected starter slot keeps the lab counter-starter while the nonstarter slot remains randomizable.
+- Safety boundary: no CFRU/DPE or Tracker files were changed; no ROMs, saves, emulator states, builds, screenshots, raw logs, hashes, private paths, tool binaries, local addresses, secrets, tokens, or `.env` data were committed or documented.
+
 # Session update - UPR-FVX final trainer move normalization
 
 - Branch: `fix/upr-fvx-final-trainer-move-normalization`.
