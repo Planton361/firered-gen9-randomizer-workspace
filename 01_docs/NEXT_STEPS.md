@@ -1,3 +1,11 @@
+# Next steps update - CFRU/DPE Tracker party-index snapshot
+
+- Install the updated `CFRUDPEExtension.lua` plus committed `source-data.json` into the local Tracker extension folder.
+- Add `Addresses.gBattlerPartyIndexes` to the local ignored `game-addresses.local.json` when a safe local symbol source provides it. Do not commit the address or local JSON.
+- Re-run a sanitized Route-22 Rival battle smoke and use `partySlot[...]` to distinguish the randomizable opponent slot `0` from the protected weak Route-22 starter slot `1`.
+- If snapshots show `partySlot[-]`, treat that as missing local address metadata, not as a `gBattleMons` reader failure.
+- Continue excluding ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, local addresses, `.local.json`, secrets, tokens and `.env` data from commits.
+
 # Next steps update - UPR-FVX CFRU/DPE output ROM reload detection
 
 - Re-run the private-ROM trainer write/reload audit with both `-D` paths from the current UPR-FVX branch.
