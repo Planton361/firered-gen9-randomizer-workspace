@@ -1,3 +1,11 @@
+# Next steps update - CFRU/DPE Tracker manifest loader smoke
+
+- Treat `CFRUDPEExtension.lua` as the current loader-smoke implementation: it reads committed `source-data.json`, reports counts, and optionally loads ignored `game-addresses.local.json` / `tracker-overrides.local.json`.
+- First local Tracker smoke should confirm the extension logs source-data counts and handles missing local manifests cleanly.
+- Only after that, create private local `.local.json` manifests from safe metadata or sanitized local validation and verify TrackerAPI loader return status.
+- Do not claim party, battle, trainer or bag correctness from loader smoke alone. Live-data correctness still requires safe addresses plus a CFRU-aware party/read strategy.
+- Keep local `.local.json` manifests, ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, `offsets.ini`, secrets, tokens and `.env` data out of commits.
+
 # Next steps update - CFRU/DPE Tracker layout overrides
 
 - Treat `01_docs/analysis/cfru-dpe-tracker-layout-overrides.md` as the current source-backed boundary for Tracker layout/override candidates.

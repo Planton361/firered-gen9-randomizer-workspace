@@ -73,8 +73,8 @@ Expected skeleton-only result:
 
 Next local manifest smoke requires filled, local non-example files:
 
-- `CFRUDPEExtension/data/game-addresses.json`
-- `CFRUDPEExtension/data/tracker-overrides.json`
+- `CFRUDPEExtension/data/game-addresses.local.json`
+- `CFRUDPEExtension/data/tracker-overrides.local.json`
 
 Those files should be produced from source-derived values and sanitized local validation. Do not commit private paths, ROM hashes, runtime logs, saves or emulator states.
 
@@ -105,3 +105,13 @@ Safe layout candidates exist for `BattleMove`, `BattlePokemon`, `BaseStats`, `Tr
 Do not assume stock party reads are fixed by layout overrides alone. CFRU `struct Pokemon` differs from vanilla encrypted Gen 3 party data, while Ironmon Tracker's `Program.readNewPokemon` decodes vanilla encrypted/reordered substructs. A real party/battle smoke should validate either a CFRU-aware reader or source-backed metadata path.
 
 Before relying on `TrackerAPI.loadTrackerOverridesFromJson`, verify locally that override JSON updates the nested fields consumed by Tracker read paths, such as `Program.Addresses.*`, `PokemonData.Addresses.*`, and `MoveData.Addresses.*`. Record only sanitized pass/fail notes.
+
+## Manifest loader smoke
+
+The minimal loader smoke uses committed `source-data.json` plus optional ignored local manifests:
+
+- committed `CFRUDPEExtension/data/source-data.json` should load and report counts;
+- missing `game-addresses.local.json` and `tracker-overrides.local.json` should be reported as missing, not as extension failure;
+- if local `.local.json` files exist, the extension should call TrackerAPI's explicit-path JSON loaders and log each return status.
+
+This smoke still proves only extension load/unload, source-data availability and manifest-loader wiring. Live party, battle, trainer and bag correctness require a separate local address smoke after safe local manifests exist.

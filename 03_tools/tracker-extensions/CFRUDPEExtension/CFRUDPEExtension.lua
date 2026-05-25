@@ -7,8 +7,8 @@
 --
 -- This skeleton does not modify Tracker core files, does not depend on
 -- NatDexExtension, and does not read or write emulator memory by itself.
--- It only prepares a manual CFRU/DPE profile path and loads real manifests
--- if the user provides non-example JSON files.
+-- It prepares a manual CFRU/DPE profile path, reads committed source-data,
+-- and loads local non-example manifests if the user provides them.
 
 local EXT_KEY = "CFRUDPEExtension"
 
@@ -69,13 +69,15 @@ local extension = {
 	state = {
 		prepared = false,
 		manifestsLoaded = false,
+		sourceDataLoaded = false,
 		lastLoadStatus = "not started",
 	},
 }
 
 extension.ManifestFiles = {
-	gameAddresses = "game-addresses.json",
-	trackerOverrides = "tracker-overrides.json",
+	sourceData = "source-data.json",
+	gameAddresses = "game-addresses.local.json",
+	trackerOverrides = "tracker-overrides.local.json",
 }
 
 function extension.getExtensionRoot()
@@ -92,6 +94,7 @@ end
 function extension.getManifestPaths()
 	local dataRoot = extension.getDataRoot()
 	return {
+		sourceData = joinPath(dataRoot, extension.ManifestFiles.sourceData),
 		gameAddresses = joinPath(dataRoot, extension.ManifestFiles.gameAddresses),
 		trackerOverrides = joinPath(dataRoot, extension.ManifestFiles.trackerOverrides),
 	}
@@ -101,6 +104,76 @@ function extension.prepareManualProfile()
 	extension.state.prepared = true
 	extension.state.manifestPaths = extension.getManifestPaths()
 	return extension.state.manifestPaths
+end
+
+local function decodeJson(filepath)
+	if filepath == nil or filepath == "" then
+		return nil
+	end
+	if FileManager ~= nil and type(FileManager.decodeJsonFile) == "function" then
+		return FileManager.decodeJsonFile(filepath)
+	end
+	return nil
+end
+
+local function getCountValue(sourceData, key)
+	local countInfo = sourceData
+		and sourceData.counts
+		and sourceData.counts[key]
+	if type(countInfo) == "table" then
+		return countInfo.value
+	end
+	return nil
+end
+
+function extension.loadSourceData()
+	local paths = extension.prepareManualProfile()
+	if not fileExists(paths.sourceData) then
+		extension.state.sourceDataLoaded = false
+		extension.state.sourceDataStatus = "source-data=missing"
+		return false
+	end
+
+	local sourceData = decodeJson(paths.sourceData)
+	if type(sourceData) ~= "table" or sourceData.counts == nil then
+		extension.state.sourceDataLoaded = false
+		extension.state.sourceDataStatus = "source-data=invalid"
+		return false
+	end
+
+	extension.state.sourceData = sourceData
+	extension.state.sourceDataLoaded = true
+	extension.state.sourceDataStatus = string.format(
+		"source-data=loaded species=%s moves=%s abilities=%s items=%s",
+		tostring(getCountValue(sourceData, "species") or "?"),
+		tostring(getCountValue(sourceData, "moves") or "?"),
+		tostring(getCountValue(sourceData, "abilities") or "?"),
+		tostring(getCountValue(sourceData, "items") or "?")
+	)
+	return true
+end
+
+local function safeLoad(label, filepath, loader)
+	local ok = false
+	local loaded = false
+	if type(loader) ~= "function" then
+		return false, string.format("%s=loader unavailable", label)
+	end
+
+	ok = xpcall(function()
+		loaded = loader(filepath)
+	end, function(errorMessage)
+		if FileManager ~= nil and type(FileManager.logError) == "function" then
+			FileManager.logError(errorMessage)
+		else
+			log(tostring(errorMessage))
+		end
+	end)
+
+	if not ok then
+		return false, string.format("%s=error", label)
+	end
+	return loaded == true, string.format("%s=%s", label, tostring(loaded == true))
 end
 
 function extension.loadConfiguredManifests()
@@ -114,19 +187,19 @@ function extension.loadConfiguredManifests()
 	local messages = {}
 
 	if fileExists(paths.gameAddresses) then
-		local ok = TrackerAPI.loadGameSettingsFromJson(paths.gameAddresses)
+		local ok, message = safeLoad("game-addresses.local", paths.gameAddresses, TrackerAPI.loadGameSettingsFromJson)
 		loadedAny = loadedAny or ok
-		table.insert(messages, string.format("game addresses=%s", tostring(ok)))
+		table.insert(messages, message)
 	else
-		table.insert(messages, "game addresses=missing")
+		table.insert(messages, "game-addresses.local=missing")
 	end
 
 	if fileExists(paths.trackerOverrides) then
-		local ok = TrackerAPI.loadTrackerOverridesFromJson(paths.trackerOverrides)
+		local ok, message = safeLoad("tracker-overrides.local", paths.trackerOverrides, TrackerAPI.loadTrackerOverridesFromJson)
 		loadedAny = loadedAny or ok
-		table.insert(messages, string.format("tracker overrides=%s", tostring(ok)))
+		table.insert(messages, message)
 	else
-		table.insert(messages, "tracker overrides=missing")
+		table.insert(messages, "tracker-overrides.local=missing")
 	end
 
 	extension.state.manifestsLoaded = loadedAny
@@ -138,23 +211,30 @@ end
 -- no core wrapping yet and no placeholder/example manifest loading.
 function extension.beforeGameDataLoad()
 	extension.prepareManualProfile()
-	log("manual CFRU/DPE profile prepared; provide data/game-addresses.json and data/tracker-overrides.json to load real values")
+	log("manual CFRU/DPE profile prepared; local manifests are data/game-addresses.local.json and data/tracker-overrides.local.json")
 end
 
--- Runs when the extension is enabled. It attempts to load only real manifest
--- filenames, not the committed *.example.json prototypes.
+-- Runs when the extension is enabled. It reads committed source-data and
+-- attempts to load only local *.local.json manifests, not the committed
+-- *.example.json prototypes.
 function extension.startup()
+	extension.loadSourceData()
+	log(extension.state.sourceDataStatus or "source-data=not checked")
+
 	local loaded = extension.loadConfiguredManifests()
 	if loaded then
-		log("loaded configured manifest files")
+		log("loaded local manifest files; " .. extension.state.lastLoadStatus)
 	else
-		log("no configured manifest files loaded; " .. extension.state.lastLoadStatus)
+		log("no local manifest files loaded; " .. extension.state.lastLoadStatus)
 	end
 end
 
 function extension.unload()
 	extension.state.prepared = false
 	extension.state.manifestsLoaded = false
+	extension.state.sourceDataLoaded = false
+	extension.state.sourceData = nil
+	extension.state.sourceDataStatus = "source-data=unloaded"
 	extension.state.lastLoadStatus = "unloaded"
 	log("unloaded; no Tracker core overrides to restore")
 end
