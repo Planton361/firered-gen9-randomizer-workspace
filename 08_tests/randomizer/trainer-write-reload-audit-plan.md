@@ -63,6 +63,9 @@ load, pokemon palette load, trainer load, ability table load, and evolution-leve
 Trainer-load bounds failures add a compact row context when available:
 `Configured randomized ROM could not be loaded during trainer load at trainer=<id> slot=<slot> layout=<layout> partyFlags=<flags> partyCount=<count> trainerOffset=<class> partyPointer=<class> slotOffset=<class> reason=<ExceptionClass>`.
 Offset and pointer values are classified as `in-rom`, `out-of-rom`, `<missing>`, or `<invalid-length>` instead of dumping raw private ROM addresses.
+When the failing slot offset is in-ROM, the diagnostic also includes numeric slot-only values:
+`rawSpecies=<id> speciesStatus=<status> rawItem=<id|not-present> itemStatus=<status> rawMoves=[...] moveStatus=[...] expectedLayout=<layout> bytesPerSlot=<n>`.
+Move status values are `none`, `in-bounds`, `out-of-bounds`, `<missing>`, or `null-slot`.
 
 Interpretation:
 

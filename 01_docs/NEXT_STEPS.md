@@ -1,3 +1,11 @@
+# Next steps update - UPR-FVX trainer-load raw slot diagnostics
+
+- Re-run the private-ROM trainer write/reload audit with both `-D` paths from the current UPR-FVX branch.
+- Expected trainer-load failure context now distinguishes whether trainer `1` slot `0` fails because `rawSpecies`, `rawItem`, or one of the `rawMoves` is out-of-bounds.
+- If `speciesStatus=out-of-bounds`, inspect trainer species write/reload identity for that row. If move statuses are out-of-bounds while species is valid, inspect custom-move write/layout handling for `partyFlags=1`.
+- If all raw values are in-bounds but the crash remains, inspect whether the read layout inferred from `partyFlags` matches the actual CFRU/DPE TrainerMon bytes.
+- Continue excluding ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, local addresses, secrets, tokens and `.env` data.
+
 # Next steps update - UPR-FVX trainer-load bounds diagnostics
 
 - Re-run the private-ROM trainer write/reload audit with both `-D` paths from the current UPR-FVX branch.
