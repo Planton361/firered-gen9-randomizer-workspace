@@ -1,3 +1,11 @@
+# Next steps update - CFRU/DPE Tracker live RAM anchors
+
+- Treat `01_docs/analysis/cfru-dpe-tracker-live-ram-anchors.md` as the current source-backed diagnosis for the failed live-data smoke.
+- Do not interpret `game-addresses.local=true` or `tracker-overrides.local=true` as proof that Player, Enemy, Wild, or Battle data can be read. They only prove loader return status.
+- Next implementation should first validate sanitized presence of live symbols such as `gPlayerParty`, `gEnemyParty`, `gBattleMons`, `gBattlersCount`, `gBattleMainFunc`, and `gBattlerPartyIndexes` in ignored local metadata.
+- Prefer a small CFRU/DPE active battle reader around `gBattleMons` as the first useful v1 data path. Full party display needs a CFRU-aware `struct Pokemon` reader because stock `Program.readNewPokemon` expects vanilla encrypted Gen III substructures.
+- Keep ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, `offsets.ini`, generated `.local.json`, real local addresses, secrets, tokens, and `.env` data out of commits and documentation.
+
 # Next steps update - CFRU/DPE local tracker overrides generator
 
 - Use `07_scripts/tracker/generate_cfru_dpe_tracker_overrides_local.py` to create a private ignored `tracker-overrides.local.json` for local Tracker layout smoke.

@@ -149,3 +149,14 @@ The generated file includes only source-backed layout candidates for recognized 
 - `MoveData`: bit offsets/sizes used when Tracker reads power/type/accuracy/PP/category from `gBattleMoves`.
 
 Do not treat this as a complete compatibility proof. It does not solve CFRU party `struct Pokemon` decoding, SaveBlock/bag runtime addresses, expanded TrainerMon variants, hidden ability UI behavior, or whether the Tracker override loader updates the nested `*.Addresses` tables used by read paths. Validate loader behavior locally and record only sanitized pass/fail notes.
+
+## Live RAM anchor follow-up
+
+Use `01_docs/analysis/cfru-dpe-tracker-live-ram-anchors.md` before treating the loader smoke as live-data capable.
+
+The local smoke where `source-data`, `game-addresses.local`, and `tracker-overrides.local` all loaded but Player/Starter and Wild battle data were still missing is consistent with two unresolved layers:
+
+- the local address manifest may still lack live RAM anchors consumed by stock Tracker paths, especially `pstats`/`gPlayerParty`, `estats`/`gEnemyParty`, `gBattleMons`, `gBattlersCount`, `gBattleMainFunc`, and `gBattlerPartyIndexes`;
+- stock `Program.readNewPokemon` decodes vanilla encrypted Gen 3 party data, while CFRU `struct Pokemon` is a direct expanded source layout.
+
+Next local smoke should not copy or document real addresses. It should only report sanitized presence/absence of required symbol keys and whether an extension-side CFRU/DPE reader can produce plausible active battle data. The recommended v1 smoke target is a custom `gBattleMons` active-battle reader before full party, bag, or SaveBlock support.
