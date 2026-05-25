@@ -457,14 +457,22 @@ local function formatStatus(status)
 	return tostring(status.name or status.key or status.raw or "?")
 end
 
+local function formatPartySlot(partySlot)
+	if partySlot == nil then
+		return "-"
+	end
+	return tostring(partySlot)
+end
+
 local function formatBattleMonSummary(mon, label)
 	if type(mon) ~= "table" or not mon.valid then
 		return string.format("%s:-", label)
 	end
 	return string.format(
-		"%s:%s L%s HP %s/%s type[%s] ability[%s] item[%s] status[%s] moves[%s]",
+		"%s:%s partySlot[%s] L%s HP %s/%s type[%s] ability[%s] item[%s] status[%s] moves[%s]",
 		label,
 		getResolvedName(mon.species),
+		formatPartySlot(mon.partySlot),
 		tostring(mon.level or "?"),
 		tostring(mon.hp or "?"),
 		tostring(mon.maxHP or "?"),
@@ -488,7 +496,14 @@ local function isPlausibleBattleMon(mon)
 		and mon.maxHP > 0
 end
 
-function extension.readBattleMon(baseAddress, slotInfo)
+function extension.readBattlerPartySlot(battlerPartyIndexesAddress, battlerIndex)
+	if type(battlerPartyIndexesAddress) ~= "number" or type(battlerIndex) ~= "number" then
+		return nil
+	end
+	return readU8(battlerPartyIndexesAddress + battlerIndex)
+end
+
+function extension.readBattleMon(baseAddress, slotInfo, partySlot)
 	local moves = {}
 	for moveIndex = 0, 3 do
 		local moveId = readU16(baseAddress + BATTLE_MON_OFFSETS.moves + (moveIndex * 2))
@@ -512,6 +527,7 @@ function extension.readBattleMon(baseAddress, slotInfo)
 		slot = slotInfo.label,
 		key = slotInfo.key,
 		battlerIndex = slotInfo.battlerIndex,
+		partySlot = partySlot,
 		species = resolveId("species", speciesId),
 		level = readU8(baseAddress + BATTLE_MON_OFFSETS.level),
 		hp = readU16(baseAddress + BATTLE_MON_OFFSETS.hp),
@@ -594,9 +610,11 @@ function extension.readActiveBattleMons()
 
 	local active = {}
 	local validRows = 0
+	local battlerPartyIndexesAddress = getConfiguredAddress("gBattlerPartyIndexes")
 	for _, slotInfo in ipairs(ACTIVE_BATTLE_SLOTS) do
 		local rowAddress = battleMonsAddress + (slotInfo.battlerIndex * BATTLE_MON_SIZE)
-		local mon = extension.readBattleMon(rowAddress, slotInfo)
+		local partySlot = extension.readBattlerPartySlot(battlerPartyIndexesAddress, slotInfo.battlerIndex)
+		local mon = extension.readBattleMon(rowAddress, slotInfo, partySlot)
 		active[slotInfo.key] = mon
 		if mon.valid then
 			validRows = validRows + 1

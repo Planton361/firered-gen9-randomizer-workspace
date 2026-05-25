@@ -102,8 +102,9 @@ Required local manifest key:
 Optional local manifest key:
 
 - `Addresses.gBattlersCount`, used only to avoid reading stale rows before at least two battlers are active
+- `Addresses.gBattlerPartyIndexes`, used to show the zero-based party slot for each active battler
 
-When `gBattleMons` is available, the extension reads the left player and left opponent `BattlePokemon` rows using the source-backed row size `0x58`. The current diagnostic fields are species, level, current HP, max HP, types, four moves, PP, ability, held item, and primary status. Species, move, ability, and item IDs are mapped through committed `data/source-data.json`. Type names use `source-data.json` if a future generator provides type mappings; otherwise the extension falls back to the CFRU/DPE type constants from `include/pokemon.h`.
+When `gBattleMons` is available, the extension reads the left player and left opponent `BattlePokemon` rows using the source-backed row size `0x58`. The current diagnostic fields are battler index, optional zero-based party slot, species, level, current HP, max HP, types, four moves, PP, ability, held item, and primary status. Species, move, ability, and item IDs are mapped through committed `data/source-data.json`. Type names use `source-data.json` if a future generator provides type mappings; otherwise the extension falls back to the CFRU/DPE type constants from `include/pokemon.h`.
 
 Expected local status messages:
 
@@ -115,6 +116,8 @@ Expected local status messages:
 - `active-battle=snapshot P:... | E:...` when the formatted battle snapshot changes.
 
 The snapshot includes player/enemy species, level, HP/max HP, type pair, ability, held item, primary status, and four move slots with current PP where available. Snapshot logging is change-based, so repeated identical frames should not spam the Tracker console.
+
+If `Addresses.gBattlerPartyIndexes` is present, snapshots include `partySlot[...]` for each active row. The value is the zero-based CFRU battler party index, matching how CFRU uses `gBattlerPartyIndexes[bank]` to access `gPlayerParty` or `gEnemyParty`. If the key is absent or unreadable, the snapshot shows `partySlot[-]` and keeps reading the rest of `gBattleMons`.
 
 Source-backed offsets currently used from CFRU `struct BattlePokemon`:
 
@@ -137,12 +140,13 @@ Install/update these files in the local Tracker extension layout:
 3. Provide local ignored `Lua/extensions/data/game-addresses.local.json` with `Addresses.gBattleMons`.
 4. Keep local ignored `Lua/extensions/data/tracker-overrides.local.json` beside it if testing other layout overrides.
 5. Optional: include `Addresses.gBattlersCount` to reduce transition/no-battle noise.
+6. Optional: include `Addresses.gBattlerPartyIndexes` to show zero-based party slots for route/rival slot-aware smoke checks.
 
 Expected sanitized debug output in battle is shaped like:
 
 ```text
 active-battle=loaded rows=2
-active-battle=snapshot P:<species> L<level> HP <hp>/<max> type[...] ability[...] item[...] status[...] moves[...] | E:<species> L<level> HP <hp>/<max> type[...] ability[...] item[...] status[...] moves[...]
+active-battle=snapshot P:<species> partySlot[<slot-or->] L<level> HP <hp>/<max> type[...] ability[...] item[...] status[...] moves[...] | E:<species> partySlot[<slot-or->] L<level> HP <hp>/<max> type[...] ability[...] item[...] status[...] moves[...]
 ```
 
 Do not copy real address values, local JSON contents, ROM paths, raw logs, screenshots, hashes, saves, emulator states, or private paths into committed files.

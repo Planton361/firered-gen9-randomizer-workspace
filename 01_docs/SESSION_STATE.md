@@ -1,3 +1,11 @@
+# Session update - CFRU/DPE Tracker party-index snapshot
+
+- Branch: `feature/cfru-dpe-tracker-party-index-snapshot`.
+- Extended the workspace-owned `CFRUDPEExtension` active-battle diagnostic snapshot with optional `gBattlerPartyIndexes` reads.
+- If local ignored `game-addresses.local.json` provides `Addresses.gBattlerPartyIndexes`, the player-left and opponent-left rows now include zero-based `partySlot[...]` values alongside the existing `gBattleMons` fields.
+- If the key is missing or unreadable, the snapshot shows `partySlot[-]` and keeps reading the rest of the battle row without throwing.
+- Scope remains Tracker-extension-only. No Tracker-core fork, NatDexExtension change, CFRU/DPE change, UPR-FVX change, ROM, save, build, screenshot, raw log, hash, private path, local `.local.json`, secret, token, or `.env` data was changed or documented.
+
 # Session update - UPR-FVX CFRU/DPE output ROM reload detection
 
 - Branch: `fix/upr-fvx-output-rom-cfru-dpe-reload-detection` / UPR-FVX `fix/upr-fvx-output-rom-cfru-dpe-reload-detection`.
