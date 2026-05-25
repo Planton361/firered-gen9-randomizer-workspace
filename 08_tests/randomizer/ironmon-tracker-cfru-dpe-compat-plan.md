@@ -40,3 +40,16 @@ The source map in `01_docs/analysis/tracker-memory-api-map.md` predicts that sto
 Do not patch stock Tracker first. Build a small source-derived data/address manifest for CFRU/DPE, then prototype a minimal Tracker extension that loads those values through `TrackerAPI.loadGameSettingsFromJson`, `TrackerAPI.loadTrackerOverridesFromJson`, or NatDexExtension-style overrides.
 
 The first prototype should target read-only display correctness for party, active battle, move names and abilities. Trainer-party fidelity and full item categorization can follow after the basic memory map is proven.
+
+## CFRU/DPE extension design follow-up
+
+Use `01_docs/analysis/cfru-dpe-tracker-extension-design.md` as the implementation concept for the future adapter.
+
+Minimal extension smoke should use an external `CFRUDPEExtension.lua` plus source-derived manifests, not a Tracker-core fork. v1 should start with manual profile activation, load CFRU/DPE counts/addresses/sizes/offsets and name mappings, then prove:
+
+- player party display from live party memory;
+- active wild enemy display from live enemy/battle memory;
+- active trainer enemy display from live enemy/battle memory;
+- species, move, ability and item names for sampled stock and Gen9 IDs.
+
+Static trainer-party data should remain caveated. CFRU and the randomizer can construct or alter actual trainer Pokemon at runtime, so live `gEnemyParty`/`gBattleMons` data is the first source of truth for battle display.
