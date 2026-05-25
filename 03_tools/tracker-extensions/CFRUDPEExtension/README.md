@@ -1,6 +1,6 @@
 # CFRU/DPE Gen9 Tracker Extension
 
-This directory contains the workspace-owned Ironmon Tracker extension skeleton for a future CFRU/DPE/Gen9 profile.
+This directory contains the workspace-owned Ironmon Tracker extension for a future CFRU/DPE/Gen9 profile.
 
 The extension is intentionally minimal:
 
@@ -13,7 +13,7 @@ The extension is intentionally minimal:
 
 | Path | Purpose |
 | --- | --- |
-| `CFRUDPEExtension.lua` | External Tracker extension skeleton. It prepares a manual CFRU/DPE profile and loads only real non-example local manifests if present. |
+| `CFRUDPEExtension.lua` | External Tracker extension. It prepares a manual CFRU/DPE profile, loads only real non-example local manifests if present, and owns a read-only `gBattleMons` diagnostic reader. |
 | `data/source-data.example.json` | Human-readable example shape for source-derived data. |
 | `data/source-data.json` | Committed generated source-derived counts and ID mappings from CFRU/DPE headers. The extension reads this file and logs current counts. |
 | `data/game-addresses.example.json` | Example only. Copy locally to `game-addresses.local.json` after filling safe local address values. |
@@ -90,6 +90,29 @@ Expected loader-only result:
 Without local non-example `.local.json` manifests, the extension can only prove load/unload and source-data availability. It cannot yet prove live party, battle or trainer data correctness.
 
 Manifest path resolution is relative to the folder containing the loaded `CFRUDPEExtension.lua` file. If that cannot be detected, the extension falls back to `FileManager.getExtensionsFolderPath()`. In both cases, manifest files are expected under `data/` directly below the extension folder.
+
+## Active battle reader smoke
+
+The extension includes a read-only CFRU/DPE `gBattleMons` diagnostic reader. It does not patch Tracker core, does not override `TrackerAPI.getActiveBattlePokemon`, does not inject into stock team screens, and does not write emulator memory.
+
+Required local manifest key:
+
+- `Addresses.gBattleMons` in `data/game-addresses.local.json`
+
+Optional local manifest key:
+
+- `Addresses.gBattlersCount`, used only to avoid reading stale rows before at least two battlers are active
+
+When `gBattleMons` is available, the extension reads the left player and left opponent `BattlePokemon` rows using the source-backed row size `0x58`. The v1 fields are species, level, current HP, max HP, four moves, PP, ability, and held item. Species, move, ability, and item IDs are mapped through committed `data/source-data.json`.
+
+Expected local status messages:
+
+- `active-battle=missing gBattleMons` when the local address manifest does not provide the key;
+- `active-battle=memory reader unavailable` if Tracker has not exposed its read API yet;
+- `active-battle=waiting battlers=0` or similar when optional `gBattlersCount` says no battle is active;
+- `active-battle=loaded rows=...` when one or both left-side rows look plausible.
+
+This is a diagnostic/helper state only. Read data is stored in `extension.state.activeBattleMons` and exposed through `extension.getActiveBattleMons()` for later extension-owned UI work.
 
 ## Local address manifests
 
