@@ -1,3 +1,10 @@
+# Next steps update - UPR-FVX trainer audit property forwarding
+
+- Re-run the private-ROM audit with regular `-D` properties from `02_external/upr-fvx`; the `romio:test` task now forwards the two audit ROM properties into the forked test JVM.
+- Expected local result with valid private paths: the post-randomization audit should no longer be `SKIPPED`, and test output should print the sanitized `reportPath=build/reports/diagnostics/...` line plus summary/warnings.
+- If it still skips, inspect the local Gradle test XML/HTML to verify property delivery before changing audit logic.
+- Continue excluding ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, local addresses, secrets, tokens and `.env` data.
+
 # Next steps update - UPR-FVX trainer audit report output
 
 - Re-run the opt-in private-ROM post-randomization audit from `02_external/upr-fvx`.

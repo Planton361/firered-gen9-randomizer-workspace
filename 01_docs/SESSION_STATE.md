@@ -1,3 +1,11 @@
+# Session update - UPR-FVX trainer audit property forwarding
+
+- Branch: `fix/upr-fvx-trainer-audit-report-output` / UPR-FVX `test/trainer-audit-report-output`.
+- Updated `romio:test` so the opt-in private-ROM audit system properties are forwarded from the Gradle process into the forked test JVM.
+- Forwarded properties: `uprfvx.trainerRuntimeSourceBaseRom` and `uprfvx.trainerRuntimeSourceRandomizedRom`.
+- Updated the audit plan to note that normal `-D...` invocation should now reach the test executor and that continued `SKIPPED` results should be checked in local Gradle test XML/HTML before interpreting missing reports.
+- Scope is Gradle test configuration and documentation only. No Randomizer behavior, CFRU/DPE code, Tracker code, ROM, save, build, screenshot, raw log, hash, private path, secret, token, or `.env` data was changed or documented.
+
 # Session update - UPR-FVX trainer audit report output
 
 - Branch: `fix/upr-fvx-trainer-audit-report-output`.
