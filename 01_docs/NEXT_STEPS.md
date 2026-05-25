@@ -1,3 +1,11 @@
+# Next steps update - CFRU/DPE gBattleMons reader design
+
+- Treat `01_docs/analysis/cfru-dpe-gbattlemons-reader-design.md` as the current design boundary for the first CFRU/DPE active-battle live-data reader.
+- Next implementation should be extension-owned and read-only: load local `gBattleMons`, prefer `gBattlersCount`, read `BattlePokemon` rows with source-backed size `0x58`, and store/display only extension state.
+- Do not inject into stock `Program.GameData.PlayerTeam` / `EnemyTeam` in v1. Stock `TrackerAPI.getActiveBattlePokemon` still depends on party objects populated by the vanilla `Program.readNewPokemon` path.
+- Minimal v1 display should cover player-left and opponent-left species, level, HP/max HP, moves and PP; doubles, hidden ability provenance, Tera/Gigantamax, party sync, bag and SaveBlock remain later work.
+- If local symbols do not provide `gBattleMons`, stop and require a safe local symbol source or future CFRU/DPE metadata table. Do not document real local addresses, ROM paths, hashes, raw logs, screenshots or private paths.
+
 # Next steps update - CFRU/DPE Tracker live RAM anchors
 
 - Treat `01_docs/analysis/cfru-dpe-tracker-live-ram-anchors.md` as the current source-backed diagnosis for the failed live-data smoke.

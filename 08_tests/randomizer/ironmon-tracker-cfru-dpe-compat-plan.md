@@ -160,3 +160,18 @@ The local smoke where `source-data`, `game-addresses.local`, and `tracker-overri
 - stock `Program.readNewPokemon` decodes vanilla encrypted Gen 3 party data, while CFRU `struct Pokemon` is a direct expanded source layout.
 
 Next local smoke should not copy or document real addresses. It should only report sanitized presence/absence of required symbol keys and whether an extension-side CFRU/DPE reader can produce plausible active battle data. The recommended v1 smoke target is a custom `gBattleMons` active-battle reader before full party, bag, or SaveBlock support.
+
+## gBattleMons reader design follow-up
+
+Use `01_docs/analysis/cfru-dpe-gbattlemons-reader-design.md` before implementing the first live active-battle reader.
+
+The recommended smoke target is extension-owned state, not stock Tracker team injection:
+
+- require local `gBattleMons` in ignored `game-addresses.local.json`;
+- prefer `gBattlersCount` for row count and stale-row filtering;
+- read `BattlePokemon` rows with source-backed size `0x58`;
+- first display only player-left and opponent-left species, level, HP/max HP, moves and PP;
+- map IDs through committed `source-data.json`;
+- do not write emulator memory and do not wrap Tracker core readers in the first implementation.
+
+If `gBattleMons` is not available from local symbols, stop and identify a safe alternate local symbol source or a future CFRU/DPE metadata-table path. Do not copy address values into documentation.
