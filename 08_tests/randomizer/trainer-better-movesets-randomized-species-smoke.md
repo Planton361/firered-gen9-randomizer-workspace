@@ -67,6 +67,18 @@ Nach einem Fix sollte ein fokussierter Test bestaetigen:
 - Reload bleibt ohne Species-/Move-Mismatches.
 - `gBattleMons` zeigt im Kampf die final erwarteten Moves.
 
+## Implementierungsstand
+
+UPR-FVX Fix-Branch `fix/trainer-better-movesets-empty-pool`:
+
+- Better Movesets schreibt Move-Slots nur noch ueber einen zentralen Helper, der danach `resetMoves=false` setzt.
+- Bei leerem Better-Movesets-Pool bleibt `resetMoves` unveraendert; nach Trainer-Species-Randomization bleibt damit der Gen3-Writer-Fallback aktiv.
+- ROM-freie Regression deckt ab:
+  - leerer Pool behaelt `resetMoves=true` und laesst alte Custom-Moves nicht als aktive Custom-Moves gelten.
+  - nichtleerer Pool schreibt neue Moves und setzt `resetMoves=false`.
+
+Der lokale Gameplay-Smoke mit privatem Output-ROM bleibt der naechste Schritt.
+
 ## Offene Smoke-Notizen
 
 - Kein lokaler Pfad, keine Seed-Strings, keine ROM-Hashes und keine raw Logs in diese Datei kopieren.

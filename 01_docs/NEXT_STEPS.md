@@ -1,3 +1,11 @@
+# Next steps update - UPR-FVX Trainer Better Movesets empty-pool fix
+
+- Treat the UPR-FVX empty-pool fix as the current implementation candidate: Better Movesets only clears `resetMoves` after writing at least one move.
+- Run the local sanitized smoke from `08_tests/randomizer/trainer-better-movesets-randomized-species-smoke.md` on a private output ROM: Trainer Species randomization plus Better Movesets, with `gBattleMons` validation for enemy Species/Level/Moves.
+- Specifically re-check the prior `Incineroar Lv6`-style failure mode: a random Trainer Species must not carry old/original custom moves when the Better-Movesets pool is empty.
+- Keep Rival-starter interpretation separate from ordinary Trainer/Nichtstarter findings until trainer ID and party slot are known.
+- Continue excluding ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, local addresses, secrets, tokens and `.env` data.
+
 # Next steps update - UPR-FVX Trainer Better Movesets with randomized species
 
 - Treat `01_docs/analysis/upr-fvx-trainer-better-movesets-randomized-species.md` as the current source-backed diagnosis for stale/original trainer moves after Species randomization plus Better Movesets.
