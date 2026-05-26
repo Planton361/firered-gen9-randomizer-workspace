@@ -1,3 +1,13 @@
+# Next steps update - CFRU difficulty power/rules mode split
+
+- Treat CFRU `feature/cfru-difficulty-power-rules-mode` as the implementation branch for making `GetGameDifficultyMode()` the single internal read path for Difficulty-owned power and rules behavior.
+- Review the semantic caveats before UI work: option-menu storage still writes `VAR_GAME_DIFFICULTY` directly by design, and `src/util.c` remains the compatibility bridge for existing saves/scripts.
+- Do not merge Trainer Level Scaling, Trainer AI Profile, or Smart Trainer AI behavior back into Difficulty; those paths should continue using their split helpers.
+- Decide later whether CFRU runtime randomized-trainer evolution deserves a separate randomizer/runtime setting instead of continuing to derive from DifficultyMode.
+- Decide later whether Wild/Raid AI should stay Difficulty-owned or receive a separate Wild/Raid AI profile; this branch only routes the existing fallback through `GetGameDifficultyMode()` without changing behavior.
+- Before UI work, add explicit settings-write plumbing for Difficulty, Trainer Level Scaling, and Trainer AI Profile while preserving `0 = legacy/unset` for the split vars.
+- Continue excluding ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, local addresses, `.local.json`, secrets, tokens and `.env` data from commits.
+
 # Next steps update - CFRU trainer AI profile mode split
 
 - Treat CFRU `feature/cfru-trainer-ai-profile-mode` as the implementation branch for separating Trainer AI Profile from the base Difficulty bundle.

@@ -1,3 +1,16 @@
+# Session update - CFRU difficulty power/rules mode split
+
+- Branch: `feature/cfru-difficulty-power-rules-mode`.
+- CFRU branch `feature/cfru-difficulty-power-rules-mode` migrates remaining clear Difficulty Power/Rules reads from direct `VAR_GAME_DIFFICULTY` checks to `GetGameDifficultyMode()`.
+- Migrated trainer-power paths: trainer IV force-to-31 on Expert, trainer EV spread Easy suppression, Unbound Rival EV spread challenge gates, boss/rival max-EV and max-friendship gates, and trainer move PP bonus on Expert.
+- Migrated player/battle-rule paths: bag restrictions, Minimize/evasion move restriction, sleep clause, Bad Thoughts damage, and fog accuracy penalty.
+- Migrated wild/raid/special-rule paths: wild scripted custom-move PP bonus, Shadow Warrior hidden ability, wild smart-move difficulty fallback, smart-wild special species gate, raid attack-again item punishment, raid start-shield gate, DexNav hidden Imposter restriction, ability-capsule hidden Imposter restriction, wild boss level difficulty fallback, non-trainer AI item/damage knowledge fallback, and Hall of Fame difficulty display read.
+- Classification of remaining direct difficulty storage reads: `src/util.c` intentionally owns `GetGameDifficultyMode()` compatibility over `VAR_GAME_DIFFICULTY`; `src/option_menu.c` intentionally remains existing UI/storage plumbing for the single legacy difficulty var in this no-UI branch.
+- Already separated paths left intact: Trainer Level Scaling stays on `GetTrainerLevelScalingMode()`, Trainer AI Profile stays on `GetTrainerAIProfile()` / `IsSmartTrainerAIEnabled()`, and Smart Trainer AI compatibility behavior is unchanged.
+- Open semantic caveat: CFRU runtime randomized-trainer evolution and wild/raid AI gates still derive from DifficultyMode for compatibility; they were not split into new randomizer or Wild/Raid AI settings in this branch.
+- Checks: CFRU `diff --check` passed; `arm-none-eabi-gcc -fsyntax-only` passed for changed CFRU C files, with pre-existing warnings observed in `dexnav.c` and `wild_encounter.c`.
+- Scope: CFRU Difficulty Power/Rules helper migration plus Workspace pin/docs only. No UPR-FVX, DPE, Tracker, UI tab, ROM, save, build artifact, screenshot, raw log, hash, private path, local address, secret, token, or `.env` data was changed or documented.
+
 # Session update - CFRU trainer AI profile mode split
 
 - Branch: `feature/cfru-trainer-ai-profile-mode`.
