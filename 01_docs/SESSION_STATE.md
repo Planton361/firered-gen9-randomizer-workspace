@@ -1,3 +1,13 @@
+# Session update - CFRU difficulty split mode helpers
+
+- Branch: `feature/cfru-difficulty-split-mode-helpers`.
+- CFRU branch `feature/cfru-difficulty-split-mode-helpers` adds split-mode storage constants and helper plumbing without moving existing Difficulty call sites.
+- Added CFRU vars `VAR_TRAINER_LEVEL_SCALING_MODE` at `0x515A` and `VAR_TRAINER_AI_PROFILE` at `0x515B`; no schema var was added because raw `0 = legacy/unset` covers the first migration path.
+- Added internal CFRU modes for `DifficultyMode`, `TrainerLevelScalingMode`, and `TrainerAIProfile`.
+- Added helpers `GetGameDifficultyMode()`, `GetTrainerLevelScalingMode()`, `GetTrainerAIProfile()`, and `IsSmartTrainerAIEnabled()`.
+- Compatibility rule: while the new split vars are `0`, level scaling and AI profile helpers derive from `VAR_GAME_DIFFICULTY`; `IsSmartTrainerAIEnabled()` continues to honor `FLAG_SMART_TRAINER_AI` unless an explicit non-Smart AI profile is set.
+- Scope: CFRU helper/storage plumbing plus Workspace pin/docs only. No UPR-FVX, DPE, Tracker, UI tab, ROM, save, emulator state, build artifact, screenshot, raw log, hash, private path, local address, secret, token, or `.env` data was changed or documented.
+
 # Session update - CFRU difficulty split var/mode plan
 
 - Branch: `analysis/cfru-difficulty-split-var-mode-plan`.
