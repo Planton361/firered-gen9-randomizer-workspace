@@ -1,3 +1,11 @@
+# Next steps update - Final Trainer Better Movesets smoke
+
+- Treat `08_tests/randomizer/trainer-better-movesets-randomized-species-smoke.md` as the current targeted local evidence that the Trainer / Better Movesets / Route 22 regression cluster is clean for the tested profile.
+- Do not reopen Better-Movesets stale-move or Route-22 weak Rival carryover work from slot `0` observations alone; weak Route 22 protected starter carryover is slot `1`, while slot `0` remains randomizable.
+- For future suspicious low-level moves, first run or inspect the Better-Movesets source audit. `TUTOR` or `TM_HM` with `fallback=yes` is expected behavior for Better Movesets, not a stale-original-moves proof.
+- With the Trainer baseline clean, continue Smart-Trainer-AI A/B smoke separately so AI move-choice findings are not conflated with Trainer write/reload or Better-Movesets issues.
+- Continue excluding ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, local addresses, `.local.json`, secrets, tokens and `.env` data from commits.
+
 # Next steps update - UPR-FVX Better Movesets source audit
 
 - For the sanitized Graveler Lv7 / Hurricane-style cases, run the private local randomizer workflow with `uprfvx.trainerBetterMovesetsSourceAudit=true` and narrow it with `uprfvx.trainerBetterMovesetsSourceAuditTrainerId` plus `uprfvx.trainerBetterMovesetsSourceAuditSlot`.

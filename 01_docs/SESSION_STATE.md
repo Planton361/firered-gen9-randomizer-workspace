@@ -1,3 +1,11 @@
+# Session update - Final Trainer Better Movesets smoke
+
+- Branch: `test/final-trainer-better-movesets-smoke`.
+- Documented the final sanitized local Trainer / Better Movesets / Route 22 smoke as `PASS_TARGETED_LOCAL_SMOKE_WITH_CAVEATS`.
+- Local smoke result: Randomizer save completed without the previous FreedSpace-overlap crash, the UPR-FVX Write/Reload-Audit completed, Route 22 weak Rival protected slot `1` carried the Oak-Lab-Rival starter correctly, slot `0` remained randomizable, and no leading empty move slots were observed.
+- Better Movesets interpretation is now explicit: it is not level-up-only, and the Graveler/Hurricane case was explained by the Better-Movesets source audit as a Tutor fallback.
+- Scope is documentation-only. No UPR-FVX behavior, CFRU/DPE code, Tracker code, ROMs, saves, builds, screenshots, raw logs, hashes, private paths, local addresses, secrets, tokens, or `.env` data was changed or documented.
+
 # Session update - UPR-FVX Better Movesets source audit
 
 - Branch: `diagnosis/upr-fvx-better-movesets-source-audit` / UPR-FVX `diagnosis/upr-fvx-better-movesets-source-audit`.
