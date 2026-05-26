@@ -1,3 +1,26 @@
+# Next steps update - Final Trainer Better Movesets smoke
+
+- Treat `08_tests/randomizer/trainer-better-movesets-randomized-species-smoke.md` as the current targeted local evidence that the Trainer / Better Movesets / Route 22 regression cluster is clean for the tested profile.
+- Do not reopen Better-Movesets stale-move or Route-22 weak Rival carryover work from slot `0` observations alone; weak Route 22 protected starter carryover is slot `1`, while slot `0` remains randomizable.
+- For future suspicious low-level moves, first run or inspect the Better-Movesets source audit. `TUTOR` or `TM_HM` with `fallback=yes` is expected behavior for Better Movesets, not a stale-original-moves proof.
+- With the Trainer baseline clean, continue Smart-Trainer-AI A/B smoke separately so AI move-choice findings are not conflated with Trainer write/reload or Better-Movesets issues.
+- Continue excluding ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, local addresses, `.local.json`, secrets, tokens and `.env` data from commits.
+
+# Next steps update - UPR-FVX Better Movesets source audit
+
+- For the sanitized Graveler Lv7 / Hurricane-style cases, run the private local randomizer workflow with `uprfvx.trainerBetterMovesetsSourceAudit=true` and narrow it with `uprfvx.trainerBetterMovesetsSourceAuditTrainerId` plus `uprfvx.trainerBetterMovesetsSourceAuditSlot`.
+- Expected diagnostic line shape: `trainer=<id> slot=<slot> species=<name> level=<level> chosenMove=<name>(<id>) sources=[...] fallback=<yes|no>`.
+- Interpret `TM_HM` / `TUTOR` with `fallback=yes` as the low-probability fallback branch from Better Movesets, not as proof of stale original trainer moves.
+- If a chosen move reports `[not-in-recorded-pool]`, inspect whether it was written by a later non-Better-Movesets path before changing trainer move selection.
+- Continue excluding ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, local addresses, `.local.json`, secrets, tokens and `.env` data from commits.
+
+# Next steps update - UPR-FVX Better Movesets pool rules
+
+- Treat `01_docs/analysis/upr-fvx-better-movesets-pool-rules.md` as the current source-backed explanation for Trainer Better Movesets pool construction.
+- For future suspicious low-level trainer moves, do not classify them as stale/original moves until the final randomized level-up, TM/HM, tutor, egg, and compatibility sources have been checked for the final trainer species.
+- If more precision is needed, add a diagnostic-only pool audit for one sanitized trainer id/slot that reports source categories and move-name categories without private paths, ROMs, raw logs, seeds, hashes, screenshots, saves, builds, or local addresses.
+- Continue excluding ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, local addresses, `.local.json`, secrets, tokens and `.env` data from commits.
+
 # Next steps update - UPR-FVX runtime trainer source overlap-free save
 
 - Treat the merged old-range runtime trainer source save as the current implementation candidate for the saveRom crash after the CFRU/DPE `partyFlags=3` 32-byte layout fix.

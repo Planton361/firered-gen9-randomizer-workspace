@@ -161,6 +161,8 @@ Do not commit:
 
 ## Open Follow-ups
 
+- Trainer-/Better-Movesets-/Route-22-Baseline ist fuer den aktuellen UPR-FVX-Stand targeted-smoke-clean dokumentiert: Randomizer-Save ohne FreedSpace-Overlap-Crash, Write/Reload-Audit durchlaufend, Route 22 weak Rival Slot `1` korrekt, Slot `0` randomisierbar, keine fuehrenden leeren Move-Slots, und Graveler/Hurricane als Tutor-Fallback erklaert.
+- Fuer Smart-Trainer-AI-Smokes sollte diese Trainer-Baseline als Voraussetzung gelten, damit Move-Auswahl-Befunde nicht erneut mit Trainer-Write-/Reload- oder Better-Movesets-Problemen vermischt werden.
 - Run the first local A/B smoke through `EventScript_Pallet_FatGuy` and document only sanitized pass/fail observations.
 - Decide whether a later set/clear helper is needed for faster repeated A/B testing.
 - After smoke, decide whether the user-facing activation should be Settings NPC, Option Menu, or randomizer-profile wiring.

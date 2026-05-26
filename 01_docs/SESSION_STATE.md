@@ -1,3 +1,27 @@
+# Session update - Final Trainer Better Movesets smoke
+
+- Branch: `test/final-trainer-better-movesets-smoke`.
+- Documented the final sanitized local Trainer / Better Movesets / Route 22 smoke as `PASS_TARGETED_LOCAL_SMOKE_WITH_CAVEATS`.
+- Local smoke result: Randomizer save completed without the previous FreedSpace-overlap crash, the UPR-FVX Write/Reload-Audit completed, Route 22 weak Rival protected slot `1` carried the Oak-Lab-Rival starter correctly, slot `0` remained randomizable, and no leading empty move slots were observed.
+- Better Movesets interpretation is now explicit: it is not level-up-only, and the Graveler/Hurricane case was explained by the Better-Movesets source audit as a Tutor fallback.
+- Scope is documentation-only. No UPR-FVX behavior, CFRU/DPE code, Tracker code, ROMs, saves, builds, screenshots, raw logs, hashes, private paths, local addresses, secrets, tokens, or `.env` data was changed or documented.
+
+# Session update - UPR-FVX Better Movesets source audit
+
+- Branch: `diagnosis/upr-fvx-better-movesets-source-audit` / UPR-FVX `diagnosis/upr-fvx-better-movesets-source-audit`.
+- Added a diagnose-only Trainer Better Movesets source audit behind Java system properties.
+- The audit records Better-Movesets pool provenance while the existing pool builder runs, then reports selected moves with trainer id, zero-based slot, species, level, chosen move, source categories, and TM/Tutor fallback yes/no.
+- Source categories currently reported: `LEVEL_UP`, `PRE_EVOLUTION_LEVEL_UP`, `TM_HM`, `TUTOR`, and `EGG`.
+- Scope is diagnostic/test-only. It does not change Better-Movesets scoring, selected move assignment, Trainer Species randomization, CFRU/DPE code, Tracker code, ROMs, saves, builds, screenshots, raw logs, hashes, private paths, local addresses, secrets, tokens, or `.env` data.
+
+# Session update - UPR-FVX Better Movesets pool rules
+
+- Branch: `analysis/upr-fvx-better-movesets-pool-rules`.
+- Added `01_docs/analysis/upr-fvx-better-movesets-pool-rules.md` to document source-backed how Trainer Better Movesets builds move pools.
+- Key finding: Better Movesets is not strict level-only. It starts from final trainer species level-up moves, then can add pre-evolution, TM/HM, Move Tutor, and egg moves from the current in-memory randomized ROM state before applying ability/stat/STAB/move-synergy heuristics.
+- The sanitized Graveler Lv7 `Hurricane / Rock Polish / Defense Curl / Agility` observation is plausible only if the current randomized compatibility/learnset/tutor/TM state makes Hurricane and Agility available; static DPE Graveler does not naturally learn Hurricane or Agility at Lv7.
+- Scope is documentation-only. No UPR-FVX behavior, CFRU/DPE code, Tracker code, ROM, save, build, screenshot, raw log, hash, private path, local address, `.local.json`, secret, token, or `.env` data was changed or documented.
+
 # Session update - UPR-FVX runtime trainer source overlap-free save
 
 - Branch: `fix/upr-fvx-runtime-trainer-source-overlap-free` / UPR-FVX `fix/upr-fvx-runtime-trainer-source-overlap-free`.
