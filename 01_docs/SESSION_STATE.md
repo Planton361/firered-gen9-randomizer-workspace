@@ -1,3 +1,13 @@
+# Session update - CFRU level scaling option row
+
+- Branch: `feature/cfru-settings-level-scaling-option`.
+- CFRU branch `feature/cfru-settings-level-scaling-option` adds only a second-page options-menu row for `Level Scaling`.
+- UI values are `Auto`, `Off`, `Easy`, `Normal`, `Hard`, and `Expert`; `Auto` maps to raw `VAR_TRAINER_LEVEL_SCALING_MODE == 0` and keeps legacy Difficulty-derived scaling behavior.
+- Added original-raw plus dirty tracking for the new row so opening and closing the menu without changing `Level Scaling` preserves the existing raw value, including legacy raw `0`.
+- The row writes only `VAR_TRAINER_LEVEL_SCALING_MODE` when changed; the existing `Game Difficulty` row, Trainer AI profile storage, Difficulty ordering, and gameplay logic outside the options menu were left unchanged.
+- Checks: CFRU `diff --check` passed; `arm-none-eabi-gcc -fsyntax-only` passed for `src/option_menu.c`; targeted `rg` checks confirmed the new level-scaling var in `option_menu.c` and no new `VAR_TRAINER_AI_PROFILE` UI path.
+- Scope: CFRU options-menu row/text plus Workspace pin/docs only. No UPR-FVX, DPE, Tracker, Trainer-AI UI, Difficulty reorder, ROM, save, build artifact, screenshot, raw log, hash, private path, local address, secret, token, or `.env` data was changed or documented.
+
 # Session update - CFRU settings UI split implementation plan
 
 - Branch: `analysis/cfru-settings-ui-tab-implementation-plan`.

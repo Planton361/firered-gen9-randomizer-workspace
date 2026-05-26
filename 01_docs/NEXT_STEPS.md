@@ -1,3 +1,12 @@
+# Next steps update - CFRU level scaling option row
+
+- Treat CFRU `feature/cfru-settings-level-scaling-option` as the implementation branch for the first split-setting UI row.
+- Verify in a later local gameplay/menu smoke that `Auto` displays for raw `VAR_TRAINER_LEVEL_SCALING_MODE == 0`, and that opening/closing the menu without changing the row keeps raw `0`.
+- Next UI branch can add `Trainer AI` using the same original-raw plus dirty-tracking pattern for `VAR_TRAINER_AI_PROFILE`.
+- Keep the existing `Game Difficulty` row unchanged until a separate branch explicitly handles display ordering or labeling.
+- Do not add Better Movesets or Trainer Evolution to CFRU; those remain UPR-FVX Randomizer settings.
+- Continue excluding ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, local addresses, `.local.json`, secrets, tokens and `.env` data from commits.
+
 # Next steps update - CFRU settings UI split implementation plan
 
 - Treat `01_docs/analysis/cfru-settings-ui-tab-implementation-plan.md` as the current handoff for implementing the CFRU in-ROM split settings UI.
