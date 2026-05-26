@@ -1,3 +1,13 @@
+# Next steps update - CFRU settings UI split implementation plan
+
+- Treat `01_docs/analysis/cfru-settings-ui-tab-implementation-plan.md` as the current handoff for implementing the CFRU in-ROM split settings UI.
+- First implementation branch should extend option-menu page 2 with `Level Scaling` and preserve raw `VAR_TRAINER_LEVEL_SCALING_MODE == 0` unless the user changes that row.
+- Second implementation branch should add `Trainer AI` with the same raw `0 = legacy/unset` preservation and explicit raw `1..6` writes only after user changes the setting.
+- Add dirty/original-raw tracking before converting helper-derived display values back to saved vars; otherwise opening and closing the menu would accidentally migrate old saves.
+- Keep Better Movesets and Trainer Evolution out of CFRU; they remain UPR-FVX Randomizer settings.
+- Defer a third option-menu page, Wild/Raid AI profile, CFRU runtime randomized-trainer evolution toggle, and schema/debug UI until separate source-backed plans exist.
+- Continue excluding ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, local addresses, `.local.json`, secrets, tokens and `.env` data from commits.
+
 # Next steps update - CFRU difficulty power/rules mode split
 
 - Treat CFRU `feature/cfru-difficulty-power-rules-mode` as the implementation branch for making `GetGameDifficultyMode()` the single internal read path for Difficulty-owned power and rules behavior.
