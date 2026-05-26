@@ -1,3 +1,13 @@
+# Next steps update - CFRU difficulty split mode helpers
+
+- Treat the CFRU helper branch as the current implementation baseline for split difficulty storage.
+- Next CFRU branch should migrate existing `VAR_GAME_DIFFICULTY` reads gradually through the new helpers, starting with low-risk display or isolated trainer-level-scaling call sites.
+- Preserve the rule that unset split vars (`0`) keep legacy behavior through `VAR_GAME_DIFFICULTY`; do not default invalid explicit values to weaker modes.
+- Use `IsSmartTrainerAIEnabled()` for the legacy `FLAG_SMART_TRAINER_AI` override instead of treating the flag as a full profile-wide Smart AI upgrade.
+- Do not move wild or raid AI behavior into `TrainerAIProfile` until a separate Wild/Raid AI setting is designed.
+- Keep UPR-FVX Better Movesets and Trainer Evolution separate from CFRU runtime level scaling and AI profile settings.
+- Continue excluding ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, local addresses, `.local.json`, secrets, tokens and `.env` data from commits.
+
 # Next steps update - CFRU difficulty split var/mode plan
 
 - Treat `01_docs/analysis/cfru-difficulty-split-var-mode-plan.md` as the current implementation handoff for CFRU split-setting storage.
