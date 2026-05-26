@@ -1,3 +1,12 @@
+# Session update - CFRU difficulty split var/mode plan
+
+- Branch: `analysis/cfru-difficulty-split-var-mode-plan`.
+- Added `01_docs/analysis/cfru-difficulty-split-var-mode-plan.md` as a source-backed plan for CFRU split-setting vars, modes, helpers, default behavior, and migration rules.
+- Var audit result: keep `VAR_GAME_DIFFICULTY` at `0x5157` as the `DifficultyMode` backing store; prefer new expanded vars `0x515A` / `0x515B` for Trainer Level Scaling and Trainer AI Profile; reserve `0x515C` only if a schema marker is actually needed; avoid `0x5152` until optional item restrictions are audited.
+- Flag audit result: keep existing `FLAG_SMART_TRAINER_AI` at `0xA0E` as a legacy/script compatibility flag and do not add new flags for split mode storage.
+- Migration rule: new mode vars use raw `0 = legacy/unset`, so existing saves with only `VAR_GAME_DIFFICULTY` keep old behavior until the split settings are explicitly written.
+- Scope is documentation-only. No CFRU/DPE/UPR-FVX code, ROMs, saves, emulator states, builds, screenshots, raw logs, hashes, private paths, local addresses, secrets, tokens, or `.env` data was changed or documented.
+
 # Session update - CFRU difficulty settings UI split design
 
 - Branch: `analysis/cfru-difficulty-settings-ui-split-design`.

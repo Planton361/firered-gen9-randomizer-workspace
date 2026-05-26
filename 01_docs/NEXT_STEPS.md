@@ -1,3 +1,12 @@
+# Next steps update - CFRU difficulty split var/mode plan
+
+- Treat `01_docs/analysis/cfru-difficulty-split-var-mode-plan.md` as the current implementation handoff for CFRU split-setting storage.
+- First implementation branch should add helpers around existing behavior before moving call sites: `GetGameDifficultyMode()`, `GetTrainerLevelScalingMode()`, `GetTrainerAIProfile()`, and `IsSmartTrainerAIEnabled()`.
+- Use `VAR_GAME_DIFFICULTY` for `DifficultyMode`; add `VAR_TRAINER_LEVEL_SCALING_MODE` at `0x515A` and `VAR_TRAINER_AI_PROFILE` at `0x515B`; keep raw `0 = legacy/unset` for both new vars.
+- Keep `FLAG_SMART_TRAINER_AI` as a trainer-only legacy/script compatibility override while the new AI profile var is unset.
+- Do not move wild/raid AI gates into `TrainerAIProfile` in the first implementation; leave them on difficulty behavior until an explicit Wild/Raid AI setting is designed.
+- Continue excluding ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, local addresses, `.local.json`, secrets, tokens and `.env` data from commits.
+
 # Next steps update - CFRU difficulty settings UI split design
 
 - Treat `01_docs/analysis/cfru-difficulty-settings-ui-split-design.md` as the current source-backed map before implementing any CFRU difficulty split.
