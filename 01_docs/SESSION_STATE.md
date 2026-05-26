@@ -1,3 +1,13 @@
+# Session update - CFRU trainer level scaling mode split
+
+- Branch: `feature/cfru-trainer-level-scaling-mode`.
+- CFRU branch `feature/cfru-trainer-level-scaling-mode` migrates only trainer level-scaling call sites in `src/build_pokemon.c` to `GetTrainerLevelScalingMode()`.
+- Migrated paths: `CreateNPCTrainerParty` trainer-scaling enable gate, pseudo-boss level-scaling classification, boss trainer-class level-scaling classification, Hard/Expert generic trainer scaling formulas, and scaling-linked evolution after generic trainer scaling.
+- Compatibility rule: when `VAR_TRAINER_LEVEL_SCALING_MODE` is unset/`0`, `GetTrainerLevelScalingMode()` derives from `VAR_GAME_DIFFICULTY`, preserving old Easy/Normal/Hard/Expert trainer-scaling behavior.
+- Explicit `TRAINER_LEVEL_SCALING_OFF` now disables the trainer level-scaling path without enabling Easy Difficulty.
+- Intentionally not migrated in this block: trainer IV/EV/friendship/PP power, randomizer-only trainer species evolution, bag/move restrictions, AI behavior, Wild/Raid AI, Wild Boss level scaling, and UI/menu storage.
+- Scope: CFRU trainer-level-scaling migration plus Workspace pin/docs only. No UPR-FVX, DPE, Tracker, UI tab, ROM, save, build artifact, screenshot, raw log, hash, private path, local address, secret, token, or `.env` data was changed or documented.
+
 # Session update - CFRU difficulty split mode helpers
 
 - Branch: `feature/cfru-difficulty-split-mode-helpers`.

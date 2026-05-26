@@ -1,3 +1,12 @@
+# Next steps update - CFRU trainer level scaling mode split
+
+- Treat CFRU `feature/cfru-trainer-level-scaling-mode` as the implementation branch for separating Trainer Level Scaling from the base Difficulty bundle.
+- Next CFRU migration branch should either move a clearly bounded Difficulty category, such as Hall of Fame display or trainer-power reads, or continue with a separate design for Wild/Raid scaling before touching `GetScaledWildBossLevel()`.
+- Keep `GetScaledWildBossLevel()` on the old difficulty path until a separate Wild/Raid scaling setting is explicitly designed.
+- Keep CFRU runtime scaling-linked evolution separate from UPR-FVX Trainer Evolution; do not route UPR-FVX write-time evolution settings through CFRU runtime scaling vars.
+- Before UI work, add profile-write plumbing that can set `VAR_TRAINER_LEVEL_SCALING_MODE` explicitly while leaving unset/`0` saves on legacy behavior.
+- Continue excluding ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, local addresses, `.local.json`, secrets, tokens and `.env` data from commits.
+
 # Next steps update - CFRU difficulty split mode helpers
 
 - Treat the CFRU helper branch as the current implementation baseline for split difficulty storage.
