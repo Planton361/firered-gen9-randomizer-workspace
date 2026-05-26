@@ -1,3 +1,11 @@
+# Session update - CFRU difficulty settings UI split design
+
+- Branch: `analysis/cfru-difficulty-settings-ui-split-design`.
+- Added `01_docs/analysis/cfru-difficulty-settings-ui-split-design.md` as a source-backed design for splitting current CFRU `VAR_GAME_DIFFICULTY` behavior into `DifficultyMode`, `TrainerLevelScalingMode`, `TrainerAIProfile`, and Randomizer-only settings.
+- Exact-symbol search for `VAR_GAME_DIFFICULTY`, `OPTIONS_EASY_DIFFICULTY`, `OPTIONS_NORMAL_DIFFICULTY`, `OPTIONS_HARD_DIFFICULTY`, and `OPTIONS_EXPERT_DIFFICULTY` found runtime uses in `02_external/CFRU-expansion/**`; the same exact-symbol search found no matches in DPE or UPR-FVX.
+- Key design outcome: Difficulty should own trainer power, player restrictions, and battle/wild rules; Trainer Level Scaling should own runtime scaling; Trainer AI Profile should own AI flag/choice/switching behavior; Better Movesets and Trainer Evolution remain UPR-FVX Randomizer-only settings.
+- Scope is documentation-only. No CFRU/DPE/UPR-FVX code, ROMs, saves, emulator states, builds, screenshots, raw logs, hashes, private paths, local addresses, secrets, tokens, or `.env` data was changed or documented.
+
 # Session update - Final Trainer Better Movesets smoke
 
 - Branch: `test/final-trainer-better-movesets-smoke`.
