@@ -1,3 +1,10 @@
+# Next steps update - UPR-FVX Better Movesets pool rules
+
+- Treat `01_docs/analysis/upr-fvx-better-movesets-pool-rules.md` as the current source-backed explanation for Trainer Better Movesets pool construction.
+- For future suspicious low-level trainer moves, do not classify them as stale/original moves until the final randomized level-up, TM/HM, tutor, egg, and compatibility sources have been checked for the final trainer species.
+- If more precision is needed, add a diagnostic-only pool audit for one sanitized trainer id/slot that reports source categories and move-name categories without private paths, ROMs, raw logs, seeds, hashes, screenshots, saves, builds, or local addresses.
+- Continue excluding ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, local addresses, `.local.json`, secrets, tokens and `.env` data from commits.
+
 # Next steps update - UPR-FVX runtime trainer source overlap-free save
 
 - Treat the merged old-range runtime trainer source save as the current implementation candidate for the saveRom crash after the CFRU/DPE `partyFlags=3` 32-byte layout fix.

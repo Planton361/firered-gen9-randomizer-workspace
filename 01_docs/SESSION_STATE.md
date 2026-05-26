@@ -1,3 +1,11 @@
+# Session update - UPR-FVX Better Movesets pool rules
+
+- Branch: `analysis/upr-fvx-better-movesets-pool-rules`.
+- Added `01_docs/analysis/upr-fvx-better-movesets-pool-rules.md` to document source-backed how Trainer Better Movesets builds move pools.
+- Key finding: Better Movesets is not strict level-only. It starts from final trainer species level-up moves, then can add pre-evolution, TM/HM, Move Tutor, and egg moves from the current in-memory randomized ROM state before applying ability/stat/STAB/move-synergy heuristics.
+- The sanitized Graveler Lv7 `Hurricane / Rock Polish / Defense Curl / Agility` observation is plausible only if the current randomized compatibility/learnset/tutor/TM state makes Hurricane and Agility available; static DPE Graveler does not naturally learn Hurricane or Agility at Lv7.
+- Scope is documentation-only. No UPR-FVX behavior, CFRU/DPE code, Tracker code, ROM, save, build, screenshot, raw log, hash, private path, local address, `.local.json`, secret, token, or `.env` data was changed or documented.
+
 # Session update - UPR-FVX runtime trainer source overlap-free save
 
 - Branch: `fix/upr-fvx-runtime-trainer-source-overlap-free` / UPR-FVX `fix/upr-fvx-runtime-trainer-source-overlap-free`.

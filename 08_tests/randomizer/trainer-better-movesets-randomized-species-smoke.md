@@ -153,3 +153,4 @@ UPR-FVX Follow-up-Branch `fix/route22-rival-final-moveslots`:
 - Kein lokaler Pfad, keine Seed-Strings, keine ROM-Hashes und keine raw Logs in diese Datei kopieren.
 - Falls `skippedMissingMovesets` sichtbar ist, nur sanitized als vorhanden/nicht vorhanden oder als grobe Count-Kategorie dokumentieren, nicht als raw Log.
 - Wenn ein Befund aus einem Rival-Battle stammt, zuerst Slot und Trainer-Kontext klaeren, bevor er als Rival-Starter-Fehler bewertet wird.
+- Better Movesets ist nicht strikt level-only. Bei auffaelligen Moves wie `Hurricane` auf niedrigem Level zuerst pruefen, ob die finale randomisierte TM-/Tutor-/Egg-/Learnset-Quelle den Move fuer die final randomisierte Species plausibel macht; siehe `01_docs/analysis/upr-fvx-better-movesets-pool-rules.md`.
