@@ -1,3 +1,11 @@
+# Next steps update - CFRU difficulty settings UI split design
+
+- Treat `01_docs/analysis/cfru-difficulty-settings-ui-split-design.md` as the current source-backed map before implementing any CFRU difficulty split.
+- Next implementation should first introduce separate internal settings for `DifficultyMode`, `TrainerLevelScalingMode`, and `TrainerAIProfile`, then move each existing `VAR_GAME_DIFFICULTY` read according to the mapping table.
+- Keep Better Movesets and Trainer Evolution in UPR-FVX Randomizer-only settings; do not wire them into CFRU runtime difficulty vars.
+- Before assigning new CFRU var IDs, audit the CFRU var range and decide whether `VAR_GAME_DIFFICULTY` remains a compatibility alias for `DifficultyMode`.
+- Continue excluding ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, local addresses, `.local.json`, secrets, tokens and `.env` data from commits.
+
 # Next steps update - Final Trainer Better Movesets smoke
 
 - Treat `08_tests/randomizer/trainer-better-movesets-randomized-species-smoke.md` as the current targeted local evidence that the Trainer / Better Movesets / Route 22 regression cluster is clean for the tested profile.
