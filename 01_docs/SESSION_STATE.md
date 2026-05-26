@@ -1,3 +1,13 @@
+# Session update - CFRU settings UI split implementation plan
+
+- Branch: `analysis/cfru-settings-ui-tab-implementation-plan`.
+- Added `01_docs/analysis/cfru-settings-ui-tab-implementation-plan.md` as a source-backed implementation plan for exposing split CFRU difficulty settings in the CFRU option menu.
+- Source-backed UI finding: `src/option_menu.c` currently has two hard-coded pages; page 2 already contains CFRU/project settings and `Game Difficulty`, so the first implementation should extend page 2 instead of adding a third page/tab.
+- Planned UI rows: `Difficulty` backed by `VAR_GAME_DIFFICULTY`, `Level Scaling` backed by `VAR_TRAINER_LEVEL_SCALING_MODE`, and `Trainer AI` backed by `VAR_TRAINER_AI_PROFILE`.
+- Critical implementation rule: split vars use raw `0 = legacy/unset`, but `CloseAndSaveOptionMenu()` currently writes all page-2 vars on close, so implementation must add dirty/original-raw tracking before displaying derived helper values.
+- Recommended order: implement Trainer Level Scaling display/write first, then Trainer AI Profile, then decide whether to reorder Difficulty display from raw order to requested Easy/Normal/Hard/Expert order.
+- Scope is documentation-only. No CFRU/DPE/UPR-FVX code, ROMs, saves, emulator states, builds, screenshots, raw logs, hashes, private paths, local addresses, secrets, tokens, or `.env` data was changed or documented.
+
 # Session update - CFRU difficulty power/rules mode split
 
 - Branch: `feature/cfru-difficulty-power-rules-mode`.
