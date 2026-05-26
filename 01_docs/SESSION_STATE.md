@@ -1,3 +1,13 @@
+# Session update - CFRU trainer AI profile mode split
+
+- Branch: `feature/cfru-trainer-ai-profile-mode`.
+- CFRU branch `feature/cfru-trainer-ai-profile-mode` migrates clear Trainer-AI profile gates to `GetTrainerAIProfile()` and `IsSmartTrainerAIEnabled()`.
+- Migrated paths: `GetAIFlags()` trainer Difficulty AI uplifts/downgrades, `FLAG_SMART_TRAINER_AI` compatibility hook, Easy-profile basic AI kill-rate reduction, trainer anti-switch/anti-cheese prediction gates, trainer Protect-cheese retarget gate, Shift/Semi-Shift trainer switching gate, and trainer weakness-berry AI knowledge gate.
+- Compatibility rule: when `VAR_TRAINER_AI_PROFILE` is unset/`0`, `GetTrainerAIProfile()` derives from `VAR_GAME_DIFFICULTY`, and `IsSmartTrainerAIEnabled()` keeps honoring `FLAG_SMART_TRAINER_AI`.
+- Explicit `TRAINER_AI_PROFILE_VANILLA` keeps trainer data AI flags without Difficulty AI uplifts; explicit Easy/Normal/Hard/Expert affects only migrated Trainer-AI logic; explicit SmartAI or the legacy Smart flag keeps the Smart-Trainer hook active.
+- Intentionally not migrated in this block: Wild AI, Raid AI, Trainer IV/EV/friendship/PP power, Trainer Level Scaling, bag/move restrictions, sleep clause, Bad Thoughts, fog, and UI/menu storage.
+- Scope: CFRU Trainer-AI profile migration plus Workspace pin/docs only. No UPR-FVX, DPE, Tracker, UI tab, ROM, save, build artifact, screenshot, raw log, hash, private path, local address, secret, token, or `.env` data was changed or documented.
+
 # Session update - CFRU trainer level scaling mode split
 
 - Branch: `feature/cfru-trainer-level-scaling-mode`.

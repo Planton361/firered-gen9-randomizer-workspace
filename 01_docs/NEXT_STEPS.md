@@ -1,3 +1,12 @@
+# Next steps update - CFRU trainer AI profile mode split
+
+- Treat CFRU `feature/cfru-trainer-ai-profile-mode` as the implementation branch for separating Trainer AI Profile from the base Difficulty bundle.
+- Next CFRU AI branch should leave Wild/Raid AI on the old Difficulty gates unless a separate Wild/Raid AI profile is explicitly designed.
+- Before UI work, add profile-write plumbing that can set `VAR_TRAINER_AI_PROFILE` explicitly while leaving unset/`0` saves on legacy `VAR_GAME_DIFFICULTY` plus `FLAG_SMART_TRAINER_AI` behavior.
+- Keep explicit `TRAINER_AI_PROFILE_VANILLA` as "trainer data AI flags only", with no Difficulty AI uplifts.
+- Continue keeping Trainer Level Scaling, Trainer Power, bag/move restrictions, Wild/Raid behavior, and battle rules out of Trainer AI Profile migrations.
+- Continue excluding ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, local addresses, `.local.json`, secrets, tokens and `.env` data from commits.
+
 # Next steps update - CFRU trainer level scaling mode split
 
 - Treat CFRU `feature/cfru-trainer-level-scaling-mode` as the implementation branch for separating Trainer Level Scaling from the base Difficulty bundle.
