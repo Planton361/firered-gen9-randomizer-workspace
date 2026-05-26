@@ -1,3 +1,12 @@
+# Next steps update - CFRU trainer AI profile option row
+
+- Treat CFRU `feature/cfru-settings-trainer-ai-profile-option` as the implementation branch for the second split-setting UI row.
+- Verify in a later local gameplay/menu smoke that `Auto` displays for raw `VAR_TRAINER_AI_PROFILE == 0`, and that opening/closing the menu without changing the row keeps raw `0`.
+- Verify explicit `Vanilla`, `Easy`, `Normal`, `Hard`, `Expert`, and `Smart` selections write raw `1..6` without changing `FLAG_SMART_TRAINER_AI`.
+- Keep the existing `Game Difficulty` row unchanged until a separate branch explicitly handles display ordering or labeling.
+- Do not change Trainer Level Scaling behavior from this branch; the only Level Scaling touch should remain page-array accommodation for the additional row.
+- Continue excluding ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, local addresses, `.local.json`, secrets, tokens and `.env` data from commits.
+
 # Next steps update - CFRU level scaling option row
 
 - Treat CFRU `feature/cfru-settings-level-scaling-option` as the implementation branch for the first split-setting UI row.

@@ -1,3 +1,13 @@
+# Session update - CFRU trainer AI profile option row
+
+- Branch: `feature/cfru-settings-trainer-ai-profile-option`.
+- CFRU branch `feature/cfru-settings-trainer-ai-profile-option` adds only a second-page options-menu row for `Trainer AI`.
+- UI values are `Auto`, `Vanilla`, `Easy`, `Normal`, `Hard`, `Expert`, and `Smart`; `Auto` maps to raw `VAR_TRAINER_AI_PROFILE == 0` and keeps legacy Difficulty-/flag-derived Trainer-AI behavior.
+- Added original-raw plus dirty tracking for the new row so opening and closing the menu without changing `Trainer AI` preserves the existing raw value, including legacy raw `0`.
+- The row writes only `VAR_TRAINER_AI_PROFILE` when changed; the existing `Game Difficulty` row, Level Scaling behavior, Smart-AI flag logic, and gameplay logic outside the options menu were left unchanged.
+- Checks: CFRU `diff --check` passed; `arm-none-eabi-gcc -fsyntax-only` passed for `src/option_menu.c`; targeted `rg` checks confirmed the new Trainer-AI var in `option_menu.c` and limited Level Scaling changes to existing row/page-array context.
+- Scope: CFRU options-menu row/text plus Workspace pin/docs only. No UPR-FVX, DPE, Tracker, Difficulty reorder, Trainer-Level-Scaling behavior change, ROM, save, build artifact, screenshot, raw log, hash, private path, local address, secret, token, or `.env` data was changed or documented.
+
 # Session update - CFRU level scaling option row
 
 - Branch: `feature/cfru-settings-level-scaling-option`.
