@@ -1,3 +1,11 @@
+# Next steps update - UPR-FVX Better Movesets source audit
+
+- For the sanitized Graveler Lv7 / Hurricane-style cases, run the private local randomizer workflow with `uprfvx.trainerBetterMovesetsSourceAudit=true` and narrow it with `uprfvx.trainerBetterMovesetsSourceAuditTrainerId` plus `uprfvx.trainerBetterMovesetsSourceAuditSlot`.
+- Expected diagnostic line shape: `trainer=<id> slot=<slot> species=<name> level=<level> chosenMove=<name>(<id>) sources=[...] fallback=<yes|no>`.
+- Interpret `TM_HM` / `TUTOR` with `fallback=yes` as the low-probability fallback branch from Better Movesets, not as proof of stale original trainer moves.
+- If a chosen move reports `[not-in-recorded-pool]`, inspect whether it was written by a later non-Better-Movesets path before changing trainer move selection.
+- Continue excluding ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, local addresses, `.local.json`, secrets, tokens and `.env` data from commits.
+
 # Next steps update - UPR-FVX Better Movesets pool rules
 
 - Treat `01_docs/analysis/upr-fvx-better-movesets-pool-rules.md` as the current source-backed explanation for Trainer Better Movesets pool construction.

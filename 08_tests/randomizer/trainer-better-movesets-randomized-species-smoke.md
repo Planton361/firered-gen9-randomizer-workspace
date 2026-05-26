@@ -154,3 +154,25 @@ UPR-FVX Follow-up-Branch `fix/route22-rival-final-moveslots`:
 - Falls `skippedMissingMovesets` sichtbar ist, nur sanitized als vorhanden/nicht vorhanden oder als grobe Count-Kategorie dokumentieren, nicht als raw Log.
 - Wenn ein Befund aus einem Rival-Battle stammt, zuerst Slot und Trainer-Kontext klaeren, bevor er als Rival-Starter-Fehler bewertet wird.
 - Better Movesets ist nicht strikt level-only. Bei auffaelligen Moves wie `Hurricane` auf niedrigem Level zuerst pruefen, ob die finale randomisierte TM-/Tutor-/Egg-/Learnset-Quelle den Move fuer die final randomisierte Species plausibel macht; siehe `01_docs/analysis/upr-fvx-better-movesets-pool-rules.md`.
+
+## Diagnose: Better-Movesets-Quellen-Audit
+
+UPR-FVX enthaelt einen diagnose-only Audit fuer Trainer Better Movesets. Er ist standardmaessig aus und soll nur lokal fuer auffaellige Trainer/Slots aktiviert werden:
+
+```sh
+./gradlew :random:test --tests '*TrainerMovesetDecisionTest*'
+```
+
+Fuer einen privaten Randomizer-Lauf koennen folgende Java-Systemproperties an den Prozess gegeben werden:
+
+- `uprfvx.trainerBetterMovesetsSourceAudit=true`
+- optional `uprfvx.trainerBetterMovesetsSourceAuditTrainerId=<trainerId>`
+- optional `uprfvx.trainerBetterMovesetsSourceAuditSlot=<zeroBasedSlot>`
+
+Sanitized Ausgabeform:
+
+```text
+[TRAINER-BETTER-MOVESET-SOURCE-AUDIT] trainer=<id> slot=<slot> species=<name> level=<level> chosenMove=<name>(<id>) sources=[LEVEL_UP|PRE_EVOLUTION_LEVEL_UP|TM_HM|TUTOR|EGG] fallback=<yes|no>
+```
+
+Die Ausgabe enthaelt keine ROM-Pfade, Seeds, Hashes, raw Logs oder Adressen. `fallback=yes` bedeutet, dass der Move ueber den niedrigwahrscheinlichen TM-/Tutor-Fallback in den Pool kam, nicht ueber die staerkere Level-vs-Power-Heuristik oder den Low-Power-Zweig.

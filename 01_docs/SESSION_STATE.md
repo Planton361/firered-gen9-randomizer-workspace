@@ -1,3 +1,11 @@
+# Session update - UPR-FVX Better Movesets source audit
+
+- Branch: `diagnosis/upr-fvx-better-movesets-source-audit` / UPR-FVX `diagnosis/upr-fvx-better-movesets-source-audit`.
+- Added a diagnose-only Trainer Better Movesets source audit behind Java system properties.
+- The audit records Better-Movesets pool provenance while the existing pool builder runs, then reports selected moves with trainer id, zero-based slot, species, level, chosen move, source categories, and TM/Tutor fallback yes/no.
+- Source categories currently reported: `LEVEL_UP`, `PRE_EVOLUTION_LEVEL_UP`, `TM_HM`, `TUTOR`, and `EGG`.
+- Scope is diagnostic/test-only. It does not change Better-Movesets scoring, selected move assignment, Trainer Species randomization, CFRU/DPE code, Tracker code, ROMs, saves, builds, screenshots, raw logs, hashes, private paths, local addresses, secrets, tokens, or `.env` data.
+
 # Session update - UPR-FVX Better Movesets pool rules
 
 - Branch: `analysis/upr-fvx-better-movesets-pool-rules`.
