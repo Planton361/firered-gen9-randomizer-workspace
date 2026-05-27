@@ -1,3 +1,13 @@
+# Next steps update - CFRU trainer level scaling gate
+
+- Treat CFRU `feature/cfru-enable-trainer-level-scaling-gate` as the implementation branch that makes the existing split `Trainer Level Scaling` setting reachable at runtime.
+- Re-run the sanitized local runtime smoke with one Lv17 party mon and an early generic Viridian Forest-style Bug Catcher.
+- Expected result with `Level Scaling = Expert`: the trainer should scale visibly above the original Lv9/Lv10 range, roughly around Lv15 for a flat early generic team.
+- Regression check with `Level Scaling = Off`: the same trainer should remain at source levels even if Game Difficulty is Expert.
+- Regression check with `Level Scaling = Auto`: raw `VAR_TRAINER_LEVEL_SCALING_MODE == 0` should continue to derive from `VAR_GAME_DIFFICULTY`.
+- Do not treat the newly defined optional `FLAG_SCALE_WILD_BOSS_LEVEL` as a Wild Level Scaling feature rollout; it is present only because the compiled trainer-scaling code already references it and should remain unset unless a separate wild-boss plan uses it.
+- Continue excluding ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, local addresses, `.local.json`, secrets, tokens and `.env` data from commits.
+
 # Next steps update - CFRU trainer AI profile option row
 
 - Treat CFRU `feature/cfru-settings-trainer-ai-profile-option` as the implementation branch for the second split-setting UI row.

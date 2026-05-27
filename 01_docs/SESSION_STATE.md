@@ -1,3 +1,14 @@
+# Session update - CFRU trainer level scaling gate
+
+- Branch: `feature/cfru-enable-trainer-level-scaling-gate`.
+- CFRU branch `feature/cfru-enable-trainer-level-scaling-gate` enables the compile-time trainer level-scaling path with `SCALED_TRAINERS`.
+- Source-backed cause: `CreateNPCTrainerParty()` and the generic/boss scaling formulas already used `GetTrainerLevelScalingMode()`, but they were behind `#if (defined SCALED_TRAINERS && !defined DEBUG_NO_LEVEL_SCALING)`.
+- Added the missing project-local `FLAG_SCALE_WILD_BOSS_LEVEL` definition because the compiled trainer-scaling path already references that optional flag for wild-boss partner scaling; it remains inactive unless scripts explicitly set it.
+- Added the existing `include/new/exp.h` include to `build_pokemon.c` so the newly compiled hard-level-cap branch sees `GetCurrentLevelCap()`.
+- Compatibility rule: explicit `Trainer Level Scaling = Off` still disables trainer scaling, raw `0` / `Auto` still derives from `VAR_GAME_DIFFICULTY`, and Easy/Normal/Hard/Expert now reach the existing trainer scaling formulas.
+- Checks: CFRU `diff --check` passed; `arm-none-eabi-gcc -fsyntax-only` passed for `src/build_pokemon.c`.
+- Scope: CFRU trainer-level-scaling compile gate plus Workspace docs only. No UPR-FVX, DPE, Tracker, Trainer AI, Better Movesets, UI layout, ROM, save, build artifact, screenshot, raw log, hash, private path, local address, secret, token, or `.env` data was changed or documented.
+
 # Session update - CFRU trainer AI profile option row
 
 - Branch: `feature/cfru-settings-trainer-ai-profile-option`.
