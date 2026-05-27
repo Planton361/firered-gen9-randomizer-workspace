@@ -74,3 +74,9 @@ When `Difficulty = Vanilla` is available, smoke it as a separate battle-profile 
 | D: Vanilla profile | Vanilla | Off | Smart | No Difficulty-owned trainer EV/power, player restriction, fog penalty, raid item-punishment, wild boss scaling, or Expert rules; trainer levels stay unscaled because Level Scaling is explicitly Off; Trainer AI remains active because it is separately set. |
 
 Raw `VAR_GAME_DIFFICULTY == 0` must still behave as legacy Normal. Vanilla should be tested through its explicit raw value only.
+
+## Final Settings Split Reference
+
+The final sanitized local smoke for the full CFRU settings-split UI is recorded in `08_tests/randomizer/cfru-settings-split-final-smoke.md`.
+
+That smoke keeps this trainer-level-scaling result as the Level Scaling evidence and adds the final Page 3 layout, Trainer AI, Game Difficulty Vanilla/Normal/Expert, Hard Cap, Wild Level Scaling separation, and Better Movesets / Trainer Rows baseline interpretation.
