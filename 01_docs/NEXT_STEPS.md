@@ -1,3 +1,13 @@
+# Next steps update - CFRU hard level cap menu option analysis
+
+- Treat `01_docs/analysis/cfru-hard-level-cap-menu-option.md` as the implementation handoff for adding Hard Level Cap to CFRU option-menu Page 3.
+- Recommended later UI row: `Hard Cap = Auto / Off / On`, after `Level Scaling` and `Trainer AI` and before `Cancel`.
+- Before implementation, confirm `0x515C` is still free; if so, use `VAR_HARD_LEVEL_CAP_MODE = 0x515C` with raw `0=Auto`, `1=Off`, `2=On`.
+- Keep `FLAG_HARD_LEVEL_CAP` as the enforcement flag and preserve script-owned behavior while mode raw is `0=Auto`.
+- Do not set `FLAG_KEPT_LEVEL_CAP_ON` from the option menu; source only proves a clear path for challenge tracking, not a safe menu-owned set path.
+- Regression scope for implementation: raw Auto unchanged menu close, explicit Off clears hard cap, explicit On sets hard cap, Page 3 layout remains `Level Scaling / Trainer AI / Hard Cap / Cancel`, and no Trainer Level Scaling behavior changes.
+- Continue excluding ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, local addresses, `.local.json`, secrets, tokens and `.env` data from commits.
+
 # Next steps update - CFRU game difficulty vanilla option analysis
 
 - Treat `01_docs/analysis/cfru-game-difficulty-vanilla-option.md` as the current handoff for deciding whether CFRU `Game Difficulty` needs an explicit `Vanilla` value.
