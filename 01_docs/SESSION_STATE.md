@@ -1,3 +1,11 @@
+# Session update - CFRU game difficulty vanilla option analysis
+
+- Branch: `analysis/cfru-game-difficulty-vanilla-option`.
+- Added `01_docs/analysis/cfru-game-difficulty-vanilla-option.md` as a source-backed analysis of whether `Game Difficulty` needs an explicit `Vanilla` / `Off` value after the Difficulty, Trainer Level Scaling, and Trainer AI split.
+- Finding: current raw `0` is legacy `Normal`, not a separate off mode; Normal avoids many Hard/Expert rules but still is not a strict FireRed-/Ironmon-near no-Difficulty-bundle mode because trainer EV spreads, runtime randomized-trainer evolution, non-Easy raid item punishment, and some wild/raid/fog behavior can still differ.
+- Recommendation: add a later explicit `Difficulty = Vanilla` mode if strict no-Difficulty power/rules are desired; do not reinterpret raw `0`, use a new explicit raw value and map behavior through helpers/predicates.
+- Scope is documentation-only. No CFRU, DPE, UPR-FVX, Tracker, ROM, save, build artifact, screenshot, raw log, hash, private path, local address, secret, token, or `.env` data was changed or documented.
+
 # Session update - CFRU trainer level scaling gate
 
 - Branch: `feature/cfru-enable-trainer-level-scaling-gate`.

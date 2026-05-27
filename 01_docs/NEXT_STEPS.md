@@ -1,3 +1,11 @@
+# Next steps update - CFRU game difficulty vanilla option analysis
+
+- Treat `01_docs/analysis/cfru-game-difficulty-vanilla-option.md` as the current handoff for deciding whether CFRU `Game Difficulty` needs an explicit `Vanilla` value.
+- If the project only needs "CFRU Normal without Hard/Expert rules", keep Variant A and do not add a value.
+- If the project needs FireRed-/Ironmon-near no-Difficulty power/rules while keeping Trainer Level Scaling and Trainer AI separate, implement Variant B later: add `Difficulty = Vanilla` with a new raw value, keep raw `0 = Normal`, and avoid raw-order comparisons.
+- Before implementation, decide how Vanilla should handle trainer EV spreads, runtime randomized-trainer evolution, raid item punishment, fog behavior, wild boss scaling, and wild/raid AI hardening.
+- Continue excluding ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, local addresses, `.local.json`, secrets, tokens and `.env` data from commits.
+
 # Next steps update - CFRU trainer level scaling gate
 
 - Treat CFRU `feature/cfru-enable-trainer-level-scaling-gate` as the implementation branch that makes the existing split `Trainer Level Scaling` setting reachable at runtime.
