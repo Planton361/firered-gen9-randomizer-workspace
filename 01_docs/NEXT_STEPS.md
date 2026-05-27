@@ -1,18 +1,9 @@
-# Next steps update - CFRU game difficulty vanilla mode
+# Next steps update - CFRU game difficulty vanilla option analysis
 
-- Treat CFRU `feature/cfru-game-difficulty-vanilla-option` as the implementation branch for explicit `Difficulty = Vanilla` behavior.
-- Verify in a later local menu/gameplay smoke that the Difficulty row displays `Vanilla / Easy / Normal / Hard / Expert` and writes raw values `4 / 1 / 0 / 2 / 3` respectively.
-- Regression-check that existing saves with raw `VAR_GAME_DIFFICULTY == 0` still behave as legacy CFRU Normal, not Vanilla.
-- For FireRed-/Ironmon-near profiles, use explicit `Difficulty = Vanilla`, `Level Scaling = Off`, and a separately chosen `Trainer AI` profile; `Auto` split settings intentionally keep their legacy Difficulty-derived compatibility behavior.
-- Review any remaining base CFRU field-rule semantics before claiming full vanilla parity; this branch removes the source-backed Difficulty-owned bonuses, restrictions, fog penalty, and hardening paths in the current split.
-- Continue excluding ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, local addresses, `.local.json`, secrets, tokens and `.env` data from commits.
-
-# Next steps update - CFRU difficulty split final smoke
-
-- Treat `08_tests/randomizer/cfru-trainer-level-scaling-runtime-smoke-plan.md` and `08_tests/randomizer/cfru-smart-trainer-ai-smoke-plan.md` as the current sanitized local evidence for the CFRU Difficulty Split settings.
-- Current targeted status is `PASS_TARGETED_LOCAL_SMOKE_WITH_CAVEATS`: Page 3 is clean, Trainer Level Scaling settings have visible runtime effect, Trainer AI is separately active, and Game Difficulty remains separately effective.
-- Do not reopen Better Movesets or Trainer Row write/reload work from this smoke; those were validated earlier and are only baseline context here.
-- Remaining caveat: this is targeted local smoke, not a Full-Playthrough, full route/trainer matrix, statistical AI evaluation, or broad UI regression suite.
+- Treat `01_docs/analysis/cfru-game-difficulty-vanilla-option.md` as the current handoff for deciding whether CFRU `Game Difficulty` needs an explicit `Vanilla` value.
+- If the project only needs "CFRU Normal without Hard/Expert rules", keep Variant A and do not add a value.
+- If the project needs FireRed-/Ironmon-near no-Difficulty power/rules while keeping Trainer Level Scaling and Trainer AI separate, implement Variant B later: add `Difficulty = Vanilla` with a new raw value, keep raw `0 = Normal`, and avoid raw-order comparisons.
+- Before implementation, decide how Vanilla should handle trainer EV spreads, runtime randomized-trainer evolution, raid item punishment, fog behavior, wild boss scaling, and wild/raid AI hardening.
 - Continue excluding ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, local addresses, `.local.json`, secrets, tokens and `.env` data from commits.
 
 # Next steps update - CFRU trainer level scaling gate
