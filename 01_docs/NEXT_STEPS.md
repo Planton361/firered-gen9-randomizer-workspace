@@ -1,3 +1,13 @@
+# Next steps update - CFRU hard level cap option row
+
+- Treat CFRU `feature/cfru-settings-hard-level-cap-option` as the implementation branch for exposing Hard Level Cap on option-menu Page 3.
+- Verify in a later local menu smoke that Page 3 shows `Level Scaling / Trainer AI / Hard Cap / Cancel`.
+- Verify raw `VAR_HARD_LEVEL_CAP_MODE == 0` displays `Auto` and opening/closing the menu without changing the row leaves raw `0` and `FLAG_HARD_LEVEL_CAP` untouched.
+- Verify explicit `Off` writes raw `1` and clears `FLAG_HARD_LEVEL_CAP`; explicit `On` writes raw `2` and sets `FLAG_HARD_LEVEL_CAP`.
+- Confirm `FLAG_KEPT_LEVEL_CAP_ON` remains untouched by menu interactions and continues to be only challenge-tracking state.
+- Do not mix any follow-up with EXP, Rare Candy, Daycare, DexNav, Wild, or Trainer Level Scaling enforcement changes unless a separate source-backed implementation branch is requested.
+- Continue excluding ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, local addresses, `.local.json`, secrets, tokens and `.env` data from commits.
+
 # Next steps update - CFRU hard level cap menu option analysis
 
 - Treat `01_docs/analysis/cfru-hard-level-cap-menu-option.md` as the implementation handoff for adding Hard Level Cap to CFRU option-menu Page 3.

@@ -1,3 +1,12 @@
+# Session update - CFRU hard level cap option row
+
+- Branch: `feature/cfru-settings-hard-level-cap-option`.
+- CFRU branch `feature/cfru-settings-hard-level-cap-option` adds a Page 3 option-menu row for `Hard Cap`.
+- Added `VAR_HARD_LEVEL_CAP_MODE = 0x515C` because that var ID was still free in the audited CFRU config range.
+- UI values are `Auto`, `Off`, and `On`; raw `0=Auto` preserves legacy/script-owned `FLAG_HARD_LEVEL_CAP` state, raw `1=Off` clears `FLAG_HARD_LEVEL_CAP`, and raw `2=On` sets `FLAG_HARD_LEVEL_CAP`.
+- `FLAG_KEPT_LEVEL_CAP_ON` remains untouched by the menu and is not used as menu state.
+- Scope: CFRU option-menu var/flag plumbing plus Workspace pin/docs only. No EXP, Rare Candy, Daycare, DexNav, Wild, Trainer Level Scaling, Difficulty, Trainer AI, UPR-FVX, DPE, Tracker, ROM, save, build artifact, screenshot, raw log, hash, private path, local address, secret, token, or `.env` data was changed or documented.
+
 # Session update - CFRU hard level cap menu option analysis
 
 - Branch: `analysis/cfru-hard-level-cap-menu-option`.
