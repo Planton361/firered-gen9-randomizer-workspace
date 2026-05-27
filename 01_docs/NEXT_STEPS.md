@@ -1,3 +1,12 @@
+# Next steps update - CFRU settings split final smoke
+
+- Treat `08_tests/randomizer/cfru-settings-split-final-smoke.md` as the current sanitized final local smoke record for the CFRU settings-split UI.
+- Status: `PASS_TARGETED_LOCAL_SMOKE_WITH_CAVEATS`.
+- If a later regression appears, isolate it by setting owner first: Game Difficulty, Trainer Level Scaling, Trainer AI, Hard Cap, Wild Level Scaling, or UPR-FVX Randomizer-only trainer settings.
+- Optional future coverage can add a broader route/trainer matrix, a hard-cap boundary matrix, or a Trainer-AI quality evaluation, but this smoke should not be upgraded into a full-playthrough claim.
+- Keep Better Movesets and Trainer Rows treated as UPR-FVX Randomizer-only baseline unless a separate source-backed task reopens them.
+- Continue excluding ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, local addresses, `.local.json`, secrets, tokens and `.env` data from commits.
+
 # Next steps update - CFRU hard level cap option row
 
 - Treat CFRU `feature/cfru-settings-hard-level-cap-option` as the implementation branch for exposing Hard Level Cap on option-menu Page 3.

@@ -1,3 +1,13 @@
+# Session update - CFRU settings split final smoke
+
+- Branch: `test/cfru-settings-split-final-smoke`.
+- Added `08_tests/randomizer/cfru-settings-split-final-smoke.md` as the sanitized final local smoke record for the CFRU settings-split UI.
+- Result: `PASS_TARGETED_LOCAL_SMOKE_WITH_CAVEATS`.
+- Page 3 layout is documented as clean with `Level Scaling`, `Trainer AI`, `Hard Cap`, and `Cancel`.
+- Runtime smoke interpretation: Level Scaling works per setting, Trainer AI works separately, `Game Difficulty` `Vanilla` / `Normal` / `Expert` are separately usable, Hard Cap `Auto` / `Off` / `On` is visible and plausibly active, and Wild Level Scaling remains separate from Game Difficulty and Trainer Level Scaling.
+- Better Movesets / Trainer Rows remain a previously validated UPR-FVX baseline and were not reopened in this final CFRU UI smoke.
+- Scope is documentation-only. No CFRU, DPE, UPR-FVX, Tracker, ROM, save, build artifact, screenshot, raw log, hash, private path, local address, secret, token, or `.env` data was changed or documented.
+
 # Session update - CFRU hard level cap option row
 
 - Branch: `feature/cfru-settings-hard-level-cap-option`.

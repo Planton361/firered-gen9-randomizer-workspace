@@ -177,6 +177,11 @@ Interpretation:
 - This is not a statistical AI-quality evaluation and does not claim exact equivalence to any external Ironmon/NatDex Smart-AI profile.
 - Keep using sanitized pass/fail observations only; do not commit ROMs, saves, screenshots, raw logs, hashes, private paths, or build artifacts.
 
+Final settings split reference:
+
+- The full CFRU settings-split UI smoke is recorded in `08_tests/randomizer/cfru-settings-split-final-smoke.md`.
+- That final smoke keeps this plan as the Trainer AI evidence and adds Page 3 layout, Trainer Level Scaling, Game Difficulty Vanilla/Normal/Expert, Hard Cap, Wild Level Scaling separation, and Better Movesets / Trainer Rows baseline interpretation.
+
 ## Open Follow-ups
 
 - Trainer-/Better-Movesets-/Route-22-Baseline ist fuer den aktuellen UPR-FVX-Stand targeted-smoke-clean dokumentiert: Randomizer-Save ohne FreedSpace-Overlap-Crash, Write/Reload-Audit durchlaufend, Route 22 weak Rival Slot `1` korrekt, Slot `0` randomisierbar, keine fuehrenden leeren Move-Slots, und Graveler/Hurricane als Tutor-Fallback erklaert.
