@@ -1,3 +1,11 @@
+# Next steps update - CFRU difficulty split final smoke
+
+- Treat `08_tests/randomizer/cfru-trainer-level-scaling-runtime-smoke-plan.md` and `08_tests/randomizer/cfru-smart-trainer-ai-smoke-plan.md` as the current sanitized local evidence for the CFRU Difficulty Split settings.
+- Current targeted status is `PASS_TARGETED_LOCAL_SMOKE_WITH_CAVEATS`: Page 3 is clean, Trainer Level Scaling settings have visible runtime effect, Trainer AI is separately active, and Game Difficulty remains separately effective.
+- Do not reopen Better Movesets or Trainer Row write/reload work from this smoke; those were validated earlier and are only baseline context here.
+- Remaining caveat: this is targeted local smoke, not a Full-Playthrough, full route/trainer matrix, statistical AI evaluation, or broad UI regression suite.
+- Continue excluding ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, local addresses, `.local.json`, secrets, tokens and `.env` data from commits.
+
 # Next steps update - CFRU trainer level scaling gate
 
 - Treat CFRU `feature/cfru-enable-trainer-level-scaling-gate` as the implementation branch that makes the existing split `Trainer Level Scaling` setting reachable at runtime.

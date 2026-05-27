@@ -159,6 +159,24 @@ Do not commit:
 - tool binaries
 - secrets, tokens or `.env` files
 
+## Final Split-Settings Smoke Result
+
+Status: `PASS_TARGETED_LOCAL_SMOKE_WITH_CAVEATS`
+
+Sanitized local observation for the current Page 3 split-settings UI:
+
+- Page 3 shows `Trainer AI` cleanly alongside `Level Scaling`.
+- Trainer AI behavior is separately controllable from `Game Difficulty`.
+- Trainer AI behavior is separately controllable from Trainer Level Scaling.
+- `Game Difficulty` still controls Difficulty-owned rules independently, including the Expert bag restriction.
+- The local smoke did not require changing Better Movesets, Trainer Rows, UPR-FVX, DPE, Tracker, or UI layout.
+
+Interpretation:
+
+- The current split-setting wiring is sufficient for targeted local validation that Trainer AI can be exercised separately from Difficulty and Level Scaling.
+- This is not a statistical AI-quality evaluation and does not claim exact equivalence to any external Ironmon/NatDex Smart-AI profile.
+- Keep using sanitized pass/fail observations only; do not commit ROMs, saves, screenshots, raw logs, hashes, private paths, or build artifacts.
+
 ## Open Follow-ups
 
 - Trainer-/Better-Movesets-/Route-22-Baseline ist fuer den aktuellen UPR-FVX-Stand targeted-smoke-clean dokumentiert: Randomizer-Save ohne FreedSpace-Overlap-Crash, Write/Reload-Audit durchlaufend, Route 22 weak Rival Slot `1` korrekt, Slot `0` randomisierbar, keine fuehrenden leeren Move-Slots, und Graveler/Hurricane als Tutor-Fallback erklaert.

@@ -1,3 +1,11 @@
+# Session update - CFRU difficulty split final smoke
+
+- Branch: `test/cfru-difficulty-split-final-smoke`.
+- Documented the sanitized local CFRU Difficulty Split settings smoke as `PASS_TARGETED_LOCAL_SMOKE_WITH_CAVEATS`.
+- Local smoke result: Page 3 shows `Level Scaling` and `Trainer AI` cleanly; `Level Scaling` Off/Easy/Normal/Hard/Expert visibly changes trainer levels by setting; `Trainer AI` acts separately; `Game Difficulty` remains separate and still controls Difficulty-owned behavior such as the Expert bag restriction.
+- Better Movesets and Trainer Rows were treated as already validated baseline, so this branch does not reopen UPR-FVX trainer row or Better Movesets behavior.
+- Scope is documentation-only. No CFRU, UPR-FVX, DPE, Tracker, UI, ROM, save, build artifact, screenshot, raw log, hash, private path, local address, secret, token, or `.env` data was changed or documented.
+
 # Session update - CFRU trainer level scaling gate
 
 - Branch: `feature/cfru-enable-trainer-level-scaling-gate`.
