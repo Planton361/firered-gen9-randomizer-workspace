@@ -41,3 +41,26 @@ Do not use this smoke to change or validate:
 - Wild Level Scaling,
 - UI page layout,
 - UPR-FVX, DPE, or Tracker behavior.
+
+## Final Local Smoke Result
+
+Status: `PASS_TARGETED_LOCAL_SMOKE_WITH_CAVEATS`
+
+Sanitized local observation for the current CFRU difficulty-split settings:
+
+- Page 3 displays `Level Scaling` and `Trainer AI` cleanly.
+- `Level Scaling` values `Off`, `Easy`, `Normal`, `Hard`, and `Expert` visibly change trainer levels according to the selected setting.
+- `Level Scaling = Off` keeps trainer scaling disabled rather than acting like Easy Difficulty.
+- Explicit scaling modes no longer require changing `Game Difficulty`.
+- `Game Difficulty` remains separate and still controls Difficulty-owned rules, including the Expert bag restriction.
+- `Trainer AI` remains separately selectable and did not need Level Scaling or Game Difficulty changes to show runtime effect.
+
+Interpretation:
+
+- The `SCALED_TRAINERS` gate is active for trainer runtime scaling.
+- The split `VAR_TRAINER_LEVEL_SCALING_MODE` setting is reaching trainer battle construction.
+- The smoke is targeted local evidence, not a Full-Playthrough or full route/trainer matrix.
+
+Previously validated baseline:
+
+- Better Movesets and trainer row write/reload behavior had already been validated separately, so this smoke was focused on CFRU split-setting runtime behavior rather than reopening Trainer Rows or Better Movesets.
