@@ -1,3 +1,12 @@
+# Session update - CFRU game difficulty vanilla mode
+
+- Branch: `feature/cfru-game-difficulty-vanilla-option`.
+- CFRU branch `feature/cfru-game-difficulty-vanilla-option` adds an explicit `Difficulty = Vanilla` mode without reinterpreting legacy raw `VAR_GAME_DIFFICULTY == 0`.
+- Raw mapping is now `0=Normal`, `1=Easy`, `2=Hard`, `3=Expert`, `4=Vanilla`; `GetGameDifficultyMode()` maps raw `4` to an internal `DIFFICULTY_MODE_VANILLA` and invalid raw values still fall back to legacy Normal.
+- The option-menu Difficulty row displays `Vanilla / Easy / Normal / Hard / Expert` and writes explicit raw values through conversion helpers. Trainer Level Scaling and Trainer AI rows were not changed.
+- Difficulty power/rule paths now use explicit helper predicates so Vanilla does not accidentally satisfy Hard/Expert numeric comparisons and does not inherit Normal-or-harder EV, runtime randomized-trainer evolution, raid item-punishment, fog penalty, or wild boss scaling behavior.
+- Scope: CFRU Difficulty/option-menu plumbing plus Workspace pin/docs only. No UPR-FVX, DPE, Tracker, Trainer Level Scaling row, Trainer AI row, ROM, save, build artifact, screenshot, raw log, hash, private path, local address, secret, token, or `.env` data was changed or documented.
+
 # Session update - CFRU difficulty split final smoke
 
 - Branch: `test/cfru-difficulty-split-final-smoke`.

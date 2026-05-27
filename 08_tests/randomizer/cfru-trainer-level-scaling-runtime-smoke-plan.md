@@ -64,3 +64,13 @@ Interpretation:
 Previously validated baseline:
 
 - Better Movesets and trainer row write/reload behavior had already been validated separately, so this smoke was focused on CFRU split-setting runtime behavior rather than reopening Trainer Rows or Better Movesets.
+
+## Vanilla Difficulty Follow-up
+
+When `Difficulty = Vanilla` is available, smoke it as a separate battle-profile case rather than as a replacement for legacy Normal:
+
+| Case | Difficulty | Level Scaling | Trainer AI | Expected boundary |
+| --- | --- | --- | --- | --- |
+| D: Vanilla profile | Vanilla | Off | Smart | No Difficulty-owned trainer EV/power, player restriction, fog penalty, raid item-punishment, wild boss scaling, or Expert rules; trainer levels stay unscaled because Level Scaling is explicitly Off; Trainer AI remains active because it is separately set. |
+
+Raw `VAR_GAME_DIFFICULTY == 0` must still behave as legacy Normal. Vanilla should be tested through its explicit raw value only.
