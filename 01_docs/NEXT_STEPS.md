@@ -1,3 +1,12 @@
+# Next steps update - CFRU game difficulty vanilla mode
+
+- Treat CFRU `feature/cfru-game-difficulty-vanilla-option` as the implementation branch for explicit `Difficulty = Vanilla` behavior.
+- Verify in a later local menu/gameplay smoke that the Difficulty row displays `Vanilla / Easy / Normal / Hard / Expert` and writes raw values `4 / 1 / 0 / 2 / 3` respectively.
+- Regression-check that existing saves with raw `VAR_GAME_DIFFICULTY == 0` still behave as legacy CFRU Normal, not Vanilla.
+- For FireRed-/Ironmon-near profiles, use explicit `Difficulty = Vanilla`, `Level Scaling = Off`, and a separately chosen `Trainer AI` profile; `Auto` split settings intentionally keep their legacy Difficulty-derived compatibility behavior.
+- Review any remaining base CFRU field-rule semantics before claiming full vanilla parity; this branch removes the source-backed Difficulty-owned bonuses, restrictions, fog penalty, and hardening paths in the current split.
+- Continue excluding ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, local addresses, `.local.json`, secrets, tokens and `.env` data from commits.
+
 # Next steps update - CFRU difficulty split final smoke
 
 - Treat `08_tests/randomizer/cfru-trainer-level-scaling-runtime-smoke-plan.md` and `08_tests/randomizer/cfru-smart-trainer-ai-smoke-plan.md` as the current sanitized local evidence for the CFRU Difficulty Split settings.
