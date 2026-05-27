@@ -1,3 +1,12 @@
+# Session update - CFRU hard level cap menu option analysis
+
+- Branch: `analysis/cfru-hard-level-cap-menu-option`.
+- Added `01_docs/analysis/cfru-hard-level-cap-menu-option.md` as a source-backed documentation-only analysis for adding Hard Level Cap as the final practical CFRU option-menu Page 3 row.
+- Source finding: `FLAG_HARD_LEVEL_CAP` controls enforcement across EXP gain, Rare Candy, Daycare, wild encounters, DexNav, and catchable wild-boss caps; `FLAG_KEPT_LEVEL_CAP_ON` is only cleared at battle start when a party mon exceeds cap and should not be used as menu state.
+- Cap calculation is badge-count based in `GetCurrentLevelCap()`: before Brock the cap is `15`, then `20/25/30/35/40/45/50`, and after all eight badges `100`.
+- Recommendation: later implementation should use `Hard Cap = Auto / Off / On` on Page 3, backed by a new `VAR_HARD_LEVEL_CAP_MODE = 0x515C` if still free, while keeping enforcement on `FLAG_HARD_LEVEL_CAP` and leaving `FLAG_KEPT_LEVEL_CAP_ON` untouched.
+- Scope is documentation-only. No CFRU, DPE, UPR-FVX, Tracker, ROM, save, build artifact, screenshot, raw log, hash, private path, local address, secret, token, or `.env` data was changed or documented.
+
 # Session update - CFRU game difficulty vanilla option analysis
 
 - Branch: `analysis/cfru-game-difficulty-vanilla-option`.
