@@ -1,3 +1,13 @@
+# Next steps update - CFRU Randomizer baseline config local smoke
+
+- Treat `08_tests/randomizer/cfru-randomizer-baseline-config.md` as the current sanitized local smoke record for CFRU Randomizer Baseline Config.
+- Status: `PASS_TARGETED_LOCAL_BUILD_BOOT_SETTINGS_SMOKE_WITH_CAVEATS`.
+- Keep the current result limited to local clean rebuild, mGBA boot, and targeted in-game settings behavior.
+- Follow-up evidence, if needed, should separately verify the currently inconclusive rows: Oak tutorial removed, poison overworld faint, SwSh catch-level malus off, old/flat EXP behavior, and intro controls guide skipped.
+- Keep Nuzlocke and Wild Prebattle toggle claims scoped to the reported targeted settings smoke unless a later sanitized gameplay matrix broadens them.
+- Do not promote this to full-playthrough, BizHawk, Ironmon Tracker or P1 support.
+- Continue excluding ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, local addresses, `.local.json`, secrets, tokens and `.env` data from commits.
+
 # Next steps update - CFRU Randomizer baseline config
 
 - Treat CFRU commit `53273184bab06f91cdc3ad6e0e5af4a8ba41591a` on branch `feature/cfru-randomizer-baseline-config` as the current Randomizer-/Ironmon-near baseline config candidate.

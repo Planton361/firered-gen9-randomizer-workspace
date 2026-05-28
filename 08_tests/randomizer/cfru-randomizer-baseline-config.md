@@ -60,8 +60,35 @@ The menu therefore owns only `FLAG_ENABLE_WILD_PMN_PREBATTLE_SCREEN`.
 - CFRU syntax-only:
   - `arm-none-eabi-gcc -fsyntax-only src/option_menu.c`: pass.
 
+## Sanitized local build / mGBA smoke
+
+Result: `PASS_TARGETED_LOCAL_BUILD_BOOT_SETTINGS_SMOKE_WITH_CAVEATS`.
+
+Local reported evidence:
+
+- CFRU commit `53273184bab06f91cdc3ad6e0e5af4a8ba41591a` was synchronized into the local Mac build workspace.
+- A local clean rebuild completed successfully.
+- `wav2agb` and `mid2agb` were found through local `local-bin` wrappers.
+- The local ROM candidate booted in mGBA.
+- The new/adjusted in-game settings worked in the local smoke.
+
+No ROMs, saves, emulator states, screenshots, raw logs, hashes, build outputs, tool binaries, private paths, tokens, secrets or `.env` data are included.
+
+| Area | Result | Notes |
+| --- | --- | --- |
+| Build / boot | Pass | Local clean rebuild succeeded and the local ROM candidate booted in mGBA. |
+| Options / settings | Pass | New/adjusted settings were reported working in game. |
+| Oak Tutorial removed | Inconclusive | Not separately documented in this sanitized report. |
+| Poison overworld faint | Inconclusive | Not separately documented in this sanitized report. |
+| SwSh catch-level malus off | Inconclusive | Not separately documented in this sanitized report. |
+| Old / flat EXP | Inconclusive | Not separately documented in this sanitized report. |
+| Intro Controls Guide skipped | Inconclusive | Not separately documented in this sanitized report. |
+| Nuzlocke toggle | Pass | Covered by the reported in-game settings smoke. |
+| Wild Prebattle toggle | Pass | Covered by the reported in-game settings smoke. |
+
 ## Caveats
 
-- No local ROM build, emulator boot, mGBA smoke, BizHawk validation, Ironmon Tracker validation, full-playthrough coverage or P1 support claim is included.
+- This is a targeted local build/boot/settings smoke only, not a full-playthrough result.
+- No BizHawk validation, Ironmon Tracker validation or P1 support claim is included.
 - Turning `Nuzlocke` off only clears `FLAG_NUZLOCKE`; it does not unwind any already-created Nuzlocke side state such as caught-area tracking or no-catching flags.
 - `Wild Prebattle` controls the existing enable flag only; no gameplay logic, encounter tables, randomizer behavior or prebattle script logic was changed.

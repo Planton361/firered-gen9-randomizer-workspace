@@ -1,3 +1,14 @@
+# Tool Manifest Update - 2026-05-29 - CFRU Randomizer baseline config local smoke
+
+- Workspace branch: `feature/cfru-randomizer-baseline-config`.
+- Evidence file: `08_tests/randomizer/cfru-randomizer-baseline-config.md`.
+- Scope: sanitized local build / mGBA smoke result for the existing CFRU Randomizer Baseline Config candidate.
+- Status impact: `PASS_TARGETED_LOCAL_BUILD_BOOT_SETTINGS_SMOKE_WITH_CAVEATS`.
+- Local reported evidence: CFRU commit `53273184bab06f91cdc3ad6e0e5af4a8ba41591a` was synchronized into the local Mac build workspace, a local clean rebuild completed, `wav2agb` / `mid2agb` were resolved through local `local-bin` wrappers, the local ROM candidate booted in mGBA, and the new/adjusted in-game settings worked.
+- Smoke matrix: Build/Boot pass, Options/Settings pass, Nuzlocke Toggle pass, Wild Prebattle Toggle pass; Oak Tutorial removed, Poison Overworld Faint, SwSh Catch-Level-Malus off, Old/Flat EXP, and Intro Controls Guide skipped remain inconclusive pending separate sanitized evidence.
+- Boundary: documentation-only update; no CFRU code, UPR-FVX, DPE, submodule pin, full-playthrough, BizHawk, Ironmon Tracker or P1 support claim is included.
+- Safety: no ROM, save, emulator state, build artifact, tool binary, screenshot, raw log, ROM hash, private path, token, secret or `.env` data is included.
+
 # Tool Manifest Update - 2026-05-29 - CFRU Randomizer baseline config
 
 - Workspace branch: `feature/cfru-randomizer-baseline-config`.
