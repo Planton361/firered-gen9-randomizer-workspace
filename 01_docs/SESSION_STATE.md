@@ -1,3 +1,12 @@
+# Session update - Trainer AI Smokescreen behavior analysis
+
+- Branch: `analysis/trainer-ai-smokescreen-behavior`.
+- Added `01_docs/analysis/trainer-ai-smokescreen-behavior.md` as a source-backed documentation-only analysis for the Rival `Tackle` + `Smokescreen` Trainer-AI observation.
+- Sanitized observed case: Rival trainer battle, opposing Pokemon had `Tackle` + `Smokescreen`, and `Smokescreen` was repeatedly selected until the player's Accuracy reached minimum.
+- Source-backed interpretation: this is plausible but suspicious. CFRU `CHECK_BAD_MOVE` only rejects Accuracy-down when Accuracy cannot be lowered or the move is blocked, while `CHECK_GOOD_MOVE` can actively boost Accuracy-down through positive utility scoring. Current Smart Trainer AI v2 only ORs `CHECK_BAD_MOVE | SEMI_SMART`, but existing trainer data with `CHECK_GOOD_MOVE` can still preserve very-smart behavior.
+- Documented current Trainer AI option interpretation for `Auto`, `Vanilla`, `Easy`, `Normal`, `Hard`, `Expert`, and `Smart`, plus a local mGBA A/B smoke plan.
+- Scope is documentation-only. No CFRU, DPE, UPR-FVX, Tracker, ROM, save, emulator state, build artifact, screenshot, raw log, hash, private path, local address, secret, token, `.env` data, external repo or submodule pin was changed or documented.
+
 # Session update - MacBook rebuild success status sync
 
 - Branch: `docs/macbook-rebuild-success`.

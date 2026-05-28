@@ -1,3 +1,12 @@
+# Tool Manifest Update - 2026-05-28 - Trainer AI Smokescreen behavior analysis
+
+- Workspace branch: `analysis/trainer-ai-smokescreen-behavior`.
+- Added source-backed analysis file `01_docs/analysis/trainer-ai-smokescreen-behavior.md`.
+- Scope: documentation-only review of current CFRU Trainer AI profile plumbing, Smart Trainer AI v2 behavior, Accuracy-down scoring, and NatDex/Ironmon Smart-AI reference semantics.
+- Sanitized local observation documented: Rival trainer battle with an opposing Pokemon that had `Tackle` + `Smokescreen`; `Smokescreen` was repeatedly selected until player Accuracy reached minimum.
+- Status impact: behavior is classified as plausible but suspicious pending local mGBA A/B smoke across Trainer AI `Auto`, `Vanilla`, `Normal`, `Hard`, `Expert`, and `Smart`.
+- Safety: no CFRU, DPE, UPR-FVX or Tracker code change; no ROM, save, emulator state, build artifact, tool binary, screenshot, raw log, hash, private path, token, secret, `.env` data, external repo change or submodule repin is included.
+
 # Tool Manifest Update - 2026-05-28 - MacBook rebuild success
 
 - Workspace branch: `docs/macbook-rebuild-success`.

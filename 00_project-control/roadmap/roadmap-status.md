@@ -1,3 +1,12 @@
+# Roadmap status update - Trainer AI Smokescreen behavior analysis
+
+- Added `01_docs/analysis/trainer-ai-smokescreen-behavior.md` as the current source-backed analysis for the Rival `Tackle` + `Smokescreen` Trainer-AI observation.
+- Status impact: no code change and no support promotion. The observed repeated Smokescreen-to-minimum behavior is documented as plausible but suspicious pending local A/B smoke.
+- Source-backed basis: current Smart Trainer AI v2 ORs `AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_SEMI_SMART`; `CHECK_BAD_MOVE` does not reject valid Accuracy-down moves before minimum; `CHECK_GOOD_MOVE` can actively boost Accuracy-down through CFRU positive utility scoring; existing trainer data with `CHECK_GOOD_MOVE` can still preserve very-smart behavior under several profiles.
+- Next roadmap step: run a local mGBA A/B smoke from the same Rival battle state across Trainer AI `Auto`, `Vanilla`, `Normal`, `Hard`, `Expert`, and `Smart`, recording only sanitized turn summaries.
+- Caveat: single observed battle only, not a statistical AI-quality claim, not a CFRU/UPR-FVX bug confirmation, not BizHawk/Tracker validation and not P1 promotion.
+- No ROM paths, ROM hashes, CRCs, full logs, screenshots, saves, emulator states, output ROMs, build artifacts, tool binaries, private paths, workspace-side UPR-FVX/CFRU/DPE code changes, external repo changes, submodule repins or P1 promotion are added.
+
 # Roadmap status update - MacBook rebuild success
 
 - Recorded the sanitized MacBook rebuild status in `01_docs/setup/macbook-rebuild-success.md`.

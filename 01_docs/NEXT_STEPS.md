@@ -1,3 +1,12 @@
+# Next steps update - Trainer AI Smokescreen behavior analysis
+
+- Treat `01_docs/analysis/trainer-ai-smokescreen-behavior.md` as the current source-backed handoff for the Rival `Tackle` + `Smokescreen` behavior.
+- Run a local mGBA A/B smoke from the same pre-Rival battle state, comparing Trainer AI `Auto`, `Vanilla`, `Normal`, `Hard`, `Expert`, and `Smart`; add `Easy` only if a weaker-AI comparison is useful.
+- Record only sanitized turn summaries: AI option, turn number, enemy move selected, player Accuracy stage bucket, whether Tackle looked meaningful or KO-relevant, and result category.
+- Classify results as plausible, suspicious, clear bug, or design mismatch before proposing any CFRU scoring change.
+- Do not change CFRU or UPR-FVX code from the single observation. If `Smart` v2 still overuses Smokescreen in a simple damage-vs-Accuracy-drop setup, design a narrow v3 proposal around repeated Accuracy-down dampening or damage-over-neutral-utility tie-breaks.
+- Continue excluding ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, local addresses, `.local.json`, secrets, tokens and `.env` data from commits.
+
 # Next steps update - MacBook rebuild success status sync
 
 - Treat `01_docs/setup/macbook-rebuild-success.md` as the current sanitized local MacBook rebuild status.
