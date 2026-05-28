@@ -1,3 +1,17 @@
+# Next steps update - CFRU Randomizer baseline config
+
+- Treat CFRU commit `53273184bab06f91cdc3ad6e0e5af4a8ba41591a` on branch `feature/cfru-randomizer-baseline-config` as the current Randomizer-/Ironmon-near baseline config candidate.
+- Treat `08_tests/randomizer/cfru-randomizer-baseline-config.md` as the source-backed implementation handoff.
+- Run a local clean CFRU rebuild from this commit.
+- Run a targeted sanitized menu smoke: Page 3 should show `Level Scaling`, `Trainer AI`, `Hard Cap`, `Nuzlocke`, `Wild Prebattle`, and `Cancel`.
+- Verify opening and closing the menu without changing `Nuzlocke` or `Wild Prebattle` leaves the existing flags unchanged.
+- Verify explicit `Nuzlocke Off/On` only clears/sets `FLAG_NUZLOCKE`.
+- Verify explicit `Wild Prebattle Off/On` only clears/sets `FLAG_ENABLE_WILD_PMN_PREBATTLE_SCREEN`.
+- Run a small sanitized gameplay smoke for the compile-time baseline: Oak tutorial removed, poison can faint in overworld, no SwSh higher-level catch malus, old/flat EXP behavior, and skipped intro controls guide.
+- Keep `FLAG_WILD_POKEMON_PREBATTLE_SCREEN` treated as transient encounter/window state, not menu-owned configuration.
+- Do not promote this to full-playthrough, BizHawk, Ironmon Tracker or P1 support without separate evidence.
+- Continue excluding ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, local addresses, `.local.json`, secrets, tokens and `.env` data from commits.
+
 # Next steps update - Trainer AI Policy v3 local smoke
 
 - Treat `08_tests/randomizer/trainer-ai-policy-v3.md` as the current sanitized local smoke record for Trainer-AI-Policy v3.

@@ -1,3 +1,15 @@
+# Roadmap status update - CFRU Randomizer baseline config
+
+- Implemented CFRU Randomizer-/Ironmon-near baseline config on CFRU branch `feature/cfru-randomizer-baseline-config`.
+- Workspace now pins CFRU baseline commit `53273184bab06f91cdc3ad6e0e5af4a8ba41591a` from base `74310deeb62c7f73ba6c7b11f921418617a9a740`.
+- Status impact: Oak tutorial is compiled out, overworld poison can faint Pokemon, SwSh catch level malus is compiled out, old EXP split and flat EXP formula are enabled, and the intro controls guide is skipped.
+- `IgnoreWildPokemon` remains compiled because source search shows runtime screen generation is controlled by `FLAG_ENABLE_WILD_PMN_PREBATTLE_SCREEN`.
+- Added source-backed Page 3 runtime toggles for `Nuzlocke = Off/On` and `Wild Prebattle = Off/On`.
+- `Nuzlocke` only clears/sets `FLAG_NUZLOCKE`; `Wild Prebattle` only clears/sets `FLAG_ENABLE_WILD_PMN_PREBATTLE_SCREEN`; no gameplay logic or encounter table behavior was changed.
+- Added `08_tests/randomizer/cfru-randomizer-baseline-config.md` as the implementation and local smoke handoff.
+- Caveat: source/syntax checked only; no local ROM build, emulator boot, BizHawk/Tracker validation, full-playthrough coverage or P1 promotion is claimed.
+- No ROM paths, ROM hashes, CRCs, full logs, screenshots, saves, emulator states, output ROMs, build artifacts, tool binaries, private paths, UPR-FVX/DPE changes or P1 promotion are added.
+
 # Roadmap status update - Trainer AI Policy v3 local smoke
 
 - Documented the sanitized local mGBA smoke result for Trainer-AI-Policy v3 in `08_tests/randomizer/trainer-ai-policy-v3.md`.
