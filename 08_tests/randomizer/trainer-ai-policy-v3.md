@@ -59,6 +59,25 @@ Trainer-AI policy:
 
 Note: a first syntax-only attempt with broad `-I include` failed before reaching the changed source because CFRU's local `include/strings.h` shadows the toolchain's system `strings.h`. The successful checks used CFRU's relative source includes without that broad include override.
 
+## Sanitized local mGBA smoke result
+
+Result: `PASS_TARGETED_LOCAL_SMOKE_WITH_CAVEATS`.
+
+The CFRU Trainer-AI-Policy v3 experiment was locally built and the resulting local ROM candidate booted in mGBA. The in-game options menu exposed the `Trainer AI` values, and selected Trainer-AI values appeared to persist after changing them.
+
+Sanitized local observations:
+
+| Area | Result | Notes |
+| --- | --- | --- |
+| Build / boot | Pass | Local CFRU build completed and the local ROM candidate booted in mGBA. |
+| Options menu | Pass | `Trainer AI` values were selectable and appeared to save correctly. |
+| Rival Smokescreen / move-choice smoke | Pass with caveats | Targeted local observation only; no raw turn log, screenshot, save, state, ROM path or ROM hash is included. |
+| `Smart` | Pass with caveats | Full Smart Move-AI appeared active. No Expert-extra behavior is claimed from this smoke. |
+| `Hard` | Pass with caveats | Smart move choice plus stronger fair reactions appeared distinguishable from `Smart`; no obvious hidden-knowledge behavior was observed. |
+| `Expert` | Pass with caveats | Strongest mode appeared plausibly active and distinguishable, with advanced behavior looking consistent with the intended Expert profile. |
+
+This smoke confirms the local build/boot/menu and targeted move-choice behavior only. It is not a full-playthrough, BizHawk, Ironmon Tracker, statistical AI-quality or P1 support claim.
+
 ## Local mGBA smoke handoff
 
 Use the same local ROM candidate and the same sanitized pre-battle setup across options. Do not commit ROMs, saves, emulator states, builds, screenshots, raw logs, hashes or private paths.

@@ -1,3 +1,12 @@
+# Next steps update - Trainer AI Policy v3 local smoke
+
+- Treat `08_tests/randomizer/trainer-ai-policy-v3.md` as the current sanitized local smoke record for Trainer-AI-Policy v3.
+- Status: `PASS_TARGETED_LOCAL_SMOKE_WITH_CAVEATS`.
+- Keep the current result limited to local build/boot/menu and targeted mGBA move-choice behavior.
+- If Trainer-AI work continues, use fresh source-backed analysis before changing scoring logic; do not infer a global AI-quality result from this smoke.
+- Optional follow-up: broaden only with sanitized A/B tables for additional trainer classes or separate Protect/Fake-Out micro-smokes, still without ROMs, saves, states, screenshots, raw logs, hashes or private paths.
+- Do not promote this to full-playthrough, BizHawk, Ironmon Tracker or P1 support.
+
 # Next steps update - Trainer AI Policy v3 experiment
 
 - Treat CFRU commit `74310deeb62c7f73ba6c7b11f921418617a9a740` on branch `experiment/trainer-ai-policy-v3` as the current Trainer-AI Policy v3 experiment.

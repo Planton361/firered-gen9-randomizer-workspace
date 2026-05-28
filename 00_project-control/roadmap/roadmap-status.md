@@ -1,3 +1,12 @@
+# Roadmap status update - Trainer AI Policy v3 local smoke
+
+- Documented the sanitized local mGBA smoke result for Trainer-AI-Policy v3 in `08_tests/randomizer/trainer-ai-policy-v3.md`.
+- Status impact: `PASS_TARGETED_LOCAL_SMOKE_WITH_CAVEATS`.
+- Local reported evidence: CFRU Trainer-AI-Policy v3 built locally, the local ROM candidate booted in mGBA, Trainer-AI option values were selectable and appeared to save, and Smart/Hard/Expert appeared distinguishable.
+- Rival Smokescreen / move-choice smoke is pass with caveats; `Smart` appeared to activate Full Smart Move-AI, `Hard` appeared to add stronger fair reactions without obvious hidden-knowledge behavior, and `Expert` appeared to be the strongest plausible advanced profile.
+- Caveat: targeted local mGBA smoke only, not full-playthrough coverage, not BizHawk or Ironmon Tracker validation, not statistical AI-quality proof and not P1 promotion.
+- No ROM paths, ROM hashes, CRCs, full logs, screenshots, saves, emulator states, output ROMs, build artifacts, tool binaries, private paths, workspace-side UPR-FVX/CFRU/DPE code changes, submodule repins or P1 promotion are added.
+
 # Roadmap status update - Trainer AI Policy v3 experiment
 
 - Implemented the narrow CFRU Trainer-AI Policy v3 experiment on CFRU branch `experiment/trainer-ai-policy-v3`.

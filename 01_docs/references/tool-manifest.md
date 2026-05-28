@@ -1,3 +1,14 @@
+# Tool Manifest Update - 2026-05-28 - Trainer AI Policy v3 local smoke
+
+- Workspace branch: `experiment/trainer-ai-policy-v3`.
+- Evidence file: `08_tests/randomizer/trainer-ai-policy-v3.md`.
+- Scope: sanitized local mGBA smoke result for the existing CFRU Trainer-AI-Policy v3 experiment.
+- Status impact: `PASS_TARGETED_LOCAL_SMOKE_WITH_CAVEATS`.
+- Local reported evidence: CFRU Trainer-AI-Policy v3 built locally, the local ROM candidate booted in mGBA, `Trainer AI` option values were selectable and appeared to save, the Rival Smokescreen / move-choice smoke passed with caveats, and `Smart` / `Hard` / `Expert` appeared distinguishable.
+- Interpretation: `Smart` appeared to activate Full Smart Move-AI; `Hard` appeared to add stronger fair reactions without obvious hidden-knowledge behavior; `Expert` appeared to be the strongest plausible advanced profile.
+- Boundary: documentation-only update; no CFRU code, UPR-FVX, DPE, submodule pin, full-playthrough, BizHawk, Ironmon Tracker, statistical AI-quality or P1 support claim is included.
+- Safety: no ROM, save, emulator state, build artifact, tool binary, screenshot, raw log, ROM hash, private path, token, secret or `.env` data is included.
+
 # Tool Manifest Update - 2026-05-28 - Trainer AI Policy v3 experiment
 
 - Workspace branch: `experiment/trainer-ai-policy-v3`.
