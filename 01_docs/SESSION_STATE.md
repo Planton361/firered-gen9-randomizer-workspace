@@ -1,3 +1,15 @@
+# Session update - MacBook rebuild success status sync
+
+- Branch: `docs/macbook-rebuild-success`.
+- Documented the sanitized MacBook rebuild status as `01_docs/setup/macbook-rebuild-success.md`.
+- Confirmed local UPR-FVX submodule pin: `1a597a667129b50284dd88afb231372b5bd01d7f` on `02_external/upr-fvx`.
+- Local UPR-FVX status: `./gradlew clean :random:jar` completed, and the UPR-FVX GUI starts with Java 25.
+- Local GBA tooling status: devkitPro/devkitARM, `arm-none-eabi-gcc` 15.2.0, `gbafix`, `grit`, GNU Make 4.4.1, and local Wine wrappers for `wav2agb.exe` / `mid2agb.exe` are present.
+- Local rebuild status: DPE and CFRU builds completed successfully.
+- Local smoke status: the final local CFRU+DPE Gen9 ROM candidate loads in UPR-FVX and boots in mGBA.
+- BizHawk/Ironmon Tracker remains open follow-up scope.
+- Scope is documentation-only. No UPR-FVX, CFRU, DPE, Tracker, ROM, save, emulator state, build artifact, screenshot, raw log, ROM hash, private path, local address, secret, token, `.env` data or external repo was changed or documented.
+
 # Session update - CFRU settings split final smoke
 
 - Branch: `test/cfru-settings-split-final-smoke`.

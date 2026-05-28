@@ -37,8 +37,11 @@ Dieses Repository enthält nicht:
 
 ## Aktueller Randomizer-Pin
 
-- `02_external/upr-fvx` ist auf den UPR-FVX compat-Merge-Commit `8349daf5ce005f0defc5674cbc3a3468f009218c` gepinnt.
-- Dieser Pin enthaelt die finalen Gen-Limit-/Special-Form-/Mechanic-Item-/Trainer-Held-Item-Fixes bis UPR-FVX PR #152 auf `compat/firered-gen9-cfru-dpe`.
+- `02_external/upr-fvx` ist auf den UPR-FVX compat-Merge-Commit `1a597a667129b50284dd88afb231372b5bd01d7f` gepinnt.
+- Dieser Pin ist lokal auf dem MacBook als sanitisiert dokumentierter Rebuild-Stand bestaetigt: UPR-FVX-JAR-Build, GUI-Start mit Java 25, vorhandene GBA-Toolchain, lokale CFRU/DPE-Builds, Randomizer-Load und mGBA-Boot wurden erfolgreich gemeldet.
+- BizHawk/Ironmon Tracker bleibt der offene naechste Kompatibilitaetsblock.
+- Vorheriger Pin: UPR-FVX compat-Merge-Commit `8349daf5ce005f0defc5674cbc3a3468f009218c`.
+- Dieser vorherige Pin enthaelt die finalen Gen-Limit-/Special-Form-/Mechanic-Item-/Trainer-Held-Item-Fixes bis UPR-FVX PR #152 auf `compat/firered-gen9-cfru-dpe`.
 - Gen Limit / Special Form / Mechanic Item Exclusions sind als `08_tests/randomizer/212_gen_limit_special_form_item_smoke.md` dokumentiert: Gen-Limit 1-9 infrastructure pass, Gen1-only und Gen1-6 log smokes korrekt, Gen7/8/9 Intro Mon crash-free mit valid visual-table candidates, Mega/GMax/Regional/Irregular/Special-form filtering lokal unauffaellig, Evolutionary Relatives bleiben expliziter Cross-Gen-Family-Override, Regionalformen werden ohne Regional-Override nicht durch Evolutionary Relatives reingezogen, Trainer Class Sprite Sync ist GUI-exposed, Oak-Lab Rival counter-starter bleibt unabhaengig von Rival Carries Starter Through Game erhalten, Mechanic-Item-Filtering nutzt source-backed CFRU/DPE Kategorien fuer Mega/Z/Dynamax-GMax Items, und Trainer Held Items / Sensible Items laufen ohne die vorherigen Missing-Pool-/Missing-Movepool-NPEs.
 - Status: `PASS_TARGETED_LOG_VISUAL_SMOKE_WITH_CAVEATS`.
 - Caveat: targeted local smoke only, kein Full-Playthrough, keine vollstaendige Held-Item-Distribution-Audit, Plates/Drives/Memories/Nectars haben noch keine separaten user-facing Policies, Static Script/Gift/NPC item sources bleiben caveated falls sie nicht durch Randomizer-Item-Replacement-Pools laufen, custom/future form encodings ausserhalb dokumentierter CFRU/DPE identity blocks bleiben audit-required und keine P1-Promotion.

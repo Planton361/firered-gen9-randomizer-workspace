@@ -13,3 +13,4 @@
 | DEC-009 | 2026-05-10 | Linux/CachyOS ist primaere lokale Entwicklungsumgebung | Nutzer hat die lokale Arbeitsumgebung gewechselt |
 | DEC-010 | 2026-05-10 | Windows-Toolchain-Inventur ist historischer Stand | Fruehere Windows-Pfade und PATH-Befunde duerfen nicht als Linux-Ist-Stand verwendet werden |
 | DEC-011 | 2026-05-13 | UPR FVX GUI Features werden als Requirements-Basis genutzt | Detailstatus kommt in eine eigene Feature-Coverage-Matrix; die Roadmap bleibt paketorientiert |
+| DEC-012 | 2026-05-28 | MacBook-Rebuild wird nur als sanitisiertes Status-Sync dokumentiert | Der lokale Rebuild bestaetigt Toolchain, UPR-FVX, CFRU/DPE und mGBA-Boot, ersetzt aber keine ROM-, Build-, Log-, BizHawk-, Tracker- oder Full-Playthrough-Evidence |

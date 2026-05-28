@@ -1,3 +1,12 @@
+# Roadmap status update - MacBook rebuild success
+
+- Recorded the sanitized MacBook rebuild status in `01_docs/setup/macbook-rebuild-success.md`.
+- Confirmed the local UPR-FVX workspace pin at `1a597a667129b50284dd88afb231372b5bd01d7f`.
+- Status impact: local MacBook environment is back to a usable rebuild baseline for UPR-FVX and CFRU/DPE work.
+- Local evidence: `./gradlew clean :random:jar` completed for UPR-FVX; the UPR-FVX GUI starts with Java 25; devkitPro/devkitARM, `arm-none-eabi-gcc` 15.2.0, `gbafix`, `grit`, GNU Make 4.4.1 and local Wine wrappers for `wav2agb.exe` / `mid2agb.exe` are present; DPE and CFRU rebuild locally; the final local CFRU+DPE Gen9 ROM candidate loads in UPR-FVX and boots in mGBA.
+- Caveat: this is a local environment and targeted mGBA boot/status sync only, not full-playthrough coverage, not BizHawk or Ironmon Tracker validation, and not P1 promotion.
+- No ROM paths, ROM hashes, CRCs, full logs, screenshots, saves, emulator states, output ROMs, build artifacts, tool binaries, private paths, workspace-side UPR-FVX/CFRU/DPE code changes, external repo changes, submodule repins or P1 promotion are added.
+
 # Roadmap status update - Gen Limit / Special Form / Mechanic Item final smoke
 
 - Synced merged UPR-FVX compat commit `8349daf5ce005f0defc5674cbc3a3468f009218c` into the workspace pin after the Gen-Limit, Special-Form, Trainer-Class-Sprite-Sync, Oak-Lab-Rival, Mechanic-Item and Trainer-Held-Item fix chain through PR #152.

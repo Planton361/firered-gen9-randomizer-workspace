@@ -1,3 +1,16 @@
+# Tool Manifest Update - 2026-05-28 - MacBook rebuild success
+
+- Workspace branch: `docs/macbook-rebuild-success`.
+- Workspace submodule `02_external/upr-fvx` is confirmed at commit `1a597a667129b50284dd88afb231372b5bd01d7f` on the local compat branch.
+- UPR-FVX local build command confirmed: `./gradlew clean :random:jar`.
+- UPR-FVX GUI starts locally with Java 25.
+- Local GBA toolchain confirmed present: devkitPro/devkitARM, `arm-none-eabi-gcc` 15.2.0, `gbafix`, `grit`, and GNU Make 4.4.1.
+- Local audio conversion wrappers confirmed present: Wine wrappers for `wav2agb.exe` and `mid2agb.exe`.
+- Local DPE and CFRU rebuilds completed successfully.
+- Final local CFRU+DPE Gen9 ROM candidate loads in UPR-FVX and boots in mGBA.
+- Status impact: the MacBook workspace is rebuilt to a usable local UPR-FVX + CFRU/DPE + mGBA smoke baseline; BizHawk and Ironmon Tracker remain open.
+- Safety: no ROM, save, emulator state, build artifact, tool binary, screenshot, raw log, ROM hash, private path, token, secret, `.env` data, external repo change or submodule repin is included in this workspace update.
+
 # Tool Manifest Update - 2026-05-25 - Tracker source references
 
 - Workspace branch: `setup/tracker-source-references`.
