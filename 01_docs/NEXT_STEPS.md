@@ -1,3 +1,24 @@
+# Next steps update - Trainer AI Policy v3 local smoke
+
+- Treat `08_tests/randomizer/trainer-ai-policy-v3.md` as the current sanitized local smoke record for Trainer-AI-Policy v3.
+- Status: `PASS_TARGETED_LOCAL_SMOKE_WITH_CAVEATS`.
+- Keep the current result limited to local build/boot/menu and targeted mGBA move-choice behavior.
+- If Trainer-AI work continues, use fresh source-backed analysis before changing scoring logic; do not infer a global AI-quality result from this smoke.
+- Optional follow-up: broaden only with sanitized A/B tables for additional trainer classes or separate Protect/Fake-Out micro-smokes, still without ROMs, saves, states, screenshots, raw logs, hashes or private paths.
+- Do not promote this to full-playthrough, BizHawk, Ironmon Tracker or P1 support.
+
+# Next steps update - Trainer AI Policy v3 experiment
+
+- Treat CFRU commit `74310deeb62c7f73ba6c7b11f921418617a9a740` on branch `experiment/trainer-ai-policy-v3` as the current Trainer-AI Policy v3 experiment.
+- Treat `08_tests/randomizer/trainer-ai-policy-v3.md` as the smoke handoff.
+- Run a local mGBA A/B smoke from the same pre-Rival battle state across Trainer AI `Vanilla`, `Normal`, `Smart`, `Hard`, `Expert`, and `Auto`.
+- Keep Game Difficulty, Level Scaling, Hard Cap, player actions, party, and items fixed except where the row explicitly tests `Auto` derivation.
+- Record only sanitized turn summaries: AI option, Game Difficulty for `Auto`, turn number, enemy move selected, player Accuracy stage bucket, whether Tackle looked meaningful or KO-relevant, and result category.
+- Add a separate small doubles micro-smoke only if validating the Hard/Expert Protect-Fake-Out retarget gate; do not mix that with the Rival Smokescreen result.
+- Watch especially for `Smart`: it should show full smart move AI but no Expert extras such as shift-switching, player-switch prediction or type-resist berry hidden knowledge.
+- Do not claim full-playthrough, BizHawk, Tracker or P1 support from this experiment.
+- Continue excluding ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, local addresses, `.local.json`, secrets, tokens and `.env` data from commits.
+
 # Next steps update - Trainer AI Smokescreen behavior analysis
 
 - Treat `01_docs/analysis/trainer-ai-smokescreen-behavior.md` as the current source-backed handoff for the Rival `Tackle` + `Smokescreen` behavior.

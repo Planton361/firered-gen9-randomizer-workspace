@@ -1,3 +1,31 @@
+# Session update - Trainer AI Policy v3 local smoke
+
+- Branch: `experiment/trainer-ai-policy-v3`.
+- Documented the sanitized local mGBA smoke result for Trainer-AI-Policy v3 in `08_tests/randomizer/trainer-ai-policy-v3.md`.
+- Result: `PASS_TARGETED_LOCAL_SMOKE_WITH_CAVEATS`.
+- Local reported evidence: CFRU Trainer-AI-Policy v3 built locally, the local ROM candidate booted in mGBA, `Trainer AI` option values were selectable and appeared to save, and Smart/Hard/Expert appeared distinguishable.
+- Rival Smokescreen / move-choice smoke is documented as pass with caveats.
+- `Smart` appeared to have Full Smart Move-AI active; `Hard` appeared to add stronger fair reactions without obvious hidden-knowledge behavior; `Expert` appeared to be the strongest profile with plausible advanced behavior.
+- Scope is documentation-only. No CFRU code, UPR-FVX, DPE, submodule pin, ROM, save, emulator state, build artifact, tool binary, screenshot, raw log, ROM hash, private path, token, secret or `.env` data was changed or documented.
+- Caveat: targeted local mGBA smoke only; no full-playthrough, BizHawk, Ironmon Tracker, statistical AI-quality or P1 support claim.
+
+# Session update - Trainer AI Policy v3 experiment
+
+- Branch: `experiment/trainer-ai-policy-v3`.
+- CFRU branch: `experiment/trainer-ai-policy-v3`.
+- CFRU base: `caaf81b2582d5af0905281aab88658ac145b43eb`.
+- CFRU experiment commit: `74310deeb62c7f73ba6c7b11f921418617a9a740`.
+- Implemented Trainer-AI Policy v3 as a narrow CFRU experiment.
+- `Trainer AI = Smart`, `Hard`, and `Expert` now give all trainer battles full smart move AI: `AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_SEMI_SMART | AI_SCRIPT_CHECK_GOOD_MOVE`.
+- `Smart` remains move-AI-only and no longer falls into Expert-style gates through enum ordering.
+- `Hard` gets the fair anti-cheese / Protect-Fake-Out retarget gates, but not switch prediction, shift-switching, bench/prediction behavior or type-resist berry hidden knowledge.
+- `Expert` keeps the advanced Expert paths: anti-cheese, Protect/Fake-Out retargeting, switch/prediction behavior, shift-switching, and Expert type-resist berry knowledge where the existing CFRU path permits it.
+- `Auto` remains compatibility mode through `GetTrainerAIProfile()` deriving from `Game Difficulty` while the trainer-AI profile var is unset.
+- `Vanilla`, `Easy`, and `Normal` were left unchanged except for sharing the explicit enum-safe gate boundaries.
+- Added `08_tests/randomizer/trainer-ai-policy-v3.md` as the sanitized implementation and local mGBA smoke handoff.
+- Checks: CFRU `diff --check` passed; `arm-none-eabi-gcc -fsyntax-only` passed for `src/Battle_AI/ai_master.c`, `src/Battle_AI/ai_switching.c`, and `src/damage_calc.c`; workspace `diff --check` passed.
+- Scope excludes `VAR_GAME_DIFFICULTY` broad effects, trainer level scaling, IV/EV/friendship/PP logic, bag/move restrictions, wild/raid/DexNav/ability-capsule logic, `AI_TRY_TO_KILL_RATE`, UPR-FVX, DPE, ROMs, saves, emulator states, builds, screenshots, raw logs, ROM hashes, private paths, tokens, secrets and `.env` data.
+
 # Session update - Trainer AI Smokescreen behavior analysis
 
 - Branch: `analysis/trainer-ai-smokescreen-behavior`.
