@@ -1,3 +1,30 @@
+# Tool Manifest Update - 2026-05-29 - CFRU Randomizer baseline config local smoke
+
+- Workspace branch: `feature/cfru-randomizer-baseline-config`.
+- Evidence file: `08_tests/randomizer/cfru-randomizer-baseline-config.md`.
+- Scope: sanitized local build / mGBA smoke result for the existing CFRU Randomizer Baseline Config candidate.
+- Status impact: `PASS_TARGETED_LOCAL_BUILD_BOOT_SETTINGS_SMOKE_WITH_CAVEATS`.
+- Local reported evidence: CFRU commit `53273184bab06f91cdc3ad6e0e5af4a8ba41591a` was synchronized into the local Mac build workspace, a local clean rebuild completed, `wav2agb` / `mid2agb` were resolved through local `local-bin` wrappers, the local ROM candidate booted in mGBA, and the new/adjusted in-game settings worked.
+- Smoke matrix: Build/Boot pass, Options/Settings pass, Nuzlocke Toggle pass, Wild Prebattle Toggle pass; Oak Tutorial removed, Poison Overworld Faint, SwSh Catch-Level-Malus off, Old/Flat EXP, and Intro Controls Guide skipped remain inconclusive pending separate sanitized evidence.
+- Boundary: documentation-only update; no CFRU code, UPR-FVX, DPE, submodule pin, full-playthrough, BizHawk, Ironmon Tracker or P1 support claim is included.
+- Safety: no ROM, save, emulator state, build artifact, tool binary, screenshot, raw log, ROM hash, private path, token, secret or `.env` data is included.
+
+# Tool Manifest Update - 2026-05-29 - CFRU Randomizer baseline config
+
+- Workspace branch: `feature/cfru-randomizer-baseline-config`.
+- CFRU branch: `feature/cfru-randomizer-baseline-config`.
+- CFRU base commit: `74310deeb62c7f73ba6c7b11f921418617a9a740`.
+- Workspace submodule `02_external/CFRU-expansion` now pins CFRU baseline commit `53273184bab06f91cdc3ad6e0e5af4a8ba41591a`.
+- Scope: narrow CFRU Randomizer-/Ironmon-near baseline config plus source-backed option-menu flag toggles.
+- Compile-time config: `TUTORIAL_BATTLES` disabled, `POISON_1_HP_SURVIVAL` disabled, `SWSH_CATCHING_DIFFICULTY_MODIFIER` disabled, `OLD_EXP_SPLIT` enabled, `FLAT_EXP_FORMULA` enabled, and `SKIP_INTRO_CONTROLS_GUIDE` enabled.
+- `IgnoreWildPokemon` remains enabled because source search shows it compiles the prebattle feature and runtime generation remains gated by `FLAG_ENABLE_WILD_PMN_PREBATTLE_SCREEN`.
+- Runtime toggles: Page 3 `Nuzlocke = Off/On` clears/sets only `FLAG_NUZLOCKE`; Page 3 `Wild Prebattle = Off/On` clears/sets only `FLAG_ENABLE_WILD_PMN_PREBATTLE_SCREEN`.
+- `FLAG_WILD_POKEMON_PREBATTLE_SCREEN` remains transient encounter/window state and is not menu-owned.
+- Evidence file: `08_tests/randomizer/cfru-randomizer-baseline-config.md`.
+- Checks: CFRU `diff --check` passed; `arm-none-eabi-gcc -fsyntax-only src/option_menu.c` passed; workspace `diff --check` passed.
+- Boundary: no UPR-FVX, DPE, Trainer AI, Trainer Level Scaling, Hard Cap, Difficulty logic, Wild Encounter Tables, Randomizer code, ROM build, emulator boot, full-playthrough, BizHawk, Ironmon Tracker or P1 support claim is included.
+- Safety: no ROM, save, emulator state, build artifact, tool binary, screenshot, raw log, ROM hash, private path, token, secret or `.env` data is included.
+
 # Tool Manifest Update - 2026-05-28 - Trainer AI Policy v3 local smoke
 
 - Workspace branch: `experiment/trainer-ai-policy-v3`.

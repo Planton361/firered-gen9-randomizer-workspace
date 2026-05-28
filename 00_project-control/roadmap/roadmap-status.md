@@ -1,3 +1,25 @@
+# Roadmap status update - CFRU Randomizer baseline config local smoke
+
+- Documented the sanitized local build / mGBA smoke result for CFRU Randomizer Baseline Config in `08_tests/randomizer/cfru-randomizer-baseline-config.md`.
+- Status impact: `PASS_TARGETED_LOCAL_BUILD_BOOT_SETTINGS_SMOKE_WITH_CAVEATS`.
+- Local reported evidence: CFRU commit `53273184bab06f91cdc3ad6e0e5af4a8ba41591a` was synchronized into the local Mac build workspace, a clean rebuild completed, local `local-bin` wrappers resolved `wav2agb` / `mid2agb`, the local ROM candidate booted in mGBA, and the new/adjusted in-game settings worked.
+- Smoke matrix: Build/Boot pass, Options/Settings pass, Nuzlocke Toggle pass, Wild Prebattle Toggle pass.
+- Oak Tutorial removed, Poison Overworld Faint, SwSh Catch-Level-Malus off, Old/Flat EXP, and Intro Controls Guide skipped remain inconclusive until separately documented.
+- Caveat: targeted local build/boot/settings smoke only, not full-playthrough coverage, not BizHawk or Ironmon Tracker validation, and not P1 promotion.
+- No ROM paths, ROM hashes, CRCs, full logs, screenshots, saves, emulator states, output ROMs, build artifacts, tool binaries, private paths, workspace-side UPR-FVX/CFRU/DPE code changes, submodule repins or P1 promotion are added.
+
+# Roadmap status update - CFRU Randomizer baseline config
+
+- Implemented CFRU Randomizer-/Ironmon-near baseline config on CFRU branch `feature/cfru-randomizer-baseline-config`.
+- Workspace now pins CFRU baseline commit `53273184bab06f91cdc3ad6e0e5af4a8ba41591a` from base `74310deeb62c7f73ba6c7b11f921418617a9a740`.
+- Status impact: Oak tutorial is compiled out, overworld poison can faint Pokemon, SwSh catch level malus is compiled out, old EXP split and flat EXP formula are enabled, and the intro controls guide is skipped.
+- `IgnoreWildPokemon` remains compiled because source search shows runtime screen generation is controlled by `FLAG_ENABLE_WILD_PMN_PREBATTLE_SCREEN`.
+- Added source-backed Page 3 runtime toggles for `Nuzlocke = Off/On` and `Wild Prebattle = Off/On`.
+- `Nuzlocke` only clears/sets `FLAG_NUZLOCKE`; `Wild Prebattle` only clears/sets `FLAG_ENABLE_WILD_PMN_PREBATTLE_SCREEN`; no gameplay logic or encounter table behavior was changed.
+- Added `08_tests/randomizer/cfru-randomizer-baseline-config.md` as the implementation and local smoke handoff.
+- Caveat: source/syntax checked only; no local ROM build, emulator boot, BizHawk/Tracker validation, full-playthrough coverage or P1 promotion is claimed.
+- No ROM paths, ROM hashes, CRCs, full logs, screenshots, saves, emulator states, output ROMs, build artifacts, tool binaries, private paths, UPR-FVX/DPE changes or P1 promotion are added.
+
 # Roadmap status update - Trainer AI Policy v3 local smoke
 
 - Documented the sanitized local mGBA smoke result for Trainer-AI-Policy v3 in `08_tests/randomizer/trainer-ai-policy-v3.md`.
