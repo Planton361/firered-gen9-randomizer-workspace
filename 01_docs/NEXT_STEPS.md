@@ -1,3 +1,12 @@
+# Next steps update - MacBook rebuild success status sync
+
+- Treat `01_docs/setup/macbook-rebuild-success.md` as the current sanitized local MacBook rebuild status.
+- Treat UPR-FVX compat commit `1a597a667129b50284dd88afb231372b5bd01d7f` as the current locally confirmed workspace pin.
+- Current local baseline: UPR-FVX builds with `./gradlew clean :random:jar`, UPR-FVX GUI starts with Java 25, devkitPro/devkitARM and required GBA build tools are present, local Wine wrappers for `wav2agb.exe` / `mid2agb.exe` are present, DPE and CFRU rebuild locally, and the final local CFRU+DPE Gen9 ROM candidate loads in UPR-FVX and boots in mGBA.
+- Next major compatibility block remains BizHawk plus Ironmon Tracker validation.
+- Do not promote this rebuild sync to full-playthrough, BizHawk, Tracker or P1 support; keep it as a local environment and mGBA boot baseline.
+- Continue excluding ROMs, saves, emulator states, screenshots, raw logs, ROM hashes, private paths, builds, tool binaries, local addresses, `.local.json`, secrets, tokens and `.env` data from commits.
+
 # Next steps update - CFRU settings split final smoke
 
 - Treat `08_tests/randomizer/cfru-settings-split-final-smoke.md` as the current sanitized final local smoke record for the CFRU settings-split UI.
