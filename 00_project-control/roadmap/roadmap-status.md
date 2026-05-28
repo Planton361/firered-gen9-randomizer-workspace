@@ -1,3 +1,16 @@
+# Roadmap status update - Trainer AI Policy v3 experiment
+
+- Implemented the narrow CFRU Trainer-AI Policy v3 experiment on CFRU branch `experiment/trainer-ai-policy-v3`.
+- Workspace now pins CFRU experiment commit `74310deeb62c7f73ba6c7b11f921418617a9a740` from base `caaf81b2582d5af0905281aab88658ac145b43eb`.
+- Status impact: Trainer AI `Smart`, `Hard`, and `Expert` now all receive full smart move AI for trainer battles while advanced behavior is separated by profile.
+- `Smart` is move-AI-only and avoids the previous risk of Expert-style behavior through enum ordering.
+- `Hard` includes fair anti-cheese / Protect-Fake-Out retarget behavior but excludes switch prediction, shift-switching, bench/prediction behavior and type-resist berry hidden knowledge.
+- `Expert` keeps the advanced Expert paths, including anti-cheese, Protect/Fake-Out retargeting, switch/prediction behavior, shift-switching and existing Expert type-resist berry knowledge.
+- `Auto` remains compatibility mode derived from `Game Difficulty`; `Vanilla`, `Easy`, and `Normal` remain unchanged.
+- Added `08_tests/randomizer/trainer-ai-policy-v3.md` as the sanitized implementation and local mGBA smoke handoff.
+- Caveat: implementation and syntax-check only; no local ROM build, mGBA smoke, BizHawk/Tracker validation, full-playthrough coverage or P1 promotion is claimed.
+- No ROM paths, ROM hashes, CRCs, full logs, screenshots, saves, emulator states, output ROMs, build artifacts, tool binaries, private paths, UPR-FVX/DPE changes or P1 promotion are added.
+
 # Roadmap status update - Trainer AI Smokescreen behavior analysis
 
 - Added `01_docs/analysis/trainer-ai-smokescreen-behavior.md` as the current source-backed analysis for the Rival `Tackle` + `Smokescreen` Trainer-AI observation.

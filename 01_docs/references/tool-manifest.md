@@ -1,3 +1,16 @@
+# Tool Manifest Update - 2026-05-28 - Trainer AI Policy v3 experiment
+
+- Workspace branch: `experiment/trainer-ai-policy-v3`.
+- CFRU branch: `experiment/trainer-ai-policy-v3`.
+- CFRU base commit: `caaf81b2582d5af0905281aab88658ac145b43eb`.
+- Workspace submodule `02_external/CFRU-expansion` now pins CFRU experiment commit `74310deeb62c7f73ba6c7b11f921418617a9a740`.
+- Scope: narrow Trainer-AI policy update in CFRU. `Smart`, `Hard`, and `Expert` trainer AI profiles receive full smart move AI for trainer battles through `AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_SEMI_SMART | AI_SCRIPT_CHECK_GOOD_MOVE`.
+- Policy split: `Smart` is move-AI-only; `Hard` adds fair anti-cheese / Protect-Fake-Out retarget behavior without switch prediction, shift-switching, bench/prediction behavior or type-resist berry hidden knowledge; `Expert` keeps the advanced Expert AI gates.
+- Additional CFRU file rationale: `src/damage_calc.c` was changed because the requested `rg` search found the existing Expert type-resist berry knowledge gate there, and the policy requires `Smart`/`Hard` to avoid hidden berry knowledge.
+- Status impact: implementation is ready for targeted local mGBA A/B smoke, documented in `08_tests/randomizer/trainer-ai-policy-v3.md`.
+- Boundary: no `VAR_GAME_DIFFICULTY` broad effects, trainer level scaling, IV/EV/friendship/PP logic, bag/move restrictions, wild/raid/DexNav/ability-capsule logic, `AI_TRY_TO_KILL_RATE`, UPR-FVX or DPE changes are included.
+- Safety: no ROM, save, emulator state, build artifact, tool binary, screenshot, raw log, ROM hash, private path, token, secret, `.env` data, UPR-FVX/DPE change, full-playthrough claim or P1 promotion is included.
+
 # Tool Manifest Update - 2026-05-28 - Trainer AI Smokescreen behavior analysis
 
 - Workspace branch: `analysis/trainer-ai-smokescreen-behavior`.
