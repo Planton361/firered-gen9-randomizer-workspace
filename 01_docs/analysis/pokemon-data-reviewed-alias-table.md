@@ -50,6 +50,16 @@ Ability coverage starts with:
 - `tabletsofruin` to `tabletofruin` as a name mismatch.
 - Six explicit `behavior-risk` entries where the local name exists but aliases to an older effect: `Hadron Engine`, `Orichalcum Pulse`, `Poison Puppeteer`, `Good as Gold`, `Toxic Debris`, and `Zero to Hero`.
 
+## Batch 2 reviewed coverage
+
+Batch 2 expands the table to 107 entries while keeping the scope to safe Species name-shape mappings:
+
+- Species `gmax-giga`: expanded from 4 to 32 entries, covering the remaining Showdown `gmax` keys with local `GIGA` constants.
+- Species `local-shortform`: expanded from 4 to 55 entries, covering reviewed Alola `A`, Galar `G`, Hisui `H`, Paldea `P`, and the existing gender-form short alias.
+- Existing Move and Ability entries were not broadened in this batch; remaining split moves and behavior-risk abilities stay visible as follow-up work.
+
+No broad regex rule was added for regional forms or GMax/Giga names. Each mapping remains an explicit reviewed entry with local constants.
+
 ## Script integration
 
 `07_scripts/data_audit/showdown_mapping_audit.py` now loads the reviewed alias file by default and prints:
@@ -67,10 +77,10 @@ With an external Pokemon Showdown data directory, the script classifies unresolv
 
 ## Full-audit summary
 
-Against the external Pokemon Showdown data directory used locally, the first table classified these unresolved buckets:
+Against the external Pokemon Showdown data directory used locally, the Batch 2 table classified these unresolved buckets:
 
-- Species Showdown-without-local: 12 classified, 307 still uncategorized.
-- Species local-without-Showdown: 16 classified, 205 still uncategorized.
+- Species Showdown-without-local: 91 classified, 228 still uncategorized.
+- Species local-without-Showdown: 95 classified, 126 still uncategorized.
 - Moves Showdown-without-local: 24 classified, 80 still uncategorized.
 - Moves local-without-Showdown: 15 classified, 128 still uncategorized.
 - Abilities Showdown-without-local: 1 classified, 35 still uncategorized.
@@ -93,6 +103,6 @@ Rules:
 
 ## Handoff
 
-Next useful step: expand `showdown_aliases.json` in small review batches, starting with remaining regional form aliases, the rest of the GMax/Giga species names, the remaining Z/Max/GMax split moves, and the high-risk Ability behavior aliases.
+Next useful step: expand `showdown_aliases.json` in small review batches, starting with the remaining Z/Max/GMax split moves, then narrow spelling/name aliases and high-risk Ability behavior aliases.
 
 Do not edit CFRU/DPE Pokemon data tables until unresolved mappings are either classified or intentionally blocked.

@@ -1,3 +1,13 @@
+# Session update - Pokemon data alias table batch 2
+
+- Branch: `analysis/pokemon-data-alias-table-batch-2`.
+- Expanded `07_scripts/data_audit/showdown_aliases.json` from 28 to 107 reviewed entries.
+- Added explicit Species-only Batch 2 aliases for regional/local shortforms and the remaining reviewed GMax/Giga Species names.
+- Alias table categories now include Species `form-name` 4, Species `gmax-giga` 32, Species `local-shortform` 55, Move `split-move` 7, Move `hidden-power-variant` ignore 1, Move `spelling` 1, Ability `name-mismatch` 1, and Ability `behavior-risk` 6.
+- External-data audit now classifies 91 Showdown-only Species keys and 95 local-only Species keys; 228 Showdown-only Species keys and 126 local-only Species keys remain uncategorized by design.
+- Move split aliases and Ability behavior-risk expansion were intentionally left for later batches so uncategorized keys stay visible and reviewable.
+- Scope remains read-only alias/data-audit documentation. No CFRU/DPE Pokemon data table, UPR-FVX code, submodule pin, Pokemon Showdown source, raw report, ROM, save, emulator state, build artifact, tool binary, screenshot, hash, private path, token, secret or `.env` data was changed or documented.
+
 # Session update - Pokemon data reviewed alias table
 
 - Branch: `analysis/pokemon-data-reviewed-alias-table`.
