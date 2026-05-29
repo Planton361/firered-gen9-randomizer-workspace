@@ -1,3 +1,13 @@
+# Session update - Pokemon data Showdown mapping audit
+
+- Branch: `analysis/pokemon-data-showdown-mapping-audit`.
+- Added `01_docs/analysis/pokemon-data-showdown-mapping-audit.md` as the read-only mapping audit plan for Pokemon Showdown data against local CFRU/DPE constants.
+- Added `07_scripts/data_audit/showdown_mapping_audit.py` as a small read-only helper that parses local Species/Move/Ability constants and optionally compares against an external Pokemon Showdown `data/` directory without downloading or vendoring Showdown data.
+- Added `08_tests/randomizer/pokemon-data-showdown-mapping-audit.md` as the sanitized local-only helper smoke.
+- Local-only findings: Species constants are count-matched between CFRU and DPE but Ogerpon Terastal form names differ on `0x592` through `0x595`; Move constants are count/name matched between CFRU and DPE; Ability constants show CFRU-only `EVAPORATE` / `LINGERINGAROMA`, DPE-only `UNUSED`, same value `0x4D` named differently, and 67 total local alias define rows across the two headers.
+- Ability aliases remain a separate behavior-risk class; name coverage is not enough for true Gen9 ability behavior.
+- Scope is read-only/documentation/tooling. No CFRU/DPE Pokemon data table, UPR-FVX code, submodule pin, ROM, save, emulator state, build artifact, tool binary, screenshot, raw log, hash, private path, token, secret or `.env` data was changed.
+
 # Session update - Pokemon data Gen9 inventory
 
 - Branch: `analysis/pokemon-data-gen9-inventory`.

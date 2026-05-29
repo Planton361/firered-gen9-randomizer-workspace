@@ -1,3 +1,14 @@
+# Tool Manifest Update - 2026-05-29 - Pokemon data Showdown mapping audit
+
+- Workspace branch: `analysis/pokemon-data-showdown-mapping-audit`.
+- Analysis file: `01_docs/analysis/pokemon-data-showdown-mapping-audit.md`.
+- Smoke file: `08_tests/randomizer/pokemon-data-showdown-mapping-audit.md`.
+- Added read-only helper: `07_scripts/data_audit/showdown_mapping_audit.py`.
+- Tool purpose: parse local CFRU/DPE Species, Move and Ability constants; report CFRU-vs-DPE drift; report Ability alias defines; optionally compare normalized keys against an external Pokemon Showdown `data/` directory containing `pokedex.ts`, `moves.ts`, and `abilities.ts`.
+- Local-only smoke command: `python3 07_scripts/data_audit/showdown_mapping_audit.py --limit 20`.
+- Local-only status: helper ran successfully without Showdown input; Species Ogerpon form-name drift, Ability `0x4D` drift and Ability aliases are documented; Moves showed no local CFRU/DPE constant-name drift.
+- Boundary: no Pokemon Showdown data is vendored; no CFRU/DPE Pokemon data table, UPR-FVX code, submodule pin, ROM, save, emulator state, build artifact, tool binary, screenshot, raw log, hash, private path, token, secret or `.env` data is included.
+
 # Tool Manifest Update - 2026-05-29 - Pokemon data Gen9 inventory
 
 - Workspace branch: `analysis/pokemon-data-gen9-inventory`.
