@@ -1,3 +1,14 @@
+# Tool Manifest Update - 2026-05-29 - DPE Base Stats Gen9 tranche 1 plan
+
+- Workspace branch: `analysis/dpe-base-stats-gen9-tranche-1-plan`.
+- Analysis file: `01_docs/analysis/dpe-base-stats-gen9-tranche-1-plan.md`.
+- Smoke file: `08_tests/randomizer/dpe-base-stats-gen9-tranche-1-plan.md`.
+- Scope: documentation-only planning for the first real DPE `Base_Stats.c` update tranche from the read-only dry-diff.
+- Helper used read-only: `07_scripts/data_audit/dpe_base_stats_dry_diff.py`.
+- Recommended tranche 1 candidates: Sneasel-Hisui, Sneasler, Ursaluna, Toedscool, Toedscruel, Primarina, Brionne, Sylveon, Magnezone, and Crobat.
+- Local smoke commands: dry-diff helper against the external Pokemon Showdown `data/` directory with `--limit 25`; `python3 -m py_compile 07_scripts/data_audit/dpe_base_stats_dry_diff.py`.
+- Boundary: no Pokemon Showdown data is vendored; no raw reports, CFRU/DPE Pokemon data table, UPR-FVX code, submodule pin, ROM, save, build artifact, tool binary, screenshot, hash, private path, token, secret or `.env` data is included.
+
 # Tool Manifest Update - 2026-05-29 - DPE Base Stats Gen9 safe dry diff
 
 - Workspace branch: `analysis/dpe-base-stats-gen9-safe-dry-diff`.

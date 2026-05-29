@@ -1,3 +1,13 @@
+# Session update - DPE Base Stats Gen9 tranche 1 plan
+
+- Branch: `analysis/dpe-base-stats-gen9-tranche-1-plan`.
+- Added `01_docs/analysis/dpe-base-stats-gen9-tranche-1-plan.md` as the documentation-only plan for the first real DPE `Base_Stats.c` update tranche.
+- Added `08_tests/randomizer/dpe-base-stats-gen9-tranche-1-plan.md` as the sanitized planning smoke.
+- Ran the read-only dry-diff helper against the external Pokemon Showdown data directory with `--limit 25`; result remained `PASS_READ_ONLY_WITH_BLOCKERS`.
+- Recommended tranche 1 is 10 Species: Sneasel-Hisui, Sneasler, Ursaluna, Toedscool, Toedscruel, Primarina, Brionne, Sylveon, Magnezone, and Crobat.
+- Tranche 1 intentionally excludes Ability fields, Catch Rate, EXP Yield, EV Yield, Growth Rate, moves, learnsets, TM/Tutor compatibility, Species `open-risk`, reviewed ignores, cosmetic Pikachu forms, representation-only gender differences, egg-group order-only churn, and obvious local stat/type balance changes.
+- Scope remains planning/documentation only. No CFRU/DPE Pokemon data table, UPR-FVX code, submodule pin, Pokemon Showdown source, raw report, ROM, save, build artifact, tool binary, screenshot, hash, private path, token, secret or `.env` data was changed or documented.
+
 # Session update - DPE Base Stats Gen9 safe dry diff
 
 - Branch: `analysis/dpe-base-stats-gen9-safe-dry-diff`.
