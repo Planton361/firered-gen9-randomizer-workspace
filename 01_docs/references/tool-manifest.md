@@ -1,12 +1,13 @@
-# Tool Manifest Update - 2026-05-29 - Pokemon data alias map policy
+# Tool Manifest Update - 2026-05-29 - Pokemon data Showdown mapping audit
 
-- Workspace branch: `analysis/pokemon-data-alias-map`.
-- Analysis file: `01_docs/analysis/pokemon-data-alias-map.md`.
-- Evidence file: `08_tests/randomizer/pokemon-data-alias-map.md`.
-- Scope: categorized Alias-/Ignore-Policy for sanitized Pokemon Showdown full-audit results against local CFRU/DPE Species, Move and Ability constants.
-- Summary counts: Species Showdown-without-local `319`, local-without-Showdown `221`; Moves `104` and `143`; Abilities `36` and `8`; local Ability alias define rows `67`.
-- Policy impact: Species, Moves and Abilities now have explicit review categories; Ability aliases are treated as behavior-risk findings, not solved mappings.
-- Boundary: no CFRU/DPE Pokemon data table, UPR-FVX code, submodule pin, Pokemon Showdown source copy, raw audit report, ROM, save, emulator state, build artifact, tool binary, screenshot, hash, private path, token, secret or `.env` data is included.
+- Workspace branch: `analysis/pokemon-data-showdown-mapping-audit`.
+- Analysis file: `01_docs/analysis/pokemon-data-showdown-mapping-audit.md`.
+- Smoke file: `08_tests/randomizer/pokemon-data-showdown-mapping-audit.md`.
+- Added read-only helper: `07_scripts/data_audit/showdown_mapping_audit.py`.
+- Tool purpose: parse local CFRU/DPE Species, Move and Ability constants; report CFRU-vs-DPE drift; report Ability alias defines; optionally compare normalized keys against an external Pokemon Showdown `data/` directory containing `pokedex.ts`, `moves.ts`, and `abilities.ts`.
+- Local-only smoke command: `python3 07_scripts/data_audit/showdown_mapping_audit.py --limit 20`.
+- Local-only status: helper ran successfully without Showdown input; Species Ogerpon form-name drift, Ability `0x4D` drift and Ability aliases are documented; Moves showed no local CFRU/DPE constant-name drift.
+- Boundary: no Pokemon Showdown data is vendored; no CFRU/DPE Pokemon data table, UPR-FVX code, submodule pin, ROM, save, emulator state, build artifact, tool binary, screenshot, raw log, hash, private path, token, secret or `.env` data is included.
 
 # Tool Manifest Update - 2026-05-29 - Pokemon data Gen9 inventory
 

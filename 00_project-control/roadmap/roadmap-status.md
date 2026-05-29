@@ -1,11 +1,11 @@
-# Roadmap status update - Pokemon data alias map policy
+# Roadmap status update - Pokemon data Showdown mapping audit
 
-- Added `01_docs/analysis/pokemon-data-alias-map.md` as the reviewable Alias-/Ignore-Policy for Pokemon Showdown-to-CFRU/DPE unresolved mapping results.
-- Added sanitized evidence file `08_tests/randomizer/pokemon-data-alias-map.md`.
-- Status impact: unresolved mapping results now have categories for review before generated table updates. No data support level is promoted.
-- Summary: Species unresolved counts were `319` Showdown-without-local and `221` local-without-Showdown; Moves were `104` and `143`; Abilities were `36` and `8`; local Ability alias define rows across CFRU/DPE remained `67`.
-- Main roadmap risk remains Abilities: local Gen9 names may alias to old effects, so Ability name coverage is not Ability behavior coverage.
-- No CFRU/DPE/UPR-FVX code, submodule pin, Pokemon Showdown data copy, raw report, ROM path, ROM hash, CRC, full log, screenshot, save, emulator state, output ROM, build artifact, tool binary, private path or P1 promotion is added.
+- Added a read-only Pokemon Showdown mapping audit plan in `01_docs/analysis/pokemon-data-showdown-mapping-audit.md`.
+- Added `07_scripts/data_audit/showdown_mapping_audit.py` to parse local CFRU/DPE Species, Move and Ability constants and optionally compare them to an external Pokemon Showdown `data/` directory.
+- Added sanitized local-only smoke evidence in `08_tests/randomizer/pokemon-data-showdown-mapping-audit.md`.
+- Status impact: a no-data-change audit path now exists before any Pokemon table update. No support level is promoted.
+- Local-only findings: Ogerpon Terastal form naming differs between CFRU and DPE on `0x592` through `0x595`; Moves are locally count/name matched; Abilities have CFRU/DPE drift at `0x4D` plus 67 total local alias define rows across both headers.
+- No CFRU/DPE Pokemon data table, UPR-FVX code, submodule pin, Pokemon Showdown data copy, ROM path, ROM hash, CRC, full log, screenshot, save, emulator state, output ROM, build artifact, tool binary, private path or P1 promotion is added.
 
 # Roadmap status update - Pokemon data Gen9 inventory
 

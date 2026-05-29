@@ -1,10 +1,10 @@
-# Next steps update - Pokemon data alias map policy
+# Next steps update - Pokemon data Showdown mapping audit
 
-- Treat `01_docs/analysis/pokemon-data-alias-map.md` as the current policy handoff before any generated Pokemon data update.
-- Next step: build a small reviewed alias table from the policy, starting with Ogerpon forms, regional/local shortforms, GMax/Giga species names, Z/Max/GMax split moves, Hidden Power variants and Ability behavior-risk aliases.
-- Generated data updates should fail closed on uncategorized unresolved Species, Move or Ability keys.
-- Ability aliases remain behavior-risk findings until CFRU ability behavior is audited; do not count name aliases as true Gen9 behavior.
-- Continue excluding CFRU/DPE data changes, UPR-FVX changes, submodule pins, Pokemon Showdown source copies, raw reports, ROMs, saves, states, builds, screenshots, hashes, private paths, secrets, tokens and `.env` data.
+- Treat `01_docs/analysis/pokemon-data-showdown-mapping-audit.md` as the current handoff for the Pokemon Showdown-to-CFRU/DPE mapping audit.
+- Use `07_scripts/data_audit/showdown_mapping_audit.py` against an external Pokemon Showdown `data/` checkout only; do not vendor Showdown data into this repository.
+- First review target: explicit alias map for Ogerpon Terastal form names between Showdown, CFRU `GREEN/BLUE/RED/GREY`, and DPE `*_TERASTAL` names.
+- Second review target: Ability aliases. Treat local alias defines as unresolved behavior risk even when the normalized ability name exists locally.
+- If preserving output, commit only a sanitized summary, not raw bulk comparison output, private paths, downloaded data, ROMs, saves, states, builds, screenshots, hashes, secrets, tokens or `.env` data.
 
 # Next steps update - Pokemon data Gen9 inventory
 

@@ -1,11 +1,12 @@
-# Session update - Pokemon data alias map policy
+# Session update - Pokemon data Showdown mapping audit
 
-- Branch: `analysis/pokemon-data-alias-map`.
-- Added `01_docs/analysis/pokemon-data-alias-map.md` as the reviewable Alias-/Ignore-Policy for Pokemon Showdown-to-CFRU/DPE mapping results.
-- Added `08_tests/randomizer/pokemon-data-alias-map.md` as the sanitized full-audit summary.
-- Full-audit summary: Species unresolved counts were Showdown-without-local `319` and local-without-Showdown `221`; Moves were `104` and `143`; Abilities were `36` and `8`; local Ability alias define rows across CFRU/DPE remained `67`.
-- Policy categories now separate Species form aliases, local shortforms, GMax/Giga aliases, CAP/fan ignores, local extras and true open form risks; Moves split Z/Max/GMax physical-special pairs, Hidden Power variants, spelling aliases, ignored content, local extras and true open move risks; Abilities split old-effect aliases, name mismatches, likely missing Gen9 behavior and intentional ignores.
-- Scope is documentation-only. No CFRU, DPE, UPR-FVX, submodule pin, Pokemon Showdown source file, raw audit report, ROM, save, emulator state, build artifact, tool binary, screenshot, hash, private path, token, secret or `.env` data was changed or committed.
+- Branch: `analysis/pokemon-data-showdown-mapping-audit`.
+- Added `01_docs/analysis/pokemon-data-showdown-mapping-audit.md` as the read-only mapping audit plan for Pokemon Showdown data against local CFRU/DPE constants.
+- Added `07_scripts/data_audit/showdown_mapping_audit.py` as a small read-only helper that parses local Species/Move/Ability constants and optionally compares against an external Pokemon Showdown `data/` directory without downloading or vendoring Showdown data.
+- Added `08_tests/randomizer/pokemon-data-showdown-mapping-audit.md` as the sanitized local-only helper smoke.
+- Local-only findings: Species constants are count-matched between CFRU and DPE but Ogerpon Terastal form names differ on `0x592` through `0x595`; Move constants are count/name matched between CFRU and DPE; Ability constants show CFRU-only `EVAPORATE` / `LINGERINGAROMA`, DPE-only `UNUSED`, same value `0x4D` named differently, and 67 total local alias define rows across the two headers.
+- Ability aliases remain a separate behavior-risk class; name coverage is not enough for true Gen9 ability behavior.
+- Scope is read-only/documentation/tooling. No CFRU/DPE Pokemon data table, UPR-FVX code, submodule pin, ROM, save, emulator state, build artifact, tool binary, screenshot, raw log, hash, private path, token, secret or `.env` data was changed.
 
 # Session update - Pokemon data Gen9 inventory
 
