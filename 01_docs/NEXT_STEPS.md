@@ -1,3 +1,11 @@
+# Next steps update - Pokemon data Showdown mapping audit
+
+- Treat `01_docs/analysis/pokemon-data-showdown-mapping-audit.md` as the current handoff for the Pokemon Showdown-to-CFRU/DPE mapping audit.
+- Use `07_scripts/data_audit/showdown_mapping_audit.py` against an external Pokemon Showdown `data/` checkout only; do not vendor Showdown data into this repository.
+- First review target: explicit alias map for Ogerpon Terastal form names between Showdown, CFRU `GREEN/BLUE/RED/GREY`, and DPE `*_TERASTAL` names.
+- Second review target: Ability aliases. Treat local alias defines as unresolved behavior risk even when the normalized ability name exists locally.
+- If preserving output, commit only a sanitized summary, not raw bulk comparison output, private paths, downloaded data, ROMs, saves, states, builds, screenshots, hashes, secrets, tokens or `.env` data.
+
 # Next steps update - Pokemon data Gen9 inventory
 
 - Treat `01_docs/analysis/pokemon-data-gen9-inventory.md` as the current source-backed handoff for Gen9 Pokemon data table planning.

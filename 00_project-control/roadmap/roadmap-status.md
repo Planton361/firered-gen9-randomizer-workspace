@@ -1,3 +1,12 @@
+# Roadmap status update - Pokemon data Showdown mapping audit
+
+- Added a read-only Pokemon Showdown mapping audit plan in `01_docs/analysis/pokemon-data-showdown-mapping-audit.md`.
+- Added `07_scripts/data_audit/showdown_mapping_audit.py` to parse local CFRU/DPE Species, Move and Ability constants and optionally compare them to an external Pokemon Showdown `data/` directory.
+- Added sanitized local-only smoke evidence in `08_tests/randomizer/pokemon-data-showdown-mapping-audit.md`.
+- Status impact: a no-data-change audit path now exists before any Pokemon table update. No support level is promoted.
+- Local-only findings: Ogerpon Terastal form naming differs between CFRU and DPE on `0x592` through `0x595`; Moves are locally count/name matched; Abilities have CFRU/DPE drift at `0x4D` plus 67 total local alias define rows across both headers.
+- No CFRU/DPE Pokemon data table, UPR-FVX code, submodule pin, Pokemon Showdown data copy, ROM path, ROM hash, CRC, full log, screenshot, save, emulator state, output ROM, build artifact, tool binary, private path or P1 promotion is added.
+
 # Roadmap status update - Pokemon data Gen9 inventory
 
 - Added `01_docs/analysis/pokemon-data-gen9-inventory.md` as a documentation-only, source-backed inventory for CFRU/DPE Pokemon data tables.
