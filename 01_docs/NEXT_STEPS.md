@@ -1,3 +1,11 @@
+# Next steps update - Pokemon data Gen9 inventory
+
+- Treat `01_docs/analysis/pokemon-data-gen9-inventory.md` as the current source-backed handoff for Gen9 Pokemon data table planning.
+- Next useful step is a read-only name/ID/form mapping audit from Pokemon Showdown data to local CFRU/DPE constants before any table edits.
+- Keep ability work separate: current source shows Gen9 ability aliases can map to older CFRU effects, so true Gen9 ability behavior needs a dedicated CFRU engine audit before changing IDs or assignments broadly.
+- Update order should stay conservative: constants/form mapping, DPE base stats and ability assignments, CFRU move data, CFRU/DPE learnset sync, egg moves, TM compatibility, then tutor compatibility last.
+- Do not change CFRU/DPE data tables, UPR-FVX code, submodule pins, ROMs, saves, emulator states, builds, tool binaries, screenshots, raw logs, hashes, private paths, `.local.json`, secrets, tokens or `.env` data without a separate implementation task.
+
 # Next steps update - CFRU Randomizer baseline config local smoke
 
 - Treat `08_tests/randomizer/cfru-randomizer-baseline-config.md` as the current sanitized local smoke record for CFRU Randomizer Baseline Config.

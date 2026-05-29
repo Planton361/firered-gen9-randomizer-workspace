@@ -1,3 +1,13 @@
+# Tool Manifest Update - 2026-05-29 - Pokemon data Gen9 inventory
+
+- Workspace branch: `analysis/pokemon-data-gen9-inventory`.
+- Analysis file: `01_docs/analysis/pokemon-data-gen9-inventory.md`.
+- Scope: documentation-only inventory of CFRU/DPE Pokemon data table ownership, format, risk and update sequencing.
+- Local source references: CFRU `src/Tables/level_up_learnsets.c`, `src/Tables/battle_moves.c`, `src/item.c`, `src/learn_move.c`, `include/constants/species.h`, `include/constants/moves.h`, `include/constants/abilities.h`, `include/constants/tutors.h`, and related strings/JSON table metadata; DPE `src/Learnsets.c`, `src/Base_Stats.c`, `src/TM_Tutor_Tables.c`, `src/Egg_Moves.c`, `include/species.h`, `include/moves.h`, `include/abilities.h`, `include/base_stats.h`, `src/tm_compatibility/*.txt`, and `src/tutor_compatibility/*.txt`.
+- External read-only references checked: Pokemon Showdown data directory, pokeemerald-expansion Pokemon data directory, Shiny-Miner fork/account references, Skeli789 CFRU upstream family reference, and Shiny-Miner DPE Gen 9.
+- Status impact: establishes Pokemon Showdown as the preferred machine-readable audit input, pokeemerald-expansion as the GBA-shape comparison reference, and CFRU/DPE upstreams as the format/engine references.
+- Boundary: no CFRU, DPE, UPR-FVX, submodule pin, external download, ROM, save, emulator state, build artifact, tool binary, screenshot, raw log, hash, private path, token, secret or `.env` data is included.
+
 # Tool Manifest Update - 2026-05-29 - CFRU Randomizer baseline config local smoke
 
 - Workspace branch: `feature/cfru-randomizer-baseline-config`.

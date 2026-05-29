@@ -1,3 +1,12 @@
+# Roadmap status update - Pokemon data Gen9 inventory
+
+- Added `01_docs/analysis/pokemon-data-gen9-inventory.md` as a documentation-only, source-backed inventory for CFRU/DPE Pokemon data tables.
+- Status impact: Gen9 data planning is now grounded in current local table ownership and update risk. No support level is promoted.
+- Current source-backed state: species/move constants and level-up learnsets include Gen9 markers through Pecharunt/Psychic Noise; DPE owns base stats, Pokemon ability assignments, egg moves, TM/HM and tutor compatibility inputs; CFRU owns battle move behavior, ability behavior, mirrored constants, and runtime TM/Tutor engine reads.
+- Main risk: ability names are not reliable evidence of true Gen9 behavior because local CFRU/DPE alias some Gen9 ability names to older ability IDs/effects.
+- Recommended roadmap order: mapping audit first, then DPE base stats/ability assignments, CFRU move data, learnset sync, egg moves, TM compatibility, and tutor compatibility last.
+- No CFRU/DPE/UPR-FVX code, submodule pin, ROM path, ROM hash, CRC, full log, screenshot, save, emulator state, output ROM, build artifact, tool binary, private path or P1 promotion is added.
+
 # Roadmap status update - CFRU Randomizer baseline config local smoke
 
 - Documented the sanitized local build / mGBA smoke result for CFRU Randomizer Baseline Config in `08_tests/randomizer/cfru-randomizer-baseline-config.md`.
