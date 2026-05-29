@@ -1,3 +1,12 @@
+# Roadmap status update - DPE Base Stats Gen9 safe dry diff
+
+- Added `07_scripts/data_audit/dpe_base_stats_dry_diff.py` as a read-only dry-diff helper for comparing DPE `src/Base_Stats.c` against external Pokemon Showdown `pokedex.ts`.
+- Added sanitized analysis and smoke docs for the dry-diff result.
+- Status impact: the project now has a reviewable Base Stats-only dry-diff path that honors the reviewed alias table, skips Species open-risk and reviewed ignores, and keeps Ability blockers out of safe candidate promotion.
+- Dry-diff result: `PASS_READ_ONLY_WITH_BLOCKERS`. Counts: `1317` tested Species, `29` Species `open-risk` skipped, `167` reviewed Species ignores skipped, `65` Ability-blocked Species skipped from safe candidate promotion, `4` missing local entries after alias/ignore handling, and `225` safe candidate Species with non-Ability field diffs.
+- Showdown `pokedex.ts` did not provide Catch Rate, EXP Yield, EV Yield, or Growth Rate in this pass; those fields remain blocked pending a secondary source.
+- No CFRU/DPE Pokemon data table, UPR-FVX code, submodule pin, Pokemon Showdown data copy, ROM path, ROM hash, CRC, full log, screenshot, save, emulator state, output ROM, build artifact, tool binary, private path or P1 promotion is added.
+
 # Roadmap status update - Pokemon data generator dry-run plan
 
 - Added `07_scripts/data_audit/pokemon_data_dry_run.py` as a read-only fail-closed gate for future Pokemon Showdown-to-CFRU/DPE data generator work.

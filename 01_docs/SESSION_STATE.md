@@ -1,3 +1,15 @@
+# Session update - DPE Base Stats Gen9 safe dry diff
+
+- Branch: `analysis/dpe-base-stats-gen9-safe-dry-diff`.
+- Added `07_scripts/data_audit/dpe_base_stats_dry_diff.py` as a read-only dry-diff helper for DPE `src/Base_Stats.c` against external Pokemon Showdown `pokedex.ts`.
+- The helper uses `showdown_mapping_audit.py` normalization and `showdown_aliases.json`; it writes no DPE/CFRU tables and emits only a compact sanitized summary.
+- Dry-diff result against the external Pokemon Showdown data directory: `PASS_READ_ONLY_WITH_BLOCKERS`.
+- Sanitized counts: `1317` tested Species, `29` Species `open-risk` skipped, `167` reviewed Species ignores skipped, `65` Species blocked from safe candidate promotion by Ability blockers, `4` missing local entries after alias/ignore handling, and `225` safe candidate Species with non-Ability field diffs.
+- Ability assignment differences are reported separately and remain analysis-only while Ability behavior/open-risk blockers remain.
+- Showdown `pokedex.ts` did not provide Catch Rate, EXP Yield, EV Yield, or Growth Rate for this pass; those fields require a secondary source before any real DPE update.
+- Added `01_docs/analysis/dpe-base-stats-gen9-safe-dry-diff.md` and `08_tests/randomizer/dpe-base-stats-gen9-safe-dry-diff.md`.
+- Scope remains read-only tooling/documentation only. No CFRU/DPE Pokemon data table, UPR-FVX code, submodule pin, Pokemon Showdown source, raw report, ROM, save, emulator state, build artifact, tool binary, screenshot, hash, private path, token, secret or `.env` data was changed or documented.
+
 # Session update - Pokemon data generator dry-run plan
 
 - Branch: `analysis/pokemon-data-generator-dry-run-plan`.
