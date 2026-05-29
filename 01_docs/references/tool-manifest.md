@@ -1,3 +1,15 @@
+# Tool Manifest Update - 2026-05-29 - DPE Base Stats Gen9 safe dry diff
+
+- Workspace branch: `analysis/dpe-base-stats-gen9-safe-dry-diff`.
+- Added read-only helper: `07_scripts/data_audit/dpe_base_stats_dry_diff.py`.
+- Analysis file: `01_docs/analysis/dpe-base-stats-gen9-safe-dry-diff.md`.
+- Smoke file: `08_tests/randomizer/dpe-base-stats-gen9-safe-dry-diff.md`.
+- Scope: sanitized DPE Base Stats dry-diff against external Pokemon Showdown `pokedex.ts`.
+- Helper inputs: external Pokemon Showdown `data/` directory, `07_scripts/data_audit/showdown_aliases.json`, `07_scripts/data_audit/showdown_mapping_audit.py`, and local DPE `src/Base_Stats.c` read-only.
+- Dry-diff status: `PASS_READ_ONLY_WITH_BLOCKERS`; `1317` tested Species, `29` Species `open-risk` skipped, `167` reviewed Species ignores skipped, `65` Ability-blocked Species skipped from safe candidate promotion, `4` missing local entries after alias/ignore handling, and `225` safe candidate Species with non-Ability field diffs.
+- Local smoke commands: `python3 07_scripts/data_audit/showdown_mapping_audit.py --limit 20`; `python3 07_scripts/data_audit/pokemon_data_dry_run.py --showdown-data-dir <external-pokemon-showdown-data-dir>`; `python3 -m py_compile 07_scripts/data_audit/dpe_base_stats_dry_diff.py`; dry-diff helper against the external Pokemon Showdown `data/` directory with `--limit 10`.
+- Boundary: no Pokemon Showdown data is vendored; no raw reports, CFRU/DPE Pokemon data table, UPR-FVX code, submodule pin, ROM, save, emulator state, build artifact, tool binary, screenshot, hash, private path, token, secret or `.env` data is included.
+
 # Tool Manifest Update - 2026-05-29 - Pokemon data generator dry-run plan
 
 - Workspace branch: `analysis/pokemon-data-generator-dry-run-plan`.
