@@ -1,3 +1,13 @@
+# Session update - Pokemon data generator dry-run plan
+
+- Branch: `analysis/pokemon-data-generator-dry-run-plan`.
+- Added `07_scripts/data_audit/pokemon_data_dry_run.py` as a read-only dry-run gate for future Pokemon Showdown-to-CFRU/DPE data generator work.
+- The helper uses `showdown_mapping_audit.py` normalization, `showdown_aliases.json`, external Showdown data inputs, and local CFRU/DPE table-shape counts; it writes no reports or data tables.
+- Dry-run result against the external Showdown data directory: `BLOCKED_BY_REVIEWED_POLICY`, with 0 uncategorized Species/Move/Ability keys but blocking reviewed Species `open-risk`, Move `open-risk`, and Ability `behavior-risk` / `open-risk` categories.
+- Documented per-block inputs, blockers, expected output, risk, and first implementation PR for Base Stats, Ability Assignments, Level-up Learnsets, Egg Moves, TM Compatibility, and Tutor Compatibility in `01_docs/analysis/pokemon-data-generator-dry-run-plan.md`.
+- Added `08_tests/randomizer/pokemon-data-generator-dry-run-plan.md` as the sanitized dry-run smoke.
+- Scope remains read-only tooling/documentation only. No CFRU/DPE Pokemon data table, UPR-FVX code, submodule pin, Pokemon Showdown source, raw report, ROM, save, emulator state, build artifact, tool binary, screenshot, hash, private path, token, secret or `.env` data was changed or documented.
+
 # Session update - Pokemon data species alias table final
 
 - Branch: `analysis/pokemon-data-species-alias-table-final`.
