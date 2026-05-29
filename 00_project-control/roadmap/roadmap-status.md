@@ -1,3 +1,12 @@
+# Roadmap status update - Pokemon data alias table move final
+
+- Expanded the reviewed Pokemon Showdown-to-CFRU/DPE alias table in `07_scripts/data_audit/showdown_aliases.json`.
+- Status impact: the remaining Move unresolved buckets are now explicitly classified without changing CFRU/DPE data tables.
+- Alias table now contains 191 entries, including Move `open-risk/lgpe-partner-move` 13, Move `open-risk/missing-engine-move` 1, Move `ignore/cap-fan-move` 3, Move `ignore/fan-future-move` 1, Move `ignore/local-helper-constant` 2, and Move `ignore/local-project-move` 2.
+- External-data smoke summary: Move reviewed classifications now cover 104 Showdown-only keys and 143 local-only keys; 0 Showdown-only Move keys and 0 local-only Move keys remain uncategorized.
+- `open-risk` Move entries remain unresolved behavior/mapping gaps and are not support promotion or safe generator mappings.
+- No CFRU/DPE Pokemon data table, UPR-FVX code, submodule pin, Pokemon Showdown data copy, ROM path, ROM hash, CRC, full log, screenshot, save, emulator state, output ROM, build artifact, tool binary, private path or P1 promotion is added.
+
 # Roadmap status update - Pokemon data alias table move splits
 
 - Expanded the reviewed Pokemon Showdown-to-CFRU/DPE alias table in `07_scripts/data_audit/showdown_aliases.json`.

@@ -1,3 +1,13 @@
+# Next steps update - Pokemon data alias table move final
+
+- Treat `07_scripts/data_audit/showdown_aliases.json` as updated through the reviewed remaining-Move classification batch.
+- Move audit buckets now have 0 still-uncategorized Showdown-only Move keys and 0 still-uncategorized local-only Move keys.
+- Keep `open-risk` Move entries blocked: `allyswitch` and Let's Go partner moves are classified as known unresolved behavior gaps, not safe aliases.
+- Keep CAP/Future Showdown moves and local helper/project constants as explicit non-actionable ignores unless the project later opts into those data domains.
+- Next alias-table batch should focus on Ability behavior-risk expansion or remaining Species form/name policy; do not broaden Move regex rules.
+- Audit/generator work must continue to fail closed on uncategorized Species or Ability mappings and must treat `open-risk` as unresolved.
+- Continue excluding Pokemon Showdown data copies, raw reports, CFRU/DPE table edits, UPR-FVX changes, submodule repins, ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, local addresses, `.local.json`, secrets, tokens and `.env` data from commits.
+
 # Next steps update - Pokemon data alias table move splits
 
 - Treat `07_scripts/data_audit/showdown_aliases.json` as updated through the reviewed Z/Max/GMax physical-special Move split batch.

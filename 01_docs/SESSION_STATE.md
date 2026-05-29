@@ -1,3 +1,14 @@
+# Session update - Pokemon data alias table move final
+
+- Branch: `analysis/pokemon-data-alias-table-move-final`.
+- Expanded `07_scripts/data_audit/showdown_aliases.json` from 169 to 191 reviewed entries.
+- Classified the remaining Move unresolved buckets only; no Species or Ability entries were expanded.
+- Added Move `open-risk` entries for `allyswitch` and 13 Let's Go partner moves because no reviewed local CFRU/DPE engine-backed move exists.
+- Added Move `ignore` entries for 3 Showdown CAP moves, 1 Showdown nonstandard Future move, 2 local helper constants, and 2 local CFRU/DPE project moves.
+- External-data audit now classifies 104 Showdown-only Move keys and 143 local-only Move keys; 0 Showdown-only Move keys and 0 local-only Move keys remain uncategorized.
+- `open-risk` Move entries remain unresolved behavior/mapping gaps, not solved aliases.
+- Scope remains read-only alias/data-audit documentation. No CFRU/DPE Pokemon data table, UPR-FVX code, submodule pin, Pokemon Showdown source, raw report, ROM, save, emulator state, build artifact, tool binary, screenshot, hash, private path, token, secret or `.env` data was changed or documented.
+
 # Session update - Pokemon data alias table move splits
 
 - Branch: `analysis/pokemon-data-alias-table-move-splits`.

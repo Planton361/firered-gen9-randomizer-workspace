@@ -15,8 +15,8 @@ The table is classification-only. It does not authorize CFRU or DPE data-table e
 Each entry uses:
 
 - `kind`: `species`, `moves`, or `abilities`.
-- `category`: review category such as `form-name`, `gmax-giga`, `local-shortform`, `split-move`, `hidden-power-variant`, `spelling`, `name-mismatch`, or `behavior-risk`.
-- `status`: `alias`, `ignore`, or `behavior-risk`.
+- `category`: review category such as `form-name`, `gmax-giga`, `local-shortform`, `split-move`, `hidden-power-variant`, `spelling`, `cap-fan-move`, `fan-future-move`, `lgpe-partner-move`, `missing-engine-move`, `local-helper-constant`, `local-project-move`, `name-mismatch`, or `behavior-risk`.
+- `status`: `alias`, `ignore`, `open-risk`, or `behavior-risk`.
 - `showdown_key` or `showdown_pattern`: normalized Showdown key or regex pattern to classify.
 - `local_keys`: normalized local CFRU/DPE keys when the entry maps to local constants.
 - `local_constants`: human-readable constants for review.
@@ -72,6 +72,20 @@ The move-split batch expands the table to 169 entries while keeping the scope to
 
 No broad regex rule was added for Z/Max/GMax names. Each split remains an explicit reviewed entry with local constants, so real Move behavior gaps stay visible.
 
+## Move final reviewed coverage
+
+The move-final batch expands the table to 191 entries while keeping the scope to remaining Move-only classifications:
+
+- Added 13 `open-risk/lgpe-partner-move` entries for Let's Go partner moves that are present in Showdown but have no reviewed local CFRU/DPE engine-backed move.
+- Added 1 `open-risk/missing-engine-move` entry for `allyswitch`, which has no reviewed local CFRU/DPE move.
+- Added 3 `ignore/cap-fan-move` entries for Showdown CAP moves.
+- Added 1 `ignore/fan-future-move` entry for Showdown nonstandard Future move data.
+- Added 2 `ignore/local-helper-constant` entries for `MOVE_NAME_LENGTH` and `MOVE_NONE`.
+- Added 2 `ignore/local-project-move` entries for local CFRU/DPE project moves `MOVE_LEECHFANG` and `MOVE_STEELYHIT`.
+- Existing Species and Ability entries were not broadened in this batch.
+
+`open-risk` entries are deliberately not solved mappings. They exist so the audit report can distinguish known missing Move behavior from accidentally uncategorized keys.
+
 ## Script integration
 
 `07_scripts/data_audit/showdown_mapping_audit.py` now loads the reviewed alias file by default and prints:
@@ -89,18 +103,18 @@ With an external Pokemon Showdown data directory, the script classifies unresolv
 
 ## Full-audit summary
 
-Against the external Pokemon Showdown data directory used locally, the move-split batch classified these unresolved buckets:
+Against the external Pokemon Showdown data directory used locally, the move-final batch classified these unresolved buckets:
 
 - Species Showdown-without-local: 91 classified, 228 still uncategorized.
 - Species local-without-Showdown: 95 classified, 126 still uncategorized.
-- Moves Showdown-without-local: 86 classified, 18 still uncategorized.
-- Moves local-without-Showdown: 139 classified, 4 still uncategorized.
+- Moves Showdown-without-local: 104 classified, 0 still uncategorized.
+- Moves local-without-Showdown: 143 classified, 0 still uncategorized.
 - Abilities Showdown-without-local: 1 classified, 35 still uncategorized.
 - Abilities local-without-Showdown: 1 classified, 7 still uncategorized.
 
 Ability behavior-risk entries are intentionally counted in the alias table summary even when they are not unresolved by name. A normalized-name match is not proof that local CFRU/DPE implements Gen9 behavior.
 
-The remaining uncategorized Move keys include real behavior/content review targets such as `allyswitch`, Let's Go-style moves, CAP/fan moves, and local extras like `leechfang`/`steelyhit`; this batch intentionally does not classify those as solved aliases.
+The remaining Move gaps are now classified rather than uncategorized: `allyswitch` and the Let's Go partner moves are `open-risk`, while CAP/Future non-target moves and local helper/project constants are explicit `ignore` entries.
 
 ## Policy
 
@@ -110,6 +124,7 @@ Rules:
 
 - Treat `alias` entries as reviewed name mappings only.
 - Treat `ignore` entries as deliberate non-actionable Showdown-only keys.
+- Treat `open-risk` entries as known unresolved mapping/behavior gaps, not solved aliases.
 - Treat `behavior-risk` entries as unresolved behavior work, not solved mappings.
 - Fail closed for generated data work: do not silently apply uncategorized Species, Move, or Ability mappings.
 - Keep Ability aliases in their own risk class until CFRU ability behavior is source-audited.
@@ -117,6 +132,6 @@ Rules:
 
 ## Handoff
 
-Next useful step: expand `showdown_aliases.json` in small review batches for narrow spelling/name aliases and high-risk Ability behavior aliases. Keep real Move behavior/content risks such as Ally Switch, Let's Go-style moves, and CAP/fan moves uncategorized until source-backed behavior review exists.
+Next useful step: expand `showdown_aliases.json` in small review batches for high-risk Ability behavior aliases and remaining Species form/name policy. Keep Move `open-risk` entries blocked until source-backed CFRU/DPE behavior or an explicit non-support policy exists.
 
 Do not edit CFRU/DPE Pokemon data tables until unresolved mappings are either classified or intentionally blocked.
