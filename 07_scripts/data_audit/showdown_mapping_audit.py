@@ -10,6 +10,7 @@ cross-source drift, and ability aliases.
 from __future__ import annotations
 
 import argparse
+import json
 import re
 import sys
 from collections import defaultdict
@@ -19,6 +20,7 @@ from pathlib import Path
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 REPO_ROOT = SCRIPT_DIR.parents[1]
+DEFAULT_ALIAS_FILE = SCRIPT_DIR / "showdown_aliases.json"
 
 LOCAL_HEADERS = {
     "species": [
@@ -64,8 +66,62 @@ class Constant:
     is_alias: bool
 
 
+@dataclass(frozen=True)
+class AliasEntry:
+    kind: str
+    category: str
+    status: str
+    showdown_key: str | None
+    showdown_pattern: str | None
+    local_keys: tuple[str, ...]
+    note: str
+
+
+@dataclass(frozen=True)
+class AliasIndex:
+    entries: tuple[AliasEntry, ...]
+    by_showdown: dict[str, list[AliasEntry]]
+    by_local: dict[str, list[AliasEntry]]
+    patterns: tuple[tuple[re.Pattern[str], AliasEntry], ...]
+
+
 def normalize(value: str) -> str:
     return re.sub(r"[^a-z0-9]", "", value.lower())
+
+
+def load_aliases(path: Path | None) -> AliasIndex:
+    if path is None or not path.is_file():
+        return AliasIndex((), {}, {}, ())
+
+    with path.open("r", encoding="utf-8") as handle:
+        raw = json.load(handle)
+
+    entries: list[AliasEntry] = []
+    by_showdown: dict[str, list[AliasEntry]] = defaultdict(list)
+    by_local: dict[str, list[AliasEntry]] = defaultdict(list)
+    patterns: list[tuple[re.Pattern[str], AliasEntry]] = []
+
+    for raw_entry in raw.get("entries", []):
+        showdown_key = raw_entry.get("showdown_key")
+        showdown_pattern = raw_entry.get("showdown_pattern")
+        entry = AliasEntry(
+            kind=raw_entry["kind"],
+            category=raw_entry["category"],
+            status=raw_entry["status"],
+            showdown_key=normalize(showdown_key) if showdown_key else None,
+            showdown_pattern=showdown_pattern,
+            local_keys=tuple(normalize(key) for key in raw_entry.get("local_keys", [])),
+            note=raw_entry.get("note", ""),
+        )
+        entries.append(entry)
+        if entry.showdown_key:
+            by_showdown[entry.showdown_key].append(entry)
+        for local_key in entry.local_keys:
+            by_local[local_key].append(entry)
+        if entry.showdown_pattern:
+            patterns.append((re.compile(entry.showdown_pattern), entry))
+
+    return AliasIndex(tuple(entries), dict(by_showdown), dict(by_local), tuple(patterns))
 
 
 def local_name_to_key(kind: str, name: str) -> str:
@@ -158,6 +214,64 @@ def print_limited(title: str, values: list[str], limit: int) -> None:
         print(f"- ... {len(values) - limit} more")
 
 
+def print_alias_summary(alias_index: AliasIndex, limit: int) -> None:
+    print("\n## reviewed alias table")
+    print(f"- entries: {len(alias_index.entries)}")
+    if not alias_index.entries:
+        return
+
+    grouped: dict[str, int] = defaultdict(int)
+    samples: list[str] = []
+    for entry in alias_index.entries:
+        grouped[f"{entry.kind}/{entry.status}/{entry.category}"] += 1
+        source = entry.showdown_key or entry.showdown_pattern or "<no-showdown-key>"
+        target = ",".join(entry.local_keys) if entry.local_keys else "<no-local-key>"
+        samples.append(f"{entry.kind} {source} -> {target} [{entry.status}/{entry.category}]")
+
+    print_limited("Alias table categories", [f"{key}: {value}" for key, value in sorted(grouped.items())], limit)
+    print_limited("Alias table samples", samples, limit)
+
+
+def matching_aliases(kind: str, key: str, alias_index: AliasIndex, side: str) -> list[AliasEntry]:
+    if side == "showdown":
+        matches = list(alias_index.by_showdown.get(key, []))
+        matches.extend(entry for pattern, entry in alias_index.patterns if pattern.fullmatch(key))
+    elif side == "local":
+        matches = list(alias_index.by_local.get(key, []))
+    else:
+        raise ValueError(f"unknown alias side: {side}")
+    return [entry for entry in matches if entry.kind == kind]
+
+
+def report_alias_classification(
+    title: str,
+    kind: str,
+    keys: list[str],
+    alias_index: AliasIndex,
+    side: str,
+    limit: int,
+) -> None:
+    if not alias_index.entries:
+        return
+
+    category_counts: dict[str, int] = defaultdict(int)
+    classified: list[str] = []
+    unclassified: list[str] = []
+    for key in keys:
+        aliases = matching_aliases(kind, key, alias_index, side)
+        if aliases:
+            labels = sorted({f"{entry.status}/{entry.category}" for entry in aliases})
+            for label in labels:
+                category_counts[label] += 1
+            classified.append(f"{key}: {', '.join(labels)}")
+        else:
+            unclassified.append(key)
+
+    print_limited(f"{title} reviewed classifications", [f"{k}: {v}" for k, v in sorted(category_counts.items())], limit)
+    print_limited(f"{title} classified examples", classified, limit)
+    print_limited(f"{title} still uncategorized", unclassified, limit)
+
+
 def report_local(kind: str, constants: list[Constant], limit: int) -> None:
     cfru = [constant for constant in constants if constant.source == "CFRU"]
     dpe = [constant for constant in constants if constant.source == "DPE"]
@@ -190,12 +304,34 @@ def report_local(kind: str, constants: list[Constant], limit: int) -> None:
         print_limited("Ability aliases", alias_lines, limit)
 
 
-def report_showdown(kind: str, constants: list[Constant], showdown_keys: set[str], limit: int) -> None:
+def report_showdown(
+    kind: str,
+    constants: list[Constant],
+    showdown_keys: set[str],
+    alias_index: AliasIndex,
+    limit: int,
+) -> None:
     local_keys = set(group_by_name(constants))
     unresolved_showdown = sorted(showdown_keys - local_keys)
     local_without_showdown = sorted(local_keys - showdown_keys)
     print_limited(f"Showdown {kind} keys without local normalized constant", unresolved_showdown, limit)
+    report_alias_classification(
+        f"Showdown {kind} keys without local normalized constant",
+        kind,
+        unresolved_showdown,
+        alias_index,
+        "showdown",
+        limit,
+    )
     print_limited(f"Local {kind} constants without Showdown normalized key", local_without_showdown, limit)
+    report_alias_classification(
+        f"Local {kind} constants without Showdown normalized key",
+        kind,
+        local_without_showdown,
+        alias_index,
+        "local",
+        limit,
+    )
 
 
 def parse_args(argv: list[str]) -> argparse.Namespace:
@@ -204,6 +340,12 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
         "--showdown-data-dir",
         type=Path,
         help="External Pokemon Showdown data directory containing pokedex.ts, moves.ts and abilities.ts.",
+    )
+    parser.add_argument(
+        "--alias-file",
+        type=Path,
+        default=DEFAULT_ALIAS_FILE,
+        help="Reviewed alias/ignore table JSON. Defaults to 07_scripts/data_audit/showdown_aliases.json.",
     )
     parser.add_argument("--limit", type=int, default=40, help="Max entries per report section.")
     return parser.parse_args(argv)
@@ -219,12 +361,22 @@ def main(argv: list[str]) -> int:
         print("showdown input: external data directory")
     else:
         print("showdown input: not provided; local-only audit")
+    alias_index = load_aliases(args.alias_file)
+    if alias_index.entries:
+        try:
+            alias_label = str(args.alias_file.resolve().relative_to(REPO_ROOT))
+        except ValueError:
+            alias_label = "external alias file"
+    else:
+        alias_label = "not loaded"
+    print(f"alias input: {alias_label}")
+    print_alias_summary(alias_index, args.limit)
 
     for kind in ("species", "moves", "abilities"):
         constants = parse_constants(kind)
         report_local(kind, constants, args.limit)
         if args.showdown_data_dir:
-            report_showdown(kind, constants, parse_showdown_keys(args.showdown_data_dir, kind), args.limit)
+            report_showdown(kind, constants, parse_showdown_keys(args.showdown_data_dir, kind), alias_index, args.limit)
 
     return 0
 

@@ -1,3 +1,13 @@
+# Roadmap status update - Pokemon data reviewed alias table
+
+- Added the first reviewed Pokemon Showdown-to-CFRU/DPE alias/ignore table in `07_scripts/data_audit/showdown_aliases.json`.
+- Updated `07_scripts/data_audit/showdown_mapping_audit.py` so the read-only mapping audit loads the alias table and separates reviewed classifications from still-uncategorized keys.
+- Added review handoff `01_docs/analysis/pokemon-data-reviewed-alias-table.md` and sanitized smoke `08_tests/randomizer/pokemon-data-reviewed-alias-table.md`.
+- Status impact: name-shape differences can now be classified in a machine-readable way before any Pokemon data-table update. No support level is promoted.
+- Initial coverage: Ogerpon Terastal forms, GMax/Giga Species examples, regional/local shortforms, Z/Max/GMax physical-special Move splits, Hidden Power typed-variant ignore rule, `visegrip` / `vicegrip`, and Ability aliases marked as behavior risks.
+- External-data smoke summary: the table classified 12 Showdown-only Species keys, 16 local-only Species keys, 24 Showdown-only Move keys, 15 local-only Move keys, and one Ability name mismatch on each side; the remaining unresolved mappings stay uncategorized.
+- No CFRU/DPE Pokemon data table, UPR-FVX code, submodule pin, Pokemon Showdown data copy, ROM path, ROM hash, CRC, full log, screenshot, save, emulator state, output ROM, build artifact, tool binary, private path or P1 promotion is added.
+
 # Roadmap status update - Pokemon data Showdown mapping audit
 
 - Added a read-only Pokemon Showdown mapping audit plan in `01_docs/analysis/pokemon-data-showdown-mapping-audit.md`.
