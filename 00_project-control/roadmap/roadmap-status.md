@@ -1,3 +1,12 @@
+# Roadmap status update - DPE Base Stats tranche 1
+
+- Implemented the first narrow DPE `Base_Stats.c` tranche on DPE branch `data/dpe-base-stats-tranche-1`.
+- Workspace now pins DPE commit `1c8d53870e38d7019c681a68a17c9425a3490611`.
+- Status impact: 10 planned Species now have the reviewed non-Ability `Base_Stats.c` fields aligned with the tranche plan: Crobat, Magnezone, Sylveon, Brionne, Primarina, Ursaluna, Sneasel-Hisui, Sneasler, Toedscool, and Toedscruel.
+- Dry-diff after the tranche reduced safe candidate Species with non-Ability field diffs from `225` to `215`.
+- Caveat: source/diff checked only; no local DPE/CFRU rebuild, ROM boot, BizHawk validation, Ironmon Tracker validation, full-playthrough coverage or P1 promotion is claimed.
+- No ROM path, ROM hash, CRC, full log, screenshot, save, build artifact, tool binary, private path, token, secret or `.env` data is added.
+
 # Roadmap status update - DPE Base Stats Gen9 tranche 1 plan
 
 - Added a documentation-only plan for the first real DPE `Base_Stats.c` update tranche.

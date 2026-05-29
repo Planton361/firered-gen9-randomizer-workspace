@@ -1,3 +1,15 @@
+# Tool Manifest Update - 2026-05-29 - DPE Base Stats tranche 1
+
+- Workspace branch: `data/dpe-base-stats-tranche-1`.
+- DPE branch: `data/dpe-base-stats-tranche-1`.
+- DPE commit: `1c8d53870e38d7019c681a68a17c9425a3490611`.
+- Workspace submodule `02_external/Dynamic-Pokemon-Expansion-Gen-9` now pins this DPE tranche candidate.
+- Scope: narrow DPE `Base_Stats.c` data update for 10 planned Species and only the reviewed non-Ability fields.
+- Changed Species: Crobat, Magnezone, Sylveon, Brionne, Primarina, Ursaluna, Sneasel-Hisui, Sneasler, Toedscool, and Toedscruel.
+- Evidence file: `08_tests/randomizer/dpe-base-stats-tranche-1.md`.
+- Checks: DPE `status --short`, `diff --stat`, `diff --check`; workspace `status --short`, `diff --stat`, `diff --check`; dry-diff helper against the external Pokemon Showdown data directory with `--limit 25`.
+- Boundary: no CFRU, UPR-FVX, other DPE files, Pokemon Showdown data copy, raw report, ROM, save, build artifact, tool binary, screenshot, hash, private path, token, secret or `.env` data is included.
+
 # Tool Manifest Update - 2026-05-29 - DPE Base Stats Gen9 tranche 1 plan
 
 - Workspace branch: `analysis/dpe-base-stats-gen9-tranche-1-plan`.
