@@ -60,6 +60,18 @@ Batch 2 expands the table to 107 entries while keeping the scope to safe Species
 
 No broad regex rule was added for regional forms or GMax/Giga names. Each mapping remains an explicit reviewed entry with local constants.
 
+## Move split batch reviewed coverage
+
+The move-split batch expands the table to 169 entries while keeping the scope to safe Move physical/special split aliases:
+
+- Move `split-move`: expanded from 7 to 69 entries.
+- Added explicit reviewed Z-Move physical/special aliases for the remaining local `P`/`S` split constants.
+- Added explicit reviewed Max Move physical/special aliases for the remaining local `P`/`S` split constants.
+- Added explicit reviewed G-Max Move physical/special aliases for the remaining local `P`/`S` split constants.
+- Existing Species and Ability entries were not broadened in this batch.
+
+No broad regex rule was added for Z/Max/GMax names. Each split remains an explicit reviewed entry with local constants, so real Move behavior gaps stay visible.
+
 ## Script integration
 
 `07_scripts/data_audit/showdown_mapping_audit.py` now loads the reviewed alias file by default and prints:
@@ -77,16 +89,18 @@ With an external Pokemon Showdown data directory, the script classifies unresolv
 
 ## Full-audit summary
 
-Against the external Pokemon Showdown data directory used locally, the Batch 2 table classified these unresolved buckets:
+Against the external Pokemon Showdown data directory used locally, the move-split batch classified these unresolved buckets:
 
 - Species Showdown-without-local: 91 classified, 228 still uncategorized.
 - Species local-without-Showdown: 95 classified, 126 still uncategorized.
-- Moves Showdown-without-local: 24 classified, 80 still uncategorized.
-- Moves local-without-Showdown: 15 classified, 128 still uncategorized.
+- Moves Showdown-without-local: 86 classified, 18 still uncategorized.
+- Moves local-without-Showdown: 139 classified, 4 still uncategorized.
 - Abilities Showdown-without-local: 1 classified, 35 still uncategorized.
 - Abilities local-without-Showdown: 1 classified, 7 still uncategorized.
 
 Ability behavior-risk entries are intentionally counted in the alias table summary even when they are not unresolved by name. A normalized-name match is not proof that local CFRU/DPE implements Gen9 behavior.
+
+The remaining uncategorized Move keys include real behavior/content review targets such as `allyswitch`, Let's Go-style moves, CAP/fan moves, and local extras like `leechfang`/`steelyhit`; this batch intentionally does not classify those as solved aliases.
 
 ## Policy
 
@@ -103,6 +117,6 @@ Rules:
 
 ## Handoff
 
-Next useful step: expand `showdown_aliases.json` in small review batches, starting with the remaining Z/Max/GMax split moves, then narrow spelling/name aliases and high-risk Ability behavior aliases.
+Next useful step: expand `showdown_aliases.json` in small review batches for narrow spelling/name aliases and high-risk Ability behavior aliases. Keep real Move behavior/content risks such as Ally Switch, Let's Go-style moves, and CAP/fan moves uncategorized until source-backed behavior review exists.
 
 Do not edit CFRU/DPE Pokemon data tables until unresolved mappings are either classified or intentionally blocked.

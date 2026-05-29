@@ -886,6 +886,564 @@
     },
     {
       "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "aciddownpour",
+      "local_keys": ["aciddownpourp", "aciddownpours"],
+      "local_constants": ["MOVE_ACID_DOWNPOUR_P", "MOVE_ACID_DOWNPOUR_S"],
+      "note": "Local Z-Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "bloomdoom",
+      "local_keys": ["bloomdoomp", "bloomdooms"],
+      "local_constants": ["MOVE_BLOOM_DOOM_P", "MOVE_BLOOM_DOOM_S"],
+      "note": "Local Z-Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "continentalcrush",
+      "local_keys": ["continentalcrushp", "continentalcrushs"],
+      "local_constants": ["MOVE_CONTINENTAL_CRUSH_P", "MOVE_CONTINENTAL_CRUSH_S"],
+      "note": "Local Z-Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "corkscrewcrash",
+      "local_keys": ["corkscrewcrashp", "corkscrewcrashs"],
+      "local_constants": ["MOVE_CORKSCREW_CRASH_P", "MOVE_CORKSCREW_CRASH_S"],
+      "note": "Local Z-Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "devastatingdrake",
+      "local_keys": ["devastatingdrakep", "devastatingdrakes"],
+      "local_constants": ["MOVE_DEVASTATING_DRAKE_P", "MOVE_DEVASTATING_DRAKE_S"],
+      "note": "Local Z-Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "gigavolthavoc",
+      "local_keys": ["gigavolthavocp", "gigavolthavocs"],
+      "local_constants": ["MOVE_GIGAVOLT_HAVOC_P", "MOVE_GIGAVOLT_HAVOC_S"],
+      "note": "Local Z-Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "gmaxbefuddle",
+      "local_keys": ["gmaxbefuddlep", "gmaxbefuddles"],
+      "local_constants": ["MOVE_G_MAX_BEFUDDLE_P", "MOVE_G_MAX_BEFUDDLE_S"],
+      "note": "Local G-Max Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "gmaxcannonade",
+      "local_keys": ["gmaxcannonadep", "gmaxcannonades"],
+      "local_constants": ["MOVE_G_MAX_CANNONADE_P", "MOVE_G_MAX_CANNONADE_S"],
+      "note": "Local G-Max Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "gmaxcentiferno",
+      "local_keys": ["gmaxcentifernop", "gmaxcentifernos"],
+      "local_constants": ["MOVE_G_MAX_CENTIFERNO_P", "MOVE_G_MAX_CENTIFERNO_S"],
+      "note": "Local G-Max Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "gmaxchistrike",
+      "local_keys": ["gmaxchistrikep", "gmaxchistrikes"],
+      "local_constants": ["MOVE_G_MAX_CHI_STRIKE_P", "MOVE_G_MAX_CHI_STRIKE_S"],
+      "note": "Local G-Max Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "gmaxcuddle",
+      "local_keys": ["gmaxcuddlep", "gmaxcuddles"],
+      "local_constants": ["MOVE_G_MAX_CUDDLE_P", "MOVE_G_MAX_CUDDLE_S"],
+      "note": "Local G-Max Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "gmaxdepletion",
+      "local_keys": ["gmaxdepletionp", "gmaxdepletions"],
+      "local_constants": ["MOVE_G_MAX_DEPLETION_P", "MOVE_G_MAX_DEPLETION_S"],
+      "note": "Local G-Max Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "gmaxdrumsolo",
+      "local_keys": ["gmaxdrumsolop", "gmaxdrumsolos"],
+      "local_constants": ["MOVE_G_MAX_DRUM_SOLO_P", "MOVE_G_MAX_DRUM_SOLO_S"],
+      "note": "Local G-Max Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "gmaxfinale",
+      "local_keys": ["gmaxfinalep", "gmaxfinales"],
+      "local_constants": ["MOVE_G_MAX_FINALE_P", "MOVE_G_MAX_FINALE_S"],
+      "note": "Local G-Max Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "gmaxfireball",
+      "local_keys": ["gmaxfireballp", "gmaxfireballs"],
+      "local_constants": ["MOVE_G_MAX_FIREBALL_P", "MOVE_G_MAX_FIREBALL_S"],
+      "note": "Local G-Max Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "gmaxfoamburst",
+      "local_keys": ["gmaxfoamburstp", "gmaxfoambursts"],
+      "local_constants": ["MOVE_G_MAX_FOAM_BURST_P", "MOVE_G_MAX_FOAM_BURST_S"],
+      "note": "Local G-Max Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "gmaxgoldrush",
+      "local_keys": ["gmaxgoldrushp", "gmaxgoldrushs"],
+      "local_constants": ["MOVE_G_MAX_GOLD_RUSH_P", "MOVE_G_MAX_GOLD_RUSH_S"],
+      "note": "Local G-Max Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "gmaxgravitas",
+      "local_keys": ["gmaxgravitasp", "gmaxgravitass"],
+      "local_constants": ["MOVE_G_MAX_GRAVITAS_P", "MOVE_G_MAX_GRAVITAS_S"],
+      "note": "Local G-Max Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "gmaxhydrosnipe",
+      "local_keys": ["gmaxhydrosnipep", "gmaxhydrosnipes"],
+      "local_constants": ["MOVE_G_MAX_HYDROSNIPE_P", "MOVE_G_MAX_HYDROSNIPE_S"],
+      "note": "Local G-Max Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "gmaxmalodor",
+      "local_keys": ["gmaxmalodorp", "gmaxmalodors"],
+      "local_constants": ["MOVE_G_MAX_MALODOR_P", "MOVE_G_MAX_MALODOR_S"],
+      "note": "Local G-Max Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "gmaxmeltdown",
+      "local_keys": ["gmaxmeltdownp", "gmaxmeltdowns"],
+      "local_constants": ["MOVE_G_MAX_MELTDOWN_P", "MOVE_G_MAX_MELTDOWN_S"],
+      "note": "Local G-Max Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "gmaxoneblow",
+      "local_keys": ["gmaxoneblowp", "gmaxoneblows"],
+      "local_constants": ["MOVE_G_MAX_ONE_BLOW_P", "MOVE_G_MAX_ONE_BLOW_S"],
+      "note": "Local G-Max Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "gmaxrapidflow",
+      "local_keys": ["gmaxrapidflowp", "gmaxrapidflows"],
+      "local_constants": ["MOVE_G_MAX_RAPID_FLOW_P", "MOVE_G_MAX_RAPID_FLOW_S"],
+      "note": "Local G-Max Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "gmaxreplenish",
+      "local_keys": ["gmaxreplenishp", "gmaxreplenishs"],
+      "local_constants": ["MOVE_G_MAX_REPLENISH_P", "MOVE_G_MAX_REPLENISH_S"],
+      "note": "Local G-Max Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "gmaxresonance",
+      "local_keys": ["gmaxresonancep", "gmaxresonances"],
+      "local_constants": ["MOVE_G_MAX_RESONANCE_P", "MOVE_G_MAX_RESONANCE_S"],
+      "note": "Local G-Max Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "gmaxsandblast",
+      "local_keys": ["gmaxsandblastp", "gmaxsandblasts"],
+      "local_constants": ["MOVE_G_MAX_SANDBLAST_P", "MOVE_G_MAX_SANDBLAST_S"],
+      "note": "Local G-Max Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "gmaxsmite",
+      "local_keys": ["gmaxsmitep", "gmaxsmites"],
+      "local_constants": ["MOVE_G_MAX_SMITE_P", "MOVE_G_MAX_SMITE_S"],
+      "note": "Local G-Max Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "gmaxsnooze",
+      "local_keys": ["gmaxsnoozep", "gmaxsnoozes"],
+      "local_constants": ["MOVE_G_MAX_SNOOZE_P", "MOVE_G_MAX_SNOOZE_S"],
+      "note": "Local G-Max Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "gmaxsteelsurge",
+      "local_keys": ["gmaxsteelsurgep", "gmaxsteelsurges"],
+      "local_constants": ["MOVE_G_MAX_STEELSURGE_P", "MOVE_G_MAX_STEELSURGE_S"],
+      "note": "Local G-Max Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "gmaxstonesurge",
+      "local_keys": ["gmaxstonesurgep", "gmaxstonesurges"],
+      "local_constants": ["MOVE_G_MAX_STONESURGE_P", "MOVE_G_MAX_STONESURGE_S"],
+      "note": "Local G-Max Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "gmaxstunshock",
+      "local_keys": ["gmaxstunshockp", "gmaxstunshocks"],
+      "local_constants": ["MOVE_G_MAX_STUN_SHOCK_P", "MOVE_G_MAX_STUN_SHOCK_S"],
+      "note": "Local G-Max Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "gmaxsweetness",
+      "local_keys": ["gmaxsweetnessp", "gmaxsweetnesss"],
+      "local_constants": ["MOVE_G_MAX_SWEETNESS_P", "MOVE_G_MAX_SWEETNESS_S"],
+      "note": "Local G-Max Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "gmaxtartness",
+      "local_keys": ["gmaxtartnessp", "gmaxtartnesss"],
+      "local_constants": ["MOVE_G_MAX_TARTNESS_P", "MOVE_G_MAX_TARTNESS_S"],
+      "note": "Local G-Max Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "gmaxterror",
+      "local_keys": ["gmaxterrorp", "gmaxterrors"],
+      "local_constants": ["MOVE_G_MAX_TERROR_P", "MOVE_G_MAX_TERROR_S"],
+      "note": "Local G-Max Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "gmaxvolcalith",
+      "local_keys": ["gmaxvolcalithp", "gmaxvolcaliths"],
+      "local_constants": ["MOVE_G_MAX_VOLCALITH_P", "MOVE_G_MAX_VOLCALITH_S"],
+      "note": "Local G-Max Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "gmaxvoltcrash",
+      "local_keys": ["gmaxvoltcrashp", "gmaxvoltcrashs"],
+      "local_constants": ["MOVE_G_MAX_VOLT_CRASH_P", "MOVE_G_MAX_VOLT_CRASH_S"],
+      "note": "Local G-Max Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "gmaxwindrage",
+      "local_keys": ["gmaxwindragep", "gmaxwindrages"],
+      "local_constants": ["MOVE_G_MAX_WIND_RAGE_P", "MOVE_G_MAX_WIND_RAGE_S"],
+      "note": "Local G-Max Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "hydrovortex",
+      "local_keys": ["hydrovortexp", "hydrovortexs"],
+      "local_constants": ["MOVE_HYDRO_VORTEX_P", "MOVE_HYDRO_VORTEX_S"],
+      "note": "Local Z-Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "infernooverdrive",
+      "local_keys": ["infernooverdrivep", "infernooverdrives"],
+      "local_constants": ["MOVE_INFERNO_OVERDRIVE_P", "MOVE_INFERNO_OVERDRIVE_S"],
+      "note": "Local Z-Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "maxdarkness",
+      "local_keys": ["maxdarknessp", "maxdarknesss"],
+      "local_constants": ["MOVE_MAX_DARKNESS_P", "MOVE_MAX_DARKNESS_S"],
+      "note": "Local Max Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "maxflare",
+      "local_keys": ["maxflarep", "maxflares"],
+      "local_constants": ["MOVE_MAX_FLARE_P", "MOVE_MAX_FLARE_S"],
+      "note": "Local Max Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "maxflutterby",
+      "local_keys": ["maxflutterbyp", "maxflutterbys"],
+      "local_constants": ["MOVE_MAX_FLUTTERBY_P", "MOVE_MAX_FLUTTERBY_S"],
+      "note": "Local Max Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "maxgeyser",
+      "local_keys": ["maxgeyserp", "maxgeysers"],
+      "local_constants": ["MOVE_MAX_GEYSER_P", "MOVE_MAX_GEYSER_S"],
+      "note": "Local Max Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "maxhailstorm",
+      "local_keys": ["maxhailstormp", "maxhailstorms"],
+      "local_constants": ["MOVE_MAX_HAILSTORM_P", "MOVE_MAX_HAILSTORM_S"],
+      "note": "Local Max Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "maxknuckle",
+      "local_keys": ["maxknucklep", "maxknuckles"],
+      "local_constants": ["MOVE_MAX_KNUCKLE_P", "MOVE_MAX_KNUCKLE_S"],
+      "note": "Local Max Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "maxlightning",
+      "local_keys": ["maxlightningp", "maxlightnings"],
+      "local_constants": ["MOVE_MAX_LIGHTNING_P", "MOVE_MAX_LIGHTNING_S"],
+      "note": "Local Max Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "maxmindstorm",
+      "local_keys": ["maxmindstormp", "maxmindstorms"],
+      "local_constants": ["MOVE_MAX_MINDSTORM_P", "MOVE_MAX_MINDSTORM_S"],
+      "note": "Local Max Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "maxooze",
+      "local_keys": ["maxoozep", "maxoozes"],
+      "local_constants": ["MOVE_MAX_OOZE_P", "MOVE_MAX_OOZE_S"],
+      "note": "Local Max Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "maxovergrowth",
+      "local_keys": ["maxovergrowthp", "maxovergrowths"],
+      "local_constants": ["MOVE_MAX_OVERGROWTH_P", "MOVE_MAX_OVERGROWTH_S"],
+      "note": "Local Max Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "maxphantasm",
+      "local_keys": ["maxphantasmp", "maxphantasms"],
+      "local_constants": ["MOVE_MAX_PHANTASM_P", "MOVE_MAX_PHANTASM_S"],
+      "note": "Local Max Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "maxquake",
+      "local_keys": ["maxquakep", "maxquakes"],
+      "local_constants": ["MOVE_MAX_QUAKE_P", "MOVE_MAX_QUAKE_S"],
+      "note": "Local Max Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "maxrockfall",
+      "local_keys": ["maxrockfallp", "maxrockfalls"],
+      "local_constants": ["MOVE_MAX_ROCKFALL_P", "MOVE_MAX_ROCKFALL_S"],
+      "note": "Local Max Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "maxstarfall",
+      "local_keys": ["maxstarfallp", "maxstarfalls"],
+      "local_constants": ["MOVE_MAX_STARFALL_P", "MOVE_MAX_STARFALL_S"],
+      "note": "Local Max Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "maxsteelspike",
+      "local_keys": ["maxsteelspikep", "maxsteelspikes"],
+      "local_constants": ["MOVE_MAX_STEELSPIKE_P", "MOVE_MAX_STEELSPIKE_S"],
+      "note": "Local Max Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "maxwyrmwind",
+      "local_keys": ["maxwyrmwindp", "maxwyrmwinds"],
+      "local_constants": ["MOVE_MAX_WYRMWIND_P", "MOVE_MAX_WYRMWIND_S"],
+      "note": "Local Max Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "neverendingnightmare",
+      "local_keys": ["neverendingnightmarep", "neverendingnightmares"],
+      "local_constants": ["MOVE_NEVER_ENDING_NIGHTMARE_P", "MOVE_NEVER_ENDING_NIGHTMARE_S"],
+      "note": "Local Z-Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "savagespinout",
+      "local_keys": ["savagespinoutp", "savagespinouts"],
+      "local_constants": ["MOVE_SAVAGE_SPIN_OUT_P", "MOVE_SAVAGE_SPIN_OUT_S"],
+      "note": "Local Z-Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "shatteredpsyche",
+      "local_keys": ["shatteredpsychep", "shatteredpsyches"],
+      "local_constants": ["MOVE_SHATTERED_PSYCHE_P", "MOVE_SHATTERED_PSYCHE_S"],
+      "note": "Local Z-Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "subzeroslammer",
+      "local_keys": ["subzeroslammerp", "subzeroslammers"],
+      "local_constants": ["MOVE_SUBZERO_SLAMMER_P", "MOVE_SUBZERO_SLAMMER_S"],
+      "note": "Local Z-Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "supersonicskystrike",
+      "local_keys": ["supersonicskystrikep", "supersonicskystrikes"],
+      "local_constants": ["MOVE_SUPERSONIC_SKYSTRIKE_P", "MOVE_SUPERSONIC_SKYSTRIKE_S"],
+      "note": "Local Z-Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "tectonicrage",
+      "local_keys": ["tectonicragep", "tectonicrages"],
+      "local_constants": ["MOVE_TECTONIC_RAGE_P", "MOVE_TECTONIC_RAGE_S"],
+      "note": "Local Z-Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "twinkletackle",
+      "local_keys": ["twinkletacklep", "twinkletackles"],
+      "local_constants": ["MOVE_TWINKLE_TACKLE_P", "MOVE_TWINKLE_TACKLE_S"],
+      "note": "Local Z-Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
       "category": "hidden-power-variant",
       "status": "ignore",
       "showdown_pattern": "^hiddenpower(?:bug|dark|dragon|electric|fighting|fire|flying|ghost|grass|ground|ice|poison|psychic|rock|steel|water)$",

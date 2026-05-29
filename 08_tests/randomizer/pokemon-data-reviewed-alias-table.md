@@ -22,8 +22,8 @@ Local-only audit:
 
 - Script completed successfully.
 - Alias table loaded from the repo-local default path.
-- Alias table reported 107 reviewed entries.
-- Category summary included 4 Species form-name aliases, 32 GMax/Giga Species aliases, 55 local-shortform Species aliases, 7 Move split aliases, 1 Hidden Power ignore pattern, 1 spelling alias, 1 Ability name-mismatch alias, and 6 Ability behavior-risk entries.
+- Alias table reported 169 reviewed entries.
+- Category summary included 4 Species form-name aliases, 32 GMax/Giga Species aliases, 55 local-shortform Species aliases, 69 Move split aliases, 1 Hidden Power ignore pattern, 1 spelling alias, 1 Ability name-mismatch alias, and 6 Ability behavior-risk entries.
 - Existing CFRU/DPE local drift remained visible: Ogerpon form-name differences, Ability `0x4D` naming drift, and Ability alias rows.
 
 External Showdown-data audit:
@@ -31,8 +31,8 @@ External Showdown-data audit:
 - Script completed successfully against an external Pokemon Showdown data directory.
 - Species Showdown-without-local: 91 classified, 228 still uncategorized.
 - Species local-without-Showdown: 95 classified, 126 still uncategorized.
-- Moves Showdown-without-local: 24 classified, 80 still uncategorized.
-- Moves local-without-Showdown: 15 classified, 128 still uncategorized.
+- Moves Showdown-without-local: 86 classified, 18 still uncategorized.
+- Moves local-without-Showdown: 139 classified, 4 still uncategorized.
 - Abilities Showdown-without-local: 1 classified, 35 still uncategorized.
 - Abilities local-without-Showdown: 1 classified, 7 still uncategorized.
 
@@ -42,6 +42,8 @@ Syntax check:
 
 ## Caveats
 
-This is a targeted read-only smoke. The Batch 2 table resolves reviewed regional Species shortforms and GMax/Giga Species aliases, but does not resolve the full Showdown-to-local mapping space.
+This is a targeted read-only smoke. The table resolves reviewed regional Species shortforms, GMax/Giga Species aliases, and explicit Z/Max/GMax physical-special Move split aliases, but does not resolve the full Showdown-to-local mapping space.
+
+Remaining uncategorized Move keys include real behavior/content review targets such as `allyswitch`, Let's Go-style moves, CAP/fan moves, and local extras. They are intentionally not marked solved by the Move split alias batch.
 
 Ability `behavior-risk` entries remain behavior risks even if the local normalized ability name exists. They require separate CFRU ability behavior review before any Gen9 data update should treat them as solved.
