@@ -1,3 +1,11 @@
+# Roadmap status update - DPE Base Stats Gen9 tranche 1 plan
+
+- Added a documentation-only plan for the first real DPE `Base_Stats.c` update tranche.
+- Status impact: the next data PR now has a constrained candidate list and explicit exclusions before any DPE table is edited.
+- Recommended tranche 1 candidates: Sneasel-Hisui, Sneasler, Ursaluna, Toedscool, Toedscruel, Primarina, Brionne, Sylveon, Magnezone, and Crobat.
+- The planned tranche includes only narrow non-Ability type-order, gender-ratio, and egg-group fields. It excludes Ability fields, Catch Rate, EXP Yield, EV Yield, Growth Rate, moves, learnsets, TM/Tutor compatibility, open-risk Species, reviewed ignores, cosmetic Pikachu forms, representation-only gender diffs, egg-group order-only churn, and local balance-looking changes.
+- No CFRU/DPE Pokemon data table, UPR-FVX code, submodule pin, Pokemon Showdown data copy, ROM path, ROM hash, CRC, full log, screenshot, save, build artifact, tool binary, private path or P1 promotion is added.
+
 # Roadmap status update - DPE Base Stats Gen9 safe dry diff
 
 - Added `07_scripts/data_audit/dpe_base_stats_dry_diff.py` as a read-only dry-diff helper for comparing DPE `src/Base_Stats.c` against external Pokemon Showdown `pokedex.ts`.

@@ -1,3 +1,12 @@
+# Next steps update - DPE Base Stats Gen9 tranche 1 plan
+
+- Treat `01_docs/analysis/dpe-base-stats-gen9-tranche-1-plan.md` as the current handoff for the first narrow DPE `Base_Stats.c` data PR.
+- Recommended tranche 1 is limited to 10 Species: Sneasel-Hisui, Sneasler, Ursaluna, Toedscool, Toedscruel, Primarina, Brionne, Sylveon, Magnezone, and Crobat.
+- Later implementation should edit only the listed non-Ability fields in DPE `Base_Stats.c`; do not include Ability fields, stats, Catch Rate, EXP Yield, EV Yield, Growth Rate, moves, learnsets, TM/Tutor compatibility, CFRU, UPR-FVX, or submodule pins.
+- Keep excluded categories out of tranche 1: Species open-risk, reviewed ignores, cosmetic Pikachu forms, representation-only gender diffs, egg-group order-only churn, obvious local balance buffs, and local custom type additions without separate policy.
+- Suggested later DPE commit: `data: update dpe base stats tranche 1`; suggested later workspace docs/pin commit if needed: `docs: pin dpe base stats tranche 1`.
+- Continue excluding Pokemon Showdown data copies, raw reports, CFRU/DPE table edits outside the later dedicated data PR, UPR-FVX changes, submodule repins, ROMs, saves, builds, tool binaries, screenshots, hashes, private paths, `.local.json`, secrets, tokens and `.env` data from commits.
+
 # Next steps update - DPE Base Stats Gen9 safe dry diff
 
 - Treat `07_scripts/data_audit/dpe_base_stats_dry_diff.py` as the current read-only helper for DPE Base Stats dry-diff review against external Pokemon Showdown `pokedex.ts`.
