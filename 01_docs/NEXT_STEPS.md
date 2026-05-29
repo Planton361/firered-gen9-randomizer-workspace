@@ -1,3 +1,12 @@
+# Next steps update - Pokemon data ability risk table final
+
+- Treat `07_scripts/data_audit/showdown_aliases.json` as updated through the final Ability unresolved-key classification batch.
+- Ability unresolved audit buckets now have 0 still-uncategorized Showdown-only Ability keys and 0 still-uncategorized local-only Ability keys.
+- Keep Ability `behavior-risk`, `alias-plus-hook`, `name-mismatch` with blocked policy, and `open-risk` entries blocked for generator/data updates until source-backed behavior acceptance or an explicit non-support policy exists.
+- Non-blocking Ability entries are limited to explicit legacy `intentionally-merged` name/effect merges, local-only ignores, non-project Future/CAP ignores, and sentinel-only `noability` / `ABILITY_NONE` handling.
+- Next useful mapping work should continue remaining Species form/name policy; Ability follow-up should focus on targeted battle smokes or source fixes for blocked entries such as As One, Chilling Neigh, Full Metal Body, Libero, Zero to Hero, Terapagos Tera behavior, Commander, Hospitality, and Embody Aspect.
+- Continue excluding Pokemon Showdown data copies, raw reports, CFRU/DPE table edits, UPR-FVX changes, submodule repins, ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, local addresses, `.local.json`, secrets, tokens and `.env` data from commits.
+
 # Next steps update - Pokemon data ability risk table
 
 - Treat `07_scripts/data_audit/showdown_aliases.json` as updated through the Ability behavior-risk table batch.
