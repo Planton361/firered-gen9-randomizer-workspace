@@ -1912,6 +1912,248 @@
     },
     {
       "kind": "abilities",
+      "category": "intentionally-merged",
+      "status": "alias",
+      "showdown_key": "airlock",
+      "local_keys": ["cloudnine"],
+      "local_constants": ["ABILITY_CLOUDNINE"],
+      "generator_policy": "non-blocking-name-merge",
+      "note": "CFRU/DPE define ABILITY_CLOUDNINE with an Also Air Lock source comment and CFRU handles optional ABILITY_AIRLOCK beside Cloud Nine."
+    },
+    {
+      "kind": "abilities",
+      "category": "name-mismatch",
+      "status": "behavior-risk",
+      "showdown_key": "asoneglastrier",
+      "local_keys": ["asonechilling"],
+      "local_constants": ["ABILITY_ASONE_CHILLING"],
+      "generator_policy": "blocked",
+      "note": "Local constant uses the Chilling-side short name; CFRU has Unnerve and Attack-boost hooks, but this remains blocked until As One behavior is separately accepted."
+    },
+    {
+      "kind": "abilities",
+      "category": "name-mismatch",
+      "status": "behavior-risk",
+      "showdown_key": "asonespectrier",
+      "local_keys": ["asonegrim"],
+      "local_constants": ["ABILITY_ASONE_GRIM"],
+      "generator_policy": "blocked",
+      "note": "Local constant uses the Grim-side short name; CFRU has Unnerve and Sp. Atk-boost hooks, but this remains blocked until As One behavior is separately accepted."
+    },
+    {
+      "kind": "abilities",
+      "category": "missing-local",
+      "status": "open-risk",
+      "showdown_key": "chillingneigh",
+      "local_keys": [],
+      "local_constants": [],
+      "generator_policy": "blocked",
+      "note": "CFRU has conditional ABILITY_CHILLINGNEIGH hooks but no reviewed local Chilling Neigh constant; AS_ONE_CHILLING is not a pure Chilling Neigh replacement."
+    },
+    {
+      "kind": "abilities",
+      "category": "missing-local",
+      "status": "ignore",
+      "showdown_key": "dragonize",
+      "local_keys": [],
+      "local_constants": [],
+      "generator_policy": "non-project-ignore",
+      "note": "Showdown marks this Ability isNonstandard Future; no local CFRU/DPE Ability constant is expected for the Gen9 project target."
+    },
+    {
+      "kind": "abilities",
+      "category": "alias-plus-hook",
+      "status": "behavior-risk",
+      "showdown_key": "fullmetalbody",
+      "local_keys": ["clearbody"],
+      "local_constants": ["ABILITY_CLEARBODY"],
+      "local_alias_target": "ABILITY_CLEARBODY",
+      "generator_policy": "blocked",
+      "note": "DPE assigns Solgaleo Clear Body with an ABILITY_FULLMETALBODY comment and CFRU has species-gated Full Metal Body display/helper paths; still blocked until behavior is accepted."
+    },
+    {
+      "kind": "abilities",
+      "category": "intentionally-merged",
+      "status": "alias",
+      "showdown_key": "ironbarbs",
+      "local_keys": ["roughskin"],
+      "local_constants": ["ABILITY_ROUGHSKIN"],
+      "generator_policy": "non-blocking-name-merge",
+      "note": "CFRU/DPE define ABILITY_ROUGHSKIN with an Also Iron Barbs source comment and CFRU shares optional Iron Barbs contact-damage behavior with Rough Skin."
+    },
+    {
+      "kind": "abilities",
+      "category": "behavior-risk",
+      "status": "behavior-risk",
+      "showdown_key": "libero",
+      "local_keys": ["protean"],
+      "local_constants": ["ABILITY_PROTEAN"],
+      "local_alias_target": "ABILITY_PROTEAN",
+      "generator_policy": "blocked",
+      "note": "CFRU/DPE define Protean as Also Libero, but CFRU Protean activation does not prove current Showdown/Gen9 once-per-switch Libero behavior."
+    },
+    {
+      "kind": "abilities",
+      "category": "missing-local",
+      "status": "ignore",
+      "showdown_key": "megasol",
+      "local_keys": [],
+      "local_constants": [],
+      "generator_policy": "non-project-ignore",
+      "note": "Showdown marks this Ability isNonstandard Future; no local CFRU/DPE Ability constant is expected for the Gen9 project target."
+    },
+    {
+      "kind": "abilities",
+      "category": "missing-local",
+      "status": "ignore",
+      "showdown_key": "mountaineer",
+      "local_keys": [],
+      "local_constants": [],
+      "generator_policy": "non-project-ignore",
+      "note": "Showdown marks this Ability isNonstandard CAP; no local CFRU/DPE Ability constant is expected for the Gen9 project target."
+    },
+    {
+      "kind": "abilities",
+      "category": "name-mismatch",
+      "status": "ignore",
+      "showdown_key": "noability",
+      "local_keys": ["none"],
+      "local_constants": ["ABILITY_NONE"],
+      "generator_policy": "sentinel-only",
+      "note": "Showdown noability and local ABILITY_NONE are sentinel values, not real Abilities to generate onto Pokemon."
+    },
+    {
+      "kind": "abilities",
+      "category": "missing-local",
+      "status": "ignore",
+      "showdown_key": "persistent",
+      "local_keys": [],
+      "local_constants": [],
+      "generator_policy": "non-project-ignore",
+      "note": "Showdown marks this Ability isNonstandard CAP; no local CFRU/DPE Ability constant is expected for the Gen9 project target."
+    },
+    {
+      "kind": "abilities",
+      "category": "missing-local",
+      "status": "ignore",
+      "showdown_key": "piercingdrill",
+      "local_keys": [],
+      "local_constants": [],
+      "generator_policy": "non-project-ignore",
+      "note": "Showdown marks this Ability isNonstandard Future; no local CFRU/DPE Ability constant is expected for the Gen9 project target."
+    },
+    {
+      "kind": "abilities",
+      "category": "intentionally-merged",
+      "status": "alias",
+      "showdown_key": "powerofalchemy",
+      "local_keys": ["receiver"],
+      "local_constants": ["ABILITY_RECEIVER"],
+      "generator_policy": "non-blocking-name-merge",
+      "note": "CFRU/DPE define ABILITY_RECEIVER with an Also Power of Alchemy source comment; this is a reviewed legacy equivalent merge."
+    },
+    {
+      "kind": "abilities",
+      "category": "intentionally-merged",
+      "status": "alias",
+      "showdown_key": "propellertail",
+      "local_keys": ["stalwart"],
+      "local_constants": ["ABILITY_STALWART"],
+      "generator_policy": "non-blocking-name-merge",
+      "note": "CFRU/DPE define ABILITY_STALWART with an Also Propellor Tail source comment; this is a reviewed legacy equivalent merge."
+    },
+    {
+      "kind": "abilities",
+      "category": "intentionally-merged",
+      "status": "alias",
+      "showdown_key": "purepower",
+      "local_keys": ["hugepower"],
+      "local_constants": ["ABILITY_HUGEPOWER"],
+      "generator_policy": "non-blocking-name-merge",
+      "note": "CFRU/DPE define ABILITY_HUGEPOWER with an Also Pure Power source comment and the doubled-Attack behavior is shared."
+    },
+    {
+      "kind": "abilities",
+      "category": "intentionally-merged",
+      "status": "alias",
+      "showdown_key": "queenlymajesty",
+      "local_keys": ["dazzling"],
+      "local_constants": ["ABILITY_DAZZLING"],
+      "generator_policy": "non-blocking-name-merge",
+      "note": "CFRU/DPE define ABILITY_DAZZLING with an Also Queenly Majesty source comment and CFRU shares optional Queenly Majesty priority-blocking paths with Dazzling."
+    },
+    {
+      "kind": "abilities",
+      "category": "missing-local",
+      "status": "ignore",
+      "showdown_key": "rebound",
+      "local_keys": [],
+      "local_constants": [],
+      "generator_policy": "non-project-ignore",
+      "note": "Showdown marks this Ability isNonstandard CAP; no local CFRU/DPE Ability constant is expected for the Gen9 project target."
+    },
+    {
+      "kind": "abilities",
+      "category": "intentionally-merged",
+      "status": "alias",
+      "showdown_key": "solidrock",
+      "local_keys": ["filter"],
+      "local_constants": ["ABILITY_FILTER"],
+      "generator_policy": "non-blocking-name-merge",
+      "note": "CFRU/DPE define ABILITY_FILTER with an Also Solid Rock source comment; this is a reviewed damage-reduction merge."
+    },
+    {
+      "kind": "abilities",
+      "category": "missing-local",
+      "status": "ignore",
+      "showdown_key": "spicyspray",
+      "local_keys": [],
+      "local_constants": [],
+      "generator_policy": "non-project-ignore",
+      "note": "Showdown marks this Ability isNonstandard Future; no local CFRU/DPE Ability constant is expected for the Gen9 project target."
+    },
+    {
+      "kind": "abilities",
+      "category": "intentionally-merged",
+      "status": "alias",
+      "showdown_key": "tanglinghair",
+      "local_keys": ["gooey"],
+      "local_constants": ["ABILITY_GOOEY"],
+      "generator_policy": "non-blocking-name-merge",
+      "note": "CFRU/DPE define ABILITY_GOOEY with an Also Tangling Hair source comment and CFRU shares optional Tangling Hair contact-speed-drop behavior with Gooey."
+    },
+    {
+      "kind": "abilities",
+      "category": "intentionally-merged",
+      "status": "alias",
+      "showdown_key": "vitalspirit",
+      "local_keys": ["insomnia"],
+      "local_constants": ["ABILITY_INSOMNIA"],
+      "generator_policy": "non-blocking-name-merge",
+      "note": "CFRU/DPE define ABILITY_INSOMNIA with an Also Vital Spirit source comment and CFRU shares optional Vital Spirit sleep-blocking paths with Insomnia."
+    },
+    {
+      "kind": "abilities",
+      "category": "intentionally-merged",
+      "status": "alias",
+      "showdown_key": "whitesmoke",
+      "local_keys": ["clearbody"],
+      "local_constants": ["ABILITY_CLEARBODY"],
+      "generator_policy": "non-blocking-name-merge",
+      "note": "CFRU/DPE define ABILITY_CLEARBODY with an Also White Smoke source comment and CFRU shares optional White Smoke stat-drop immunity paths with Clear Body."
+    },
+    {
+      "kind": "abilities",
+      "category": "intentionally-merged",
+      "status": "alias",
+      "showdown_key": "wimpout",
+      "local_keys": ["emergencyexit"],
+      "local_constants": ["ABILITY_EMERGENCYEXIT"],
+      "generator_policy": "non-blocking-name-merge",
+      "note": "CFRU/DPE define ABILITY_EMERGENCYEXIT with an Also Wimp Out source comment and CFRU retains Wimp Out comments beside Emergency Exit switch-out behavior."
+    },
+    {
+      "kind": "abilities",
       "category": "local-only",
       "status": "ignore",
       "local_keys": ["evaporate"],

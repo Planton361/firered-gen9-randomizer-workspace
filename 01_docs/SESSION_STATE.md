@@ -1,3 +1,14 @@
+# Session update - Pokemon data ability risk table final
+
+- Branch: `analysis/pokemon-data-ability-risk-table-final`.
+- Expanded `07_scripts/data_audit/showdown_aliases.json` from 215 to 239 reviewed entries with Ability-only final classifications.
+- Classified the remaining Ability unresolved buckets from the external Pokemon Showdown audit: Showdown-without-local Abilities are now 36 classified / 0 still uncategorized; local-without-Showdown Abilities are now 8 classified / 0 still uncategorized.
+- Added source-backed legacy merges for Air Lock, Iron Barbs, Power of Alchemy, Propeller Tail, Pure Power, Queenly Majesty, Solid Rock, Tangling Hair, Vital Spirit, White Smoke, and Wimp Out where CFRU/DPE comments or shared paths show intentional local merges.
+- Added blocking classifications for As One name mismatches, pure Chilling Neigh missing-local risk, Full Metal Body alias-plus-hook risk, and Libero / Protean behavior risk.
+- Added explicit non-project ignores for Showdown `isNonstandard` Future/CAP Ability names and a sentinel-only `noability` / `ABILITY_NONE` name-mismatch ignore.
+- Updated `01_docs/analysis/pokemon-data-reviewed-alias-table.md` and `08_tests/randomizer/pokemon-data-reviewed-alias-table.md` with sanitized counts and caveats.
+- Scope remains alias-table/documentation only. No CFRU/DPE Pokemon data table, UPR-FVX code, submodule pin, Pokemon Showdown source, raw report, ROM, save, emulator state, build artifact, tool binary, screenshot, hash, private path, token, secret or `.env` data was changed or documented.
+
 # Session update - Pokemon data ability risk table
 
 - Branch: `analysis/pokemon-data-ability-risk-table`.

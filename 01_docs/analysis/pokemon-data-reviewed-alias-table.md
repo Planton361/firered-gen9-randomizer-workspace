@@ -102,6 +102,20 @@ The source-backed focus entries include `HADRONENGINE`, `ORICHALCUMPULSE`, `TOXI
 
 All Ability behavior-risk/open-risk entries include blocking generator policy. The table classifies the risk; it does not promote any Gen9 Ability behavior to generator-safe support.
 
+## Ability final batch reviewed coverage
+
+The Ability final batch expands the table to 239 entries and classifies the remaining Ability-only unresolved buckets:
+
+- Ability `intentionally-merged`: expanded to 13 non-blocking legacy merge entries. Added reviewed CFRU/DPE source-comment-backed merges for Air Lock / Cloud Nine, Iron Barbs / Rough Skin, Power of Alchemy / Receiver, Propeller Tail / Stalwart, Pure Power / Huge Power, Queenly Majesty / Dazzling, Solid Rock / Filter, Tangling Hair / Gooey, Vital Spirit / Insomnia, White Smoke / Clear Body, and Wimp Out / Emergency Exit.
+- Ability `alias-plus-hook`: expanded to 13 `behavior-risk` entries by adding Full Metal Body as a Clear Body-backed local assignment with CFRU species-gated display/helper paths.
+- Ability `behavior-risk`: expanded to 5 entries by adding Libero / Protean as a blocked behavior-risk merge because current local behavior was not proven equivalent to current Showdown/Gen9 behavior.
+- Ability `name-mismatch`: expanded to 3 blocking behavior-risk entries by adding Showdown `asoneglastrier` / `asonespectrier` mapped to local `asonechilling` / `asonegrim`.
+- Ability `missing-local`: expanded to 8 `open-risk` entries by adding pure Chilling Neigh, because CFRU has conditional hooks but no reviewed local `ABILITY_CHILLINGNEIGH` constant.
+- Ability `missing-local`: added 7 explicit `ignore` entries for Showdown `isNonstandard` Future/CAP Ability keys: Dragonize, Mega Sol, Mountaineer, Persistent, Piercing Drill, Rebound, and Spicy Spray.
+- Ability `name-mismatch`: added 1 sentinel-only ignore for Showdown `noability` / local `ABILITY_NONE`.
+
+After this batch, the external audit has no still-uncategorized Ability keys in either Showdown-without-local or local-without-Showdown buckets. Blocking Ability classifications still remain blocking; the batch classifies names and risk, not battle correctness.
+
 ## Script integration
 
 `07_scripts/data_audit/showdown_mapping_audit.py` now loads the reviewed alias file by default and prints:
@@ -139,6 +153,13 @@ Against the same external Pokemon Showdown data directory, the Ability risk-tabl
 
 Most `alias-plus-hook` entries have matching local normalized keys, so they are represented in the alias table category summary rather than only in unresolved-key buckets.
 
+Against the same external Pokemon Showdown data directory, the Ability final batch classified the remaining Ability unresolved buckets:
+
+- Abilities Showdown-without-local: 36 classified, 0 still uncategorized.
+- Abilities local-without-Showdown: 8 classified, 0 still uncategorized.
+
+The remaining blocking Ability keys are the `behavior-risk` and `open-risk` classifications, including `asoneglastrier`, `asonespectrier`, `chillingneigh`, `commander`, `embodyaspect*`, `fullmetalbody`, `hospitality`, `libero`, `tabletsofruin`, `teraformzero`, `terashell`, and `terashift`.
+
 ## Policy
 
 Use this table to separate reviewed name-shape differences from real unresolved mapping work.
@@ -157,6 +178,6 @@ Rules:
 
 ## Handoff
 
-Next useful step: review the remaining uncategorized Ability names in small batches, then continue remaining Species form/name policy. Keep Move and Ability `open-risk` / `behavior-risk` entries blocked until source-backed CFRU/DPE behavior or an explicit non-support policy exists.
+Next useful step: continue remaining Species form/name policy. Keep Move and Ability `open-risk` / `behavior-risk` entries blocked until source-backed CFRU/DPE behavior or an explicit non-support policy exists.
 
 Do not edit CFRU/DPE Pokemon data tables until unresolved mappings are either classified or intentionally blocked.
