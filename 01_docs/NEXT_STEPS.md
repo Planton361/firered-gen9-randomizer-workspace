@@ -1,3 +1,12 @@
+# Next steps update - Pokemon data species alias table final
+
+- Treat `07_scripts/data_audit/showdown_aliases.json` as updated through the final Species unresolved-key classification batch.
+- Species unresolved audit buckets now have 0 still-uncategorized Showdown-only Species keys and 0 still-uncategorized local-only Species keys.
+- Keep Species `open-risk` entries blocked for generator/data updates until source-backed form semantics or an explicit non-support policy exists.
+- Blocking Species follow-up should focus on Alcremie cream/sweet forms, Basculin/Basculegion form semantics, Battle Bond Greninja, Pumpkaboo/Gourgeist size naming, Ogerpon mask-vs-form naming, Sinistea/Polteageist antique/chipped naming, Rockruff Dusk, and Tatsugiri form color/name semantics.
+- Next useful data work can plan a dry-run generator/audit path against the reviewed alias table, still failing closed on any uncategorized key and treating `open-risk` / `behavior-risk` as unresolved.
+- Continue excluding Pokemon Showdown data copies, raw reports, CFRU/DPE table edits, UPR-FVX changes, submodule repins, ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, local addresses, `.local.json`, secrets, tokens and `.env` data from commits.
+
 # Next steps update - Pokemon data ability risk table final
 
 - Treat `07_scripts/data_audit/showdown_aliases.json` as updated through the final Ability unresolved-key classification batch.

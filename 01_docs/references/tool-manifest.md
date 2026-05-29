@@ -1,3 +1,15 @@
+# Tool Manifest Update - 2026-05-29 - Pokemon data species alias table final
+
+- Workspace branch: `analysis/pokemon-data-species-alias-table-final`.
+- Alias table: `07_scripts/data_audit/showdown_aliases.json`.
+- Analysis file updated: `01_docs/analysis/pokemon-data-reviewed-alias-table.md`.
+- Smoke file updated: `08_tests/randomizer/pokemon-data-reviewed-alias-table.md`.
+- Scope: Species-only final classification of remaining Pokemon Showdown-to-CFRU/DPE unresolved Species/Form keys.
+- Added explicit local-shortform, GMax/Giga, cosmetic-form, fan-ignore, local-extra, and blocking open-risk Species entries.
+- Alias table status: 471 entries total; external Species buckets now classify 319 Showdown-only Species keys and 221 local-only Species keys with 0 still uncategorized.
+- Local smoke commands: `python3 07_scripts/data_audit/showdown_mapping_audit.py --limit 20`; full comparison against an external Pokemon Showdown `data/` directory with `--limit 50`; `python3 -m py_compile 07_scripts/data_audit/showdown_mapping_audit.py`.
+- Boundary: no Pokemon Showdown data is vendored; no raw reports, CFRU/DPE Pokemon data table, UPR-FVX code, submodule pin, ROM, save, emulator state, build artifact, tool binary, screenshot, raw log, hash, private path, token, secret or `.env` data is included.
+
 # Tool Manifest Update - 2026-05-29 - Pokemon data ability risk table final
 
 - Workspace branch: `analysis/pokemon-data-ability-risk-table-final`.
