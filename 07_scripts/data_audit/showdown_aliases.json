@@ -1,0 +1,263 @@
+{
+  "schema_version": 1,
+  "description": "Reviewed Pokemon Showdown-to-CFRU/DPE alias and ignore table. This file classifies mappings only; it does not authorize CFRU/DPE data changes.",
+  "entries": [
+    {
+      "kind": "species",
+      "category": "form-name",
+      "status": "alias",
+      "showdown_key": "ogerpontealtera",
+      "local_keys": ["ogerpongreen", "ogerponterastal"],
+      "local_constants": ["SPECIES_OGERPON_GREEN", "SPECIES_OGERPON_TERASTAL"],
+      "note": "Ogerpon Teal Mask Terastal form; CFRU uses color shorthand while DPE uses TERASTAL naming."
+    },
+    {
+      "kind": "species",
+      "category": "form-name",
+      "status": "alias",
+      "showdown_key": "ogerponwellspringtera",
+      "local_keys": ["ogerponblue", "ogerponwellspringterastal"],
+      "local_constants": ["SPECIES_OGERPON_BLUE", "SPECIES_OGERPON_WELLSPRING_TERASTAL"],
+      "note": "Ogerpon Wellspring Terastal form."
+    },
+    {
+      "kind": "species",
+      "category": "form-name",
+      "status": "alias",
+      "showdown_key": "ogerponhearthflametera",
+      "local_keys": ["ogerponred", "ogerponhearthflameterastal"],
+      "local_constants": ["SPECIES_OGERPON_RED", "SPECIES_OGERPON_HEARTHFLAME_TERASTAL"],
+      "note": "Ogerpon Hearthflame Terastal form."
+    },
+    {
+      "kind": "species",
+      "category": "form-name",
+      "status": "alias",
+      "showdown_key": "ogerponcornerstonetera",
+      "local_keys": ["ogerpongrey", "ogerponcornerstoneterastal"],
+      "local_constants": ["SPECIES_OGERPON_GREY", "SPECIES_OGERPON_CORNERSTONE_TERASTAL"],
+      "note": "Ogerpon Cornerstone Terastal form."
+    },
+    {
+      "kind": "species",
+      "category": "gmax-giga",
+      "status": "alias",
+      "showdown_key": "charizardgmax",
+      "local_keys": ["charizardgiga"],
+      "local_constants": ["SPECIES_CHARIZARD_GIGA"],
+      "note": "Local source uses GIGA naming for Gigantamax species forms."
+    },
+    {
+      "kind": "species",
+      "category": "gmax-giga",
+      "status": "alias",
+      "showdown_key": "blastoisegmax",
+      "local_keys": ["blastoisegiga"],
+      "local_constants": ["SPECIES_BLASTOISE_GIGA"],
+      "note": "Local source uses GIGA naming for Gigantamax species forms."
+    },
+    {
+      "kind": "species",
+      "category": "gmax-giga",
+      "status": "alias",
+      "showdown_key": "rillaboomgmax",
+      "local_keys": ["rillaboomgiga"],
+      "local_constants": ["SPECIES_RILLABOOM_GIGA"],
+      "note": "Local source uses GIGA naming for Gigantamax species forms."
+    },
+    {
+      "kind": "species",
+      "category": "gmax-giga",
+      "status": "alias",
+      "showdown_key": "alcremiegmax",
+      "local_keys": ["alcremiegiga"],
+      "local_constants": ["SPECIES_ALCREMIE_GIGA"],
+      "note": "Local source uses GIGA naming for Gigantamax species forms."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "arcaninehisui",
+      "local_keys": ["arcanineh"],
+      "local_constants": ["SPECIES_ARCANINE_H"],
+      "note": "Local source shortens Hisui to H."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "articunogalar",
+      "local_keys": ["articunog"],
+      "local_constants": ["SPECIES_ARTICUNO_G"],
+      "note": "Local source shortens Galar to G."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "farfetchdgalar",
+      "local_keys": ["farfetchdg"],
+      "local_constants": ["SPECIES_FARFETCHD_G"],
+      "note": "Local source shortens Galar to G."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "indeedeef",
+      "local_keys": ["indeedeefemale"],
+      "local_constants": ["SPECIES_INDEEDEE_FEMALE"],
+      "note": "Gender form naming differs."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "breakneckblitz",
+      "local_keys": ["breakneckblitzp", "breakneckblitzs"],
+      "local_constants": ["MOVE_BREAKNECK_BLITZ_P", "MOVE_BREAKNECK_BLITZ_S"],
+      "note": "Local Z-Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "alloutpummeling",
+      "local_keys": ["alloutpummelingp", "alloutpummelings"],
+      "local_constants": ["MOVE_ALL_OUT_PUMMELING_P", "MOVE_ALL_OUT_PUMMELING_S"],
+      "note": "Local Z-Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "blackholeeclipse",
+      "local_keys": ["blackholeeclipsep", "blackholeeclipses"],
+      "local_constants": ["MOVE_BLACK_HOLE_ECLIPSE_P", "MOVE_BLACK_HOLE_ECLIPSE_S"],
+      "note": "Local Z-Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "maxstrike",
+      "local_keys": ["maxstrikep", "maxstrikes"],
+      "local_constants": ["MOVE_MAX_STRIKE_P", "MOVE_MAX_STRIKE_S"],
+      "note": "Local Max Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "maxairstream",
+      "local_keys": ["maxairstreamp", "maxairstreams"],
+      "local_constants": ["MOVE_MAX_AIRSTREAM_P", "MOVE_MAX_AIRSTREAM_S"],
+      "note": "Local Max Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "gmaxvinelash",
+      "local_keys": ["gmaxvinelashp", "gmaxvinelashs"],
+      "local_constants": ["MOVE_G_MAX_VINE_LASH_P", "MOVE_G_MAX_VINE_LASH_S"],
+      "note": "Local G-Max Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "split-move",
+      "status": "alias",
+      "showdown_key": "gmaxwildfire",
+      "local_keys": ["gmaxwildfirep", "gmaxwildfires"],
+      "local_constants": ["MOVE_G_MAX_WILDFIRE_P", "MOVE_G_MAX_WILDFIRE_S"],
+      "note": "Local G-Max Move constants split physical/special variants."
+    },
+    {
+      "kind": "moves",
+      "category": "hidden-power-variant",
+      "status": "ignore",
+      "showdown_pattern": "^hiddenpower(?:bug|dark|dragon|electric|fighting|fire|flying|ghost|grass|ground|ice|poison|psychic|rock|steel|water)$",
+      "local_keys": [],
+      "note": "Showdown exposes typed Hidden Power variants; local CFRU/DPE does not model each type as a separate move constant."
+    },
+    {
+      "kind": "moves",
+      "category": "spelling",
+      "status": "alias",
+      "showdown_key": "visegrip",
+      "local_keys": ["vicegrip"],
+      "local_constants": ["MOVE_VICE_GRIP"],
+      "note": "CFRU/DPE use the legacy local spelling."
+    },
+    {
+      "kind": "abilities",
+      "category": "name-mismatch",
+      "status": "alias",
+      "showdown_key": "tabletsofruin",
+      "local_keys": ["tabletofruin"],
+      "local_constants": ["ABILITY_TABLETOFRUIN"],
+      "note": "Local constant omits the plural s; behavior still aliases to STALL and remains a behavior risk."
+    },
+    {
+      "kind": "abilities",
+      "category": "behavior-risk",
+      "status": "behavior-risk",
+      "showdown_key": "hadronengine",
+      "local_keys": ["hadronengine"],
+      "local_constants": ["ABILITY_HADRONENGINE"],
+      "local_alias_target": "ABILITY_ELECTRICSURGE",
+      "note": "Local name aliases to an older effect."
+    },
+    {
+      "kind": "abilities",
+      "category": "behavior-risk",
+      "status": "behavior-risk",
+      "showdown_key": "orichalcumpulse",
+      "local_keys": ["orichalcumpulse"],
+      "local_constants": ["ABILITY_ORICHALCUMPULSE"],
+      "local_alias_target": "ABILITY_DROUGHT",
+      "note": "Local name aliases to an older effect."
+    },
+    {
+      "kind": "abilities",
+      "category": "behavior-risk",
+      "status": "behavior-risk",
+      "showdown_key": "poisonpuppeteer",
+      "local_keys": ["poisonpuppeteer"],
+      "local_constants": ["ABILITY_POISONPUPPETEER"],
+      "local_alias_target": "ABILITY_PLUS",
+      "note": "Local name aliases to an older effect."
+    },
+    {
+      "kind": "abilities",
+      "category": "behavior-risk",
+      "status": "behavior-risk",
+      "showdown_key": "goodasgold",
+      "local_keys": ["goodasgold"],
+      "local_constants": ["ABILITY_GOODASGOLD"],
+      "local_alias_target": "ABILITY_CLEARBODY",
+      "note": "Local name aliases to an older effect."
+    },
+    {
+      "kind": "abilities",
+      "category": "behavior-risk",
+      "status": "behavior-risk",
+      "showdown_key": "toxicdebris",
+      "local_keys": ["toxicdebris"],
+      "local_constants": ["ABILITY_TOXICDEBRIS"],
+      "local_alias_target": "ABILITY_POISONPOINT",
+      "note": "Local name aliases to an older effect."
+    },
+    {
+      "kind": "abilities",
+      "category": "behavior-risk",
+      "status": "behavior-risk",
+      "showdown_key": "zerotohero",
+      "local_keys": ["zerotohero"],
+      "local_constants": ["ABILITY_ZEROTOHERO"],
+      "local_alias_target": "ABILITY_TORRENT",
+      "note": "Local name aliases to an older effect."
+    }
+  ]
+}

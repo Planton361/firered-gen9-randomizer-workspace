@@ -1,3 +1,12 @@
+# Next steps update - Pokemon data reviewed alias table
+
+- Treat `01_docs/analysis/pokemon-data-reviewed-alias-table.md` and `07_scripts/data_audit/showdown_aliases.json` as the current reviewed alias/ignore handoff.
+- Expand the alias table only in small review batches: remaining regional form aliases, remaining GMax/Giga species names, remaining Z/Max/GMax physical-special split moves, then explicit Ability behavior-risk entries.
+- Keep `ignore` entries limited to deliberate Showdown-only forms such as Hidden Power typed variants; do not use ignores to hide uncertain mappings.
+- Keep Ability behavior-risk entries separate from name aliases. A local normalized ability name is not evidence of true Gen9 behavior.
+- Before any CFRU/DPE data-table update, require the generator/audit path to fail closed on uncategorized Species, Move, or Ability mappings.
+- Continue excluding Pokemon Showdown data copies, raw reports, CFRU/DPE table edits, UPR-FVX changes, submodule repins, ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, local addresses, `.local.json`, secrets, tokens and `.env` data from commits.
+
 # Next steps update - Pokemon data Showdown mapping audit
 
 - Treat `01_docs/analysis/pokemon-data-showdown-mapping-audit.md` as the current handoff for the Pokemon Showdown-to-CFRU/DPE mapping audit.

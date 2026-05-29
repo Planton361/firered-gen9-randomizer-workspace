@@ -1,3 +1,15 @@
+# Tool Manifest Update - 2026-05-29 - Pokemon data reviewed alias table
+
+- Workspace branch: `analysis/pokemon-data-reviewed-alias-table`.
+- Analysis file: `01_docs/analysis/pokemon-data-reviewed-alias-table.md`.
+- Smoke file: `08_tests/randomizer/pokemon-data-reviewed-alias-table.md`.
+- Alias table: `07_scripts/data_audit/showdown_aliases.json`.
+- Updated helper: `07_scripts/data_audit/showdown_mapping_audit.py`.
+- Tool purpose update: the read-only Pokemon Showdown mapping audit now loads a reviewed alias/ignore table, reports category counts, and classifies unresolved Showdown/local Species, Move and Ability keys while keeping still-uncategorized keys visible.
+- Initial alias coverage: Ogerpon Terastal form aliases, GMax/Giga Species examples, regional/local shortform examples, Z/Max/GMax physical-special Move split aliases, Hidden Power typed-variant ignore pattern, `visegrip` to `vicegrip`, and Ability aliases as explicit behavior risks.
+- Local smoke commands: `python3 07_scripts/data_audit/showdown_mapping_audit.py --limit 20`; full comparison against an external Pokemon Showdown `data/` directory with `--limit 50`; `python3 -m py_compile 07_scripts/data_audit/showdown_mapping_audit.py`.
+- Boundary: no Pokemon Showdown data is vendored; no raw reports, CFRU/DPE Pokemon data table, UPR-FVX code, submodule pin, ROM, save, emulator state, build artifact, tool binary, screenshot, raw log, hash, private path, token, secret or `.env` data is included.
+
 # Tool Manifest Update - 2026-05-29 - Pokemon data Showdown mapping audit
 
 - Workspace branch: `analysis/pokemon-data-showdown-mapping-audit`.
