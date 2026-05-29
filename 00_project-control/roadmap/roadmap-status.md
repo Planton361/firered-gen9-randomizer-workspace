@@ -1,3 +1,12 @@
+# Roadmap status update - Pokemon data alias map policy
+
+- Added `01_docs/analysis/pokemon-data-alias-map.md` as the reviewable Alias-/Ignore-Policy for Pokemon Showdown-to-CFRU/DPE unresolved mapping results.
+- Added sanitized evidence file `08_tests/randomizer/pokemon-data-alias-map.md`.
+- Status impact: unresolved mapping results now have categories for review before generated table updates. No data support level is promoted.
+- Summary: Species unresolved counts were `319` Showdown-without-local and `221` local-without-Showdown; Moves were `104` and `143`; Abilities were `36` and `8`; local Ability alias define rows across CFRU/DPE remained `67`.
+- Main roadmap risk remains Abilities: local Gen9 names may alias to old effects, so Ability name coverage is not Ability behavior coverage.
+- No CFRU/DPE/UPR-FVX code, submodule pin, Pokemon Showdown data copy, raw report, ROM path, ROM hash, CRC, full log, screenshot, save, emulator state, output ROM, build artifact, tool binary, private path or P1 promotion is added.
+
 # Roadmap status update - Pokemon data Gen9 inventory
 
 - Added `01_docs/analysis/pokemon-data-gen9-inventory.md` as a documentation-only, source-backed inventory for CFRU/DPE Pokemon data tables.

@@ -1,3 +1,11 @@
+# Next steps update - Pokemon data alias map policy
+
+- Treat `01_docs/analysis/pokemon-data-alias-map.md` as the current policy handoff before any generated Pokemon data update.
+- Next step: build a small reviewed alias table from the policy, starting with Ogerpon forms, regional/local shortforms, GMax/Giga species names, Z/Max/GMax split moves, Hidden Power variants and Ability behavior-risk aliases.
+- Generated data updates should fail closed on uncategorized unresolved Species, Move or Ability keys.
+- Ability aliases remain behavior-risk findings until CFRU ability behavior is audited; do not count name aliases as true Gen9 behavior.
+- Continue excluding CFRU/DPE data changes, UPR-FVX changes, submodule pins, Pokemon Showdown source copies, raw reports, ROMs, saves, states, builds, screenshots, hashes, private paths, secrets, tokens and `.env` data.
+
 # Next steps update - Pokemon data Gen9 inventory
 
 - Treat `01_docs/analysis/pokemon-data-gen9-inventory.md` as the current source-backed handoff for Gen9 Pokemon data table planning.

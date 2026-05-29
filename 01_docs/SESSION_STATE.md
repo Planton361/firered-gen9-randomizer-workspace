@@ -1,3 +1,12 @@
+# Session update - Pokemon data alias map policy
+
+- Branch: `analysis/pokemon-data-alias-map`.
+- Added `01_docs/analysis/pokemon-data-alias-map.md` as the reviewable Alias-/Ignore-Policy for Pokemon Showdown-to-CFRU/DPE mapping results.
+- Added `08_tests/randomizer/pokemon-data-alias-map.md` as the sanitized full-audit summary.
+- Full-audit summary: Species unresolved counts were Showdown-without-local `319` and local-without-Showdown `221`; Moves were `104` and `143`; Abilities were `36` and `8`; local Ability alias define rows across CFRU/DPE remained `67`.
+- Policy categories now separate Species form aliases, local shortforms, GMax/Giga aliases, CAP/fan ignores, local extras and true open form risks; Moves split Z/Max/GMax physical-special pairs, Hidden Power variants, spelling aliases, ignored content, local extras and true open move risks; Abilities split old-effect aliases, name mismatches, likely missing Gen9 behavior and intentional ignores.
+- Scope is documentation-only. No CFRU, DPE, UPR-FVX, submodule pin, Pokemon Showdown source file, raw audit report, ROM, save, emulator state, build artifact, tool binary, screenshot, hash, private path, token, secret or `.env` data was changed or committed.
+
 # Session update - Pokemon data Gen9 inventory
 
 - Branch: `analysis/pokemon-data-gen9-inventory`.
