@@ -116,6 +116,19 @@ The Ability final batch expands the table to 239 entries and classifies the rema
 
 After this batch, the external audit has no still-uncategorized Ability keys in either Showdown-without-local or local-without-Showdown buckets. Blocking Ability classifications still remain blocking; the batch classifies names and risk, not battle correctness.
 
+## Species final batch reviewed coverage
+
+The Species final batch expands the table to 471 entries and classifies the remaining Species/Form unresolved buckets:
+
+- Species `local-shortform`: expanded to 76 entries, adding explicit reviewed aliases for shorter local names such as Arceus Fighting, Calyrex rider forms, Cherrim Sunshine, Darmanitan Galar Zen, Dudunsparce Three-Segment, Ash-Greninja, Lycanroc Midnight, Magearna Original, Meowstic/Oinkologne female forms, Oricorio forms, Silvally Fighting, Tauros Paldea forms, Urshifu forms, Wishiwashi School, and Xerneas Neutral/Natural.
+- Species `gmax-giga`: expanded to 34 entries, adding Urshifu Single/Rapid Strike GMax to local Giga naming.
+- Species `cosmetic-form`: added reviewed aliases or ignores for Minior, Pikachu cap/starter/world/flying/surfing, Pichu Spiky-eared, Castform weather forms, local color/gender/trim/seasonal/Unown constants, and other cosmetic-only keys.
+- Species `fan-ignore`: added 161 explicit ignores for Showdown CAP/Fan/Pokestar/Totem/non-project species keys.
+- Species `local-extra`: covers local sentinel/helper/project/special constants such as `SPECIES_NONE`, `SPECIES_EGG`, `SPECIES_SHADOW_WARRIOR`, local Cubone/Exeggcute/Koffing/Mime Jr. variants, and Zygarde cell/core helpers.
+- Species `open-risk`: 29 entries remain blocking for true form semantics or missing support.
+
+The blocking Species groups are Alcremie cream/sweet forms, Basculin/Basculegion form semantics, Battle Bond Greninja, Pumpkaboo/Gourgeist size naming, Ogerpon mask-vs-form naming, Sinistea/Polteageist antique/chipped naming, Rockruff Dusk, and Tatsugiri form color/name semantics. These are classified so generators can fail closed; they are not solved aliases.
+
 ## Script integration
 
 `07_scripts/data_audit/showdown_mapping_audit.py` now loads the reviewed alias file by default and prints:
@@ -160,6 +173,13 @@ Against the same external Pokemon Showdown data directory, the Ability final bat
 
 The remaining blocking Ability keys are the `behavior-risk` and `open-risk` classifications, including `asoneglastrier`, `asonespectrier`, `chillingneigh`, `commander`, `embodyaspect*`, `fullmetalbody`, `hospitality`, `libero`, `tabletsofruin`, `teraformzero`, `terashell`, and `terashift`.
 
+Against the same external Pokemon Showdown data directory, the Species final batch classified the remaining Species unresolved buckets:
+
+- Species Showdown-without-local: 319 classified, 0 still uncategorized.
+- Species local-without-Showdown: 221 classified, 0 still uncategorized.
+
+The remaining blocking Species keys are the `open-risk` classifications: `alcremie`, `alcremiecaramelswirl`, `alcremielemoncream`, `alcremiematchacream`, `alcremiemintcream`, `alcremierainbowswirl`, `alcremierubycream`, `alcremierubyswirl`, `basculegion`, `basculin`, `basculinbluestriped`, `basculinwhitestriped`, `greninjabond`, `gourgeistlarge`, `gourgeistsmall`, `gourgeistsuper`, `ogerponcornerstone`, `ogerponhearthflame`, `ogerponwellspring`, `polteageistantique`, `pumpkaboolarge`, `pumpkaboosmall`, `pumpkaboosuper`, `rockruffdusk`, `sinisteaantique`, `tatsugiridroopy`, `tatsugiristretchy`, plus local-only Alcremie sweet constants and local average-size Pumpkaboo/Gourgeist constants.
+
 ## Policy
 
 Use this table to separate reviewed name-shape differences from real unresolved mapping work.
@@ -178,6 +198,6 @@ Rules:
 
 ## Handoff
 
-Next useful step: continue remaining Species form/name policy. Keep Move and Ability `open-risk` / `behavior-risk` entries blocked until source-backed CFRU/DPE behavior or an explicit non-support policy exists.
+Next useful step: use the alias table as the fail-closed input for a dry-run Pokemon data generator plan. Keep Species, Move, and Ability `open-risk` / `behavior-risk` entries blocked until source-backed CFRU/DPE behavior or an explicit non-support policy exists.
 
 Do not edit CFRU/DPE Pokemon data tables until unresolved mappings are either classified or intentionally blocked.

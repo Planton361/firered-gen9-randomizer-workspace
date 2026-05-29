@@ -1,3 +1,13 @@
+# Session update - Pokemon data species alias table final
+
+- Branch: `analysis/pokemon-data-species-alias-table-final`.
+- Expanded `07_scripts/data_audit/showdown_aliases.json` from 239 to 471 reviewed entries with Species-only final classifications.
+- Classified the remaining Species unresolved buckets from the external Pokemon Showdown audit: Showdown-without-local Species are now 319 classified / 0 still uncategorized; local-without-Showdown Species are now 221 classified / 0 still uncategorized.
+- Added explicit Species classifications for additional local shortforms, GMax/Giga naming, cosmetic forms, CAP/Fan/Pokestar/Totem/non-project ignores, local sentinel/helper/project extras, and blocking open-risk form families.
+- Blocking Species groups remain Alcremie cream/sweet forms, Basculin/Basculegion form semantics, Battle Bond Greninja, Pumpkaboo/Gourgeist size naming, Ogerpon mask-vs-form naming, Sinistea/Polteageist antique/chipped naming, Rockruff Dusk, and Tatsugiri form color/name semantics.
+- Updated `01_docs/analysis/pokemon-data-reviewed-alias-table.md` and `08_tests/randomizer/pokemon-data-reviewed-alias-table.md` with sanitized counts and caveats.
+- Scope remains alias-table/documentation only. No CFRU/DPE Pokemon data table, UPR-FVX code, submodule pin, Pokemon Showdown source, raw report, ROM, save, emulator state, build artifact, tool binary, screenshot, hash, private path, token, secret or `.env` data was changed or documented.
+
 # Session update - Pokemon data ability risk table final
 
 - Branch: `analysis/pokemon-data-ability-risk-table-final`.

@@ -822,6 +822,2119 @@
       "note": "Local source shortens Paldea to P."
     },
     {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "arceusfighting",
+      "local_keys": ["arceusfight"],
+      "local_constants": ["SPECIES_ARCEUS_FIGHT"],
+      "note": "Reviewed exact Species/Form alias; local CFRU/DPE uses a shorter or alternate form label for the same explicit form."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "calyrexice",
+      "local_keys": ["calyrexicerider"],
+      "local_constants": ["SPECIES_CALYREX_ICE_RIDER"],
+      "note": "Reviewed exact Species/Form alias; local CFRU/DPE uses a shorter or alternate form label for the same explicit form."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "calyrexshadow",
+      "local_keys": ["calyrexshadowrider"],
+      "local_constants": ["SPECIES_CALYREX_SHADOW_RIDER"],
+      "note": "Reviewed exact Species/Form alias; local CFRU/DPE uses a shorter or alternate form label for the same explicit form."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "cherrimsunshine",
+      "local_keys": ["cherrimsun"],
+      "local_constants": ["SPECIES_CHERRIM_SUN"],
+      "note": "Reviewed exact Species/Form alias; local CFRU/DPE uses a shorter or alternate form label for the same explicit form."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "darmanitangalarzen",
+      "local_keys": ["darmanitangzen"],
+      "local_constants": ["SPECIES_DARMANITAN_G_ZEN"],
+      "note": "Reviewed exact Species/Form alias; local CFRU/DPE uses a shorter or alternate form label for the same explicit form."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "dudunsparcethreesegment",
+      "local_keys": ["dudunsparcethree"],
+      "local_constants": ["SPECIES_DUDUNSPARCE_THREE"],
+      "note": "Reviewed exact Species/Form alias; local CFRU/DPE uses a shorter or alternate form label for the same explicit form."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "greninjaash",
+      "local_keys": ["ashgreninja"],
+      "local_constants": ["SPECIES_ASHGRENINJA"],
+      "note": "Reviewed exact Species/Form alias; local CFRU/DPE uses a shorter or alternate form label for the same explicit form."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "lycanrocmidnight",
+      "local_keys": ["lycanrocn"],
+      "local_constants": ["SPECIES_LYCANROC_N"],
+      "note": "Reviewed exact Species/Form alias; local CFRU/DPE uses a shorter or alternate form label for the same explicit form."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "magearnaoriginal",
+      "local_keys": ["magearnap"],
+      "local_constants": ["SPECIES_MAGEARNA_P"],
+      "note": "Reviewed exact Species/Form alias; local CFRU/DPE uses a shorter or alternate form label for the same explicit form."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "meowsticf",
+      "local_keys": ["meowsticfemale"],
+      "local_constants": ["SPECIES_MEOWSTIC_FEMALE"],
+      "note": "Reviewed exact Species/Form alias; local CFRU/DPE uses a shorter or alternate form label for the same explicit form."
+    },
+    {
+      "kind": "species",
+      "category": "cosmetic-form",
+      "status": "alias",
+      "showdown_key": "minior",
+      "local_keys": ["miniorred"],
+      "local_constants": ["SPECIES_MINIOR_RED"],
+      "note": "Reviewed exact Species/Form alias; local CFRU/DPE uses a shorter or alternate form label for the same explicit form."
+    },
+    {
+      "kind": "species",
+      "category": "cosmetic-form",
+      "status": "alias",
+      "showdown_key": "miniormeteor",
+      "local_keys": ["miniorshield"],
+      "local_constants": ["SPECIES_MINIOR_SHIELD"],
+      "note": "Reviewed exact Species/Form alias; local CFRU/DPE uses a shorter or alternate form label for the same explicit form."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "oinkolognef",
+      "local_keys": ["oinkolognefemale"],
+      "local_constants": ["SPECIES_OINKOLOGNE_FEMALE"],
+      "note": "Reviewed exact Species/Form alias; local CFRU/DPE uses a shorter or alternate form label for the same explicit form."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "oricoriopau",
+      "local_keys": ["oricoriop"],
+      "local_constants": ["SPECIES_ORICORIO_P"],
+      "note": "Reviewed exact Species/Form alias; local CFRU/DPE uses a shorter or alternate form label for the same explicit form."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "oricoriopompom",
+      "local_keys": ["oricorioy"],
+      "local_constants": ["SPECIES_ORICORIO_Y"],
+      "note": "Reviewed exact Species/Form alias; local CFRU/DPE uses a shorter or alternate form label for the same explicit form."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "oricoriosensu",
+      "local_keys": ["oricorios"],
+      "local_constants": ["SPECIES_ORICORIO_S"],
+      "note": "Reviewed exact Species/Form alias; local CFRU/DPE uses a shorter or alternate form label for the same explicit form."
+    },
+    {
+      "kind": "species",
+      "category": "cosmetic-form",
+      "status": "alias",
+      "showdown_key": "pichuspikyeared",
+      "local_keys": ["pichuspiky"],
+      "local_constants": ["SPECIES_PICHU_SPIKY"],
+      "note": "Reviewed exact Species/Form alias; local CFRU/DPE uses a shorter or alternate form label for the same explicit form."
+    },
+    {
+      "kind": "species",
+      "category": "cosmetic-form",
+      "status": "alias",
+      "showdown_key": "pikachualola",
+      "local_keys": ["pikachucapalola"],
+      "local_constants": ["SPECIES_PIKACHU_CAP_ALOLA"],
+      "note": "Reviewed exact Species/Form alias; local CFRU/DPE uses a shorter or alternate form label for the same explicit form."
+    },
+    {
+      "kind": "species",
+      "category": "cosmetic-form",
+      "status": "alias",
+      "showdown_key": "pikachuhoenn",
+      "local_keys": ["pikachucaphoenn"],
+      "local_constants": ["SPECIES_PIKACHU_CAP_HOENN"],
+      "note": "Reviewed exact Species/Form alias; local CFRU/DPE uses a shorter or alternate form label for the same explicit form."
+    },
+    {
+      "kind": "species",
+      "category": "cosmetic-form",
+      "status": "alias",
+      "showdown_key": "pikachukalos",
+      "local_keys": ["pikachucapkalos"],
+      "local_constants": ["SPECIES_PIKACHU_CAP_KALOS"],
+      "note": "Reviewed exact Species/Form alias; local CFRU/DPE uses a shorter or alternate form label for the same explicit form."
+    },
+    {
+      "kind": "species",
+      "category": "cosmetic-form",
+      "status": "alias",
+      "showdown_key": "pikachuoriginal",
+      "local_keys": ["pikachucaporiginal"],
+      "local_constants": ["SPECIES_PIKACHU_CAP_ORIGINAL"],
+      "note": "Reviewed exact Species/Form alias; local CFRU/DPE uses a shorter or alternate form label for the same explicit form."
+    },
+    {
+      "kind": "species",
+      "category": "cosmetic-form",
+      "status": "alias",
+      "showdown_key": "pikachupartner",
+      "local_keys": ["pikachucappartner"],
+      "local_constants": ["SPECIES_PIKACHU_CAP_PARTNER"],
+      "note": "Reviewed exact Species/Form alias; local CFRU/DPE uses a shorter or alternate form label for the same explicit form."
+    },
+    {
+      "kind": "species",
+      "category": "cosmetic-form",
+      "status": "alias",
+      "showdown_key": "pikachusinnoh",
+      "local_keys": ["pikachucapsinnoh"],
+      "local_constants": ["SPECIES_PIKACHU_CAP_SINNOH"],
+      "note": "Reviewed exact Species/Form alias; local CFRU/DPE uses a shorter or alternate form label for the same explicit form."
+    },
+    {
+      "kind": "species",
+      "category": "cosmetic-form",
+      "status": "alias",
+      "showdown_key": "pikachuunova",
+      "local_keys": ["pikachucapunova"],
+      "local_constants": ["SPECIES_PIKACHU_CAP_UNOVA"],
+      "note": "Reviewed exact Species/Form alias; local CFRU/DPE uses a shorter or alternate form label for the same explicit form."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "silvallyfighting",
+      "local_keys": ["silvallyfight"],
+      "local_constants": ["SPECIES_SILVALLY_FIGHT"],
+      "note": "Reviewed exact Species/Form alias; local CFRU/DPE uses a shorter or alternate form label for the same explicit form."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "taurospaldeaaqua",
+      "local_keys": ["taurosaquap"],
+      "local_constants": ["SPECIES_TAUROS_AQUA_P"],
+      "note": "Reviewed exact Species/Form alias; local CFRU/DPE uses a shorter or alternate form label for the same explicit form."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "taurospaldeablaze",
+      "local_keys": ["taurosblazep"],
+      "local_constants": ["SPECIES_TAUROS_BLAZE_P"],
+      "note": "Reviewed exact Species/Form alias; local CFRU/DPE uses a shorter or alternate form label for the same explicit form."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "taurospaldeacombat",
+      "local_keys": ["taurosp"],
+      "local_constants": ["SPECIES_TAUROS_P"],
+      "note": "Reviewed exact Species/Form alias; local CFRU/DPE uses a shorter or alternate form label for the same explicit form."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "urshifu",
+      "local_keys": ["urshifusingle"],
+      "local_constants": ["SPECIES_URSHIFU_SINGLE"],
+      "note": "Reviewed exact Species/Form alias; local CFRU/DPE uses a shorter or alternate form label for the same explicit form."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "urshifurapidstrike",
+      "local_keys": ["urshifurapid"],
+      "local_constants": ["SPECIES_URSHIFU_RAPID"],
+      "note": "Reviewed exact Species/Form alias; local CFRU/DPE uses a shorter or alternate form label for the same explicit form."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "wishiwashischool",
+      "local_keys": ["wishiwashis"],
+      "local_constants": ["SPECIES_WISHIWASHI_S"],
+      "note": "Reviewed exact Species/Form alias; local CFRU/DPE uses a shorter or alternate form label for the same explicit form."
+    },
+    {
+      "kind": "species",
+      "category": "cosmetic-form",
+      "status": "alias",
+      "showdown_key": "xerneasneutral",
+      "local_keys": ["xerneasnatural"],
+      "local_constants": ["SPECIES_XERNEAS_NATURAL"],
+      "note": "Reviewed exact Species/Form alias; local CFRU/DPE uses a shorter or alternate form label for the same explicit form."
+    },
+    {
+      "kind": "species",
+      "category": "gmax-giga",
+      "status": "alias",
+      "showdown_key": "urshifugmax",
+      "local_keys": ["urshifusinglegiga"],
+      "local_constants": ["SPECIES_URSHIFU_SINGLE_GIGA"],
+      "note": "Reviewed Gigantamax/GIGA alias with local Urshifu form shorthand."
+    },
+    {
+      "kind": "species",
+      "category": "gmax-giga",
+      "status": "alias",
+      "showdown_key": "urshifurapidstrikegmax",
+      "local_keys": ["urshifurapidgiga"],
+      "local_constants": ["SPECIES_URSHIFU_RAPID_GIGA"],
+      "note": "Reviewed Gigantamax/GIGA alias with local Urshifu form shorthand."
+    },
+    {
+      "kind": "species",
+      "category": "open-risk",
+      "status": "open-risk",
+      "showdown_key": "alcremie",
+      "local_keys": ["alcremiestrawberry"],
+      "local_constants": ["SPECIES_ALCREMIE_STRAWBERRY"],
+      "generator_policy": "blocked",
+      "note": "Alcremie base/cream-vs-sweet encoding differs between Showdown and local constants; keep generator-blocking."
+    },
+    {
+      "kind": "species",
+      "category": "open-risk",
+      "status": "open-risk",
+      "showdown_key": "alcremiecaramelswirl",
+      "local_keys": [],
+      "local_constants": [],
+      "generator_policy": "blocked",
+      "note": "Showdown Alcremie cream/swirl form has no reviewed equivalent local sweet-form constant; keep generator-blocking."
+    },
+    {
+      "kind": "species",
+      "category": "open-risk",
+      "status": "open-risk",
+      "showdown_key": "alcremielemoncream",
+      "local_keys": [],
+      "local_constants": [],
+      "generator_policy": "blocked",
+      "note": "Showdown Alcremie cream/swirl form has no reviewed equivalent local sweet-form constant; keep generator-blocking."
+    },
+    {
+      "kind": "species",
+      "category": "open-risk",
+      "status": "open-risk",
+      "showdown_key": "alcremiematchacream",
+      "local_keys": [],
+      "local_constants": [],
+      "generator_policy": "blocked",
+      "note": "Showdown Alcremie cream/swirl form has no reviewed equivalent local sweet-form constant; keep generator-blocking."
+    },
+    {
+      "kind": "species",
+      "category": "open-risk",
+      "status": "open-risk",
+      "showdown_key": "alcremiemintcream",
+      "local_keys": [],
+      "local_constants": [],
+      "generator_policy": "blocked",
+      "note": "Showdown Alcremie cream/swirl form has no reviewed equivalent local sweet-form constant; keep generator-blocking."
+    },
+    {
+      "kind": "species",
+      "category": "open-risk",
+      "status": "open-risk",
+      "showdown_key": "alcremierainbowswirl",
+      "local_keys": [],
+      "local_constants": [],
+      "generator_policy": "blocked",
+      "note": "Showdown Alcremie cream/swirl form has no reviewed equivalent local sweet-form constant; keep generator-blocking."
+    },
+    {
+      "kind": "species",
+      "category": "open-risk",
+      "status": "open-risk",
+      "showdown_key": "alcremierubycream",
+      "local_keys": [],
+      "local_constants": [],
+      "generator_policy": "blocked",
+      "note": "Showdown Alcremie cream/swirl form has no reviewed equivalent local sweet-form constant; keep generator-blocking."
+    },
+    {
+      "kind": "species",
+      "category": "open-risk",
+      "status": "open-risk",
+      "showdown_key": "alcremierubyswirl",
+      "local_keys": [],
+      "local_constants": [],
+      "generator_policy": "blocked",
+      "note": "Showdown Alcremie cream/swirl form has no reviewed equivalent local sweet-form constant; keep generator-blocking."
+    },
+    {
+      "kind": "species",
+      "category": "open-risk",
+      "status": "open-risk",
+      "showdown_key": "basculegion",
+      "local_keys": ["basculegionm"],
+      "local_constants": ["SPECIES_BASCULEGION_M"],
+      "generator_policy": "blocked",
+      "note": "Showdown base Basculegion resolves to the male local form, but gender-form data remains generator-blocking until accepted."
+    },
+    {
+      "kind": "species",
+      "category": "open-risk",
+      "status": "open-risk",
+      "showdown_key": "basculin",
+      "local_keys": ["basculinred"],
+      "local_constants": ["SPECIES_BASCULIN_RED"],
+      "generator_policy": "blocked",
+      "note": "Showdown base Basculin resolves to local red-striped form; stripe/form assumptions remain generator-blocking."
+    },
+    {
+      "kind": "species",
+      "category": "open-risk",
+      "status": "open-risk",
+      "showdown_key": "basculinbluestriped",
+      "local_keys": ["basculinblue"],
+      "local_constants": ["SPECIES_BASCULIN_BLUE"],
+      "generator_policy": "blocked",
+      "note": "Reviewed Basculin Blue-Striped local alias; stripe/form assumptions remain generator-blocking."
+    },
+    {
+      "kind": "species",
+      "category": "open-risk",
+      "status": "open-risk",
+      "showdown_key": "basculinwhitestriped",
+      "local_keys": ["basculinh"],
+      "local_constants": ["SPECIES_BASCULIN_H"],
+      "generator_policy": "blocked",
+      "note": "Reviewed Basculin White-Striped local alias; local H naming remains generator-blocking until accepted."
+    },
+    {
+      "kind": "species",
+      "category": "open-risk",
+      "status": "open-risk",
+      "showdown_key": "greninjabond",
+      "local_keys": [],
+      "local_constants": [],
+      "generator_policy": "blocked",
+      "note": "Showdown Greninja-Bond has no reviewed local species constant; do not treat as solved Ash-Greninja support."
+    },
+    {
+      "kind": "species",
+      "category": "open-risk",
+      "status": "open-risk",
+      "showdown_key": "gourgeistlarge",
+      "local_keys": ["gourgeistl"],
+      "local_constants": ["SPECIES_GOURGEIST_L"],
+      "generator_policy": "blocked",
+      "note": "Gourgeist size forms affect stats; reviewed local size alias remains generator-blocking."
+    },
+    {
+      "kind": "species",
+      "category": "open-risk",
+      "status": "open-risk",
+      "showdown_key": "gourgeistsmall",
+      "local_keys": ["gourgeist"],
+      "local_constants": ["SPECIES_GOURGEIST"],
+      "generator_policy": "blocked",
+      "note": "Showdown Small maps to the current local base-sized data, but Pumpkaboo/Gourgeist size encoding remains generator-blocking."
+    },
+    {
+      "kind": "species",
+      "category": "open-risk",
+      "status": "open-risk",
+      "showdown_key": "gourgeistsuper",
+      "local_keys": ["gourgeistxl"],
+      "local_constants": ["SPECIES_GOURGEIST_XL"],
+      "generator_policy": "blocked",
+      "note": "Gourgeist Super maps to local XL naming; size-form data remains generator-blocking."
+    },
+    {
+      "kind": "species",
+      "category": "open-risk",
+      "status": "open-risk",
+      "showdown_key": "ogerponcornerstone",
+      "local_keys": ["ogerponcornerstonemask"],
+      "local_constants": ["SPECIES_OGERPON_CORNERSTONE_MASK"],
+      "generator_policy": "blocked",
+      "note": "Ogerpon mask form maps to local MASK constant, distinct from Terastal form; keep generator-blocking."
+    },
+    {
+      "kind": "species",
+      "category": "open-risk",
+      "status": "open-risk",
+      "showdown_key": "ogerponhearthflame",
+      "local_keys": ["ogerponhearthflamemask"],
+      "local_constants": ["SPECIES_OGERPON_HEARTHFLAME_MASK"],
+      "generator_policy": "blocked",
+      "note": "Ogerpon mask form maps to local MASK constant, distinct from Terastal form; keep generator-blocking."
+    },
+    {
+      "kind": "species",
+      "category": "open-risk",
+      "status": "open-risk",
+      "showdown_key": "ogerponwellspring",
+      "local_keys": ["ogerponwellspringmask"],
+      "local_constants": ["SPECIES_OGERPON_WELLSPRING_MASK"],
+      "generator_policy": "blocked",
+      "note": "Ogerpon mask form maps to local MASK constant, distinct from Terastal form; keep generator-blocking."
+    },
+    {
+      "kind": "species",
+      "category": "open-risk",
+      "status": "open-risk",
+      "showdown_key": "polteageistantique",
+      "local_keys": ["polteageistchipped"],
+      "local_constants": ["SPECIES_POLTEAGEIST_CHIPPED"],
+      "generator_policy": "blocked",
+      "note": "Showdown Antique form maps to local Chipped naming; antique/chipped semantics remain generator-blocking."
+    },
+    {
+      "kind": "species",
+      "category": "open-risk",
+      "status": "open-risk",
+      "showdown_key": "pumpkaboolarge",
+      "local_keys": ["pumpkabool"],
+      "local_constants": ["SPECIES_PUMPKABOO_L"],
+      "generator_policy": "blocked",
+      "note": "Pumpkaboo size forms affect stats; reviewed local size alias remains generator-blocking."
+    },
+    {
+      "kind": "species",
+      "category": "open-risk",
+      "status": "open-risk",
+      "showdown_key": "pumpkaboosmall",
+      "local_keys": ["pumpkaboo"],
+      "local_constants": ["SPECIES_PUMPKABOO"],
+      "generator_policy": "blocked",
+      "note": "Showdown Small maps to the current local base-sized data, but Pumpkaboo size encoding remains generator-blocking."
+    },
+    {
+      "kind": "species",
+      "category": "open-risk",
+      "status": "open-risk",
+      "showdown_key": "pumpkaboosuper",
+      "local_keys": ["pumpkabooxl"],
+      "local_constants": ["SPECIES_PUMPKABOO_XL"],
+      "generator_policy": "blocked",
+      "note": "Pumpkaboo Super maps to local XL naming; size-form data remains generator-blocking."
+    },
+    {
+      "kind": "species",
+      "category": "open-risk",
+      "status": "open-risk",
+      "showdown_key": "rockruffdusk",
+      "local_keys": [],
+      "local_constants": [],
+      "generator_policy": "blocked",
+      "note": "Showdown Rockruff-Dusk has no reviewed local species constant; do not collapse into Lycanroc Dusk."
+    },
+    {
+      "kind": "species",
+      "category": "open-risk",
+      "status": "open-risk",
+      "showdown_key": "sinisteaantique",
+      "local_keys": ["sinisteachipped"],
+      "local_constants": ["SPECIES_SINISTEA_CHIPPED"],
+      "generator_policy": "blocked",
+      "note": "Showdown Antique form maps to local Chipped naming; antique/chipped semantics remain generator-blocking."
+    },
+    {
+      "kind": "species",
+      "category": "open-risk",
+      "status": "open-risk",
+      "showdown_key": "tatsugiridroopy",
+      "local_keys": ["tatsugirired"],
+      "local_constants": ["SPECIES_TATSUGIRI_RED"],
+      "generator_policy": "blocked",
+      "note": "Tatsugiri Droopy maps to local color naming; form/color semantics remain generator-blocking."
+    },
+    {
+      "kind": "species",
+      "category": "open-risk",
+      "status": "open-risk",
+      "showdown_key": "tatsugiristretchy",
+      "local_keys": ["tatsugiriyellow"],
+      "local_constants": ["SPECIES_TATSUGIRI_YELLOW"],
+      "generator_policy": "blocked",
+      "note": "Tatsugiri Stretchy maps to local color naming; form/color semantics remain generator-blocking."
+    },
+    {
+      "kind": "species",
+      "category": "cosmetic-form",
+      "status": "ignore",
+      "showdown_key": "castformrainy",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only cosmetic/battle/mode form with no reviewed local species constant; ignore for CFRU/DPE Pokemon data import."
+    },
+    {
+      "kind": "species",
+      "category": "cosmetic-form",
+      "status": "ignore",
+      "showdown_key": "castformsnowy",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only cosmetic/battle/mode form with no reviewed local species constant; ignore for CFRU/DPE Pokemon data import."
+    },
+    {
+      "kind": "species",
+      "category": "cosmetic-form",
+      "status": "ignore",
+      "showdown_key": "castformsunny",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only cosmetic/battle/mode form with no reviewed local species constant; ignore for CFRU/DPE Pokemon data import."
+    },
+    {
+      "kind": "species",
+      "category": "cosmetic-form",
+      "status": "ignore",
+      "showdown_key": "eeveestarter",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only cosmetic/battle/mode form with no reviewed local species constant; ignore for CFRU/DPE Pokemon data import."
+    },
+    {
+      "kind": "species",
+      "category": "cosmetic-form",
+      "status": "ignore",
+      "showdown_key": "pikachustarter",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only cosmetic/battle/mode form with no reviewed local species constant; ignore for CFRU/DPE Pokemon data import."
+    },
+    {
+      "kind": "species",
+      "category": "cosmetic-form",
+      "status": "ignore",
+      "showdown_key": "pikachuworld",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only cosmetic/battle/mode form with no reviewed local species constant; ignore for CFRU/DPE Pokemon data import."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "ababo",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "absolmegaz",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "araquanidtotem",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "argalis",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "arghonaut",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "astrolotl",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "aurumoth",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "barbaraclemega",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "baxcaliburmega",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "brattler",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "breezi",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "caimanoe",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "caribolt",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "cawdet",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "cawmodore",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "chandeluremega",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "chesnaughtmega",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "chimechomega",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "chromera",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "chuggalong",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "chuggon",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "clefablemega",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "colossoil",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "coribalis",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "crabominablemega",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "cresceidon",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "crucibelle",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "crucibellemega",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "cupra",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "cyclohm",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "darkraimega",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "delphoxmega",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "dorsoil",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "dragalgemega",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "draggalong",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "dragonitemega",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "drampamega",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "duohm",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "eelektrossmega",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "electrelk",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "embirch",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "emboarmega",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "equilibra",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "excadrillmega",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "falinksmega",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "fawnifer",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "feraligatrmega",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "fidgit",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "flarelm",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "floatoy",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "floettemega",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "flox",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "froslassmega",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "garchompmegaz",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "glimmoramega",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "golisopodmega",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "golurkmega",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "greninjamega",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "gumshoostotem",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "hawluchamega",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "heatranmega",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "hemogoblin",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "jumbao",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "justyke",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "kerfluffle",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "kitsunoh",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "kommoototem",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "krilowatt",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "lucariomegaz",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "lurantistotem",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "magearnamega",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "magearnaoriginalmega",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "malaconda",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "malamarmega",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "marowakalolatotem",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "meganiummega",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "meowsticfmega",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "meowsticmmega",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "miasmaw",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "miasmite",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "mimikyubustedtotem",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "mimikyutotem",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "missingno",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "mollux",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "monohm",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "mumbao",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "naviathan",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "necturine",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "necturna",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "nohface",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "obliteryx",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "pajantom",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "plasmanta",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "pluffle",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "pokestarblackbelt",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "pokestarblackdoor",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "pokestarbrycenman",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "pokestarf00",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "pokestarf002",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "pokestargiant",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "pokestarhumanoid",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "pokestarmonster",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "pokestarmt",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "pokestarmt2",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "pokestarsmeargle",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "pokestarspirit",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "pokestartransport",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "pokestarufo",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "pokestarufo2",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "pokestarufopropu2",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "pokestarwhitedoor",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "privatyke",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "protowatt",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "pyroak",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "pyroarmega",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "raichumegax",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "raichumegay",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "ramnarok",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "ramnarokradiant",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "raticatealolatotem",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "rebble",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "revenankh",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "ribombeetotem",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "saharaja",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "saharascal",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "salazzletotem",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "scattervein",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "scolipedemega",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "scovillainmega",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "scraftymega",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "scratchet",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "shox",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "skarmorymega",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "smogecko",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "smoguana",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "smokomodo",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "snaelstrom",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "snugglow",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "solotl",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "staraptormega",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "starmiemega",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "stratagem",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "swirlpool",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "syclant",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "syclar",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "tactite",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "tatsugiricurlymega",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "tatsugiridroopymega",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "tatsugiristretchymega",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "togedemarutotem",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "tomohawk",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "venomicon",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "venomiconepilogue",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "victreebelmega",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "vikavolttotem",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "volkraken",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "volkritter",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "voodoll",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "voodoom",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "zeraoramega",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "fan-ignore",
+      "status": "ignore",
+      "showdown_key": "zygardemega",
+      "local_keys": [],
+      "local_constants": [],
+      "note": "Showdown-only CAP/Fan/Pokestar/Totem/custom-Mega or non-baseline mode species; intentionally ignored for the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "species",
+      "category": "open-risk",
+      "status": "open-risk",
+      "local_keys": ["alcremieberry", "alcremieclover", "alcremieflower", "alcremielove", "alcremieribbon", "alcremiestar"],
+      "local_constants": ["SPECIES_ALCREMIE_BERRY", "SPECIES_ALCREMIE_CLOVER", "SPECIES_ALCREMIE_FLOWER", "SPECIES_ALCREMIE_LOVE", "SPECIES_ALCREMIE_RIBBON", "SPECIES_ALCREMIE_STAR"],
+      "generator_policy": "blocked",
+      "note": "Local Alcremie sweet-form constants do not have one-to-one Showdown cream/swirl keys in the audit; keep generator-blocking."
+    },
+    {
+      "kind": "species",
+      "category": "open-risk",
+      "status": "open-risk",
+      "local_keys": ["pumpkaboom", "gourgeistm"],
+      "local_constants": ["SPECIES_PUMPKABOO_M", "SPECIES_GOURGEIST_M"],
+      "generator_policy": "blocked",
+      "note": "Local average-size Pumpkaboo/Gourgeist constants need explicit family semantics before generated data use."
+    },
+    {
+      "kind": "species",
+      "category": "cosmetic-form",
+      "status": "ignore",
+      "local_keys": ["flabebeblue", "flabebeorange", "flabebewhite", "flabebeyellow", "floetteblue", "floetteorange", "floettewhite", "floetteyellow", "florgesblue", "florgesorange", "florgeswhite", "florgesyellow", "frillishf", "furfroudandy", "furfroudebutante", "furfroudiamond", "furfrouheart", "furfroukabuki", "furfroulareine", "furfroumatron", "furfroupharoah", "furfroustar", "hippopotasf", "hippowdonf", "jellicentf", "pyroarfemale", "sawsbuckautumn", "sawsbucksummer", "sawsbuckwinter", "unfezantf", "unownb", "unownc", "unownd", "unowne", "unownexclamation", "unownf", "unowng", "unownh", "unowni", "unownj", "unownk", "unownl", "unownm", "unownn", "unowno", "unownp", "unownq", "unownquestion", "unownr", "unowns", "unownt", "unownu", "unownv", "unownw", "unownx", "unowny", "unownz", "pikachuflying", "pikachusurfing"],
+      "local_constants": ["SPECIES_FLABEBE_BLUE", "SPECIES_FLABEBE_ORANGE", "SPECIES_FLABEBE_WHITE", "SPECIES_FLABEBE_YELLOW", "SPECIES_FLOETTE_BLUE", "SPECIES_FLOETTE_ORANGE", "SPECIES_FLOETTE_WHITE", "SPECIES_FLOETTE_YELLOW", "SPECIES_FLORGES_BLUE", "SPECIES_FLORGES_ORANGE", "SPECIES_FLORGES_WHITE", "SPECIES_FLORGES_YELLOW", "SPECIES_FRILLISH_F", "SPECIES_FURFROU_DANDY", "SPECIES_FURFROU_DEBUTANTE", "SPECIES_FURFROU_DIAMOND", "SPECIES_FURFROU_HEART", "SPECIES_FURFROU_KABUKI", "SPECIES_FURFROU_LA_REINE", "SPECIES_FURFROU_MATRON", "SPECIES_FURFROU_PHAROAH", "SPECIES_FURFROU_STAR", "SPECIES_HIPPOPOTAS_F", "SPECIES_HIPPOWDON_F", "SPECIES_JELLICENT_F", "SPECIES_PYROAR_FEMALE", "SPECIES_SAWSBUCK_AUTUMN", "SPECIES_SAWSBUCK_SUMMER", "SPECIES_SAWSBUCK_WINTER", "SPECIES_UNFEZANT_F", "SPECIES_UNOWN_B", "SPECIES_UNOWN_C", "SPECIES_UNOWN_D", "SPECIES_UNOWN_E", "SPECIES_UNOWN_EXCLAMATION", "SPECIES_UNOWN_F", "SPECIES_UNOWN_G", "SPECIES_UNOWN_H", "SPECIES_UNOWN_I", "SPECIES_UNOWN_J", "SPECIES_UNOWN_K", "SPECIES_UNOWN_L", "SPECIES_UNOWN_M", "SPECIES_UNOWN_N", "SPECIES_UNOWN_O", "SPECIES_UNOWN_P", "SPECIES_UNOWN_Q", "SPECIES_UNOWN_QUESTION", "SPECIES_UNOWN_R", "SPECIES_UNOWN_S", "SPECIES_UNOWN_T", "SPECIES_UNOWN_U", "SPECIES_UNOWN_V", "SPECIES_UNOWN_W", "SPECIES_UNOWN_X", "SPECIES_UNOWN_Y", "SPECIES_UNOWN_Z", "SPECIES_PIKACHU_FLYING", "SPECIES_PIKACHU_SURFING"],
+      "note": "Local-only cosmetic, gender, color, seasonal, cap, Unown, or mode form constants; do not map Showdown data onto them without a dedicated policy."
+    },
+    {
+      "kind": "species",
+      "category": "local-extra",
+      "status": "ignore",
+      "local_keys": ["cubonea", "egg", "exeggcutea", "koffingg", "mimejrg", "none", "shadowwarrior", "zygardecell", "zygardecore"],
+      "local_constants": ["SPECIES_CUBONE_A", "SPECIES_EGG", "SPECIES_EXEGGCUTE_A", "SPECIES_KOFFING_G", "SPECIES_MIME_JR_G", "SPECIES_NONE", "SPECIES_SHADOW_WARRIOR", "SPECIES_ZYGARDE_CELL", "SPECIES_ZYGARDE_CORE"],
+      "note": "Local sentinel/helper/project/special-form species constants with no reviewed Showdown top-level species key; ignored for Showdown data import."
+    },
+    {
       "kind": "moves",
       "category": "split-move",
       "status": "alias",

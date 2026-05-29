@@ -22,15 +22,16 @@ Local-only audit:
 
 - Script completed successfully.
 - Alias table loaded from the repo-local default path.
-- Alias table reported 239 reviewed entries.
-- Category summary included 4 Species form-name aliases, 32 GMax/Giga Species aliases, 55 local-shortform Species aliases, 69 Move split aliases, 1 Hidden Power ignore pattern, 1 spelling alias, 3 CAP/Fan Move ignores, 1 Future/Fan Move ignore, 2 local helper-constant ignores, 2 local project-move ignores, 13 LGPE partner Move open-risks, 1 missing-engine Move open-risk, 13 Ability alias-plus-hook behavior-risk entries, 5 Ability behavior-risk entries, 3 Ability name-mismatch behavior-risk entries, 8 Ability missing-local open-risk entries, 13 Ability intentionally-merged aliases, 7 Ability missing-local ignores, 1 Ability sentinel/name-mismatch ignore, and 5 Ability local-only ignores.
+- Alias table reported 471 reviewed entries.
+- Category summary included Species aliases/ignores/open-risks: 4 form-name aliases, 34 GMax/Giga aliases, 76 local-shortform aliases, 11 cosmetic-form aliases, 7 cosmetic-form ignores, 161 fan-ignore entries, 1 local-extra ignore entry, and 29 Species open-risk entries.
+- Category summary also retained 69 Move split aliases, 1 Hidden Power ignore pattern, 1 spelling alias, 3 CAP/Fan Move ignores, 1 Future/Fan Move ignore, 2 local helper-constant ignores, 2 local project-move ignores, 13 LGPE partner Move open-risks, 1 missing-engine Move open-risk, 13 Ability alias-plus-hook behavior-risk entries, 5 Ability behavior-risk entries, 3 Ability name-mismatch behavior-risk entries, 8 Ability missing-local open-risk entries, 13 Ability intentionally-merged aliases, 7 Ability missing-local ignores, 1 Ability sentinel/name-mismatch ignore, and 5 Ability local-only ignores.
 - Existing CFRU/DPE local drift remained visible: Ogerpon form-name differences, Ability `0x4D` naming drift, and Ability alias rows.
 
 External Showdown-data audit:
 
 - Script completed successfully against an external Pokemon Showdown data directory.
-- Species Showdown-without-local: 91 classified, 228 still uncategorized.
-- Species local-without-Showdown: 95 classified, 126 still uncategorized.
+- Species Showdown-without-local: 319 classified, 0 still uncategorized.
+- Species local-without-Showdown: 221 classified, 0 still uncategorized.
 - Moves Showdown-without-local: 104 classified, 0 still uncategorized.
 - Moves local-without-Showdown: 143 classified, 0 still uncategorized.
 - Abilities Showdown-without-local: 36 classified, 0 still uncategorized.
@@ -42,7 +43,9 @@ Syntax check:
 
 ## Caveats
 
-This is a targeted read-only smoke. The table resolves reviewed regional Species shortforms, GMax/Giga Species aliases, and explicit Z/Max/GMax physical-special Move split aliases, but does not resolve the full Showdown-to-local mapping space.
+This is a targeted read-only smoke. The table now classifies all current Species, Move, and Ability Showdown/local unresolved-name buckets from the external audit, but open-risk and behavior-risk entries remain blocked.
+
+Species `open-risk` entries are not solved aliases. Alcremie cream/sweet forms, Basculin/Basculegion form semantics, Battle Bond Greninja, Pumpkaboo/Gourgeist size naming, Ogerpon mask-vs-form naming, Sinistea/Polteageist antique/chipped naming, Rockruff Dusk, and Tatsugiri form color/name semantics require source-backed policy before generated data may treat them as safe.
 
 Move keys now have no still-uncategorized bucket in the external audit, but `open-risk` Move entries are not solved aliases. `allyswitch` and Let's Go partner moves still require source-backed local behavior or an explicit non-support policy before generator/data work can treat them as resolved.
 

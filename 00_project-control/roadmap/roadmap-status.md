@@ -1,3 +1,12 @@
+# Roadmap status update - Pokemon data species alias table final
+
+- Expanded the reviewed Pokemon Showdown-to-CFRU/DPE alias table in `07_scripts/data_audit/showdown_aliases.json`.
+- Status impact: the remaining Species/Form unresolved buckets are now explicitly classified without changing CFRU/DPE data tables.
+- Alias table now contains 471 entries, including Species `local-shortform` 76, Species `gmax-giga` 34, Species `cosmetic-form` aliases 11, Species `cosmetic-form` ignores 7, Species `fan-ignore` 161, Species `local-extra` ignores 1, and Species `open-risk` 29.
+- External-data smoke summary: Species reviewed classifications now cover 319 Showdown-only keys and 221 local-only keys; 0 Showdown-only Species keys and 0 local-only Species keys remain uncategorized.
+- `open-risk` Species entries remain unresolved form/mapping gaps and are not support promotion or safe generator mappings.
+- No CFRU/DPE Pokemon data table, UPR-FVX code, submodule pin, Pokemon Showdown data copy, ROM path, ROM hash, CRC, full log, screenshot, save, emulator state, output ROM, build artifact, tool binary, private path or P1 promotion is added.
+
 # Roadmap status update - Pokemon data ability risk table
 
 - Expanded the reviewed Pokemon Showdown-to-CFRU/DPE alias table in `07_scripts/data_audit/showdown_aliases.json`.
