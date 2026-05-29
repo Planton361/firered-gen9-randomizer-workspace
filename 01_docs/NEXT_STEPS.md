@@ -1,3 +1,12 @@
+# Next steps update - Pokemon data ability risk table
+
+- Treat `07_scripts/data_audit/showdown_aliases.json` as updated through the Ability behavior-risk table batch.
+- Ability behavior risk is now machine-readable but still blocking by default: `alias-plus-hook`, `behavior-risk`, `name-mismatch`, and `missing-local` entries do not authorize generator-safe Ability updates.
+- Only explicit `intentionally-merged` legacy Ability entries and `local-only` ignores are non-blocking classifications.
+- Next Ability work should either add targeted battle smokes for selected `alias-plus-hook` entries or source-fix/document non-support for high-risk entries such as Zero to Hero and Terapagos Tera behavior.
+- Remaining uncategorized Ability names should stay visible until reviewed in small batches; do not add broad regex rules.
+- Continue excluding Pokemon Showdown data copies, raw reports, CFRU/DPE table edits, UPR-FVX changes, submodule repins, ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, local addresses, `.local.json`, secrets, tokens and `.env` data from commits.
+
 # Next steps update - Pokemon ability behavior risk audit
 
 - Treat `01_docs/analysis/pokemon-ability-behavior-risk-audit.md` as the current source-backed Ability behavior-risk handoff.

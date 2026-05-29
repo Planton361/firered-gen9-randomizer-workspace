@@ -1,3 +1,13 @@
+# Session update - Pokemon data ability risk table
+
+- Branch: `analysis/pokemon-data-ability-risk-table`.
+- Expanded `07_scripts/data_audit/showdown_aliases.json` from 191 to 215 reviewed entries with Ability-only risk classifications from the source-backed CFRU/DPE Ability behavior audit.
+- Ability categories now include `alias-plus-hook` behavior-risk, blocking `behavior-risk`, `missing-local` open-risk, blocking `name-mismatch`, non-blocking `intentionally-merged`, and `local-only` ignores.
+- Marked the requested focus set: Hadron Engine, Orichalcum Pulse, Toxic Debris, Poison Puppeteer, Sharpness, Rocky Payload, Seed Sower, Wind Power, Wind Rider, Ruin abilities, Good as Gold, Zero to Hero, Terapagos Tera abilities, Commander, Hospitality, and Embody Aspect variants.
+- Ability entries with behavior/open risk carry blocking generator policy; only explicit legacy merges and local-only ignores are non-blocking classifications.
+- Updated `01_docs/analysis/pokemon-data-reviewed-alias-table.md` and `08_tests/randomizer/pokemon-data-reviewed-alias-table.md` with the sanitized counts and caveats.
+- Scope remains alias-table/documentation only. No CFRU/DPE Pokemon data table, UPR-FVX code, submodule pin, Pokemon Showdown source, raw report, ROM, save, emulator state, build artifact, tool binary, screenshot, hash, private path, token, secret or `.env` data was changed or documented.
+
 # Session update - Pokemon ability behavior risk audit
 
 - Branch: `analysis/pokemon-ability-behavior-risk-audit`.

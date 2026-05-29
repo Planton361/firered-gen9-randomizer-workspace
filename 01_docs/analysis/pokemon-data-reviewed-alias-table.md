@@ -15,7 +15,7 @@ The table is classification-only. It does not authorize CFRU or DPE data-table e
 Each entry uses:
 
 - `kind`: `species`, `moves`, or `abilities`.
-- `category`: review category such as `form-name`, `gmax-giga`, `local-shortform`, `split-move`, `hidden-power-variant`, `spelling`, `cap-fan-move`, `fan-future-move`, `lgpe-partner-move`, `missing-engine-move`, `local-helper-constant`, `local-project-move`, `name-mismatch`, or `behavior-risk`.
+- `category`: review category such as `form-name`, `gmax-giga`, `local-shortform`, `split-move`, `hidden-power-variant`, `spelling`, `cap-fan-move`, `fan-future-move`, `lgpe-partner-move`, `missing-engine-move`, `local-helper-constant`, `local-project-move`, `name-mismatch`, `alias-plus-hook`, `behavior-risk`, `missing-local`, `intentionally-merged`, or `local-only`.
 - `status`: `alias`, `ignore`, `open-risk`, or `behavior-risk`.
 - `showdown_key` or `showdown_pattern`: normalized Showdown key or regex pattern to classify.
 - `local_keys`: normalized local CFRU/DPE keys when the entry maps to local constants.
@@ -23,6 +23,7 @@ Each entry uses:
 - `note`: reviewer-facing rationale.
 
 Ability `behavior-risk` entries may also record `local_alias_target` to show that a local Gen9-looking ability name still aliases to an older effect.
+Ability entries may also record `generator_policy`; unless the status and policy explicitly mark a non-blocking name merge or local-only ignore, Ability entries are behavior-gating classifications and do not authorize automated data generation.
 
 ## Initial reviewed coverage
 
@@ -86,6 +87,21 @@ The move-final batch expands the table to 191 entries while keeping the scope to
 
 `open-risk` entries are deliberately not solved mappings. They exist so the audit report can distinguish known missing Move behavior from accidentally uncategorized keys.
 
+## Ability risk-table reviewed coverage
+
+The Ability risk-table batch expands the table to 215 entries while keeping the scope to Ability-only classification:
+
+- Ability `alias-plus-hook`: 12 `behavior-risk` entries where local CFRU/DPE aliases point at older Ability IDs but the source-backed audit found species-gated or extra CFRU behavior hooks.
+- Ability `behavior-risk`: 4 entries for Good as Gold, Zero to Hero, Tera Shift, and Tera Shell where source evidence remains incomplete, inconsistent, or not generator-safe.
+- Ability `name-mismatch`: 1 blocking behavior-risk entry for `tabletsofruin` / `tabletofruin`.
+- Ability `missing-local`: 7 `open-risk` entries for Commander, Hospitality, Embody Aspect variants, and Teraform Zero.
+- Ability `intentionally-merged`: 2 non-blocking legacy merge entries for Teravolt and Turboblaze into local Mold Breaker-style behavior.
+- Ability `local-only`: 5 ignore entries for local sentinel/project/placeholder constants.
+
+The source-backed focus entries include `HADRONENGINE`, `ORICHALCUMPULSE`, `TOXICDEBRIS`, `POISONPUPPETEER`, `SHARPNESS`, `ROCKYPAYLOAD`, `SEEDSOWER`, `WINDPOWER`, `WINDRIDER`, the Ruin abilities, `GOODASGOLD`, `ZEROTOHERO`, Terapagos Tera abilities, `COMMANDER`, `HOSPITALITY`, and `EMBODYASPECT*`.
+
+All Ability behavior-risk/open-risk entries include blocking generator policy. The table classifies the risk; it does not promote any Gen9 Ability behavior to generator-safe support.
+
 ## Script integration
 
 `07_scripts/data_audit/showdown_mapping_audit.py` now loads the reviewed alias file by default and prints:
@@ -116,6 +132,13 @@ Ability behavior-risk entries are intentionally counted in the alias table summa
 
 The remaining Move gaps are now classified rather than uncategorized: `allyswitch` and the Let's Go partner moves are `open-risk`, while CAP/Future non-target moves and local helper/project constants are explicit `ignore` entries.
 
+Against the same external Pokemon Showdown data directory, the Ability risk-table batch classified these Ability unresolved buckets:
+
+- Abilities Showdown-without-local: 12 classified, 24 still uncategorized.
+- Abilities local-without-Showdown: 6 classified, 2 still uncategorized.
+
+Most `alias-plus-hook` entries have matching local normalized keys, so they are represented in the alias table category summary rather than only in unresolved-key buckets.
+
 ## Policy
 
 Use this table to separate reviewed name-shape differences from real unresolved mapping work.
@@ -126,12 +149,14 @@ Rules:
 - Treat `ignore` entries as deliberate non-actionable Showdown-only keys.
 - Treat `open-risk` entries as known unresolved mapping/behavior gaps, not solved aliases.
 - Treat `behavior-risk` entries as unresolved behavior work, not solved mappings.
+- Treat Ability `alias-plus-hook` entries as source-backed risk classifications, not automatic support clearance.
+- Treat Ability `generator_policy = blocked` as not generator-safe unless a later source-backed task explicitly changes that policy.
 - Fail closed for generated data work: do not silently apply uncategorized Species, Move, or Ability mappings.
-- Keep Ability aliases in their own risk class until CFRU ability behavior is source-audited.
+- Keep Ability aliases in their own risk class until CFRU ability behavior is source-audited and, where needed, battle-smoked.
 - Keep Pokemon Showdown data external; do not commit vendored Showdown files or raw comparison reports.
 
 ## Handoff
 
-Next useful step: expand `showdown_aliases.json` in small review batches for high-risk Ability behavior aliases and remaining Species form/name policy. Keep Move `open-risk` entries blocked until source-backed CFRU/DPE behavior or an explicit non-support policy exists.
+Next useful step: review the remaining uncategorized Ability names in small batches, then continue remaining Species form/name policy. Keep Move and Ability `open-risk` / `behavior-risk` entries blocked until source-backed CFRU/DPE behavior or an explicit non-support policy exists.
 
 Do not edit CFRU/DPE Pokemon data tables until unresolved mappings are either classified or intentionally blocked.

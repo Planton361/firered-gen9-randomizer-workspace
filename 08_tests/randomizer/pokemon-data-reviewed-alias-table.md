@@ -22,8 +22,8 @@ Local-only audit:
 
 - Script completed successfully.
 - Alias table loaded from the repo-local default path.
-- Alias table reported 191 reviewed entries.
-- Category summary included 4 Species form-name aliases, 32 GMax/Giga Species aliases, 55 local-shortform Species aliases, 69 Move split aliases, 1 Hidden Power ignore pattern, 1 spelling alias, 3 CAP/Fan Move ignores, 1 Future/Fan Move ignore, 2 local helper-constant ignores, 2 local project-move ignores, 13 LGPE partner Move open-risks, 1 missing-engine Move open-risk, 1 Ability name-mismatch alias, and 6 Ability behavior-risk entries.
+- Alias table reported 215 reviewed entries.
+- Category summary included 4 Species form-name aliases, 32 GMax/Giga Species aliases, 55 local-shortform Species aliases, 69 Move split aliases, 1 Hidden Power ignore pattern, 1 spelling alias, 3 CAP/Fan Move ignores, 1 Future/Fan Move ignore, 2 local helper-constant ignores, 2 local project-move ignores, 13 LGPE partner Move open-risks, 1 missing-engine Move open-risk, 12 Ability alias-plus-hook behavior-risk entries, 4 Ability behavior-risk entries, 1 Ability name-mismatch behavior-risk entry, 7 Ability missing-local open-risk entries, 2 Ability intentionally-merged aliases, and 5 Ability local-only ignores.
 - Existing CFRU/DPE local drift remained visible: Ogerpon form-name differences, Ability `0x4D` naming drift, and Ability alias rows.
 
 External Showdown-data audit:
@@ -33,8 +33,8 @@ External Showdown-data audit:
 - Species local-without-Showdown: 95 classified, 126 still uncategorized.
 - Moves Showdown-without-local: 104 classified, 0 still uncategorized.
 - Moves local-without-Showdown: 143 classified, 0 still uncategorized.
-- Abilities Showdown-without-local: 1 classified, 35 still uncategorized.
-- Abilities local-without-Showdown: 1 classified, 7 still uncategorized.
+- Abilities Showdown-without-local: 12 classified, 24 still uncategorized.
+- Abilities local-without-Showdown: 6 classified, 2 still uncategorized.
 
 Syntax check:
 
@@ -46,4 +46,4 @@ This is a targeted read-only smoke. The table resolves reviewed regional Species
 
 Move keys now have no still-uncategorized bucket in the external audit, but `open-risk` Move entries are not solved aliases. `allyswitch` and Let's Go partner moves still require source-backed local behavior or an explicit non-support policy before generator/data work can treat them as resolved.
 
-Ability `behavior-risk` entries remain behavior risks even if the local normalized ability name exists. They require separate CFRU ability behavior review before any Gen9 data update should treat them as solved.
+Ability `alias-plus-hook`, `behavior-risk`, and `open-risk` entries remain blocking classifications even if the local normalized ability name exists. They require source-backed acceptance and, where appropriate, targeted battle smoke before any Gen9 data update should treat them as solved.
