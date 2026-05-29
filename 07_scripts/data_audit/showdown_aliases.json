@@ -1638,41 +1638,46 @@
     {
       "kind": "abilities",
       "category": "name-mismatch",
-      "status": "alias",
+      "status": "behavior-risk",
       "showdown_key": "tabletsofruin",
       "local_keys": ["tabletofruin"],
       "local_constants": ["ABILITY_TABLETOFRUIN"],
-      "note": "Local constant omits the plural s; behavior still aliases to STALL and remains a behavior risk."
+      "local_alias_target": "ABILITY_STALL",
+      "generator_policy": "blocked",
+      "note": "Local constant omits the plural s; source audit found Ruin behavior hooks, but generator use remains blocked until behavior is separately accepted."
     },
     {
       "kind": "abilities",
-      "category": "behavior-risk",
+      "category": "alias-plus-hook",
       "status": "behavior-risk",
       "showdown_key": "hadronengine",
       "local_keys": ["hadronengine"],
       "local_constants": ["ABILITY_HADRONENGINE"],
       "local_alias_target": "ABILITY_ELECTRICSURGE",
-      "note": "Local name aliases to an older effect."
+      "generator_policy": "blocked",
+      "note": "Local alias uses Electric Surge for terrain and CFRU damage_calc has a species-gated Hadron Engine Sp. Atk hook."
     },
     {
       "kind": "abilities",
-      "category": "behavior-risk",
+      "category": "alias-plus-hook",
       "status": "behavior-risk",
       "showdown_key": "orichalcumpulse",
       "local_keys": ["orichalcumpulse"],
       "local_constants": ["ABILITY_ORICHALCUMPULSE"],
       "local_alias_target": "ABILITY_DROUGHT",
-      "note": "Local name aliases to an older effect."
+      "generator_policy": "blocked",
+      "note": "Local alias uses Drought for sun and CFRU damage_calc has a species-gated Orichalcum Pulse Attack hook."
     },
     {
       "kind": "abilities",
-      "category": "behavior-risk",
+      "category": "alias-plus-hook",
       "status": "behavior-risk",
       "showdown_key": "poisonpuppeteer",
       "local_keys": ["poisonpuppeteer"],
       "local_constants": ["ABILITY_POISONPUPPETEER"],
       "local_alias_target": "ABILITY_PLUS",
-      "note": "Local name aliases to an older effect."
+      "generator_policy": "blocked",
+      "note": "Local alias uses Plus, but CFRU battle scripts call a species-gated confusion-on-poison hook."
     },
     {
       "kind": "abilities",
@@ -1682,17 +1687,19 @@
       "local_keys": ["goodasgold"],
       "local_constants": ["ABILITY_GOODASGOLD"],
       "local_alias_target": "ABILITY_CLEARBODY",
-      "note": "Local name aliases to an older effect."
+      "generator_policy": "blocked",
+      "note": "CFRU has species-gated Good as Gold status/status-move hooks, but mixed Clear Body / Good as Gold plumbing remains behavior-risk."
     },
     {
       "kind": "abilities",
-      "category": "behavior-risk",
+      "category": "alias-plus-hook",
       "status": "behavior-risk",
       "showdown_key": "toxicdebris",
       "local_keys": ["toxicdebris"],
       "local_constants": ["ABILITY_TOXICDEBRIS"],
       "local_alias_target": "ABILITY_POISONPOINT",
-      "note": "Local name aliases to an older effect."
+      "generator_policy": "blocked",
+      "note": "Local alias uses Poison Point, but CFRU has a species-gated Toxic Spikes-on-physical-hit hook."
     },
     {
       "kind": "abilities",
@@ -1702,7 +1709,251 @@
       "local_keys": ["zerotohero"],
       "local_constants": ["ABILITY_ZEROTOHERO"],
       "local_alias_target": "ABILITY_TORRENT",
-      "note": "Local name aliases to an older effect."
+      "generator_policy": "blocked",
+      "note": "Source audit found display/switch-in message evidence but did not confirm true Palafin form-change behavior."
+    },
+    {
+      "kind": "abilities",
+      "category": "alias-plus-hook",
+      "status": "behavior-risk",
+      "showdown_key": "sharpness",
+      "local_keys": ["sharpness"],
+      "local_constants": ["ABILITY_SHARPNESS"],
+      "local_alias_target": "ABILITY_STRONGJAW",
+      "generator_policy": "blocked",
+      "note": "Local alias uses Strong Jaw, but CFRU damage_calc has a species-gated slicing-move boost hook."
+    },
+    {
+      "kind": "abilities",
+      "category": "alias-plus-hook",
+      "status": "behavior-risk",
+      "showdown_key": "rockypayload",
+      "local_keys": ["rockypayload"],
+      "local_constants": ["ABILITY_ROCKYPAYLOAD"],
+      "local_alias_target": "ABILITY_STEELWORKER",
+      "generator_policy": "blocked",
+      "note": "Local alias uses Steelworker, but CFRU damage_calc has a species-gated Rock-type power boost hook."
+    },
+    {
+      "kind": "abilities",
+      "category": "alias-plus-hook",
+      "status": "behavior-risk",
+      "showdown_key": "seedsower",
+      "local_keys": ["seedsower"],
+      "local_constants": ["ABILITY_SEEDSOWER"],
+      "local_alias_target": "ABILITY_GRASSYSURGE",
+      "generator_policy": "blocked",
+      "note": "Local alias uses Grassy Surge, but CFRU suppresses entry activation and adds a hit-reaction terrain hook for Seed Sower species."
+    },
+    {
+      "kind": "abilities",
+      "category": "alias-plus-hook",
+      "status": "behavior-risk",
+      "showdown_key": "windpower",
+      "local_keys": ["windpower"],
+      "local_constants": ["ABILITY_WINDPOWER"],
+      "local_alias_target": "ABILITY_BERSERK",
+      "generator_policy": "blocked",
+      "note": "Local alias uses Berserk, but CFRU has a species-gated wind-move charge-style hook."
+    },
+    {
+      "kind": "abilities",
+      "category": "alias-plus-hook",
+      "status": "behavior-risk",
+      "showdown_key": "windrider",
+      "local_keys": ["windrider"],
+      "local_constants": ["ABILITY_WINDRIDER"],
+      "local_alias_target": "ABILITY_ANGERPOINT",
+      "generator_policy": "blocked",
+      "note": "Local alias uses Anger Point, but CFRU has species-gated wind-move block and Attack boost hooks."
+    },
+    {
+      "kind": "abilities",
+      "category": "alias-plus-hook",
+      "status": "behavior-risk",
+      "showdown_key": "beadsofruin",
+      "local_keys": ["beadsofruin"],
+      "local_constants": ["ABILITY_BEADSOFRUIN"],
+      "local_alias_target": "ABILITY_STALL",
+      "generator_policy": "blocked",
+      "note": "Local alias uses Stall, but CFRU has species-gated Ruin display, Stall-speed exclusion and stat-reduction hooks."
+    },
+    {
+      "kind": "abilities",
+      "category": "alias-plus-hook",
+      "status": "behavior-risk",
+      "showdown_key": "swordofruin",
+      "local_keys": ["swordofruin"],
+      "local_constants": ["ABILITY_SWORDOFRUIN"],
+      "local_alias_target": "ABILITY_STALL",
+      "generator_policy": "blocked",
+      "note": "Local alias uses Stall, but CFRU has species-gated Ruin display, Stall-speed exclusion and stat-reduction hooks."
+    },
+    {
+      "kind": "abilities",
+      "category": "alias-plus-hook",
+      "status": "behavior-risk",
+      "showdown_key": "vesselofruin",
+      "local_keys": ["vesselofruin"],
+      "local_constants": ["ABILITY_VESSELOFRUIN"],
+      "local_alias_target": "ABILITY_STALL",
+      "generator_policy": "blocked",
+      "note": "Local alias uses Stall, but CFRU has species-gated Ruin display, Stall-speed exclusion and stat-reduction hooks."
+    },
+    {
+      "kind": "abilities",
+      "category": "behavior-risk",
+      "status": "behavior-risk",
+      "showdown_key": "terashift",
+      "local_keys": [],
+      "local_constants": [],
+      "generator_policy": "blocked",
+      "note": "CFRU has Tera Shift display/helper paths, but no local ABILITY_TERASHIFT constant and the Terapagos helper naming does not match local TERASTAL species constants."
+    },
+    {
+      "kind": "abilities",
+      "category": "behavior-risk",
+      "status": "behavior-risk",
+      "showdown_key": "terashell",
+      "local_keys": [],
+      "local_constants": [],
+      "generator_policy": "blocked",
+      "note": "CFRU has a Tera Shell damage hook, but no local ABILITY_TERASHELL constant and DPE Terapagos form assignments do not line up cleanly with the display override."
+    },
+    {
+      "kind": "abilities",
+      "category": "missing-local",
+      "status": "open-risk",
+      "showdown_key": "teraformzero",
+      "local_keys": [],
+      "local_constants": [],
+      "generator_policy": "blocked",
+      "note": "Showdown Terapagos Ability; no reviewed local CFRU/DPE Ability constant or behavior path was found."
+    },
+    {
+      "kind": "abilities",
+      "category": "missing-local",
+      "status": "open-risk",
+      "showdown_key": "commander",
+      "local_keys": [],
+      "local_constants": [],
+      "generator_policy": "blocked",
+      "note": "Showdown Ability not represented by reviewed local CFRU/DPE Ability constants or behavior."
+    },
+    {
+      "kind": "abilities",
+      "category": "missing-local",
+      "status": "open-risk",
+      "showdown_key": "hospitality",
+      "local_keys": [],
+      "local_constants": [],
+      "generator_policy": "blocked",
+      "note": "Showdown Ability not represented by reviewed local CFRU/DPE Ability constants or behavior."
+    },
+    {
+      "kind": "abilities",
+      "category": "missing-local",
+      "status": "open-risk",
+      "showdown_key": "embodyaspectteal",
+      "local_keys": [],
+      "local_constants": [],
+      "generator_policy": "blocked",
+      "note": "Showdown Ogerpon Ability not represented locally; DPE Ogerpon Terastal forms use older Ability assignments."
+    },
+    {
+      "kind": "abilities",
+      "category": "missing-local",
+      "status": "open-risk",
+      "showdown_key": "embodyaspecthearthflame",
+      "local_keys": [],
+      "local_constants": [],
+      "generator_policy": "blocked",
+      "note": "Showdown Ogerpon Ability not represented locally; DPE Ogerpon Terastal forms use older Ability assignments."
+    },
+    {
+      "kind": "abilities",
+      "category": "missing-local",
+      "status": "open-risk",
+      "showdown_key": "embodyaspectwellspring",
+      "local_keys": [],
+      "local_constants": [],
+      "generator_policy": "blocked",
+      "note": "Showdown Ogerpon Ability not represented locally; DPE Ogerpon Terastal forms use older Ability assignments."
+    },
+    {
+      "kind": "abilities",
+      "category": "missing-local",
+      "status": "open-risk",
+      "showdown_key": "embodyaspectcornerstone",
+      "local_keys": [],
+      "local_constants": [],
+      "generator_policy": "blocked",
+      "note": "Showdown Ogerpon Ability not represented locally; DPE Ogerpon Terastal forms use older Ability assignments."
+    },
+    {
+      "kind": "abilities",
+      "category": "intentionally-merged",
+      "status": "alias",
+      "showdown_key": "teravolt",
+      "local_keys": ["moldbreaker"],
+      "local_constants": ["ABILITY_MOLDBREAKER"],
+      "generator_policy": "non-blocking-name-merge",
+      "note": "Legacy Mold Breaker-style behavior is intentionally merged locally; this is a name/effect merge, not a Gen9 behavior clearance."
+    },
+    {
+      "kind": "abilities",
+      "category": "intentionally-merged",
+      "status": "alias",
+      "showdown_key": "turboblaze",
+      "local_keys": ["moldbreaker"],
+      "local_constants": ["ABILITY_MOLDBREAKER"],
+      "generator_policy": "non-blocking-name-merge",
+      "note": "Legacy Mold Breaker-style behavior is intentionally merged locally; this is a name/effect merge, not a Gen9 behavior clearance."
+    },
+    {
+      "kind": "abilities",
+      "category": "local-only",
+      "status": "ignore",
+      "local_keys": ["evaporate"],
+      "local_constants": ["ABILITY_EVAPORATE"],
+      "generator_policy": "local-only-ignore",
+      "note": "Local project Ability with no reviewed Showdown counterpart; do not map to a Showdown Ability."
+    },
+    {
+      "kind": "abilities",
+      "category": "local-only",
+      "status": "ignore",
+      "local_keys": ["portalpower"],
+      "local_constants": ["ABILITY_PORTALPOWER"],
+      "generator_policy": "local-only-ignore",
+      "note": "Local project Ability constant with no reviewed Showdown counterpart; do not map to a Showdown Ability."
+    },
+    {
+      "kind": "abilities",
+      "category": "local-only",
+      "status": "ignore",
+      "local_keys": ["none"],
+      "local_constants": ["ABILITY_NONE"],
+      "generator_policy": "local-only-ignore",
+      "note": "Local sentinel Ability constant, not a Showdown Ability."
+    },
+    {
+      "kind": "abilities",
+      "category": "local-only",
+      "status": "ignore",
+      "local_keys": ["drillbeak"],
+      "local_constants": ["ABILITY_DRILLBEAK"],
+      "generator_policy": "local-only-ignore",
+      "note": "Local project Ability with no reviewed Showdown counterpart; do not map to a Showdown Ability."
+    },
+    {
+      "kind": "abilities",
+      "category": "local-only",
+      "status": "ignore",
+      "local_keys": ["unused"],
+      "local_constants": ["ABILITY_UNUSED"],
+      "generator_policy": "local-only-ignore",
+      "note": "DPE local placeholder/free Ability constant, not a Showdown Ability."
     }
   ]
 }

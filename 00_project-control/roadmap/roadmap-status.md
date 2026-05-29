@@ -1,3 +1,12 @@
+# Roadmap status update - Pokemon data ability risk table
+
+- Expanded the reviewed Pokemon Showdown-to-CFRU/DPE alias table in `07_scripts/data_audit/showdown_aliases.json`.
+- Status impact: the source-backed Ability behavior-risk audit is now encoded in machine-readable Ability entries without changing CFRU/DPE data tables.
+- Alias table now contains 215 entries, including Ability `alias-plus-hook` behavior-risk 12, Ability blocking behavior-risk 4, Ability blocking name-mismatch 1, Ability missing-local open-risk 7, Ability intentionally-merged aliases 2, and Ability local-only ignores 5.
+- External-data smoke summary: Ability reviewed classifications now cover 12 Showdown-only keys and 6 local-only keys; 24 Showdown-only Ability keys and 2 local-only Ability keys remain uncategorized.
+- Ability risk entries remain generator-blocking unless explicitly marked as a non-blocking legacy merge or local-only ignore.
+- No CFRU/DPE Pokemon data table, UPR-FVX code, submodule pin, Pokemon Showdown data copy, ROM path, ROM hash, CRC, full log, screenshot, save, emulator state, output ROM, build artifact, tool binary, private path or P1 promotion is added.
+
 # Roadmap status update - Pokemon ability behavior risk audit
 
 - Added `01_docs/analysis/pokemon-ability-behavior-risk-audit.md` as a read-only CFRU/DPE Ability behavior-risk matrix.
