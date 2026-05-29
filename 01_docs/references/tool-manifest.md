@@ -1,3 +1,15 @@
+# Tool Manifest Update - 2026-05-29 - Pokemon data alias table move splits
+
+- Workspace branch: `analysis/pokemon-data-alias-table-move-splits`.
+- Alias table: `07_scripts/data_audit/showdown_aliases.json`.
+- Analysis file updated: `01_docs/analysis/pokemon-data-reviewed-alias-table.md`.
+- Smoke file updated: `08_tests/randomizer/pokemon-data-reviewed-alias-table.md`.
+- Scope: Move-only expansion of the reviewed Pokemon Showdown-to-CFRU/DPE alias/ignore table.
+- Added explicit reviewed Z-Move, Max Move, and G-Max Move physical-special split aliases with local `P`/`S` constants.
+- Alias table status: 169 entries total; Move `split-move` 69.
+- Local smoke commands: `python3 07_scripts/data_audit/showdown_mapping_audit.py --limit 20`; full comparison against an external Pokemon Showdown `data/` directory with `--limit 50`; `python3 -m py_compile 07_scripts/data_audit/showdown_mapping_audit.py`.
+- Boundary: no Pokemon Showdown data is vendored; no raw reports, CFRU/DPE Pokemon data table, UPR-FVX code, submodule pin, ROM, save, emulator state, build artifact, tool binary, screenshot, raw log, hash, private path, token, secret or `.env` data is included.
+
 # Tool Manifest Update - 2026-05-29 - Pokemon data alias table batch 2
 
 - Workspace branch: `analysis/pokemon-data-alias-table-batch-2`.

@@ -1,3 +1,14 @@
+# Session update - Pokemon data alias table move splits
+
+- Branch: `analysis/pokemon-data-alias-table-move-splits`.
+- Expanded `07_scripts/data_audit/showdown_aliases.json` from 107 to 169 reviewed entries.
+- Added only explicit reviewed Move `split-move` aliases for remaining Z-Move, Max Move, and G-Max Move physical/special local split constants.
+- Alias table categories now include Species `form-name` 4, Species `gmax-giga` 32, Species `local-shortform` 55, Move `split-move` 69, Move `hidden-power-variant` ignore 1, Move `spelling` 1, Ability `name-mismatch` 1, and Ability `behavior-risk` 6.
+- External-data audit now classifies 86 Showdown-only Move keys and 139 local-only Move keys; 18 Showdown-only Move keys and 4 local-only Move keys remain uncategorized by design.
+- Species and Ability alias coverage was intentionally not expanded in this batch.
+- Remaining uncategorized Move keys include real behavior/content risks such as Ally Switch, Let's Go-style moves, CAP/fan moves, and local extras; they are not treated as solved aliases.
+- Scope remains read-only alias/data-audit documentation. No CFRU/DPE Pokemon data table, UPR-FVX code, submodule pin, Pokemon Showdown source, raw report, ROM, save, emulator state, build artifact, tool binary, screenshot, hash, private path, token, secret or `.env` data was changed or documented.
+
 # Session update - Pokemon data alias table batch 2
 
 - Branch: `analysis/pokemon-data-alias-table-batch-2`.

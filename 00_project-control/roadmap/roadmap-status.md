@@ -1,3 +1,12 @@
+# Roadmap status update - Pokemon data alias table move splits
+
+- Expanded the reviewed Pokemon Showdown-to-CFRU/DPE alias table in `07_scripts/data_audit/showdown_aliases.json`.
+- Status impact: the move-split batch covers explicit reviewed Z/Max/GMax physical-special Move split aliases without changing CFRU/DPE data tables.
+- Alias table now contains 169 entries: Species `form-name` 4, Species `gmax-giga` 32, Species `local-shortform` 55, Move `split-move` 69, Move `hidden-power-variant` ignore 1, Move `spelling` 1, Ability `name-mismatch` 1, and Ability `behavior-risk` 6.
+- External-data smoke summary: Move reviewed classifications increased to 86 Showdown-only keys and 139 local-only keys; 18 Showdown-only Move keys and 4 local-only Move keys remain uncategorized.
+- Species and Ability unresolved buckets were not expanded in this batch; no broad regex rule was added to hide uncertain mappings.
+- No CFRU/DPE Pokemon data table, UPR-FVX code, submodule pin, Pokemon Showdown data copy, ROM path, ROM hash, CRC, full log, screenshot, save, emulator state, output ROM, build artifact, tool binary, private path or P1 promotion is added.
+
 # Roadmap status update - Pokemon data alias table batch 2
 
 - Expanded the reviewed Pokemon Showdown-to-CFRU/DPE alias table in `07_scripts/data_audit/showdown_aliases.json`.

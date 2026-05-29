@@ -1,3 +1,13 @@
+# Next steps update - Pokemon data alias table move splits
+
+- Treat `07_scripts/data_audit/showdown_aliases.json` as updated through the reviewed Z/Max/GMax physical-special Move split batch.
+- Move split alias coverage is now 69 explicit entries; do not add broad regex rules for these names.
+- Next alias-table batch should review narrow spelling/name aliases separately from real missing Move behavior.
+- Keep Ally Switch, Let's Go-style moves, CAP/fan moves, and local extra moves visible as unresolved behavior/content risks until source-backed review exists.
+- Keep expanding Ability entries only as `behavior-risk` when local names alias to older effects; do not mark them solved until CFRU ability behavior is audited.
+- Audit/generator work must continue to fail closed on uncategorized Species, Move, or Ability mappings.
+- Continue excluding Pokemon Showdown data copies, raw reports, CFRU/DPE table edits, UPR-FVX changes, submodule repins, ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, local addresses, `.local.json`, secrets, tokens and `.env` data from commits.
+
 # Next steps update - Pokemon data alias table batch 2
 
 - Treat `07_scripts/data_audit/showdown_aliases.json` as updated through Batch 2 for reviewed regional Species shortforms and GMax/Giga Species aliases.
