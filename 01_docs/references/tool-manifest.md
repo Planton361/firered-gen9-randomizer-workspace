@@ -1,3 +1,15 @@
+# Tool Manifest Update - 2026-05-29 - Pokemon data generator dry-run plan
+
+- Workspace branch: `analysis/pokemon-data-generator-dry-run-plan`.
+- Added read-only helper: `07_scripts/data_audit/pokemon_data_dry_run.py`.
+- Analysis file: `01_docs/analysis/pokemon-data-generator-dry-run-plan.md`.
+- Smoke file: `08_tests/randomizer/pokemon-data-generator-dry-run-plan.md`.
+- Scope: fail-closed dry-run planning for future Pokemon Showdown-to-CFRU/DPE data generator work.
+- Helper inputs: external Pokemon Showdown `data/` directory, `07_scripts/data_audit/showdown_aliases.json`, local constants through `showdown_mapping_audit.py`, and local DPE/CFRU table-shape files.
+- Dry-run status: `BLOCKED_BY_REVIEWED_POLICY`; uncategorized Species/Move/Ability key counts are 0, while reviewed Species `open-risk`, Move `open-risk`, and Ability `behavior-risk` / `open-risk` entries block all planned data blocks.
+- Local smoke commands: `python3 07_scripts/data_audit/showdown_mapping_audit.py --limit 20`; full comparison against an external Pokemon Showdown `data/` directory with `--limit 50`; `python3 -m py_compile 07_scripts/data_audit/pokemon_data_dry_run.py`; dry-run helper against the external Pokemon Showdown `data/` directory.
+- Boundary: no Pokemon Showdown data is vendored; no raw reports, CFRU/DPE Pokemon data table, UPR-FVX code, submodule pin, ROM, save, emulator state, build artifact, tool binary, screenshot, raw log, hash, private path, token, secret or `.env` data is included.
+
 # Tool Manifest Update - 2026-05-29 - Pokemon data species alias table final
 
 - Workspace branch: `analysis/pokemon-data-species-alias-table-final`.

@@ -1,3 +1,13 @@
+# Next steps update - Pokemon data generator dry-run plan
+
+- Treat `07_scripts/data_audit/pokemon_data_dry_run.py` as the current read-only gate before any Pokemon Showdown-to-CFRU/DPE data generator work.
+- Current dry-run result is `BLOCKED_BY_REVIEWED_POLICY`: no uncategorized Species/Move/Ability keys remain, but Species `open-risk`, Move `open-risk`, and Ability `behavior-risk` / `open-risk` entries block all six data blocks.
+- Keep Base Stats blocked by Species open-risk until form semantics are accepted or excluded.
+- Keep Ability Assignments blocked by Species open-risk and Ability behavior/open risks until CFRU Ability behavior is accepted, fixed, or explicitly excluded.
+- Keep Level-up Learnsets, Egg Moves, TM Compatibility, and Tutor Compatibility blocked by Species open-risk and Move open-risk until form semantics and missing/unsupported move behavior are resolved or excluded.
+- First useful implementation path: generate a sanitized base-stats-only dry diff for a non-blocked species subset, still with no table writes until review.
+- Continue excluding Pokemon Showdown data copies, raw reports, CFRU/DPE table edits, UPR-FVX changes, submodule repins, ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, local addresses, `.local.json`, secrets, tokens and `.env` data from commits.
+
 # Next steps update - Pokemon data species alias table final
 
 - Treat `07_scripts/data_audit/showdown_aliases.json` as updated through the final Species unresolved-key classification batch.
