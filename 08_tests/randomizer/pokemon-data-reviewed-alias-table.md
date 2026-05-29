@@ -22,15 +22,15 @@ Local-only audit:
 
 - Script completed successfully.
 - Alias table loaded from the repo-local default path.
-- Alias table reported 28 reviewed entries.
-- Category summary included Species form-name, GMax/Giga and local-shortform aliases; Move split aliases, Hidden Power ignore pattern and spelling alias; Ability name-mismatch and behavior-risk entries.
+- Alias table reported 107 reviewed entries.
+- Category summary included 4 Species form-name aliases, 32 GMax/Giga Species aliases, 55 local-shortform Species aliases, 7 Move split aliases, 1 Hidden Power ignore pattern, 1 spelling alias, 1 Ability name-mismatch alias, and 6 Ability behavior-risk entries.
 - Existing CFRU/DPE local drift remained visible: Ogerpon form-name differences, Ability `0x4D` naming drift, and Ability alias rows.
 
 External Showdown-data audit:
 
 - Script completed successfully against an external Pokemon Showdown data directory.
-- Species Showdown-without-local: 12 classified, 307 still uncategorized.
-- Species local-without-Showdown: 16 classified, 205 still uncategorized.
+- Species Showdown-without-local: 91 classified, 228 still uncategorized.
+- Species local-without-Showdown: 95 classified, 126 still uncategorized.
 - Moves Showdown-without-local: 24 classified, 80 still uncategorized.
 - Moves local-without-Showdown: 15 classified, 128 still uncategorized.
 - Abilities Showdown-without-local: 1 classified, 35 still uncategorized.
@@ -42,6 +42,6 @@ Syntax check:
 
 ## Caveats
 
-This is a targeted read-only smoke. The table is intentionally small and does not resolve the full Showdown-to-local mapping space.
+This is a targeted read-only smoke. The Batch 2 table resolves reviewed regional Species shortforms and GMax/Giga Species aliases, but does not resolve the full Showdown-to-local mapping space.
 
 Ability `behavior-risk` entries remain behavior risks even if the local normalized ability name exists. They require separate CFRU ability behavior review before any Gen9 data update should treat them as solved.

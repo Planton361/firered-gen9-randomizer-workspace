@@ -76,6 +76,258 @@
     },
     {
       "kind": "species",
+      "category": "gmax-giga",
+      "status": "alias",
+      "showdown_key": "appletungmax",
+      "local_keys": ["appletungiga"],
+      "local_constants": ["SPECIES_APPLETUN_GIGA"],
+      "note": "Local source uses GIGA naming for Gigantamax species forms."
+    },
+    {
+      "kind": "species",
+      "category": "gmax-giga",
+      "status": "alias",
+      "showdown_key": "butterfreegmax",
+      "local_keys": ["butterfreegiga"],
+      "local_constants": ["SPECIES_BUTTERFREE_GIGA"],
+      "note": "Local source uses GIGA naming for Gigantamax species forms."
+    },
+    {
+      "kind": "species",
+      "category": "gmax-giga",
+      "status": "alias",
+      "showdown_key": "centiskorchgmax",
+      "local_keys": ["centiskorchgiga"],
+      "local_constants": ["SPECIES_CENTISKORCH_GIGA"],
+      "note": "Local source uses GIGA naming for Gigantamax species forms."
+    },
+    {
+      "kind": "species",
+      "category": "gmax-giga",
+      "status": "alias",
+      "showdown_key": "cinderacegmax",
+      "local_keys": ["cinderacegiga"],
+      "local_constants": ["SPECIES_CINDERACE_GIGA"],
+      "note": "Local source uses GIGA naming for Gigantamax species forms."
+    },
+    {
+      "kind": "species",
+      "category": "gmax-giga",
+      "status": "alias",
+      "showdown_key": "coalossalgmax",
+      "local_keys": ["coalossalgiga"],
+      "local_constants": ["SPECIES_COALOSSAL_GIGA"],
+      "note": "Local source uses GIGA naming for Gigantamax species forms."
+    },
+    {
+      "kind": "species",
+      "category": "gmax-giga",
+      "status": "alias",
+      "showdown_key": "copperajahgmax",
+      "local_keys": ["copperajahgiga"],
+      "local_constants": ["SPECIES_COPPERAJAH_GIGA"],
+      "note": "Local source uses GIGA naming for Gigantamax species forms."
+    },
+    {
+      "kind": "species",
+      "category": "gmax-giga",
+      "status": "alias",
+      "showdown_key": "corviknightgmax",
+      "local_keys": ["corviknightgiga"],
+      "local_constants": ["SPECIES_CORVIKNIGHT_GIGA"],
+      "note": "Local source uses GIGA naming for Gigantamax species forms."
+    },
+    {
+      "kind": "species",
+      "category": "gmax-giga",
+      "status": "alias",
+      "showdown_key": "drednawgmax",
+      "local_keys": ["drednawgiga"],
+      "local_constants": ["SPECIES_DREDNAW_GIGA"],
+      "note": "Local source uses GIGA naming for Gigantamax species forms."
+    },
+    {
+      "kind": "species",
+      "category": "gmax-giga",
+      "status": "alias",
+      "showdown_key": "duraludongmax",
+      "local_keys": ["duraludongiga"],
+      "local_constants": ["SPECIES_DURALUDON_GIGA"],
+      "note": "Local source uses GIGA naming for Gigantamax species forms."
+    },
+    {
+      "kind": "species",
+      "category": "gmax-giga",
+      "status": "alias",
+      "showdown_key": "eeveegmax",
+      "local_keys": ["eeveegiga"],
+      "local_constants": ["SPECIES_EEVEE_GIGA"],
+      "note": "Local source uses GIGA naming for Gigantamax species forms."
+    },
+    {
+      "kind": "species",
+      "category": "gmax-giga",
+      "status": "alias",
+      "showdown_key": "flapplegmax",
+      "local_keys": ["flapplegiga"],
+      "local_constants": ["SPECIES_FLAPPLE_GIGA"],
+      "note": "Local source uses GIGA naming for Gigantamax species forms."
+    },
+    {
+      "kind": "species",
+      "category": "gmax-giga",
+      "status": "alias",
+      "showdown_key": "garbodorgmax",
+      "local_keys": ["garbodorgiga"],
+      "local_constants": ["SPECIES_GARBODOR_GIGA"],
+      "note": "Local source uses GIGA naming for Gigantamax species forms."
+    },
+    {
+      "kind": "species",
+      "category": "gmax-giga",
+      "status": "alias",
+      "showdown_key": "gengargmax",
+      "local_keys": ["gengargiga"],
+      "local_constants": ["SPECIES_GENGAR_GIGA"],
+      "note": "Local source uses GIGA naming for Gigantamax species forms."
+    },
+    {
+      "kind": "species",
+      "category": "gmax-giga",
+      "status": "alias",
+      "showdown_key": "grimmsnarlgmax",
+      "local_keys": ["grimmsnarlgiga"],
+      "local_constants": ["SPECIES_GRIMMSNARL_GIGA"],
+      "note": "Local source uses GIGA naming for Gigantamax species forms."
+    },
+    {
+      "kind": "species",
+      "category": "gmax-giga",
+      "status": "alias",
+      "showdown_key": "hatterenegmax",
+      "local_keys": ["hatterenegiga"],
+      "local_constants": ["SPECIES_HATTERENE_GIGA"],
+      "note": "Local source uses GIGA naming for Gigantamax species forms."
+    },
+    {
+      "kind": "species",
+      "category": "gmax-giga",
+      "status": "alias",
+      "showdown_key": "inteleongmax",
+      "local_keys": ["inteleongiga"],
+      "local_constants": ["SPECIES_INTELEON_GIGA"],
+      "note": "Local source uses GIGA naming for Gigantamax species forms."
+    },
+    {
+      "kind": "species",
+      "category": "gmax-giga",
+      "status": "alias",
+      "showdown_key": "kinglergmax",
+      "local_keys": ["kinglergiga"],
+      "local_constants": ["SPECIES_KINGLER_GIGA"],
+      "note": "Local source uses GIGA naming for Gigantamax species forms."
+    },
+    {
+      "kind": "species",
+      "category": "gmax-giga",
+      "status": "alias",
+      "showdown_key": "laprasgmax",
+      "local_keys": ["laprasgiga"],
+      "local_constants": ["SPECIES_LAPRAS_GIGA"],
+      "note": "Local source uses GIGA naming for Gigantamax species forms."
+    },
+    {
+      "kind": "species",
+      "category": "gmax-giga",
+      "status": "alias",
+      "showdown_key": "machampgmax",
+      "local_keys": ["machampgiga"],
+      "local_constants": ["SPECIES_MACHAMP_GIGA"],
+      "note": "Local source uses GIGA naming for Gigantamax species forms."
+    },
+    {
+      "kind": "species",
+      "category": "gmax-giga",
+      "status": "alias",
+      "showdown_key": "melmetalgmax",
+      "local_keys": ["melmetalgiga"],
+      "local_constants": ["SPECIES_MELMETAL_GIGA"],
+      "note": "Local source uses GIGA naming for Gigantamax species forms."
+    },
+    {
+      "kind": "species",
+      "category": "gmax-giga",
+      "status": "alias",
+      "showdown_key": "meowthgmax",
+      "local_keys": ["meowthgiga"],
+      "local_constants": ["SPECIES_MEOWTH_GIGA"],
+      "note": "Local source uses GIGA naming for Gigantamax species forms."
+    },
+    {
+      "kind": "species",
+      "category": "gmax-giga",
+      "status": "alias",
+      "showdown_key": "orbeetlegmax",
+      "local_keys": ["orbeetlegiga"],
+      "local_constants": ["SPECIES_ORBEETLE_GIGA"],
+      "note": "Local source uses GIGA naming for Gigantamax species forms."
+    },
+    {
+      "kind": "species",
+      "category": "gmax-giga",
+      "status": "alias",
+      "showdown_key": "pikachugmax",
+      "local_keys": ["pikachugiga"],
+      "local_constants": ["SPECIES_PIKACHU_GIGA"],
+      "note": "Local source uses GIGA naming for Gigantamax species forms."
+    },
+    {
+      "kind": "species",
+      "category": "gmax-giga",
+      "status": "alias",
+      "showdown_key": "sandacondagmax",
+      "local_keys": ["sandacondagiga"],
+      "local_constants": ["SPECIES_SANDACONDA_GIGA"],
+      "note": "Local source uses GIGA naming for Gigantamax species forms."
+    },
+    {
+      "kind": "species",
+      "category": "gmax-giga",
+      "status": "alias",
+      "showdown_key": "snorlaxgmax",
+      "local_keys": ["snorlaxgiga"],
+      "local_constants": ["SPECIES_SNORLAX_GIGA"],
+      "note": "Local source uses GIGA naming for Gigantamax species forms."
+    },
+    {
+      "kind": "species",
+      "category": "gmax-giga",
+      "status": "alias",
+      "showdown_key": "toxtricitygmax",
+      "local_keys": ["toxtricitygiga"],
+      "local_constants": ["SPECIES_TOXTRICITY_GIGA"],
+      "note": "Local source uses GIGA naming for Gigantamax species forms."
+    },
+    {
+      "kind": "species",
+      "category": "gmax-giga",
+      "status": "alias",
+      "showdown_key": "toxtricitylowkeygmax",
+      "local_keys": ["toxtricitylowkeygiga"],
+      "local_constants": ["SPECIES_TOXTRICITY_LOW_KEY_GIGA"],
+      "note": "Local source uses GIGA naming for Gigantamax species forms."
+    },
+    {
+      "kind": "species",
+      "category": "gmax-giga",
+      "status": "alias",
+      "showdown_key": "venusaurgmax",
+      "local_keys": ["venusaurgiga"],
+      "local_constants": ["SPECIES_VENUSAUR_GIGA"],
+      "note": "Local source uses GIGA naming for Gigantamax species forms."
+    },
+    {
+      "kind": "species",
       "category": "local-shortform",
       "status": "alias",
       "showdown_key": "arcaninehisui",
@@ -109,6 +361,465 @@
       "local_keys": ["indeedeefemale"],
       "local_constants": ["SPECIES_INDEEDEE_FEMALE"],
       "note": "Gender form naming differs."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "diglettalola",
+      "local_keys": ["digletta"],
+      "local_constants": ["SPECIES_DIGLETT_A"],
+      "note": "Local source shortens Alola to A."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "dugtrioalola",
+      "local_keys": ["dugtrioa"],
+      "local_constants": ["SPECIES_DUGTRIO_A"],
+      "note": "Local source shortens Alola to A."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "exeggutoralola",
+      "local_keys": ["exeggutora"],
+      "local_constants": ["SPECIES_EXEGGUTOR_A"],
+      "note": "Local source shortens Alola to A."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "geodudealola",
+      "local_keys": ["geodudea"],
+      "local_constants": ["SPECIES_GEODUDE_A"],
+      "note": "Local source shortens Alola to A."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "golemalola",
+      "local_keys": ["golema"],
+      "local_constants": ["SPECIES_GOLEM_A"],
+      "note": "Local source shortens Alola to A."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "graveleralola",
+      "local_keys": ["gravelera"],
+      "local_constants": ["SPECIES_GRAVELER_A"],
+      "note": "Local source shortens Alola to A."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "grimeralola",
+      "local_keys": ["grimera"],
+      "local_constants": ["SPECIES_GRIMER_A"],
+      "note": "Local source shortens Alola to A."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "marowakalola",
+      "local_keys": ["marowaka"],
+      "local_constants": ["SPECIES_MAROWAK_A"],
+      "note": "Local source shortens Alola to A."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "meowthalola",
+      "local_keys": ["meowtha"],
+      "local_constants": ["SPECIES_MEOWTH_A"],
+      "note": "Local source shortens Alola to A."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "mukalola",
+      "local_keys": ["muka"],
+      "local_constants": ["SPECIES_MUK_A"],
+      "note": "Local source shortens Alola to A."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "ninetalesalola",
+      "local_keys": ["ninetalesa"],
+      "local_constants": ["SPECIES_NINETALES_A"],
+      "note": "Local source shortens Alola to A."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "persianalola",
+      "local_keys": ["persiana"],
+      "local_constants": ["SPECIES_PERSIAN_A"],
+      "note": "Local source shortens Alola to A."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "raichualola",
+      "local_keys": ["raichua"],
+      "local_constants": ["SPECIES_RAICHU_A"],
+      "note": "Local source shortens Alola to A."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "raticatealola",
+      "local_keys": ["raticatea"],
+      "local_constants": ["SPECIES_RATICATE_A"],
+      "note": "Local source shortens Alola to A."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "rattataalola",
+      "local_keys": ["rattataa"],
+      "local_constants": ["SPECIES_RATTATA_A"],
+      "note": "Local source shortens Alola to A."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "sandshrewalola",
+      "local_keys": ["sandshrewa"],
+      "local_constants": ["SPECIES_SANDSHREW_A"],
+      "note": "Local source shortens Alola to A."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "sandslashalola",
+      "local_keys": ["sandslasha"],
+      "local_constants": ["SPECIES_SANDSLASH_A"],
+      "note": "Local source shortens Alola to A."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "vulpixalola",
+      "local_keys": ["vulpixa"],
+      "local_constants": ["SPECIES_VULPIX_A"],
+      "note": "Local source shortens Alola to A."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "corsolagalar",
+      "local_keys": ["corsolag"],
+      "local_constants": ["SPECIES_CORSOLA_G"],
+      "note": "Local source shortens Galar to G."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "darmanitangalar",
+      "local_keys": ["darmanitang"],
+      "local_constants": ["SPECIES_DARMANITAN_G"],
+      "note": "Local source shortens Galar to G."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "darumakagalar",
+      "local_keys": ["darumakag"],
+      "local_constants": ["SPECIES_DARUMAKA_G"],
+      "note": "Local source shortens Galar to G."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "linoonegalar",
+      "local_keys": ["linooneg"],
+      "local_constants": ["SPECIES_LINOONE_G"],
+      "note": "Local source shortens Galar to G."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "meowthgalar",
+      "local_keys": ["meowthg"],
+      "local_constants": ["SPECIES_MEOWTH_G"],
+      "note": "Local source shortens Galar to G."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "moltresgalar",
+      "local_keys": ["moltresg"],
+      "local_constants": ["SPECIES_MOLTRES_G"],
+      "note": "Local source shortens Galar to G."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "mrmimegalar",
+      "local_keys": ["mrmimeg"],
+      "local_constants": ["SPECIES_MR_MIME_G"],
+      "note": "Local source shortens Galar to G."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "ponytagalar",
+      "local_keys": ["ponytag"],
+      "local_constants": ["SPECIES_PONYTA_G"],
+      "note": "Local source shortens Galar to G."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "rapidashgalar",
+      "local_keys": ["rapidashg"],
+      "local_constants": ["SPECIES_RAPIDASH_G"],
+      "note": "Local source shortens Galar to G."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "slowbrogalar",
+      "local_keys": ["slowbrog"],
+      "local_constants": ["SPECIES_SLOWBRO_G"],
+      "note": "Local source shortens Galar to G."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "slowkinggalar",
+      "local_keys": ["slowkingg"],
+      "local_constants": ["SPECIES_SLOWKING_G"],
+      "note": "Local source shortens Galar to G."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "slowpokegalar",
+      "local_keys": ["slowpokeg"],
+      "local_constants": ["SPECIES_SLOWPOKE_G"],
+      "note": "Local source shortens Galar to G."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "stunfiskgalar",
+      "local_keys": ["stunfiskg"],
+      "local_constants": ["SPECIES_STUNFISK_G"],
+      "note": "Local source shortens Galar to G."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "weezinggalar",
+      "local_keys": ["weezingg"],
+      "local_constants": ["SPECIES_WEEZING_G"],
+      "note": "Local source shortens Galar to G."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "yamaskgalar",
+      "local_keys": ["yamaskg"],
+      "local_constants": ["SPECIES_YAMASK_G"],
+      "note": "Local source shortens Galar to G."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "zapdosgalar",
+      "local_keys": ["zapdosg"],
+      "local_constants": ["SPECIES_ZAPDOS_G"],
+      "note": "Local source shortens Galar to G."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "zigzagoongalar",
+      "local_keys": ["zigzagoong"],
+      "local_constants": ["SPECIES_ZIGZAGOON_G"],
+      "note": "Local source shortens Galar to G."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "avalugghisui",
+      "local_keys": ["avaluggh"],
+      "local_constants": ["SPECIES_AVALUGG_H"],
+      "note": "Local source shortens Hisui to H."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "braviaryhisui",
+      "local_keys": ["braviaryh"],
+      "local_constants": ["SPECIES_BRAVIARY_H"],
+      "note": "Local source shortens Hisui to H."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "decidueyehisui",
+      "local_keys": ["decidueyeh"],
+      "local_constants": ["SPECIES_DECIDUEYE_H"],
+      "note": "Local source shortens Hisui to H."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "electrodehisui",
+      "local_keys": ["electrodeh"],
+      "local_constants": ["SPECIES_ELECTRODE_H"],
+      "note": "Local source shortens Hisui to H."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "goodrahisui",
+      "local_keys": ["goodrah"],
+      "local_constants": ["SPECIES_GOODRA_H"],
+      "note": "Local source shortens Hisui to H."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "growlithehisui",
+      "local_keys": ["growlitheh"],
+      "local_constants": ["SPECIES_GROWLITHE_H"],
+      "note": "Local source shortens Hisui to H."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "lilliganthisui",
+      "local_keys": ["lilliganth"],
+      "local_constants": ["SPECIES_LILLIGANT_H"],
+      "note": "Local source shortens Hisui to H."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "qwilfishhisui",
+      "local_keys": ["qwilfishh"],
+      "local_constants": ["SPECIES_QWILFISH_H"],
+      "note": "Local source shortens Hisui to H."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "samurotthisui",
+      "local_keys": ["samurotth"],
+      "local_constants": ["SPECIES_SAMUROTT_H"],
+      "note": "Local source shortens Hisui to H."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "sliggoohisui",
+      "local_keys": ["sliggooh"],
+      "local_constants": ["SPECIES_SLIGGOO_H"],
+      "note": "Local source shortens Hisui to H."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "sneaselhisui",
+      "local_keys": ["sneaselh"],
+      "local_constants": ["SPECIES_SNEASEL_H"],
+      "note": "Local source shortens Hisui to H."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "typhlosionhisui",
+      "local_keys": ["typhlosionh"],
+      "local_constants": ["SPECIES_TYPHLOSION_H"],
+      "note": "Local source shortens Hisui to H."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "voltorbhisui",
+      "local_keys": ["voltorbh"],
+      "local_constants": ["SPECIES_VOLTORB_H"],
+      "note": "Local source shortens Hisui to H."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "zoroarkhisui",
+      "local_keys": ["zoroarkh"],
+      "local_constants": ["SPECIES_ZOROARK_H"],
+      "note": "Local source shortens Hisui to H."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "zoruahisui",
+      "local_keys": ["zoruah"],
+      "local_constants": ["SPECIES_ZORUA_H"],
+      "note": "Local source shortens Hisui to H."
+    },
+    {
+      "kind": "species",
+      "category": "local-shortform",
+      "status": "alias",
+      "showdown_key": "wooperpaldea",
+      "local_keys": ["wooperp"],
+      "local_constants": ["SPECIES_WOOPER_P"],
+      "note": "Local source shortens Paldea to P."
     },
     {
       "kind": "moves",
