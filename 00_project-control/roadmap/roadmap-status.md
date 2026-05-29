@@ -1,3 +1,12 @@
+# Roadmap status update - Pokemon ability behavior risk audit
+
+- Added `01_docs/analysis/pokemon-ability-behavior-risk-audit.md` as a read-only CFRU/DPE Ability behavior-risk matrix.
+- Added sanitized audit evidence in `08_tests/randomizer/pokemon-ability-behavior-risk-audit.md`.
+- Status impact: Ability names can now be separated into source-backed alias-plus-hook behavior, partial alias behavior, alias-only risk, display/definition risk, and missing local support before any Pokemon data-table update.
+- Hadron Engine, Orichalcum Pulse, Toxic Debris and Poison Puppeteer have source-backed CFRU behavior hooks; Ruin abilities, Good as Gold, Tera Shift / Tera Shell and Zero to Hero remain higher-risk until targeted validation or source fixes.
+- Commander, Hospitality and Embody Aspect are not locally represented in the reviewed Ability paths.
+- No CFRU/DPE Pokemon data table, UPR-FVX code, submodule pin, Pokemon Showdown data copy, ROM path, ROM hash, CRC, full log, screenshot, save, emulator state, output ROM, build artifact, tool binary, private path or P1 promotion is added.
+
 # Roadmap status update - Pokemon data alias table move final
 
 - Expanded the reviewed Pokemon Showdown-to-CFRU/DPE alias table in `07_scripts/data_audit/showdown_aliases.json`.

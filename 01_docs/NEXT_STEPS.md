@@ -1,3 +1,12 @@
+# Next steps update - Pokemon ability behavior risk audit
+
+- Treat `01_docs/analysis/pokemon-ability-behavior-risk-audit.md` as the current source-backed Ability behavior-risk handoff.
+- Keep Ability aliases separate from solved mappings: a local Gen9 Ability name can still compile to an older CFRU Ability ID.
+- Next policy batch should extend the reviewed alias/ignore table with Ability categories such as `implemented-alias-hooked`, `partial-alias-hooked`, `alias-only-risk`, `display-or-definition-risk`, and `missing-local`.
+- Block Commander, Hospitality, Embody Aspect, and Terapagos Tera Shift / Tera Shell from generator-safe behavior assumptions until source-backed behavior or explicit non-support policy exists.
+- Treat Zero to Hero as unresolved for true form-change behavior until a targeted source fix or sanitized battle smoke confirms it.
+- Continue excluding Pokemon Showdown data copies, raw reports, CFRU/DPE table edits, UPR-FVX changes, submodule repins, ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, local addresses, `.local.json`, secrets, tokens and `.env` data from commits.
+
 # Next steps update - Pokemon data alias table move final
 
 - Treat `07_scripts/data_audit/showdown_aliases.json` as updated through the reviewed remaining-Move classification batch.

@@ -1,3 +1,13 @@
+# Tool Manifest Update - 2026-05-29 - Pokemon ability behavior risk audit
+
+- Workspace branch: `analysis/pokemon-ability-behavior-risk-audit`.
+- Analysis file: `01_docs/analysis/pokemon-ability-behavior-risk-audit.md`.
+- Smoke file: `08_tests/randomizer/pokemon-ability-behavior-risk-audit.md`.
+- Scope: read-only source audit of CFRU/DPE Ability constants, alias defines, display strings, DPE Base Stats assignments, and CFRU battle behavior hooks for Gen9/newer Ability names.
+- Source search covered CFRU `include/constants/abilities.h`, `strings/ability_name_table.string`, `strings/ability_descriptions.string`, `assembly/data/ability_tables.json`, `src/ability_battle_effects.c`, `src/ability_util.c`, `include/new/ability_tables.h`, and additional behavior-hook files found by `rg`; DPE `include/abilities.h` and `src/Base_Stats.c`.
+- Status impact: Ability behavior policy now has source-backed categories for alias-plus-hook behavior, partial alias behavior, alias-only risk, display/definition risk, and missing local support.
+- Boundary: no Pokemon Showdown data is vendored; no raw reports, CFRU/DPE Pokemon data table, UPR-FVX code, submodule pin, ROM, save, emulator state, build artifact, tool binary, screenshot, raw log, hash, private path, token, secret or `.env` data is included.
+
 # Tool Manifest Update - 2026-05-29 - Pokemon data alias table move final
 
 - Workspace branch: `analysis/pokemon-data-alias-table-move-final`.
