@@ -1,3 +1,13 @@
+# Session update - Pokemon data Gen9 inventory
+
+- Branch: `analysis/pokemon-data-gen9-inventory`.
+- Added `01_docs/analysis/pokemon-data-gen9-inventory.md` as a source-backed inventory of current CFRU/DPE Pokemon data tables and a conservative update path.
+- Source finding: local CFRU/DPE species and move constants already reach Gen9 markers through `SPECIES_PECHARUNT` and `MOVE_PSYCHICNOISE`; level-up learnsets include Gen9 blocks in both CFRU and DPE.
+- Source finding: DPE owns primary Pokemon-facing data for base stats, ability assignments, egg moves, and TM/Tutor compatibility inputs; CFRU owns battle move behavior, ability behavior, runtime TM/Tutor bitset reads, and mirrored constants.
+- Key caveat: several Gen9 ability names are aliases to older CFRU ability IDs/effects, so ability assignment freshness is not the same as true Gen9 ability behavior.
+- Recommended update order: freeze constants/form mapping, generate a read-only Showdown-to-CFRU/DPE mapping diff, then update base stats/ability assignments, move data, learnsets, egg moves, TM compatibility, and tutor compatibility last.
+- Scope is documentation-only. No CFRU, DPE, UPR-FVX, submodule pin, ROM, save, emulator state, build artifact, tool binary, screenshot, raw log, hash, private path, token, secret or `.env` data was changed.
+
 # Session update - CFRU Randomizer baseline config local smoke
 
 - Branch: `feature/cfru-randomizer-baseline-config`.
