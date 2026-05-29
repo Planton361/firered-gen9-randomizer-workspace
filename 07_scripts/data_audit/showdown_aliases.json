@@ -1460,6 +1460,182 @@
       "note": "CFRU/DPE use the legacy local spelling."
     },
     {
+      "kind": "moves",
+      "category": "missing-engine-move",
+      "status": "open-risk",
+      "showdown_key": "allyswitch",
+      "local_keys": [],
+      "note": "Showdown has Ally Switch behavior; no reviewed local CFRU/DPE move constant exists, so this is not solved."
+    },
+    {
+      "kind": "moves",
+      "category": "lgpe-partner-move",
+      "status": "open-risk",
+      "showdown_key": "baddybad",
+      "local_keys": [],
+      "note": "Let's Go partner move; no reviewed local engine-backed CFRU/DPE move exists, so this is not solved."
+    },
+    {
+      "kind": "moves",
+      "category": "lgpe-partner-move",
+      "status": "open-risk",
+      "showdown_key": "bouncybubble",
+      "local_keys": [],
+      "note": "Let's Go partner move; no reviewed local engine-backed CFRU/DPE move exists, so this is not solved."
+    },
+    {
+      "kind": "moves",
+      "category": "lgpe-partner-move",
+      "status": "open-risk",
+      "showdown_key": "buzzybuzz",
+      "local_keys": [],
+      "note": "Let's Go partner move; no reviewed local engine-backed CFRU/DPE move exists, so this is not solved."
+    },
+    {
+      "kind": "moves",
+      "category": "lgpe-partner-move",
+      "status": "open-risk",
+      "showdown_key": "floatyfall",
+      "local_keys": [],
+      "note": "Let's Go partner move; no reviewed local engine-backed CFRU/DPE move exists, so this is not solved."
+    },
+    {
+      "kind": "moves",
+      "category": "lgpe-partner-move",
+      "status": "open-risk",
+      "showdown_key": "freezyfrost",
+      "local_keys": [],
+      "note": "Let's Go partner move; no reviewed local engine-backed CFRU/DPE move exists, so this is not solved."
+    },
+    {
+      "kind": "moves",
+      "category": "lgpe-partner-move",
+      "status": "open-risk",
+      "showdown_key": "glitzyglow",
+      "local_keys": [],
+      "note": "Let's Go partner move; no reviewed local engine-backed CFRU/DPE move exists, so this is not solved."
+    },
+    {
+      "kind": "moves",
+      "category": "fan-future-move",
+      "status": "ignore",
+      "showdown_key": "nihillight",
+      "local_keys": [],
+      "note": "Showdown marks this as nonstandard Future data; not a reviewed CFRU/DPE Gen9 target."
+    },
+    {
+      "kind": "moves",
+      "category": "cap-fan-move",
+      "status": "ignore",
+      "showdown_key": "paleowave",
+      "local_keys": [],
+      "note": "Pokemon Showdown CAP move; intentionally outside the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "moves",
+      "category": "lgpe-partner-move",
+      "status": "open-risk",
+      "showdown_key": "pikapapow",
+      "local_keys": [],
+      "note": "Let's Go partner move; no reviewed local engine-backed CFRU/DPE move exists, so this is not solved."
+    },
+    {
+      "kind": "moves",
+      "category": "cap-fan-move",
+      "status": "ignore",
+      "showdown_key": "polarflare",
+      "local_keys": [],
+      "note": "Pokemon Showdown CAP move; intentionally outside the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "moves",
+      "category": "lgpe-partner-move",
+      "status": "open-risk",
+      "showdown_key": "sappyseed",
+      "local_keys": [],
+      "note": "Let's Go partner move; no reviewed local engine-backed CFRU/DPE move exists, so this is not solved."
+    },
+    {
+      "kind": "moves",
+      "category": "cap-fan-move",
+      "status": "ignore",
+      "showdown_key": "shadowstrike",
+      "local_keys": [],
+      "note": "Pokemon Showdown CAP move; intentionally outside the CFRU/DPE Gen9 data target."
+    },
+    {
+      "kind": "moves",
+      "category": "lgpe-partner-move",
+      "status": "open-risk",
+      "showdown_key": "sizzlyslide",
+      "local_keys": [],
+      "note": "Let's Go partner move; no reviewed local engine-backed CFRU/DPE move exists, so this is not solved."
+    },
+    {
+      "kind": "moves",
+      "category": "lgpe-partner-move",
+      "status": "open-risk",
+      "showdown_key": "sparklyswirl",
+      "local_keys": [],
+      "note": "Let's Go partner move; no reviewed local engine-backed CFRU/DPE move exists, so this is not solved."
+    },
+    {
+      "kind": "moves",
+      "category": "lgpe-partner-move",
+      "status": "open-risk",
+      "showdown_key": "splishysplash",
+      "local_keys": [],
+      "note": "Let's Go partner move; no reviewed local engine-backed CFRU/DPE move exists, so this is not solved."
+    },
+    {
+      "kind": "moves",
+      "category": "lgpe-partner-move",
+      "status": "open-risk",
+      "showdown_key": "veeveevolley",
+      "local_keys": [],
+      "note": "Let's Go partner move; no reviewed local engine-backed CFRU/DPE move exists, so this is not solved."
+    },
+    {
+      "kind": "moves",
+      "category": "lgpe-partner-move",
+      "status": "open-risk",
+      "showdown_key": "zippyzap",
+      "local_keys": [],
+      "note": "Let's Go partner move; no reviewed local engine-backed CFRU/DPE move exists, so this is not solved."
+    },
+    {
+      "kind": "moves",
+      "category": "local-project-move",
+      "status": "ignore",
+      "local_keys": ["leechfang"],
+      "local_constants": ["MOVE_LEECHFANG"],
+      "note": "Local CFRU/DPE project move with no reviewed Showdown counterpart; do not map to a Showdown move."
+    },
+    {
+      "kind": "moves",
+      "category": "local-helper-constant",
+      "status": "ignore",
+      "local_keys": ["namelength"],
+      "local_constants": ["MOVE_NAME_LENGTH"],
+      "note": "Local helper constant, not a Pokemon move."
+    },
+    {
+      "kind": "moves",
+      "category": "local-helper-constant",
+      "status": "ignore",
+      "local_keys": ["none"],
+      "local_constants": ["MOVE_NONE"],
+      "note": "Local sentinel constant, not a Pokemon move."
+    },
+    {
+      "kind": "moves",
+      "category": "local-project-move",
+      "status": "ignore",
+      "local_keys": ["steelyhit"],
+      "local_constants": ["MOVE_STEELYHIT"],
+      "note": "Local CFRU/DPE project move with no reviewed Showdown counterpart; do not map to a Showdown move."
+    },
+    {
       "kind": "abilities",
       "category": "name-mismatch",
       "status": "alias",

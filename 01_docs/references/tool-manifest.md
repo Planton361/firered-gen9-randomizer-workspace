@@ -1,3 +1,15 @@
+# Tool Manifest Update - 2026-05-29 - Pokemon data alias table move final
+
+- Workspace branch: `analysis/pokemon-data-alias-table-move-final`.
+- Alias table: `07_scripts/data_audit/showdown_aliases.json`.
+- Analysis file updated: `01_docs/analysis/pokemon-data-reviewed-alias-table.md`.
+- Smoke file updated: `08_tests/randomizer/pokemon-data-reviewed-alias-table.md`.
+- Scope: Move-only final classification of remaining Pokemon Showdown-to-CFRU/DPE unresolved Move keys.
+- Added `open-risk` entries for Ally Switch and Let's Go partner moves, plus explicit ignores for CAP/Future Showdown moves and local helper/project constants.
+- Alias table status: 191 entries total; Move unresolved audit buckets now classify 104 Showdown-only Move keys and 143 local-only Move keys with 0 still uncategorized.
+- Local smoke commands: `python3 07_scripts/data_audit/showdown_mapping_audit.py --limit 20`; full comparison against an external Pokemon Showdown `data/` directory with `--limit 50`; `python3 -m py_compile 07_scripts/data_audit/showdown_mapping_audit.py`.
+- Boundary: no Pokemon Showdown data is vendored; no raw reports, CFRU/DPE Pokemon data table, UPR-FVX code, submodule pin, ROM, save, emulator state, build artifact, tool binary, screenshot, raw log, hash, private path, token, secret or `.env` data is included.
+
 # Tool Manifest Update - 2026-05-29 - Pokemon data alias table move splits
 
 - Workspace branch: `analysis/pokemon-data-alias-table-move-splits`.
