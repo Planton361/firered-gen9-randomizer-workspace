@@ -1,3 +1,13 @@
+# Session update - Pokemon ability behavior risk audit
+
+- Branch: `analysis/pokemon-ability-behavior-risk-audit`.
+- Added `01_docs/analysis/pokemon-ability-behavior-risk-audit.md` as a source-backed, read-only CFRU/DPE audit of Gen9/newer Ability behavior risk.
+- Added `08_tests/randomizer/pokemon-ability-behavior-risk-audit.md` as the sanitized audit smoke record.
+- Key finding: most Gen9-looking Ability names are local aliases to older Ability IDs, but many have species-gated CFRU behavior hooks that make them stronger than pure name aliases.
+- Focus findings: Hadron Engine, Orichalcum Pulse, Toxic Debris and Poison Puppeteer have source-backed alias-plus-hook behavior; Ruin abilities and Good as Gold have behavior hooks but remain medium/high risk because of alias plumbing; Zero to Hero is not fully confirmed as true form-change behavior by this source pass.
+- Missing/high-risk findings: Commander, Hospitality and Embody Aspect were not found as local Ability constants/behavior; Terapagos Tera Shift / Tera Shell has name/assignment/helper inconsistency and remains blocked for generator-safe behavior assumptions.
+- Scope remains documentation-only. No CFRU/DPE Pokemon data table, UPR-FVX code, submodule pin, Showdown source, raw report, ROM, save, emulator state, build artifact, tool binary, screenshot, hash, private path, token, secret or `.env` data was changed or documented.
+
 # Session update - Pokemon data alias table move final
 
 - Branch: `analysis/pokemon-data-alias-table-move-final`.
