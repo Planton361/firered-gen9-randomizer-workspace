@@ -1,6 +1,52 @@
 # CFRU Name Rater Pokecenter pilot
 
-Status: `SMOKE_FAIL_DEBUG_SOURCE_PATH_PLAUSIBLE_CLEAN_REBUILD_REQUIRED`
+Status: `MVP_PASS_WITH_CAVEATS`
+
+## Manual smoke result - 2026-05-30
+
+Branch: `test/cfru-map-object-overlay-viridian-smoke`
+
+Sanitized user-reported result:
+
+- Clean-build was run in the local Mac CFRU build checkout.
+- The added Name Rater became visible only after running
+  `python3 scripts/clean.py BUILD` followed by `python3 scripts/make.py`.
+- Viridian City Pokecenter 1F was entered fresh from outside the map.
+- No ROM name, hash, save, screenshot, raw log, private path or generated
+  artifact detail is included.
+
+Smoke matrix:
+
+| Case | Result |
+|---|---|
+| Clean build with `clean.py BUILD` plus `make.py` | pass |
+| Viridian Pokecenter loads | pass |
+| Viridian Pokecenter entered from outside | pass |
+| Added Name Rater NPC visible | pass |
+| Nurse works | pass |
+| PC works | pass |
+| Existing NPCs remain present and interactable | pass |
+| Name Rater `No` path works | pass |
+| Nickname screen opens | pass |
+| Nickname cancel path works | pass |
+| Nickname confirm / rename path works | pass |
+| No visible Runtime Options side effect | pass |
+| No visible Field Item side effect | pass |
+| No visible randomizer-output side effect | pass |
+| Egg rejection path | not run |
+| Traded/non-player-OT rejection path | not run |
+| Broader Pokecenter rollout | not run |
+
+Result decision: the Viridian-only overlay MVP is accepted as
+`MVP_PASS_WITH_CAVEATS`.
+
+Caveats:
+
+- Manual smoke only; no automated test or full playthrough.
+- Egg and traded-mon rejection paths were not run in this result.
+- No claim is made for additional Pokecenters, rollout readiness, BizHawk,
+  Ironmon Tracker, P1 support, Hidden Items, itemball graphics, Field Items or
+  Randomizer writer behavior beyond the targeted visible side-effect check.
 
 ## Smoke fail debug - 2026-05-30
 

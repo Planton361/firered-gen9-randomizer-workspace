@@ -1,3 +1,13 @@
+# Session update - CFRU Viridian Name Rater overlay smoke pass
+
+- Branch: `test/cfru-map-object-overlay-viridian-smoke`.
+- PR #453 was verified as merged into current `main` before creating this branch.
+- Updated `08_tests/randomizer/cfru-name-rater-centers-qol.md` with the sanitized successful manual Viridian Pokecenter Name Rater overlay smoke.
+- User-reported result: a local Mac CFRU clean-build using `python3 scripts/clean.py BUILD` followed by `python3 scripts/make.py` made the added Name Rater visible; Viridian Pokecenter was entered fresh from outside the map.
+- Smoke rows reported pass: Viridian Pokecenter loads, added Name Rater visible, Nurse works, PC works, existing NPCs remain present/interactable, Name Rater No path works, nickname screen opens, cancel works, confirm/rename works, and no visible Runtime Options / Field Item / randomizer-output side effect was observed.
+- Not run: Egg rejection path, traded/non-player-OT rejection path, broader Pokecenter rollout.
+- Status promoted to `MVP_PASS_WITH_CAVEATS` for the Viridian-only overlay MVP. No CFRU, DPE, UPR-FVX, additional Pokecenter, rollout, Hidden Item, itemball graphics, Field Item, Randomizer writer, ROM, save, build artifact, tool binary, screenshot, raw log, hash, private path, token, secret or `.env` data was changed or documented.
+
 # Session update - CFRU Name Rater overlay smoke fail debug
 
 - Branch: `debug/cfru-name-rater-overlay-smoke-fail`.

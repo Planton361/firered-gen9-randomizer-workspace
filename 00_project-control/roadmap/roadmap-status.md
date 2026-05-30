@@ -1,3 +1,15 @@
+# Roadmap status update - CFRU Viridian Name Rater overlay smoke pass
+
+- Documented the sanitized successful manual smoke for the Viridian-only
+  Pokecenter Name Rater map-object overlay in
+  `08_tests/randomizer/cfru-name-rater-centers-qol.md`.
+- Status impact: the Viridian-only added-NPC overlay MVP is promoted to
+  `MVP_PASS_WITH_CAVEATS`.
+- Caveats: manual smoke only, no full playthrough, no rollout, Egg/traded-mon
+  rejection paths not run, and no claim for other Pokecenters, BizHawk, Ironmon
+  Tracker, P1 support, Hidden Items, itemball graphics, Field Items or
+  Randomizer writer behavior.
+
 # Roadmap status update - CFRU QoL coverage analysis
 
 - Added a documentation-only coverage map in `01_docs/analysis/cfru-qol-coverage.md` and a preserve-smoke handoff in `08_tests/randomizer/cfru-qol-coverage.md`.
