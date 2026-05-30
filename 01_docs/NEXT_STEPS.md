@@ -1,3 +1,12 @@
+# Next steps update - DPE Base Stats full source sync audit
+
+- Treat `01_docs/analysis/dpe-base-stats-full-source-sync.md` as the current decision record for whole-file DPE `Base_Stats.c` replacement.
+- Do not full-replace DPE `src/Base_Stats.c` from Shiny-Miner, Skeli, pokeemerald-expansion, or Pokemon Showdown.
+- Continue with small reviewed field-family tranches driven by the alias table and dry-diff helper.
+- Keep Ability assignment updates blocked until Ability behavior/alias risk is explicitly accepted, fixed, or excluded.
+- For a later real data PR, generate a review table with Species key, local DPE ID, source key, exact fields, blocker status, and canonical-vs-local-balance classification before writing any DPE table.
+- Continue excluding submodule repins, external data copies, raw reports, ROMs, saves, builds, tool binaries, screenshots, hashes, private paths, tokens, secrets and `.env` data unless a later task explicitly allows them.
+
 # Next steps update - DPE Base Stats tranche 1
 
 - Treat DPE commit `1c8d53870e38d7019c681a68a17c9425a3490611` on branch `data/dpe-base-stats-tranche-1` as the current tranche 1 candidate.

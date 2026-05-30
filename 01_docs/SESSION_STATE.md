@@ -1,3 +1,12 @@
+# Session update - DPE Base Stats full source sync audit
+
+- Branch: `analysis/dpe-base-stats-full-source-sync`.
+- Added `01_docs/analysis/dpe-base-stats-full-source-sync.md` as a read-only source-backed audit for whether DPE `src/Base_Stats.c` can be fully or mostly replaced from a current compatible source.
+- Added `08_tests/randomizer/dpe-base-stats-full-source-sync.md` as the sanitized smoke record.
+- Finding: no full replace is recommended. Planton DPE `origin/master` is compatible but identical for the audited files; Shiny-Miner DPE Gen9 is structurally close but older than the local accepted table state; Skeli DPE, pokeemerald-expansion, and Pokemon Showdown are not drop-in sources.
+- Key blockers: local Ogerpon Terastal rows, form naming/open-risk families, and Gen9 Ability names that alias to older local Ability IDs/effects.
+- Scope remains documentation-only. No DPE/CFRU/UPR-FVX source, submodule pin, Pokemon Showdown data, external repo, raw report, ROM, save, build artifact, tool binary, screenshot, hash, private path, token, secret or `.env` data was changed.
+
 # Session update - DPE Base Stats tranche 1
 
 - Workspace branch: `data/dpe-base-stats-tranche-1`.
