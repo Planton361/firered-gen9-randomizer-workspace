@@ -1,3 +1,13 @@
+# Session update - CFRU QoL New Game smoke plan
+
+- Branch: `test/cfru-qol-new-game-smoke`.
+- PR #441 was verified as merged before creating this branch from the updated Workspace `main`.
+- Added `08_tests/randomizer/cfru-qol-new-game-smoke.md` as a documentation-only smoke-test plan for the existing CFRU QoL / New Game baseline.
+- Read-only source review covered current CFRU config, intro controls guide skip, Oak tutorial gating, EXP/poison/catch config surfaces, option-menu runtime rows, Wild Prebattle gating, existing workspace smokes, and UPR-FVX Field Items ownership notes.
+- Planned smoke coverage: New Game reaches player control, controls guide skip, Oak tutorial absence, Teachy-TV unchanged/out of scope, runtime option preservation and toggle ownership, old/flat EXP symptom smoke, poison overworld faint, SwSh catch-level malus absence, and randomizer compatibility without Field Item changes.
+- Scope remains documentation-only. No CFRU/DPE/UPR-FVX source, submodule pin, ROM, save, emulator state, build artifact, tool binary, screenshot, raw log, hash value, private path, token, secret or `.env` data was changed or documented.
+- Roadmap status was not changed because this plan does not promote support status; it only defines the next sanitized smoke protocol.
+
 # Session update - Ironmon QoL feature inventory
 
 - Branch: `analysis/ironmon-qol-feature-inventory`.
