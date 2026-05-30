@@ -1,13 +1,16 @@
 # CFRU Name Rater Pokecenter pilot
 
-Status: `IMPLEMENTED_PILOT_SOURCE_BACKED`
+Status: `STOPPED_ADDITIONAL_OBJECT_EVENT_NOT_SOURCE_BACKED`
 
 ## Scope
 
-This block implements exactly one QoL pilot: a Name Rater hook in one selected
-Pokecenter.
+This block re-checks the Name Rater Pokecenter pilot after review feedback on
+PR #448.
 
-Pilot map: `MAP_VIRIDIAN_CITY_POKEMON_CENTER_1F`.
+Desired pilot map: `MAP_VIRIDIAN_CITY_POKEMON_CENTER_1F`.
+
+Desired target state: add one new, uniform Name Rater NPC to Viridian City
+Pokecenter 1F without replacing or repointing an existing NPC.
 
 No global Pokecenter rollout was added. No Pewter City, other Pokecenter,
 Faster Intro, Oak/Lab/Parcel, Bill-Sevii, Repel-Reuse, auto-run, poison, EXP,
@@ -17,7 +20,7 @@ Friendship Boost or binary patch work was changed.
 
 ## Read-only source findings
 
-Current CFRU already has nickname-capable vanilla special plumbing:
+Current CFRU still has nickname-capable vanilla special plumbing:
 
 - `02_external/CFRU-expansion/src/scripting.c`
   - `sp07C_BufferNickname`
@@ -30,9 +33,6 @@ Current CFRU already has nickname-capable vanilla special plumbing:
 - `02_external/CFRU-expansion/routinepointers`
   - Documents optional replacement addresses for `sp07C`, `sp07D`, and
     `sp09E` if `REPLACE_SOME_VANILLA_SPECIALS` is enabled later.
-- `02_external/CFRU-expansion/eventscripts`
-  - Provides a local source-backed event-script pointer replacement surface by
-    map bank, map number, object event id, and script symbol.
 
 Vanilla reference flow checked read-only:
 
@@ -46,76 +46,101 @@ Vanilla reference flow checked read-only:
     `IsMonOTIDNotPlayers`, `ChangePokemonNickname`, `ChoosePartyMon`,
     `GetPartyMonSpecies`, and `IsMonOTNameNotPlayers`.
 - `02_external/references/pret-pokefirered/data/maps/ViridianCity_PokemonCenter_1F/map.json`
-  - Viridian Pokecenter 1F has object event id `1`, a Gentleman at `(12, 5)`,
-    separate from the Nurse and PC/link-area objects.
-- `02_external/references/pret-pokefirered/data/maps/PewterCity_PokemonCenter_1F/map.json`
-  - Pewter also has candidate NPCs, but was not selected because the task
-    allows only one pilot map and Viridian is earlier/recommended.
+  - Viridian Pokecenter 1F has four object events:
+    - object event id `0`: Nurse at `(7, 2)`
+    - object event id `1`: Gentleman at `(12, 5)`
+    - object event id `2`: Boy at `(4, 7)`
+    - object event id `3`: Youngster at `(2, 3)`
+- `02_external/CFRU-expansion/include/constants/maps.h`
+  - `MAP_VIRIDIAN_CITY_POKEMON_CENTER_1F` is map bank `5`, map number `4`.
 
-## Implemented hook
+## Rejected prior pilot
 
-Changed CFRU files:
+PR #448 previously used:
 
-- `02_external/CFRU-expansion/eventscripts`
-- `02_external/CFRU-expansion/assembly/overworld_scripts/name_rater_pilot.s`
-- `02_external/CFRU-expansion/strings/Scripts/name_rater_pilot.string`
+```text
+npc 5 4 1 EventScript_PilotPokeCenterNameRater
+```
 
-Implementation details:
+That changed Viridian Pokecenter object event id `1`, the existing Gentleman at
+`(12, 5)`, into the Name Rater pilot hook.
 
-- Repoints only Viridian Pokecenter 1F object event id `1`:
-  `npc 5 4 1 EventScript_PilotPokeCenterNameRater`.
-- Keeps Nurse/healing, PC, Cable Club upstairs warp, Runtime Options and other
-  maps untouched.
-- Uses one existing object-event hook instead of adding map-object structure.
-- Uses vanilla Name-Rater-capable specials by id:
-  - `0x7B` nickname-changed check
-  - `0x7C` buffer nickname
-  - `0x7D` OT ID ownership check
-  - `0x9E` nickname screen
-  - `0x9F` party chooser
-  - `0x147` party mon species
-  - `0x150` OT name ownership check
-- Adds short project-local text rather than copying vanilla text/source files.
+This is rejected as the rollout basis because Pokecenters have different
+existing NPCs and scripts. A uniform rollout model needs an added Name Rater
+object event per target Pokecenter, not replacement of map-specific local
+dialogue NPCs.
 
-## Manual smoke proposal
+The CFRU branch now removes the prior replacement hook and removes the unused
+local pilot script/text. The original Gentleman object event is left owned by
+the vanilla map object table and script pointer.
 
-Use a local gameplay candidate and record only sanitized pass/fail notes:
+## Additional object-event check
+
+The available local CFRU source-backed event surface is
+`02_external/CFRU-expansion/eventscripts`, parsed by
+`02_external/CFRU-expansion/scripts/insert.py`.
+
+For `npc`, `trainer`, and `item` rows, the inserter:
+
+- reads the target map header from the ROM map-bank table;
+- reads the event header and existing object-event count;
+- rejects any object id greater than or equal to the existing count;
+- writes only the script pointer field at `npcTable + eventId * 0x18 + 0x10`.
+
+That means `eventscripts` can repoint scripts on existing object events, but it
+cannot add a fifth object event to
+`MAP_VIRIDIAN_CITY_POKEMON_CENTER_1F`, increment the object count, allocate a
+new object-event table, or repoint the map event header to that new table.
+
+No local CFRU source file was found that owns Viridian/Pewter Pokecenter
+`object_events` in source form. Implementing an added NPC from the current
+source surface would require a raw map-event-table replacement or a broader
+map-object ownership/refactor design, both outside this block.
+
+## Stop decision
+
+No new Name Rater NPC is implemented in this correction.
+
+Reason: a new Viridian Pokecenter object event is not source-backed by the
+current CFRU hook surface. The only small hook found is replacement of an
+existing object event, and that replacement model is explicitly rejected for
+the desired rollout.
+
+## Future smoke proposal
+
+Run this only after a future source-backed map-object ownership design adds a
+real fifth object event to Viridian Pokecenter:
 
 1. Enter Viridian City Pokecenter 1F.
-2. Confirm the Nurse still heals normally.
-3. Confirm PC access still opens normally.
-4. Talk to the Gentleman object at the right side of the room.
-5. Choose `No` at the Name Rater intro and confirm the script exits normally.
-6. Talk again, choose `Yes`, select an eligible player-owned non-Egg party mon,
+2. Confirm the original Gentleman still has his normal dialogue.
+3. Confirm the Nurse still heals normally.
+4. Confirm PC access still opens normally.
+5. Talk to the added Name Rater NPC.
+6. Choose `No` at the Name Rater intro and confirm the script exits normally.
+7. Talk again, choose `Yes`, select an eligible player-owned non-Egg party mon,
    and confirm the nickname screen opens.
-7. Cancel from the naming screen and confirm field control returns without
+8. Cancel from the naming screen and confirm field control returns without
    softlock.
-8. Repeat, enter a changed nickname, and confirm the new nickname is applied.
-9. Select an Egg if available and confirm the Egg rejection path.
-10. Select a traded/non-player-OT mon if available and confirm the rejection
+9. Repeat, enter a changed nickname, and confirm the new nickname is applied.
+10. Select an Egg if available and confirm the Egg rejection path.
+11. Select a traded/non-player-OT mon if available and confirm the rejection
     path.
-11. Confirm no Runtime Options, healing, PC, upstairs warp, Field Items,
+12. Confirm no Runtime Options, healing, PC, upstairs warp, Field Items,
     hidden-item cues or randomizer-output behavior changed.
 
 ## Rollout handoff
 
-Do not roll this out globally until the Viridian pilot smoke passes.
+Do not roll this out globally from object replacement.
 
-If the pilot passes, a later rollout design should:
-
-- choose whether every Pokecenter receives a replacement existing NPC hook or a
-  real new object-event ownership model;
-- list each target map bank, map number, object event id, and original NPC
-  behavior being replaced;
-- decide whether the Name Rater should stay party-only or support boxed Pokemon
-  by enabling/reviewing CFRU special replacements;
-- keep healing, PC, link rooms, Runtime Options, Field Items, randomizer writer,
-  DPE data and unrelated QoL unchanged.
+A later accepted design should first add or expose source ownership for map
+object events, then pilot exactly one added NPC in Viridian Pokecenter. That
+design must list map bank, map number, new object event id, sprite, coordinates,
+movement, elevation, script symbol, and any event-table ownership changes before
+code.
 
 ## Caveats
 
-- This pilot repoints an existing Viridian Pokecenter Gentleman NPC; it does
-  not add a new object event.
-- Visual identity remains the existing Gentleman object event.
+- This correction intentionally leaves no playable Name Rater in Viridian
+  Pokecenter.
 - No ROM build, emulator run, save/state inspection, screenshot, raw log, hash,
   private path or generated artifact is included.

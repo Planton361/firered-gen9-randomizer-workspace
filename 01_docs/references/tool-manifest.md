@@ -1,3 +1,16 @@
+# Tool Manifest Update - 2026-05-30 - CFRU Name Rater Pokecenter pilot correction
+
+- Workspace branch: `feature/cfru-name-rater-centers-qol`.
+- CFRU branch: `feature/cfru-name-rater-centers-qol`.
+- CFRU commit: `5658d5e4cb13f4acaeabf1c0809f7ed05f9f225b`.
+- Evidence file: `08_tests/randomizer/cfru-name-rater-centers-qol.md`.
+- Scope: correction of PR #448 from an existing-NPC replacement pilot to a Stop/Handoff for a future added-NPC design.
+- CFRU change: removed the Viridian Pokecenter `eventscripts` repoint for map bank `5`, map `4`, object event id `1`; removed the now-unused local pilot script and text.
+- Source basis: `scripts/insert.py` only supports script-pointer repoints for existing object events and rejects ids beyond the existing object count. No source-owned Viridian Pokecenter object-event table was found in local CFRU.
+- Decision: adding a real fifth Viridian Pokecenter Name Rater NPC is not source-backed by the current CFRU hook surface; object replacement is rejected as the rollout model.
+- Checks: CFRU `diff --check`; workspace `diff --check`.
+- Boundary: no global Pokecenter rollout, Pewter change, Faster Intro, Oak/Lab/Parcel, Bill-Sevii, Repel-Reuse, auto-run/running indoors, poison, EXP, Runtime Options, Hidden Items, Itemfinder sparkle, itemball graphics, Field Items, UPR-FVX writer, DPE data, binary patch, ROM, save, emulator state, build artifact, tool binary, screenshot, raw log, hash, private path, token, secret or `.env` data is included.
+
 # Tool Manifest Update - 2026-05-30 - CFRU Name Rater Pokecenter pilot
 
 - Workspace branch: `feature/cfru-name-rater-centers-qol`.
