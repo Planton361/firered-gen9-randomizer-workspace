@@ -1,3 +1,11 @@
+# Next steps update - CFRU QoL New Game remaining smoke results
+
+- Treat `08_tests/randomizer/cfru-qol-new-game-smoke.md` as updated to `PASS_FULL_WITH_CAVEATS` for the planned manual CFRU QoL / New Game smoke matrix.
+- All planned manual cases are green by user report: New Game Start, controls guide skip, Oak Tutorial absent, Teachy-TV unchanged, Runtime / Settings, old/flat EXP symptom smoke, poison overworld faint, SwSh catch-level malus absent, and Randomizer compatibility without Field Item changes.
+- Keep the result manual and caveated. Do not promote it to full-playthrough, BizHawk, Ironmon Tracker or P1 support.
+- Do not infer coverage for Hidden Sparkle, Field Item writer changes, itemball graphics, Randomizer writer changes, UPR-FVX profile/settings changes, DPE data changes or binary patch ports.
+- First implementation block can now be narrow and regression-gated: only change CFRU QoL/New Game code if a future smoke finds a concrete regression or the user requests one specific source-backed feature.
+
 # Next steps update - CFRU QoL New Game settings smoke result
 
 - Treat `08_tests/randomizer/cfru-qol-new-game-smoke.md` as updated with a narrow `PASS_SETTINGS_ONLY_WITH_CAVEATS` Runtime / Settings result.

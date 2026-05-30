@@ -1,3 +1,11 @@
+# Roadmap status update - CFRU QoL New Game full manual smoke
+
+- Documented the remaining sanitized manual CFRU QoL / New Game smoke results in `08_tests/randomizer/cfru-qol-new-game-smoke.md`.
+- Status impact: the planned manual CFRU QoL / New Game smoke matrix is promoted from settings-only partial coverage to `PASS_FULL_WITH_CAVEATS`.
+- User-reported green cases: New Game Start, intro controls guide skipped, Oak Tutorial battle absent, Teachy-TV unchanged, Runtime / Settings, old/flat EXP symptom smoke, poison overworld faint, SwSh catch-level malus absent, and Randomizer compatibility without Field Item changes.
+- Caveat: coverage is manual and non-automated. This is not a full-playthrough result, BizHawk validation, Ironmon Tracker validation, P1 support claim, hidden-sparkle validation, Field Item writer validation, itemball graphics validation, Randomizer writer validation or binary patch port.
+- No CFRU/DPE/UPR-FVX source file, submodule pin, ROM path, ROM hash, CRC, full log, screenshot, save, emulator state, output ROM, build artifact, tool binary, private path, token, secret or `.env` data is added.
+
 # Roadmap status update - Ironmon QoL feature inventory
 
 - Added a documentation-only source-backed inventory for Ironmon-/NatDex-/FireRed-QoL features in `01_docs/analysis/ironmon-qol-feature-inventory.md`.
