@@ -1,3 +1,16 @@
+# Session update - CFRU Name Rater Pokecenter pilot
+
+- Branch: `feature/cfru-name-rater-centers-qol`.
+- PR #447 was verified as merged by fast-forwarding `main` to merge commit `cd3fb73` before creating this branch.
+- CFRU submodule branch: `feature/cfru-name-rater-centers-qol`.
+- CFRU commit: `0a0af84a6b4ee649ea4bff7135ba4efd4f3f2c3e`.
+- Read-only CFRU review found existing nickname special plumbing in `src/scripting.c`, optional vanilla-special replacement wiring in `routinepointers`, and a source-backed map object script repoint surface in `eventscripts`.
+- Read-only vanilla reference review identified the Name Rater flow in `LavenderTown_House2`, plus Viridian and Pewter Pokecenter object-event candidates.
+- Implemented exactly one pilot map: Viridian City Pokecenter 1F object event id `1` now points to `EventScript_PilotPokeCenterNameRater`.
+- Added a project-local Name Rater pilot script and text, using existing vanilla special ids for party selection, nickname buffering, ownership checks, nickname screen, and changed-name detection.
+- Added `08_tests/randomizer/cfru-name-rater-centers-qol.md` with source findings, Pilot-Map details, manual smoke proposal, caveats, and rollout handoff.
+- No global Pokecenter rollout, Pewter change, Faster Intro, Oak/Lab/Parcel, Bill-Sevii, Repel-Reuse, auto-run/running indoors, poison, EXP, Runtime Options, Hidden Items, Itemfinder sparkle, itemball graphics, Field Items, UPR-FVX writer, DPE data, Viridian-Forest-Nurse, Step Item Guarantees, Friendship Boost, binary patch, ROM, save, build, tool binary, raw log, screenshot, token, secret or `.env` data was changed or documented.
+
 # Session update - CFRU Bill Sevii QoL
 
 - Branch: `feature/cfru-bill-sevii-qol`.

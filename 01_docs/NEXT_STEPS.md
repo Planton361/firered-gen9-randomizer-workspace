@@ -1,3 +1,11 @@
+# Next steps update - CFRU Name Rater Pokecenter pilot
+
+- Treat CFRU commit `0a0af84a6b4ee649ea4bff7135ba4efd4f3f2c3e` on branch `feature/cfru-name-rater-centers-qol` as the current Name Rater Pokecenter pilot candidate.
+- Treat `08_tests/randomizer/cfru-name-rater-centers-qol.md` as the current smoke protocol and rollout handoff.
+- Run a manual Viridian City Pokecenter smoke before any rollout: Nurse healing, PC access, Name Rater intro No path, eligible mon nickname cancel/confirm, optional Egg/traded-mon rejection, and no Runtime Options or Field Item/randomizer-output side effects.
+- Do not add Pewter or other Pokecenters until the Viridian pilot passes and a rollout design lists each target map bank, map number, object event id, and original NPC behavior being replaced.
+- Keep Faster Intro, Oak/Lab/Parcel, Bill-Sevii, Repel-Reuse, auto-run/running indoors, poison, EXP, Runtime Options, Hidden Items, Itemfinder sparkle, itemball graphics, Field Items, UPR-FVX writer, DPE data, Viridian-Forest-Nurse, Step Item Guarantees, Friendship Boost and binary patch ports out of this block.
+
 # Next steps update - CFRU Bill Sevii QoL
 
 - Treat `08_tests/randomizer/cfru-bill-sevii-qol.md` as the current Stop/Handoff for the Bill-Sevii auto-ask removal.
