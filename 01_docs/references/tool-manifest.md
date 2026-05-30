@@ -1,3 +1,14 @@
+# Tool Manifest Update - 2026-05-30 - Ironmon QoL feature inventory
+
+- Workspace branch: `analysis/ironmon-qol-feature-inventory`.
+- Analysis file: `01_docs/analysis/ironmon-qol-feature-inventory.md`.
+- Smoke file: `08_tests/randomizer/ironmon-qol-feature-inventory.md`.
+- Scope: documentation-only inventory of public/source-backed Ironmon-/NatDex-/FireRed-QoL feature candidates for the CFRU/DPE/UPR-FVX workspace.
+- Sources checked read-only: existing workspace docs and smokes; local public source references for CFRU, UPR-FVX and pret FireRed; public Ironmon/Tracker/UPR-FVX docs for QoL, New Runs and randomizer field-item context.
+- Target areas inventoried: Faster Intro / Controls Guide / Oak Tutorial / New Game Flow; Hidden Items / Itemfinder / Sparkle / Field Effects; Field Item Balls / Pokeball object graphics / TM-HM item balls; Runtime Options / Config Flags; Randomizer interaction with Field Items.
+- Recommendation: smoke-harden the existing low-risk CFRU QoL baseline first, then design hidden-item/Itemfinder presentation, then keep UPR-FVX Field Items behavior under dedicated regression smokes.
+- Boundary: no CFRU/DPE/UPR-FVX/Tracker source file or submodule pin is changed; no external source copy, ROM, save, emulator state, build artifact, tool binary, screenshot, raw log, hash value, private path, token, secret or `.env` data is included.
+
 # Tool Manifest Update - 2026-05-30 - Pokemon Showdown data local build/boot smoke
 
 - Workspace branch: `data/showdown-pokemon-data-gen1-9`.
