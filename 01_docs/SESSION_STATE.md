@@ -1,3 +1,14 @@
+# Session update - CFRU Name Rater Pokecenter rollout design
+
+- Branch: `design/cfru-name-rater-centers-rollout`.
+- PR #454 was fast-forwarded into current `main` before creating this branch.
+- Added `01_docs/analysis/cfru-name-rater-centers-rollout.md` as a design-only rollout inventory for added Name Rater NPCs in Pokecenter 1F maps.
+- Added `08_tests/randomizer/cfru-name-rater-centers-rollout.md` as the clean-build and map-by-map smoke handoff for future rollout work.
+- Read-only source inventory covered CFRU map constants and pret `*PokemonCenter_1F/map.json` files. It identified 19 target Pokecenter 1F maps, with per-map bank, map number, object count, new row/local id, candidate coordinate, event risk and smoke focus.
+- Viridian remains the only implemented/passed MVP pattern: status `MVP_PASS_WITH_CAVEATS`, clean build required, and map entry from outside required.
+- Recommended rollout order is staged: safe Kanto maps first, high-count Kanto and Indigo Plateau separately, Sevii maps later, and One Island last because of Bill/Celio/Network Machine plus coord/BG-event preservation risk.
+- No CFRU, DPE, UPR-FVX, rollout code, additional Pokecenter implementation, Hidden Item, itemball graphics, Field Item, Randomizer writer, ROM, save, build artifact, tool binary, screenshot, raw log, hash, private path, token, secret or `.env` data was changed or documented.
+
 # Session update - CFRU Viridian Name Rater overlay smoke pass
 
 - Branch: `test/cfru-map-object-overlay-viridian-smoke`.
