@@ -1,3 +1,11 @@
+# Next steps update - CFRU Viridian Name Rater overlay smoke pass
+
+- Treat `08_tests/randomizer/cfru-name-rater-centers-qol.md` as promoted to `MVP_PASS_WITH_CAVEATS` for the Viridian-only added Name Rater overlay.
+- The immediate rebuild blocker is resolved: the Name Rater became visible after a clean local Mac CFRU build using `python3 scripts/clean.py BUILD` followed by `python3 scripts/make.py`, then entering Viridian Pokecenter fresh from outside.
+- Do not add more Pokecenters from this result alone. The next implementation/design block should be a rollout design that lists each target Pokecenter's map bank, map number, original object count, proposed local id, coordinate, and coord/bg-event preservation risk.
+- Before rollout, add smoke gates for at least one high-count Pokecenter and one coord/bg-event Pokecenter, plus optional Egg and traded/non-player-OT Name Rater rejection paths.
+- Continue excluding Faster Intro, Oak/Lab/Parcel, Bill-Sevii, Repel-Reuse, Hidden Items, itemball graphics, Field Items, Randomizer writer, UPR-FVX/DPE changes, ROMs, saves, builds, tool binaries, screenshots, raw logs, hashes, private paths, tokens, secrets and `.env` data from commits.
+
 # Next steps update - CFRU Name Rater overlay smoke fail debug
 
 - Treat `08_tests/randomizer/cfru-name-rater-centers-qol.md` as updated with the current Viridian Name Rater overlay smoke-fail diagnosis.
