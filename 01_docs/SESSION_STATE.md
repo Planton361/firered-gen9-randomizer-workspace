@@ -1,3 +1,14 @@
+# Session update - CFRU QoL coverage analysis
+
+- Branch: `analysis/cfru-qol-coverage`.
+- Verified PR #444 was merged before creating the branch from current `main`.
+- Added `01_docs/analysis/cfru-qol-coverage.md` as a source-backed, documentation-only coverage map of current Planton361 CFRU QoL features against the Ironmon / FireRed baseline.
+- Added `08_tests/randomizer/cfru-qol-coverage.md` as the sanitized coverage handoff and preserve-smoke proposal.
+- Main finding: `BW_REPEL_SYSTEM` is active in current CFRU source and should be tested/preserved, not newly built. It is compile-time plus script behavior, and no runtime Options-menu toggle was found.
+- Already-covered CFRU areas include controls-guide skip, Oak tutorial battle absence, Repel-Reuse, auto-run path, running indoors, poison faint behavior, old/flat EXP profile, reusable TMs, select-from-PC, party move-item path, item picture/description acquire behavior, auto lowercase naming screen, multiple Premier Balls, HM field-use convenience, Portable PC plumbing and current Runtime Options pages.
+- Needs-design items remain separate: broader Faster Intro / New Game Flow, shortened Oak/Lab/Parcel flow, visible Hidden Items / Itemfinder sparkle cue, yellow/golden TM/HM or important itemballs, Name Rater in Poke Centers, lab-specific convenience and Bill-Sevii auto-ask removal.
+- Scope remains documentation-only. No CFRU/DPE/UPR-FVX source file or submodule pin was changed, and no forbidden local artifact was documented.
+
 # Session update - CFRU QoL New Game remaining smoke results
 
 - Branch: `test/cfru-qol-new-game-smoke-remaining`.

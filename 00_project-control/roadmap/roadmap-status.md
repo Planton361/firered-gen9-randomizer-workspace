@@ -1,3 +1,12 @@
+# Roadmap status update - CFRU QoL coverage analysis
+
+- Added a documentation-only coverage map in `01_docs/analysis/cfru-qol-coverage.md` and a preserve-smoke handoff in `08_tests/randomizer/cfru-qol-coverage.md`.
+- Status impact: QoL planning now separates CFRU-provided features from preserve-smoke work and true new implementation candidates.
+- Current CFRU already provides Repel-Reuse, running indoors, auto-run path, poison faint behavior, old/flat EXP profile, reusable TMs, select-from-PC, party move-item support, item acquire picture/description behavior, auto lowercase naming screen, multiple Premier Balls, HM field-use convenience, Portable PC plumbing, Runtime Options pages, controls-guide skip and Oak tutorial battle absence.
+- Repel-Reuse finding: `BW_REPEL_SYSTEM` is active and should be tested/preserved, not newly built; no runtime Options-menu toggle was found in the reviewed source.
+- New implementation candidates remain separate: broader Faster Intro / New Game Flow, shortened Oak/Lab/Parcel flow, visible Hidden Items / Itemfinder sparkle cue, TM/HM or important itemball graphics, Name Rater in Poke Centers, lab convenience and Bill-Sevii auto-ask removal.
+- Caveat: source coverage only; no local build, emulator run, full-playthrough coverage, BizHawk validation, Ironmon Tracker validation, support promotion or CFRU/DPE/UPR-FVX source change is claimed.
+
 # Roadmap status update - CFRU QoL New Game full manual smoke
 
 - Documented the remaining sanitized manual CFRU QoL / New Game smoke results in `08_tests/randomizer/cfru-qol-new-game-smoke.md`.
