@@ -1922,3 +1922,10 @@ Zweck: Diagnose 082 reviewen und mergen; danach Evolution-Methoden-Writer und we
 - Direct write-scope safety stayed clean: `invalidPickupItemWrites=0`, `unloadedPickupItemWrites=0`, `fallbackPickupItemWrites=0`, `placeholderPickupItemWrites=0`; Field Items, Shops and Held Items were unchanged.
 - `FVX-ITEM-010` remains `Write modelliert` until the Pickup reload-locator blocker is fixed and re-smoked.
 - Next recommended block: `analysis/upr-fvx-cfru-dpe-pickup-items-reload-locator-blocker-plan`.
+# Roadmap status update - CFRU complete Name Rater rollout smoke pass
+
+- `2026-05-31`: Complete Pokecenter Name Rater rollout promoted to
+  `COMPLETE_ROLLOUT_PASS_WITH_CAVEATS` based on sanitized manual smoke.
+- Scope remains caveated: manual smoke only, no automated test, no full
+  playthrough, Egg rejection path not run, traded/non-player-OT rejection path
+  not run, and no BizHawk/Ironmon Tracker/P1 support claim.

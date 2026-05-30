@@ -1,6 +1,56 @@
 # CFRU Name Rater Pokecenter rollout smoke handoff
 
-Status: `COMPLETE_ROLLOUT_PENDING_MANUAL_SMOKE`
+Status: `COMPLETE_ROLLOUT_PASS_WITH_CAVEATS`
+
+## Manual smoke result - complete rollout
+
+Branch: `test/cfru-name-rater-complete-rollout-smoke`
+
+Sanitized user-reported result:
+
+- Complete Name Rater Pokecenter rollout was manually smoked.
+- User reported: all tested core behavior works.
+- No ROM name, hash, save, screenshot, raw log, private path or generated
+  artifact detail is included.
+
+Smoke matrix:
+
+| Case | Result |
+|---|---|
+| Complete rollout candidate loaded from current Workspace main | pass |
+| Viridian previously confirmed Name Rater remains available | pass |
+| Safe-Kanto batch maps work | pass |
+| High-count Kanto maps work | pass |
+| Indigo Plateau Pokecenter works | pass |
+| Sevii Pokecenters work | pass |
+| One Island Pokecenter works | pass |
+| Added Name Rater NPCs visible/interactable | pass |
+| Nurse works in checked Pokecenters | pass |
+| PC works in checked Pokecenters | pass |
+| Warps remain usable in checked Pokecenters | pass |
+| Existing NPCs remain usable in checked Pokecenters | pass |
+| Name Rater `No` path works | pass |
+| Nickname screen opens | pass |
+| Nickname cancel path works | pass |
+| Nickname confirm / rename path works | pass |
+| No visible Runtime Options side effect | pass |
+| No visible Field Item side effect | pass |
+| No visible randomizer-output side effect | pass |
+| Egg rejection path | not run |
+| Traded/non-player-OT rejection path | not run |
+
+Result decision: the complete Pokecenter Name Rater rollout is accepted as
+`COMPLETE_ROLLOUT_PASS_WITH_CAVEATS`.
+
+Caveats:
+
+- Manual smoke only; no automated test or full playthrough.
+- The user report was summarized as "all core behavior works"; no raw logs,
+  screenshots, paths, hashes or generated artifact details are included.
+- Egg and traded/non-player-OT rejection paths remain not run in this result.
+- No claim is made for BizHawk, Ironmon Tracker, P1 support, Hidden Items,
+  itemball graphics, Field Items or Randomizer writer behavior beyond the
+  targeted visible side-effect checks.
 
 ## Implementation candidate - complete rollout
 
