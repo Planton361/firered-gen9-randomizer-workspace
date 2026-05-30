@@ -1,3 +1,16 @@
+# Session update - CFRU hidden item sparkle QoL design
+
+- Branch: `design/cfru-hidden-item-sparkle-qol`.
+- PR #458 was merged into current `main` before this branch was created.
+- Added `01_docs/analysis/cfru-hidden-item-sparkle-qol.md` as a source-backed, documentation-only design for visible hidden-item sparkle cues without Itemfinder behavior.
+- Added `08_tests/randomizer/cfru-hidden-item-sparkle-qol.md` as the future Viridian Forest pilot smoke handoff.
+- Faster-FireRed boundary: public evidence documents visually marked hidden items and a no-hidden-item-marks patch variant, but no portable source implementation was used. No IPS/BPS/UPS, binary patch data or raw address port is accepted.
+- CFRU finding: hidden items are represented through BG-event data with item/id/quantity/underfoot state and hidden-item flags; pickup already calls item-sprite presentation and `SetHiddenItemFlag`; CFRU also exposes `FLDEFF_SPARKLE`, CFRU-added `FLDEFF_REPEATING_SPARKLES`, and a map-transition source path that could scan current `gMapHeader.events->bgEvents`.
+- pret finding: vanilla FireRed generates hidden items from `map.json` `hidden_item` BG events, checks the hidden-item flag before pickup, and uses Itemfinder-only scanning for nearby/underfoot response behavior. Itemfinder behavior remains out of scope.
+- Decision: `implementable-medium`. A one-shot map-load `FLDEFF_SPARKLE` cue is the recommended small MVP; permanent repeating sparkles need owned cleanup infrastructure; object-event markers are fallback only.
+- Pilot map: Viridian Forest, map bank `1`, map number `0`, hidden Potion at `(3, 22)` with `FLAG_HIDDEN_ITEM_VIRIDIAN_FOREST_POTION` / offset `0`, hidden Antidote at `(28, 57)` with `FLAG_HIDDEN_ITEM_VIRIDIAN_FOREST_ANTIDOTE` / offset `1`.
+- No CFRU, DPE, UPR-FVX, Hidden Item implementation, Itemfinder feature, Field Item randomizer writer, itemball graphics, ROM, save, emulator state, build artifact, tool binary, screenshot, raw log, private path, token, secret or `.env` data was changed or documented.
+
 # Session update - CFRU complete Name Rater rollout smoke pass
 
 - Branch: `test/cfru-name-rater-complete-rollout-smoke`.

@@ -1,3 +1,15 @@
+# Next steps update - CFRU hidden item sparkle QoL design
+
+- Treat `01_docs/analysis/cfru-hidden-item-sparkle-qol.md` as the current source-backed design for visible hidden-item sparkle cues without Itemfinder behavior.
+- Treat `08_tests/randomizer/cfru-hidden-item-sparkle-qol.md` as the future Viridian Forest pilot smoke protocol.
+- Recommended future implementation branch: `feature/cfru-hidden-item-sparkle-qol`.
+- First implementation should prefer a CFRU-owned current-map BG-event scan on map transition that spawns one-shot `FLDEFF_SPARKLE` cues only for uncollected hidden items.
+- Keep the first pilot narrow: Viridian Forest, map bank `1`, map number `0`, hidden Potion at `(3, 22)`, hidden Antidote at `(28, 57)`.
+- Do not implement Itemfinder behavior, connected-map Itemfinder scanning, UPR-FVX Field Item writer changes, TM/non-TM slot behavior changes, shops, Pickup, static/gift/NPC item-source changes, or itemball graphics in this train.
+- Do not use Faster-FireRed IPS/BPS/UPS/binary patch data or raw address ports. Public Faster-FireRed docs remain feature inspiration only.
+- If permanent sparkle markers are requested, add owned lifetime/cleanup infrastructure before broad rollout; otherwise keep the first MVP as one-shot map-load sparkle cues.
+- After a later implementation, run a clean CFRU build and the sanitized Viridian Forest smoke before adding broader maps or underfoot/renewable hidden-item cases.
+
 # Next steps update - CFRU complete Name Rater rollout smoke pass
 
 - Treat `08_tests/randomizer/cfru-name-rater-centers-rollout.md` as promoted to `COMPLETE_ROLLOUT_PASS_WITH_CAVEATS`.
