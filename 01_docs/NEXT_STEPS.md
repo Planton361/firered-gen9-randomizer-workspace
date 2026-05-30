@@ -1,3 +1,14 @@
+# Next steps update - Ironmon QoL feature inventory
+
+- Treat `01_docs/analysis/ironmon-qol-feature-inventory.md` as the current source-backed handoff for Ironmon-/NatDex-/FireRed-QoL candidates.
+- Treat `08_tests/randomizer/ironmon-qol-feature-inventory.md` as the sanitized inventory smoke and first implementation-block handoff.
+- First recommended real block: `feature/cfru-qol-baseline-smoke-hardening`, limited to targeted smokes for the existing CFRU baseline: intro controls guide skipped, Oak tutorial removed, old/flat EXP, poison overworld faint, SwSh catch-level malus off, Nuzlocke row, and Wild Prebattle row.
+- Keep the first block smoke-only unless a regression is found. Do not add hidden-item sparkle, itemball graphics, Field Items writer changes, Shops, Pickup, static/gift/NPC item interaction, CFRU/DPE data-table changes, or UPR-FVX changes.
+- Second recommended block: source-backed CFRU hidden-item / Itemfinder / field-effect presentation design, using FireRed hidden-item and CFRU field-effect source only.
+- Keep UPR-FVX Field Items Shuffle/Random/Random Even/Ban Bad support as a randomizer-output regression scope; preserve TM-vs-non-TM slots, required field TMs, and disallowed/progression-sensitive slot guards.
+- Do not port binary QoL patches. Use public patch notes only as feature inspiration until public source or documentation exists.
+- Continue excluding ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, local addresses, secrets, tokens and `.env` data from commits.
+
 # Next steps update - Pokemon Showdown data local build/boot smoke
 
 - Treat `08_tests/randomizer/showdown-pokemon-data-gen1-9.md` as updated with the sanitized local build/boot smoke.

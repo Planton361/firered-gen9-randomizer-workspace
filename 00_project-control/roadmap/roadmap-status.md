@@ -1,3 +1,13 @@
+# Roadmap status update - Ironmon QoL feature inventory
+
+- Added a documentation-only source-backed inventory for Ironmon-/NatDex-/FireRed-QoL features in `01_docs/analysis/ironmon-qol-feature-inventory.md`.
+- Added sanitized inventory smoke and handoff in `08_tests/randomizer/ironmon-qol-feature-inventory.md`.
+- Status impact: QoL work now has a prioritized package map before any implementation: low-risk CFRU baseline smoke-hardening first, medium CFRU hidden-item/script presentation second, UPR-FVX Field Items regression scope third, and high-risk/unclear-source items blocked.
+- Low-risk package covers existing baseline candidates such as intro controls guide skip, Oak tutorial removal, old/flat EXP, poison overworld faint, catch-level malus off, Nuzlocke toggle, Wild Prebattle toggle, and already-smoked UPR-FVX Misc Tweaks.
+- Randomizer-output package preserves the existing Field Items Shuffle/Random/Random Even/Ban Bad narrow-scope evidence and keeps required field TMs, TM-vs-non-TM slot typing, disallowed slots, Shops and Pickup boundaries explicit.
+- Caveat: no implementation, local gameplay run, BizHawk validation, Ironmon Tracker validation, full-playthrough coverage, or support promotion is claimed.
+- No CFRU/DPE/UPR-FVX/Tracker source file or submodule pin is changed. No ROM path, ROM hash, CRC, full log, screenshot, save, emulator state, output ROM, build artifact, tool binary, private path, token, secret, or `.env` data is added.
+
 # Roadmap status update - Pokemon Showdown data local build/boot smoke
 
 - Documented the sanitized local build/boot smoke after the CFRU learnset syntax repair.

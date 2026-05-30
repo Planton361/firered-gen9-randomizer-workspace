@@ -1,3 +1,13 @@
+# Session update - Ironmon QoL feature inventory
+
+- Branch: `analysis/ironmon-qol-feature-inventory`.
+- Added `01_docs/analysis/ironmon-qol-feature-inventory.md` as a source-backed, documentation-only inventory of Ironmon-/NatDex-/FireRed-QoL feature candidates for the CFRU/DPE/UPR-FVX workspace.
+- Added `08_tests/randomizer/ironmon-qol-feature-inventory.md` as the sanitized inventory smoke and first implementation handoff.
+- Inventory target areas: Faster Intro / Controls Guide / Oak Tutorial / New Game Flow; Hidden Items / Itemfinder / Sparkle / Field Effects; Field Item Balls / Pokeball object graphics / TM-HM item balls; Runtime Options / Config Flags; Randomizer interaction with Field Items.
+- Main recommendation: first harden the already-documented low-risk CFRU QoL baseline with targeted gameplay smokes, then handle medium hidden-item/script presentation, then preserve existing UPR-FVX Field Items support with regression smokes.
+- High-risk or unclear-source items remain blocked: binary QoL patch ports, TM/HM-specific itemball graphics, always-visible hidden-item sparkles, static/gift/NPC item interaction, Shops and Pickup.
+- Scope remains documentation-only. No CFRU/DPE/UPR-FVX/Tracker source file or submodule pin was changed. No ROM, save, emulator state, build artifact, tool binary, screenshot, raw log, hash value, private path, token, secret or `.env` data was changed or documented.
+
 # Session update - Pokemon Showdown data local build/boot smoke
 
 - Branch: `data/showdown-pokemon-data-gen1-9`.
