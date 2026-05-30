@@ -1,3 +1,13 @@
+# Session update - CFRU QoL New Game remaining smoke results
+
+- Branch: `test/cfru-qol-new-game-smoke-remaining`.
+- PR #443 was verified as merged, and this branch was created from current `origin/main`.
+- Updated `08_tests/randomizer/cfru-qol-new-game-smoke.md` with the remaining sanitized manual CFRU QoL / New Game smoke results.
+- User-reported result: New Game Start, intro controls guide skipped, Oak Tutorial battle absent, Teachy-TV unchanged, old/flat EXP symptom smoke, poison overworld faint, SwSh catch-level malus absent, and Randomizer compatibility without Field Item changes all functioned.
+- Overall smoke status is now `PASS_FULL_WITH_CAVEATS`: all planned manual smoke cases are green by user report, but coverage remains manual and non-automated.
+- Caveats remain explicit: no full-playthrough, BizHawk validation, Ironmon Tracker validation, P1 support, Field Item writer coverage, hidden-sparkle behavior, itemball graphics behavior, Randomizer writer change, binary patch use, CFRU/DPE/UPR-FVX code change or submodule repin is claimed.
+- No ROM, save, emulator state, build artifact, tool binary, screenshot, raw log, hash value, private path, token, secret or `.env` data was changed or documented.
+
 # Session update - CFRU QoL New Game settings smoke result
 
 - Branch: `test/cfru-qol-new-game-smoke-results`.

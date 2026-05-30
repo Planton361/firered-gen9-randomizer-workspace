@@ -92,6 +92,41 @@ Detailed status:
 | SwSh catch-level malus absent | not run | Not separately reported in this result. |
 | Randomizer compatibility without Field Item changes | not run | Not separately reported in this result; Field Items remain owned by existing UPR-FVX field-item smokes. |
 
+## Manual smoke result - Remaining New Game / QoL cases
+
+Status: `PASS_FULL_WITH_CAVEATS`.
+
+Source of result: sanitized user-reported manual smoke. Codex did not run ROMs, inspect ROMs, read saves, launch an emulator, read raw logs or verify local build artifacts for this result.
+
+User finding:
+
+- The remaining manual CFRU QoL / New Game smoke cases were checked.
+- The checked cases functioned.
+- No obvious regression was observed.
+
+This promotes the manual smoke matrix from settings-only to fully manually checked with caveats. It remains manual and non-automated. It does not claim full-playthrough, BizHawk validation, Ironmon Tracker validation, P1 support, Field Item writer coverage, hidden-sparkle behavior, itemball graphics behavior, randomizer writer changes or binary-patch coverage.
+
+| Date | Candidate type | New Game | Controls Guide | Oak Tutorial | Runtime Options | EXP | Poison | Catch malus | Randomizer no-field-items | Result | Caveat |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| 2026-05-30 | sanitized user manual remaining QoL / New Game smoke | pass | pass | pass | pass | pass | pass | pass | pass | PASS_FULL_WITH_CAVEATS | All planned manual smoke cases are green by user report. Coverage remains manual, not automated, and no Field Item, hidden-sparkle, itemball-graphics or Randomizer-writer change was tested or implemented. |
+
+Detailed status:
+
+| Test | Status | Evidence boundary |
+|---|---|---|
+| New Game Start reaches player control | pass | User-reported manual check; no ROM, save, screenshot, raw log, hash or private path documented. |
+| Intro Controls Guide skipped | pass | User-reported manual check; this remains a controls-guide skip result, not a full faster-intro implementation claim. |
+| Oak Tutorial battle absent | pass | User-reported manual check; no broader script-flow/full-playthrough claim is made. |
+| Teachy-TV unchanged | pass | User-reported manual check; no Teachy-TV behavior change is claimed or implemented. |
+| Runtime menu Page 3 layout | pass | Previously covered by the settings smoke and included in the full manual result. |
+| Runtime menu close preserves unchanged rows | pass | Previously covered by the settings smoke and included in the full manual result. |
+| Nuzlocke toggle ownership | pass | Previously covered by the settings smoke; no side-state unwind claim is made. |
+| Wild Prebattle toggle ownership | pass | Previously covered by the settings smoke; no encounter-table or randomizer-output claim is made. |
+| Old / flat EXP symptom smoke | pass | User-reported manual symptom check; this is not an exact Gen 3 EXP proof. |
+| Poison overworld faint | pass | User-reported manual check; no save/state artifact is documented. |
+| SwSh catch-level malus absent | pass | User-reported manual check; catch behavior remains manually observed and RNG-caveated. |
+| Randomizer compatibility without Field Item changes | pass | User-reported manual compatibility check; Field Items remain owned by existing UPR-FVX field-item smokes, with no writer or itemball graphics change here. |
+
 ## Pass / fail policy
 
 Overall `PASS_WITH_CAVEATS` requires:
