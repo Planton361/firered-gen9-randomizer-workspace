@@ -1,7 +1,16 @@
+# Roadmap status update - Pokemon Showdown data local build/boot smoke
+
+- Documented the sanitized local build/boot smoke after the CFRU learnset syntax repair.
+- Workspace data-sync candidate now uses DPE `22ffa27ad09cfacbca841d90e6cbe31e6f9b7fdc` and CFRU `8c2d69b48aee8923098912ee06c188d3db93d231`.
+- Status impact: DPE build, CFRU build on the new DPE ROM, mGBA boot, and no-crash-before-first-gameplay checks are locally reported pass.
+- CFRU learnset syntax repair is included in the smoke.
+- Caveat: targeted local build/boot smoke only; no full-playthrough coverage, BizHawk validation, Ironmon Tracker validation, or P1 promotion is claimed.
+- No ROM path, ROM hash, CRC, full log, screenshot, save, emulator state, output ROM, build artifact, tool binary, private path, token, secret, or `.env` data is added.
+
 # Roadmap status update - Pokemon Showdown Pokemon Data Gen1-9 sync
 
 - Implemented generation-by-generation Pokemon Showdown data sync on DPE/CFRU branches `data/showdown-pokemon-data-gen1-9`.
-- Workspace now pins DPE `22ffa27ad09cfacbca841d90e6cbe31e6f9b7fdc` and CFRU `e9fac6dbe35c5d8e2d08a9fef00b2df3c3b5f8f2`.
+- Workspace now pins DPE `22ffa27ad09cfacbca841d90e6cbe31e6f9b7fdc` and CFRU `8c2d69b48aee8923098912ee06c188d3db93d231`.
 - Status impact: safe mapped Gen1-9 DPE Base Stats fields and DPE/CFRU level-up learnsets are aligned with the fail-closed Showdown helper where reviewed alias and blocker policy permits it.
 - Added `07_scripts/data_audit/showdown_pokemon_data_sync.py` and sanitized evidence in `08_tests/randomizer/showdown-pokemon-data-gen1-9.md`.
 - Final validation: all Gen1-9 post-write dry-runs report zero remaining Base Stats field diffs; `1109` ready learnsets were checked with `0` DPE/CFRU expected-output drift.

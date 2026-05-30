@@ -1,8 +1,17 @@
+# Tool Manifest Update - 2026-05-30 - Pokemon Showdown data local build/boot smoke
+
+- Workspace branch: `data/showdown-pokemon-data-gen1-9`.
+- Evidence file updated: `08_tests/randomizer/showdown-pokemon-data-gen1-9.md`.
+- Current data candidates: DPE `22ffa27ad09cfacbca841d90e6cbe31e6f9b7fdc`; CFRU `8c2d69b48aee8923098912ee06c188d3db93d231`.
+- Scope: sanitized local build/boot smoke after the CFRU learnset syntax repair.
+- Local reported evidence: DPE build pass, CFRU build on the new DPE ROM pass, mGBA boot pass, no crash before first gameplay pass, and CFRU learnset syntax repair included.
+- Boundary: documentation-only update; no DPE/CFRU/UPR-FVX code, submodule pin, Pokemon Showdown data copy, raw report, ROM, save, emulator state, build artifact, tool binary, screenshot, hash, private path, token, secret, or `.env` data is included.
+
 # Tool Manifest Update - 2026-05-30 - Pokemon Showdown Pokemon Data Gen1-9 sync
 
 - Workspace branch: `data/showdown-pokemon-data-gen1-9`.
 - DPE branch: `data/showdown-pokemon-data-gen1-9`; final commit `22ffa27ad09cfacbca841d90e6cbe31e6f9b7fdc`.
-- CFRU branch: `data/showdown-pokemon-data-gen1-9`; final commit `e9fac6dbe35c5d8e2d08a9fef00b2df3c3b5f8f2`.
+- CFRU branch: `data/showdown-pokemon-data-gen1-9`; final commit `8c2d69b48aee8923098912ee06c188d3db93d231`.
 - Added helper: `07_scripts/data_audit/showdown_pokemon_data_sync.py`.
 - Evidence file: `08_tests/randomizer/showdown-pokemon-data-gen1-9.md`.
 - Scope: fail-closed Pokemon Showdown data sync for DPE `src/Base_Stats.c`, DPE `src/Learnsets.c`, and CFRU `src/Tables/level_up_learnsets.c`.

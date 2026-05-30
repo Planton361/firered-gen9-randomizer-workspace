@@ -1,6 +1,16 @@
+# Next steps update - Pokemon Showdown data local build/boot smoke
+
+- Treat `08_tests/randomizer/showdown-pokemon-data-gen1-9.md` as updated with the sanitized local build/boot smoke.
+- Current data pins for follow-up review: DPE `22ffa27ad09cfacbca841d90e6cbe31e6f9b7fdc`; CFRU `8c2d69b48aee8923098912ee06c188d3db93d231`.
+- Status: DPE build pass, CFRU build on the new DPE ROM pass, mGBA boot pass, and no crash before first gameplay pass.
+- Keep next validation focused on targeted data spot checks: representative Base Stats/type/gender/egg group/Ability display checks and level-up learnset spot checks.
+- Keep Ability behavior-risk entries, Move open-risk entries, and Species open-risk form families blocked from stronger gameplay claims.
+- Do not claim full-playthrough, BizHawk, Ironmon Tracker, or P1 support from this smoke.
+- Continue excluding ROMs, saves, emulator states, screenshots, raw logs, hashes, private paths, builds, tool binaries, local addresses, secrets, tokens, and `.env` data from commits.
+
 # Next steps update - Pokemon Showdown Pokemon Data Gen1-9 sync
 
-- Treat DPE commit `22ffa27ad09cfacbca841d90e6cbe31e6f9b7fdc` and CFRU commit `e9fac6dbe35c5d8e2d08a9fef00b2df3c3b5f8f2` on branch `data/showdown-pokemon-data-gen1-9` as the current data-sync candidates.
+- Treat DPE commit `22ffa27ad09cfacbca841d90e6cbe31e6f9b7fdc` and CFRU commit `8c2d69b48aee8923098912ee06c188d3db93d231` on branch `data/showdown-pokemon-data-gen1-9` as the current data-sync candidates.
 - Treat `08_tests/randomizer/showdown-pokemon-data-gen1-9.md` as the current sanitized handoff.
 - Run a local DPE/CFRU rebuild from the pinned commits before merging or promoting support.
 - Run targeted local ROM boot/data smokes only after rebuild: representative Base Stats/type/gender/egg group/Ability display checks, plus level-up learnset spot checks in both DPE and CFRU.

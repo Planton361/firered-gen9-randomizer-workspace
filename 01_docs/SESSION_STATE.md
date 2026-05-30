@@ -1,8 +1,18 @@
+# Session update - Pokemon Showdown data local build/boot smoke
+
+- Branch: `data/showdown-pokemon-data-gen1-9`.
+- Documented the sanitized local build/boot smoke after the CFRU learnset syntax repair.
+- Current pinned data candidates: DPE `22ffa27ad09cfacbca841d90e6cbe31e6f9b7fdc`; CFRU `8c2d69b48aee8923098912ee06c188d3db93d231`.
+- Local reported evidence: DPE build pass, CFRU build on the new DPE ROM pass, mGBA boot pass, no crash before first gameplay pass, and the CFRU learnset syntax repair is included.
+- Updated `08_tests/randomizer/showdown-pokemon-data-gen1-9.md` with the sanitized smoke matrix.
+- Scope remains documentation-only. No DPE code, CFRU code, UPR-FVX code, submodule pin, ROM, save, emulator state, screenshot, raw log, hash, private path, token, secret or `.env` data was changed or documented.
+- Caveat: targeted local build/boot smoke only; no full-playthrough, BizHawk, Ironmon Tracker, or P1 support claim.
+
 # Session update - Pokemon Showdown Pokemon Data Gen1-9 sync
 
 - Workspace branch: `data/showdown-pokemon-data-gen1-9`.
 - DPE branch: `data/showdown-pokemon-data-gen1-9`; final DPE commit `22ffa27ad09cfacbca841d90e6cbe31e6f9b7fdc`.
-- CFRU branch: `data/showdown-pokemon-data-gen1-9`; final CFRU commit `e9fac6dbe35c5d8e2d08a9fef00b2df3c3b5f8f2`.
+- CFRU branch: `data/showdown-pokemon-data-gen1-9`; final CFRU commit `8c2d69b48aee8923098912ee06c188d3db93d231`.
 - Added `07_scripts/data_audit/showdown_pokemon_data_sync.py` as a fail-closed helper that reads external Pokemon Showdown data, local CFRU/DPE constants, and the reviewed alias table; it writes only with `--write`.
 - Updated DPE `src/Base_Stats.c` and `src/Learnsets.c` generation-by-generation from Pokemon Showdown for safe mapped Species and allowed fields.
 - Updated CFRU `src/Tables/level_up_learnsets.c` for Gen1-8; Gen9 produced no CFRU learnset diff.
