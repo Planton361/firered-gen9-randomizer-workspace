@@ -1,3 +1,12 @@
+# Next steps update - CFRU safe Kanto Name Rater Pokecenter rollout batch
+
+- Treat CFRU Draft PR `https://github.com/Planton361/CFRU-expansion/pull/26` as the current safe-Kanto-first rollout candidate.
+- Treat `08_tests/randomizer/cfru-name-rater-centers-rollout.md` as updated to `IMPLEMENTED_PENDING_MANUAL_SMOKE`.
+- Manual smoke must run after a clean CFRU build with `python3 scripts/clean.py BUILD` and `python3 scripts/make.py`, then each implemented map must be entered from outside.
+- Smoke Celadon, Fuchsia, Lavender, Route 10, Route 4 and Saffron for map load, added Name Rater visibility/interactability, Nurse, PC, warps, existing NPCs, and Name Rater No/Cancel/Confirm paths.
+- Do not add Cerulean, Cinnabar, Pewter, Vermilion, Indigo Plateau, Sevii centers or One Island until this safe batch passes and the next staged rollout gate is opened.
+- Continue excluding Faster Intro, Oak/Lab/Parcel, Bill-Sevii, Repel-Reuse, Hidden Items, itemball graphics, Field Items, Randomizer writer, UPR-FVX/DPE changes, ROMs, saves, builds, tool binaries, screenshots, raw logs, hashes, private paths, tokens, secrets and `.env` data from commits.
+
 # Next steps update - CFRU Name Rater Pokecenter rollout design
 
 - Treat `01_docs/analysis/cfru-name-rater-centers-rollout.md` as the current map-by-map rollout design for added Pokecenter Name Rater NPCs.
