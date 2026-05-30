@@ -1,3 +1,16 @@
+# Tool Manifest Update - 2026-05-30 - Pokemon Showdown Pokemon Data Gen1-9 sync
+
+- Workspace branch: `data/showdown-pokemon-data-gen1-9`.
+- DPE branch: `data/showdown-pokemon-data-gen1-9`; final commit `22ffa27ad09cfacbca841d90e6cbe31e6f9b7fdc`.
+- CFRU branch: `data/showdown-pokemon-data-gen1-9`; final commit `e9fac6dbe35c5d8e2d08a9fef00b2df3c3b5f8f2`.
+- Added helper: `07_scripts/data_audit/showdown_pokemon_data_sync.py`.
+- Evidence file: `08_tests/randomizer/showdown-pokemon-data-gen1-9.md`.
+- Scope: fail-closed Pokemon Showdown data sync for DPE `src/Base_Stats.c`, DPE `src/Learnsets.c`, and CFRU `src/Tables/level_up_learnsets.c`.
+- Helper inputs: external Pokemon Showdown `data/` directory supplied at runtime, local CFRU/DPE constants, local DPE/CFRU table files, and `07_scripts/data_audit/showdown_aliases.json`.
+- Data policy: Base Stats updates are limited to stats, types, gender ratio, egg groups, and Ability assignment fields; Catch Rate, EXP Yield, EV Yield, Growth Rate, held items, egg cycles, friendship, body color, Egg Moves, TM/HM, Tutor data, Move behavior, and Ability behavior are not generated.
+- Local smoke commands: `python3 -m py_compile 07_scripts/data_audit/showdown_pokemon_data_sync.py`; per-generation helper dry-runs against an external Pokemon Showdown `data/` directory; aggregate DPE/CFRU learnset expected-output drift check; `python3 07_scripts/data_audit/showdown_mapping_audit.py --limit 20`; DPE/CFRU/workspace `diff --check`.
+- Boundary: no Pokemon Showdown data is vendored; no raw reports, ROM, save, emulator state, build artifact, tool binary, screenshot, hash, private path, token, secret or `.env` data is included.
+
 # Tool Manifest Update - 2026-05-30 - DPE Base Stats full source sync audit
 
 - Workspace branch: `analysis/dpe-base-stats-full-source-sync`.

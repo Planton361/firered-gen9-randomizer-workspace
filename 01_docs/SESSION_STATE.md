@@ -1,3 +1,17 @@
+# Session update - Pokemon Showdown Pokemon Data Gen1-9 sync
+
+- Workspace branch: `data/showdown-pokemon-data-gen1-9`.
+- DPE branch: `data/showdown-pokemon-data-gen1-9`; final DPE commit `22ffa27ad09cfacbca841d90e6cbe31e6f9b7fdc`.
+- CFRU branch: `data/showdown-pokemon-data-gen1-9`; final CFRU commit `e9fac6dbe35c5d8e2d08a9fef00b2df3c3b5f8f2`.
+- Added `07_scripts/data_audit/showdown_pokemon_data_sync.py` as a fail-closed helper that reads external Pokemon Showdown data, local CFRU/DPE constants, and the reviewed alias table; it writes only with `--write`.
+- Updated DPE `src/Base_Stats.c` and `src/Learnsets.c` generation-by-generation from Pokemon Showdown for safe mapped Species and allowed fields.
+- Updated CFRU `src/Tables/level_up_learnsets.c` for Gen1-8; Gen9 produced no CFRU learnset diff.
+- Final dry-runs for Gen1-9 report `base_species_with_changes: 0` and `base_field_changes: 0`.
+- Aggregate ready learnset validation covered `1109` DPE/CFRU expected-output blocks with `0` drift.
+- Remaining blockers are intentional and source-visible: Ability behavior risk, Move open-risk such as Ally Switch, missing Showdown form learnsets, reviewed Species open-risk families, and reviewed ignores.
+- Added `08_tests/randomizer/showdown-pokemon-data-gen1-9.md` as the sanitized data-sync smoke and handoff.
+- Scope excludes Pokemon Showdown data copies, raw reports, ROMs, saves, emulator states, builds, tool binaries, screenshots, hashes, private paths, tokens, secrets, `.env`, full-playthrough, BizHawk, Ironmon Tracker, and P1 support claims.
+
 # Session update - DPE Base Stats full source sync audit
 
 - Branch: `analysis/dpe-base-stats-full-source-sync`.
