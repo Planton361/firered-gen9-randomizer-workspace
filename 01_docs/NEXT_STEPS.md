@@ -1,3 +1,11 @@
+# Next steps update - CFRU Bill Sevii QoL
+
+- Treat `08_tests/randomizer/cfru-bill-sevii-qol.md` as the current Stop/Handoff for the Bill-Sevii auto-ask removal.
+- Do not implement this feature until one source owner is accepted: either a local CFRU hook that can atomically set the post-Blaine Cinnabar scene/object state, or a separately reviewed map-script ownership design.
+- A future design must name every affected flag, var, object visibility state, warp, and text/event hook before code. The likely transition is after Blaine and before the Cinnabar outdoor Bill frame script, but current CFRU source does not expose that map script as an editable source-backed hook.
+- Future smoke should verify that Bill does not automatically approach after Blaine, Bill remains optional in the Cinnabar Pokemon Center, accepting still reaches One Island, Tri-Pass/Celio setup still works, and the Sevii return plus later Ruby/Sapphire/Network Machine states are not regressed.
+- Continue excluding Faster Intro, Oak/Lab/Parcel, Repel-Reuse, auto-run/running indoors, poison, EXP, Runtime Options, Hidden Items, Itemfinder sparkle, itemball graphics, Field Items, UPR-FVX writer, DPE data, Name Rater, Viridian-Forest-Nurse, Step Item Guarantees, Friendship Boost and binary patch ports from this block.
+
 # Next steps update - CFRU Faster Intro QoL
 
 - Treat `08_tests/randomizer/cfru-faster-intro-qol.md` as the current handoff for the first Faster-Intro / Oak-Lab-Parcel implementation attempt.

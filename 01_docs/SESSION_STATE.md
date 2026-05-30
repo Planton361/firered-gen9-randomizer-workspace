@@ -1,3 +1,13 @@
+# Session update - CFRU Bill Sevii QoL
+
+- Branch: `feature/cfru-bill-sevii-qol`.
+- PR #446 was verified as merged before switching to current `main`, pulling with fast-forward only, and creating this branch.
+- Read-only CFRU review covered Bill, Sevii, Blaine, Cinnabar, One Island, Celio, Tri-Pass, Ruby/Sapphire and Network Machine source surfaces.
+- Vanilla reference review found the target behavior across Blaine post-battle, Cinnabar outdoor Bill scene, Cinnabar Pokemon Center Bill prompt, One Island Harbor arrival, One Island Pokemon Center Bill/Celio first meeting, Tri-Pass grant, and the Sevii return path.
+- Stop rule triggered: current CFRU source exposes constants, item data, trainer data, debug helpers and general script engine surfaces, but not the Cinnabar/One-Island map scripts that own the behavior. Implementing this now would require raw address replacement or owning multiple map-script subflows.
+- Added `08_tests/randomizer/cfru-bill-sevii-qol.md` as the sanitized no-code handoff, including current flow notes, rejected hook decision, and future manual smoke proposal.
+- No CFRU/DPE/UPR-FVX source, Field Item behavior, hidden sparkle, itemball graphics, randomizer writer, roadmap status, tool pin, ROM, save, build, tool binary, raw log, screenshot, token, secret or `.env` data was changed or documented.
+
 # Session update - CFRU Faster Intro QoL
 
 - Branch: `feature/cfru-faster-intro-qol`.
