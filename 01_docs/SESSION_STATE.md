@@ -1,3 +1,13 @@
+# Session update - CFRU QoL New Game settings smoke result
+
+- Branch: `test/cfru-qol-new-game-smoke-results`.
+- PR #442 was verified as merged, and the branch was confirmed against current `origin/main` before documenting results.
+- Updated `08_tests/randomizer/cfru-qol-new-game-smoke.md` with a sanitized manual Runtime / Settings smoke result.
+- User-reported result: existing Runtime / Settings functionality was manually checked, appeared to work, and showed no obvious regression.
+- Status is deliberately narrow: `PASS_SETTINGS_ONLY_WITH_CAVEATS`. New Game Start, controls guide skip, Oak Tutorial absence, Teachy-TV, EXP, poison overworld faint, SwSh catch-level malus and Randomizer no-Field-Items compatibility remain `not run` for this result.
+- Scope remains documentation-only. No CFRU/DPE/UPR-FVX source, submodule pin, ROM, save, emulator state, build artifact, tool binary, screenshot, raw log, hash value, private path, token, secret or `.env` data was changed or documented.
+- Roadmap status was not changed because this records a narrow settings result only and does not promote the full smoke matrix.
+
 # Session update - CFRU QoL New Game smoke plan
 
 - Branch: `test/cfru-qol-new-game-smoke`.

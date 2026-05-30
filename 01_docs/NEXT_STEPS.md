@@ -1,3 +1,11 @@
+# Next steps update - CFRU QoL New Game settings smoke result
+
+- Treat `08_tests/randomizer/cfru-qol-new-game-smoke.md` as updated with a narrow `PASS_SETTINGS_ONLY_WITH_CAVEATS` Runtime / Settings result.
+- Keep the result scoped to the user's manual finding: existing Runtime / Settings functionality seemed to work and no obvious regression was observed.
+- Do not treat the full New Game smoke matrix as passed yet. New Game Start, controls guide skip, Oak Tutorial absence, Teachy-TV unchanged, old/flat EXP, poison overworld faint, SwSh catch-level malus absence and Randomizer no-Field-Items compatibility remain `not run` in this result.
+- Next useful smoke block: run the remaining not-run cases individually and record only sanitized pass/fail rows.
+- Continue excluding Hidden Sparkle, Field Item or itemball graphics changes, Randomizer writer changes, UPR-FVX profile/settings changes, DPE data changes, binary patch ports, ROMs, saves, emulator states, builds, tool binaries, screenshots, raw logs, hashes, private paths, local addresses, secrets, tokens and `.env` content.
+
 # Next steps update - CFRU QoL New Game smoke plan
 
 - Treat `08_tests/randomizer/cfru-qol-new-game-smoke.md` as the current smoke protocol for existing CFRU QoL / New Game behavior.
