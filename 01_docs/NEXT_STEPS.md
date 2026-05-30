@@ -1,3 +1,13 @@
+# Next steps update - CFRU hidden item sparkle pilot
+
+- Treat CFRU Draft PR `https://github.com/Planton361/CFRU-expansion/pull/28` as the current Viridian Forest hidden-item sparkle pilot candidate.
+- Treat `08_tests/randomizer/cfru-hidden-item-sparkle-qol.md` as updated to `IMPLEMENTED_PILOT_PENDING_MANUAL_SMOKE`.
+- Manual smoke must run after a clean CFRU build with `python3 scripts/clean.py BUILD` and `python3 scripts/make.py`, then Viridian Forest must be entered from outside.
+- Required smoke sequence: both hidden-item flags unset shows both sparkles; after picking up the Potion and re-entering only the Antidote sparkle remains; after picking up both and re-entering no pilot sparkles appear.
+- Regression checks during smoke: Pickup, Itemfinder, hidden-item pickup text/grant flow, existing Field Items behavior, visible item balls, trainers and warps remain unchanged.
+- Do not broaden beyond Viridian Forest or beyond the two pilot hidden items until this manual smoke is recorded.
+- Keep permanent/repeating sparkle lifetime infrastructure, Itemfinder behavior, Randomizer writer changes, visible item balls, other maps, underfoot/renewable hidden-item policy and broader rollout out of this pilot train.
+
 # Next steps update - CFRU hidden item sparkle QoL design
 
 - Treat `01_docs/analysis/cfru-hidden-item-sparkle-qol.md` as the current source-backed design for visible hidden-item sparkle cues without Itemfinder behavior.

@@ -1,3 +1,17 @@
+# Session update - CFRU hidden item sparkle pilot
+
+- Branch: `feature/cfru-hidden-item-sparkle-pilot`.
+- PR #459 was merged into current `main` before this branch was created.
+- CFRU branch: `feature/cfru-hidden-item-sparkle-pilot`.
+- CFRU Draft PR: `https://github.com/Planton361/CFRU-expansion/pull/28`.
+- Implemented a source-backed Viridian Forest hidden-item sparkle pilot for exactly two BG hidden items: Potion at `(3, 22)` / offset `0` and Antidote at `(28, 57)` / offset `1`.
+- CFRU change is limited to `src/overworld.c`: `RunOnTransitionMapScript` now calls a Viridian-Forest-only helper that scans the current map's BG events and starts one-shot `FLDEFF_SPARKLE` only when the matching hidden-item flag is unset.
+- The pilot does not use Itemfinder behavior, does not change hidden-item pickup, does not change the UPR-FVX Field Item writer, does not add visible item balls, and does not touch other maps.
+- Updated `08_tests/randomizer/cfru-hidden-item-sparkle-qol.md` to `IMPLEMENTED_PILOT_PENDING_MANUAL_SMOKE`, including the clean-build command pair and the re-entry smoke matrix.
+- Workspace submodule `02_external/CFRU-expansion` now points at the CFRU hidden-item sparkle pilot branch tip for review while the CFRU Draft PR remains unmerged.
+- Checks run: CFRU `diff --check`, CFRU syntax-only compile for `src/overworld.c`, workspace `diff --check`.
+- No DPE, UPR-FVX, Name Rater, Faster Intro, Bill-Sevii, visible itemball, Pickup, Itemfinder, Field Item randomizer writer, ROM, save, emulator state, build artifact, tool binary, screenshot, raw log, private path, token, secret or `.env` data was changed or documented.
+
 # Session update - CFRU hidden item sparkle QoL design
 
 - Branch: `design/cfru-hidden-item-sparkle-qol`.
