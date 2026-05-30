@@ -1,3 +1,15 @@
+# Session update - DPE Base Stats tranche 1
+
+- Workspace branch: `data/dpe-base-stats-tranche-1`.
+- DPE branch: `data/dpe-base-stats-tranche-1`.
+- DPE commit: `1c8d53870e38d7019c681a68a17c9425a3490611`.
+- Implemented the first narrow DPE `Base_Stats.c` tranche from the merged plan PR #434.
+- Changed exactly the planned non-Ability fields for 10 Species: Crobat, Magnezone, Sylveon, Brionne, Primarina, Ursaluna, Sneasel-Hisui, Sneasler, Toedscool, and Toedscruel.
+- No Ability fields, Catch Rate, EXP Yield, EV Yield, Growth Rate, held items, base stats, moves, learnsets, TM/Tutor compatibility, CFRU code, UPR-FVX code or other DPE files were changed.
+- Dry-diff after the tranche: safe candidate Species with non-Ability field diffs dropped from `225` to `215`; `eggGroup1`, `eggGroup2`, `type1`, `type2`, and `genderRatio` counts dropped consistently with the 10-Species tranche.
+- Added `08_tests/randomizer/dpe-base-stats-tranche-1.md` as the sanitized source/diff smoke.
+- Scope excludes ROMs, saves, builds, tool binaries, screenshots, raw reports, hashes, private paths, tokens, secrets and `.env` data.
+
 # Session update - DPE Base Stats Gen9 tranche 1 plan
 
 - Branch: `analysis/dpe-base-stats-gen9-tranche-1-plan`.

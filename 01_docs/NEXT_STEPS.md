@@ -1,3 +1,11 @@
+# Next steps update - DPE Base Stats tranche 1
+
+- Treat DPE commit `1c8d53870e38d7019c681a68a17c9425a3490611` on branch `data/dpe-base-stats-tranche-1` as the current tranche 1 candidate.
+- Run a local DPE/CFRU rebuild smoke from this DPE pin.
+- Keep the smoke sanitized: document build pass/fail and any table-load symptoms only, without ROM paths, hashes, screenshots, raw logs, saves, states, private paths, tool binaries, tokens, secrets or `.env` data.
+- If the build passes, optionally run a targeted ROM boot/menu smoke, but do not claim full-playthrough, BizHawk, Ironmon Tracker or P1 support from this tranche.
+- Do not expand tranche 1 with Ability fields, Catch Rate, EXP Yield, EV Yield, Growth Rate, held items, base stats, moves, learnsets, TM/Tutor compatibility, CFRU code, UPR-FVX code, or extra DPE Species without a separate reviewed plan.
+
 # Next steps update - DPE Base Stats Gen9 tranche 1 plan
 
 - Treat `01_docs/analysis/dpe-base-stats-gen9-tranche-1-plan.md` as the current handoff for the first narrow DPE `Base_Stats.c` data PR.
