@@ -1,9 +1,11 @@
 # Tool Manifest Update - 2026-05-30 - CFRU Viridian Pokecenter map object overlay MVP
 
 - Workspace branch: `feature/cfru-map-object-overlay-generator`.
-- CFRU branch: `feature/cfru-map-object-overlay-generator`.
-- CFRU commit: `648ce6042a93b71796c2d478fc816687e2ec060a`.
-- Workspace submodule `02_external/CFRU-expansion` now pins this CFRU overlay MVP candidate.
+- CFRU feature branch: `feature/cfru-map-object-overlay-generator`.
+- CFRU feature commit: `648ce6042a93b71796c2d478fc816687e2ec060a`.
+- CFRU compat merge: PR #25 into `compat/firered-gen9-randomizer`, merge commit `f40a35a295ce23294557f19dfff220240056386f`.
+- Workspace submodule `02_external/CFRU-expansion` now pins CFRU compat merge commit `f40a35a295ce23294557f19dfff220240056386f`.
+- Workspace PRs: #450 merged the first MVP branch state, #451 merged the final compat-merge submodule pin cleanup.
 - Evidence file: `08_tests/randomizer/cfru-name-rater-centers-qol.md`.
 - Scope: minimal CFRU-owned map-object overlay/generator MVP for exactly one added Viridian City Pokecenter 1F Name Rater NPC.
 - CFRU changes: `scripts/insert.py` now reads `mapobjectoverlays`, derives map headers by bank/number, copies the current object-event table, appends source-defined object templates, emits replacement object table plus replacement `MapEvents`, preserves original warp/coord/bg pointers, and repoints `MapHeader.events`; `mapobjectoverlays` contains one row for map bank `5`, map `4`; local script/text add `EventScript_PokeCenterNameRater`.

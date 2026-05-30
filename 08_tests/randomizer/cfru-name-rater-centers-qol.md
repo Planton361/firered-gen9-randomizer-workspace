@@ -18,7 +18,10 @@ Friendship Boost and binary patch work.
 
 ## Source-backed implementation
 
-CFRU commit: `648ce6042a93b71796c2d478fc816687e2ec060a`
+CFRU feature commit: `648ce6042a93b71796c2d478fc816687e2ec060a`
+
+CFRU compat merge commit pinned by the final Workspace PR:
+`f40a35a295ce23294557f19dfff220240056386f`
 
 Changed CFRU files:
 
