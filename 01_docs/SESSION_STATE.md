@@ -1,3 +1,16 @@
+# Session update - CFRU complete Name Rater Pokecenter rollout
+
+- Branch: `feature/cfru-name-rater-centers-rollout-complete`.
+- PR #456 was fast-forwarded into current `main` before creating this branch.
+- CFRU branch: `feature/cfru-name-rater-centers-rollout-complete`.
+- CFRU Draft PR: `https://github.com/Planton361/CFRU-expansion/pull/27`.
+- CFRU change is limited to `mapobjectoverlays`: 12 remaining Pokecenter 1F append rows were added for Cerulean, Cinnabar, Pewter, Vermilion, Indigo Plateau, Two Island, Three Island, Four Island, Five Island, Six Island, Seven Island and One Island.
+- Existing Viridian and safe-Kanto batch rows are unchanged. No rollout-table Pokecenter 1F maps were skipped.
+- Each new row uses the design-provided fail-closed expected object count, local id, coordinate `(10, 5)`, `MAP_OBJ_GFX_GENTLEMAN`, elevation `3`, `MOVEMENT_TYPE_FACE_DOWN`, and `EventScript_PokeCenterNameRater`.
+- Updated `08_tests/randomizer/cfru-name-rater-centers-rollout.md` to `COMPLETE_ROLLOUT_PENDING_MANUAL_SMOKE`, with One Island called out as the highest-risk smoke target because of Bill/Celio/Network Machine and coord/BG-event preservation.
+- Workspace submodule `02_external/CFRU-expansion` now points at the CFRU complete-rollout feature commit for review while the CFRU Draft PR remains unmerged.
+- No CFRU script/Python/ASM, DPE, UPR-FVX, Hidden Item, itemball graphics, Field Item, Randomizer writer, ROM, save, build artifact, tool binary, screenshot, raw log, private path, token, secret or `.env` data was changed or documented.
+
 # Session update - CFRU safe Kanto Name Rater Pokecenter rollout batch
 
 - Branch: `feature/cfru-name-rater-centers-rollout-kanto-1`.

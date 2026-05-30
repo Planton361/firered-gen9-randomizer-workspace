@@ -1,3 +1,17 @@
+# Tool Manifest Update - 2026-05-31 - CFRU complete Name Rater Pokecenter rollout
+
+- Workspace branch: `feature/cfru-name-rater-centers-rollout-complete`.
+- CFRU branch: `feature/cfru-name-rater-centers-rollout-complete`.
+- CFRU commit: `44c7ab571539b768e2533be0cebbb73352d655cc`.
+- CFRU Draft PR: `https://github.com/Planton361/CFRU-expansion/pull/27`.
+- Workspace submodule `02_external/CFRU-expansion` now pins CFRU feature commit `44c7ab571539b768e2533be0cebbb73352d655cc` for review; the CFRU PR is not merged in this block.
+- Evidence file updated: `08_tests/randomizer/cfru-name-rater-centers-rollout.md`.
+- Scope: complete Name Rater Pokecenter 1F rollout using the existing CFRU map-object overlay system.
+- CFRU change: `mapobjectoverlays` appends the remaining Name Rater object rows for Cerulean, Cinnabar, Pewter, Vermilion, Indigo Plateau, Two Island, Three Island, Four Island, Five Island, Six Island, Seven Island and One Island, while leaving the prior Viridian and safe-Kanto rows unchanged.
+- Skipped maps: none from the rollout table.
+- Checks: CFRU `diff --check`; workspace `diff --check`.
+- Boundary: no CFRU script/Python/ASM change, existing-NPC replacement, Raw-Address-Replacement, ROM edit, binary patch, Faster Intro, Oak/Lab/Parcel, Bill-Sevii, Repel-Reuse, Hidden Item, itemball graphics, Field Item, UPR-FVX/DPE change, Randomizer writer, ROM, save, emulator state, build artifact, tool binary, screenshot, raw log, private path, token, secret or `.env` data is included.
+
 # Tool Manifest Update - 2026-05-31 - CFRU safe Kanto Name Rater Pokecenter rollout batch
 
 - Workspace branch: `feature/cfru-name-rater-centers-rollout-kanto-1`.
