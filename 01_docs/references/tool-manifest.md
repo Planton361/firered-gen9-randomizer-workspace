@@ -1,3 +1,15 @@
+# Tool Manifest Update - 2026-05-31 - CFRU hidden item sparkle pilot
+
+- Workspace branch: `feature/cfru-hidden-item-sparkle-pilot`.
+- CFRU branch: `feature/cfru-hidden-item-sparkle-pilot`.
+- CFRU Draft PR: `https://github.com/Planton361/CFRU-expansion/pull/28`.
+- Workspace submodule `02_external/CFRU-expansion` now pins the CFRU hidden-item sparkle pilot branch tip for review; the CFRU PR is not merged in this block.
+- Evidence file updated: `08_tests/randomizer/cfru-hidden-item-sparkle-qol.md`.
+- Scope: exactly two Viridian Forest hidden-item sparkle cues on map transition: Potion `(3, 22)` / offset `0` and Antidote `(28, 57)` / offset `1`.
+- CFRU change: `src/overworld.c` adds a Viridian-Forest-only BG-event scan from `RunOnTransitionMapScript`, gated by map, BG kind, coordinate, elevation, hidden-item offset and existing hidden-item flag state, then starts one-shot `FLDEFF_SPARKLE`.
+- Checks: CFRU `diff --check`; CFRU syntax-only compile for `src/overworld.c`; workspace `diff --check`.
+- Boundary: no global hidden-item rollout, permanent/repeating sparkle cleanup infrastructure, Itemfinder behavior, hidden-item pickup change, UPR-FVX Field Item writer change, visible itemball graphics, other map, DPE change, Name Rater, Faster Intro, Bill-Sevii, ROM, save, emulator state, build artifact, tool binary, screenshot, raw log, private path, token, secret or `.env` data is included.
+
 # Tool Manifest Update - 2026-05-31 - CFRU complete Name Rater Pokecenter rollout
 
 - Workspace branch: `feature/cfru-name-rater-centers-rollout-complete`.
