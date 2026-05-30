@@ -1,6 +1,6 @@
 # Pokemon Showdown Pokemon Data Gen1-9 Sync
 
-Status: `PASS_DATA_SYNC_WITH_REVIEWED_BLOCKERS`
+Status: `PASS_LOCAL_BUILD_BOOT_SMOKE_WITH_REVIEWED_BLOCKERS`
 
 Branch:
 
@@ -11,7 +11,7 @@ Branch:
 Pinned commits:
 
 - DPE: `22ffa27ad09cfacbca841d90e6cbe31e6f9b7fdc`
-- CFRU: `e9fac6dbe35c5d8e2d08a9fef00b2df3c3b5f8f2`
+- CFRU: `8c2d69b48aee8923098912ee06c188d3db93d231`
 
 ## Scope
 
@@ -83,7 +83,22 @@ Data commits:
 
 - DPE Gen1-9 commits: `916aa1a`, `c23fcf7`, `aa0fe9f`, `8d6f268`, `325610d`, `5835c17`, `5ab0dd5`, `b193aee`, `22ffa27`
 - CFRU Gen1-8 learnset commits: `27d78a69`, `2b517691`, `b102c2d1`, `79da5db0`, `2d2756a2`, `f1c63b89`, `21887ce4`, `e9fac6db`
+- CFRU learnset syntax repair commit: `8c2d69b`
 - Gen9 produced no CFRU learnset diff.
+
+## Local Build / Boot Smoke
+
+Sanitized local smoke after the CFRU learnset syntax repair:
+
+| Check | Result |
+| --- | --- |
+| DPE build | Pass |
+| CFRU build on new DPE ROM | Pass |
+| mGBA boot | Pass |
+| No crash before first gameplay | Pass |
+| CFRU learnset syntax repair included | Pass |
+
+This is a targeted local build/boot smoke only. It does not include ROM paths, saves, emulator states, screenshots, raw logs, hashes, private paths, full-playthrough coverage, BizHawk validation, Ironmon Tracker validation, or P1 support promotion.
 
 ## Checks
 
@@ -96,11 +111,13 @@ Passed:
 - DPE `git diff --check`
 - CFRU `git diff --check`
 - Workspace `git diff --check`
+- Local DPE build
+- Local CFRU build on the new DPE ROM
+- Local mGBA boot
+- Local no-crash-before-first-gameplay smoke
 
 Not run:
 
-- Local DPE/CFRU rebuild
-- ROM boot
 - BizHawk validation
 - Ironmon Tracker validation
 - Full playthrough
