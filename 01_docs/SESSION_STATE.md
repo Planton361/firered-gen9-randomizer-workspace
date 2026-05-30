@@ -1,3 +1,13 @@
+# Session update - CFRU complete Name Rater rollout smoke pass
+
+- Branch: `test/cfru-name-rater-complete-rollout-smoke`.
+- CFRU PR #27 and Workspace PR #457 were present in current `main` before creating this branch.
+- Updated `08_tests/randomizer/cfru-name-rater-centers-rollout.md` with the sanitized user-reported final manual smoke result for the complete Pokecenter Name Rater rollout.
+- User finding: all core behavior works.
+- Status promoted to `COMPLETE_ROLLOUT_PASS_WITH_CAVEATS`.
+- Caveats remain explicit: manual smoke only, no automated test, no full playthrough, Egg rejection path not run, traded/non-player-OT rejection path not run, and no BizHawk/Ironmon Tracker/P1 support claim.
+- No CFRU, DPE, UPR-FVX, Hidden Item, itemball graphics, Field Item, Randomizer writer, ROM, save, build artifact, tool binary, screenshot, raw log, hash, private path, token, secret or `.env` data was changed or documented.
+
 # Session update - CFRU complete Name Rater Pokecenter rollout
 
 - Branch: `feature/cfru-name-rater-centers-rollout-complete`.

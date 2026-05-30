@@ -1,3 +1,11 @@
+# Next steps update - CFRU complete Name Rater rollout smoke pass
+
+- Treat `08_tests/randomizer/cfru-name-rater-centers-rollout.md` as promoted to `COMPLETE_ROLLOUT_PASS_WITH_CAVEATS`.
+- The complete Pokecenter Name Rater rollout is accepted by sanitized manual smoke for core behavior.
+- Keep caveats: no automated test, no full playthrough, Egg rejection path not run, traded/non-player-OT rejection path not run, and no BizHawk/Ironmon Tracker/P1 support claim.
+- Do not reopen additional Pokecenter rollout work unless a manual regression is found or the optional Egg/traded rejection paths are explicitly requested.
+- Continue excluding Faster Intro, Oak/Lab/Parcel, Bill-Sevii, Repel-Reuse, Hidden Items, itemball graphics, Field Items, Randomizer writer, UPR-FVX/DPE changes, ROMs, saves, builds, tool binaries, screenshots, raw logs, hashes, private paths, tokens, secrets and `.env` data from commits.
+
 # Next steps update - CFRU complete Name Rater Pokecenter rollout
 
 - Treat CFRU Draft PR `https://github.com/Planton361/CFRU-expansion/pull/27` as the current complete Name Rater Pokecenter rollout candidate.
