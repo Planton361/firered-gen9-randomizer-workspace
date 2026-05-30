@@ -1,3 +1,14 @@
+# Next steps update - Pokemon Showdown Pokemon Data Gen1-9 sync
+
+- Treat DPE commit `22ffa27ad09cfacbca841d90e6cbe31e6f9b7fdc` and CFRU commit `e9fac6dbe35c5d8e2d08a9fef00b2df3c3b5f8f2` on branch `data/showdown-pokemon-data-gen1-9` as the current data-sync candidates.
+- Treat `08_tests/randomizer/showdown-pokemon-data-gen1-9.md` as the current sanitized handoff.
+- Run a local DPE/CFRU rebuild from the pinned commits before merging or promoting support.
+- Run targeted local ROM boot/data smokes only after rebuild: representative Base Stats/type/gender/egg group/Ability display checks, plus level-up learnset spot checks in both DPE and CFRU.
+- Keep Ability behavior-risk entries blocked for gameplay-behavior claims until source-backed CFRU behavior fixes or targeted smokes exist.
+- Keep open-risk form families out of automated data writes unless a future source-backed policy resolves them.
+- Do not claim full-playthrough, BizHawk, Ironmon Tracker, or P1 support from this data sync.
+- Continue excluding Pokemon Showdown data copies, raw reports, ROMs, saves, emulator states, builds, tool binaries, screenshots, hashes, private paths, tokens, secrets, `.env`, and local-only paths from commits.
+
 # Next steps update - DPE Base Stats full source sync audit
 
 - Treat `01_docs/analysis/dpe-base-stats-full-source-sync.md` as the current decision record for whole-file DPE `Base_Stats.c` replacement.

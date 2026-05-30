@@ -1,3 +1,14 @@
+# Roadmap status update - Pokemon Showdown Pokemon Data Gen1-9 sync
+
+- Implemented generation-by-generation Pokemon Showdown data sync on DPE/CFRU branches `data/showdown-pokemon-data-gen1-9`.
+- Workspace now pins DPE `22ffa27ad09cfacbca841d90e6cbe31e6f9b7fdc` and CFRU `e9fac6dbe35c5d8e2d08a9fef00b2df3c3b5f8f2`.
+- Status impact: safe mapped Gen1-9 DPE Base Stats fields and DPE/CFRU level-up learnsets are aligned with the fail-closed Showdown helper where reviewed alias and blocker policy permits it.
+- Added `07_scripts/data_audit/showdown_pokemon_data_sync.py` and sanitized evidence in `08_tests/randomizer/showdown-pokemon-data-gen1-9.md`.
+- Final validation: all Gen1-9 post-write dry-runs report zero remaining Base Stats field diffs; `1109` ready learnsets were checked with `0` DPE/CFRU expected-output drift.
+- Remaining roadmap blockers stay explicit: Gen9 Ability behavior risk, Move open-risk entries, missing form learnsets, and reviewed Species open-risk families.
+- Caveat: data/syntax/dry-run checked only; no local rebuild, ROM boot, BizHawk validation, Ironmon Tracker validation, full-playthrough coverage, or P1 promotion is claimed.
+- No Pokemon Showdown source copy, raw report, ROM path, ROM hash, CRC, full log, screenshot, save, emulator state, output ROM, build artifact, tool binary, private path, token, secret, or `.env` data is added.
+
 # Roadmap status update - DPE Base Stats full source sync audit
 
 - Added a read-only audit for whether DPE `src/Base_Stats.c` can be fully or mostly replaced from a current compatible source.
