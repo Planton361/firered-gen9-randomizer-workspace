@@ -1,3 +1,16 @@
+# Session update - CFRU Viridian Pokecenter map object overlay MVP
+
+- Branch: `feature/cfru-map-object-overlay-generator`.
+- PR #449 was verified as merged into current `main` before creating this branch.
+- CFRU submodule branch: `feature/cfru-map-object-overlay-generator`.
+- CFRU commit: `648ce6042a93b71796c2d478fc816687e2ec060a`.
+- Implemented a minimal CFRU-owned `mapobjectoverlays` insertion surface for exactly one map: Viridian City Pokecenter 1F, map bank `5`, map number `4`.
+- The inserter now derives the map header by bank/number, reads existing `MapHeader.events`, fail-closes on object count mismatch, copies the existing object-event table, appends one source-defined object, emits a replacement object table plus replacement `MapEvents`, preserves original warp/coord/bg pointers, and repoints only `MapHeader.events`.
+- Added one new Viridian Pokecenter Name Rater object event as row `4` / local id `5`, `MAP_OBJ_GFX_GENTLEMAN`, coordinate `(10, 5)`, elevation `3`, `MOVEMENT_TYPE_FACE_DOWN`, script `EventScript_PokeCenterNameRater`.
+- Existing Viridian Pokecenter Nurse, Gentleman, Boy, Youngster, warps, coord events and bg events are intended to remain owned by the original source data and preserved by copy/pointer preservation; manual runtime smoke is still required.
+- Updated `08_tests/randomizer/cfru-name-rater-centers-qol.md` with the implemented overlay MVP, added-NPC details, smoke gate and caveats.
+- No global Pokecenter rollout, Pewter change, Faster Intro, Oak/Lab/Parcel, Bill-Sevii, Repel-Reuse, auto-run/running indoors, poison, EXP, Runtime Options, Hidden Items, Itemfinder sparkle, itemball graphics, Field Items, UPR-FVX writer, DPE data, binary patch, ROM, save, build, tool binary, raw log, screenshot, hash, private path, token, secret or `.env` data was changed or documented.
+
 # Session update - CFRU Pokecenter map object ownership design
 
 - Branch: `design/cfru-pokecenter-map-object-ownership`.

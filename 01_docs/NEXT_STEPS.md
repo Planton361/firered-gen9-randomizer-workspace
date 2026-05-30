@@ -1,3 +1,11 @@
+# Next steps update - CFRU Viridian Pokecenter map object overlay MVP
+
+- Treat CFRU commit `648ce6042a93b71796c2d478fc816687e2ec060a` on branch `feature/cfru-map-object-overlay-generator` as the current Viridian-only map-object overlay MVP candidate.
+- Treat `08_tests/randomizer/cfru-name-rater-centers-qol.md` as the manual smoke gate for the added Viridian Pokecenter Name Rater NPC.
+- First follow-up must be a sanitized manual Viridian runtime smoke: map load, original Gentleman/Boy/Youngster dialogue, Nurse heal, PC access, warps, new Name Rater visible at `(10, 5)`, intro No path, selection cancel, nickname cancel, nickname confirm, optional Egg rejection, optional traded-mon rejection, and leave/re-enter duplicate check.
+- Do not roll out to additional Pokecenters until Viridian passes and a separate rollout design covers object counts, local ids, coordinates, and coord/bg-event preservation for each target map.
+- Keep Faster Intro, Oak/Lab/Parcel, Bill-Sevii, Repel-Reuse, auto-run/running indoors, poison, EXP, Runtime Options, Hidden Items, Itemfinder sparkle, itemball graphics, Field Items, UPR-FVX writer, DPE data, binary patches, ROMs, saves, builds, tool binaries, screenshots, raw logs, hashes, private paths, tokens, secrets and `.env` data out of this train.
+
 # Next steps update - CFRU Pokecenter map object ownership design
 
 - Treat `01_docs/analysis/cfru-pokecenter-map-object-ownership.md` as the current design handoff for added Pokecenter NPC ownership.

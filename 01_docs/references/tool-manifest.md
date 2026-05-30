@@ -1,3 +1,16 @@
+# Tool Manifest Update - 2026-05-30 - CFRU Viridian Pokecenter map object overlay MVP
+
+- Workspace branch: `feature/cfru-map-object-overlay-generator`.
+- CFRU branch: `feature/cfru-map-object-overlay-generator`.
+- CFRU commit: `648ce6042a93b71796c2d478fc816687e2ec060a`.
+- Workspace submodule `02_external/CFRU-expansion` now pins this CFRU overlay MVP candidate.
+- Evidence file: `08_tests/randomizer/cfru-name-rater-centers-qol.md`.
+- Scope: minimal CFRU-owned map-object overlay/generator MVP for exactly one added Viridian City Pokecenter 1F Name Rater NPC.
+- CFRU changes: `scripts/insert.py` now reads `mapobjectoverlays`, derives map headers by bank/number, copies the current object-event table, appends source-defined object templates, emits replacement object table plus replacement `MapEvents`, preserves original warp/coord/bg pointers, and repoints `MapHeader.events`; `mapobjectoverlays` contains one row for map bank `5`, map `4`; local script/text add `EventScript_PokeCenterNameRater`.
+- Added NPC: zero-based row `4`, local id `5`, `MAP_OBJ_GFX_GENTLEMAN`, coordinate `(10, 5)`, elevation `3`, `MOVEMENT_TYPE_FACE_DOWN`, script `EventScript_PokeCenterNameRater`.
+- Checks: `python3 -m py_compile scripts/insert.py`; `arm-none-eabi-as -o /dev/null overworld_scripts/name_rater_pokecenter.s`; CFRU `diff --cached --check`; workspace `diff --check`.
+- Boundary: no global Pokecenter rollout, existing-NPC replacement, Pewter change, Faster Intro, Oak/Lab/Parcel, Bill-Sevii, Repel-Reuse, Hidden Items, itemball graphics, Field Items, UPR-FVX writer, DPE data, binary patch, ROM, save, emulator state, build artifact, tool binary, screenshot, raw log, hash, private path, token, secret or `.env` data is included.
+
 # Tool Manifest Update - 2026-05-30 - CFRU Name Rater Pokecenter pilot correction
 
 - Workspace branch: `feature/cfru-name-rater-centers-qol`.
