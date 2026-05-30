@@ -1,3 +1,12 @@
+# Next steps update - CFRU Name Rater Pokecenter rollout design
+
+- Treat `01_docs/analysis/cfru-name-rater-centers-rollout.md` as the current map-by-map rollout design for added Pokecenter Name Rater NPCs.
+- Treat `08_tests/randomizer/cfru-name-rater-centers-rollout.md` as the smoke gate for future rollout phases.
+- Do not start with a global rollout. The first code block should be a reviewed safe Kanto batch only, preserving the fail-closed expected object count checks and using the existing `EventScript_PokeCenterNameRater`.
+- Run a clean CFRU build with `python3 scripts/clean.py BUILD` and `python3 scripts/make.py` before smoke, then enter each target Pokecenter from outside.
+- Keep high-count Kanto maps, Indigo Plateau, Sevii maps, Four Island BG events and One Island Bill/Celio/Network Machine coord/BG preservation as separate later gates.
+- Continue excluding Faster Intro, Oak/Lab/Parcel, Bill-Sevii, Repel-Reuse, Hidden Items, itemball graphics, Field Items, Randomizer writer, UPR-FVX/DPE changes, ROMs, saves, builds, tool binaries, screenshots, raw logs, hashes, private paths, tokens, secrets and `.env` data from commits.
+
 # Next steps update - CFRU Viridian Name Rater overlay smoke pass
 
 - Treat `08_tests/randomizer/cfru-name-rater-centers-qol.md` as promoted to `MVP_PASS_WITH_CAVEATS` for the Viridian-only added Name Rater overlay.
