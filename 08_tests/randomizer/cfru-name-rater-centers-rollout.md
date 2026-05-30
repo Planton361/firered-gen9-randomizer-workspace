@@ -1,6 +1,37 @@
 # CFRU Name Rater Pokecenter rollout smoke handoff
 
-Status: `IMPLEMENTED_PENDING_MANUAL_SMOKE`
+Status: `COMPLETE_ROLLOUT_PENDING_MANUAL_SMOKE`
+
+## Implementation candidate - complete rollout
+
+Branch: `feature/cfru-name-rater-centers-rollout-complete`
+
+CFRU Draft PR: `https://github.com/Planton361/CFRU-expansion/pull/27`
+
+Implemented in CFRU `mapobjectoverlays` only:
+
+| Map | Bank | Map | Expected count | New local id | Coordinate | Script | Result |
+|---|---:|---:|---:|---:|---|---|---|
+| `CeruleanCity_PokemonCenter_1F` | 7 | 3 | 7 | 8 | `(10, 5)` | `EventScript_PokeCenterNameRater` | pending smoke |
+| `CinnabarIsland_PokemonCenter_1F` | 12 | 5 | 7 | 8 | `(10, 5)` | `EventScript_PokeCenterNameRater` | pending smoke |
+| `PewterCity_PokemonCenter_1F` | 6 | 5 | 7 | 8 | `(10, 5)` | `EventScript_PokeCenterNameRater` | pending smoke |
+| `VermilionCity_PokemonCenter_1F` | 9 | 1 | 7 | 8 | `(10, 5)` | `EventScript_PokeCenterNameRater` | pending smoke |
+| `IndigoPlateau_PokemonCenter_1F` | 13 | 0 | 8 | 9 | `(10, 5)` | `EventScript_PokeCenterNameRater` | pending smoke |
+| `TwoIsland_PokemonCenter_1F` | 33 | 2 | 3 | 4 | `(10, 5)` | `EventScript_PokeCenterNameRater` | pending smoke |
+| `ThreeIsland_PokemonCenter_1F` | 34 | 1 | 4 | 5 | `(10, 5)` | `EventScript_PokeCenterNameRater` | pending smoke |
+| `FourIsland_PokemonCenter_1F` | 35 | 1 | 4 | 5 | `(10, 5)` | `EventScript_PokeCenterNameRater` | pending smoke |
+| `FiveIsland_PokemonCenter_1F` | 36 | 0 | 5 | 6 | `(10, 5)` | `EventScript_PokeCenterNameRater` | pending smoke |
+| `SixIsland_PokemonCenter_1F` | 37 | 0 | 4 | 5 | `(10, 5)` | `EventScript_PokeCenterNameRater` | pending smoke |
+| `SevenIsland_PokemonCenter_1F` | 31 | 3 | 6 | 7 | `(10, 5)` | `EventScript_PokeCenterNameRater` | pending smoke |
+| `OneIsland_PokemonCenter_1F` | 32 | 0 | 6 | 7 | `(10, 5)` | `EventScript_PokeCenterNameRater` | pending smoke |
+
+No remaining Pokecenter 1F maps from the rollout table were skipped. Existing
+Viridian and safe-Kanto batch entries remain unchanged.
+
+Manual smoke is required before promoting this complete rollout. One Island is
+implemented because the rollout table contains a complete fail-closed row, but
+it remains the highest-risk smoke target because it has Bill, Celio, Network
+Machine BG events and leave-island coord triggers.
 
 ## Implementation candidate - safe Kanto batch 1
 
@@ -29,8 +60,8 @@ Skipped by design in this batch:
 - Sevii centers: Two, Three, Four, Five, Six, Seven Island;
 - One Island.
 
-Manual smoke is required before promoting this batch. Use the clean-build and
-fresh-map-entry rules below for every implemented map.
+Manual smoke remains required for this batch as part of the complete rollout.
+Use the clean-build and fresh-map-entry rules below for every implemented map.
 
 ## Purpose
 
