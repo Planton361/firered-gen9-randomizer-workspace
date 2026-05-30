@@ -57,6 +57,41 @@ Use one compact sanitized row per local run:
 
 Do not record ROM names, file paths, hashes, screenshots, raw emulator logs, save names, state names, build output paths, tool binary paths, local addresses, tokens, secrets or `.env` content.
 
+## Manual smoke result - Runtime / Settings
+
+Status: `PASS_SETTINGS_ONLY_WITH_CAVEATS`.
+
+Source of result: sanitized user-reported manual smoke. Codex did not run ROMs, inspect ROMs, read saves, launch an emulator, read raw logs or verify local build artifacts for this result.
+
+User finding:
+
+- Existing Runtime / Settings functionality was manually checked.
+- The checked settings appeared to work.
+- No obvious regression was observed.
+
+This result is intentionally narrow. It does not promote the full New Game smoke matrix to pass, and it does not claim full-playthrough, BizHawk, Ironmon Tracker, Field Items, hidden sparkle, item ball graphics, randomizer writer or binary-patch coverage.
+
+| Date | Candidate type | New Game | Controls Guide | Oak Tutorial | Runtime Options | EXP | Poison | Catch malus | Randomizer no-field-items | Result | Caveat |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| 2026-05-30 | sanitized user manual Runtime / Settings smoke | not run | not run | not run | pass | not run | not run | not run | not run | PASS_SETTINGS_ONLY_WITH_CAVEATS | Existing Runtime / Settings were manually tested and seemed to function; no obvious regression was observed. Individual New Game, intro, tutorial, EXP, poison, catch and randomizer-no-field-items cases were not separately confirmed in this result. |
+
+Detailed status:
+
+| Test | Status | Evidence boundary |
+|---|---|---|
+| New Game Start reaches player control | not run | Not separately reported in this result. |
+| Intro Controls Guide skipped | not run | Not separately reported in this result. |
+| Oak Tutorial battle absent | not run | Not separately reported in this result. |
+| Teachy-TV unchanged | not run | No Teachy-TV-specific check was reported; no change is claimed. |
+| Runtime menu Page 3 layout | pass | Covered by the user's manual Runtime / Settings check at a broad level. |
+| Runtime menu close preserves unchanged rows | pass | Covered by the user's manual Runtime / Settings check at a broad level. |
+| Nuzlocke toggle ownership | pass | Covered by the user's manual Runtime / Settings check at a broad level; no side-state unwind claim is made. |
+| Wild Prebattle toggle ownership | pass | Covered by the user's manual Runtime / Settings check at a broad level; no encounter-table or randomizer-output claim is made. |
+| Old / flat EXP symptom smoke | not run | Not separately reported in this result. |
+| Poison overworld faint | not run | Not separately reported in this result. |
+| SwSh catch-level malus absent | not run | Not separately reported in this result. |
+| Randomizer compatibility without Field Item changes | not run | Not separately reported in this result; Field Items remain owned by existing UPR-FVX field-item smokes. |
+
 ## Pass / fail policy
 
 Overall `PASS_WITH_CAVEATS` requires:
