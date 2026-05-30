@@ -1,3 +1,12 @@
+# Next steps update - CFRU QoL New Game smoke plan
+
+- Treat `08_tests/randomizer/cfru-qol-new-game-smoke.md` as the current smoke protocol for existing CFRU QoL / New Game behavior.
+- First follow-up should remain smoke-only: run a fresh local candidate through New Game Start, controls guide skip, Oak tutorial absence, Page 3 runtime option preservation, Nuzlocke/Wild Prebattle ownership, old/flat EXP symptom check, poison overworld faint, and SwSh catch-level malus absence where practical.
+- Record only sanitized pass/fail rows. Do not document ROM names, paths, hashes, screenshots, raw emulator logs, save/state names, build output paths, tool binary paths, local addresses, tokens, secrets or `.env` content.
+- Keep Teachy-TV unchanged unless a later source-backed task specifically targets it.
+- Do not add Hidden Sparkle, Field Item or itemball graphics changes, Randomizer writer changes, UPR-FVX profile/settings changes, DPE data changes or binary patch ports in the first smoke block.
+- If a concrete regression appears, open a narrow implementation branch for that single behavior and keep the smoke plan as the acceptance gate.
+
 # Next steps update - Ironmon QoL feature inventory
 
 - Treat `01_docs/analysis/ironmon-qol-feature-inventory.md` as the current source-backed handoff for Ironmon-/NatDex-/FireRed-QoL candidates.
