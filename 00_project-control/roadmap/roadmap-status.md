@@ -1,3 +1,11 @@
+# Roadmap status update - DPE Base Stats full source sync audit
+
+- Added a read-only audit for whether DPE `src/Base_Stats.c` can be fully or mostly replaced from a current compatible source.
+- Status impact: full replacement is rejected for now. No external source checked is both newer/better and drop-in compatible with local DPE IDs, structs, forms, and Ability semantics.
+- Planton DPE `origin/master` is compatible but not a new replacement source; Shiny-Miner DPE Gen9 is structurally close but would revert accepted local Ogerpon/Terastal and tranche data; Skeli DPE lacks the Gen9 tail; pokeemerald-expansion and Pokemon Showdown remain reference inputs only.
+- Recommended path remains small, reviewed, field-family updates through the fail-closed mapping/dry-diff workflow.
+- No DPE/CFRU/UPR-FVX source, submodule pin, external data copy, raw report, ROM path, ROM hash, CRC, full log, screenshot, save, build artifact, tool binary, private path or P1 promotion is added.
+
 # Roadmap status update - DPE Base Stats tranche 1
 
 - Implemented the first narrow DPE `Base_Stats.c` tranche on DPE branch `data/dpe-base-stats-tranche-1`.

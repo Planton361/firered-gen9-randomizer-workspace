@@ -1,3 +1,13 @@
+# Tool Manifest Update - 2026-05-30 - DPE Base Stats full source sync audit
+
+- Workspace branch: `analysis/dpe-base-stats-full-source-sync`.
+- Analysis file: `01_docs/analysis/dpe-base-stats-full-source-sync.md`.
+- Smoke file: `08_tests/randomizer/dpe-base-stats-full-source-sync.md`.
+- Scope: read-only audit of local DPE `src/Base_Stats.c`, `include/base_stats.h`, `include/species.h`, `include/abilities.h`, and `include/types.h` against candidate sources for full or broad replacement.
+- Sources checked: Planton DPE `origin/master` `34f88ab9fb2d23db715297016f00d1c5e30b064d`, Shiny-Miner DPE Gen9 `5906aa4d4904e41393fd9184a16951c961e96263`, Skeli789 DPE `cdfc053a56326a13dc5311b24488445e17536b7e`, pokeemerald-expansion Pokemon data, and Pokemon Showdown `data/pokedex.ts`.
+- Decision: do not full-replace DPE `Base_Stats.c`. Use small reviewed field-family updates instead.
+- Boundary: no DPE/CFRU/UPR-FVX source file, submodule pin, external source checkout, Pokemon Showdown data copy, raw report, ROM, save, build artifact, tool binary, screenshot, hash, private path, token, secret or `.env` data is included.
+
 # Tool Manifest Update - 2026-05-29 - DPE Base Stats tranche 1
 
 - Workspace branch: `data/dpe-base-stats-tranche-1`.
