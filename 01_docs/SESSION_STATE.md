@@ -2,8 +2,11 @@
 
 - Branch: `feature/cfru-map-object-overlay-generator`.
 - PR #449 was verified as merged into current `main` before creating this branch.
-- CFRU submodule branch: `feature/cfru-map-object-overlay-generator`.
-- CFRU commit: `648ce6042a93b71796c2d478fc816687e2ec060a`.
+- CFRU feature branch: `feature/cfru-map-object-overlay-generator`.
+- CFRU feature commit: `648ce6042a93b71796c2d478fc816687e2ec060a`.
+- CFRU compat merge: PR #25 into `compat/firered-gen9-randomizer`, merge commit `f40a35a295ce23294557f19dfff220240056386f`.
+- Workspace submodule pin now points at CFRU compat merge commit `f40a35a295ce23294557f19dfff220240056386f`.
+- Workspace PRs for this branch were merged as #450 and #451; #451 is the final main-facing pin cleanup.
 - Implemented a minimal CFRU-owned `mapobjectoverlays` insertion surface for exactly one map: Viridian City Pokecenter 1F, map bank `5`, map number `4`.
 - The inserter now derives the map header by bank/number, reads existing `MapHeader.events`, fail-closes on object count mismatch, copies the existing object-event table, appends one source-defined object, emits a replacement object table plus replacement `MapEvents`, preserves original warp/coord/bg pointers, and repoints only `MapHeader.events`.
 - Added one new Viridian Pokecenter Name Rater object event as row `4` / local id `5`, `MAP_OBJ_GFX_GENTLEMAN`, coordinate `(10, 5)`, elevation `3`, `MOVEMENT_TYPE_FACE_DOWN`, script `EventScript_PokeCenterNameRater`.

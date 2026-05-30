@@ -1,6 +1,7 @@
 # Next steps update - CFRU Viridian Pokecenter map object overlay MVP
 
-- Treat CFRU commit `648ce6042a93b71796c2d478fc816687e2ec060a` on branch `feature/cfru-map-object-overlay-generator` as the current Viridian-only map-object overlay MVP candidate.
+- Treat CFRU feature commit `648ce6042a93b71796c2d478fc816687e2ec060a` and compat merge commit `f40a35a295ce23294557f19dfff220240056386f` as the current Viridian-only map-object overlay MVP candidate.
+- The Workspace PR chain for this branch is already merged to `main`; no additional PR merge is needed for this block.
 - Treat `08_tests/randomizer/cfru-name-rater-centers-qol.md` as the manual smoke gate for the added Viridian Pokecenter Name Rater NPC.
 - First follow-up must be a sanitized manual Viridian runtime smoke: map load, original Gentleman/Boy/Youngster dialogue, Nurse heal, PC access, warps, new Name Rater visible at `(10, 5)`, intro No path, selection cancel, nickname cancel, nickname confirm, optional Egg rejection, optional traded-mon rejection, and leave/re-enter duplicate check.
 - Do not roll out to additional Pokecenters until Viridian passes and a separate rollout design covers object counts, local ids, coordinates, and coord/bg-event preservation for each target map.
