@@ -1,6 +1,36 @@
 # CFRU Name Rater Pokecenter rollout smoke handoff
 
-Status: `DESIGN_ONLY_NO_CODE`
+Status: `IMPLEMENTED_PENDING_MANUAL_SMOKE`
+
+## Implementation candidate - safe Kanto batch 1
+
+Branch: `feature/cfru-name-rater-centers-rollout-kanto-1`
+
+CFRU Draft PR: `https://github.com/Planton361/CFRU-expansion/pull/26`
+
+Implemented in CFRU `mapobjectoverlays` only:
+
+| Map | Bank | Map | Expected count | New local id | Coordinate | Script | Result |
+|---|---:|---:|---:|---:|---|---|---|
+| `CeladonCity_PokemonCenter_1F` | 10 | 12 | 4 | 5 | `(10, 5)` | `EventScript_PokeCenterNameRater` | pending smoke |
+| `FuchsiaCity_PokemonCenter_1F` | 11 | 5 | 4 | 5 | `(10, 5)` | `EventScript_PokeCenterNameRater` | pending smoke |
+| `LavenderTown_PokemonCenter_1F` | 8 | 0 | 5 | 6 | `(10, 5)` | `EventScript_PokeCenterNameRater` | pending smoke |
+| `Route10_PokemonCenter_1F` | 21 | 0 | 5 | 6 | `(10, 5)` | `EventScript_PokeCenterNameRater` | pending smoke |
+| `Route4_PokemonCenter_1F` | 16 | 0 | 6 | 7 | `(10, 5)` | `EventScript_PokeCenterNameRater` | pending smoke |
+| `SaffronCity_PokemonCenter_1F` | 14 | 6 | 6 | 7 | `(10, 5)` | `EventScript_PokeCenterNameRater` | pending smoke |
+
+Existing Viridian overlay entry remains unchanged and is not re-smoked by this
+candidate.
+
+Skipped by design in this batch:
+
+- high-count Kanto: Cerulean, Cinnabar, Pewter, Vermilion;
+- special layout: Indigo Plateau;
+- Sevii centers: Two, Three, Four, Five, Six, Seven Island;
+- One Island.
+
+Manual smoke is required before promoting this batch. Use the clean-build and
+fresh-map-entry rules below for every implemented map.
 
 ## Purpose
 

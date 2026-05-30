@@ -1,3 +1,16 @@
+# Session update - CFRU safe Kanto Name Rater Pokecenter rollout batch
+
+- Branch: `feature/cfru-name-rater-centers-rollout-kanto-1`.
+- PR #455 was fast-forwarded into current `main` before creating this branch.
+- CFRU branch: `feature/cfru-name-rater-centers-rollout-kanto-1`.
+- CFRU Draft PR: `https://github.com/Planton361/CFRU-expansion/pull/26`.
+- CFRU change is limited to `mapobjectoverlays`: six safe-Kanto-first append rows were added for Celadon, Fuchsia, Lavender, Route 10, Route 4 and Saffron Pokecenter 1F.
+- Existing Viridian overlay row is unchanged. No high-count Kanto maps, Indigo Plateau, Sevii centers or One Island were added.
+- Each new row uses the design-provided fail-closed expected object count, local id, coordinate `(10, 5)`, `MAP_OBJ_GFX_GENTLEMAN`, elevation `3`, `MOVEMENT_TYPE_FACE_DOWN`, and `EventScript_PokeCenterNameRater`.
+- Updated `08_tests/randomizer/cfru-name-rater-centers-rollout.md` with the implementation candidate and pending manual smoke matrix.
+- Workspace submodule `02_external/CFRU-expansion` now points at the CFRU safe-Kanto feature commit for review while the CFRU Draft PR remains unmerged.
+- No CFRU script/Python/ASM, DPE, UPR-FVX, Hidden Item, itemball graphics, Field Item, Randomizer writer, ROM, save, build artifact, tool binary, screenshot, raw log, hash, private path, token, secret or `.env` data was changed or documented.
+
 # Session update - CFRU Name Rater Pokecenter rollout design
 
 - Branch: `design/cfru-name-rater-centers-rollout`.
