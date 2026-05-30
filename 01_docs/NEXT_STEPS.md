@@ -1,3 +1,13 @@
+# Next steps update - CFRU Pokecenter map object ownership design
+
+- Treat `01_docs/analysis/cfru-pokecenter-map-object-ownership.md` as the current design handoff for added Pokecenter NPC ownership.
+- Treat `08_tests/randomizer/cfru-pokecenter-map-object-ownership.md` as the future manual smoke gate.
+- Do not implement added Pokecenter NPCs as existing-NPC replacement or fixed raw-address table edits.
+- Recommended next implementation block is medium-sized infrastructure: a CFRU-owned map-object overlay/generator that preserves original warp/coord/bg event tables and appends source-defined object templates through a replacement `MapEvents` pointer.
+- First implementation must stay Viridian-only and prove object count `4 -> 5`, new zero-based row `4` / local id `5`, original Gentleman dialogue preserved, Nurse/PC/warps preserved, and Name Rater cancel/confirm paths working.
+- Defer global rollout until at least one high-count Pokecenter and one coord/bg-event Pokecenter are separately smoke-tested.
+- Continue excluding CFRU/DPE/UPR-FVX unrelated code, Hidden Items, itemball graphics, Field Items, Faster Intro, Bill-Sevii, binary patches, ROMs, saves, builds, tool binaries, screenshots, raw logs, private paths, tokens, secrets and `.env` data from this train.
+
 # Next steps update - CFRU Name Rater Pokecenter pilot correction
 
 - Treat `08_tests/randomizer/cfru-name-rater-centers-qol.md` as a Stop/Handoff, not an implemented pilot.

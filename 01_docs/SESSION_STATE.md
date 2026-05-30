@@ -1,3 +1,15 @@
+# Session update - CFRU Pokecenter map object ownership design
+
+- Branch: `design/cfru-pokecenter-map-object-ownership`.
+- PR #448 was fast-forwarded into current `main` before creating this branch.
+- Added `01_docs/analysis/cfru-pokecenter-map-object-ownership.md` as a design-only source-backed analysis for adding extra Pokecenter NPCs without existing-NPC replacement.
+- Added `08_tests/randomizer/cfru-pokecenter-map-object-ownership.md` as the future manual smoke and rollout handoff.
+- Read-only CFRU review found that `eventscripts` only repoints existing object-event script pointers; it cannot append objects, update object counts, allocate a new object-event table, or repoint `MapHeader.events`.
+- Read-only pret review found the source-owned model: `map.json` object events are generated into object arrays and `MapEvents` structs by `tools/mapjson/mapjson.cpp`.
+- Result decision: `implementable-medium`. Recommended path is a CFRU-owned map-object overlay/generator that derives map headers by bank/number, copies existing object templates during insertion, appends source-defined objects, emits replacement object table plus replacement `MapEvents`, preserves original warp/coord/bg pointers, and repoints `MapHeader.events`.
+- Viridian pilot design records current object count `4`, desired new zero-based table row `4` / local id `5`, `MAP_OBJ_GFX_GENTLEMAN`, candidate coordinate `(10, 5)`, elevation `3`, `MOVEMENT_TYPE_FACE_DOWN`, and future `EventScript_PokeCenterNameRater`.
+- No CFRU, DPE, UPR-FVX, Hidden Item, itemball, Field Item, Faster Intro, Bill-Sevii, ROM, binary patch, build, save, emulator state, tool binary, screenshot, raw log, private path, token, secret or `.env` data was changed or documented.
+
 # Session update - CFRU Name Rater Pokecenter pilot correction
 
 - Branch: `feature/cfru-name-rater-centers-qol`.
