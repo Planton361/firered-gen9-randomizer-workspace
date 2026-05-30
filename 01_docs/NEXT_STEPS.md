@@ -1,3 +1,12 @@
+# Next steps update - CFRU QoL coverage analysis
+
+- Treat `01_docs/analysis/cfru-qol-coverage.md` as the current source-backed CFRU QoL coverage map.
+- Do not reimplement CFRU-provided QoL such as Repel-Reuse, running indoors, auto-run path, reusable TMs, item acquire presentation, HM field-use convenience, current Runtime Options, controls-guide skip or Oak tutorial absence.
+- First recommended follow-up is preserve-smoke only: Repel-Reuse, auto-run/running indoors, reusable TM/HM behavior, item acquire presentation, party move-item path and Runtime Options dirty-row preservation.
+- Missing baseline items need separate design decisions before code: broader Faster Intro / New Game Flow, Oak/Lab/Parcel shortening, visible hidden-item cue, TM/HM or important itemball graphics, Name Rater placement, lab convenience and Bill-Sevii auto-ask removal.
+- Keep UPR-FVX as owner for Field Items output, required Field TMs, TM-vs-non-TM slot typing and Field Items reload smokes. CFRU visual work must not silently change randomizer writer semantics.
+- Keep DPE out of this QoL train unless a later task directly touches Pokemon data.
+
 # Next steps update - CFRU QoL New Game remaining smoke results
 
 - Treat `08_tests/randomizer/cfru-qol-new-game-smoke.md` as updated to `PASS_FULL_WITH_CAVEATS` for the planned manual CFRU QoL / New Game smoke matrix.
