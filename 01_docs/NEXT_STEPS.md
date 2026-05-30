@@ -1,3 +1,11 @@
+# Next steps update - CFRU Faster Intro QoL
+
+- Treat `08_tests/randomizer/cfru-faster-intro-qol.md` as the current handoff for the first Faster-Intro / Oak-Lab-Parcel implementation attempt.
+- Do not implement broader Faster Intro until a design-only pass selects exactly one early-game subflow and identifies a local CFRU source hook.
+- Keep already-covered CFRU QoL out of preserve-smoke work for this train unless the user reverses the decision: Repel-Reuse, auto-run/running indoors, poison/EXP/runtime options, reusable TM/HM behavior, item acquire presentation, Move Items, Select-from-PC and Portable-PC plumbing are accepted without additional preserve-smoke and not retested in this block.
+- Recommended next branch: a narrow design handoff for one Parcel-chain or Lab-dialogue subflow, documenting flags, vars, item grants, NPC/object state and the exact allowed hook before code.
+- Continue excluding Hidden Items, Itemfinder sparkle, itemball graphics, Field Items, UPR-FVX writers, DPE data, Name Rater, Bill-Sevii, Viridian-Forest-Nurse, Step Item Guarantees, Friendship Boost and binary patch ports from the Faster-Intro block.
+
 # Next steps update - CFRU QoL coverage analysis
 
 - Treat `01_docs/analysis/cfru-qol-coverage.md` as the current source-backed CFRU QoL coverage map.

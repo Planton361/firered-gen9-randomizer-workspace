@@ -1,3 +1,13 @@
+# Session update - CFRU Faster Intro QoL
+
+- Branch: `feature/cfru-faster-intro-qol`.
+- PR #445 was verified as merged before creating this branch from current `main`.
+- Read-only CFRU review covered the New Game / intro / Oak / Lab / Route 1 Parcel / Viridian early-script area in local source surfaces.
+- The only locally confirmed Faster-Intro-adjacent coverage is existing CFRU behavior: controls-guide skip and Oak tutorial battle absence. Per user decision, CFRU-covered QoL is accepted without additional preserve-smoke and was not retested in this block.
+- Stop rule triggered for new implementation: a broader Oak/Lab/Parcel change would require either raw address-level replacement or a multi-map script design, not one isolated source-backed QoL feature.
+- Added `08_tests/randomizer/cfru-faster-intro-qol.md` as the sanitized no-code handoff, including the minimal next design proposal and future smoke gate.
+- No CFRU/DPE/UPR-FVX source, Field Item behavior, hidden sparkle, itemball graphics, randomizer writer or forbidden local artifact was changed or documented.
+
 # Session update - CFRU QoL coverage analysis
 
 - Branch: `analysis/cfru-qol-coverage`.
