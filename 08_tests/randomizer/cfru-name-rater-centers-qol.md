@@ -1,6 +1,70 @@
 # CFRU Name Rater Pokecenter pilot
 
-Status: `IMPLEMENTED_VIRIDIAN_OVERLAY_MVP_NEEDS_MANUAL_SMOKE`
+Status: `SMOKE_FAIL_DEBUG_SOURCE_PATH_PLAUSIBLE_CLEAN_REBUILD_REQUIRED`
+
+## Smoke fail debug - 2026-05-30
+
+Branch: `debug/cfru-name-rater-overlay-smoke-fail`
+
+User-reported result: after locally rebuilding and starting the current CFRU
+compat candidate, no visible or interactable Name Rater was found in Viridian
+City Pokecenter 1F.
+
+Read-only source diagnosis found:
+
+- Workspace `main` contains PR #452.
+- Workspace submodule pin points to CFRU compat merge
+  `f40a35a295ce23294557f19dfff220240056386f`.
+- CFRU local branch is `compat/firered-gen9-randomizer` at the same commit.
+- `scripts/make.py` calls `scripts/build.py` and then `scripts/insert.py`.
+- `scripts/insert.py` does call `InsertMapObjectOverlays(...)`; the overlay
+  function is not dead code.
+- The overlay call runs after existing `eventscripts` pointer repoints and
+  before song pointer insertion. No later source-backed map-event writer was
+  found in `insert.py`.
+- `MAP_VIRIDIAN_CITY_POKEMON_CENTER_1F` is map bank `5`, map number `4`.
+- The pret Viridian Pokecenter 1F reference has object count `4`, matching the
+  overlay's expected count.
+- The requested added object row/local-id model remains correct: appended row
+  `4`, local id `5`.
+- `MAP_OBJ_GFX_GENTLEMAN`, coordinate `(10, 5)`, elevation `3`, and
+  `MOVEMENT_TYPE_FACE_DOWN` resolve to normal object-template fields.
+- The `1 1 0 0` fields are movement range `1, 1`, trainer type `0`, and
+  trainer range `0`; they are not visibility flags.
+- The object-template byte layout in `BuildEventObjectTemplate` matches the
+  local CFRU `EventObjectTemplate` layout and the pret `object_event` macro
+  shape for the fields used by this MVP.
+- `assembly/overworld_scripts/name_rater_pokecenter.s` and
+  `strings/Scripts/name_rater_pokecenter.string` are under the recursive
+  `scripts/build.py` assembly/string globs.
+- The script and text symbols are internally consistent in source.
+
+No small source-backed code defect was identified in this pass.
+
+Local generated build intermediates needed to verify concrete linked symbols
+and inserted output were not present in this checkout, so the final ROM/output
+state was not inspected. No ROM, save, emulator state, screenshot, raw log,
+hash, private path or build artifact is documented here.
+
+Debug decision: no CFRU code change in this branch. Treat the current failure
+as blocked pending a clean rebuild and map-reload smoke from the CFRU root.
+
+Clean rebuild / smoke handoff:
+
+1. From `02_external/CFRU-expansion`, confirm branch
+   `compat/firered-gen9-randomizer` and commit
+   `f40a35a295ce23294557f19dfff220240056386f`.
+2. Remove stale generated build/intermediate outputs locally if present.
+3. Run `python3 scripts/make.py` from the CFRU root, not only
+   `scripts/build.py`.
+4. Load the newly inserted local output, not an older candidate.
+5. Enter Viridian City Pokecenter 1F from outside the map after the new output
+   is loaded; do not rely on an emulator state already inside the map.
+6. Check for the added Gentleman-like Name Rater at `(10, 5)`.
+7. If still absent, the next debug block should verify the inserted
+   `MapHeader.events` pointer and generated object count from a sanitized
+   local inspection path, without documenting ROM names, hashes, private paths
+   or raw binary dumps.
 
 ## Scope
 

@@ -1,3 +1,15 @@
+# Tool Manifest Update - 2026-05-30 - CFRU Name Rater overlay smoke fail debug
+
+- Workspace branch: `debug/cfru-name-rater-overlay-smoke-fail`.
+- CFRU branch inspected read-only: `compat/firered-gen9-randomizer`.
+- CFRU commit inspected read-only: `f40a35a295ce23294557f19dfff220240056386f`.
+- Evidence file updated: `08_tests/randomizer/cfru-name-rater-centers-qol.md`.
+- Scope: diagnosis-only follow-up for the user-reported Viridian Pokecenter Name Rater overlay smoke fail.
+- Findings: `scripts/make.py` invokes `scripts/insert.py`; `InsertMapObjectOverlays(...)` is called; Viridian map bank `5` / map `4`, expected object count `4`, appended row `4`, local id `5`, object-template fields, and Name Rater script/text source inclusion remain plausible.
+- Decision: no small source-backed CFRU code defect was identified. No CFRU source commit or submodule pin change is included.
+- Checks: workspace `diff --check`; CFRU `diff --check`; CFRU status clean.
+- Boundary: no additional Pokecenter, rollout, Raw-Address-Replacement, ROM edit, binary patch, UPR-FVX/DPE change, Hidden Item, itemball graphics, Field Item, Randomizer writer, ROM, save, emulator state, build artifact, tool binary, screenshot, raw log, hash, private path, token, secret or `.env` data is included.
+
 # Tool Manifest Update - 2026-05-30 - CFRU Viridian Pokecenter map object overlay MVP
 
 - Workspace branch: `feature/cfru-map-object-overlay-generator`.

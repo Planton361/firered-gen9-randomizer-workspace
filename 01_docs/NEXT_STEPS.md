@@ -1,3 +1,11 @@
+# Next steps update - CFRU Name Rater overlay smoke fail debug
+
+- Treat `08_tests/randomizer/cfru-name-rater-centers-qol.md` as updated with the current Viridian Name Rater overlay smoke-fail diagnosis.
+- No source-level CFRU fix was identified in the debug pass. Do not add rollout work or redesign the overlay until the clean rebuild / fresh map-entry smoke is repeated.
+- Immediate next action: clean rebuild from `02_external/CFRU-expansion` on `compat/firered-gen9-randomizer` commit `f40a35a295ce23294557f19dfff220240056386f`, load the newly inserted local output, enter Viridian City Pokecenter 1F from outside the map, and check for the added Name Rater at `(10, 5)`.
+- If the NPC is still absent after that clean smoke, open a separate debug block to verify the inserted `MapHeader.events` pointer and generated object count through sanitized local inspection only.
+- Continue excluding additional Pokecenters, rollout work, Raw-Address-Replacements, ROM edits, binary patches, UPR-FVX/DPE changes, Hidden Items, itemball graphics, Field Items, Randomizer writer, ROMs, saves, builds, tool binaries, screenshots, raw logs, hashes, private paths, tokens, secrets and `.env` data from commits.
+
 # Next steps update - CFRU Viridian Pokecenter map object overlay MVP
 
 - Treat CFRU feature commit `648ce6042a93b71796c2d478fc816687e2ec060a` and compat merge commit `f40a35a295ce23294557f19dfff220240056386f` as the current Viridian-only map-object overlay MVP candidate.
