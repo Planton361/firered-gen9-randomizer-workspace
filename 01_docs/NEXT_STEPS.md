@@ -1,3 +1,13 @@
+# Next steps update - CFRU small hidden item sparkle visual
+
+- Treat CFRU Draft PR `https://github.com/Planton361/CFRU-expansion/pull/31` and commit `d77da7fdb6c1ceeb946615bb2b31dcd2bbcf9ddd` as `SMALL_VISUAL_FIX_PENDING_MANUAL_SMOKE`.
+- Treat existing Workspace Draft PR `https://github.com/Planton361/firered-gen9-randomizer-workspace/pull/461` as the current pin/handoff review surface; do not merge either PR.
+- Run the normal local clean CFRU build, then compare the new pilot against the prior strong cross-star: the cue should be compact, 16x16, visibly two-frame/brief and less bright while remaining readable on both Viridian Forest positions.
+- Confirm the 16-frame scheduling does not accumulate sprites: at most one owned pilot sparkle may exist at a time.
+- Repeat the existing lifecycle smoke for Potion `(3, 22)` and Antidote `(28, 57)`: unset flags repeat, pickup stops the matching cue, map change leaves no sprite/task, resume restarts the remaining unset cue.
+- Regression-check that unrelated/global `FLDEFF_SPARKLE` uses are visually unchanged.
+- Keep all other maps/items, Itemfinder, UPR-FVX, DPE and visible itemballs out of this block.
+
 # Next steps update - CFRU hidden item sparkle linker fix
 
 - Treat CFRU follow-up commit `05b4231d847a1aa71d53f846b818403e887f4d3f` on the existing `fix/cfru-hidden-item-sparkle-pilot-visibility` branch as `FIX_CANDIDATE_PENDING_LOCAL_REBUILD`.

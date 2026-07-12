@@ -1,3 +1,16 @@
+# Tool Manifest Update - 2026-07-13 - CFRU small hidden item sparkle visual
+
+- Existing Workspace branch: `fix/cfru-hidden-item-sparkle-pilot-visibility`; existing Draft PR: `https://github.com/Planton361/firered-gen9-randomizer-workspace/pull/461`.
+- CFRU branch: `fix/cfru-hidden-item-sparkle-small-visual`; commit `d77da7fdb6c1ceeb946615bb2b31dcd2bbcf9ddd`; Draft PR `https://github.com/Planton361/CFRU-expansion/pull/31` targeting `compat/firered-gen9-randomizer`.
+- CFRU base: `325212e325023284bd6198a3a9cd75b60e0c21f8`, including linker fix `05b4231d847a1aa71d53f846b818403e887f4d3f`.
+- Read-only reference: `02_external/references/cyansmp64-pokefirered-natdex`; `TryStartVisibleHiddenItemSparkles` uses a `+/-7` by `+/-5` camera window and cooldown `16`; `gFieldEffectObjectTemplate_SmallSparkle` uses 16x16 OAM, two frames and `3 / 5 / 5` timing; `object_event_graphics.h` owns `small_sparkle` graphics/palette.
+- Visual comparison: prior CFRU pilot used the general `FLDEFF_SPARKLE` and appeared as a large bright cross-star; the candidate uses a CFRU-owned local compact two-frame 16x16 asset with subtle white/cyan palette.
+- Implementation: direct `CreateSpriteAtEnd` with a local SpriteTemplate/callback; no global `FLDEFF_SPARKLE` start, no Field Effect active-list entry, no private template table and no raw address. The local animation callback and task cleanup free sprite/palette resources.
+- Preserved lifecycle: Viridian Forest only, Potion `(3, 22)`, Antidote `(28, 57)`, exact BG-event/flag gating, existing visibility check, single owned sprite, pickup/map cleanup and resume restart. Cooldown changes from `90` to source-backed `16`.
+- Workspace submodule `02_external/CFRU-expansion` now pins `d77da7fdb6c1ceeb946615bb2b31dcd2bbcf9ddd`; evidence status is `SMALL_VISUAL_FIX_PENDING_MANUAL_SMOKE`.
+- Checks: CFRU `git diff --check`; syntax-only compile of `src/overworld.c`; `python3 scripts/build.py` completed including link; no pilot reference to `gFieldEffectObjectTemplatePointers` or `FLDEFFOBJ_SMALL_SPARKLE`; workspace `git diff --check`.
+- Boundary: no global rollout/Field Effect change, other map/item, Itemfinder, UPR-FVX, DPE, visible itemball, ROM/save/emulator state, committed build artifact, raw address or binary patch is included.
+
 # Tool Manifest Update - 2026-07-12 - CFRU hidden item sparkle linker fix
 
 - Existing Workspace branch: `fix/cfru-hidden-item-sparkle-pilot-visibility`; existing Draft PR: `https://github.com/Planton361/firered-gen9-randomizer-workspace/pull/461`.

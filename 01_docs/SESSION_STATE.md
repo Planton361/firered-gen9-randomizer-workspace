@@ -1,3 +1,17 @@
+# Session update - CFRU small hidden item sparkle visual
+
+- Existing Workspace branch: `fix/cfru-hidden-item-sparkle-pilot-visibility`; existing Workspace Draft PR: `https://github.com/Planton361/firered-gen9-randomizer-workspace/pull/461`.
+- CFRU base: current `compat/firered-gen9-randomizer` merge commit `325212e325023284bd6198a3a9cd75b60e0c21f8`, which contains linker fix `05b4231d847a1aa71d53f846b818403e887f4d3f`.
+- CFRU branch: `fix/cfru-hidden-item-sparkle-small-visual`; commit `d77da7fdb6c1ceeb946615bb2b31dcd2bbcf9ddd`; Draft PR `https://github.com/Planton361/CFRU-expansion/pull/31` targeting `compat/firered-gen9-randomizer`.
+- Local user finding on the prior candidate: the Viridian pilot is visible and repeats correctly, but the general CFRU `FLDEFF_SPARKLE` is too large and bright, appearing as a strong cross-star.
+- Read-only CyanSMP64 NatDex reference: visible hidden items use a camera window of approximately `+/-7` horizontal / `+/-5` vertical tiles, per-BG-event cooldown `16`, and `gFieldEffectObjectTemplate_SmallSparkle` with 16x16 OAM, two frames and animation timing `3 / 5 / 5`; its source graphics use a compact sparkle and subtle palette.
+- CFRU change remains limited to `src/overworld.c`: the pilot now owns a local 16x16, two-frame SpriteTemplate/animation/palette derived from the Cyan source asset and creates that Sprite directly. It no longer starts the global `FLDEFF_SPARKLE` or uses the Field Effect active list.
+- The existing Viridian-only task, two items, flag gating, visibility check, single-sprite ownership, pickup cleanup, map-change cleanup and resume restart remain unchanged. Cooldown is now source-backed `16` frames.
+- Local sprite/palette resources are freed by the dedicated animation-end callback and the existing task cleanup; a failed `CreateSpriteAtEnd` frees the loaded palette and records no ownership.
+- Status: `SMALL_VISUAL_FIX_PENDING_MANUAL_SMOKE`; no visual/runtime pass is documented.
+- Checks: CFRU `git diff --check`; syntax-only compile of `src/overworld.c`; full CFRU source build/link with `python3 scripts/build.py`; no pilot reference to `gFieldEffectObjectTemplatePointers` or `FLDEFFOBJ_SMALL_SPARKLE`; workspace `git diff --check`.
+- No global Field Effect, other map/item, Itemfinder, UPR-FVX, DPE, visible itemball, ROM, save, emulator state, committed build artifact, raw address or binary patch change is included.
+
 # Session update - CFRU hidden item sparkle linker fix
 
 - Existing Workspace branch: `fix/cfru-hidden-item-sparkle-pilot-visibility`; existing Workspace Draft PR: `https://github.com/Planton361/firered-gen9-randomizer-workspace/pull/461`.
