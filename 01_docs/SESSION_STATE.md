@@ -1,3 +1,16 @@
+# Session update - CFRU hidden item sparkle linker fix
+
+- Existing Workspace branch: `fix/cfru-hidden-item-sparkle-pilot-visibility`; existing Workspace Draft PR: `https://github.com/Planton361/firered-gen9-randomizer-workspace/pull/461`.
+- Local user clean-build finding for CFRU commit `b32e2ec0fc10902408322848217ae63f9161073a`: link failed with undefined reference to `gFieldEffectObjectTemplatePointers` from `TryStartViridianForestHiddenItemSparklePilotSprite`.
+- Root cause: CFRU exposes only an `extern` declaration to this compilation unit; syntax-only compilation did not prove a linkable definition for the new direct template-table comparison.
+- Existing CFRU branch: `fix/cfru-hidden-item-sparkle-pilot-visibility`; follow-up commit: `05b4231d847a1aa71d53f846b818403e887f4d3f`.
+- CFRU PR #29 is already merged at the prior head `b32e2ec0fc10902408322848217ae63f9161073a`; it was not merged in this session and cannot be updated with the follow-up commit. No replacement branch or PR was created.
+- The follow-up removes all direct `src/overworld.c` access to `gFieldEffectObjectTemplatePointers` and `FLDEFFOBJ_SMALL_SPARKLE`. It snapshots every sprite slot's `inUse` state, requires at least one free slot, synchronously starts `FLDEFF_SPARKLE`, and owns only the newly transitioned slot.
+- Source verification: `FieldEffectStart` executes the field-effect script synchronously; CFRU `FldEff_Sparkle` performs exactly one `CreateSpriteAtEnd`; the Sparkle update callback uses only `data[0]` and `data[1]`, leaving pilot marker `data[7]` unused; no detected new slot removes the added `FLDEFF_SPARKLE` active-list entry and returns failure.
+- Viridian-only scope, both pilot items, visibility gate, 90-frame interval, single owned sparkle, pickup stop, map cleanup and resume restart are unchanged.
+- Status is `FIX_CANDIDATE_PENDING_LOCAL_REBUILD`; no build pass or runtime pass is documented.
+- Checks run: CFRU `git diff --check`; CFRU syntax-only compile for `src/overworld.c`; required no-template-access `rg`; workspace `git diff --check`.
+
 # Session update - CFRU hidden item sparkle pilot visibility fix
 
 - Branch: `fix/cfru-hidden-item-sparkle-pilot-visibility`.

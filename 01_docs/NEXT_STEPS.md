@@ -1,3 +1,12 @@
+# Next steps update - CFRU hidden item sparkle linker fix
+
+- Treat CFRU follow-up commit `05b4231d847a1aa71d53f846b818403e887f4d3f` on the existing `fix/cfru-hidden-item-sparkle-pilot-visibility` branch as `FIX_CANDIDATE_PENDING_LOCAL_REBUILD`.
+- CFRU PR #29 is already merged at the prior commit and does not contain this follow-up. Do not create a replacement PR under the current instruction and do not merge anything else.
+- Treat existing Workspace Draft PR `https://github.com/Planton361/firered-gen9-randomizer-workspace/pull/461` as the current pin/handoff review surface.
+- From the CFRU root, rerun `python3 scripts/clean.py BUILD` followed by `python3 scripts/make.py` and first confirm the undefined-reference linker failure is gone.
+- Only after a successful local rebuild, run the existing Viridian Forest manual smoke matrix for approach visibility, 90-frame repetition, duplicate guard, pickup stop, map-change cleanup and resume behavior.
+- Keep the status pending and do not record a pass until the user reports the new clean-build result.
+
 # Next steps update - CFRU hidden item sparkle pilot visibility fix
 
 - Treat CFRU Draft PR `https://github.com/Planton361/CFRU-expansion/pull/29` and commit `b32e2ec0fc10902408322848217ae63f9161073a` as the current Viridian Forest visibility-fix candidate.

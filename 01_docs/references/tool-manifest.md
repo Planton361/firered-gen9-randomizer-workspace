@@ -1,3 +1,17 @@
+# Tool Manifest Update - 2026-07-12 - CFRU hidden item sparkle linker fix
+
+- Existing Workspace branch: `fix/cfru-hidden-item-sparkle-pilot-visibility`; existing Draft PR: `https://github.com/Planton361/firered-gen9-randomizer-workspace/pull/461`.
+- Existing CFRU branch: `fix/cfru-hidden-item-sparkle-pilot-visibility`; follow-up commit: `05b4231d847a1aa71d53f846b818403e887f4d3f`.
+- CFRU PR #29 status at handoff: merged at prior head `b32e2ec0fc10902408322848217ae63f9161073a`; the follow-up commit is on the same branch but cannot update the merged PR. No new branch or PR was created.
+- Local user evidence: the prior candidate's complete clean build reached link and failed with undefined reference to `gFieldEffectObjectTemplatePointers` from the pilot sprite-identification path.
+- CFRU fix: replace the non-linkable template-table comparison with a `bool8 wasInUse[MAX_SPRITES]` snapshot, require a free slot before start, and identify the owned sparkle only through `!wasInUse[i] && gSprites[i].inUse` after synchronous `FieldEffectStart(FLDEFF_SPARKLE)`.
+- Failure cleanup: if no slot transitions to in-use, remove the newly added `FLDEFF_SPARKLE` active-list entry and return failure; no pilot sprite id is recorded.
+- Source verification: the field-effect script runs synchronously, CFRU `FldEff_Sparkle` calls `CreateSpriteAtEnd` once, and its callback uses `data[0]`/`data[1]` but not the pilot marker in `data[7]`.
+- Workspace submodule `02_external/CFRU-expansion` now pins `05b4231d847a1aa71d53f846b818403e887f4d3f`.
+- Evidence status: `FIX_CANDIDATE_PENDING_LOCAL_REBUILD` in `08_tests/randomizer/cfru-hidden-item-sparkle-qol.md`.
+- Checks: CFRU `git diff --check`; CFRU syntax-only compile for `src/overworld.c`; `rg -n "gFieldEffectObjectTemplatePointers|FLDEFFOBJ_SMALL_SPARKLE" src/overworld.c` returned no matches; workspace `git diff --check`.
+- Boundary: no raw address, global Field Effect change, other map/item, Itemfinder, UPR-FVX, DPE, ROM/save/build artifact, new branch or new PR is included.
+
 # Tool Manifest Update - 2026-07-12 - CFRU hidden item sparkle pilot visibility fix
 
 - Workspace branch: `fix/cfru-hidden-item-sparkle-pilot-visibility`.

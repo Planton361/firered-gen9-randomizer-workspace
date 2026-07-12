@@ -1,12 +1,16 @@
 # CFRU hidden item sparkle QoL smoke handoff
 
-Status: `FIX_CANDIDATE_PENDING_MANUAL_SMOKE` on CFRU branch `fix/cfru-hidden-item-sparkle-pilot-visibility`, commit `b32e2ec0fc10902408322848217ae63f9161073a`, Draft PR `https://github.com/Planton361/CFRU-expansion/pull/29`.
+Status: `FIX_CANDIDATE_PENDING_LOCAL_REBUILD` on CFRU branch `fix/cfru-hidden-item-sparkle-pilot-visibility`, follow-up commit `05b4231d847a1aa71d53f846b818403e887f4d3f`.
+
+CFRU PR #29 is already merged at prior commit `b32e2ec0fc10902408322848217ae63f9161073a`; the follow-up commit is not part of that merged PR. No replacement branch or PR is created in this block.
 
 No pass result is documented. No ROM, save, emulator state, build artifact, tool binary, screenshot, raw log, private path, token, secret, `.env`, binary patch, raw address port, Itemfinder feature, Field Item randomizer writer, visible itemball graphics, other map or DPE change is included.
 
 ## Root cause and fix candidate
 
 The failed smoke is consistent with the prior lifecycle: `RunOnTransitionMapScript` started one-shot `FLDEFF_SPARKLE` effects before `InitMap`, once for each distant Viridian Forest coordinate. A one-shot effect is camera-relative and finite, so an off-screen map-entry sparkle ends before the player reaches its tile.
+
+The first task-based fix candidate then failed the user's complete local clean build at link time with undefined reference to `gFieldEffectObjectTemplatePointers`. Its syntax-only compile could not expose that missing linkable definition. The follow-up removes the direct template-table dependency and identifies the new sparkle by snapshotting all sprite `inUse` states before the synchronous field-effect start, then selecting only a slot that transitions from unused to used.
 
 The fix keeps existing one-shot `FLDEFF_SPARKLE` rendering but moves scheduling into a Viridian-Forest-only task:
 
@@ -21,6 +25,14 @@ The fix keeps existing one-shot `FLDEFF_SPARKLE` rendering but moves scheduling 
 - re-establish the task from transition and resume hooks after overworld task resets.
 
 `FLDEFF_REPEATING_SPARKLES` is not used. Its source shows a looping sprite with explicit DexNav ownership/cleanup, not built-in lifecycle semantics for two positions and two hidden-item flags. Field-effect active-list source also permits duplicate IDs while removing one matching entry at a time, so the pilot deliberately serializes one-shot sparkle ownership.
+
+Source verification for the linker follow-up:
+
+- `FieldEffectStart` runs the selected field-effect script synchronously to completion.
+- CFRU `FldEff_Sparkle` invokes exactly one `CreateSpriteAtEnd`.
+- `UpdateSparkleFieldEffect` uses `data[0]` and `data[1]`; `data[7]` remains available for the pilot ownership marker.
+- A full sprite table prevents the start.
+- If no slot transitions to `inUse`, the new `FLDEFF_SPARKLE` active-list entry is removed and the start returns failure without recording sprite ownership.
 
 ## Pilot inventory
 
@@ -57,10 +69,12 @@ python3 scripts/make.py
 
 - CFRU `git diff --check`: pass.
 - CFRU syntax-only compile of `src/overworld.c`: pass.
+- `rg -n "gFieldEffectObjectTemplatePointers|FLDEFFOBJ_SMALL_SPARKLE" src/overworld.c`: no matches.
 - Workspace `git diff --check`: pass.
-- Clean CFRU build: not run by Codex because `scripts/make.py` reads/modifies the local ROM and repository rules prohibit Codex from reading or modifying ROM files.
+- Prior complete local CFRU clean build: user-reported linker fail on undefined `gFieldEffectObjectTemplatePointers`.
+- Clean CFRU rebuild on follow-up commit `05b4231d847a1aa71d53f846b818403e887f4d3f`: pending user run; not run by Codex because `scripts/make.py` reads/modifies the local ROM and repository rules prohibit Codex from reading or modifying ROM files.
 - Runtime smoke: not run.
 
 ## Acceptance boundary
 
-Do not promote beyond `FIX_CANDIDATE_PENDING_MANUAL_SMOKE` until all core approach, repeat, duplicate-guard, post-pickup and map-cleanup rows pass. Even after a pass, this remains a two-item Viridian Forest pilot, not evidence for a global rollout, underfoot/renewable hidden items, full playthrough, BizHawk, Ironmon Tracker or P1 support.
+Do not promote beyond `FIX_CANDIDATE_PENDING_LOCAL_REBUILD` until the new complete clean build links successfully. After that, all core approach, repeat, duplicate-guard, post-pickup and map-cleanup rows still require manual smoke. Even after a pass, this remains a two-item Viridian Forest pilot, not evidence for a global rollout, underfoot/renewable hidden items, full playthrough, BizHawk, Ironmon Tracker or P1 support.
