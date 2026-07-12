@@ -1,3 +1,14 @@
+# Next steps update - CFRU hidden item sparkle pilot visibility fix
+
+- Treat CFRU Draft PR `https://github.com/Planton361/CFRU-expansion/pull/29` and commit `b32e2ec0fc10902408322848217ae63f9161073a` as the current Viridian Forest visibility-fix candidate.
+- Treat `08_tests/randomizer/cfru-hidden-item-sparkle-qol.md` as `FIX_CANDIDATE_PENDING_MANUAL_SMOKE`; do not record a pass until the runtime matrix is actually completed.
+- Run a clean local CFRU build from the CFRU root with `python3 scripts/clean.py BUILD` followed by `python3 scripts/make.py`, then enter Viridian Forest from outside with both pilot flags unset.
+- Walk to Potion `(3, 22)` and Antidote `(28, 57)` separately. Each must begin sparkling on approach, repeat at a bounded interval while visible/uncollected, and never accumulate duplicate sparkle sprites.
+- Pick up each item through the normal hidden-item flow and remain near the tile long enough to prove its sparkle stops immediately after the flag is set; re-entry must not restore a collected-item sparkle.
+- Leave Viridian Forest while a pilot sparkle is visible, then check the destination map for no lingering sparkle/task symptom. Return to the forest and confirm the remaining unset pilot resumes normally.
+- Regression-smoke signs, trainers, exits, visible item balls, hidden-item grant/text flow and Itemfinder behavior; no UPR-FVX Field Item writer behavior should change.
+- Do not broaden beyond Viridian Forest or these two items, and do not merge either Draft PR, until this manual smoke is recorded.
+
 # Next steps update - CFRU hidden item sparkle pilot
 
 - Treat CFRU Draft PR `https://github.com/Planton361/CFRU-expansion/pull/28` as the current Viridian Forest hidden-item sparkle pilot candidate.

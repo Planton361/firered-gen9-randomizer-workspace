@@ -1,3 +1,19 @@
+# Session update - CFRU hidden item sparkle pilot visibility fix
+
+- Branch: `fix/cfru-hidden-item-sparkle-pilot-visibility`.
+- Workspace `main` contained PR #460 before this branch was created.
+- Root cause of the failed Viridian Forest smoke: the prior pilot started both one-shot `FLDEFF_SPARKLE` effects once from `RunOnTransitionMapScript`, before `InitMap`; the distant coordinates were outside the entry camera and each effect expired before the player reached it.
+- CFRU branch: `fix/cfru-hidden-item-sparkle-pilot-visibility`.
+- CFRU commit: `b32e2ec0fc10902408322848217ae63f9161073a`.
+- CFRU Draft PR: `https://github.com/Planton361/CFRU-expansion/pull/29`, targeting `compat/firered-gen9-randomizer`.
+- CFRU change remains limited to `src/overworld.c` and exactly two Viridian Forest hidden-item BG events: Potion `(3, 22)` / offset `0` and Antidote `(28, 57)` / offset `1`.
+- The map-entry burst is replaced by a CFRU-owned task that waits for `CB2_Overworld`, inactive palette fade and a live player sprite; validates the exact BG event; checks its hidden-item flag; starts a one-shot sparkle only when its coordinate is fully inside the current display; and retries on a bounded 90-frame interval.
+- At most one pilot `FLDEFF_SPARKLE` is owned at once. The task marks and tracks its sprite, stops it immediately when the owning hidden-item flag becomes set, destroys it and itself on map change, and is re-established through transition/resume hooks after overworld task resets.
+- `FLDEFF_REPEATING_SPARKLES` was not used: source review showed a looping sprite whose lifecycle is owned explicitly by DexNav, not a positions/flags-aware multi-marker facility.
+- Status is `FIX_CANDIDATE_PENDING_MANUAL_SMOKE`; no pass documentation is included.
+- Checks run: CFRU `git diff --check`; CFRU syntax-only compile for `src/overworld.c`; workspace `git diff --check`. The ROM-based clean build was not run by Codex because repository rules prohibit Codex from reading or modifying ROM files.
+- No DPE, UPR-FVX, Itemfinder, visible itemball, hidden-item pickup, other map, ROM, save, emulator state, build artifact, tool binary, screenshot, raw log, private path, token, secret or `.env` data was changed or documented.
+
 # Session update - CFRU hidden item sparkle pilot
 
 - Branch: `feature/cfru-hidden-item-sparkle-pilot`.

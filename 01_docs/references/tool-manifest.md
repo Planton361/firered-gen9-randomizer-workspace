@@ -1,3 +1,18 @@
+# Tool Manifest Update - 2026-07-12 - CFRU hidden item sparkle pilot visibility fix
+
+- Workspace branch: `fix/cfru-hidden-item-sparkle-pilot-visibility`.
+- CFRU branch: `fix/cfru-hidden-item-sparkle-pilot-visibility`.
+- CFRU commit: `b32e2ec0fc10902408322848217ae63f9161073a`.
+- CFRU Draft PR: `https://github.com/Planton361/CFRU-expansion/pull/29`, targeting `compat/firered-gen9-randomizer`.
+- Workspace submodule `02_external/CFRU-expansion` now pins the CFRU visibility-fix commit for review; the CFRU PR is not merged in this block.
+- Evidence file updated: `08_tests/randomizer/cfru-hidden-item-sparkle-qol.md`; status `FIX_CANDIDATE_PENDING_MANUAL_SMOKE`.
+- Scope: exactly two Viridian Forest hidden-item slots, Potion `(3, 22)` / offset `0` and Antidote `(28, 57)` / offset `1`.
+- Root cause: the prior transition hook started one-shot sparkles before map initialization and while both distant coordinates could be outside the entry viewport, so their finite lifetimes ended before approach.
+- CFRU lifecycle: a Viridian-only task waits for overworld/fade/player-sprite readiness, validates each exact BG event and flag, checks camera-relative visibility, repeats a one-shot `FLDEFF_SPARKLE` on a 90-frame interval, owns at most one marked pilot sprite, stops it on pickup, and destroys sprite/task on map change; transition and resume hooks ensure task availability after overworld resets.
+- Source finding: duplicate identical field-effect IDs are technically accepted by the active list, but removal is one entry at a time; `FLDEFF_REPEATING_SPARKLES` has DexNav-owned cleanup and no built-in two-position/flag semantics. The fix therefore serializes owned one-shot sparkles.
+- Checks: CFRU `git diff --check`; CFRU `arm-none-eabi-gcc` syntax-only compile for `src/overworld.c`; workspace `git diff --check`. No ROM-based clean build was run by Codex because repository rules prohibit Codex from reading or modifying ROM files.
+- Boundary: no global hidden-item rollout, other map, Itemfinder behavior, hidden-item pickup change, UPR-FVX Field Item writer, visible itemball graphics, DPE change, ROM, save, emulator state, build artifact, tool binary, screenshot, raw log, private path, token, secret or `.env` data is included.
+
 # Tool Manifest Update - 2026-05-31 - CFRU hidden item sparkle pilot
 
 - Workspace branch: `feature/cfru-hidden-item-sparkle-pilot`.

@@ -1,34 +1,33 @@
 # CFRU hidden item sparkle QoL smoke handoff
 
-Status: Viridian Forest pilot implemented in CFRU branch `feature/cfru-hidden-item-sparkle-pilot`; pending manual smoke.
+Status: `FIX_CANDIDATE_PENDING_MANUAL_SMOKE` on CFRU branch `fix/cfru-hidden-item-sparkle-pilot-visibility`, commit `b32e2ec0fc10902408322848217ae63f9161073a`, Draft PR `https://github.com/Planton361/CFRU-expansion/pull/29`.
 
-No ROM, save, emulator state, build artifact, tool binary, screenshot, raw log, private path, token, secret, `.env`, binary patch, raw address port, Itemfinder feature, Field Item randomizer writer, or itemball graphics change is included.
+No pass result is documented. No ROM, save, emulator state, build artifact, tool binary, screenshot, raw log, private path, token, secret, `.env`, binary patch, raw address port, Itemfinder feature, Field Item randomizer writer, visible itemball graphics, other map or DPE change is included.
 
-## Current result
+## Root cause and fix candidate
 
-Decision: `IMPLEMENTED_PILOT_PENDING_MANUAL_SMOKE`.
+The failed smoke is consistent with the prior lifecycle: `RunOnTransitionMapScript` started one-shot `FLDEFF_SPARKLE` effects before `InitMap`, once for each distant Viridian Forest coordinate. A one-shot effect is camera-relative and finite, so an off-screen map-entry sparkle ends before the player reaches its tile.
 
-Implemented pilot: Viridian Forest, map bank `1`, map number `0`.
+The fix keeps existing one-shot `FLDEFF_SPARKLE` rendering but moves scheduling into a Viridian-Forest-only task:
 
-Visible behavior: a source-backed CFRU helper scans current-map hidden-item BG events on map transition and spawns one-shot `FLDEFF_SPARKLE` cues only for the two pilot hidden-item coordinates while their hidden-item flags are unset.
+- wait for `CB2_Overworld`, inactive palette fade, and a live player sprite;
+- validate the exact hidden-item BG event before every candidate start;
+- require the coordinate to be fully inside the current display;
+- check the matching hidden-item flag before every start and while a pilot sprite is active;
+- repeat on a 90-frame interval while visible and uncollected;
+- own at most one marked pilot sparkle sprite at once;
+- stop the owned sprite immediately after its flag is set;
+- destroy the owned sprite and task on map change;
+- re-establish the task from transition and resume hooks after overworld task resets.
 
-Permanent sparkle behavior remains out of scope and should wait for owned marker lifetime and cleanup infrastructure, likely using `FLDEFF_REPEATING_SPARKLES` only after sprite/effect tracking and post-pickup cleanup are explicit.
-
-## Source-backed implementation notes
-
-- Hook: CFRU `RunOnTransitionMapScript`, after the map transition script tag runs.
-- Scope guard: `MAP_IS(VIRIDIAN_FOREST)` plus exact current-map BG-event matches for kind `7`, coordinate, elevation and hidden-item offset.
-- Sparkle source: existing one-shot `FLDEFF_SPARKLE`; no repeating sparkle lifetime state is added.
-- Flag gate: existing hidden-item flag state, using `FLAG_HIDDEN_ITEMS_START + offset`.
-- Randomizer boundary: item id is not used for the pilot match, so the cue is tied to coordinate/hidden-item flag slot and does not require Field Item randomizer writer changes.
-- Non-scope preserved by design: hidden-item pickup, Itemfinder, visible item balls, Pickup, trainers, warps and other maps.
+`FLDEFF_REPEATING_SPARKLES` is not used. Its source shows a looping sprite with explicit DexNav ownership/cleanup, not built-in lifecycle semantics for two positions and two hidden-item flags. Field-effect active-list source also permits duplicate IDs while removing one matching entry at a time, so the pilot deliberately serializes one-shot sparkle ownership.
 
 ## Pilot inventory
 
-| Map | Hidden item | Coordinate | Elevation | Flag/state | Quantity | Underfoot | Marker |
+| Map | Hidden item | Coordinate | Elevation | Flag/state | Quantity | Underfoot | Candidate marker |
 |---|---|---:|---:|---|---:|---|---|
-| `MAP_VIRIDIAN_FOREST` | `ITEM_POTION` | `(3, 22)` | `3` | `FLAG_HIDDEN_ITEM_VIRIDIAN_FOREST_POTION`; CFRU offset `0` | `1` | `false` | one-shot `FLDEFF_SPARKLE` |
-| `MAP_VIRIDIAN_FOREST` | `ITEM_ANTIDOTE` | `(28, 57)` | `0` | `FLAG_HIDDEN_ITEM_VIRIDIAN_FOREST_ANTIDOTE`; CFRU offset `1` | `1` | `false` | one-shot `FLDEFF_SPARKLE` |
+| `MAP_VIRIDIAN_FOREST` | `ITEM_POTION` | `(3, 22)` | `3` | `FLAG_HIDDEN_ITEM_VIRIDIAN_FOREST_POTION`; offset `0` | `1` | `false` | visible-range one-shot sparkle, repeated every 90 frames |
+| `MAP_VIRIDIAN_FOREST` | `ITEM_ANTIDOTE` | `(28, 57)` | `0` | `FLAG_HIDDEN_ITEM_VIRIDIAN_FOREST_ANTIDOTE`; offset `1` | `1` | `false` | visible-range one-shot sparkle, repeated every 90 frames |
 
 ## Manual smoke matrix
 
@@ -39,31 +38,29 @@ python3 scripts/clean.py BUILD
 python3 scripts/make.py
 ```
 
-| Case | Setup | Expected result |
-|---|---|---|
-| Map entry, both hidden items uncollected | enter Viridian Forest from outside with both hidden-item flags unset | sparkle cues appear at both hidden-item coordinates |
-| Normal hidden pickup still works | press A facing the Potion hidden-item spot | item grants once through existing hidden-item pickup flow; hidden-item flag is set |
-| Flag-gated re-entry after one pickup | leave and re-enter Viridian Forest after picking up Potion only | Potion cue is absent; Antidote cue remains |
-| Flag-gated re-entry after both pickups | pick up both hidden items, leave and re-enter | no hidden-item sparkle cues appear |
-| Existing map behavior | interact with signs, trainers, visible item balls, and exits | behavior remains unchanged |
-| Randomizer ownership | use an output generated with existing UPR-FVX Field Items behavior, if later requested | hidden marker follows coordinate/flag slot only; no writer, TM slot, shop, Pickup, static/gift/NPC item-source behavior changes |
-| Itemfinder non-scope | use Itemfinder near the pilot items, if later tested | vanilla/CFRU Itemfinder behavior remains unchanged; sparkle QoL does not depend on Itemfinder |
+| Case | Setup | Expected result | Result |
+|---|---|---|---|
+| Fresh entry/readiness | enter Viridian Forest from outside with both flags unset | no load/fade artifact; normal overworld appears | not run |
+| Potion approach | walk to `(3, 22)` without using Itemfinder | clear sparkle begins when the tile enters the visible area and repeats while nearby | not run |
+| Potion duplicate guard | remain near `(3, 22)` through several intervals | one controlled sparkle sequence at a time; no accumulating identical sprites | not run |
+| Potion pickup/flag stop | pick up Potion normally, then remain nearby | normal grant/text flow; no new Potion sparkle after the flag is set | not run |
+| Antidote approach | walk to `(28, 57)` with its flag unset | clear sparkle begins on approach and repeats while nearby | not run |
+| Antidote pickup/flag stop | pick up Antidote normally, then remain nearby | normal grant/text flow; no new Antidote sparkle after the flag is set | not run |
+| One collected / one unset | re-enter with Potion collected and Antidote unset | no Potion sparkle; Antidote still repeats on approach | not run |
+| Both collected | re-enter with both flags set | neither pilot position sparkles | not run |
+| Map-change cleanup | leave Viridian Forest while a pilot sparkle is visible | no sparkle or pilot-task symptom on the destination map | not run |
+| Resume behavior | return from a menu/battle or re-enter the forest with one flag unset | remaining marker scheduling resumes after overworld readiness | not run |
+| Existing map behavior | test signs, trainers, exits and visible item balls | unchanged | not run |
+| Itemfinder non-scope | optionally use Itemfinder near each pilot | existing behavior remains unchanged; pilot does not depend on Itemfinder | not run |
 
-## Implementation checks run
+## Automated/source checks
 
-- `git status --short`
-- `git -C 02_external/CFRU-expansion status --short`
-- CFRU source diff review limited to the hidden-item sparkle helper and transition hook
-- no ROM/build/save/log artifact staged
-- CFRU syntax-only check for `src/overworld.c`
-- no clean CFRU build run in this block; build and runtime smoke are manual handoff
-- `git diff --check`
+- CFRU `git diff --check`: pass.
+- CFRU syntax-only compile of `src/overworld.c`: pass.
+- Workspace `git diff --check`: pass.
+- Clean CFRU build: not run by Codex because `scripts/make.py` reads/modifies the local ROM and repository rules prohibit Codex from reading or modifying ROM files.
+- Runtime smoke: not run.
 
-## Caveats
+## Acceptance boundary
 
-- This protocol does not prove full-playthrough compatibility.
-- This protocol does not prove BizHawk or Ironmon Tracker compatibility.
-- This protocol does not cover underfoot hidden items.
-- This protocol does not cover renewable hidden-item reset behavior.
-- This protocol does not cover every map with many hidden items.
-- Permanent markers require additional cleanup proof beyond this one-shot sparkle MVP.
+Do not promote beyond `FIX_CANDIDATE_PENDING_MANUAL_SMOKE` until all core approach, repeat, duplicate-guard, post-pickup and map-cleanup rows pass. Even after a pass, this remains a two-item Viridian Forest pilot, not evidence for a global rollout, underfoot/renewable hidden items, full playthrough, BizHawk, Ironmon Tracker or P1 support.
