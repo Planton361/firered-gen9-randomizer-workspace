@@ -1,3 +1,17 @@
+# Session update - CFRU hidden item sparkle visual tuning and multi-item fix
+
+- Existing branches remain `fix/cfru-hidden-item-sparkle-small-visual` in CFRU and `fix/cfru-hidden-item-sparkle-pilot-visibility` in the Workspace; existing Draft PRs remain CFRU #31 and Workspace #461.
+- User smoke fail on CFRU commit `d77da7fdb6c1ceeb946615bb2b31dcd2bbcf9ddd`: the compact sparkle was still somewhat too large, flickered too frequently, and used an unwanted white/cyan palette. Functional regression: after collecting Antidote first, the remaining Potion position no longer sparkled.
+- CFRU follow-up commit: `98c9038dd20e62ee58a7482bf9ef96485f06e4ad` on the existing branch/Draft PR #31.
+- Root cause addressed: the local animation callback destroyed the Sprite through `FieldEffectFreeGraphicsResources` without atomically releasing the owning task's Sprite slot. The task depended on later inspection of a mutable/reusable Sprite slot, allowing stale single-sprite ownership to block the other pilot. Flag state was also duplicated in the pilot table instead of derived from the matched BG event.
+- New ownership: Sprite stores its task id; the callback validates task id, active task function and matching Sprite id, sets task Sprite ownership to `MAX_SPRITES`, then calls only `DestroySprite`. Pickup cleanup also destroys only the owned Sprite and immediately clears task ownership.
+- Palette ownership: the task loads the local palette once after Overworld readiness, retains it across repeated local Sprites, and frees it only after removing the active Sprite during map-change task cleanup.
+- Flag state now comes from the actually matched hidden-item BG event's `hiddenItemId`; only that flag disables that pilot. Potion and Antidote retain independent cooldowns, and a next-pilot round-robin index prevents fixed-order starvation.
+- Visual tuning: stable 16x16 canvas, approximately 8x8 centered luminous area with shortened cross arms, warm gold/light-yellow/yellow-off-white palette without dominant pure white or cyan, animation `6 / 10 / 8`, start interval `60` frames.
+- Scope remains exactly Viridian Forest Potion `(3, 22)` / offset `0` and Antidote `(28, 57)` / offset `1`.
+- Status: `VISUAL_TUNING_AND_MULTI_ITEM_FIX_PENDING_MANUAL_SMOKE`; no pass is documented.
+- Checks: CFRU `git diff --check`; syntax-only compile of `src/overworld.c`; full source build/link with `python3 scripts/build.py`; no forbidden template-table references; temporary local state-model tests for both pickup orders, both collected, single ownership, map cleanup and resume; workspace `git diff --check`.
+
 # Session update - CFRU small hidden item sparkle visual
 
 - Existing Workspace branch: `fix/cfru-hidden-item-sparkle-pilot-visibility`; existing Workspace Draft PR: `https://github.com/Planton361/firered-gen9-randomizer-workspace/pull/461`.

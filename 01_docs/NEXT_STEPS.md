@@ -1,3 +1,13 @@
+# Next steps update - CFRU hidden item sparkle visual tuning and multi-item fix
+
+- Treat CFRU Draft PR `https://github.com/Planton361/CFRU-expansion/pull/31` at commit `98c9038dd20e62ee58a7482bf9ef96485f06e4ad` and Workspace Draft PR `https://github.com/Planton361/firered-gen9-randomizer-workspace/pull/461` as `VISUAL_TUNING_AND_MULTI_ITEM_FIX_PENDING_MANUAL_SMOKE`; do not merge either PR.
+- Run the normal local clean CFRU build, then confirm the new marker occupies only about the centered 8x8 portion of its stable 16x16 canvas, uses warm yellow/gold tones, and pulses at `6 / 10 / 8` with 60-frame starts rather than near-continuous flicker.
+- Required order A: both flags unset; collect Antidote first; verify Antidote stops and Potion still sparkles when approached.
+- Required order B from a fresh state: both flags unset; collect Potion first; verify Potion stops and Antidote still sparkles when approached.
+- Verify both collected produces no sparkle; map change during an active Sprite removes Sprite/task/palette; resume recreates eligibility for the remaining unset item.
+- Remain near each item for multiple intervals and verify no accumulation and at most one owned pilot Sprite.
+- Keep all other maps/items, global `FLDEFF_SPARKLE`, Itemfinder, UPR-FVX, DPE and visible itemballs unchanged.
+
 # Next steps update - CFRU small hidden item sparkle visual
 
 - Treat CFRU Draft PR `https://github.com/Planton361/CFRU-expansion/pull/31` and commit `d77da7fdb6c1ceeb946615bb2b31dcd2bbcf9ddd` as `SMALL_VISUAL_FIX_PENDING_MANUAL_SMOKE`.

@@ -1,3 +1,16 @@
+# Tool Manifest Update - 2026-07-13 - CFRU hidden item sparkle visual tuning and multi-item fix
+
+- Existing CFRU branch/Draft PR: `fix/cfru-hidden-item-sparkle-small-visual`, `https://github.com/Planton361/CFRU-expansion/pull/31`; follow-up commit `98c9038dd20e62ee58a7482bf9ef96485f06e4ad`.
+- Existing Workspace branch/Draft PR: `fix/cfru-hidden-item-sparkle-pilot-visibility`, `https://github.com/Planton361/firered-gen9-randomizer-workspace/pull/461`.
+- User fail on prior `d77da7fdb6c1ceeb946615bb2b31dcd2bbcf9ddd`: marker still too large, too flickery and white/cyan; after Antidote-first pickup the remaining Potion marker did not resume.
+- Root cause: local callback freed Field Effect graphics resources without atomically notifying task ownership; the task could retain a stale/reused Sprite id and block all new pilot starts. A second hard-coded flag source in the pilot table also made per-event state less direct.
+- Lifecycle fix: Sprite `data[6]` stores task id; callback validates active task/function and matching Sprite id, clears task ownership, then uses `DestroySprite`. Task owns the palette once, frees it only on map exit after Sprite cleanup, and derives each flag from the matched BG event.
+- Multi-item scheduling: independent task cooldowns for offsets `0` and `1`, 60-frame interval, and round-robin `nextPilot` selection; setting one flag disables only its matched event.
+- Visual tuning: 16x16 canvas, approximately centered 8x8 lit footprint, short cross arms, palette `transparent / warm gold / light yellow / yellow off-white`, no dominant white/cyan, animation timing `6 / 10 / 8`.
+- Workspace submodule now pins `98c9038dd20e62ee58a7482bf9ef96485f06e4ad`; evidence status is `VISUAL_TUNING_AND_MULTI_ITEM_FIX_PENDING_MANUAL_SMOKE`.
+- Checks: CFRU `git diff --check`; syntax-only `src/overworld.c`; `python3 scripts/build.py` including link; no `gFieldEffectObjectTemplatePointers`/`FLDEFFOBJ_SMALL_SPARKLE`; temporary pickup-order/cleanup/resume/single-ownership model tests; workspace `git diff --check`.
+- Boundary: no other map/item, global rollout/Field Effect, Itemfinder, UPR-FVX, DPE, visible itemball, ROM/save/emulator state, committed build artifact, raw address or binary patch.
+
 # Tool Manifest Update - 2026-07-13 - CFRU small hidden item sparkle visual
 
 - Existing Workspace branch: `fix/cfru-hidden-item-sparkle-pilot-visibility`; existing Draft PR: `https://github.com/Planton361/firered-gen9-randomizer-workspace/pull/461`.

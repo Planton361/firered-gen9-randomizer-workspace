@@ -1,10 +1,21 @@
 # CFRU hidden item sparkle QoL smoke handoff
 
-Status: `SMALL_VISUAL_FIX_PENDING_MANUAL_SMOKE` on CFRU branch `fix/cfru-hidden-item-sparkle-small-visual`, commit `d77da7fdb6c1ceeb946615bb2b31dcd2bbcf9ddd`, Draft PR `https://github.com/Planton361/CFRU-expansion/pull/31`.
+Status: `VISUAL_TUNING_AND_MULTI_ITEM_FIX_PENDING_MANUAL_SMOKE` on CFRU branch `fix/cfru-hidden-item-sparkle-small-visual`, commit `98c9038dd20e62ee58a7482bf9ef96485f06e4ad`, Draft PR `https://github.com/Planton361/CFRU-expansion/pull/31`.
 
 Base: current `compat/firered-gen9-randomizer` commit `325212e325023284bd6198a3a9cd75b60e0c21f8`, including linker fix `05b4231d847a1aa71d53f846b818403e887f4d3f`.
 
 No pass result is documented. No ROM, save, emulator state, build artifact, tool binary, screenshot, raw log, private path, token, secret, `.env`, binary patch, raw address port, Itemfinder feature, Field Item randomizer writer, visible itemball graphics, other map or DPE change is included.
+
+## Current user fail
+
+Prior candidate `d77da7fdb6c1ceeb946615bb2b31dcd2bbcf9ddd` failed manual acceptance:
+
+- visible footprint remained somewhat too large;
+- 16-frame starts caused excessive flicker;
+- white/cyan was the wrong color direction;
+- after collecting Antidote first, the remaining Potion marker never appeared again.
+
+No case is promoted to pass from that smoke.
 
 ## Root cause and fix candidate
 
@@ -14,13 +25,17 @@ The first task-based fix candidate then failed the user's complete local clean b
 
 The linker-fixed pilot is now user-confirmed visible and repeating, but its general CFRU `FLDEFF_SPARKLE` visual is too large and bright, producing a strong cross-star. The small-visual candidate replaces only this pilot asset with a local Cyan-derived 16x16, two-frame sparkle and subtle palette.
 
+The first small-visual callback used `FieldEffectFreeGraphicsResources` to destroy a local non-Field-Effect Sprite. It did not synchronously clear the owning task's Sprite id. That left correctness dependent on a later task-frame inspection of a mutable Sprite slot; during pickup/presentation transitions the single-ownership gate could remain stale and suppress the other item. The refined callback carries the task id, validates the task/function/Sprite id, clears ownership first, and then calls `DestroySprite`.
+
+The pilot table no longer carries a duplicate hard-coded flag. Each flag is derived from the actually matched hidden-item BG event, so setting Antidote disables only Antidote and setting Potion disables only Potion. Independent cooldowns and round-robin selection keep both candidates eligible.
+
 The existing Viridian-Forest-only task still:
 
 - wait for `CB2_Overworld`, inactive palette fade, and a live player sprite;
 - validate the exact hidden-item BG event before every candidate start;
 - require the coordinate to be fully inside the current display;
 - check the matching hidden-item flag before every start and while a pilot sprite is active;
-- repeat on a source-backed 16-frame interval while visible and uncollected;
+- repeat on a tuned 60-frame interval while visible and uncollected;
 - own at most one marked pilot sparkle sprite at once;
 - stop the owned sprite immediately after its flag is set;
 - destroy the owned sprite and task on map change;
@@ -32,13 +47,13 @@ The visible pilot no longer uses `FLDEFF_SPARKLE` or `FLDEFF_REPEATING_SPARKLES`
 
 | Property | Prior CFRU pilot | Cyan reference / candidate |
 |---|---|---|
-| Visible asset | general `FLDEFF_SPARKLE`, strong bright cross-star | dedicated compact small sparkle |
-| OAM | global/private asset behavior | local 16x16 OAM |
+| Visible asset | prior small visual still somewhat large | centered approximately 8x8 warm sparkle in stable 16x16 canvas |
+| OAM | local 16x16 OAM | local 16x16 OAM retained for positioning |
 | Frames | global sparkle lifecycle | two frames |
-| Animation | longer general effect | `3 / 5 / 5`, then destroy |
-| Palette | bright general Field Effect palette | subtle white/cyan palette |
-| Cooldown | 90 frames | 16 frames |
-| Ownership | Field Effect active list plus tracked sprite | local SpriteTemplate/callback; no active-list entry |
+| Animation | excessive `3 / 5 / 5` flicker | calmer `6 / 10 / 8`, then destroy |
+| Palette | unwanted white/cyan | warm gold, light yellow, yellow off-white |
+| Cooldown | excessive 16-frame starts | 60 frames |
+| Ownership | callback destroyed without atomic task notification | callback clears validated task/Sprite ownership before `DestroySprite` |
 
 Source verification for the linker follow-up:
 
@@ -52,8 +67,8 @@ Source verification for the linker follow-up:
 
 | Map | Hidden item | Coordinate | Elevation | Flag/state | Quantity | Underfoot | Candidate marker |
 |---|---|---:|---:|---|---:|---|---|
-| `MAP_VIRIDIAN_FOREST` | `ITEM_POTION` | `(3, 22)` | `3` | `FLAG_HIDDEN_ITEM_VIRIDIAN_FOREST_POTION`; offset `0` | `1` | `false` | local 16x16 two-frame sparkle, cooldown 16 |
-| `MAP_VIRIDIAN_FOREST` | `ITEM_ANTIDOTE` | `(28, 57)` | `0` | `FLAG_HIDDEN_ITEM_VIRIDIAN_FOREST_ANTIDOTE`; offset `1` | `1` | `false` | local 16x16 two-frame sparkle, cooldown 16 |
+| `MAP_VIRIDIAN_FOREST` | `ITEM_POTION` | `(3, 22)` | `3` | matched BG-event offset `0` | `1` | `false` | centered ~8x8 warm sparkle, cooldown 60 |
+| `MAP_VIRIDIAN_FOREST` | `ITEM_ANTIDOTE` | `(28, 57)` | `0` | matched BG-event offset `1` | `1` | `false` | centered ~8x8 warm sparkle, cooldown 60 |
 
 ## Manual smoke matrix
 
@@ -67,12 +82,13 @@ python3 scripts/make.py
 | Case | Setup | Expected result | Result |
 |---|---|---|---|
 | Fresh entry/readiness | enter Viridian Forest from outside with both flags unset | no load/fade artifact; normal overworld appears | not run |
-| Potion visual/approach | walk to `(3, 22)` without using Itemfinder | compact, less bright 16x16 sparkle begins when visible and remains readable | not run |
+| Potion visual/approach | walk to `(3, 22)` without using Itemfinder | centered ~8x8 warm-yellow sparkle is readable without dominant cross arms | not run |
 | Potion duplicate guard | remain near `(3, 22)` through several intervals | one controlled sparkle sequence at a time; no accumulating identical sprites | not run |
 | Potion pickup/flag stop | pick up Potion normally, then remain nearby | normal grant/text flow; no new Potion sparkle after the flag is set | not run |
-| Antidote visual/approach | walk to `(28, 57)` with its flag unset | same compact, less bright sparkle begins on approach | not run |
+| Antidote visual/approach | walk to `(28, 57)` with its flag unset | same tuned warm sparkle begins on approach | not run |
 | Antidote pickup/flag stop | pick up Antidote normally, then remain nearby | normal grant/text flow; no new Antidote sparkle after the flag is set | not run |
-| One collected / one unset | re-enter with Potion collected and Antidote unset | no Potion sparkle; Antidote still repeats on approach | not run |
+| Antidote-first order | with both unset, collect Antidote first, then approach Potion | Antidote stops; Potion remains independently eligible and sparkles | not run |
+| Potion-first order | from fresh both-unset state, collect Potion first, then approach Antidote | Potion stops; Antidote remains independently eligible and sparkles | not run |
 | Both collected | re-enter with both flags set | neither pilot position sparkles | not run |
 | Map-change cleanup | leave Viridian Forest while a pilot sparkle is visible | no sparkle or pilot-task symptom on the destination map | not run |
 | Resume behavior | return from a menu/battle or re-enter the forest with one flag unset | remaining marker scheduling resumes after overworld readiness | not run |
@@ -86,6 +102,7 @@ python3 scripts/make.py
 - CFRU syntax-only compile of `src/overworld.c`: pass.
 - `rg -n "gFieldEffectObjectTemplatePointers|FLDEFFOBJ_SMALL_SPARKLE" src/overworld.c`: no matches.
 - CFRU source build/link with `python3 scripts/build.py`: pass, with existing unrelated compiler/linker warnings only.
+- Temporary local logic model: pass for Antidote-first, Potion-first, both collected, single ownership, map cleanup and resume with one remaining item.
 - Workspace `git diff --check`: pass.
 - Prior complete local CFRU clean build: user-reported linker fail on undefined `gFieldEffectObjectTemplatePointers`.
 - Clean CFRU ROM insertion build for the small-visual candidate: pending user run; not run by Codex because `scripts/make.py` reads/modifies the local ROM and repository rules prohibit Codex from reading or modifying ROM files.
@@ -93,4 +110,4 @@ python3 scripts/make.py
 
 ## Acceptance boundary
 
-Do not promote beyond `SMALL_VISUAL_FIX_PENDING_MANUAL_SMOKE` until both pilot positions visibly use the compact, less bright sparkle and all repeat, duplicate-guard, post-pickup, map-cleanup and global-sparkle-regression rows pass. Even after a pass, this remains a two-item Viridian Forest pilot, not evidence for a global rollout, underfoot/renewable hidden items, full playthrough, BizHawk, Ironmon Tracker or P1 support.
+Do not promote beyond `VISUAL_TUNING_AND_MULTI_ITEM_FIX_PENDING_MANUAL_SMOKE` until both pickup orders, tuned visual/frequency, duplicate guard, both-collected state, map cleanup, resume and global-sparkle regression pass. Even after a pass, this remains a two-item Viridian Forest pilot, not evidence for a global rollout, underfoot/renewable hidden items, full playthrough, BizHawk, Ironmon Tracker or P1 support.
