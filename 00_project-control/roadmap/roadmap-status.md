@@ -1,3 +1,10 @@
+# Roadmap status update - Hidden-Item Sparkle pilot removed and blocked
+
+- CFRU Revert Draft PR `https://github.com/Planton361/CFRU-expansion/pull/33` removes the complete unstable Viridian Forest Hidden-Item-Sparkle pilot while preserving unrelated Compat work.
+- Sanitized failure history: map-entry visibility failure, second-item loss in task/ownership models, stray Sparkles, and runtime palette corruption in the rejected private-asset path.
+- Status impact: Hidden-Item Sparkle is `BLOCKED_NEEDS_SOURCE_BACKED_OVERWORLD_FRAME_HOOK`.
+- Reopening requires an approved source-backed normal Overworld-frame hook after `CameraUpdate`; raw-address/byte replacement and a broad `OverworldBasic` port remain outside the feature scope.
+
 # Roadmap status update - CFRU Viridian Name Rater overlay smoke pass
 
 - Documented the sanitized successful manual smoke for the Viridian-only
