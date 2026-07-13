@@ -1,3 +1,16 @@
+# Session update - CFRU hidden item sparkle unsafe palette rollback
+
+- Existing branches/Draft PRs updated only: CFRU `fix/cfru-hidden-item-sparkle-small-visual` / PR #31; Workspace `fix/cfru-hidden-item-sparkle-pilot-visibility` / PR #461.
+- Severe user runtime fail on CFRU commit `98c9038dd20e62ee58a7482bf9ef96485f06e4ad`: first expected sparkle appeared, then sparkles appeared at unrelated positions; player palette cycled through pink, black, yellow and cyan; NPC/OBJ palettes were affected; possible environment tint changes were observed; test was aborted.
+- Cause boundary: the corruption is isolated to the private local Small-Sprite/graphics/palette ownership path in `src/overworld.c`. Its exact low-level mechanism is not claimed; the complete path is rejected and removed rather than repaired in this block.
+- Verified safe base: fetched `origin/compat/firered-gen9-randomizer` commit `325212e325023284bd6198a3a9cd75b60e0c21f8`; graph confirms it contains linker fix `05b4231d847a1aa71d53f846b818403e887f4d3f` via PR #30.
+- CFRU rollback commit: `3c3ebf2dcfab6e2d41f5edf279627db7f35bcfad`; existing Draft PR #31 title updated to `fix: restore safe hidden item sparkle lifecycle`.
+- `src/overworld.c` is restored exactly to the verified Compat version: built-in `FieldEffectStart(FLDEFF_SPARKLE)`, synchronous `inUse` transition identification, no direct private template-table access, 90-frame interval, Viridian-only two-item BG-event/flag gating, one marked owned Sprite, map-change cleanup and resume restart.
+- Removed completely: private palette tag, local tile/palette/OAM/frame/template/callback data, `LoadSpritePalette`, `FreeSpritePaletteByTag`, direct local `CreateSpriteAtEnd`, and palette-loaded task state.
+- Status: `ROLLBACK_CANDIDATE_PENDING_MANUAL_SMOKE`; no pass is documented.
+- Screenshots remain local user evidence. No screenshots, ROMs, Saves, Emulator States, builds or raw logs are committed.
+- Checks: exact Compat file comparison; CFRU `git diff --check`; syntax-only compile of `src/overworld.c`; `python3 scripts/build.py` including link; forbidden-private-path searches; independent Potion/Antidote flag-gate model; workspace `git diff --check`.
+
 # Session update - CFRU hidden item sparkle visual tuning and multi-item fix
 
 - Existing branches remain `fix/cfru-hidden-item-sparkle-small-visual` in CFRU and `fix/cfru-hidden-item-sparkle-pilot-visibility` in the Workspace; existing Draft PRs remain CFRU #31 and Workspace #461.

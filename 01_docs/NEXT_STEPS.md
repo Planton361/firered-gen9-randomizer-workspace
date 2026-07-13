@@ -1,3 +1,12 @@
+# Next steps update - CFRU hidden item sparkle unsafe palette rollback
+
+- Treat CFRU Draft PR `https://github.com/Planton361/CFRU-expansion/pull/31` at rollback commit `3c3ebf2dcfab6e2d41f5edf279627db7f35bcfad` and Workspace Draft PR `https://github.com/Planton361/firered-gen9-randomizer-workspace/pull/461` as `ROLLBACK_CANDIDATE_PENDING_MANUAL_SMOKE`; do not merge either PR.
+- Run the normal clean local CFRU build, then prioritize safety: no stray sparkle coordinates, no player/NPC/OBJ palette changes, and no environment tint changes after repeated Sparkles and movement through Viridian Forest.
+- With both flags unset, verify the built-in CFRU sparkle appears only near Potion `(3, 22)` and Antidote `(28, 57)` at the conservative 90-frame interval.
+- Run Antidote-first and Potion-first from fresh states; the remaining unset item must remain independently eligible.
+- Verify both collected produces no sparkle, map change removes the marked Sprite/task, resume restores the remaining unset item, and multiple intervals never accumulate more than one pilot Sprite.
+- Do not attempt another private Small-Sprite or palette repair in this block. Keep screenshots, ROMs, Saves, Emulator States, builds and raw logs out of commits.
+
 # Next steps update - CFRU hidden item sparkle visual tuning and multi-item fix
 
 - Treat CFRU Draft PR `https://github.com/Planton361/CFRU-expansion/pull/31` at commit `98c9038dd20e62ee58a7482bf9ef96485f06e4ad` and Workspace Draft PR `https://github.com/Planton361/firered-gen9-randomizer-workspace/pull/461` as `VISUAL_TUNING_AND_MULTI_ITEM_FIX_PENDING_MANUAL_SMOKE`; do not merge either PR.

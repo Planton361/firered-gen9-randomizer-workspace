@@ -1,3 +1,16 @@
+# Tool Manifest Update - 2026-07-13 - CFRU hidden item sparkle unsafe palette rollback
+
+- Existing CFRU branch/Draft PR: `fix/cfru-hidden-item-sparkle-small-visual`, `https://github.com/Planton361/CFRU-expansion/pull/31`; rollback commit `3c3ebf2dcfab6e2d41f5edf279627db7f35bcfad`.
+- Existing Workspace branch/Draft PR: `fix/cfru-hidden-item-sparkle-pilot-visibility`, `https://github.com/Planton361/firered-gen9-randomizer-workspace/pull/461`.
+- User runtime fail on prior `98c9038dd20e62ee58a7482bf9ef96485f06e4ad`: first expected cue followed by stray-coordinate Sparkles, player palette cycling pink/black/yellow/cyan, NPC/OBJ palette corruption and possible environment tint; test aborted.
+- Cause boundary: unsafe behavior is bounded to the private local Sprite/graphics/palette path. The exact low-level mechanism remains unproven; the path is rejected wholesale rather than repaired.
+- Verified rollback source: fetched `origin/compat/firered-gen9-randomizer` `325212e325023284bd6198a3a9cd75b60e0c21f8`, containing linker fix `05b4231d847a1aa71d53f846b818403e887f4d3f` via PR #30. Rollback `src/overworld.c` matches this source exactly.
+- Restored implementation: global built-in `FLDEFF_SPARKLE`; synchronous `inUse` before/after Sprite identification; no direct template-table symbol; 90-frame interval; exact Viridian Potion/Antidote BG-event and independent flag gates; one marked Sprite; map cleanup; resume restart.
+- Removed: private palette tag, tile/palette/OAM/frame/template/callback definitions, palette load/free calls, direct local Sprite creation and palette-loaded task state.
+- Workspace submodule now pins `3c3ebf2dcfab6e2d41f5edf279627db7f35bcfad`; evidence status `ROLLBACK_CANDIDATE_PENDING_MANUAL_SMOKE`.
+- Checks: exact Compat comparison; CFRU `git diff --check`; syntax-only `src/overworld.c`; `python3 scripts/build.py` including link; private-path and forbidden-template searches; independent two-order flag model; workspace `git diff --check`.
+- Safety boundary: screenshots remain local evidence; no screenshot, ROM, Save, Emulator State, build, raw log, new map/item, Itemfinder, UPR-FVX, DPE, visible itemball, raw address or binary patch is included.
+
 # Tool Manifest Update - 2026-07-13 - CFRU hidden item sparkle visual tuning and multi-item fix
 
 - Existing CFRU branch/Draft PR: `fix/cfru-hidden-item-sparkle-small-visual`, `https://github.com/Planton361/CFRU-expansion/pull/31`; follow-up commit `98c9038dd20e62ee58a7482bf9ef96485f06e4ad`.
