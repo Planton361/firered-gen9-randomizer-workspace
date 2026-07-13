@@ -1,11 +1,10 @@
-# Next steps update - CFRU gold TM itemball runtime pass
+# Next steps update - CFRU TM itemball NatDex mismatch
 
-- Treat the targeted MtMoon_1F runtime matrix as passed and the current status as `RUNTIME_PASS_RANDOMIZER_MATRIX_PENDING`.
-- Keep CFRU commit `e63625392ac54c7e460f8b8c2de744b168e02c1f`, CFRU Draft PR #34 and Workspace Draft PR #464 unchanged and unmerged.
-- Run all six fresh UPR-FVX rows against this candidate: Unchanged/off, Shuffle/off, Random/off, Random/on, Random Even/off and Random Even/on.
-- Require `rawApiTmSlotAlignmentMismatches=0`, `tmFieldItemSlotMismatches=0`, `nonTmFieldItemSlotMismatches=0`, `requiredFieldTMMissingAfter=0` and `fieldItemReloadMismatches=0`, plus successful discovery of the `0x065C` target through low byte `92`.
-- Promote to `PILOT_PASS_WITH_CAVEATS` only after all six rows are recorded. Until then, do not merge, add a second gold slot or begin the 29-slot rollout.
-- Retain caveats after any later promotion: targeted smoke, no full playthrough and no BizHawk/Ironmon Tracker support promotion.
+- Current final rollout status is `ROLLOUT_BLOCKED_BY_NATDEX_MISMATCH`: NatDex uses dedicated graphics for 28 TMs, but not for HM07. Decide whether the future CFRU rollout is TM-only (28), includes an intentional HM07 divergence, or adopts another approved policy.
+- Do not add any rollout `replace_graphics` row before that decision. Do not use NatDex graphics ID 67; retain the CFRU contract `0x065C`, table 6/index 92, low byte 92 and palette `0x1106`.
+- After policy resolution, convert the one-row `scripts/insert.py --check-map-object-overlays` self-test into a fail-closed multiple-row whitelist check, preserving every object count and warp/coord/BG pointer.
+- Then run the documented spotchecks (TM09 pilot, TM05 early Kanto, TM41 elevation 0, HM07 only if included, TM36 Sevii and a normal ball control) and all six fresh UPR-FVX mode/Ban-Bad rows with their required zero counters.
+- Workspace PR #464 and CFRU PR #34 are merged. Workspace `main` still points to `e6362539` rather than merged Compat `8927ba7a`; leave that submodule-pin cleanup to a separate, explicit change.
 
 # Next steps update - CFRU gold TM itemball one-slot pilot
 
