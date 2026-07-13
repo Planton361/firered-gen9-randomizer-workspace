@@ -1,3 +1,9 @@
+# Tool Manifest Update - 2026-07-13 - CFRU rollback Git handoff cleanup
+
+- CFRU branch `fix/cfru-hidden-item-sparkle-small-visual` has the exact tree of official `origin/compat/firered-gen9-randomizer` commit `325212e325023284bd6198a3a9cd75b60e0c21f8`; GitHub reports `changed files = 0` for `https://github.com/Planton361/CFRU-expansion/pull/31`.
+- CFRU PR #31 was closed without merge as a no-op. No additional CFRU integration is required.
+- Workspace branch/Draft PR `fix/cfru-hidden-item-sparkle-pilot-visibility` / `https://github.com/Planton361/firered-gen9-randomizer-workspace/pull/461` pins the CFRU submodule directly to `325212e325023284bd6198a3a9cd75b60e0c21f8`; active candidate status remains `ROLLBACK_CANDIDATE_PENDING_MANUAL_SMOKE`.
+
 # Tool Manifest Update - 2026-07-13 - CFRU hidden item sparkle unsafe palette rollback
 
 - Existing CFRU branch/Draft PR: `fix/cfru-hidden-item-sparkle-small-visual`, `https://github.com/Planton361/CFRU-expansion/pull/31`; rollback commit `3c3ebf2dcfab6e2d41f5edf279627db7f35bcfad`.
@@ -7,7 +13,7 @@
 - Verified rollback source: fetched `origin/compat/firered-gen9-randomizer` `325212e325023284bd6198a3a9cd75b60e0c21f8`, containing linker fix `05b4231d847a1aa71d53f846b818403e887f4d3f` via PR #30. Rollback `src/overworld.c` matches this source exactly.
 - Restored implementation: global built-in `FLDEFF_SPARKLE`; synchronous `inUse` before/after Sprite identification; no direct template-table symbol; 90-frame interval; exact Viridian Potion/Antidote BG-event and independent flag gates; one marked Sprite; map cleanup; resume restart.
 - Removed: private palette tag, tile/palette/OAM/frame/template/callback definitions, palette load/free calls, direct local Sprite creation and palette-loaded task state.
-- Workspace submodule now pins `3c3ebf2dcfab6e2d41f5edf279627db7f35bcfad`; evidence status `ROLLBACK_CANDIDATE_PENDING_MANUAL_SMOKE`.
+- Historical rollback branch commit was `3c3ebf2dcfab6e2d41f5edf279627db7f35bcfad`; its tree matches Compat exactly. The active Workspace submodule pin is official Compat commit `325212e325023284bd6198a3a9cd75b60e0c21f8`; evidence status remains `ROLLBACK_CANDIDATE_PENDING_MANUAL_SMOKE`.
 - Checks: exact Compat comparison; CFRU `git diff --check`; syntax-only `src/overworld.c`; `python3 scripts/build.py` including link; private-path and forbidden-template searches; independent two-order flag model; workspace `git diff --check`.
 - Safety boundary: screenshots remain local evidence; no screenshot, ROM, Save, Emulator State, build, raw log, new map/item, Itemfinder, UPR-FVX, DPE, visible itemball, raw address or binary patch is included.
 

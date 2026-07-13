@@ -1,3 +1,9 @@
+# Session update - CFRU rollback Git handoff cleanup
+
+- CFRU Draft PR #31 was closed without merge after GitHub reported `changed files = 0`; its branch tree is identical to official `origin/compat/firered-gen9-randomizer` commit `325212e325023284bd6198a3a9cd75b60e0c21f8`.
+- No additional CFRU integration is required. Workspace Draft PR #461 now pins the CFRU submodule directly to official Compat commit `325212e325023284bd6198a3a9cd75b60e0c21f8`, with no candidate dependency on rollback commit `3c3ebf2dcfab6e2d41f5edf279627db7f35bcfad`.
+- Status remains `ROLLBACK_CANDIDATE_PENDING_MANUAL_SMOKE`; Workspace PR #461 remains unmerged.
+
 # Session update - CFRU hidden item sparkle unsafe palette rollback
 
 - Existing branches/Draft PRs updated only: CFRU `fix/cfru-hidden-item-sparkle-small-visual` / PR #31; Workspace `fix/cfru-hidden-item-sparkle-pilot-visibility` / PR #461.

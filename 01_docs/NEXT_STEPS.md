@@ -1,6 +1,12 @@
+# Next steps update - CFRU rollback Git handoff cleanup
+
+- Use official CFRU Compat commit `325212e325023284bd6198a3a9cd75b60e0c21f8` as the manual rollback-smoke candidate pinned by Workspace Draft PR `https://github.com/Planton361/firered-gen9-randomizer-workspace/pull/461`.
+- CFRU PR #31 is closed without merge as a no-op (`changed files = 0`, branch tree identical to Compat); no additional CFRU integration is required.
+- Keep status `ROLLBACK_CANDIDATE_PENDING_MANUAL_SMOKE` and do not merge Workspace PR #461 before the manual smoke.
+
 # Next steps update - CFRU hidden item sparkle unsafe palette rollback
 
-- Treat CFRU Draft PR `https://github.com/Planton361/CFRU-expansion/pull/31` at rollback commit `3c3ebf2dcfab6e2d41f5edf279627db7f35bcfad` and Workspace Draft PR `https://github.com/Planton361/firered-gen9-randomizer-workspace/pull/461` as `ROLLBACK_CANDIDATE_PENDING_MANUAL_SMOKE`; do not merge either PR.
+- Treat Workspace Draft PR `https://github.com/Planton361/firered-gen9-randomizer-workspace/pull/461`, pinned directly to official Compat commit `325212e325023284bd6198a3a9cd75b60e0c21f8`, as `ROLLBACK_CANDIDATE_PENDING_MANUAL_SMOKE`; do not merge it.
 - Run the normal clean local CFRU build, then prioritize safety: no stray sparkle coordinates, no player/NPC/OBJ palette changes, and no environment tint changes after repeated Sparkles and movement through Viridian Forest.
 - With both flags unset, verify the built-in CFRU sparkle appears only near Potion `(3, 22)` and Antidote `(28, 57)` at the conservative 90-frame interval.
 - Run Antidote-first and Potion-first from fresh states; the remaining unset item must remain independently eligible.

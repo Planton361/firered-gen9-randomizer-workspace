@@ -1,6 +1,8 @@
 # CFRU hidden item sparkle QoL smoke handoff
 
-Status: `ROLLBACK_CANDIDATE_PENDING_MANUAL_SMOKE` on CFRU branch `fix/cfru-hidden-item-sparkle-small-visual`, rollback commit `3c3ebf2dcfab6e2d41f5edf279627db7f35bcfad`, Draft PR `https://github.com/Planton361/CFRU-expansion/pull/31`.
+Status: `ROLLBACK_CANDIDATE_PENDING_MANUAL_SMOKE` on official CFRU Compat commit `325212e325023284bd6198a3a9cd75b60e0c21f8`, pinned directly by Workspace Draft PR `https://github.com/Planton361/firered-gen9-randomizer-workspace/pull/461`.
+
+CFRU PR `https://github.com/Planton361/CFRU-expansion/pull/31` is closed without merge as a no-op: its rollback branch tree matches Compat exactly, GitHub reports `changed files = 0`, and no additional CFRU integration is required.
 
 Verified rollback source: fetched `origin/compat/firered-gen9-randomizer` commit `325212e325023284bd6198a3a9cd75b60e0c21f8`, including linker fix `05b4231d847a1aa71d53f846b818403e887f4d3f` via PR #30.
 
