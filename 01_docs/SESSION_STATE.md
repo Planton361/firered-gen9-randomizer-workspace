@@ -1,3 +1,27 @@
+# Session update - CFRU gold TM itemball runtime smoke pass
+
+- Sanitized user-reported MtMoon_1F runtime smoke passed on the existing CFRU candidate `e63625392ac54c7e460f8b8c2de744b168e02c1f`; no CFRU code or submodule pin changed.
+- TM09 local id `9` at `(11, 35)` appeared gold/yellow and Potion local id `10` at `(26, 32)` remained the normal ball.
+- No visible tile, Sprite or palette error was observed; player, NPC and environment palettes remained stable.
+- Pickup, both pickup orders, leave/re-enter and in-game save/reload passed; object flags remained correct.
+- No old Savestate was used as acceptance evidence. Screenshots remain local user evidence and are not committed.
+- The six fresh candidate-specific UPR-FVX rows have not been recorded with all required zero counters. Status is therefore `RUNTIME_PASS_RANDOMIZER_MATRIX_PENDING`, not `PILOT_PASS_WITH_CAVEATS`.
+- Caveats: targeted manual runtime smoke, no full playthrough, one gold TM pilot slot, no 29-slot rollout, and no BizHawk/Ironmon Tracker support promotion.
+- CFRU Draft PR #34 and Workspace Draft PR #464 remain open and unmerged while the Randomizer matrix is pending.
+
+# Session update - CFRU gold TM itemball one-slot pilot
+
+- Workspace branch: `feature/cfru-tm-itemball-visual-pilot` from current `main` after merged Workspace PR #463.
+- CFRU branch/commit/Draft PR: `feature/cfru-tm-itemball-visual-pilot`, `e63625392ac54c7e460f8b8c2de744b168e02c1f`, <https://github.com/Planton361/CFRU-expansion/pull/34> against `compat/firered-gen9-randomizer`.
+- Status: `PILOT_PENDING_MANUAL_SMOKE`; no runtime pass or rollout is claimed.
+- Pilot scope is exactly MtMoon_1F local id `9`, TM09 at `(11, 35)`, elevation `3`, expected object count `14`. Graphics id changes from `0x005C` to exactly `0x065C`; low byte `0x5C` / `92` remains visible to the UPR-FVX Field Item reader.
+- Same-map control is Potion local id `10` at `(26, 32)`, elevation `3`; its full 24-byte object template remains byte-identical with graphics id `0x005C`.
+- CFRU registers previously free regular Object Graphics table `6`, entry `[92]`, with a 16x16 one-frame inanimate gold ball. The normal item-ball geometry is unchanged and palette indices `8/9/10` are replaced only by existing gold-ramp indices `5/6/7`.
+- Palette tag remains the existing static `0x1106`; no palette registration, runtime load/free or private sprite lifecycle was added.
+- `mapobjectoverlays` now supports fail-closed `replace_graphics`: it validates map/count, every target/control template field, flags and standard `finditem` script bytes, copies all 24 bytes and changes only target graphics-id byte `3`. Object count and warp/coord/BG pointers remain unchanged.
+- Checks passed: CFRU `diff --check`, Python compile, overlay serialized-diff self-test, syntax-only compile of both changed C files, full `scripts/build.py` link, and clean `scripts/clean.py BUILD` plus `scripts/make.py` insertion. Existing CFRU warnings only.
+- Workspace pins CFRU to the candidate commit. UPR-FVX and DPE are unchanged; no ROM, save, state, screenshot, build or generated artifact is committed.
+
 # Session update - CFRU TM/HM itemball visual design
 
 - Branch: `design/cfru-tm-itemball-visuals` from clean current `main` after Workspace PR #462.

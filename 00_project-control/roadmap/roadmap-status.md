@@ -1,3 +1,10 @@
+# Roadmap status update - CFRU gold TM itemball one-slot pilot
+
+- Implemented the design-approved one-slot CFRU candidate for MtMoon_1F TM09, with the same-map Potion kept as the byte-identical normal-ball control.
+- Status impact: `PILOT_PENDING_MANUAL_SMOKE`; static, syntax, link, clean-build and insertion gates pass, but no runtime or UPR-FVX save/reload pass is claimed.
+- CFRU graphics id is exactly `0x065C` (table `6`, low byte `92`) and reuses static palette tag `0x1106`; the overlay changes only object-template graphics-id upper byte `3`.
+- No rollout is authorized until the documented randomized-output and runtime matrix passes. UPR-FVX, DPE, other maps, other items, Hidden Items and special ball-like objects remain unchanged.
+
 # Roadmap status update - CFRU TM/HM itemball visual design
 
 - Added the source-backed design and future smoke gate for a static gold/yellow Object Event graphic on visible TM/HM Field Item slots.

@@ -1,3 +1,21 @@
+# Next steps update - CFRU gold TM itemball runtime pass
+
+- Treat the targeted MtMoon_1F runtime matrix as passed and the current status as `RUNTIME_PASS_RANDOMIZER_MATRIX_PENDING`.
+- Keep CFRU commit `e63625392ac54c7e460f8b8c2de744b168e02c1f`, CFRU Draft PR #34 and Workspace Draft PR #464 unchanged and unmerged.
+- Run all six fresh UPR-FVX rows against this candidate: Unchanged/off, Shuffle/off, Random/off, Random/on, Random Even/off and Random Even/on.
+- Require `rawApiTmSlotAlignmentMismatches=0`, `tmFieldItemSlotMismatches=0`, `nonTmFieldItemSlotMismatches=0`, `requiredFieldTMMissingAfter=0` and `fieldItemReloadMismatches=0`, plus successful discovery of the `0x065C` target through low byte `92`.
+- Promote to `PILOT_PASS_WITH_CAVEATS` only after all six rows are recorded. Until then, do not merge, add a second gold slot or begin the 29-slot rollout.
+- Retain caveats after any later promotion: targeted smoke, no full playthrough and no BizHawk/Ironmon Tracker support promotion.
+
+# Next steps update - CFRU gold TM itemball one-slot pilot
+
+- Treat CFRU Draft PR <https://github.com/Planton361/CFRU-expansion/pull/34> at commit `e63625392ac54c7e460f8b8c2de744b168e02c1f` as the only candidate; status is `PILOT_PENDING_MANUAL_SMOKE`.
+- Do not merge or add a second slot before every UPR-FVX save/reload and runtime row in `08_tests/randomizer/cfru-tm-itemball-visuals.md` passes.
+- Run fresh Unchanged, Shuffle, Random and Random Even Field Item outputs, including both Ban Bad variants where listed. Confirm TM/non-TM slot typing, required Field TMs and reload mismatch counters remain clean.
+- Runtime-smoke MtMoon_1F local id `9` at `(11, 35)` as the gold TM target and local id `10` at `(26, 32)` as the normal Potion control, including both pickup orders, leave/re-enter and in-game save/reload.
+- Confirm both balls can coexist without OBJ tile loss, sprite loss, flicker or player/NPC/environment palette changes; palette tag remains `0x1106` and only the target uses `0x065C`.
+- Preserve the strict boundary: no further map/TM/HM slot, Hidden Item, special ball-like object, pickup script, flag, item value, UPR-FVX/DPE writer, runtime hook or private palette lifecycle until the pilot passes.
+
 # Next steps update - CFRU TM/HM itemball visual design
 
 - Treat `01_docs/analysis/cfru-tm-itemball-visuals.md` as the source-backed design and `08_tests/randomizer/cfru-tm-itemball-visuals.md` as the complete future pilot gate.
