@@ -1,13 +1,12 @@
-# Session update - CFRU gold TM itemball runtime smoke pass
+# Session update - CFRU TM itemball NatDex parity handoff
 
-- Sanitized user-reported MtMoon_1F runtime smoke passed on the existing CFRU candidate `e63625392ac54c7e460f8b8c2de744b168e02c1f`; no CFRU code or submodule pin changed.
-- TM09 local id `9` at `(11, 35)` appeared gold/yellow and Potion local id `10` at `(26, 32)` remained the normal ball.
-- No visible tile, Sprite or palette error was observed; player, NPC and environment palettes remained stable.
-- Pickup, both pickup orders, leave/re-enter and in-game save/reload passed; object flags remained correct.
-- No old Savestate was used as acceptance evidence. Screenshots remain local user evidence and are not committed.
-- The six fresh candidate-specific UPR-FVX rows have not been recorded with all required zero counters. Status is therefore `RUNTIME_PASS_RANDOMIZER_MATRIX_PENDING`, not `PILOT_PASS_WITH_CAVEATS`.
-- Caveats: targeted manual runtime smoke, no full playthrough, one gold TM pilot slot, no 29-slot rollout, and no BizHawk/Ironmon Tracker support promotion.
-- CFRU Draft PR #34 and Workspace Draft PR #464 remain open and unmerged while the Randomizer matrix is pending.
+- GitHub-aligned local refs show Workspace PR #464 merged to `main` as `1d805e4` and CFRU PR #34 merged to `compat/firered-gen9-randomizer` as `8927ba7a`; earlier open-Draft wording below is historical and superseded.
+- Workspace `main` still pins the pre-merge CFRU feature commit `e63625392ac54c7e460f8b8c2de744b168e02c1f`, not `8927ba7a`. This is documented as a later pin-cleanup only; no submodule pin changed here.
+- The complete 29-slot map/object whitelist matches the local CyanSMP64 NatDex reference for map id, bank/number, count, local id, coordinate, elevation, movement/range, `finditem` script and flag.
+- NatDex uses `OBJ_EVENT_GFX_UNUSED_MALE_RECEPTIONIST` (ID 67) for all 28 TM slots but keeps HM07 as `OBJ_EVENT_GFX_ITEM_BALL` (ID 92). NatDex ID 67 must not be used by CFRU.
+- Final rollout status: `ROLLOUT_BLOCKED_BY_NATDEX_MISMATCH`. Resolve the explicit HM07 visual-policy mismatch before adding rows; the targeted TM09 runtime result and its six pending UPR-FVX rows remain evidence, not rollout authorization.
+- CFRU's current gold contract is unchanged: `0x065C`, table 6/index 92, low byte 92 and palette `0x1106`; no CFRU, UPR-FVX, DPE, graphics, palette, ROM, save, build or external checkout was changed.
+- Handoffs: `01_docs/analysis/cfru-tm-itemball-natdex-parity.md` and `08_tests/randomizer/cfru-tm-itemball-rollout.md`.
 
 # Session update - CFRU gold TM itemball one-slot pilot
 

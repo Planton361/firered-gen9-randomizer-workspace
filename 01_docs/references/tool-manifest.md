@@ -1,11 +1,10 @@
-# Tool Manifest Update - 2026-07-13 - CFRU gold TM itemball runtime smoke
+# Tool Manifest Update - 2026-07-13 - CFRU TM itemball NatDex parity
 
-- Existing candidate remains unchanged: CFRU `e63625392ac54c7e460f8b8c2de744b168e02c1f`, Draft PR #34; Workspace Draft PR #464 retains the same submodule pin.
-- Sanitized targeted runtime result: gold/yellow TM09 at MtMoon_1F `(11,35)`; normal Potion control at `(26,32)`; no visible tile/Sprite/palette issue; stable player/NPC/environment palettes; pickup, both pickup orders, leave/re-enter and in-game save/reload passed with correct object flags.
-- No old Savestate was used. Screenshots remain local user evidence and are not committed.
-- Status: `RUNTIME_PASS_RANDOMIZER_MATRIX_PENDING`. The six candidate-specific UPR-FVX rows and their required zero counters are not yet recorded; older Field Item diagnostics are not treated as substitutes.
-- Caveats: targeted manual runtime smoke, no full playthrough, only one gold TM pilot slot, no 29-slot rollout, and no BizHawk/Ironmon Tracker support promotion.
-- Boundary: no CFRU, UPR-FVX or DPE source change; no submodule repin; no ROM, save, state, screenshot, build, generated artifact or private evidence is committed.
+- Workspace analysis branch: `analysis/cfru-tm-itemball-natdex-parity`; all external repositories were inspected read-only.
+- Git refs after refresh: Workspace PR #464 is merged to `main` as `1d805e4`; CFRU PR #34 is merged to `compat/firered-gen9-randomizer` as `8927ba7a`. Workspace main remains pinned to feature commit `e63625392ac54c7e460f8b8c2de744b168e02c1f`, so a later pin cleanup is required but not made here.
+- NatDex reference pin: `16b8b9ffd77607debe7ce332cd50d3615f47e125` on `natdex`. Its exhaustive visible `finditem` inventory has 29 rows: 28 TMs use `OBJ_EVENT_GFX_UNUSED_MALE_RECEPTIONIST` / 67; HM07 uses normal `OBJ_EVENT_GFX_ITEM_BALL` / 92.
+- CFRU evidence: the merged implementation retains the existing gold graphic unchanged at `0x065C`, table 6/index 92, lower byte 92 and palette `0x1106`; operational `replace_graphics` supports multiple rows, while its self-test must be expanded beyond one row before rollout.
+- Result: `ROLLOUT_BLOCKED_BY_NATDEX_MISMATCH`; no CFRU, UPR-FVX, DPE, graphics, palette, submodule pin, ROM, save, state, build or generated artifact changed.
 
 # Tool Manifest Update - 2026-07-13 - CFRU gold TM itemball one-slot pilot
 
