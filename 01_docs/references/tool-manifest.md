@@ -1,3 +1,13 @@
+# Tool Manifest Update - 2026-07-13 - CFRU hidden item sparkle simple spawn fix
+
+- CFRU branch/commit/Draft PR: `fix/cfru-hidden-item-sparkle-simple-spawn`, `4648302dd2765f9731d6d5faa81783aeaa7e356e`, `https://github.com/Planton361/CFRU-expansion/pull/32`; base `compat/firered-gen9-randomizer` at `325212e325023284bd6198a3a9cd75b60e0c21f8`.
+- Existing Workspace branch/Draft PR: `fix/cfru-hidden-item-sparkle-pilot-visibility`, `https://github.com/Planton361/firered-gen9-randomizer-workspace/pull/461`; submodule pins the new CFRU commit.
+- Latest rollback smoke fail: first expected Sparkle appeared, second hidden-item Sparkle was unreliable/missing, and stray-coordinate Sparkles appeared. The prior private-palette corruption did not recur.
+- Implementation: exact Viridian Potion/Antidote BG-event scan, event-derived flag/position/elevation, explicit underfoot skip, display/readiness/free-slot gates, independent 90-frame cooldowns, and at most one `FieldEffectStart(FLDEFF_SPARKLE)` per task tick.
+- Removed pilot state: stored Sprite slot, Sprite marker, manual `FieldEffectStop`, same-effect active-list blocker, and all before/after Sprite-slot discovery. No custom Sprite/palette/OAM resources are introduced.
+- Checks: `git diff --check`; syntax-only `src/overworld.c`; `python3 scripts/build.py` including link (existing RWX linker warning only); ownership-path searches; no build artifacts in Git status.
+- Evidence status: `SIMPLE_SPAWN_FIX_PENDING_MANUAL_SMOKE`. Neither Draft PR is merged.
+
 # Tool Manifest Update - 2026-07-13 - CFRU rollback Git handoff cleanup
 
 - CFRU branch `fix/cfru-hidden-item-sparkle-small-visual` has the exact tree of official `origin/compat/firered-gen9-randomizer` commit `325212e325023284bd6198a3a9cd75b60e0c21f8`; GitHub reports `changed files = 0` for `https://github.com/Planton361/CFRU-expansion/pull/31`.

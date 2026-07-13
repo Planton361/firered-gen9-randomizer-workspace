@@ -1,12 +1,23 @@
 # CFRU hidden item sparkle QoL smoke handoff
 
-Status: `ROLLBACK_CANDIDATE_PENDING_MANUAL_SMOKE` on official CFRU Compat commit `325212e325023284bd6198a3a9cd75b60e0c21f8`, pinned directly by Workspace Draft PR `https://github.com/Planton361/firered-gen9-randomizer-workspace/pull/461`.
+Status: `SIMPLE_SPAWN_FIX_PENDING_MANUAL_SMOKE` on CFRU branch `fix/cfru-hidden-item-sparkle-simple-spawn`, commit `4648302dd2765f9731d6d5faa81783aeaa7e356e`, Draft PR `https://github.com/Planton361/CFRU-expansion/pull/32`, pinned by Workspace Draft PR `https://github.com/Planton361/firered-gen9-randomizer-workspace/pull/461`.
 
 CFRU PR `https://github.com/Planton361/CFRU-expansion/pull/31` is closed without merge as a no-op: its rollback branch tree matches Compat exactly, GitHub reports `changed files = 0`, and no additional CFRU integration is required.
 
 Verified rollback source: fetched `origin/compat/firered-gen9-randomizer` commit `325212e325023284bd6198a3a9cd75b60e0c21f8`, including linker fix `05b4231d847a1aa71d53f846b818403e887f4d3f` via PR #30.
 
 No pass result is documented. No ROM, save, emulator state, build artifact, tool binary, screenshot, raw log, private path, token, secret, `.env`, binary patch, raw address port, Itemfinder feature, Field Item randomizer writer, visible itemball graphics, other map or DPE change is included.
+
+## Latest rollback-runtime fail
+
+The official Compat rollback removed the prior palette corruption, but still failed the pilot smoke:
+
+- the first expected Sparkle appeared correctly;
+- the second Hidden Item did not sparkle reliably;
+- Sparkles appeared at unrelated positions;
+- no player/NPC/OBJ palette corruption was reported for this rollback run.
+
+No pass is recorded and no screenshot or runtime artifact is committed.
 
 ## Current user fail
 
@@ -32,7 +43,7 @@ Prior candidate `d77da7fdb6c1ceeb946615bb2b31dcd2bbcf9ddd` failed manual accepta
 
 No case is promoted to pass from that smoke.
 
-## Rollback candidate
+## Previous rollback candidate (failed runtime smoke)
 
 `src/overworld.c` is restored exactly to the verified Compat file:
 
@@ -44,6 +55,20 @@ No case is promoted to pass from that smoke.
 - conservative 90-frame interval;
 - Viridian Forest only, two exact BG-event/flag-gated pilot items;
 - one marked owned Sprite, map-change cleanup and resume restart.
+
+## Simple-spawn fix candidate
+
+The new candidate discards the complete pilot Sprite-ownership/stop model:
+
+- no stored Sprite slot in task data;
+- no Sprite marker or before/after slot discovery;
+- no manual `FieldEffectStop` for a pilot Sprite;
+- no global `FieldEffectActiveListContains(FLDEFF_SPARKLE)` blocker;
+- no custom Sprite, palette, graphics, OAM or template resources.
+
+On each ready task tick, the pilot evaluates the two entries independently. It matches the actual hidden-item BG event by exact coordinate and hidden-item offset, derives the flag, position and elevation from that event, rejects underfoot/collected/off-screen events, verifies a free Sprite slot, then starts the built-in one-shot `FLDEFF_SPARKLE`. Potion and Antidote have separate 90-frame cooldowns, and only one start is attempted per tick.
+
+Underfoot events are explicitly ignored. Both pilot items are non-underfoot, so this does not change their pickup behavior and does not introduce Itemfinder-like digging behavior.
 
 ## Root cause and fix candidate
 
@@ -125,6 +150,11 @@ python3 scripts/make.py
 
 ## Automated/source checks
 
+- New simple-spawn CFRU `git diff --check`: pass.
+- New simple-spawn syntax-only compile of `src/overworld.c`: pass.
+- New simple-spawn `python3 scripts/build.py` source build/link: pass, with the existing RWX linker warning only.
+- Pilot stored-Sprite-slot/marker/manual-stop/active-list-blocker search: no remaining matches.
+- CFRU post-build Git status contains no build artifacts.
 - CFRU `git diff --check`: pass.
 - CFRU syntax-only compile of `src/overworld.c`: pass.
 - `rg -n "gFieldEffectObjectTemplatePointers|FLDEFFOBJ_SMALL_SPARKLE" src/overworld.c`: no matches.
@@ -138,4 +168,4 @@ python3 scripts/make.py
 
 ## Acceptance boundary
 
-Do not promote beyond `ROLLBACK_CANDIDATE_PENDING_MANUAL_SMOKE` until the stray-Sprite/palette/tint failure is absent and both pickup orders, duplicate guard, both-collected state, map cleanup, resume and global-sparkle regression pass. Even after a pass, this remains a two-item Viridian Forest pilot, not evidence for a global rollout, underfoot/renewable hidden items, full playthrough, BizHawk, Ironmon Tracker or P1 support.
+Do not promote beyond `SIMPLE_SPAWN_FIX_PENDING_MANUAL_SMOKE` until stray positions are absent and both pickup orders, duplicate guard, both-collected state, map cleanup, resume, palette/environment stability and global-sparkle regression pass. Even after a pass, this remains a two-item Viridian Forest pilot, not evidence for a global rollout, underfoot/renewable hidden items, full playthrough, BizHawk, Ironmon Tracker or P1 support.

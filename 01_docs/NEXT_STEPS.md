@@ -1,3 +1,11 @@
+# Next steps update - CFRU hidden item sparkle simple spawn fix
+
+- Treat CFRU Draft PR `https://github.com/Planton361/CFRU-expansion/pull/32` at `4648302dd2765f9731d6d5faa81783aeaa7e356e` and Workspace Draft PR `https://github.com/Planton361/firered-gen9-randomizer-workspace/pull/461` as `SIMPLE_SPAWN_FIX_PENDING_MANUAL_SMOKE`; merge neither PR.
+- Rebuild locally, then verify the built-in Sparkle appears only at Potion `(3, 22)` and Antidote `(28, 57)`, with no unrelated coordinates or palette/environment changes over multiple intervals.
+- Run both pickup orders from fresh states: Antidote first must leave Potion eligible; Potion first must leave Antidote eligible. With both flags set, neither may spawn.
+- Verify the independent 90-frame cooldowns do not accumulate Sprites, and that map change plus resume/re-entry resets only task/cooldown scheduling without lingering pilot behavior.
+- Keep the pilot limited to the two non-underfoot Viridian BG events; do not add Itemfinder behavior, custom Sprite resources, global rollout, other maps/items, visible item balls, DPE, or UPR-FVX changes.
+
 # Next steps update - CFRU rollback Git handoff cleanup
 
 - Use official CFRU Compat commit `325212e325023284bd6198a3a9cd75b60e0c21f8` as the manual rollback-smoke candidate pinned by Workspace Draft PR `https://github.com/Planton361/firered-gen9-randomizer-workspace/pull/461`.

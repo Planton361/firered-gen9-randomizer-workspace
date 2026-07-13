@@ -1,3 +1,13 @@
+# Session update - CFRU hidden item sparkle simple spawn fix
+
+- Official Compat rollback `325212e325023284bd6198a3a9cd75b60e0c21f8` removed the private palette corruption, but the latest user smoke still failed: the first expected Sparkle appeared, the second item did not sparkle reliably, and Sparkles appeared at unrelated positions. No pass is recorded.
+- New CFRU branch/commit/Draft PR: `fix/cfru-hidden-item-sparkle-simple-spawn`, `4648302dd2765f9731d6d5faa81783aeaa7e356e`, `https://github.com/Planton361/CFRU-expansion/pull/32`, targeting `compat/firered-gen9-randomizer`.
+- Root-cause boundary: the prior pilot coupled correctness to a mutable stored Sprite slot, marker, manual stop, and global same-effect blocker. This could starve the other item and left the pilot exposed to wrong/stale Sprite-slot handling; the exact low-level cause of every stray coordinate is not claimed.
+- Replacement architecture follows the Cyan/NatDex scan-and-cooldown pattern: match each exact hidden-item BG event, derive flag/position/elevation from that event, skip collected/underfoot/off-screen events, require a free Sprite slot, and start one built-in `FLDEFF_SPARKLE` per task tick with independent 90-frame item cooldowns.
+- No pilot Sprite id, marker, manual `FieldEffectStop`, custom graphics/palette/OAM, or global `FLDEFF_SPARKLE` active-list blocker remains. Map change destroys only the pilot task; transition/resume creates fresh zeroed cooldown state.
+- Status: `SIMPLE_SPAWN_FIX_PENDING_MANUAL_SMOKE`; CFRU PR #32 and Workspace PR #461 remain Draft and unmerged.
+- Checks: CFRU `git diff --check`; syntax-only compile of `src/overworld.c`; `python3 scripts/build.py` including link; forbidden ownership-path searches; clean CFRU post-build Git status.
+
 # Session update - CFRU rollback Git handoff cleanup
 
 - CFRU Draft PR #31 was closed without merge after GitHub reported `changed files = 0`; its branch tree is identical to official `origin/compat/firered-gen9-randomizer` commit `325212e325023284bd6198a3a9cd75b60e0c21f8`.
