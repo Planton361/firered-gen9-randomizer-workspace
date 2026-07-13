@@ -2,7 +2,7 @@
 
 Date: 2026-07-13
 
-Status: `PILOT_PENDING_MANUAL_SMOKE`
+Status: `RUNTIME_PASS_RANDOMIZER_MATRIX_PENDING`
 
 ## Purpose
 
@@ -10,8 +10,10 @@ This is the smoke handoff for the implemented CFRU-only first pilot. CFRU branch
 `feature/cfru-tm-itemball-visual-pilot`, commit
 `e63625392ac54c7e460f8b8c2de744b168e02c1f` and Draft PR
 <https://github.com/Planton361/CFRU-expansion/pull/34> contain the candidate.
-No runtime pass is claimed. ROMs, saves, states, screenshots, builds and
-generated artifacts remain local and uncommitted.
+The targeted MtMoon_1F runtime smoke passed by sanitized user report. The six
+candidate-specific UPR-FVX save/reload rows remain open, so no final pilot pass
+or rollout is claimed. ROMs, saves, states, screenshots, builds and generated
+artifacts remain local and uncommitted.
 
 Pilot:
 
@@ -55,6 +57,10 @@ Each row uses a newly built candidate and a fresh randomization. Reload the
 saved output through the existing sanitized Field Item diagnostics; do not
 reuse emulator states from another build.
 
+Result for commit `e63625392ac54c7e460f8b8c2de744b168e02c1f`:
+**pending for all six rows**. Older Field Item diagnostics are not substituted
+for fresh candidate-specific evidence.
+
 | Mode | Ban Bad | TM pilot remains a TM slot | Control remains non-TM | Required TMs | Reload mismatches | Expected |
 |---|---|---|---|---|---|---|
 | Unchanged | off | yes | yes | unchanged | 0 | pass |
@@ -79,18 +85,21 @@ Required sanitized assertions:
 
 Use an in-game save. Savestates are not acceptance evidence.
 
-| Scenario | Expected result |
-|---|---|
-| Fresh entry to MtMoon_1F | Map, trainers, warps and all 14 Object Events behave normally. |
-| Approach local id 9 | A clearly gold/yellow 16x16 item ball is shown at `(11, 35)`. |
-| Approach local id 10 | The existing normal red/white item ball remains at `(26, 32)`. |
-| Both balls visible | No OBJ tile failure, sprite loss, flicker or palette corruption. |
-| Player/NPC/environment palettes | No color change; gold ball reuses the registered static palette. |
-| Pick up TM pilot | Randomized content is a TM; normal pickup text/fanfare, object removal and original flag work. |
-| Pick up normal control | Randomized content is non-TM; normal pickup behavior and original flag work. |
-| Leave/re-enter | Collected object stays hidden; uncollected object keeps the correct graphic. |
-| In-game save/reload | Flags, graphics and randomized contents remain correct. |
-| Repeat with opposite pickup order | Each object remains independent. |
+| Scenario | Expected result | Sanitized result |
+|---|---|---|
+| Fresh entry to MtMoon_1F | Map, trainers, warps and all 14 Object Events behave normally. | Map entry passed; trainers/warps/all-object inventory were not separately asserted. |
+| Approach local id 9 | A clearly gold/yellow 16x16 item ball is shown at `(11, 35)`. | Pass. |
+| Approach local id 10 | The existing normal red/white item ball remains at `(26, 32)`. | Pass. |
+| Both balls visible | No OBJ tile failure, sprite loss, flicker or palette corruption. | Pass. |
+| Player/NPC/environment palettes | No color change; gold ball reuses the registered static palette. | Pass. |
+| Pick up TM pilot | Randomized content is a TM; normal pickup text/fanfare, object removal and original flag work. | Pickup/flag behavior passed; randomized-content typing remains in the UPR-FVX matrix. |
+| Pick up normal control | Randomized content is non-TM; normal pickup behavior and original flag work. | Pickup/flag behavior passed; randomized-content typing remains in the UPR-FVX matrix. |
+| Leave/re-enter | Collected object stays hidden; uncollected object keeps the correct graphic. | Pass. |
+| In-game save/reload | Flags, graphics and randomized contents remain correct. | Object flags passed; randomized-content reload remains in the UPR-FVX matrix. |
+| Repeat with opposite pickup order | Each object remains independent. | Pass for both pickup orders. |
+
+No old Savestate was used as acceptance evidence. Screenshots remain local user
+evidence and are not committed.
 
 ## Regression boundary
 
@@ -108,3 +117,7 @@ Do not add any second gold slot until every build, UPR save/reload and runtime
 row above passes. A later rollout must use the 29-entry source whitelist from
 `01_docs/analysis/cfru-tm-itemball-visuals.md` and retain the low-byte-92
 contract for every replacement.
+
+Caveats: targeted manual runtime smoke only, no full playthrough, one gold TM
+pilot slot only, no 29-slot rollout, and no BizHawk or Ironmon Tracker support
+promotion.

@@ -1,3 +1,14 @@
+# Session update - CFRU gold TM itemball runtime smoke pass
+
+- Sanitized user-reported MtMoon_1F runtime smoke passed on the existing CFRU candidate `e63625392ac54c7e460f8b8c2de744b168e02c1f`; no CFRU code or submodule pin changed.
+- TM09 local id `9` at `(11, 35)` appeared gold/yellow and Potion local id `10` at `(26, 32)` remained the normal ball.
+- No visible tile, Sprite or palette error was observed; player, NPC and environment palettes remained stable.
+- Pickup, both pickup orders, leave/re-enter and in-game save/reload passed; object flags remained correct.
+- No old Savestate was used as acceptance evidence. Screenshots remain local user evidence and are not committed.
+- The six fresh candidate-specific UPR-FVX rows have not been recorded with all required zero counters. Status is therefore `RUNTIME_PASS_RANDOMIZER_MATRIX_PENDING`, not `PILOT_PASS_WITH_CAVEATS`.
+- Caveats: targeted manual runtime smoke, no full playthrough, one gold TM pilot slot, no 29-slot rollout, and no BizHawk/Ironmon Tracker support promotion.
+- CFRU Draft PR #34 and Workspace Draft PR #464 remain open and unmerged while the Randomizer matrix is pending.
+
 # Session update - CFRU gold TM itemball one-slot pilot
 
 - Workspace branch: `feature/cfru-tm-itemball-visual-pilot` from current `main` after merged Workspace PR #463.
