@@ -2,7 +2,7 @@
 
 Date: 2026-07-13
 
-Status: `ROLLOUT_BLOCKED_BY_NATDEX_MISMATCH`
+Status: `ROLLOUT_READY_FOR_29_TM_HM_CFRU_POLICY`
 
 ## Result
 
@@ -12,13 +12,14 @@ and HM07. Map, bank/number, object count, local id, coordinate, elevation,
 movement/range, script and flag all match. There are no extra NatDex TM slots,
 no missing local slots, and no coordinate, script or flag differences.
 
-The requested visual conclusion is nevertheless negative. NatDex uses
+NatDex uses
 `OBJ_EVENT_GFX_UNUSED_MALE_RECEPTIONIST` (numeric ID `67`) for exactly the 28
 TM slots, but its HM07 object in `FourIsland_IcefallCave_1F` uses the normal
-`OBJ_EVENT_GFX_ITEM_BALL` (ID `92`). Therefore NatDex does **not** use its
-dedicated TM graphic for every TM/HM slot. The proposed all-29 CFRU rollout
-would intentionally diverge at HM07, so it is blocked until the product policy
-chooses either 28 TMs only or an explicit CFRU-specific HM07 exception.
+`OBJ_EVENT_GFX_ITEM_BALL` (ID `92`). This difference is consciously accepted:
+the project policy is that all 29 visible TM/HM Field Item slots, including
+HM07, use the existing gold CFRU ball. HM07 changes only its Object Graphics
+ID from `0x005C` to `0x065C`; item, `finditem` script, flag, pickup behavior
+and preserve-only randomizer policy remain unchanged.
 
 NatDex ID `67` is reference evidence only. It must not be copied into CFRU.
 The CFRU contract remains exactly gold ID `0x065C`, low byte `0x5C` / `92`,
@@ -78,8 +79,8 @@ rows are TM36 and TM41; the Sevii rows are HM07 and TM36.
 
 ## Exclusions and differences
 
-- Dedicated NatDex graphic: 28 TM rows yes; HM07 no. This is the sole
-  NatDex mismatch and the blocker.
+- Dedicated NatDex graphic: 28 TM rows yes; HM07 no. This is the sole NatDex
+  difference and is an explicitly accepted CFRU policy, not a blocker.
 - Additional NatDex TM slots: none. The complete NatDex reception-graphic
   scan returns the same 28 TMs and no non-TM/HM source.
 - Missing local slots, coordinates, scripts or flags: none.
@@ -106,10 +107,9 @@ before/after template changes only byte 3, while preserving object count and
 warp/coord/BG pointers. This is not an overlay limitation; it is a necessary
 fail-closed rollout hardening task.
 
-## Deferred rollout handoff
+## Approved 29-slot rollout handoff
 
-Do not implement while this status is blocked. If policy resolves HM07, the
-only CFRU changes are:
+The policy permits all 29 rows. The only later CFRU changes are:
 
 1. add one `replace_graphics` row per approved whitelist entry to
    `mapobjectoverlays`, with the exact table above and `0x005C -> 0x065C`;
@@ -119,5 +119,5 @@ only CFRU changes are:
 3. update the rollout smoke document with static, randomizer and runtime
    evidence; do not add graphics, palettes, UPR-FVX or DPE changes.
 
-The existing graphics resource is reused. No new graphics resource, palette,
-runtime hook or randomizer graphics writer is needed.
+The existing graphics resource is reused. No new graphics resource or palette
+work, runtime hook or randomizer graphics writer is needed.
