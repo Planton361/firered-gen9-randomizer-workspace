@@ -2,9 +2,9 @@
 
 - Workspace analysis branch: `analysis/cfru-tm-itemball-natdex-parity`; all external repositories were inspected read-only.
 - Git refs after refresh: Workspace PR #464 is merged to `main` as `1d805e4`; CFRU PR #34 is merged to `compat/firered-gen9-randomizer` as `8927ba7a`. Workspace main remains pinned to feature commit `e63625392ac54c7e460f8b8c2de744b168e02c1f`, so a later pin cleanup is required but not made here.
-- NatDex reference pin: `16b8b9ffd77607debe7ce332cd50d3615f47e125` on `natdex`. Its exhaustive visible `finditem` inventory has 29 rows: 28 TMs use `OBJ_EVENT_GFX_UNUSED_MALE_RECEPTIONIST` / 67; HM07 uses normal `OBJ_EVENT_GFX_ITEM_BALL` / 92.
-- CFRU evidence: the merged implementation retains the existing gold graphic unchanged at `0x065C`, table 6/index 92, lower byte 92 and palette `0x1106`; operational `replace_graphics` supports multiple rows, while its self-test must be expanded beyond one row before rollout.
-- Result: `ROLLOUT_BLOCKED_BY_NATDEX_MISMATCH`; no CFRU, UPR-FVX, DPE, graphics, palette, submodule pin, ROM, save, state, build or generated artifact changed.
+- NatDex reference pin: `16b8b9ffd77607debe7ce332cd50d3615f47e125` on `natdex`. Its exhaustive visible `finditem` inventory has 29 rows: 28 TMs use `OBJ_EVENT_GFX_UNUSED_MALE_RECEPTIONIST` / 67; HM07 uses normal `OBJ_EVENT_GFX_ITEM_BALL` / 92. The HM07 difference is consciously accepted; ID 67 remains reference-only.
+- CFRU evidence: the merged implementation retains the existing gold graphic unchanged at `0x065C`, table 6/index 92, lower byte 92 and palette `0x1106`; operational `replace_graphics` supports multiple rows, while its self-test must be expanded beyond one row before rollout. HM07 changes only Object Graphics ID; item, script, flag, pickup and preserve-only policy remain unchanged, with no extra graphics or palette work.
+- Result: `ROLLOUT_READY_FOR_29_TM_HM_CFRU_POLICY`; no CFRU, UPR-FVX, DPE, graphics, palette, submodule pin, ROM, save, state, build or generated artifact changed.
 
 # Tool Manifest Update - 2026-07-13 - CFRU gold TM itemball one-slot pilot
 

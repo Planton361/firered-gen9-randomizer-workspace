@@ -1,8 +1,8 @@
-# Next steps update - CFRU TM itemball NatDex mismatch
+# Next steps update - CFRU 29-slot TM/HM itemball policy
 
-- Current final rollout status is `ROLLOUT_BLOCKED_BY_NATDEX_MISMATCH`: NatDex uses dedicated graphics for 28 TMs, but not for HM07. Decide whether the future CFRU rollout is TM-only (28), includes an intentional HM07 divergence, or adopts another approved policy.
-- Do not add any rollout `replace_graphics` row before that decision. Do not use NatDex graphics ID 67; retain the CFRU contract `0x065C`, table 6/index 92, low byte 92 and palette `0x1106`.
-- After policy resolution, convert the one-row `scripts/insert.py --check-map-object-overlays` self-test into a fail-closed multiple-row whitelist check, preserving every object count and warp/coord/BG pointer.
+- Current final rollout status is `ROLLOUT_READY_FOR_29_TM_HM_CFRU_POLICY`: all 28 TMs plus HM07 are authorized for the gold CFRU ball. The NatDex HM07 normal-ball difference is consciously accepted; NatDex graphics ID 67 remains reference-only.
+- Use the existing CFRU contract for every rollout row: `0x065C`, table 6/index 92, low byte 92 and palette `0x1106`. HM07 changes only Object Graphics ID; its item, script, flag, pickup behavior and preserve-only policy remain unchanged. No new graphics or palette work is needed.
+- Convert the one-row `scripts/insert.py --check-map-object-overlays` self-test into a fail-closed multiple-row whitelist check, preserving every object count and warp/coord/BG pointer.
 - Then run the documented spotchecks (TM09 pilot, TM05 early Kanto, TM41 elevation 0, HM07 only if included, TM36 Sevii and a normal ball control) and all six fresh UPR-FVX mode/Ban-Bad rows with their required zero counters.
 - Workspace PR #464 and CFRU PR #34 are merged. Workspace `main` still points to `e6362539` rather than merged Compat `8927ba7a`; leave that submodule-pin cleanup to a separate, explicit change.
 
