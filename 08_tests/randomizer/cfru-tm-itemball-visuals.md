@@ -1,14 +1,17 @@
-# CFRU TM/HM itemball visual pilot smoke design
+# CFRU TM/HM itemball visual pilot smoke
 
 Date: 2026-07-13
 
-Status: `DESIGN_READY_FOR_PILOT`
+Status: `PILOT_PENDING_MANUAL_SMOKE`
 
 ## Purpose
 
-This is the smoke handoff for a future CFRU-only first pilot. No implementation,
-ROM, save, state, screenshot, build or generated artifact is part of this
-documentation block.
+This is the smoke handoff for the implemented CFRU-only first pilot. CFRU branch
+`feature/cfru-tm-itemball-visual-pilot`, commit
+`e63625392ac54c7e460f8b8c2de744b168e02c1f` and Draft PR
+<https://github.com/Planton361/CFRU-expansion/pull/34> contain the candidate.
+No runtime pass is claimed. ROMs, saves, states, screenshots, builds and
+generated artifacts remain local and uncommitted.
 
 Pilot:
 
@@ -19,25 +22,32 @@ Pilot:
 
 ## Build and static gates
 
-- [ ] CFRU branch starts from the then-current Compat branch.
-- [ ] Only files in the design allowlist are changed.
-- [ ] `git diff --check` passes.
-- [ ] Syntax-only compile passes for every changed C file.
-- [ ] `python3 scripts/build.py` links the complete CFRU source.
-- [ ] The normal local clean-build flow passes:
+- [x] CFRU branch starts from Compat merge commit `b1cb855b5432d607ac9162d58541ec90ec8fcfd9`.
+- [x] Only files in the design allowlist are changed.
+- [x] `git diff --check` passes.
+- [x] Syntax-only compile passes for every changed C file.
+- [x] `python3 scripts/build.py` links the complete CFRU source.
+- [x] The normal local clean-build flow passes:
   `python3 scripts/clean.py BUILD` followed by `python3 scripts/make.py`.
-- [ ] No ROM, save, state, screenshot, build output or generated tool artifact is
+- [x] No ROM, save, state, screenshot, build output or generated tool artifact is
   staged.
-- [ ] New graphics id is exactly `0x065C`: upper table `6`, lower byte `92`.
-- [ ] Table index `6` was free before registration and `[92]` is in bounds.
-- [ ] The new GraphicsInfo is 16x16, inanimate, one frame, regular Object Event
+- [x] New graphics id is exactly `0x065C`: upper table `6`, lower byte `92`.
+- [x] Table index `6` was free before registration and `[92]` is in bounds.
+- [x] The new GraphicsInfo is 16x16, inanimate, one frame, regular Object Event
   OAM/subsprite lifecycle.
-- [ ] Palette tag remains the existing static `0x1106`; no palette load/free
+- [x] Palette tag remains the existing static `0x1106`; no palette load/free
   calls and no new palette slot exist.
-- [ ] Generator proves object count/local id/coordinate/elevation/movement/range,
+- [x] Generator proves object count/local id/coordinate/elevation/movement/range,
   vanilla full graphics id, script shape, flag and unchanged control object.
-- [ ] Serialized target differs only in graphics-id upper byte; the lower byte
+- [x] Serialized target differs only in graphics-id upper byte; the lower byte
   remains `92`.
+
+The generator check is `python3 scripts/insert.py --check-map-object-overlays`.
+It proves that the only serialized object-table difference is target byte `3`,
+that the Potion control is byte-identical, and that object count plus
+warp/coord/BG pointers remain unchanged. The real clean insertion also passed
+against the local build input. Existing CFRU compiler warnings and the RWX
+linker warning remain; no new pilot-specific warning or error was observed.
 
 ## UPR-FVX save/reload matrix
 

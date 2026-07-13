@@ -1,3 +1,14 @@
+# Tool Manifest Update - 2026-07-13 - CFRU gold TM itemball one-slot pilot
+
+- Workspace branch: `feature/cfru-tm-itemball-visual-pilot`; CFRU submodule candidate pin `e63625392ac54c7e460f8b8c2de744b168e02c1f`.
+- CFRU branch/Draft PR: `feature/cfru-tm-itemball-visual-pilot`, <https://github.com/Planton361/CFRU-expansion/pull/34>, based on Compat merge `b1cb855b5432d607ac9162d58541ec90ec8fcfd9` with the Hidden-Item-Sparkle Revert.
+- Status: `PILOT_PENDING_MANUAL_SMOKE`; build/static gates pass, runtime and UPR-FVX output smoke remain open.
+- Target/control: MtMoon_1F object count `14`; TM09 local id `9` `(11,35)` changes `0x005C -> 0x065C`; Potion local id `10` `(26,32)` stays byte-identical at `0x005C`.
+- Graphics: regular table `6`, designated entry `[92]`, 16x16 one-frame inanimate object; exact indexed color substitution `8->5`, `9->6`, `10->7`; existing static palette tag `0x1106`; no new/dynamic palette.
+- Overlay: `replace_graphics` validates all source-backed target/control fields and standard `finditem` scripts, then changes only graphics-id upper byte `3`. Object count and warp/coord/BG pointers remain unchanged.
+- Checks: `git diff --check`; syntax-only C compiles; `python3 -m py_compile scripts/insert.py`; `python3 scripts/insert.py --check-map-object-overlays`; `python3 scripts/build.py`; `python3 scripts/clean.py BUILD`; `python3 scripts/make.py` including successful insertion. Existing CFRU warnings only.
+- Boundary: UPR-FVX `1a597a667129b50284dd88afb231372b5bd01d7f` and DPE `22ffa27ad09cfacbca841d90e6cbe31e6f9b7fdc` are unchanged. No other map/itemball, Hidden Item, script, flag, item value, runtime hook, palette lifecycle, ROM, save, state, screenshot, build or generated artifact is committed.
+
 # Tool Manifest Update - 2026-07-13 - CFRU TM/HM itemball visual design
 
 - Workspace branch: `design/cfru-tm-itemball-visuals`; documentation-only analysis from clean current `main`.
