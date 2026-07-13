@@ -2,7 +2,21 @@
 
 Date: 2026-07-13
 
-Status: `ROLLOUT_READY_FOR_29_TM_HM_CFRU_POLICY`
+Status: `ROLLOUT_PENDING_RANDOMIZER_AND_RUNTIME_SMOKE`
+
+## Candidate and acceptance boundary
+
+The workspace pins CFRU candidate
+`08b869032735118539411adbcffa421c8a697caa` from branch
+`feature/cfru-tm-itemball-29-slot-rollout`. CFRU PR
+[#35](https://github.com/Planton361/CFRU-expansion/pull/35) is open as a Draft
+against `compat/firered-gen9-randomizer` at base `8927ba7a`; do not merge it
+yet.
+
+Static overlay, generator, build and insertion checks have passed for the
+candidate. This is test readiness only: no new 29-slot runtime smoke and no
+fresh six-row UPR-FVX matrix have been accepted. The runtime and automated
+gates below remain mandatory before rollout acceptance.
 
 ## Accepted 29-slot policy
 
@@ -17,22 +31,27 @@ pickup behavior and preserve-only randomizer policy remain unchanged. Existing
 gold graphics and palette registration are reused; no extra graphics or palette
 work is needed.
 
+Seven rows have no suitable same-map normal `finditem` control ball. They are
+source-backed target-only exceptions, not missing or invented controls: TM05
+Route4, TM45 Route24, TM43 Route25, TM31 SSAnne 1F Room2, TM44 SSAnne B1F
+Room2, TM18 Route15 and TM32 Safari Zone West. Every target continues to have
+its own exact object/script/item/flag validation.
+
 When unblocked, every selected row must preserve its existing object count,
 local id, coordinate, elevation, movement/range, `finditem` script and flag as
 listed in `01_docs/analysis/cfru-tm-itemball-natdex-parity.md`.
 
 ## Required static gate
 
-- [ ] `mapobjectoverlays` contains exactly the policy-approved whitelist;
+- [x] `mapobjectoverlays` contains exactly the policy-approved whitelist;
   no starter ball, Electrode, Eevee, Silph Scope, Lift Key, NPC/gift/Gym TM,
   shop or Hidden Item is included.
-- [ ] Each row has source value `0x005C`, target `0x065C`, low byte `92`, and
-  an exact target/control expectation.
-- [ ] `scripts/insert.py --check-map-object-overlays` proves every replacement
+- [x] Each row has source value `0x005C`, target `0x065C`, low byte `92`, and
+  an exact target expectation plus a validated normal control where one exists.
+- [x] `scripts/insert.py --check-map-object-overlays` proves every replacement
   changes only the graphics upper byte; all counts and warp/coord/BG pointers
-  are preserved. The current one-row self-test must become a multiple-row
-  whitelist test.
-- [ ] CFRU `git diff --check`, Python syntax check, full link and clean
+  are preserved by the multi-row fail-closed whitelist test.
+- [x] CFRU `git diff --check`, Python syntax check, full link and clean
   insertion pass without generated or private artifacts.
 
 ## Runtime spotcheck matrix

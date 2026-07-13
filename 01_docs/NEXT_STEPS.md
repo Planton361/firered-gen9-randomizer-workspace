@@ -1,10 +1,10 @@
-# Next steps update - CFRU 29-slot TM/HM itemball policy
+# Next steps update - CFRU 29-slot TM/HM itemball candidate smoke
 
-- Current final rollout status is `ROLLOUT_READY_FOR_29_TM_HM_CFRU_POLICY`: all 28 TMs plus HM07 are authorized for the gold CFRU ball. The NatDex HM07 normal-ball difference is consciously accepted; NatDex graphics ID 67 remains reference-only.
-- Use the existing CFRU contract for every rollout row: `0x065C`, table 6/index 92, low byte 92 and palette `0x1106`. HM07 changes only Object Graphics ID; its item, script, flag, pickup behavior and preserve-only policy remain unchanged. No new graphics or palette work is needed.
-- Convert the one-row `scripts/insert.py --check-map-object-overlays` self-test into a fail-closed multiple-row whitelist check, preserving every object count and warp/coord/BG pointer.
-- Then run the documented spotchecks (TM09 pilot, TM05 early Kanto, TM41 elevation 0, HM07 only if included, TM36 Sevii and a normal ball control) and all six fresh UPR-FVX mode/Ban-Bad rows with their required zero counters.
-- Workspace PR #464 and CFRU PR #34 are merged. Workspace `main` still points to `e6362539` rather than merged Compat `8927ba7a`; leave that submodule-pin cleanup to a separate, explicit change.
+- Current status is `ROLLOUT_PENDING_RANDOMIZER_AND_RUNTIME_SMOKE`. Workspace candidate pin `08b869032735118539411adbcffa421c8a697caa` is CFRU Draft PR <https://github.com/Planton361/CFRU-expansion/pull/35> on `feature/cfru-tm-itemball-29-slot-rollout`, based on Compat `8927ba7a`. Do not merge PR #35 until both acceptance gates below pass.
+- Static overlay, generator, build and insertion gates have passed for exactly 29 unique targets. The policy remains 28 TMs plus HM07 using `0x005C -> 0x065C`, low byte `0x5C` / `92`, table `6` and palette `0x1106`; NatDex ID 67 remains reference-only. HM07 item, script, flag, pickup and preserve-only policy remain unchanged.
+- Run the documented runtime spotcheck matrix using a fresh candidate: TM09, TM05 early Kanto, TM41 elevation 0, HM07, TM36 Sevii and a normal Item Ball control. Record sanitized results only; no runtime acceptance is currently claimed.
+- Run all six fresh UPR-FVX Field-Item mode/Ban-Bad rows and require every documented zero mismatch counter, including low-byte-92 discovery. No fresh 29-slot UPR-FVX matrix is currently accepted.
+- Preserve the seven source-backed target-only exceptions without inventing controls: TM05 Route4, TM45 Route24, TM43 Route25, TM31 SSAnne 1F Room2, TM44 SSAnne B1F Room2, TM18 Route15 and TM32 Safari Zone West. All other rollout lines retain their validated normal control object.
 
 # Next steps update - CFRU gold TM itemball one-slot pilot
 

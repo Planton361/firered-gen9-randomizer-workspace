@@ -1,3 +1,12 @@
+# Session update - CFRU 29-slot TM/HM itemball candidate pinned for smoke
+
+- Workspace branch: `feature/cfru-tm-itemball-29-slot-rollout-pin`, based on current `main` `1010356`.
+- The `02_external/CFRU-expansion` Gitlink is pinned to CFRU candidate commit `08b869032735118539411adbcffa421c8a697caa` on branch `feature/cfru-tm-itemball-29-slot-rollout`; CFRU Draft PR <https://github.com/Planton361/CFRU-expansion/pull/35> targets `compat/firered-gen9-randomizer` at base `8927ba7a` and must not be merged yet.
+- Working status: `ROLLOUT_PENDING_RANDOMIZER_AND_RUNTIME_SMOKE`. The candidate is test-ready, not accepted: static overlay, generator, build and insertion checks passed, but neither a new runtime smoke nor the fresh six-row UPR-FVX matrix is accepted for the 29-slot candidate.
+- Policy remains exactly 28 visible TMs plus HM07 with the existing gold CFRU graphics ID `0x065C` (`0x005C -> 0x065C`, low byte `0x5C` / `92`, table `6`, palette `0x1106`). No graphics or palette resource was added. HM07 changes only Object Graphics ID; its item, script, flag, pickup behavior and preserve-only randomizer policy remain unchanged.
+- Seven target rows have no suitable same-map normal `finditem` control ball and are explicitly source-backed target-only exceptions: TM05 Route4, TM45 Route24, TM43 Route25, TM31 SSAnne 1F Room2, TM44 SSAnne B1F Room2, TM18 Route15 and TM32 Safari Zone West. No synthetic control object is implied or added.
+- No CFRU, UPR-FVX or DPE file was edited in this workspace block. No ROM, save, state, build, screenshot, generated artifact, private log or other external pin changed.
+
 # Session update - CFRU TM itemball NatDex parity handoff
 
 - GitHub-aligned local refs show Workspace PR #464 merged to `main` as `1d805e4` and CFRU PR #34 merged to `compat/firered-gen9-randomizer` as `8927ba7a`; earlier open-Draft wording below is historical and superseded.

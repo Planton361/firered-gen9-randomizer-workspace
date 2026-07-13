@@ -1,3 +1,12 @@
+# Tool Manifest Update - 2026-07-13 - CFRU 29-slot TM/HM itemball candidate pin
+
+- Workspace branch: `feature/cfru-tm-itemball-29-slot-rollout-pin`, based on `main` `1010356`.
+- CFRU Gitlink candidate: `02_external/CFRU-expansion` is pinned to `08b869032735118539411adbcffa421c8a697caa` on `feature/cfru-tm-itemball-29-slot-rollout`; CFRU Draft PR <https://github.com/Planton361/CFRU-expansion/pull/35> is open against `compat/firered-gen9-randomizer` base `8927ba7a` and is not approved for merge.
+- Candidate contract: exactly 29 targets (28 TMs plus HM07), every target `0x005C -> 0x065C` with lower byte `0x5C` / `92`, existing table `6` / index `92` and palette `0x1106`. Existing graphics and palette resources are reused; NatDex ID `67` remains reference-only.
+- Verified CFRU evidence: static overlay self-test, generator check, Python compile, full build and clean insertion all pass. This is `ROLLOUT_PENDING_RANDOMIZER_AND_RUNTIME_SMOKE`, not rollout acceptance: a fresh runtime spotcheck matrix and the six separate UPR-FVX Field-Item gate rows remain open.
+- HM07 changes only Object Graphics ID; item, script, flag, pickup behavior and preserve-only randomizer policy remain unchanged. Source-backed target-only exceptions with no suitable normal same-map control are TM05 Route4, TM45 Route24, TM43 Route25, TM31 SSAnne 1F Room2, TM44 SSAnne B1F Room2, TM18 Route15 and TM32 Safari Zone West; no controls were invented.
+- Boundary: no CFRU, UPR-FVX or DPE tracked file, graphics, palette, ROM, save, state, build, screenshot, generated artifact or private log was changed by the workspace pin block.
+
 # Tool Manifest Update - 2026-07-13 - CFRU TM itemball NatDex parity
 
 - Workspace analysis branch: `analysis/cfru-tm-itemball-natdex-parity`; all external repositories were inspected read-only.

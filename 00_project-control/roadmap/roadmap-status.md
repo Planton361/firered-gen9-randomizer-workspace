@@ -1,13 +1,15 @@
-# Roadmap status update - CFRU 29-slot TM/HM itemball policy
+# Roadmap status update - CFRU 29-slot TM/HM itemball candidate pinned
 
-- Status impact: `ROLLOUT_READY_FOR_29_TM_HM_CFRU_POLICY`. The exact 29-slot
-  object whitelist remains structurally NatDex-aligned; its normal-ball HM07 is
-  a consciously accepted visual divergence.
-- All 28 TMs and HM07 target the existing CFRU gold graphics ID `0x065C`
-  (table 6, low byte 92, palette `0x1106`); NatDex ID 67 remains reference-only.
-- The later multi-row overlay self-test, existing TM09 runtime smoke and
-  six-row UPR-FVX matrix remain implementation gates. No additional graphics
-  or palette work is needed.
+- Status impact: `ROLLOUT_PENDING_RANDOMIZER_AND_RUNTIME_SMOKE`. CFRU candidate
+  `08b869032735118539411adbcffa421c8a697caa` is pinned for review; Draft PR
+  #35 remains open and must not be merged before acceptance evidence exists.
+- The exact 29-slot policy remains 28 TMs plus HM07 at existing gold graphics
+  ID `0x065C` (source `0x005C`, table 6, low byte 92, palette `0x1106`);
+  NatDex ID 67 stays reference-only. HM07's item, script, flag, pickup and
+  preserve-only policy are unchanged.
+- Static overlay, generator, build and insertion gates pass. New runtime
+  spotchecks and the six-row fresh UPR-FVX matrix remain the required separate
+  acceptance gates; no graphics or palette work is needed.
 
 # Roadmap status update - CFRU TM/HM itemball visual design
 
