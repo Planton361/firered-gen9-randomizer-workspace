@@ -1,3 +1,13 @@
+# Tool Manifest Update - 2026-07-13 - CFRU hidden item sparkle pilot removal
+
+- Closed without merge: CFRU Draft PR `https://github.com/Planton361/CFRU-expansion/pull/32` and Workspace Draft PR `https://github.com/Planton361/firered-gen9-randomizer-workspace/pull/461`.
+- CFRU Revert branch/commit/Draft PR: `revert/cfru-hidden-item-sparkle-pilot`, `acf1cf38a0acab1fd8a88be9b687e3b02faeb50b`, `https://github.com/Planton361/CFRU-expansion/pull/33`; base `compat/firered-gen9-randomizer` `325212e325023284bd6198a3a9cd75b60e0c21f8`.
+- Workspace Revert branch: `revert/cfru-hidden-item-sparkle-pilot`; CFRU submodule pins the Revert commit for review against current `main`.
+- Removal scope: exactly 186 pilot-only lines from CFRU `src/overworld.c`; resulting file matches pre-pilot commit `9c105d156e219e7a59069f47d5ee49f1fdcfb6dc` exactly. Unrelated Name-Rater, map-overlay, DPE/Randomizer and Compat changes remain intact.
+- Failure summary: invisible distant map-entry one-shot; second-item starvation under task/ownership models; stray Sparkles; runtime palette corruption from rejected private resources; Cyan-style frame scan blocked by the missing source-backed post-`CameraUpdate` hook.
+- Checks: pilot-name/coordinate searches empty; CFRU `git diff --check`; syntax-only `src/overworld.c`; `python3 scripts/build.py` including link (existing RWX warning only); no build artifact in Git status.
+- Feature status: `BLOCKED_NEEDS_SOURCE_BACKED_OVERWORLD_FRAME_HOOK`. No raw address, byte replacement, new hook, marker, Itemfinder, DPE or UPR-FVX change is included.
+
 # Tool Manifest Update - 2026-05-31 - CFRU hidden item sparkle pilot
 
 - Workspace branch: `feature/cfru-hidden-item-sparkle-pilot`.

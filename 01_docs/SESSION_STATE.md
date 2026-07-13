@@ -1,3 +1,14 @@
+# Session update - CFRU hidden item sparkle pilot removed and blocked
+
+- Failed Draft PRs were closed without merge: CFRU #32 and Workspace #461.
+- CFRU Revert branch/commit/Draft PR: `revert/cfru-hidden-item-sparkle-pilot`, `acf1cf38a0acab1fd8a88be9b687e3b02faeb50b`, `https://github.com/Planton361/CFRU-expansion/pull/33`, targeting `compat/firered-gen9-randomizer`.
+- The cumulative pilot inventory from pre-pilot `9c105d156e219e7a59069f47d5ee49f1fdcfb6dc` through Compat `325212e325023284bd6198a3a9cd75b60e0c21f8` was limited to 186 added lines in `src/overworld.c`. The Revert removes exactly those lines without resetting the branch or changing unrelated Compat history.
+- Removed: Viridian pilot defines/data/coordinates, transition and resume calls, task/cooldown state, BG-event/visibility/readiness helpers, Sprite-slot discovery/ownership/marker code, manual stop/active-list cleanup, and all later simple-spawn pilot work.
+- Sanitized failure record: the map-entry one-shot was not visible when the distant coordinates were reached; task/ownership variants lost the second item; stray Sparkles occurred; the rejected private graphics/palette path caused runtime palette corruption; and the source-faithful Cyan frame scan cannot be installed without a source-backed Overworld hook after `CameraUpdate`.
+- `OverworldBasic` and `CB2_OverworldBasic` remain bound to Vanilla addresses in CFRU. Raw-address/byte replacement and a larger `OverworldBasic` port are not approved for this feature scope.
+- Status: `BLOCKED_NEEDS_SOURCE_BACKED_OVERWORLD_FRAME_HOOK`. No Hidden-Item marker remains in the Revert candidate.
+- CFRU checks passed: exact pre-pilot file comparison, pilot-name/coordinate searches, `git diff --check`, syntax-only compile of `src/overworld.c`, and `python3 scripts/build.py` including link with only the existing RWX warning.
+
 # Session update - CFRU hidden item sparkle pilot
 
 - Branch: `feature/cfru-hidden-item-sparkle-pilot`.

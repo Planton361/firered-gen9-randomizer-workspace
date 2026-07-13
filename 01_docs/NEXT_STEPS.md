@@ -1,3 +1,11 @@
+# Next steps update - CFRU hidden item sparkle pilot removed and blocked
+
+- Review CFRU Revert Draft PR `https://github.com/Planton361/CFRU-expansion/pull/33` and the Workspace Revert handoff; merge neither until the clean removal and pin are accepted.
+- Keep Hidden-Item Sparkle at `BLOCKED_NEEDS_SOURCE_BACKED_OVERWORLD_FRAME_HOOK`. Do not restart marker implementation through transition/resume tasks, Sprite ownership, private assets, Itemfinder behavior, raw addresses or byte replacement.
+- A future implementation may reopen only after CFRU gains an approved source-backed normal Overworld-frame extension point after `CameraUpdate` and a source-backed camera-focus API or equivalent proven coordinate contract.
+- Preserve the Name-Rater Pokecenter rollout, map-object overlay infrastructure, DPE/Randomizer compatibility and all unrelated QoL behavior while the Revert is reviewed.
+- No gameplay sparkle smoke is pending for this Revert. Validation is removal/build/link plus normal regression smoke after integration; old-ROM Savestates are not compatibility evidence.
+
 # Next steps update - CFRU hidden item sparkle pilot
 
 - Treat CFRU Draft PR `https://github.com/Planton361/CFRU-expansion/pull/28` as the current Viridian Forest hidden-item sparkle pilot candidate.
