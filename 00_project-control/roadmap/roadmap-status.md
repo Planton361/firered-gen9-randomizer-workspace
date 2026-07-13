@@ -1,3 +1,11 @@
+# Roadmap status update - CFRU TM/HM itemball visual design
+
+- Added the source-backed design and future smoke gate for a static gold/yellow Object Event graphic on visible TM/HM Field Item slots.
+- Status impact: `DESIGN_READY_FOR_PILOT` for one MtMoon_1F TM09 target with the nearby Potion as unchanged normal control.
+- The compatibility hinge is explicit: proposed CFRU id `0x065C` selects free upper table 6 but retains lower byte `92`, which UPR-FVX uses to discover visible Gen 3 Field Items.
+- Current UPR-FVX modes preserve the 28 TM slot classes; HM07 is banned from normal pools and preserve-only. No output metadata, runtime hook or graphics writer is required.
+- No implementation or support promotion is claimed. CFRU graphics/overlay work, clean build, UPR save/reload matrix and runtime smoke remain future gates.
+
 # Roadmap status update - Hidden-Item Sparkle pilot removed and blocked
 
 - CFRU Revert Draft PR `https://github.com/Planton361/CFRU-expansion/pull/33` removes the complete unstable Viridian Forest Hidden-Item-Sparkle pilot while preserving unrelated Compat work.

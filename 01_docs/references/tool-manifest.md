@@ -1,3 +1,14 @@
+# Tool Manifest Update - 2026-07-13 - CFRU TM/HM itemball visual design
+
+- Workspace branch: `design/cfru-tm-itemball-visuals`; documentation-only analysis from clean current `main`.
+- Read-only pins: CFRU `325212e325023284bd6198a3a9cd75b60e0c21f8`, UPR-FVX `1a597a667129b50284dd88afb231372b5bd01d7f`, DPE `22ffa27ad09cfacbca841d90e6cbe31e6f9b7fdc`, pret FireRed `e060ab955b5dc9ac1c4904c2cd141683615cf477`, CyanSMP64 FireRed NatDex `16b8b9ffd77607debe7ce332cd50d3615f47e125`.
+- New design: `01_docs/analysis/cfru-tm-itemball-visuals.md`; future smoke: `08_tests/randomizer/cfru-tm-itemball-visuals.md`.
+- Result: `DESIGN_READY_FOR_PILOT` for a one-slot MtMoon_1F TM09 gold-ball pilot with a same-map Potion control.
+- CFRU evidence: 16-bit graphics ids select `gOverworldTableSwitcher` by upper byte; table 6 is currently free; Object Graphics can use regular 16x16 OAM/subsprite/graphics data and registered static palette tag `0x1106`. Existing `mapobjectoverlays` copies and repoints map event tables but currently needs a fail-closed replace-only operation.
+- UPR-FVX evidence: the Gen 3 visible Field Item scan reads only object-template byte 1 and expects `ItemBallPic=92`; proposed id `0x065C` retains that byte. ItemRandomizer and writer guards preserve TM/non-TM slot class in Shuffle, Random and Random Even; Ban Bad affects the non-TM pool; HM07 is preserve-only.
+- Source inventory: 29 vanilla visible TM/HM balls (28 TM, one HM07); all gifts, NPC/static sources, shops, Hidden Items and special ball-lookalike objects remain outside the feature.
+- Boundary: no CFRU, UPR-FVX or DPE source, graphics, palette, submodule pin, external checkout, ROM, save, state, screenshot, build artifact, tool binary, generated output, raw-address port or binary patch was changed.
+
 # Tool Manifest Update - 2026-07-13 - CFRU hidden item sparkle pilot removal
 
 - Closed without merge: CFRU Draft PR `https://github.com/Planton361/CFRU-expansion/pull/32` and Workspace Draft PR `https://github.com/Planton361/firered-gen9-randomizer-workspace/pull/461`.

@@ -1,3 +1,14 @@
+# Next steps update - CFRU TM/HM itemball visual design
+
+- Treat `01_docs/analysis/cfru-tm-itemball-visuals.md` as the source-backed design and `08_tests/randomizer/cfru-tm-itemball-visuals.md` as the complete future pilot gate.
+- Status is `DESIGN_READY_FOR_PILOT`; this documentation PR does not authorize implementation.
+- First implementation must remain one map/one target: MtMoon_1F bank 1/map 1, TM09 local id 9 at `(11, 35)`, with Potion local id 10 at `(26, 32)` as the unchanged normal control and expected object count 14.
+- Preserve UPR-FVX discovery by using exactly `0x065C`: new CFRU Object Graphics table 6, low byte `92`. Reject any id that changes the lower byte used by `Gen3RomHandler.preprocessMaps()`.
+- Extend `mapobjectoverlays` only with a fail-closed `replace_graphics` operation. It must copy the full existing template, validate every source-backed field and change only the graphics-id upper byte; object count and warp/coord/BG pointers remain unchanged.
+- Use a regular 16x16 one-frame inanimate CFRU Object Graphics entry and existing static palette tag `0x1106`. Do not add private runtime palette management.
+- Before rollout, require CFRU syntax/link/clean build, all six UPR-FVX mode/Ban-Bad save-reload rows, and the MtMoon graphics/pickup/flag/palette runtime matrix.
+- Do not change UPR-FVX, DPE, pickup scripts, item values, Hidden Items, other maps, gifts, NPC items, shops, starter/static balls, runtime Overworld hooks, raw addresses or binary replacements in the first pilot.
+
 # Next steps update - CFRU hidden item sparkle pilot removed and blocked
 
 - Review CFRU Revert Draft PR `https://github.com/Planton361/CFRU-expansion/pull/33` and the Workspace Revert handoff; merge neither until the clean removal and pin are accepted.

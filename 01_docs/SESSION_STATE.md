@@ -1,3 +1,16 @@
+# Session update - CFRU TM/HM itemball visual design
+
+- Branch: `design/cfru-tm-itemball-visuals` from clean current `main` after Workspace PR #462.
+- Added a documentation-only, source-backed design for gold/yellow visible TM/HM Object Events while normal visible Field Items and invisible Hidden Items remain unchanged.
+- Final design status: `DESIGN_READY_FOR_PILOT`.
+- Vanilla inventory: 29 visible TM/HM balls, comprising 28 TM slots and the preserve-only HM07 ball. Standard visible `finditem` slots use the same lower graphics id `92`.
+- Key compatibility contract: CFRU reconstructs a 16-bit Object Graphics id from lower/upper bytes, while UPR-FVX's Gen 3 Field Item scanner checks only object-template byte 1 against `ItemBallPic=92`. Proposed gold id `0x065C` selects free CFRU table 6 and retains low byte 92, so UPR-FVX continues to own and write the item value.
+- UPR-FVX source and existing reload smokes confirm TM/non-TM slot typing is preserved by Shuffle, Random and Random Even; Ban Bad only changes the non-TM pool. HM07 is banned from normal pools and remains unchanged.
+- The current CFRU overlay generator only appends. A future pilot may add a fail-closed `replace_graphics` operation which copies the existing object template and changes only the graphics-id upper byte.
+- Pilot/control: MtMoon_1F bank 1/map 1, expected 14 objects; TM09 local id 9 at `(11, 35)` becomes gold, Potion local id 10 at `(26, 32)` remains the normal control.
+- Graphics plan: regular 16x16 one-frame inanimate Object Graphics entry; reuse existing palette tag `0x1106` and its unused muted-gold ramp, with no new or dynamic palette.
+- No CFRU, UPR-FVX or DPE code, graphics, palettes, submodule pins, ROMs, saves, states, screenshots, builds, generated artifacts, raw-address ports or binary patches were changed.
+
 # Session update - CFRU hidden item sparkle pilot removed and blocked
 
 - Failed Draft PRs were closed without merge: CFRU #32 and Workspace #461.
