@@ -2,15 +2,20 @@
 
 Date: 2026-07-13
 
-Status: `ROLLOUT_BLOCKED_BY_NATDEX_MISMATCH`
+Status: `ROLLOUT_READY_FOR_29_TM_HM_CFRU_POLICY`
 
-## Blocker and prerequisite
+## Accepted 29-slot policy
 
-Do not add rollout overlay rows yet. NatDex uses its dedicated graphic for all
-28 TM balls but not for HM07, which remains `OBJ_EVENT_GFX_ITEM_BALL`. Resolve
-the explicit HM07 product policy first. Never copy NatDex graphics ID `67` into
-CFRU; the only permitted CFRU target is `0x065C` (table 6, low byte 92,
-palette `0x1106`).
+NatDex uses its dedicated graphic for all 28 TM balls but leaves HM07 as
+`OBJ_EVENT_GFX_ITEM_BALL`. The project consciously accepts that structural-only
+reference divergence: HM07 also receives the gold CFRU ball. Never copy NatDex
+graphics ID `67` into CFRU; every one of the 29 rows targets `0x065C` (table 6,
+low byte 92, palette `0x1106`).
+
+HM07 changes only Object Graphics ID. Its item, `finditem` script, flag,
+pickup behavior and preserve-only randomizer policy remain unchanged. Existing
+gold graphics and palette registration are reused; no extra graphics or palette
+work is needed.
 
 When unblocked, every selected row must preserve its existing object count,
 local id, coordinate, elevation, movement/range, `finditem` script and flag as
@@ -40,7 +45,7 @@ an in-game save (not a savestate), and record only sanitized results.
 | Existing pilot | TM09, MtMoon_1F, 1/1, LID 9 | Gold object, normal Potion control LID 10, pickup, original flags, both pickup orders, re-entry and save/reload. |
 | Early Kanto | TM05, Route4, 3/22, LID 3 | Gold object, `finditem` reward, original flag and map transition remain correct. |
 | Elevation 0 | TM41, SilphCo_4F, 1/50, LID 8 | Gold object at elevation 0, pickup/removal and map event behavior correct. |
-| HM07 | FourIsland_IcefallCave_1F, 1/111, LID 2 | Run only if policy includes HM07; verify its selected visual policy, preserved HM07 reward, flag and re-entry. |
+| HM07 | FourIsland_IcefallCave_1F, 1/111, LID 2 | Gold object, preserved HM07 reward, original flag, pickup/removal and re-entry. |
 | Sevii TM | TM36, FiveIsland_RocketWarehouse, 1/114, LID 8 | Gold object at elevation 0, pickup/removal, flag and map transition correct. |
 | Normal control | Any nearby non-TM `OBJ_EVENT_GFX_ITEM_BALL` | Remains red/white, retains normal reward/flag, no palette or sprite corruption. |
 
