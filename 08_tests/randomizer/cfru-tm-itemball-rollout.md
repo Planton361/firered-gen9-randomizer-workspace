@@ -2,7 +2,21 @@
 
 Date: 2026-07-13
 
-Status: `ROLLOUT_READY_FOR_29_TM_HM_CFRU_POLICY`
+Status: `M001_CANDIDATE_ACCEPTANCE_ACTIVE`
+
+## M-001 candidate and acceptance boundary
+
+**CONFIRMED CURRENT STATE:** The workspace pins CFRU candidate
+`08b869032735118539411adbcffa421c8a697caa`. CFRU PR #35 is the active product
+candidate. No final acceptance or product merge is claimed in this bootstrap.
+
+**LEGACY / OBSOLETE:** Workspace PR #467 is closed unmerged. Its branch and
+commit are supporting handoff evidence only; it is not the active integration
+PR.
+
+**CONFIRMED CURRENT STATE:** Static overlay, generator, build, and insertion
+gates passed for this candidate. The runtime and fresh candidate-specific
+six-row UPR-FVX gates below remain mandatory.
 
 ## Accepted 29-slot policy
 
@@ -17,22 +31,28 @@ pickup behavior and preserve-only randomizer policy remain unchanged. Existing
 gold graphics and palette registration are reused; no extra graphics or palette
 work is needed.
 
+Seven rows have no suitable same-map normal `finditem` control ball. They are
+source-backed target-only exceptions, not missing or invented controls: TM05
+Route4, TM45 Route24, TM43 Route25, TM31 SSAnne 1F Room2, TM44 SSAnne B1F
+Room2, TM18 Route15, and TM32 Safari Zone West. Every target retains its own
+exact object/script/item/flag validation.
+
 When unblocked, every selected row must preserve its existing object count,
 local id, coordinate, elevation, movement/range, `finditem` script and flag as
 listed in `01_docs/analysis/cfru-tm-itemball-natdex-parity.md`.
 
 ## Required static gate
 
-- [ ] `mapobjectoverlays` contains exactly the policy-approved whitelist;
+- [x] `mapobjectoverlays` contains exactly the policy-approved whitelist;
   no starter ball, Electrode, Eevee, Silph Scope, Lift Key, NPC/gift/Gym TM,
   shop or Hidden Item is included.
-- [ ] Each row has source value `0x005C`, target `0x065C`, low byte `92`, and
+- [x] Each row has source value `0x005C`, target `0x065C`, low byte `92`, and
   an exact target/control expectation.
-- [ ] `scripts/insert.py --check-map-object-overlays` proves every replacement
+- [x] `scripts/insert.py --check-map-object-overlays` proves every replacement
   changes only the graphics upper byte; all counts and warp/coord/BG pointers
   are preserved. The current one-row self-test must become a multiple-row
   whitelist test.
-- [ ] CFRU `git diff --check`, Python syntax check, full link and clean
+- [x] CFRU `git diff --check`, Python syntax check, full link and clean
   insertion pass without generated or private artifacts.
 
 ## Runtime spotcheck matrix
@@ -51,6 +71,16 @@ an in-game save (not a savestate), and record only sanitized results.
 
 For every case, also check player/NPC/environment palettes, no sprite/tile loss,
 and no warp/trainer/object-event regression.
+
+## Current user-reported runtime evidence
+
+**CONFIRMED CURRENT STATE:** The user reports correct TM/HM-versus-normal-ball
+color behavior, pickup/removal, map re-entry, in-game save/reload, and no
+sprite/tile/palette corruption.
+
+**UNKNOWN:** Representative-slot coverage is pending confirmation. The report
+does not identify which required matrix slots were exercised, so no matrix row
+is silently marked complete.
 
 ## Separate automated UPR-FVX gate
 
