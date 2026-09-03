@@ -50,11 +50,12 @@ duplicated workflow instructions are replaced by canonical docs.
 
 ## New source of truth
 
-**INTENDED FUTURE STATE:** After merge, `AGENTS.md` and `docs/` are the
-repository-backed workflow baseline. GitHub remains persistent truth.
+**CONFIRMED CURRENT STATE:** `AGENTS.md` and `docs/` are the canonical
+repository-backed workflow baseline. GitHub remains the persistent source of
+truth.
 
 ## Workflow baseline
 
-**INTENDED FUTURE STATE:** Effective only after merge to `main`.
+**CONFIRMED CURRENT STATE:** Activated by merge to `main`.
 
-Final merge SHA: `TBD after merge`
+Final merge SHA: `65da597b6b57d40d4698a221809741912abe8e3c`

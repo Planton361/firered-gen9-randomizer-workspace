@@ -1,6 +1,8 @@
 # 0001 — Workflow baseline
 
-**Status:** Accepted for M-000R; effective after merge to `main`.
+**Status:** Accepted for M-000R; effective on `main`.
+
+**Baseline merge SHA:** `65da597b6b57d40d4698a221809741912abe8e3c`
 
 ## Decision
 
@@ -17,5 +19,5 @@ remain supporting evidence, not canonical policy.
 ## Consequences
 
 M-000R introduces no product changes, broad refactors, dependency migrations,
-or submodule Gitlink changes. The baseline takes effect only after merge; until
-then this decision is **INTENDED FUTURE STATE**.
+or submodule Gitlink changes. The baseline is **CONFIRMED CURRENT STATE** after
+merge to `main`.

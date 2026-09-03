@@ -1,10 +1,16 @@
 # Roadmap
 
-## Active milestone
+## M-000R closure
 
-**CONFIRMED CURRENT STATE:** M-000R — Workflow Adoption is active and blocks
-regular work until its canonical baseline is merged. It does not renumber or
-rewrite historical work.
+**CONFIRMED CURRENT STATE:** M-000R — Workflow Adoption: **COMPLETE**. The
+canonical workflow baseline was activated by merge commit
+`65da597b6b57d40d4698a221809741912abe8e3c`. Historical work is neither
+renumbered nor rewritten.
+
+## Next regular milestone
+
+**INTENDED FUTURE STATE:** M-001 is the next regular milestone. It is not
+started by this M-000R closure branch.
 
 **CONFIRMED CURRENT STATE:** The Excel roadmap is a derived visual dashboard,
 not canonical truth.
@@ -13,9 +19,8 @@ not canonical truth.
 
 **CONFIRMED CURRENT STATE — suspended candidate:** CFRU PR #35 and Workspace
 PR #467 contain the current TM/HM itemball rollout. They are not canceled and
-receive no support promotion in M-000R. The next milestone, **M-001**, is to
-complete their 29-slot TM/HM itemball acceptance and integration after an
-explicit restart decision.
+remain suspended pending an explicit M-001 restart. M-001 is to complete their
+29-slot TM/HM itemball acceptance and integration.
 
 ## Later tracks
 
