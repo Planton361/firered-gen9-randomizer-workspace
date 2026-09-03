@@ -226,13 +226,13 @@ This repository does not provide or link to ROM downloads.
 
 ### Clone the workspace
 
-After the proposed repository rename:
+Use the current repository name:
 
 ```bash
 git clone --recurse-submodules \
-  https://github.com/Planton361/firered-gen9-randomizer.git
+  https://github.com/Planton361/firered-gen9-randomizer-workspace.git
 
-cd firered-gen9-randomizer
+cd firered-gen9-randomizer-workspace
 ```
 
 For an existing checkout:
@@ -241,18 +241,18 @@ For an existing checkout:
 git submodule update --init --recursive
 ```
 
-### Read the active project state
+### Read the canonical project state
 
 Start with:
 
-1. [`01_docs/PROJECT_BRIEF.md`](./01_docs/PROJECT_BRIEF.md)
-2. [`00_project-control/roadmap/roadmap-status.md`](./00_project-control/roadmap/roadmap-status.md)
-3. [`01_docs/SESSION_STATE.md`](./01_docs/SESSION_STATE.md)
-4. [`01_docs/NEXT_STEPS.md`](./01_docs/NEXT_STEPS.md)
-5. [`01_docs/references/tool-manifest.md`](./01_docs/references/tool-manifest.md)
+1. [docs/PROJECT.md](docs/PROJECT.md)
+2. [docs/ENGINEERING_RULES.md](docs/ENGINEERING_RULES.md)
+3. [docs/ENVIRONMENT.md](docs/ENVIRONMENT.md)
+4. [docs/ROADMAP.md](docs/ROADMAP.md)
+5. [AGENTS.md](AGENTS.md)
 
-The newest entries in the status and handoff files supersede older historical
-entries below them.
+`01_docs/`, `08_tests/`, and `00_project-control/` remain valuable historical
+and supporting evidence. They do not override the canonical `docs/` workflow.
 
 ### Prepare the local environment
 
@@ -260,7 +260,8 @@ Follow:
 
 - [`01_docs/setup/workspace-build-randomizer-integration-plan.md`](./01_docs/setup/workspace-build-randomizer-integration-plan.md)
 - the currently pinned component documentation;
-- the relevant test plan under [`08_tests/`](./08_tests/).
+- the relevant test plan index in
+  [`08_tests/randomizer/README.md`](./08_tests/randomizer/README.md).
 
 Build commands and expected outputs may change with component pins. Do not copy
 commands from an older session without checking the current manifest.
@@ -296,7 +297,7 @@ Do not promote a feature beyond the evidence level actually completed.
 ## Repository structure
 
 ```text
-firered-gen9-randomizer/
+firered-gen9-randomizer-workspace/
 ├── 00_project-control/
 │   └── roadmap/              # Roadmap and high-level project status
 ├── 01_docs/
@@ -391,6 +392,12 @@ and dedicated runtime matrices.
 
 | Document | Purpose |
 |---|---|
+| [docs/PROJECT.md](docs/PROJECT.md) | Canonical project purpose, scope, ownership, and support state |
+| [docs/ENGINEERING_RULES.md](docs/ENGINEERING_RULES.md) | Canonical Git, PR, safety, and completion rules |
+| [docs/ENVIRONMENT.md](docs/ENVIRONMENT.md) | Canonical environment baseline and verified tool expectations |
+| [docs/REPRODUCIBILITY.md](docs/REPRODUCIBILITY.md) | Revision and evidence requirements |
+| [docs/ROADMAP.md](docs/ROADMAP.md) | Canonical milestone roadmap |
+| [docs/ADOPTION_REPORT.md](docs/ADOPTION_REPORT.md) | M-000R migration findings and ChatGPT Project handoff |
 | [`01_docs/PROJECT_BRIEF.md`](./01_docs/PROJECT_BRIEF.md) | Stable project purpose and boundaries |
 | [`00_project-control/roadmap/roadmap-status.md`](./00_project-control/roadmap/roadmap-status.md) | Current roadmap-level status |
 | [`01_docs/SESSION_STATE.md`](./01_docs/SESSION_STATE.md) | Latest implementation and validation handoff |
@@ -398,7 +405,7 @@ and dedicated runtime matrices.
 | [`01_docs/DECISIONS_INDEX.md`](./01_docs/DECISIONS_INDEX.md) | Index of accepted technical decisions |
 | [`01_docs/references/source-index.md`](./01_docs/references/source-index.md) | External sources and reference projects |
 | [`01_docs/references/tool-manifest.md`](./01_docs/references/tool-manifest.md) | Tool versions, branches, commits and local assumptions |
-| [`08_tests/`](./08_tests/) | Smoke plans, compatibility matrices and sanitized evidence |
+| [`08_tests/randomizer/README.md`](./08_tests/randomizer/README.md) | Smoke plans, compatibility matrices and sanitized evidence |
 | [`AGENTS.md`](./AGENTS.md) | Repository rules for coding agents |
 
 ## Upstream projects and references

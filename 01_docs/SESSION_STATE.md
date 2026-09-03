@@ -1,3 +1,10 @@
+> **LEGACY / HISTORICAL EVIDENCE:** This file is retained as a chronological
+> handoff record. Canonical workflow, current scope, and roadmap are
+> [docs/ENGINEERING_RULES.md](../../docs/ENGINEERING_RULES.md),
+> [docs/PROJECT.md](../../docs/PROJECT.md), and
+> [docs/ROADMAP.md](../../docs/ROADMAP.md). Do not treat an older entry below
+> as a current normative instruction.
+
 # Session update - CFRU TM itemball NatDex parity handoff
 
 - GitHub-aligned local refs show Workspace PR #464 merged to `main` as `1d805e4` and CFRU PR #34 merged to `compat/firered-gen9-randomizer` as `8927ba7a`; earlier open-Draft wording below is historical and superseded.
