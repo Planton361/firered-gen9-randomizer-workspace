@@ -39,13 +39,14 @@ refactors. ROMs, saves, emulator states, builds, tool binaries, secrets, and
 evidence is scoped and revision-specific. The complete Name Rater rollout has
 a documented manual pass with caveats.
 
-**SUSPENDED:** CFRU PR #35 and Workspace PR #467 are in-flight TM/HM itemball
-rollout work. They are neither canceled nor promoted by this milestone. Their
-acceptance/integration is the next candidate milestone after M-000R.
+**CONFIRMED CURRENT STATE — suspended candidate:** CFRU PR #35 and Workspace
+PR #467 are in-flight TM/HM itemball rollout work. They are neither canceled
+nor promoted by this milestone. Their acceptance/integration is the next
+candidate milestone after M-000R.
 
-**BLOCKED:** Hidden Item sparkle remains blocked until a source-backed
-Overworld frame hook is available. No raw-address or opaque binary workaround
-is authorized.
+**CONFIRMED CURRENT STATE — blocked feature:** Hidden Item sparkle remains
+blocked until a source-backed Overworld frame hook is available. No raw-address
+or opaque binary workaround is authorized.
 
 ## Canonical project instruction for ChatGPT Project settings
 

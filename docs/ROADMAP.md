@@ -11,10 +11,11 @@ not canonical truth.
 
 ## Suspended candidate work
 
-**SUSPENDED:** CFRU PR #35 and Workspace PR #467 contain the current TM/HM
-itemball rollout. They are not canceled and receive no support promotion in
-M-000R. The next milestone, **M-001**, is to complete their 29-slot TM/HM
-itemball acceptance and integration after an explicit restart decision.
+**CONFIRMED CURRENT STATE — suspended candidate:** CFRU PR #35 and Workspace
+PR #467 contain the current TM/HM itemball rollout. They are not canceled and
+receive no support promotion in M-000R. The next milestone, **M-001**, is to
+complete their 29-slot TM/HM itemball acceptance and integration after an
+explicit restart decision.
 
 ## Later tracks
 
@@ -30,8 +31,9 @@ itemball acceptance and integration after an explicit restart decision.
 
 - **CONFIRMED CURRENT STATE:** Name Rater complete pass is completed, with its
   recorded manual-smoke caveats.
-- **BLOCKED:** Hidden Item sparkle needs a source-backed Overworld frame hook.
-- **LEGACY / HISTORICAL EVIDENCE:** Prior roadmap numbering, detailed queues,
+- **CONFIRMED CURRENT STATE — blocked feature:** Hidden Item sparkle needs a
+  source-backed Overworld frame hook.
+- **LEGACY / OBSOLETE:** Prior roadmap numbering, detailed queues,
   and status remain in
   [00_project-control/roadmap/roadmap-status.md](../00_project-control/roadmap/roadmap-status.md)
   without renumbering.
