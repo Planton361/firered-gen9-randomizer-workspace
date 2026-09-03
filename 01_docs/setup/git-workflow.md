@@ -1,3 +1,8 @@
+> **LEGACY / SUPPORTING GUIDANCE:** The canonical Git and PR workflow is
+> [docs/ENGINEERING_RULES.md](../../docs/ENGINEERING_RULES.md). The POSIX
+> `check_git_safety.py` check is the current default; PowerShell guidance below
+> is compatibility-only.
+
 # Git Workflow
 
 ## Ziel

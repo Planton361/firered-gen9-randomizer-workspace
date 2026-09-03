@@ -1,3 +1,9 @@
+> **LEGACY / SUPPORTING GUIDANCE:** The canonical Codex workflow is now
+> [docs/ENGINEERING_RULES.md](../../docs/ENGINEERING_RULES.md) and
+> [docs/MODEL_POLICY.md](../../docs/MODEL_POLICY.md). This file remains as
+> historical context; PowerShell-specific material is optional compatibility
+> guidance, not the POSIX default.
+
 # Codex Workflow
 
 ## Ziel

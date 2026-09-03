@@ -1,3 +1,8 @@
+> **LEGACY / HISTORICAL EVIDENCE:** This is a preserved handoff queue, not the
+> canonical roadmap. Use [docs/ROADMAP.md](../../docs/ROADMAP.md) and the
+> relevant milestone contract in [docs/milestones/](../../docs/milestones/) for
+> current work. Historical content below is intentionally unchanged.
+
 # Next steps update - CFRU 29-slot TM/HM itemball policy
 
 - Current final rollout status is `ROLLOUT_READY_FOR_29_TM_HM_CFRU_POLICY`: all 28 TMs plus HM07 are authorized for the gold CFRU ball. The NatDex HM07 normal-ball difference is consciously accepted; NatDex graphics ID 67 remains reference-only.

@@ -1,3 +1,8 @@
+> **LEGACY / HISTORICAL EVIDENCE:** This derived project-control roadmap is
+> retained for traceability. The canonical milestone roadmap is
+> [docs/ROADMAP.md](../../docs/ROADMAP.md). Historical status below does not
+> supersede the canonical workflow baseline.
+
 # Roadmap status update - CFRU 29-slot TM/HM itemball policy
 
 - Status impact: `ROLLOUT_READY_FOR_29_TM_HM_CFRU_POLICY`. The exact 29-slot

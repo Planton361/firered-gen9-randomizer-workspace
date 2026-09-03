@@ -1,10 +1,11 @@
 ## Summary
 
-- 
+- Milestone/task contract:
+- Scope:
 
 ## Geänderte Dateien
 
-- 
+-
 
 ## Checks
 
@@ -12,6 +13,10 @@
 - [ ] `git diff --stat`
 - [ ] Safety-Check ausgeführt oder begründet nicht verfügbar
 - [ ] aufgabenspezifische Checks dokumentiert
+
+## Risks / deviations
+
+-
 
 ## Sicherheitscheck
 
@@ -31,3 +36,7 @@
 Nächster minimaler Schritt:
 
 - 
+
+## Artifact safety
+
+- [ ] No protected/private/generated artifacts were read, staged, or committed

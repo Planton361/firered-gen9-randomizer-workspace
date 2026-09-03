@@ -1,3 +1,8 @@
+> **LEGACY / SUPPORTING GUIDANCE:** The canonical work-package lifecycle and
+> Definition of Done are in [docs/ENGINEERING_RULES.md](../../docs/ENGINEERING_RULES.md)
+> and [docs/milestones/M-000R.md](../../docs/milestones/M-000R.md). Historical
+> guidance below is retained for evidence and does not override them.
+
 # Work Package Lifecycle
 
 ## Ziel
