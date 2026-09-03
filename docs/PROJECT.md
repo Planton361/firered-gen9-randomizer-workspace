@@ -33,20 +33,22 @@ refactors. ROMs, saves, emulator states, builds, tool binaries, secrets, and
 | mGBA | Current targeted smoke emulator | **CONFIRMED CURRENT STATE** |
 | BizHawk / Ironmon Tracker | Later validation and integration targets | **INTENDED FUTURE STATE** |
 
-## Support and suspended work
+## Support and active M-001 candidate
 
 **CONFIRMED CURRENT STATE:** General release/support status is not claimed;
 evidence is scoped and revision-specific. The complete Name Rater rollout has
 a documented manual pass with caveats.
 
-**CONFIRMED CURRENT STATE — suspended candidate:** CFRU PR #35 and Workspace
-PR #467 are in-flight TM/HM itemball rollout work. They are neither canceled
-nor promoted by this milestone. Their acceptance/integration is the next
-candidate milestone after M-000R.
+**CONFIRMED CURRENT STATE:** M-001 has restarted the 29-slot TM/HM itemball
+candidate. CFRU PR #35 at `08b869032735118539411adbcffa421c8a697caa` is active
+candidate work; no final acceptance or product merge is claimed.
 
-**CONFIRMED CURRENT STATE — blocked feature:** Hidden Item sparkle remains
-blocked until a source-backed Overworld frame hook is available. No raw-address
-or opaque binary workaround is authorized.
+**LEGACY / OBSOLETE:** Workspace PR #467 is closed unmerged and retained only
+as historical supporting handoff evidence.
+
+**CONFIRMED CURRENT STATE:** Hidden Item sparkle remains blocked until a
+source-backed Overworld frame hook is available. No raw-address or opaque binary
+workaround is authorized.
 
 ## Canonical project instruction for ChatGPT Project settings
 

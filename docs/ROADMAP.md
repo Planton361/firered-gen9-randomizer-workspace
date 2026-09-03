@@ -7,20 +7,24 @@ canonical workflow baseline was activated by merge commit
 `65da597b6b57d40d4698a221809741912abe8e3c`. Historical work is neither
 renumbered nor rewritten.
 
-## Next regular milestone
+## Active regular milestone
 
-**INTENDED FUTURE STATE:** M-001 is the next regular milestone. It is not
-started by this M-000R closure branch.
+**CONFIRMED CURRENT STATE:** M-001 — 29-slot TM/HM Itemball Acceptance /
+Integration Restart is active. It is candidate/bootstrap work only and does
+not claim final acceptance or merge CFRU PR #35.
 
 **CONFIRMED CURRENT STATE:** The Excel roadmap is a derived visual dashboard,
 not canonical truth.
 
-## Suspended candidate work
+## Active candidate and legacy handoff
 
-**CONFIRMED CURRENT STATE — suspended candidate:** CFRU PR #35 and Workspace
-PR #467 contain the current TM/HM itemball rollout. They are not canceled and
-remain suspended pending an explicit M-001 restart. M-001 is to complete their
-29-slot TM/HM itemball acceptance and integration.
+**CONFIRMED CURRENT STATE:** CFRU PR #35 at
+`08b869032735118539411adbcffa421c8a697caa` is the active M-001 product
+candidate for the 28 TM plus HM07 scope.
+
+**LEGACY / OBSOLETE:** Workspace PR #467 is closed unmerged. Its
+`feature/cfru-tm-itemball-29-slot-rollout-pin` branch is historical supporting
+evidence; the M-001 workspace branch and PR supersede it for integration.
 
 ## Later tracks
 
