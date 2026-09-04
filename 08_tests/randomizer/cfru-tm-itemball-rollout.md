@@ -2,13 +2,13 @@
 
 Date: 2026-07-13
 
-Status: `M001_TECHNICAL_ACCEPTANCE_COMPLETE_DECISION_PENDING`
+Status: `M001_COMPLETE_ACCEPTED_INTEGRATED`
 
 ## M-001 candidate and acceptance boundary
 
-**CONFIRMED CURRENT STATE:** The workspace pins CFRU candidate
-`08b869032735118539411adbcffa421c8a697caa`. CFRU PR #35 is the active product
-candidate. No final acceptance or product merge is claimed in this bootstrap.
+**CONFIRMED CURRENT STATE:** CFRU PR #35 is **MERGED**. Its accepted candidate
+head is `08b869032735118539411adbcffa421c8a697caa`; its actual merge commit is
+`8e3fa8378d67dfe4011d6994469c3806f32764c4`, which the workspace now pins.
 
 **LEGACY / OBSOLETE:** Workspace PR #467 is closed unmerged. Its branch and
 commit are supporting handoff evidence only; it is not the active integration
@@ -17,8 +17,9 @@ PR.
 **CONFIRMED CURRENT STATE:** Static overlay, generator, build, insertion,
 representative runtime, and fresh candidate-specific six-row UPR-FVX gates
 have passed for this candidate. All M-001 technical acceptance gates have
-passed. The explicit acceptance/integration decision for CFRU PR #35 and the
-workspace pin remains pending; no product merge is claimed.
+passed. The user performed the product integration by merging CFRU PR #35;
+the 29-slot rollout is accepted and integrated. This acceptance is
+revision-specific and does not establish a broader support profile.
 
 ## Accepted 29-slot policy
 
@@ -103,7 +104,7 @@ artifact details are recorded.
 | random-even | off | true | true | true | 0 | 0 | 0 | 0 | 0 | true | **PASS** |
 | random-even | on | true | true | true | 0 | 0 | 0 | 0 | 0 | true | **PASS** |
 
-All M-001 technical acceptance gates have passed. The next step is an explicit
-user-authorized acceptance/integration decision for CFRU PR #35 and the
-workspace pin. This evidence does not claim that CFRU PR #35 has merged,
-product integration is complete, or a broader support profile is established.
+All M-001 technical acceptance gates have passed. CFRU PR #35 is merged and
+the accepted 29-slot rollout is integrated at the pinned actual merge commit.
+This evidence remains revision-specific and does not establish a broader
+support profile.

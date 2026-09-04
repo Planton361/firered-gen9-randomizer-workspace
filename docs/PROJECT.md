@@ -33,15 +33,17 @@ refactors. ROMs, saves, emulator states, builds, tool binaries, secrets, and
 | mGBA | Current targeted smoke emulator | **CONFIRMED CURRENT STATE** |
 | BizHawk / Ironmon Tracker | Later validation and integration targets | **INTENDED FUTURE STATE** |
 
-## Support and active M-001 candidate
+## Support and completed M-001 rollout
 
 **CONFIRMED CURRENT STATE:** General release/support status is not claimed;
 evidence is scoped and revision-specific. The complete Name Rater rollout has
 a documented manual pass with caveats.
 
-**CONFIRMED CURRENT STATE:** M-001 has restarted the 29-slot TM/HM itemball
-candidate. CFRU PR #35 at `08b869032735118539411adbcffa421c8a697caa` is active
-candidate work; no final acceptance or product merge is claimed.
+**CONFIRMED CURRENT STATE:** M-001's accepted 29-slot TM/HM itemball rollout
+(28 TMs plus HM07) is integrated. CFRU PR #35 merged at
+`8e3fa8378d67dfe4011d6994469c3806f32764c4` from accepted candidate head
+`08b869032735118539411adbcffa421c8a697caa`. This revision-specific acceptance
+does not establish general release/support status.
 
 **LEGACY / OBSOLETE:** Workspace PR #467 is closed unmerged and retained only
 as historical supporting handoff evidence.
