@@ -2,7 +2,7 @@
 
 Date: 2026-07-13
 
-Status: `M001_CANDIDATE_ACCEPTANCE_ACTIVE`
+Status: `M001_TECHNICAL_ACCEPTANCE_COMPLETE_DECISION_PENDING`
 
 ## M-001 candidate and acceptance boundary
 
@@ -14,9 +14,11 @@ candidate. No final acceptance or product merge is claimed in this bootstrap.
 commit are supporting handoff evidence only; it is not the active integration
 PR.
 
-**CONFIRMED CURRENT STATE:** Static overlay, generator, build, and insertion
-gates passed for this candidate. The runtime and fresh candidate-specific
-six-row UPR-FVX gates below remain mandatory.
+**CONFIRMED CURRENT STATE:** Static overlay, generator, build, insertion,
+representative runtime, and fresh candidate-specific six-row UPR-FVX gates
+have passed for this candidate. All M-001 technical acceptance gates have
+passed. The explicit acceptance/integration decision for CFRU PR #35 and the
+workspace pin remains pending; no product merge is claimed.
 
 ## Accepted 29-slot policy
 
@@ -87,19 +89,21 @@ map/event regression.
 
 ## Separate automated UPR-FVX gate
 
-The six rows remain mandatory and are the only open acceptance gate. Each uses
-a fresh candidate and fresh randomized output:
+**CONFIRMED CURRENT STATE:** **PASS.** User-supplied sanitized evidence for
+the exact candidate records the complete six-row matrix below. Each row began
+from the same immutable input and used an independent output; no private
+artifact details are recorded.
 
-| Mode | Ban Bad | Required result |
-|---|---|---|
-| Unchanged | off | TM slot remains TM; normal control remains non-TM; reload counters zero. |
-| Shuffle | off | Same, with required-TM set preserved and reload counters zero. |
-| Random | off | Same; required Field TMs missing = 0; reload counters zero. |
-| Random | on | Same; required Field TMs missing = 0; reload counters zero. |
-| Random Even | off | Same; required Field TMs missing = 0; reload counters zero. |
-| Random Even | on | Same; required Field TMs missing = 0; reload counters zero. |
+| mode | banBad | candidateLoaded | saveSuccessful | reloadSuccessful | rawApiTmSlotAlignmentMismatches | tmFieldItemSlotMismatches | nonTmFieldItemSlotMismatches | requiredFieldTMMissingAfter | fieldItemReloadMismatches | lowByte92Discovery | result |
+|---|---|---|---|---|---:|---:|---:|---:|---:|---|---|
+| unchanged | off | true | true | true | 0 | 0 | 0 | 0 | 0 | true | **PASS** |
+| shuffle | off | true | true | true | 0 | 0 | 0 | 0 | 0 | true | **PASS** |
+| random | off | true | true | true | 0 | 0 | 0 | 0 | 0 | true | **PASS** |
+| random | on | true | true | true | 0 | 0 | 0 | 0 | 0 | true | **PASS** |
+| random-even | off | true | true | true | 0 | 0 | 0 | 0 | 0 | true | **PASS** |
+| random-even | on | true | true | true | 0 | 0 | 0 | 0 | 0 | true | **PASS** |
 
-All six require `rawApiTmSlotAlignmentMismatches=0`,
-`tmFieldItemSlotMismatches=0`, `nonTmFieldItemSlotMismatches=0`,
-`requiredFieldTMMissingAfter=0`, `fieldItemReloadMismatches=0`, and successful
-discovery through low byte `92`.
+All M-001 technical acceptance gates have passed. The next step is an explicit
+user-authorized acceptance/integration decision for CFRU PR #35 and the
+workspace pin. This evidence does not claim that CFRU PR #35 has merged,
+product integration is complete, or a broader support profile is established.

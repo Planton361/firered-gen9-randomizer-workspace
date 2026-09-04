@@ -10,8 +10,10 @@ renumbered nor rewritten.
 ## Active regular milestone
 
 **CONFIRMED CURRENT STATE:** M-001 — 29-slot TM/HM Itemball Acceptance /
-Integration Restart is active. It is candidate/bootstrap work only and does
-not claim final acceptance or merge CFRU PR #35.
+Integration Restart remains active with all technical acceptance gates passed.
+An explicit acceptance/integration decision for CFRU PR #35 and the workspace
+pin is pending; this does not claim final product integration or a CFRU PR #35
+merge.
 
 **CONFIRMED CURRENT STATE:** The Excel roadmap is a derived visual dashboard,
 not canonical truth.

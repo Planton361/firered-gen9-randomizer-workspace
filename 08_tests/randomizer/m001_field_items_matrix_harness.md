@@ -1,6 +1,7 @@
 # M-001 UPR-FVX Field Items matrix harness
 
-**Status:** Harness available; the six-row M-001 acceptance gate remains open.
+**Status:** Six-row M-001 UPR-FVX gate **PASS**; acceptance/integration decision
+pending.
 
 This workspace-side harness runs the six required Field Items save/reload rows
 against a user-supplied private candidate ROM. It does not modify UPR-FVX,
@@ -66,6 +67,17 @@ python3 07_scripts/randomizer/m001_field_items_matrix.py \
   --output-dir <ignored-output-dir>
 ```
 
-The supported matrix is fixed at Unchanged/off, Shuffle/off, Random/off,
-Random/on, Random Even/off, and Random Even/on. This document does not claim
-that any row has been run or that M-001 is complete.
+## Recorded six-row result
+
+**CONFIRMED CURRENT STATE:** User-supplied sanitized evidence records PASS for
+Unchanged/off, Shuffle/off, Random/off, Random/on, Random Even/off, and Random
+Even/on. Every row reports `candidateLoaded=true`, `saveSuccessful=true`,
+`reloadSuccessful=true`, `rawApiTmSlotAlignmentMismatches=0`,
+`tmFieldItemSlotMismatches=0`, `nonTmFieldItemSlotMismatches=0`,
+`requiredFieldTMMissingAfter=0`, `fieldItemReloadMismatches=0`, and
+`lowByte92Discovery=true`.
+
+All M-001 technical acceptance gates have passed. The next step is an explicit
+user-authorized acceptance/integration decision for CFRU PR #35 and the
+workspace pin. This result does not claim that CFRU PR #35 has merged, product
+integration is complete, or a broader support profile is established.
