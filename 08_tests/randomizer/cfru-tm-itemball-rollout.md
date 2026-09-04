@@ -60,32 +60,35 @@ listed in `01_docs/analysis/cfru-tm-itemball-natdex-parity.md`.
 This is intentionally not 29 full playthroughs. Use a freshly built candidate,
 an in-game save (not a savestate), and record only sanitized results.
 
-| Case | Slot | Required observations |
-|---|---|---|
-| Existing pilot | TM09, MtMoon_1F, 1/1, LID 9 | Gold object, normal Potion control LID 10, pickup, original flags, both pickup orders, re-entry and save/reload. |
-| Early Kanto | TM05, Route4, 3/22, LID 3 | Gold object, `finditem` reward, original flag and map transition remain correct. |
-| Elevation 0 | TM41, SilphCo_4F, 1/50, LID 8 | Gold object at elevation 0, pickup/removal and map event behavior correct. |
-| HM07 | FourIsland_IcefallCave_1F, 1/111, LID 2 | Gold object, preserved HM07 reward, original flag, pickup/removal and re-entry. |
-| Sevii TM | TM36, FiveIsland_RocketWarehouse, 1/114, LID 8 | Gold object at elevation 0, pickup/removal, flag and map transition correct. |
-| Normal control | Any nearby non-TM `OBJ_EVENT_GFX_ITEM_BALL` | Remains red/white, retains normal reward/flag, no palette or sprite corruption. |
+| Case | Slot | Required observations | Sanitized result |
+|---|---|---|---|
+| Existing pilot | TM09, MtMoon_1F, 1/1, LID 9 | Gold object, normal Potion control LID 10, pickup, original flags, both pickup orders, re-entry and save/reload. | **PASS** — user-reported for TM09 and Potion in both pickup orders. |
+| Early Kanto | TM05, Route4, 3/22, LID 3 | Gold object, `finditem` reward, original flag and map transition remain correct. | **PASS** — user-reported. |
+| Elevation 0 | TM41, SilphCo_4F, 1/50, LID 8 | Gold object at elevation 0, pickup/removal and map event behavior correct. | **PASS** — user-reported. |
+| HM07 | FourIsland_IcefallCave_1F, 1/111, LID 2 | Gold object, preserved HM07 reward, original flag, pickup/removal and re-entry. | **PASS** — user-reported. |
+| Sevii TM | TM36, FiveIsland_RocketWarehouse, 1/114, LID 8 | Gold object at elevation 0, pickup/removal, flag and map transition correct. | **PASS** — user-reported. |
+| Normal control | Any nearby non-TM `OBJ_EVENT_GFX_ITEM_BALL` | Remains red/white, retains normal reward/flag, no palette or sprite corruption. | **PASS** — user-reported normal red/white control. |
 
 For every case, also check player/NPC/environment palettes, no sprite/tile loss,
 and no warp/trainer/object-event regression.
 
 ## Current user-reported runtime evidence
 
-**CONFIRMED CURRENT STATE:** The user reports correct TM/HM-versus-normal-ball
-color behavior, pickup/removal, map re-entry, in-game save/reload, and no
-sprite/tile/palette corruption.
-
-**UNKNOWN:** Representative-slot coverage is pending confirmation. The report
-does not identify which required matrix slots were exercised, so no matrix row
-is silently marked complete.
+**CONFIRMED CURRENT STATE:** **PASS.** For exact candidate
+`08b869032735118539411adbcffa421c8a697caa`, the user confirms all required
+representative cases: TM09/MtMoon_1F, its normal Potion control, both
+TM09/Potion pickup orders, TM05/Route4, elevation-0 TM41/SilphCo_4F,
+HM07/FourIsland_IcefallCave_1F, elevation-0 Sevii TM36/FiveIsland_RocketWarehouse,
+and a normal red/white item-ball control. The user reports gold TM/HM targets,
+correct normal-ball color, reward/pickup behavior, object removal, map
+leave/re-entry persistence, in-game save/reload persistence, and no reported
+sprite/tile loss, flicker, player/NPC/environment palette corruption, or
+map/event regression.
 
 ## Separate automated UPR-FVX gate
 
-The six rows remain mandatory and separate from visual runtime acceptance. Each
-uses a fresh candidate and fresh randomized output:
+The six rows remain mandatory and are the only open acceptance gate. Each uses
+a fresh candidate and fresh randomized output:
 
 | Mode | Ban Bad | Required result |
 |---|---|---|
