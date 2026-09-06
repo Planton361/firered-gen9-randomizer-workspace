@@ -33,8 +33,27 @@ revision-specific and caveated; it is not a broad support-profile claim. The
 integrated merge revision is not claimed to have been separately runtime-tested.
 
 **CONFIRMED CURRENT STATE:** The workspace closure pins only the integrated
-CFRU merge revision. The workspace PR remains a draft and must not be merged
-by Codex.
+CFRU merge revision. Workspace PR #477 is merged.
+
+## M-003 closure
+
+**CONFIRMED CURRENT STATE:** M-003 — Instant PokeCenter Healing is
+**COMPLETE**. CFRU PR #37 integrated the bounded normal-Pokemon-Center Nurse
+fast path at merge revision `215bd44d340c16076b1817b9c6db038d54fe5f76` while
+retaining the short healing effect and Trainer Tower's original Nurse
+interaction.
+
+**CONFIRMED CURRENT STATE — user-supplied sanitized runtime PASS for tested
+candidate `d6571f4a8c371075da1cf6341c5d01f89903d426`:** instant healing,
+short healing effect, full-party healing, repeat use, a second Kanto Center,
+and a Sevii Center passed. Trainer Tower retained its original interaction;
+Name Rater, PC, and warps showed no regression; status, PP, and fainted-party
+restoration checks passed where tested. This evidence is revision-specific and
+caveated; the integrated merge revision is not claimed to have been separately
+runtime-tested.
+
+**CONFIRMED CURRENT STATE:** The workspace closure pins only the integrated
+CFRU M-003 merge revision. No subsequent milestone is started by this closure.
 
 ## Integrated M-001 rollout and legacy handoff
 
