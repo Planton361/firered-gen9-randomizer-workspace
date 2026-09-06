@@ -17,20 +17,24 @@ this closure.
 **CONFIRMED CURRENT STATE:** The Excel roadmap is a derived visual dashboard,
 not canonical truth.
 
-## M-002 integration candidate
+## M-002 closure
 
-**CONFIRMED CURRENT STATE:** CFRU Draft PR #36 contains the bounded Viridian
-Forest Nurse candidate. The candidate replaces the original non-trainer at
-`(29,58,3)` with Nurse Joy, keeps the existing map contract fail-closed, and
-includes the corrected two-line poison-refusal text.
+**CONFIRMED CURRENT STATE:** M-002 — Viridian Forest Nurse is **COMPLETE**.
+CFRU PR #36 integrated the bounded Nurse implementation at merge revision
+`9548877aa481750b825c765c4d72fce90d633c16`. It replaces the original
+non-trainer at `(29,58,3)` with Nurse Joy, keeps the existing map contract
+fail-closed, and includes the corrected two-line poison-refusal text.
 
-**CONFIRMED CURRENT STATE — user-supplied sanitized runtime PASS:** Nurse
+**CONFIRMED CURRENT STATE — user-supplied sanitized runtime PASS for tested
+candidate `98cc40664080f7c956edbb81769acb7d112ce2ee`:** Nurse
 visibility/interactivity, healing, poison refusal, and the prompt, success,
 and corrected refusal texts passed targeted runtime smoke. This evidence is
-revision-specific and caveated; it is not a broad support-profile claim.
+revision-specific and caveated; it is not a broad support-profile claim. The
+integrated merge revision is not claimed to have been separately runtime-tested.
 
-**INTENDED FUTURE STATE:** Workspace Draft PR integration pins only the CFRU
-M-002 candidate. Both M-002 PRs remain drafts and must not be merged by Codex.
+**CONFIRMED CURRENT STATE:** The workspace closure pins only the integrated
+CFRU merge revision. The workspace PR remains a draft and must not be merged
+by Codex.
 
 ## Integrated M-001 rollout and legacy handoff
 
