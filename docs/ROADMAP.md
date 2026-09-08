@@ -55,6 +55,26 @@ runtime-tested.
 **CONFIRMED CURRENT STATE:** The workspace closure pins only the integrated
 CFRU M-003 merge revision. No subsequent milestone is started by this closure.
 
+## M-004 closure
+
+**CONFIRMED CURRENT STATE:** M-004 — Guaranteed Renewable Step Items is
+**COMPLETE**. CFRU PR #38 integrated the bounded renewable hidden-item
+regeneration behavior at merge revision
+`520fc7feeb7494b5f8f0555e348c13f0e847304b`. The implementation preserves the
+1,500-step cycle, guarantees eligible Underground Pass and approved Sevii
+renewable groups, and leaves Mt. Moon vanilla/random.
+
+**CONFIRMED CURRENT STATE — user-supplied sanitized runtime PASS for tested
+candidate `aad9c76d537cf812673e1cd3e69faffd435ff692`:** Underground Pass spawn
+and repeat regeneration, a representative Sevii group, Mt. Moon's
+vanilla/random control, Itemfinder, normal one-time hidden items, and a
+representative UPR-FVX Field Items smoke passed. This evidence is
+revision-specific and caveated; the integrated merge revision is not claimed
+to have been separately runtime-tested.
+
+**CONFIRMED CURRENT STATE:** The workspace closure pins only the integrated
+CFRU M-004 merge revision. No subsequent milestone is started by this closure.
+
 ## Integrated M-001 rollout and legacy handoff
 
 **CONFIRMED CURRENT STATE:** CFRU PR #35 is merged at
