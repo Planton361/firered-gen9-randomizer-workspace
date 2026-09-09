@@ -7,11 +7,20 @@ commit, submodule Gitlinks, configuration, and declared test scope. A later
 upstream revision or local artifact is not covered automatically.
 
 Current baseline Gitlinks are repository evidence, including CFRU
-`a869c3526d7f76c54082bc71e236742564319e02`, DPE
+`827fa1ef04bd43e5c6bad5c47f7d8690ea6823ec`, DPE
 `22ffa27ad09cfacbca841d90e6cbe31e6f9b7fdc`, UPR-FVX
 `1a597a667129b50284dd88afb231372b5bd01d7f`, Ironmon Tracker
 `c450ecaee2d8131a2789bb656e3be792a93712fb`, and NatDexExtension
 `a94b8844800308248bb5090b6c36c8b2d7e5d7b9`.
+
+**CONFIRMED CURRENT STATE, with targeted runtime caveat:** M-009's
+user-accepted, runtime-tested CFRU candidate is
+`3da0547d782fb62fc993431278d63575912025da`. The pinned integrated merge
+`827fa1ef04bd43e5c6bad5c47f7d8690ea6823ec` is exactly one commit ahead,
+has that candidate as its merge base, and has no additional file changes.
+The merge revision was not separately runtime-tested. The supplied acceptance
+is `PASS_TARGETED_VISIBLE_SPARKLE_WITH_CAVEATS`; see
+[M-009](milestones/M-009.md). Every other component pin is unchanged.
 
 ## Evidence levels
 
