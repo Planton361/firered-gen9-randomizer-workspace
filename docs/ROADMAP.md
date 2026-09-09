@@ -134,6 +134,24 @@ runtime-tested.
 CFRU M-007 merge revision. No M-008 or other subsequent milestone is started
 by this closure.
 
+## M-008 closure
+
+**CONFIRMED CURRENT STATE:** M-008 — Optional Bill / Sevii handoff is
+**COMPLETE**. CFRU PR #42 integrated the bounded automatic outdoor-Bill scene
+bypass at merge revision `a869c3526d7f76c54082bc71e236742564319e02`.
+
+**CONFIRMED CURRENT STATE — user-supplied sanitized runtime PASS for tested
+candidate `07b86d44b9c98354c815ae56f7f26072fcc0147a`:** Blaine completion, no
+automatic Bill dialogue/prompt/travel, outdoor Bill removal, Center Bill
+availability and NO persistence, save/reload, original YES travel, Sevii and
+return scenes, M-003 instant Nurse, Name Rater, and M-005 through M-007 passed
+targeted runtime smoke. This evidence is revision-specific and caveated; the
+integrated merge revision is not claimed to have been separately runtime-tested.
+
+**CONFIRMED CURRENT STATE:** The workspace closure pins only the integrated
+CFRU M-008 merge revision. No further mandatory ROM-QoL milestone is invented
+by this closure.
+
 ## Integrated M-001 rollout and legacy handoff
 
 **CONFIRMED CURRENT STATE:** CFRU PR #35 is merged at
@@ -162,6 +180,8 @@ evidence; the M-001 workspace branch and PR supersede it for integration.
   recorded manual-smoke caveats.
 - **CONFIRMED CURRENT STATE — blocked feature:** Hidden Item sparkle needs a
   source-backed Overworld frame hook.
+- **CONFIRMED CURRENT STATE:** Friendship Boost remains optional and
+  non-standard for Ironmon; it is not a mandatory ROM-QoL milestone.
 - **LEGACY / OBSOLETE:** Prior roadmap numbering, detailed queues,
   and status remain in
   [00_project-control/roadmap/roadmap-status.md](../00_project-control/roadmap/roadmap-status.md)
