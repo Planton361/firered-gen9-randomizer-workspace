@@ -48,9 +48,22 @@ does not establish general release/support status.
 **LEGACY / OBSOLETE:** Workspace PR #467 is closed unmerged and retained only
 as historical supporting handoff evidence.
 
-**CONFIRMED CURRENT STATE:** Hidden Item sparkle remains blocked until a
-source-backed Overworld frame hook is available. No raw-address or opaque binary
-workaround is authorized.
+**CONFIRMED CURRENT STATE, with targeted runtime caveat:**
+[M-009](milestones/M-009.md) integrates Hidden Item Sparkle through a narrowly
+source-owned Overworld frame functionrewrite at CFRU
+`827fa1ef04bd43e5c6bad5c47f7d8690ea6823ec`. It intentionally supersedes the
+old slow-camera byte owner, restores the pret/Cyan Quest Log arrival and OAM
+order, and scans normal hidden-item BG events at the frame tail using the
+existing transient effect, without persistent custom sprite/palette ownership.
+
+The user observed sparkle behavior and visually judged it appropriate on
+candidate `3da0547d782fb62fc993431278d63575912025da`:
+`PASS_TARGETED_VISIBLE_SPARKLE_WITH_CAVEATS`. The integrated merge has the
+same files but was not separately runtime-tested. Broader global-frame,
+menu/lifecycle, Quest Log and resource-pressure regressions remain part of the
+later feature-complete playthrough gate. Earlier failed sparkle pilots are
+**LEGACY / OBSOLETE**, not evidence against the integrated source-owned
+solution. No broad support or release claim follows from this acceptance.
 
 ## Canonical project instruction for ChatGPT Project settings
 

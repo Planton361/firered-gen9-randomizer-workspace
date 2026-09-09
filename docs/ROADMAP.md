@@ -152,6 +152,31 @@ integrated merge revision is not claimed to have been separately runtime-tested.
 CFRU M-008 merge revision. No further mandatory ROM-QoL milestone is invented
 by this closure.
 
+## M-009 closure
+
+**CONFIRMED CURRENT STATE, with targeted runtime caveat:**
+[M-009 — Hidden Item Sparkle / source-owned Overworld frame integration](milestones/M-009.md)
+is **COMPLETE**. CFRU PR #43 is integrated at
+`827fa1ef04bd43e5c6bad5c47f7d8690ea6823ec`. The old slow-camera byte owner
+was intentionally superseded by a named functionrewrite with the exact
+pret/Cyan frame order and a frame-tail Hidden Item scanner.
+
+**CONFIRMED CURRENT STATE — user-supplied
+`PASS_TARGETED_VISIBLE_SPARKLE_WITH_CAVEATS`:** Hidden Item sparkle behavior
+was observed in runtime and visually judged appropriate on the exact
+candidate `3da0547d782fb62fc993431278d63575912025da`. The merge is exactly
+one commit ahead, has the candidate as merge base, and has no additional file
+changes. The integrated merge was not separately runtime-tested.
+
+This closes the former source-hook blocker. Earlier failed sparkle pilots
+remain **LEGACY / OBSOLETE** evidence. Separate coverage of every Start/Bag/
+Party/Quest-Log/resource-pressure/lifecycle permutation is not claimed;
+broader global-frame regressions belong to the later feature-complete
+playthrough gate. This is not a broad support or release claim.
+
+**INTENDED FUTURE STATE:** The next major track is Controlled Gen 1–9 Data
+Risk Closure. This closure PR does not start that track or another milestone.
+
 ## Integrated M-001 rollout and legacy handoff
 
 **CONFIRMED CURRENT STATE:** CFRU PR #35 is merged at
@@ -178,8 +203,12 @@ evidence; the M-001 workspace branch and PR supersede it for integration.
 
 - **CONFIRMED CURRENT STATE:** Name Rater complete pass is completed, with its
   recorded manual-smoke caveats.
-- **CONFIRMED CURRENT STATE — blocked feature:** Hidden Item sparkle needs a
-  source-backed Overworld frame hook.
+- **CONFIRMED CURRENT STATE, with targeted runtime caveat:** Hidden Item Sparkle
+  is integrated through M-009's source-owned frame solution. Its acceptance is
+  `PASS_TARGETED_VISIBLE_SPARKLE_WITH_CAVEATS`; broader regressions remain at
+  the later feature-complete playthrough gate.
+- **LEGACY / OBSOLETE:** Earlier failed sparkle pilots and their source-hook
+  blocker describe the pre-M-009 state, not current integration status.
 - **CONFIRMED CURRENT STATE:** Friendship Boost remains optional and
   non-standard for Ironmon; it is not a mandatory ROM-QoL milestone.
 - **LEGACY / OBSOLETE:** Prior roadmap numbering, detailed queues,
