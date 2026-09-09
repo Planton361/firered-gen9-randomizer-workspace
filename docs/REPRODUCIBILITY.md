@@ -7,7 +7,7 @@ commit, submodule Gitlinks, configuration, and declared test scope. A later
 upstream revision or local artifact is not covered automatically.
 
 Current baseline Gitlinks are repository evidence, including CFRU
-`520fc7feeb7494b5f8f0555e348c13f0e847304b`, DPE
+`4a9698467600500d18ec8c08f9269f0d6ad008e6`, DPE
 `22ffa27ad09cfacbca841d90e6cbe31e6f9b7fdc`, UPR-FVX
 `1a597a667129b50284dd88afb231372b5bd01d7f`, Ironmon Tracker
 `c450ecaee2d8131a2789bb656e3be792a93712fb`, and NatDexExtension

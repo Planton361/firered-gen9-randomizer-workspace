@@ -75,6 +75,24 @@ to have been separately runtime-tested.
 **CONFIRMED CURRENT STATE:** The workspace closure pins only the integrated
 CFRU M-004 merge revision. No subsequent milestone is started by this closure.
 
+## M-005 closure
+
+**CONFIRMED CURRENT STATE:** M-005 — PC Item -> Oak's Lab is **COMPLETE**.
+CFRU PR #39 integrated the bounded Player PC initialization and Oak's Lab
+Potion Item Ball behavior at merge revision
+`4a9698467600500d18ec8c08f9269f0d6ad008e6`.
+
+**CONFIRMED CURRENT STATE — user-supplied sanitized runtime PASS for tested
+candidate `10a338eca514c3ca1f614586d1054a89f039010a`:** a fresh New Game has no
+starter Potion in PC storage; the Oak's Lab Potion Item Ball, pickup
+disappearance/persistence, starter/Rival/Oak Lab flow, warps, normal Player PC
+storage, and representative UPR-FVX Field Items behavior passed. This evidence
+is revision-specific and caveated; the integrated merge revision is not claimed
+to have been separately runtime-tested.
+
+**CONFIRMED CURRENT STATE:** The workspace closure pins only the integrated
+CFRU M-005 merge revision. No subsequent milestone is started by this closure.
+
 ## Integrated M-001 rollout and legacy handoff
 
 **CONFIRMED CURRENT STATE:** CFRU PR #35 is merged at
