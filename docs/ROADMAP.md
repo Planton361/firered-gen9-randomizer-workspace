@@ -93,6 +93,26 @@ to have been separately runtime-tested.
 **CONFIRMED CURRENT STATE:** The workspace closure pins only the integrated
 CFRU M-005 merge revision. No subsequent milestone is started by this closure.
 
+## M-006 closure
+
+**CONFIRMED CURRENT STATE:** M-006 — Talk to Mom / Faster New Game handoff is
+**COMPLETE**. CFRU PR #40 integrated the bounded mandatory Mom interaction and
+fast scene-1 Oak's Lab handoff at merge revision
+`237fc61ac52bea6978f4b434c06fc3f1f11e5dcc`.
+
+**CONFIRMED CURRENT STATE — user-supplied sanitized runtime PASS for final
+tested candidate `574318a1af2801c161cd40d9687ed2b65dd3b92a`:** the Player
+House exit blocker, Mom handoff, fast Lab player/camera state, Oak's normal
+`(6,3)` facing-down position, direct starter choice, starter/Rival flow,
+Lab exit and warps, M-005 Potion, and post-rival Mom healing passed. Earlier
+M-006 candidates with runtime defects were superseded and are not promoted to
+PASS. This evidence is revision-specific and caveated; the integrated merge
+revision is not claimed to have been separately runtime-tested.
+
+**CONFIRMED CURRENT STATE:** The workspace closure pins only the integrated
+CFRU M-006 merge revision. No M-007 or other subsequent milestone is started
+by this closure.
+
 ## Integrated M-001 rollout and legacy handoff
 
 **CONFIRMED CURRENT STATE:** CFRU PR #35 is merged at
