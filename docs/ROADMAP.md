@@ -113,6 +113,27 @@ revision is not claimed to have been separately runtime-tested.
 CFRU M-006 merge revision. No M-007 or other subsequent milestone is started
 by this closure.
 
+## M-007 closure
+
+**CONFIRMED CURRENT STATE:** M-007 — Shortened Oak Parcel Flow is
+**COMPLETE**. CFRU PR #41 integrated the bounded Route 1 Clerk and Pallet Town
+Oak Parcel handoff at merge revision
+`62298cf81d4a2b487c8793bad8b6e29906c705f4`.
+
+**CONFIRMED CURRENT STATE — user-supplied sanitized runtime PASS for tested
+candidate `00e316532be65f4fdd8e4561b2b2579817a1f64f`:** M-006's Mom/start and
+starter/Rival flow, the hidden temporary Oak, original Route 1 Potion Clerk,
+all Route 1 and Pallet handoff trigger positions, single Parcel award,
+save/reload, no Mart duplicate, Pokedex/unlock plus five Poke Balls,
+post-Parcel story state, the skipped Old Man tutorial, M-005 Potion, and M-006
+flow passed targeted runtime smoke. This evidence is revision-specific and
+caveated; the integrated merge revision is not claimed to have been separately
+runtime-tested.
+
+**CONFIRMED CURRENT STATE:** The workspace closure pins only the integrated
+CFRU M-007 merge revision. No M-008 or other subsequent milestone is started
+by this closure.
+
 ## Integrated M-001 rollout and legacy handoff
 
 **CONFIRMED CURRENT STATE:** CFRU PR #35 is merged at
