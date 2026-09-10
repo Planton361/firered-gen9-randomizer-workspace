@@ -22,14 +22,52 @@ dependencies, introduce CI/containers/skill libraries, or perform broad
 refactors. ROMs, saves, emulator states, builds, tool binaries, secrets, and
 `.env` remain outside Git and agent context.
 
+## Pilot product contract
+
+**CONFIRMED USER DECISION — repository sync pending merge of this scope
+realignment:** The pilot targets FireRed using the existing CFRU/DPE engine
+architecture, with Gen 1–9 Pokémon usable by UPR-FVX and modernized Gen-9 data
+where the selected engine can represent it safely. This is the product target,
+not a claim of complete compatibility or new battle-mechanic support.
+
+Data modernization covers Base Stats, Level-up Learnsets, and Ability
+assignments/names within existing CFRU/DPE engine semantics. A modern ability
+name or assignment does not establish its upstream runtime behavior.
+
+Pilot non-goals are missing Gen-9 battle-mechanic implementation, extending
+CFRU into a Scarlet/Violet mechanics engine, Commander, Hospitality or Embody
+Aspect engine implementation, new Terastal/form-transition systems solely for
+Gen-9 parity, and broad battle-engine refactors.
+
+When the selected CFRU/DPE baseline lacks an upstream/current-generation
+mechanic, record the limitation. UPR-FVX may preserve, guard or exclude unsafe
+cases when necessary; the ROM engine is not expanded solely to implement that
+mechanic. The [M-010 decision record](milestones/M-010.md) retains the sanitized
+compatibility findings and supersedes the M-011 Hospitality implementation
+train. Engine expansion would require an explicit, separate post-pilot request.
+
+## QoL contract
+
+**CONFIRMED USER DECISION:** ROM source changes remain allowed for explicitly
+desired, source-backed QoL behavior. The primary reference goal is appropriate
+Ironmon NatDex-style quality-of-life and flow improvements for both Ironmon
+players and normal/casual play.
+
+Use the [repository source index](../01_docs/references/source-index.md) and
+established reference roles/order described in
+[Engineering rules](ENGINEERING_RULES.md#engine-data-and-qol-boundary).
+Do not port opaque binary patches. The next milestone is
+[M-012 — Ironmon NatDex QoL Parity Audit](ROADMAP.md#m-012--ironmon-natdex-qol-parity-audit),
+analysis-only initially; this closure starts no implementation.
+
 ## Component ownership
 
 | Component | Ownership boundary | State |
 |---|---|---|
 | Workspace | Workflow, manifests, decisions, evidence | **CONFIRMED CURRENT STATE** |
-| DPE Gen 9 | Expanded Pokémon data and representation | **CONFIRMED CURRENT STATE** |
-| CFRU Expansion | Engine behavior and source-backed QoL | **CONFIRMED CURRENT STATE** |
-| UPR-FVX | Randomizer settings, selection, and output writing | **CONFIRMED CURRENT STATE** |
+| DPE Gen 9 | Expanded Pokémon data and safe representation within the selected engine | **CONFIRMED CURRENT STATE** |
+| CFRU Expansion | Existing runtime semantics, engine integration, and explicitly desired source-backed QoL | **CONFIRMED CURRENT STATE** |
+| UPR-FVX | Randomizer settings, selection, output writing, and necessary preserve/guard/exclude policy for unsafe cases | **CONFIRMED CURRENT STATE** |
 | mGBA | Current targeted smoke emulator | **CONFIRMED CURRENT STATE** |
 | BizHawk / Ironmon Tracker | Later validation and integration targets | **INTENDED FUTURE STATE** |
 
@@ -77,6 +115,9 @@ docs/REPRODUCIBILITY.md, and docs/ROADMAP.md. Treat 01_docs/, 08_tests/, and
 commands by default. Keep work to one bounded milestone and approved branch;
 never work directly on or merge main. Do not access or request ROMs, saves,
 emulator states, builds, tool binaries, .env files, tokens, keys, or secrets.
-For a task, state the evidence classification: CONFIRMED CURRENT STATE,
-INTENDED FUTURE STATE, LEGACY / OBSOLETE, CONFLICT, or UNKNOWN.
+Follow the pilot data/engine/QoL boundary in docs/PROJECT.md. Gen-9 data
+modernization does not authorize missing battle mechanics.
+For a task, state the evidence classification: CONFIRMED USER DECISION,
+CONFIRMED CURRENT STATE, INTENDED FUTURE STATE, LEGACY / OBSOLETE, CONFLICT,
+or UNKNOWN.
 ```
