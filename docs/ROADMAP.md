@@ -174,8 +174,51 @@ Party/Quest-Log/resource-pressure/lifecycle permutation is not claimed;
 broader global-frame regressions belong to the later feature-complete
 playthrough gate. This is not a broad support or release claim.
 
-**INTENDED FUTURE STATE:** The next major track is Controlled Gen 1–9 Data
-Risk Closure. This closure PR does not start that track or another milestone.
+M-009 did not start another milestone. The next milestone is now M-012 below,
+under the confirmed pilot scope decision recorded in M-010.
+
+## M-010 closure — Gen-9 engine-boundary compatibility audit
+
+**CONFIRMED USER DECISION:** M-010 is closed as a compatibility audit under
+[the corrected pilot contract](PROJECT.md#pilot-product-contract), pending
+repository sync through this documentation PR. Its
+[sanitized findings and decision record](milestones/M-010.md) are supporting
+compatibility evidence: Commander, Hospitality and Embody Aspect are missing;
+Palafin / Zero to Hero and Terapagos are partial. These are known limitations
+of the selected baseline, not pilot implementation requirements or runtime
+acceptance. Reopening mechanics requires an explicit separate post-pilot project.
+
+## M-011 — superseded Hospitality implementation
+
+**CONFIRMED USER DECISION:** The Hospitality implementation train is superseded
+by the corrected pilot scope. CFRU PR #44, DPE PR #5 and UPR-FVX PR #184 are
+experimental, unmerged work; their exact candidates and links are retained in
+[M-010](milestones/M-010.md#m-011--superseded-hospitality-train). They must not
+be integrated or pinned. At verification on 2026-09-10, all three PRs remain
+open and unmerged. Once closed unmerged, their disposition is **LEGACY /
+OBSOLETE**. This documentation closure changes no component PR state and
+claims no runtime acceptance.
+
+## M-012 — Ironmon NatDex QoL Parity Audit
+
+**INTENDED FUTURE STATE — next milestone, analysis-only initially:** Audit
+appropriate Ironmon NatDex-style QoL and flow improvements for Ironmon players
+and normal/casual play within the existing CFRU/DPE architecture.
+
+Use the [source index](../01_docs/references/source-index.md) and
+[established source/reference roles](ENGINEERING_RULES.md#engine-data-and-qol-boundary),
+with the historical [QoL inventory](../01_docs/analysis/ironmon-qol-feature-inventory.md)
+and [CFRU coverage analysis](../01_docs/analysis/cfru-qol-coverage.md) as supporting
+evidence. Reconcile those older inventories against canonical completed
+milestones; do not reopen integrated QoL solely because an old inventory calls
+it missing.
+
+The audit should record source/revision, current coverage, desired behavior for
+both audiences, component owner, risks and evidence needed for each candidate.
+Separate already provided/preserve, appropriate missing QoL, and out-of-scope
+or insufficient-source cases. Do not port opaque binary patches or turn
+missing Gen-9 mechanics into QoL requirements. Implementation requires a later
+bounded work package; this closure does not begin the audit or implementation.
 
 ## Integrated M-001 rollout and legacy handoff
 
@@ -191,7 +234,8 @@ evidence; the M-001 workspace branch and PR supersede it for integration.
 
 ## Later tracks
 
-- **INTENDED FUTURE STATE:** Controlled Gen 1–9 data risk closure.
+- **INTENDED FUTURE STATE:** Controlled Gen 1–9 data risk closure within the
+  pilot data contract and selected engine limitations.
 - **INTENDED FUTURE STATE:** Randomizer regression hardening.
 - **INTENDED FUTURE STATE:** Remaining source-backed QoL.
 - **INTENDED FUTURE STATE:** BizHawk validation.
