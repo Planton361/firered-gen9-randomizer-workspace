@@ -174,8 +174,8 @@ Party/Quest-Log/resource-pressure/lifecycle permutation is not claimed;
 broader global-frame regressions belong to the later feature-complete
 playthrough gate. This is not a broad support or release claim.
 
-M-009 did not start another milestone. The next milestone is now M-012 below,
-under the confirmed pilot scope decision recorded in M-010.
+M-009 did not start another milestone. The subsequent M-012 audit is closed
+below under the confirmed pilot scope decision recorded in M-010.
 
 ## M-010 closure — Gen-9 engine-boundary compatibility audit
 
@@ -201,24 +201,25 @@ claims no runtime acceptance.
 
 ## M-012 — Ironmon NatDex QoL Parity Audit
 
-**INTENDED FUTURE STATE — next milestone, analysis-only initially:** Audit
-appropriate Ironmon NatDex-style QoL and flow improvements for Ironmon players
-and normal/casual play within the existing CFRU/DPE architecture.
+**COMPLETE — analysis-only parity audit; 36 assessed entries.** The
+[audit findings](milestones/M-012.md) become **CONFIRMED CURRENT STATE** once
+this documentation closure is merged; until then, repository closure is
+pending. The report reconciles the historical QoL inventories against pinned
+source and accepted milestone evidence. M-001 through M-009 remain complete
+and are not reopened.
 
-Use the [source index](../01_docs/references/source-index.md) and
-[established source/reference roles](ENGINEERING_RULES.md#engine-data-and-qol-boundary),
-with the historical [QoL inventory](../01_docs/analysis/ironmon-qol-feature-inventory.md)
-and [CFRU coverage analysis](../01_docs/analysis/cfru-qol-coverage.md) as supporting
-evidence. Reconcile those older inventories against canonical completed
-milestones; do not reopen integrated QoL solely because an old inventory calls
-it missing.
+**INTENDED FUTURE STATE:** The remaining source-backed implementation
+candidate is **M-013 — NatDex Premier Ball purchase bonus**. Its bounded
+recommendation is recorded in [M-012](milestones/M-012.md#g1--recommended-next-minimal-milestone-premier-ball-parity);
+no implementation starts in this closure.
 
-The audit should record source/revision, current coverage, desired behavior for
-both audiences, component owner, risks and evidence needed for each candidate.
-Separate already provided/preserve, appropriate missing QoL, and out-of-scope
-or insufficient-source cases. Do not port opaque binary patches or turn
-missing Gen-9 mechanics into QoL requirements. Implementation requires a later
-bounded work package; this closure does not begin the audit or implementation.
+**INTENDED FUTURE STATE — optional backlog:** Paid Move Reminder on Cinnabar
+is not required for pilot feature-complete status unless explicitly promoted
+later. No milestone number is assigned to this optional candidate.
+
+No missing Gen-9 battle-mechanic work is introduced. This documentation-only
+closure changes no component source or Gitlinks, including CFRU, DPE and
+UPR-FVX, and provides no new runtime or broad support claim.
 
 ## Integrated M-001 rollout and legacy handoff
 

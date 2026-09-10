@@ -56,9 +56,17 @@ players and normal/casual play.
 Use the [repository source index](../01_docs/references/source-index.md) and
 established reference roles/order described in
 [Engineering rules](ENGINEERING_RULES.md#engine-data-and-qol-boundary).
-Do not port opaque binary patches. The next milestone is
-[M-012 — Ironmon NatDex QoL Parity Audit](ROADMAP.md#m-012--ironmon-natdex-qol-parity-audit),
-analysis-only initially; this closure starts no implementation.
+Do not port opaque binary patches. [M-012](milestones/M-012.md) is COMPLETE
+as an analysis-only parity audit of 36 entries; its findings become
+**CONFIRMED CURRENT STATE** once this documentation closure is merged.
+M-001 through M-009 remain complete and are not reopened.
+
+**INTENDED FUTURE STATE:** M-013 — NatDex Premier Ball purchase bonus is the
+remaining source-backed implementation candidate. Paid Move Reminder on
+Cinnabar remains optional backlog, not required for pilot feature-complete
+status unless explicitly promoted later. This closure starts no implementation,
+introduces no missing Gen-9 battle-mechanic work, and changes no CFRU/DPE/UPR-FVX
+source or component pins.
 
 ## Component ownership
 

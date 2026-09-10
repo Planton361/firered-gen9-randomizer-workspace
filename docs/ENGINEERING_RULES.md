@@ -52,8 +52,9 @@ source-first approach and do not port opaque binary patches.
 
 M-010 findings are supporting compatibility evidence. The M-011 experimental
 candidates in [M-010](milestones/M-010.md#m-011--superseded-hospitality-train)
-must not be integrated or pinned. M-012 is analysis-only initially; its listing
-here authorizes no implementation or component pin change.
+must not be integrated or pinned. [M-012](milestones/M-012.md) closes as an
+analysis-only audit; its closure authorizes no implementation or component pin
+change. Future implementation candidates require a separate bounded work package.
 
 ## Verification and completion
 
