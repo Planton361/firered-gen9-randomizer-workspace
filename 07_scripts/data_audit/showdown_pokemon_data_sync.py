@@ -113,27 +113,28 @@ def parse_learnsets(path: Path) -> dict[str, dict[str, list[str]]]:
     return result
 
 
-def latest_level_moves(move_sources: dict[str, list[str]]) -> tuple[list[tuple[int, str]], list[str]]:
+def coherent_level_moves(move_sources: dict[str, list[str]]) -> tuple[int | None, list[tuple[int, str]]]:
+    """Choose one generation for the entire literal dataset, never per move."""
     selected: list[tuple[int, int, str]] = []
-    non_level: list[str] = []
+    parsed = []
     for order, (move_key, sources) in enumerate(move_sources.items()):
-        level_sources: list[tuple[int, int]] = []
         for source in sources:
             match = re.fullmatch(r"(\d+)L(\d+)", source)
             if match:
                 if not 1 <= int(match.group(1)) <= 9:
                     raise ValueError("Level-up source outside Gen1-9: " + source)
-                level_sources.append((int(match.group(1)), int(match.group(2))))
-        if not level_sources:
-            continue
-        latest_gen = max(gen for gen, _ in level_sources)
-        latest_levels = sorted({level for gen, level in level_sources if gen == latest_gen})
-        if not latest_levels:
-            non_level.append(move_key)
-        for level in latest_levels:
-            selected.append((level, order, move_key))
+                parsed.append((int(match.group(1)), int(match.group(2)), order, move_key))
+            elif re.match(r"\d+L", source):
+                raise ValueError("Unparsed level-up source: " + source)
+    generation = max((row[0] for row in parsed), default=None)
+    selected = list({(level, order, move) for gen, level, order, move in parsed if gen == generation})
     selected.sort(key=lambda item: (item[0], item[1], item[2]))
-    return [(level, move_key) for level, _, move_key in selected], non_level
+    return generation, [(level, move_key) for level, _, move_key in selected]
+
+
+def latest_level_moves(move_sources: dict[str, list[str]]) -> tuple[list[tuple[int, str]], list[str]]:
+    # Retain the legacy call shape, not its superseded per-move union semantics.
+    return coherent_level_moves(move_sources)[1], []
 
 
 def raw_alias_entries() -> list[dict[str, object]]:

@@ -1,5 +1,5 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "historical_showdown_revision": "UNKNOWN",
   "reference_role": "NEW reproducible pilot reference; not the historical sync source",
   "repository": "https://github.com/smogon/pokemon-showdown",
@@ -12,16 +12,19 @@
   },
   "aliases_file": "showdown_aliases.json",
   "aliases_sha256": "10585f6b5863ec847264a02e45adf5da190c2783a8fe58ca5f19ca9ea48414ba",
+  "ownership_file": "showdown_learnset_ownership.json",
+  "ownership_sha256": "b513f4802874ef81e19b54d61da9e6e67e4398d67a220cfc398652e7c41968d1",
+  "dex_species_sha256": "5f47308e655371968c3b4ddc6680cf0da1c92022c330625ca5cce71e3f0e43ce",
   "canonical_pins": {
     "CFRU": "827fa1ef04bd43e5c6bad5c47f7d8690ea6823ec",
     "DPE": "22ffa27ad09cfacbca841d90e6cbe31e6f9b7fdc"
   },
   "policy": {
-    "id": "pilot-latest-level-per-move-fail-closed-v2",
+    "id": "pilot-coherent-generation-reviewed-ownership-v3",
     "generation_range": [1, 9],
-    "selection": "For each move use all L levels from its latest available generation; retain older-generation-only moves. Not a strict SV dex.",
-    "tie_order": "Source learnset property order, then move key; order-only changes blocked for explicit initial-move review.",
-    "forms": "Literal learnset data only. Do not infer inheritance or choose one shared consumer's expectation over another.",
+    "selection": "Select ONE generation for the exact species/form: Gen9 if any literal Gen9 L sources exist; otherwise newest earlier L dataset. Never keep older-only moves or mix generations. Incomplete/no-L1 selected data is blocked, not padded from history.",
+    "tie_order": "Showdown L strings specify levels, not in-game order within a level. Preserve canonical local relative order of surviving exact level/move pairs; append new same-level pairs in source property order. No older-only move can survive this ordering policy.",
+    "forms": "Own coherent literal wins, even if older. Explicit changesFrom/battleOnly or missing-literal forme/baseSpecies follows pinned dex-species.ts; all possible battle parents must agree. Never inherit prevo/event/R moves. Only enumerated reviewed local ownership aliases and two existing-ID splits are allowed; other ambiguous forms fail closed.",
     "early_level": "Require nonempty sorted 0..100 rows, <=50 rows, valid nonzero u16 move IDs, and an eligible move at level 1 before writing.",
     "low_level_coverage": "All active pointer targets checked conservatively at L1, stronger than normal encounters; no claim that every form is encounterable.",
     "ability_semantics": "Existing CFRU/DPE only; reviewed aliases retained, blocked/ignored/missing/ambiguous assignments never written.",
