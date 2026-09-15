@@ -11,7 +11,7 @@ exact-revision profile and must not be promoted to live support as-is.
 | Source | Workspace pin | Public current ref inspected |
 |---|---|---|
 | Workspace extension | `7437cd551545ab5e4dcd57a2ff5dbf9672193d74` | `origin/main` same revision |
-| CFRU pilot | `827fa1ef04bd43e5c6bad5c47f7d8690ea6823ec` | Pilot compatibility head unchanged. Default Experiments is `0cf50941320975e5754e3a545dff0ee3a54d98ac`, NOT the pilot. Candidate #46 `94404bcebd92f3817da0d03963cc536d7b7f44c3` has unchanged struct headers. |
+| CFRU pilot | `827fa1ef04bd43e5c6bad5c47f7d8690ea6823ec` | Pilot compatibility head unchanged. Default Experiments is `0cf50941320975e5754e3a545dff0ee3a54d98ac`, NOT the pilot. Candidate #46 `5ea11537ef0def6a718d007ce5f4a765f6585205` has unchanged struct headers. |
 | DPE pilot | `22ffa27ad09cfacbca841d90e6cbe31e6f9b7fdc` | Pilot compatibility head unchanged. Default master is `0528450c7a95bd517df7ebc9e0f2bb00a06f0162`, NOT substituted for pilot. |
 | Ironmon Tracker | `c450ecaee2d8131a2789bb656e3be792a93712fb` | Fetched `main`: `41e671124fbc1e944480adfe62fc62dac26fd5b8` |
 | NatDexExtension | `a94b8844800308248bb5090b6c36c8b2d7e5d7b9` | Configured `dev_new`: `c5c3f1f25c7d8e9876c613988dd90d384a8b3d8a`; default `main`: `46c0e12c50010c614af93d8674462495cc364b61` |
@@ -66,7 +66,7 @@ exact CFRU source checkout:
 arm-none-eabi-gcc -mthumb -mcpu=arm7tdmi -march=armv4t -std=c11 -Wall -Wextra -fsyntax-only -I /path/to/cfru 07_scripts/tracker/check_pilot_struct_layouts.c
 ```
 
-PASS against candidate `94404bcebd92f3817da0d03963cc536d7b7f44c3`; relevant headers
+PASS against candidate `5ea11537ef0def6a718d007ce5f4a765f6585205`; relevant headers
 are unchanged from pilot pin. No link, output binary or memory input. Assertions
 cover Pokemon100/Box80/Battle88/BaseStats28/Move12/Trainer40, all four trainer
 row variants, packed learnset3, Item44 and MapHeader28/+0x12. Bitfield semantics
