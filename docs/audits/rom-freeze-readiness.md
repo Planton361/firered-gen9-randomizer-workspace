@@ -33,15 +33,17 @@ PR state queried from GitHub 2026-09-15. All session PRs are draft and unmerged.
 
 | Task / PR | Exact candidate SHA | Gate / dependency |
 |---|---|---|
-| M-013 [CFRU #45](https://github.com/Planton361/CFRU-expansion/pull/45) | `8a677e73ee3650e1f4e00769a7235b2860a68da1` | Source/host checks passed; clean full build and transaction/capacity runtime matrix open. |
+| M-013 [CFRU #45](https://github.com/Planton361/CFRU-expansion/pull/45) | `d8468e1d12dbe33f646e2778bbde51ece7010a73` | Source/host checks passed; clean full build and transaction/capacity runtime matrix open. |
 | Pickup guard [UPR #185](https://github.com/Planton361/universal-pokemon-randomizer-fvx/pull/185) | `0df4ed3d83fba6176f19a3c3146bd3c27561e47e` | Synthetic actual-method regression passed; module/JUnit build and output smoke open; Pickup Unchanged required. |
-| Five learnsets [CFRU #46](https://github.com/Planton361/CFRU-expansion/pull/46) | `94404bcebd92f3817da0d03963cc536d7b7f44c3` | Stacked on #45; exact tracked-source restore/ARM syntax passed; full build/runtime and authoritative-data uncertainty remain. |
-| Data report [workspace #487](https://github.com/Planton361/firered-gen9-randomizer-workspace/pull/487) | `bb89b20bb46417d60d4de0bed5077d42b5307c5d` | Documentation and source-only reproducible audit; does not change Gitlinks. |
+| Five learnsets [CFRU #46](https://github.com/Planton361/CFRU-expansion/pull/46) | `5ea11537ef0def6a718d007ce5f4a765f6585205` | Stacked on #45; exact tracked-source restore/ARM syntax passed; full build/runtime and authoritative-data uncertainty remain. |
+| Data report [workspace #487](https://github.com/Planton361/firered-gen9-randomizer-workspace/pull/487) | `559013955f6b25848748579a75523a40c1539fca` | Documentation and source-only reproducible audit; does not change Gitlinks. |
 | Randomizer report [workspace #488](https://github.com/Planton361/firered-gen9-randomizer-workspace/pull/488) | `44ea58b376d976edf22d13833d0a2f214f6ee01a` | Every requested feature classified; runtime support not inferred. |
 | Acceptance package [workspace #489](https://github.com/Planton361/firered-gen9-randomizer-workspace/pull/489) | `391a200a20bd217feee9ca9b973b200c089e6de1` | 115 uniquely identified cases plus variants; all NOT_RUN. |
+| Tracker design [workspace #491](https://github.com/Planton361/firered-gen9-randomizer-workspace/pull/491) | `d6034ae39cbc2e5a551289db685f4687388ce59d` | Current public source discovery, fail-closed roadmap and ARM layout assertions; no live profile. |
+| M-013 canonical handoff [workspace #492](https://github.com/Planton361/firered-gen9-randomizer-workspace/pull/492) | `0d071dba7d788be7be1f937ef360878e2f1f3671` | Source candidate/ROADMAP status only, no pin change. |
 
-At this snapshot these are the only open component PRs in CFRU/DPE/UPR and
-the only pre-report open workspace PRs. Later revisions must be re-queried,
+At session end these and this readiness [workspace #490](https://github.com/Planton361/firered-gen9-randomizer-workspace/pull/490)
+are the session's draft PRs. Later revisions must be re-queried,
 not substituted silently for this table. This readiness report's exact commit
 is its PR head (a file cannot self-embed its own commit ID).
 
@@ -62,7 +64,7 @@ Severity below is source-risk triage, not an invented observed runtime failure.
 | Five empty active learnsets at current CFRU pin, 31 affected species/form pointers | S1 potential progression/data-integrity impact; candidate available | Review #46 restoration, full build, starting/level-up/shared-form and randomized-pool smoke. |
 | UPR Pickup writer targets legacy FRLG table, not active CFRU common/rare arrays | S1 unsupported writer correctness; candidate available | Review #185, module tests, verify explicit rejection and no partial output; retain native Pickup via Unchanged. |
 | Premier reward precedence and absent partial capacity clamp | S2 known source parity gap; candidate available | Review #45 and exact floor(quantity/10) per-transaction matrix including capacity and failed purchase. |
-| CFRU clean/full build completion | BLOCKED tooling | Both fresh source builds completed C/assembly/string/image stages then failed at missing wav2agb; mid2agb also absent. Approved toolchain full build/link required; no download was attempted/requested. |
+| CFRU clean/full build completion | BLOCKED tooling | Fresh source builds, including final stacked candidate 5ea11537, completed C/assembly/string/image stages then failed at missing wav2agb; mid2agb also absent. Approved toolchain full build/link required; no download was attempted/requested. |
 | UPR affected-module/JUnit build | BLOCKED tooling | Gradle unavailable, installed Java 23 vs source requirement 25. Host Java regression passed, not JUnit. Run module tests/build; inspect test failures/errors/skips because ignoreFailures is configured. |
 | M-009 source-owned global frame lifecycle | NEEDS_FINAL_RUNTIME_SMOKE | Broad camera/OAM, menus, fades, warps/connections, battle return, scripts/cutscenes, resource lifecycle and Quest Log. Historical targeted sparkle PASS is not broad acceptance. |
 | Full integrated early game and story | NEEDS_FINAL_RUNTIME_SMOKE | Fresh New Game A flow; one continuous Brock→Hall of Fame run with save/reload, all integrated QoL; optional Bill/Sevii separately. |
@@ -114,6 +116,12 @@ history is not reopened or relabeled as final revision-wide PASS.
 Tracker readiness is a separate post-freeze contract. A tracker profile should
 not delay the ROM freeze unless the user explicitly makes tracker support part
 of the ROM acceptance scope. No such scope expansion is assumed here.
+
+The completed [tracker discovery PR #491](https://github.com/Planton361/firered-gen9-randomizer-workspace/pull/491)
+confirms that source-owned layouts alone are insufficient: nested override
+imports, expanded ROM domain reads, three-byte learnsets, direct party/hidden
+ability decoding and flag-specific trainer rows need bounded follow-ups. No
+complete exact-revision profile exists, so live activation remains a later gate.
 
 ## Optional backlog and explicit exclusions
 
