@@ -213,6 +213,11 @@ candidate is **M-013 — NatDex Premier Ball purchase bonus**. Its bounded
 recommendation is recorded in [M-012](milestones/M-012.md#g1--recommended-next-minimal-milestone-premier-ball-parity);
 no implementation starts in this closure.
 
+**2026-09-15 source-candidate update:** [M-013](milestones/M-013.md) now has a
+bounded draft CFRU PR with source/host evidence. It is not integrated or runtime
+accepted; clean/full build completion and the manual transaction/capacity matrix
+remain gates. This does not promote any other M-012 backlog item.
+
 **INTENDED FUTURE STATE — optional backlog:** Paid Move Reminder on Cinnabar
 is not required for pilot feature-complete status unless explicitly promoted
 later. No milestone number is assigned to this optional candidate.
