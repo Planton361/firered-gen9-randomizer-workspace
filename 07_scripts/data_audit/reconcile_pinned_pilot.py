@@ -151,7 +151,9 @@ def main():
         "cfru_learnsets_changed_since_sync": bool(git(c,"diff","--name-only",SYNC_CFRU,cfru_ref,"--","src/Tables/level_up_learnsets.c").strip()),
         "upstream_reconciliation": "UNKNOWN: approved upstream snapshot is not tracked; no new data generated",
     }
-    encoded = json.dumps(report,indent=2)+"\n"
+    # Keep each [level, move] pair on one line for a reviewable full inventory.
+    encoded = re.sub(r"\[\n\s+(\d+),\n\s+(\d+)\n\s+\]", r"[\1, \2]",
+                     json.dumps(report,indent=2))+"\n"
     if args.output:
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.write_text(encoded)

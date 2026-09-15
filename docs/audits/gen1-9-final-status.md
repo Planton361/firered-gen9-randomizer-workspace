@@ -19,7 +19,7 @@ pinned Git history (no submodule checkout or protected artifact required):
 
 ```sh
 python3 07_scripts/data_audit/reconcile_pinned_pilot.py --source-workspace /path/to/workspace --output /tmp/pilot-source.json
-python3 07_scripts/data_audit/reconcile_pinned_pilot.py --source-workspace /path/to/workspace --cfru-ref 94404bcebd92f3817da0d03963cc536d7b7f44c3 --output /tmp/pilot-candidate.json
+python3 07_scripts/data_audit/reconcile_pinned_pilot.py --source-workspace /path/to/workspace --cfru-ref 5ea11537ef0def6a718d007ce5f4a765f6585205 --output /tmp/pilot-candidate.json
 ```
 
 [Baseline inventory](gen1-9-source-reconciliation.json) and
@@ -53,8 +53,8 @@ that every form is encounter-safe, or that every move matches the latest games.
 ## Candidate and tests
 
 [CFRU draft #46](https://github.com/Planton361/CFRU-expansion/pull/46), exact
-candidate `94404bcebd92f3817da0d03963cc536d7b7f44c3`, is stacked on M-013
-`8a677e73ee3650e1f4e00769a7235b2860a68da1` to preserve both bounded M-009
+candidate `5ea11537ef0def6a718d007ce5f4a765f6585205`, is stacked on M-013
+`d8468e1d12dbe33f646e2778bbde51ece7010a73` to preserve both bounded M-009
 source-guard extensions. User merge order: #45 first, then retarget/rebase #46
 to the compatibility branch and review its five-block diff. Nothing is merged.
 
