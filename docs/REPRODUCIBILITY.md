@@ -42,3 +42,17 @@ scope, method, result, caveats, and next required level without exposing them.
 
 **UNKNOWN:** A stable support profile is not established until all required
 evidence for its explicitly defined scope is completed.
+
+## Pinned Gen1–9 data reference
+
+**CONFIRMED NEW REFERENCE:** Pokemon Showdown
+`b1156ff19204e48089e2384eb2c9c1a8004f57ce` is the explicit reproducible pilot
+reference. It is not the historical sync source, whose exact revision remains
+**UNKNOWN**. The [coherent-generation closure](audits/coherent-learnsets-2026-09-15.md)
+supersedes the earlier per-move-union policy and CFRU #47's 89-table evidence.
+It records one selected generation per species/form, reviewed form ownership,
+all source/configuration hashes, fresh inventories and exact replay commands.
+Zero safe diffs, non-sentinel L1 gaps and unbound pointers do not certify
+unsupported battle mechanics or replace the remaining build/runtime/profile
+gates. Canonical component pins remain unchanged. The
+[earlier audit](audits/gen1-9-closure-2026-09-15.md) is historical evidence only.
