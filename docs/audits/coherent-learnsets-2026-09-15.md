@@ -1,5 +1,14 @@
 # Coherent current learnsets — final core-data pass
 
+**HISTORICAL / SUPERSEDED INTEGRATION STATUS (2026-09-19):** This report
+records the pre-integration CFRU #48 candidate and its old `827fa1e…` baseline.
+CFRU #48 was later merged and is included in the current CFRU pin
+`8bc8c38210ddba0b05c933dbda06cb4539254c7a`. The source findings remain valid
+supporting evidence; the old “draft/no merge” wording below is historical.
+Current runtime evidence is recorded separately in
+[Runtime Gate 1](../testing/runtime-gate-1-2026-09-19.md), with tested revision
+binding still UNKNOWN.
+
 ## Disposition
 
 New draft [CFRU #48](https://github.com/Planton361/CFRU-expansion/pull/48):

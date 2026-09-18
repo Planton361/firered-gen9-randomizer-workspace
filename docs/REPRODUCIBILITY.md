@@ -13,7 +13,18 @@ Current baseline Gitlinks are repository evidence, including CFRU
 `c450ecaee2d8131a2789bb656e3be792a93712fb`, and NatDexExtension
 `a94b8844800308248bb5090b6c36c8b2d7e5d7b9`.
 
-**CONFIRMED CURRENT STATE, with targeted runtime caveat:** M-009's
+The inspected Workspace baseline before this documentation closure is
+`85a963626791ff8ccbfad63bec04b2733558d41e` (Workspace PR #494 merge). CFRU
+#45/#48 and UPR-FVX #185 are integrated in the pins above; DPE is unchanged.
+
+**CONFIRMED USER-SUPPLIED RUNTIME PASS, revision binding UNKNOWN:** The
+targeted [Runtime Gate 1 report](testing/runtime-gate-1-2026-09-19.md) records
+the user's PASS report. Its exact tested workspace/CFRU/DPE/UPR-FVX SHAs were
+not supplied and are not inferred from the current Gitlinks. The report is
+therefore not revision-specific acceptance of this baseline.
+
+**CONFIRMED CURRENT STATE, with targeted runtime caveat:** At M-009 closure,
+the
 user-accepted, runtime-tested CFRU candidate is
 `3da0547d782fb62fc993431278d63575912025da`. The pinned integrated merge
 `827fa1ef04bd43e5c6bad5c47f7d8690ea6823ec` is exactly one commit ahead,
@@ -54,5 +65,7 @@ It records one selected generation per species/form, reviewed form ownership,
 all source/configuration hashes, fresh inventories and exact replay commands.
 Zero safe diffs, non-sentinel L1 gaps and unbound pointers do not certify
 unsupported battle mechanics or replace the remaining build/runtime/profile
-gates. Canonical component pins remain unchanged. The
+gates. The audit's old-pin statements are historical; current component pins
+are recorded above and the integration change is reconciled in the
+[draft-PR audit](audits/draft-pr-reconciliation-2026-09-19.md). The
 [earlier audit](audits/gen1-9-closure-2026-09-15.md) is historical evidence only.

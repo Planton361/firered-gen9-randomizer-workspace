@@ -180,8 +180,8 @@ below under the confirmed pilot scope decision recorded in M-010.
 ## M-010 closure — Gen-9 engine-boundary compatibility audit
 
 **CONFIRMED USER DECISION:** M-010 is closed as a compatibility audit under
-[the corrected pilot contract](PROJECT.md#pilot-product-contract), pending
-repository sync through this documentation PR. Its
+[the corrected pilot contract](PROJECT.md#pilot-product-contract), and the
+repository sync was merged through Workspace PR #485. Its
 [sanitized findings and decision record](milestones/M-010.md) are supporting
 compatibility evidence: Commander, Hospitality and Embody Aspect are missing;
 Palafin / Zero to Hero and Terapagos are partial. These are known limitations
@@ -202,24 +202,40 @@ claims no runtime acceptance.
 ## M-012 — Ironmon NatDex QoL Parity Audit
 
 **COMPLETE — analysis-only parity audit; 36 assessed entries.** The
-[audit findings](milestones/M-012.md) become **CONFIRMED CURRENT STATE** once
-this documentation closure is merged; until then, repository closure is
-pending. The report reconciles the historical QoL inventories against pinned
+[audit findings](milestones/M-012.md) are **CONFIRMED CURRENT STATE**. The
+report reconciles the historical QoL inventories against pinned
 source and accepted milestone evidence. M-001 through M-009 remain complete
 and are not reopened.
-
-**INTENDED FUTURE STATE:** The remaining source-backed implementation
-candidate is **M-013 — NatDex Premier Ball purchase bonus**. Its bounded
-recommendation is recorded in [M-012](milestones/M-012.md#g1--recommended-next-minimal-milestone-premier-ball-parity);
-no implementation starts in this closure.
 
 **INTENDED FUTURE STATE — optional backlog:** Paid Move Reminder on Cinnabar
 is not required for pilot feature-complete status unless explicitly promoted
 later. No milestone number is assigned to this optional candidate.
 
-No missing Gen-9 battle-mechanic work is introduced. This documentation-only
-closure changes no component source or Gitlinks, including CFRU, DPE and
-UPR-FVX, and provides no new runtime or broad support claim.
+No missing Gen-9 battle-mechanic work is introduced by M-012. Its historical
+documentation closure changed no component source or Gitlinks; later component
+and workspace pin integration is recorded below and in [M-013](milestones/M-013.md).
+
+## M-013 closure — Premier Ball bonus and post-integration gate
+
+**CONFIRMED CURRENT STATE:** M-013 is implemented in CFRU PR #45 and carried
+by the current CFRU PR #48 merge pin
+`8bc8c38210ddba0b05c933dbda06cb4539254c7a`. The bounded behavior is
+documented in [M-013](milestones/M-013.md). UPR-FVX PR #185 is integrated at
+`0e3be63e94e34215cc35308d64e8db15e9a3c48c`; DPE remains unchanged.
+
+**CONFIRMED USER-SUPPLIED RUNTIME PASS, revision binding UNKNOWN:** The user
+reported the targeted [Runtime Gate 1](testing/runtime-gate-1-2026-09-19.md)
+scope as PASS. Because the exact tested workspace and component SHAs were not
+supplied, this is not revision-specific acceptance of the current pins and is
+not a full feature-complete or release gate.
+
+## M-014 — Feature-Complete Manual Acceptance Block
+
+**INTENDED FUTURE STATE:** [M-014](milestones/M-014.md) is the single next
+bounded test/documentation block. It refreshes the existing A–H manual package
+to exact revision identity and covers the remaining targeted regressions,
+continuous progression, display/form sanity and supported randomized-output
+smoke. It does not implement features or claim universal Gen-1–9 mechanics.
 
 ## Integrated M-001 rollout and legacy handoff
 
@@ -235,10 +251,10 @@ evidence; the M-001 workspace branch and PR supersede it for integration.
 
 ## Later tracks
 
-- **INTENDED FUTURE STATE:** Controlled Gen 1–9 data risk closure within the
-  pilot data contract and selected engine limitations.
-- **INTENDED FUTURE STATE:** Randomizer regression hardening.
-- **INTENDED FUTURE STATE:** Remaining source-backed QoL.
+- **CONFIRMED CURRENT STATE:** The bounded coherent Gen 1–9 data closure is
+  integrated within the selected CFRU/DPE semantics, with the documented blocked forms,
+  ability behavior and battle-mechanic limitations retained.
+- **INTENDED FUTURE STATE:** M-014 manual acceptance block.
 - **INTENDED FUTURE STATE:** BizHawk validation.
 - **INTENDED FUTURE STATE:** Ironmon Tracker integration.
 - **INTENDED FUTURE STATE:** Stable support profile, only after completed
@@ -256,6 +272,9 @@ evidence; the M-001 workspace branch and PR supersede it for integration.
   blocker describe the pre-M-009 state, not current integration status.
 - **CONFIRMED CURRENT STATE:** Friendship Boost remains optional and
   non-standard for Ironmon; it is not a mandatory ROM-QoL milestone.
+- **CONFIRMED USER-SUPPLIED RUNTIME PASS, revision binding UNKNOWN:** Runtime
+  Gate 1 is recorded for its targeted scope only; exact tested SHAs and broad
+  feature-complete coverage remain unresolved.
 - **LEGACY / OBSOLETE:** Prior roadmap numbering, detailed queues,
   and status remain in
   [00_project-control/roadmap/roadmap-status.md](../00_project-control/roadmap/roadmap-status.md)
