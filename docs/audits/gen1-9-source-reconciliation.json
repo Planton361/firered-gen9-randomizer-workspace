@@ -1,0 +1,1525 @@
+{
+  "dpe_pin": "22ffa27ad09cfacbca841d90e6cbe31e6f9b7fdc",
+  "cfru_pin": "827fa1ef04bd43e5c6bad5c47f7d8690ea6823ec",
+  "comparison_scope": "Pinned local source consistency; external authoritative dataset absent from tracked workspace",
+  "base_stat_rows": 1412,
+  "base_row_ids": [0, 1439],
+  "generation_coverage": {
+    "1": {
+      "national_species_with_base_and_active_learnset": 150,
+      "expected": 151,
+      "missing": [
+        25
+      ]
+    },
+    "2": {
+      "national_species_with_base_and_active_learnset": 100,
+      "expected": 100,
+      "missing": []
+    },
+    "3": {
+      "national_species_with_base_and_active_learnset": 135,
+      "expected": 135,
+      "missing": []
+    },
+    "4": {
+      "national_species_with_base_and_active_learnset": 106,
+      "expected": 107,
+      "missing": [
+        479
+      ]
+    },
+    "5": {
+      "national_species_with_base_and_active_learnset": 156,
+      "expected": 156,
+      "missing": []
+    },
+    "6": {
+      "national_species_with_base_and_active_learnset": 72,
+      "expected": 72,
+      "missing": []
+    },
+    "7": {
+      "national_species_with_base_and_active_learnset": 87,
+      "expected": 88,
+      "missing": [
+        800
+      ]
+    },
+    "8": {
+      "national_species_with_base_and_active_learnset": 94,
+      "expected": 96,
+      "missing": [888, 889]
+    },
+    "9": {
+      "national_species_with_base_and_active_learnset": 120,
+      "expected": 120,
+      "missing": []
+    }
+  },
+  "base_stat_or_ability_encoding_findings": [
+    {
+      "species": "SPECIES_EGG",
+      "field": "baseHP",
+      "value": 0,
+      "classification": "OUT_OF_SCOPE"
+    },
+    {
+      "species": "SPECIES_EGG",
+      "field": "baseAttack",
+      "value": 0,
+      "classification": "OUT_OF_SCOPE"
+    },
+    {
+      "species": "SPECIES_EGG",
+      "field": "baseDefense",
+      "value": 0,
+      "classification": "OUT_OF_SCOPE"
+    },
+    {
+      "species": "SPECIES_EGG",
+      "field": "baseSpeed",
+      "value": 0,
+      "classification": "OUT_OF_SCOPE"
+    },
+    {
+      "species": "SPECIES_EGG",
+      "field": "baseSpAttack",
+      "value": 0,
+      "classification": "OUT_OF_SCOPE"
+    },
+    {
+      "species": "SPECIES_EGG",
+      "field": "baseSpDefense",
+      "value": 0,
+      "classification": "OUT_OF_SCOPE"
+    }
+  ],
+  "ability_slots_checked": 4233,
+  "shared_ability_constant_drift": {},
+  "ability_macros_only_dpe": [
+    "ABILITY_UNUSED"
+  ],
+  "ability_macros_only_cfru": [
+    "ABILITIES_COUNT",
+    "ABILITY_EVAPORATE",
+    "ABILITY_LINGERINGAROMA"
+  ],
+  "assignments_using_dpe_only_ability_names": [],
+  "ability_aliases": [
+    {
+      "macro": "ABILITY_ANGERSHELL",
+      "id": 193,
+      "classification": "INTENTIONAL_ALIAS"
+    },
+    {
+      "macro": "ABILITY_ARMORTAIL",
+      "id": 221,
+      "classification": "INTENTIONAL_ALIAS"
+    },
+    {
+      "macro": "ABILITY_BEADSOFRUIN",
+      "id": 179,
+      "classification": "INTENTIONAL_ALIAS"
+    },
+    {
+      "macro": "ABILITY_COSTAR",
+      "id": 235,
+      "classification": "INTENTIONAL_ALIAS"
+    },
+    {
+      "macro": "ABILITY_CUDCHEW",
+      "id": 225,
+      "classification": "INTENTIONAL_ALIAS"
+    },
+    {
+      "macro": "ABILITY_DRILLBEAK",
+      "id": 200,
+      "classification": "INTENTIONAL_ALIAS"
+    },
+    {
+      "macro": "ABILITY_EARTHEATER",
+      "id": 10,
+      "classification": "INTENTIONAL_ALIAS"
+    },
+    {
+      "macro": "ABILITY_ELECTROMORPHOSIS",
+      "id": 16,
+      "classification": "INTENTIONAL_ALIAS"
+    },
+    {
+      "macro": "ABILITY_GOODASGOLD",
+      "id": 29,
+      "classification": "INTENTIONAL_ALIAS"
+    },
+    {
+      "macro": "ABILITY_GUARDDOG",
+      "id": 39,
+      "classification": "INTENTIONAL_ALIAS"
+    },
+    {
+      "macro": "ABILITY_HADRONENGINE",
+      "id": 181,
+      "classification": "INTENTIONAL_ALIAS"
+    },
+    {
+      "macro": "ABILITY_MINDSEYE",
+      "id": 83,
+      "classification": "INTENTIONAL_ALIAS"
+    },
+    {
+      "macro": "ABILITY_MYCELIUMMIGHT",
+      "id": 152,
+      "classification": "INTENTIONAL_ALIAS"
+    },
+    {
+      "macro": "ABILITY_OPPORTUNIST",
+      "id": 232,
+      "classification": "INTENTIONAL_ALIAS"
+    },
+    {
+      "macro": "ABILITY_ORICHALCUMPULSE",
+      "id": 70,
+      "classification": "INTENTIONAL_ALIAS"
+    },
+    {
+      "macro": "ABILITY_POISONPUPPETEER",
+      "id": 57,
+      "classification": "INTENTIONAL_ALIAS"
+    },
+    {
+      "macro": "ABILITY_PROTOSYNTHESIS",
+      "id": 175,
+      "classification": "INTENTIONAL_ALIAS"
+    },
+    {
+      "macro": "ABILITY_PURIFYINGSALT",
+      "id": 17,
+      "classification": "INTENTIONAL_ALIAS"
+    },
+    {
+      "macro": "ABILITY_ROCKYPAYLOAD",
+      "id": 174,
+      "classification": "INTENTIONAL_ALIAS"
+    },
+    {
+      "macro": "ABILITY_SEEDSOWER",
+      "id": 182,
+      "classification": "INTENTIONAL_ALIAS"
+    },
+    {
+      "macro": "ABILITY_SHARPNESS",
+      "id": 129,
+      "classification": "INTENTIONAL_ALIAS"
+    },
+    {
+      "macro": "ABILITY_SUPERSWEETSYRUP",
+      "id": 22,
+      "classification": "INTENTIONAL_ALIAS"
+    },
+    {
+      "macro": "ABILITY_SUPREMEOVERLORD",
+      "id": 37,
+      "classification": "INTENTIONAL_ALIAS"
+    },
+    {
+      "macro": "ABILITY_SWORDOFRUIN",
+      "id": 179,
+      "classification": "INTENTIONAL_ALIAS"
+    },
+    {
+      "macro": "ABILITY_TABLETOFRUIN",
+      "id": 179,
+      "classification": "INTENTIONAL_ALIAS"
+    },
+    {
+      "macro": "ABILITY_THERMALEXCHANGE",
+      "id": 245,
+      "classification": "INTENTIONAL_ALIAS"
+    },
+    {
+      "macro": "ABILITY_TOXICCHAIN",
+      "id": 209,
+      "classification": "INTENTIONAL_ALIAS"
+    },
+    {
+      "macro": "ABILITY_TOXICDEBRIS",
+      "id": 38,
+      "classification": "INTENTIONAL_ALIAS"
+    },
+    {
+      "macro": "ABILITY_VESSELOFRUIN",
+      "id": 179,
+      "classification": "INTENTIONAL_ALIAS"
+    },
+    {
+      "macro": "ABILITY_WELLBAKEDBODY",
+      "id": 245,
+      "classification": "INTENTIONAL_ALIAS"
+    },
+    {
+      "macro": "ABILITY_WINDPOWER",
+      "id": 216,
+      "classification": "INTENTIONAL_ALIAS"
+    },
+    {
+      "macro": "ABILITY_WINDRIDER",
+      "id": 187,
+      "classification": "INTENTIONAL_ALIAS"
+    },
+    {
+      "macro": "ABILITY_ZEROTOHERO",
+      "id": 67,
+      "classification": "INTENTIONAL_ALIAS"
+    }
+  ],
+  "ability_name_rows": 328,
+  "ability_name_encoding": "MAX_LENGTH=16 plus explicit FF terminator (17 bytes); contextual overrides follow indexed table",
+  "overlength_ability_names": [],
+  "learnset_blocks": {
+    "DPE": 1096,
+    "CFRU": 1105
+  },
+  "learnset_pointer_rows": {
+    "DPE": 1410,
+    "CFRU": 1414
+  },
+  "learnset_equal_rows": 1378,
+  "learnset_differences": [
+    {
+      "id": 1018,
+      "dpe_species": "SPECIES_MAGEARNA",
+      "cfru_species": "SPECIES_MAGEARNA",
+      "dpe": {
+        "missing_declaration": "sMagearnaLevelUpLearnset"
+      },
+      "cfru": [
+        [1, 635],
+        [1, 591],
+        [1, 480],
+        [1, 382],
+        [1, 270],
+        [1, 49],
+        [1, 111],
+        [1, 60],
+        [9, 649],
+        [17, 62],
+        [25, 446],
+        [33, 170],
+        [41, 449],
+        [49, 589],
+        [57, 334],
+        [65, 220],
+        [73, 533],
+        [81, 359],
+        [89, 541],
+        [97, 668]
+      ],
+      "classification": "OUT_OF_SCOPE",
+      "reason": "DPE EXPAND_LEARNSETS disabled; current pilot uses CFRU table"
+    },
+    {
+      "id": 1019,
+      "dpe_species": "SPECIES_MARSHADOW",
+      "cfru_species": "SPECIES_MARSHADOW",
+      "dpe": {
+        "missing_declaration": "sMarshadowLevelUpLearnset"
+      },
+      "cfru": [
+        [1, 228],
+        [1, 398],
+        [1, 9],
+        [9, 272],
+        [15, 27],
+        [18, 325],
+        [27, 375],
+        [35, 26],
+        [36, 485],
+        [45, 458],
+        [63, 244],
+        [72, 613],
+        [81, 594],
+        [90, 283],
+        [99, 365]
+      ],
+      "classification": "OUT_OF_SCOPE",
+      "reason": "DPE EXPAND_LEARNSETS disabled; current pilot uses CFRU table"
+    },
+    {
+      "id": 1036,
+      "dpe_species": null,
+      "cfru_species": "SPECIES_EXEGGCUTE_A",
+      "dpe": null,
+      "cfru": [
+        [1, 71],
+        [1, 140],
+        [1, 95],
+        [5, 115],
+        [10, 73],
+        [15, 72],
+        [19, 78],
+        [20, 93],
+        [21, 77],
+        [23, 79],
+        [25, 235],
+        [30, 331],
+        [35, 202],
+        [37, 506],
+        [40, 326],
+        [45, 253],
+        [47, 94],
+        [50, 642],
+        [50, 475],
+        [55, 76]
+      ],
+      "classification": "OUT_OF_SCOPE",
+      "reason": "DPE EXPAND_LEARNSETS disabled; current pilot uses CFRU table"
+    },
+    {
+      "id": 1038,
+      "dpe_species": null,
+      "cfru_species": "SPECIES_CUBONE_A",
+      "dpe": null,
+      "cfru": [
+        [1, 45],
+        [1, 189],
+        [4, 39],
+        [7, 125],
+        [8, 206],
+        [12, 29],
+        [13, 43],
+        [16, 498],
+        [20, 643],
+        [23, 99],
+        [24, 617],
+        [29, 198],
+        [32, 116],
+        [36, 283],
+        [40, 155],
+        [44, 37],
+        [48, 38]
+      ],
+      "classification": "OUT_OF_SCOPE",
+      "reason": "DPE EXPAND_LEARNSETS disabled; current pilot uses CFRU table"
+    },
+    {
+      "id": 1073,
+      "dpe_species": "SPECIES_MAGEARNA_P",
+      "cfru_species": "SPECIES_MAGEARNA_P",
+      "dpe": {
+        "missing_declaration": "sMagearnaLevelUpLearnset"
+      },
+      "cfru": [
+        [1, 635],
+        [1, 591],
+        [1, 480],
+        [1, 382],
+        [1, 270],
+        [1, 49],
+        [1, 111],
+        [1, 60],
+        [9, 649],
+        [17, 62],
+        [25, 446],
+        [33, 170],
+        [41, 449],
+        [49, 589],
+        [57, 334],
+        [65, 220],
+        [73, 533],
+        [81, 359],
+        [89, 541],
+        [97, 668]
+      ],
+      "classification": "OUT_OF_SCOPE",
+      "reason": "DPE EXPAND_LEARNSETS disabled; current pilot uses CFRU table"
+    },
+    {
+      "id": 1209,
+      "dpe_species": "SPECIES_ZARUDE_DADA",
+      "cfru_species": null,
+      "dpe": [
+        [1, 20],
+        [1, 10],
+        [6, 43],
+        [12, 22],
+        [18, 74],
+        [24, 154],
+        [30, 184],
+        [36, 377],
+        [42, 44],
+        [48, 442],
+        [54, 207],
+        [60, 373],
+        [66, 235],
+        [72, 379],
+        [78, 37],
+        [84, 390],
+        [90, 732]
+      ],
+      "cfru": null,
+      "classification": "OUT_OF_SCOPE",
+      "reason": "DPE EXPAND_LEARNSETS disabled; current pilot uses CFRU table"
+    },
+    {
+      "id": 1218,
+      "dpe_species": null,
+      "cfru_species": "SPECIES_KOFFING_G",
+      "dpe": null,
+      "cfru": [
+        [1, 139],
+        [1, 33],
+        [4, 123],
+        [8, 108],
+        [12, 427],
+        [16, 485],
+        [20, 124],
+        [24, 114],
+        [28, 120],
+        [29, 510],
+        [32, 188],
+        [36, 92],
+        [40, 641],
+        [44, 153],
+        [48, 262],
+        [52, 194]
+      ],
+      "classification": "OUT_OF_SCOPE",
+      "reason": "DPE EXPAND_LEARNSETS disabled; current pilot uses CFRU table"
+    },
+    {
+      "id": 1220,
+      "dpe_species": "SPECIES_MR_MIME_G",
+      "cfru_species": "SPECIES_MR_MIME_G",
+      "dpe": {
+        "missing_declaration": "sMrMimeGLevelUpLearnset"
+      },
+      "cfru": [
+        [1, 381],
+        [1, 627],
+        [1, 229],
+        [1, 466],
+        [1, 219],
+        [1, 115],
+        [1, 113],
+        [1, 102],
+        [1, 278],
+        [1, 182],
+        [1, 272],
+        [1, 456],
+        [1, 1],
+        [4, 226],
+        [8, 227],
+        [12, 93],
+        [16, 285],
+        [20, 196],
+        [24, 24],
+        [28, 60],
+        [32, 95],
+        [36, 243],
+        [40, 458],
+        [44, 501],
+        [48, 94],
+        [52, 298]
+      ],
+      "classification": "OUT_OF_SCOPE",
+      "reason": "DPE EXPAND_LEARNSETS disabled; current pilot uses CFRU table"
+    },
+    {
+      "id": 1228,
+      "dpe_species": null,
+      "cfru_species": "SPECIES_MIME_JR_G",
+      "dpe": null,
+      "cfru": [
+        [1, 112],
+        [1, 456],
+        [1, 1],
+        [1, 321],
+        [4, 226],
+        [8, 227],
+        [8, 96],
+        [11, 3],
+        [12, 93],
+        [16, 272],
+        [20, 182],
+        [24, 278],
+        [28, 60],
+        [29, 164],
+        [32, 102],
+        [36, 113],
+        [36, 115],
+        [36, 219],
+        [36, 271],
+        [40, 458],
+        [44, 466],
+        [48, 94],
+        [52, 298]
+      ],
+      "classification": "OUT_OF_SCOPE",
+      "reason": "DPE EXPAND_LEARNSETS disabled; current pilot uses CFRU table"
+    },
+    {
+      "id": 1250,
+      "dpe_species": null,
+      "cfru_species": "SPECIES_DECIDUEYE_H",
+      "dpe": null,
+      "cfru": [
+        [0, 758],
+        [1, 428],
+        [1, 442],
+        [1, 33],
+        [1, 45],
+        [1, 595],
+        [1, 310],
+        [9, 64],
+        [12, 249],
+        [15, 75],
+        [16, 359],
+        [20, 235],
+        [22, 193],
+        [25, 451],
+        [30, 386],
+        [33, 758],
+        [35, 31],
+        [37, 458],
+        [43, 348],
+        [51, 297],
+        [58, 361]
+      ],
+      "classification": "OUT_OF_SCOPE",
+      "reason": "DPE EXPAND_LEARNSETS disabled; current pilot uses CFRU table"
+    },
+    {
+      "id": 1357,
+      "dpe_species": "SPECIES_PALAFIN",
+      "cfru_species": "SPECIES_PALAFIN",
+      "dpe": [
+        [0, 728],
+        [1, 944],
+        [1, 48],
+        [1, 55],
+        [1, 310],
+        [1, 116],
+        [13, 357],
+        [17, 438],
+        [21, 358],
+        [25, 204],
+        [29, 440],
+        [34, 227],
+        [37, 728],
+        [39, 291],
+        [44, 54],
+        [50, 56],
+        [55, 264],
+        [61, 749]
+      ],
+      "cfru": [
+        [0, 728],
+        [0, 944],
+        [1, 48],
+        [1, 55],
+        [1, 310],
+        [1, 116],
+        [13, 357],
+        [17, 438],
+        [21, 358],
+        [25, 204],
+        [29, 440],
+        [34, 227],
+        [37, 728],
+        [39, 291],
+        [44, 54],
+        [50, 56],
+        [55, 264],
+        [61, 749]
+      ],
+      "classification": "OUT_OF_SCOPE",
+      "reason": "DPE EXPAND_LEARNSETS disabled; current pilot uses CFRU table"
+    },
+    {
+      "id": 1358,
+      "dpe_species": "SPECIES_PALAFIN_HERO",
+      "cfru_species": "SPECIES_PALAFIN_HERO",
+      "dpe": [
+        [0, 728],
+        [1, 944],
+        [1, 48],
+        [1, 55],
+        [1, 310],
+        [1, 116],
+        [13, 357],
+        [17, 438],
+        [21, 358],
+        [25, 204],
+        [29, 440],
+        [34, 227],
+        [37, 728],
+        [39, 291],
+        [44, 54],
+        [50, 56],
+        [55, 264],
+        [61, 749]
+      ],
+      "cfru": [
+        [0, 728],
+        [0, 944],
+        [1, 48],
+        [1, 55],
+        [1, 310],
+        [1, 116],
+        [13, 357],
+        [17, 438],
+        [21, 358],
+        [25, 204],
+        [29, 440],
+        [34, 227],
+        [37, 728],
+        [39, 291],
+        [44, 54],
+        [50, 56],
+        [55, 264],
+        [61, 749]
+      ],
+      "classification": "OUT_OF_SCOPE",
+      "reason": "DPE EXPAND_LEARNSETS disabled; current pilot uses CFRU table"
+    },
+    {
+      "id": 1366,
+      "dpe_species": "SPECIES_HOUNDSTONE",
+      "cfru_species": "SPECIES_HOUNDSTONE",
+      "dpe": [
+        [1, 33],
+        [1, 45],
+        [1, 122],
+        [1, 39],
+        [1, 44],
+        [1, 46],
+        [12, 29],
+        [16, 91],
+        [24, 242],
+        [28, 156],
+        [36, 463],
+        [41, 270],
+        [46, 489],
+        [51, 204],
+        [58, 38],
+        [99, 946]
+      ],
+      "cfru": [
+        [0, 946],
+        [1, 33],
+        [1, 45],
+        [1, 122],
+        [1, 39],
+        [1, 44],
+        [1, 46],
+        [12, 29],
+        [16, 91],
+        [24, 242],
+        [28, 156],
+        [36, 463],
+        [41, 270],
+        [46, 489],
+        [51, 204],
+        [58, 38]
+      ],
+      "classification": "OUT_OF_SCOPE",
+      "reason": "DPE EXPAND_LEARNSETS disabled; current pilot uses CFRU table"
+    },
+    {
+      "id": 1436,
+      "dpe_species": "SPECIES_TERAPAGOS",
+      "cfru_species": "SPECIES_TERAPAGOS",
+      "dpe": [
+        [1, 110],
+        [1, 161],
+        [1, 229],
+        [10, 246],
+        [20, 29],
+        [30, 182],
+        [40, 372],
+        [50, 532],
+        [
+          60,
+          "MOVE_TERASTORM"
+        ],
+        [70, 38],
+        [80, 393],
+        [90, 510]
+      ],
+      "cfru": [
+        [1, 110],
+        [1, 161],
+        [1, 229],
+        [10, 246],
+        [20, 29],
+        [30, 182],
+        [40, 372],
+        [50, 532],
+        [60, 979],
+        [70, 38],
+        [80, 393],
+        [90, 510]
+      ],
+      "classification": "OUT_OF_SCOPE",
+      "reason": "DPE EXPAND_LEARNSETS disabled; current pilot uses CFRU table"
+    },
+    {
+      "id": 1437,
+      "dpe_species": "SPECIES_TERAPAGOS_TERASTAL",
+      "cfru_species": "SPECIES_TERAPAGOS_TERASTAL",
+      "dpe": [
+        [1, 110],
+        [1, 161],
+        [1, 229],
+        [10, 246],
+        [20, 29],
+        [30, 182],
+        [40, 372],
+        [50, 532],
+        [
+          60,
+          "MOVE_TERASTORM"
+        ],
+        [70, 38],
+        [80, 393],
+        [90, 510]
+      ],
+      "cfru": [
+        [1, 110],
+        [1, 161],
+        [1, 229],
+        [10, 246],
+        [20, 29],
+        [30, 182],
+        [40, 372],
+        [50, 532],
+        [60, 979],
+        [70, 38],
+        [80, 393],
+        [90, 510]
+      ],
+      "classification": "OUT_OF_SCOPE",
+      "reason": "DPE EXPAND_LEARNSETS disabled; current pilot uses CFRU table"
+    },
+    {
+      "id": 1438,
+      "dpe_species": "SPECIES_TERAPAGOS_STELLAR",
+      "cfru_species": "SPECIES_TERAPAGOS_STELLAR",
+      "dpe": [
+        [1, 110],
+        [1, 161],
+        [1, 229],
+        [10, 246],
+        [20, 29],
+        [30, 182],
+        [40, 372],
+        [50, 532],
+        [
+          60,
+          "MOVE_TERASTORM"
+        ],
+        [70, 38],
+        [80, 393],
+        [90, 510]
+      ],
+      "cfru": [
+        [1, 110],
+        [1, 161],
+        [1, 229],
+        [10, 246],
+        [20, 29],
+        [30, 182],
+        [40, 372],
+        [50, 532],
+        [60, 979],
+        [70, 38],
+        [80, 393],
+        [90, 510]
+      ],
+      "classification": "OUT_OF_SCOPE",
+      "reason": "DPE EXPAND_LEARNSETS disabled; current pilot uses CFRU table"
+    },
+    {
+      "id": 26,
+      "dpe_species": "SPECIES_RAICHU",
+      "cfru_species": "SPECIES_RAICHU",
+      "dpe": {
+        "missing_declaration": "sRaichuLevelUpLearnset"
+      },
+      "cfru": [
+        [1, 84],
+        [1, 39],
+        [1, 98],
+        [1, 85]
+      ],
+      "classification": "OUT_OF_SCOPE",
+      "reason": "DPE EXPAND_LEARNSETS disabled; current pilot uses CFRU table"
+    },
+    {
+      "id": 27,
+      "dpe_species": "SPECIES_SANDSHREW",
+      "cfru_species": "SPECIES_SANDSHREW",
+      "dpe": {
+        "missing_declaration": "sSandshrewLevelUpLearnset"
+      },
+      "cfru": [
+        [27, 97],
+        [30, 163],
+        [33, 91],
+        [36, 510],
+        [39, 14],
+        [42, 201],
+        [45, 89]
+      ],
+      "classification": "OUT_OF_SCOPE",
+      "reason": "DPE EXPAND_LEARNSETS disabled; current pilot uses CFRU table"
+    },
+    {
+      "id": 533,
+      "dpe_species": "SPECIES_UXIE",
+      "cfru_species": "SPECIES_UXIE",
+      "dpe": {
+        "missing_declaration": "sUxieLevelUpLearnset"
+      },
+      "cfru": [
+        [1, 262],
+        [1, 506],
+        [1, 175],
+        [1, 156],
+        [1, 93],
+        [6, 286],
+        [16, 203],
+        [21, 129],
+        [31, 281],
+        [36, 248],
+        [46, 133],
+        [50, 326],
+        [61, 175],
+        [66, 506],
+        [76, 262]
+      ],
+      "classification": "OUT_OF_SCOPE",
+      "reason": "DPE EXPAND_LEARNSETS disabled; current pilot uses CFRU table"
+    },
+    {
+      "id": 534,
+      "dpe_species": "SPECIES_MESPRIT",
+      "cfru_species": "SPECIES_MESPRIT",
+      "dpe": {
+        "missing_declaration": "sMespritLevelUpLearnset"
+      },
+      "cfru": [
+        [1, 470],
+        [1, 506],
+        [1, 456],
+        [1, 156],
+        [1, 93],
+        [6, 286],
+        [16, 182],
+        [21, 129],
+        [31, 649],
+        [36, 248],
+        [46, 204],
+        [50, 326],
+        [61, 456],
+        [66, 506],
+        [76, 470]
+      ],
+      "classification": "OUT_OF_SCOPE",
+      "reason": "DPE EXPAND_LEARNSETS disabled; current pilot uses CFRU table"
+    },
+    {
+      "id": 535,
+      "dpe_species": "SPECIES_AZELF",
+      "cfru_species": "SPECIES_AZELF",
+      "dpe": {
+        "missing_declaration": "sAzelfLevelUpLearnset"
+      },
+      "cfru": [
+        [1, 506],
+        [1, 674],
+        [1, 156],
+        [1, 93],
+        [6, 286],
+        [16, 197],
+        [21, 129],
+        [31, 253],
+        [36, 248],
+        [46, 386],
+        [50, 326],
+        [61, 674],
+        [66, 506],
+        [76, 153]
+      ],
+      "classification": "OUT_OF_SCOPE",
+      "reason": "DPE EXPAND_LEARNSETS disabled; current pilot uses CFRU table"
+    },
+    {
+      "id": 536,
+      "dpe_species": "SPECIES_DIALGA",
+      "cfru_species": "SPECIES_DIALGA",
+      "dpe": {
+        "missing_declaration": "sDialgaLevelUpLearnset"
+      },
+      "cfru": [
+        [50, 647],
+        [56, 389],
+        [64, 521],
+        [72, 372],
+        [80, 231],
+        [88, 492]
+      ],
+      "classification": "OUT_OF_SCOPE",
+      "reason": "DPE EXPAND_LEARNSETS disabled; current pilot uses CFRU table"
+    },
+    {
+      "id": 541,
+      "dpe_species": "SPECIES_CRESSELIA",
+      "cfru_species": "SPECIES_CRESSELIA",
+      "dpe": [
+        [1, 745],
+        [1, 93],
+        [1, 104],
+        [6, 54],
+        [12, 62],
+        [18, 60],
+        [24, 525],
+        [30, 163],
+        [36, 391],
+        [42, 236],
+        [48, 219],
+        [54, 94],
+        [60, 464],
+        [66, 248],
+        [72, 471],
+        [72, 765]
+      ],
+      "cfru": [
+        [1, 471],
+        [1, 525],
+        [1, 391],
+        [1, 236],
+        [1, 93],
+        [1, 104],
+        [11, 219],
+        [20, 54],
+        [29, 62],
+        [38, 248],
+        [47, 163],
+        [57, 236],
+        [66, 391],
+        [75, 525],
+        [84, 471],
+        [93, 94],
+        [99, 464]
+      ],
+      "classification": "OUT_OF_SCOPE",
+      "reason": "DPE EXPAND_LEARNSETS disabled; current pilot uses CFRU table"
+    },
+    {
+      "id": 603,
+      "dpe_species": "SPECIES_BASCULIN_RED",
+      "cfru_species": "SPECIES_BASCULIN_RED",
+      "dpe": [
+        [1, 39],
+        [1, 33],
+        [1, 55],
+        [3, 253],
+        [5, 29],
+        [7, 44],
+        [9, 357],
+        [11, 507],
+        [14, 36],
+        [17, 242],
+        [20, 358],
+        [23, 656],
+        [26, 38],
+        [30, 184],
+        [34, 749],
+        [34, 175],
+        [38, 495],
+        [42, 37],
+        [46, 380]
+      ],
+      "cfru": [
+        [1, 39],
+        [1, 33],
+        [1, 55],
+        [3, 253],
+        [5, 29],
+        [7, 44],
+        [9, 357],
+        [11, 507],
+        [14, 36],
+        [17, 242],
+        [20, 358],
+        [23, 656],
+        [26, 38],
+        [30, 184],
+        [34, 175],
+        [38, 495],
+        [42, 37],
+        [46, 380]
+      ],
+      "classification": "OUT_OF_SCOPE",
+      "reason": "DPE EXPAND_LEARNSETS disabled; current pilot uses CFRU table"
+    },
+    {
+      "id": 630,
+      "dpe_species": "SPECIES_SOLOSIS",
+      "cfru_species": "SPECIES_SOLOSIS",
+      "dpe": [
+        [1, 149],
+        [3, 115],
+        [7, 205],
+        [10, 289],
+        [14, 60],
+        [16, 113],
+        [19, 204],
+        [24, 105],
+        [25, 502],
+        [28, 283],
+        [31, 248],
+        [33, 220],
+        [37, 94],
+        [40, 285],
+        [46, 647],
+        [48, 634]
+      ],
+      "cfru": [
+        [1, 149],
+        [3, 115],
+        [7, 205],
+        [10, 289],
+        [14, 237],
+        [16, 113],
+        [19, 204],
+        [24, 105],
+        [25, 502],
+        [28, 283],
+        [31, 248],
+        [33, 220],
+        [37, 94],
+        [40, 285],
+        [46, 647],
+        [48, 634]
+      ],
+      "classification": "OUT_OF_SCOPE",
+      "reason": "DPE EXPAND_LEARNSETS disabled; current pilot uses CFRU table"
+    },
+    {
+      "id": 631,
+      "dpe_species": "SPECIES_DUOSION",
+      "cfru_species": "SPECIES_DUOSION",
+      "dpe": [
+        [1, 149],
+        [1, 115],
+        [1, 205],
+        [1, 289],
+        [3, 115],
+        [7, 205],
+        [10, 289],
+        [14, 60],
+        [16, 113],
+        [19, 204],
+        [24, 105],
+        [25, 502],
+        [28, 283],
+        [31, 248],
+        [34, 220],
+        [39, 94],
+        [43, 285],
+        [50, 647],
+        [53, 634]
+      ],
+      "cfru": [
+        [1, 149],
+        [1, 115],
+        [1, 205],
+        [1, 289],
+        [3, 115],
+        [7, 205],
+        [10, 289],
+        [14, 237],
+        [16, 113],
+        [19, 204],
+        [24, 105],
+        [25, 502],
+        [28, 283],
+        [31, 248],
+        [34, 220],
+        [39, 94],
+        [43, 285],
+        [50, 647],
+        [53, 634]
+      ],
+      "classification": "OUT_OF_SCOPE",
+      "reason": "DPE EXPAND_LEARNSETS disabled; current pilot uses CFRU table"
+    },
+    {
+      "id": 632,
+      "dpe_species": "SPECIES_REUNICLUS",
+      "cfru_species": "SPECIES_REUNICLUS",
+      "dpe": [
+        [0, 146],
+        [1, 146],
+        [1, 149],
+        [1, 115],
+        [1, 205],
+        [1, 289],
+        [3, 115],
+        [7, 205],
+        [10, 289],
+        [14, 60],
+        [16, 113],
+        [19, 204],
+        [24, 105],
+        [25, 502],
+        [28, 283],
+        [31, 248],
+        [34, 220],
+        [39, 94],
+        [45, 285],
+        [54, 647],
+        [59, 634]
+      ],
+      "cfru": [
+        [0, 146],
+        [1, 146],
+        [1, 149],
+        [1, 115],
+        [1, 205],
+        [1, 289],
+        [3, 115],
+        [7, 205],
+        [10, 289],
+        [14, 237],
+        [16, 113],
+        [19, 204],
+        [24, 105],
+        [25, 502],
+        [28, 283],
+        [31, 248],
+        [34, 220],
+        [39, 94],
+        [45, 285],
+        [54, 647],
+        [59, 634]
+      ],
+      "classification": "OUT_OF_SCOPE",
+      "reason": "DPE EXPAND_LEARNSETS disabled; current pilot uses CFRU table"
+    },
+    {
+      "id": 706,
+      "dpe_species": null,
+      "cfru_species": "SPECIES_SHADOW_WARRIOR",
+      "dpe": null,
+      "cfru": [
+        [1, 10],
+        [1, 474],
+        [30, 163],
+        [30, 337],
+        [30, 397],
+        [50, 489]
+      ],
+      "classification": "OUT_OF_SCOPE",
+      "reason": "DPE EXPAND_LEARNSETS disabled; current pilot uses CFRU table"
+    },
+    {
+      "id": 736,
+      "dpe_species": "SPECIES_BASCULIN_BLUE",
+      "cfru_species": "SPECIES_BASCULIN_BLUE",
+      "dpe": [
+        [1, 39],
+        [1, 33],
+        [1, 55],
+        [3, 253],
+        [5, 29],
+        [7, 44],
+        [9, 357],
+        [11, 507],
+        [14, 36],
+        [17, 242],
+        [20, 358],
+        [23, 656],
+        [26, 38],
+        [30, 184],
+        [34, 749],
+        [34, 175],
+        [38, 495],
+        [42, 37],
+        [46, 380]
+      ],
+      "cfru": [
+        [1, 39],
+        [1, 33],
+        [1, 55],
+        [3, 253],
+        [5, 29],
+        [7, 44],
+        [9, 357],
+        [11, 507],
+        [14, 36],
+        [17, 242],
+        [20, 358],
+        [23, 656],
+        [26, 38],
+        [30, 184],
+        [34, 175],
+        [38, 495],
+        [42, 37],
+        [46, 380]
+      ],
+      "classification": "OUT_OF_SCOPE",
+      "reason": "DPE EXPAND_LEARNSETS disabled; current pilot uses CFRU table"
+    },
+    {
+      "id": 775,
+      "dpe_species": "SPECIES_LITLEO",
+      "cfru_species": "SPECIES_LITLEO",
+      "dpe": {
+        "missing_declaration": "sLitleoLevelUpLearnset"
+      },
+      "cfru": [
+        [5, 52],
+        [8, 414],
+        [11, 29],
+        [15, 558],
+        [20, 36],
+        [23, 431],
+        [28, 283],
+        [33, 538],
+        [36, 53],
+        [39, 242],
+        [43, 304],
+        [46, 474],
+        [50, 315]
+      ],
+      "classification": "OUT_OF_SCOPE",
+      "reason": "DPE EXPAND_LEARNSETS disabled; current pilot uses CFRU table"
+    },
+    {
+      "id": 826,
+      "dpe_species": "SPECIES_ZYGARDE",
+      "cfru_species": "SPECIES_ZYGARDE",
+      "dpe": [],
+      "cfru": [
+        [80, 89],
+        [88, 245],
+        [88, 200]
+      ],
+      "classification": "OUT_OF_SCOPE",
+      "reason": "DPE EXPAND_LEARNSETS disabled; current pilot uses CFRU table"
+    },
+    {
+      "id": 835,
+      "dpe_species": "SPECIES_ZYGARDE_CELL",
+      "cfru_species": "SPECIES_ZYGARDE_CELL",
+      "dpe": [],
+      "cfru": [
+        [80, 89],
+        [88, 245],
+        [88, 200]
+      ],
+      "classification": "OUT_OF_SCOPE",
+      "reason": "DPE EXPAND_LEARNSETS disabled; current pilot uses CFRU table"
+    },
+    {
+      "id": 836,
+      "dpe_species": "SPECIES_ZYGARDE_CORE",
+      "cfru_species": "SPECIES_ZYGARDE_CORE",
+      "dpe": [],
+      "cfru": [
+        [80, 89],
+        [88, 245],
+        [88, 200]
+      ],
+      "classification": "OUT_OF_SCOPE",
+      "reason": "DPE EXPAND_LEARNSETS disabled; current pilot uses CFRU table"
+    },
+    {
+      "id": 837,
+      "dpe_species": "SPECIES_ZYGARDE_10",
+      "cfru_species": "SPECIES_ZYGARDE_10",
+      "dpe": [],
+      "cfru": [
+        [80, 89],
+        [88, 245],
+        [88, 200]
+      ],
+      "classification": "OUT_OF_SCOPE",
+      "reason": "DPE EXPAND_LEARNSETS disabled; current pilot uses CFRU table"
+    },
+    {
+      "id": 838,
+      "dpe_species": "SPECIES_ZYGARDE_COMPLETE",
+      "cfru_species": "SPECIES_ZYGARDE_COMPLETE",
+      "dpe": [],
+      "cfru": [
+        [80, 89],
+        [88, 245],
+        [88, 200]
+      ],
+      "classification": "OUT_OF_SCOPE",
+      "reason": "DPE EXPAND_LEARNSETS disabled; current pilot uses CFRU table"
+    },
+    {
+      "id": 919,
+      "dpe_species": "SPECIES_DIALGA_ORIGIN",
+      "cfru_species": "SPECIES_DIALGA_ORIGIN",
+      "dpe": [
+        [1, 239],
+        [6, 246],
+        [12, 163],
+        [19, 337],
+        [27, 389],
+        [36, 370],
+        [42, 372],
+        [47, 231],
+        [55, 449],
+        [60, 492]
+      ],
+      "cfru": [
+        [50, 647],
+        [56, 389],
+        [64, 521],
+        [72, 372],
+        [80, 231],
+        [88, 492]
+      ],
+      "classification": "OUT_OF_SCOPE",
+      "reason": "DPE EXPAND_LEARNSETS disabled; current pilot uses CFRU table"
+    },
+    {
+      "id": 920,
+      "dpe_species": "SPECIES_PALKIA_ORIGIN",
+      "cfru_species": "SPECIES_PALKIA_ORIGIN",
+      "dpe": [
+        [1, 239],
+        [6, 246],
+        [12, 163],
+        [19, 337],
+        [27, 389],
+        [36, 370],
+        [42, 372],
+        [47, 231],
+        [55, 56],
+        [60, 493]
+      ],
+      "cfru": [
+        [1, 184],
+        [1, 352],
+        [8, 225],
+        [16, 246],
+        [24, 163],
+        [32, 639],
+        [40, 337],
+        [48, 359],
+        [50, 647],
+        [56, 389],
+        [64, 358],
+        [72, 372],
+        [80, 493],
+        [88, 56]
+      ],
+      "classification": "OUT_OF_SCOPE",
+      "reason": "DPE EXPAND_LEARNSETS disabled; current pilot uses CFRU table"
+    },
+    {
+      "id": "SPECIES_DIALGA_PRIMAL",
+      "dpe_species": "SPECIES_DIALGA_PRIMAL",
+      "cfru_species": null,
+      "dpe": {
+        "missing_declaration": "sDialgaLevelUpLearnset"
+      },
+      "cfru": null,
+      "classification": "OUT_OF_SCOPE",
+      "reason": "DPE EXPAND_LEARNSETS disabled; current pilot uses CFRU table"
+    }
+  ],
+  "invalid_learnset_entries": [
+    {
+      "component": "DPE",
+      "id": 26,
+      "classification": "OUT_OF_SCOPE"
+    },
+    {
+      "component": "DPE",
+      "id": 27,
+      "classification": "OUT_OF_SCOPE"
+    },
+    {
+      "component": "DPE",
+      "id": 533,
+      "classification": "OUT_OF_SCOPE"
+    },
+    {
+      "component": "DPE",
+      "id": 534,
+      "classification": "OUT_OF_SCOPE"
+    },
+    {
+      "component": "DPE",
+      "id": 535,
+      "classification": "OUT_OF_SCOPE"
+    },
+    {
+      "component": "DPE",
+      "id": 536,
+      "classification": "OUT_OF_SCOPE"
+    },
+    {
+      "component": "DPE",
+      "id": 775,
+      "classification": "OUT_OF_SCOPE"
+    },
+    {
+      "component": "DPE",
+      "id": "SPECIES_DIALGA_PRIMAL",
+      "classification": "OUT_OF_SCOPE"
+    },
+    {
+      "component": "DPE",
+      "id": 1018,
+      "classification": "OUT_OF_SCOPE"
+    },
+    {
+      "component": "DPE",
+      "id": 1019,
+      "classification": "OUT_OF_SCOPE"
+    },
+    {
+      "component": "DPE",
+      "id": 1073,
+      "classification": "OUT_OF_SCOPE"
+    },
+    {
+      "component": "DPE",
+      "id": 1220,
+      "classification": "OUT_OF_SCOPE"
+    },
+    {
+      "component": "DPE",
+      "id": 1436,
+      "classification": "OUT_OF_SCOPE"
+    },
+    {
+      "component": "DPE",
+      "id": 1437,
+      "classification": "OUT_OF_SCOPE"
+    },
+    {
+      "component": "DPE",
+      "id": 1438,
+      "classification": "OUT_OF_SCOPE"
+    }
+  ],
+  "maximum_learnset_length": {
+    "DPE": 34,
+    "CFRU": 34
+  },
+  "shared_move_constant_drift": {},
+  "cfru_learnsets_changed_since_sync": false,
+  "upstream_reconciliation": "UNKNOWN: approved upstream snapshot is not tracked; no new data generated"
+}
