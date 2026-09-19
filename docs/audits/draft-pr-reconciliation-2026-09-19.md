@@ -2,9 +2,9 @@
 
 **Evidence classification:** **CONFIRMED CURRENT STATE** for GitHub metadata,
 Gitlinks and merged history inspected on 2026-09-19. Runtime rows are
-**CONFIRMED USER-SUPPLIED RUNTIME PASS** only as recorded in
-[Runtime Gate 1](../testing/runtime-gate-1-2026-09-19.md); their tested
-revisions remain **UNKNOWN**.
+**CONFIRMED USER-SUPPLIED REVISION-BOUND RUNTIME PASS** only as recorded in
+[Runtime Gate 1](../testing/runtime-gate-1-2026-09-19.md); that report records
+their exact tested revisions.
 
 ## Current comparison base
 
@@ -35,7 +35,7 @@ dispositions are recorded without changing or closing those PRs.
 | [#489](https://github.com/Planton361/firered-gen9-randomizer-workspace/pull/489) | `391a200a20bd217feee9ca9b973b200c089e6de1` | “All cases NOT_RUN” is no longer true for the user-reported Gate 1 subset. The full A–H package was not thereby passed. | **RETAIN as historical test-package source;** M-014 is the current refreshed bounded block. |
 | [#490](https://github.com/Planton361/firered-gen9-randomizer-workspace/pull/490) | `fd4835905a48c0135562e66327208ee2c22288b4` | Its “pins unchanged”, old M-013 pending status and pre-#494 baseline are stale. Its no-freeze/no-feature-complete boundary remains valid. | **SUPERSEDED for pin/readiness facts;** freeze and broad acceptance remain open. |
 | [#491](https://github.com/Planton361/firered-gen9-randomizer-workspace/pull/491) | `d6034ae39cbc2e5a551289db685f4687388ce59d` | Its tracker discovery is design-only and uses the pre-#494 identity. Gate 1 did not activate Tracker or establish a freeze. | **STILL FUTURE / not activated.** Keep outside this closure and M-014. |
-| [#492](https://github.com/Planton361/firered-gen9-randomizer-workspace/pull/492) | `0d071dba7d788be7be1f937ef360878e2f1f3671` | Its M-013 candidate `d8468e1` and old CFRU `827fa1e` baseline are now in the integrated CFRU #45 → #48 ancestry. Its runtime-pending wording predates the user report. | **SUPERSEDED for implementation status;** the reported Premier rows remain unbound to exact tested SHAs. |
+| [#492](https://github.com/Planton361/firered-gen9-randomizer-workspace/pull/492) | `0d071dba7d788be7be1f937ef360878e2f1f3671` | Its M-013 candidate `d8468e1` and old CFRU `827fa1e` baseline are now in the integrated CFRU #45 → #48 ancestry. Its runtime-pending wording predates the user report. | **SUPERSEDED for implementation status;** the reported Premier rows are now revision-bound by Gate 1's supplied integrated revision set. |
 
 ## Historical handling
 

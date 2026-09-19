@@ -2,32 +2,34 @@
 
 **Recorded:** 2026-09-19
 
-**Evidence classification:** **CONFIRMED USER-SUPPLIED RUNTIME PASS**.
+**Evidence classification:** **CONFIRMED USER-SUPPLIED REVISION-BOUND RUNTIME PASS**.
 
-**Revision status:** **UNKNOWN / not revision-bound**. The user reported that
-all rows below passed, but did not provide the exact workspace, component,
-configuration, emulator, or run revisions. The repository therefore records
-the report without treating it as acceptance of the current pins.
+**Revision status:** **REVISION-BOUND** to the supplied Workspace/test basis and
+component SHAs below. The successful run predates this documentation commit;
+the documentation commit that introduced this report is
+`264d30505db4da820a3f1289470d8dedbf7ce0e5` and is not the tested Workspace
+revision. This report binds only the targeted Gate 1 scope to the four
+recorded revisions.
 
 This is a sanitized evidence record. It does not add emulator observations,
-ROM/save/state details, screenshots, private paths, hashes or raw logs.
+ROM/save/state details, screenshots, private paths, artifact hashes or raw logs.
 
 ## Revision binding
 
-The documentation branch was based on `origin/main` at
-`85a963626791ff8ccbfad63bec04b2733558d41e`, the Workspace #494 merge inspected
-before this documentation change. Its integrated Gitlinks were:
+The successful Runtime Gate 1 run was executed before this documentation
+commit against the then-integrated Workspace/test basis. The exact revisions
+used by the reported run were:
 
-| Identity | Integrated revision in the inspected workspace | Exact revision used by the reported run |
-|---|---|---|
-| Workspace | `85a963626791ff8ccbfad63bec04b2733558d41e` | **UNKNOWN** |
-| CFRU Expansion | `8bc8c38210ddba0b05c933dbda06cb4539254c7a` | **UNKNOWN** |
-| DPE Gen 9 | `22ffa27ad09cfacbca841d90e6cbe31e6f9b7fdc` | **UNKNOWN** |
-| UPR-FVX | `0e3be63e94e34215cc35308d64e8db15e9a3c48c` | **UNKNOWN** |
+| Identity | Exact revision used by the reported run |
+|---|---|
+| Workspace/test basis | `85a963626791ff8ccbfad63bec04b2733558d41e` |
+| CFRU Expansion | `8bc8c38210ddba0b05c933dbda06cb4539254c7a` |
+| DPE Gen 9 | `22ffa27ad09cfacbca841d90e6cbe31e6f9b7fdc` |
+| UPR-FVX | `0e3be63e94e34215cc35308d64e8db15e9a3c48c` |
 
-The current integration pins are repository facts, not proof that the private
-runtime run used those exact revisions. No stronger revision-specific
-acceptance statement is made until the tested identities are supplied.
+These four revisions are the pre-documentation integrated pins against which
+the private runtime run was performed. The later documentation commit is not
+itself claimed as a runtime-tested Workspace revision.
 
 ## User-reported results
 
@@ -50,14 +52,13 @@ inferred.
 ## Gate status and boundary
 
 - **User-reported Gate 1 result:** PASS.
-- **Revision-bound Gate 1 acceptance:** UNKNOWN until the tested SHA set is
-  recorded.
+- **Revision-bound Gate 1 acceptance:** PASS for the targeted scope on the
+  four-revision set recorded above.
 - **Broad feature-complete/playthrough status:** not established by this gate.
 - **ROM feature-complete, ROM frozen, stable support profile and complete
   Gen-1–9 compatibility:** not claimed.
+- **Tracker start/activation:** not performed by this gate.
 - Missing Gen-9 battle mechanics remain outside the pilot contract.
 
-The exact tested SHA set, test configuration and sanitized run label are the
-only missing binding fields for promoting this report beyond a user-supplied,
-revision-unbound PASS. The full manual acceptance block remains separate in
+The full manual acceptance block remains separate in
 [M-014](../milestones/M-014.md).

@@ -67,14 +67,19 @@ implemented in the integrated CFRU ancestry and pinned through CFRU
 integrated at `0e3be63e94e34215cc35308d64e8db15e9a3c48c`; DPE remains pinned at
 `22ffa27ad09cfacbca841d90e6cbe31e6f9b7fdc`. See [M-013](milestones/M-013.md).
 
-**CONFIRMED USER-SUPPLIED RUNTIME PASS, revision binding UNKNOWN:** The user
-reported the targeted [Runtime Gate 1](testing/runtime-gate-1-2026-09-19.md)
-scope as PASS, including Premier Ball controls, representative modernized
-learnsets, start/level-up/Move Reminder/Summary/save-reload, UPR-FVX detection
-and randomization, Pickup Unchanged/rejection, randomized output start,
-starter/wild/trainer paths, and tested Stats/Learnsets/Abilities. The exact
-tested workspace and component SHAs were not supplied, so this is not promoted
-to revision-specific acceptance of the current pins.
+**CONFIRMED USER-SUPPLIED REVISION-BOUND RUNTIME PASS:** The user reported the
+targeted [Runtime Gate 1](testing/runtime-gate-1-2026-09-19.md) scope as PASS,
+including Premier Ball controls, representative modernized learnsets,
+start/level-up/Move Reminder/Summary/save-reload, UPR-FVX detection and
+randomization, Pickup Unchanged/rejection, randomized output start,
+starter/wild/trainer paths, and tested Stats/Learnsets/Abilities. The run is
+bound to Workspace/test basis `85a963626791ff8ccbfad63bec04b2733558d41e`, CFRU
+`8bc8c38210ddba0b05c933dbda06cb4539254c7a`, DPE
+`22ffa27ad09cfacbca841d90e6cbe31e6f9b7fdc`, and UPR-FVX
+`0e3be63e94e34215cc35308d64e8db15e9a3c48c`. It predates this documentation
+branch; the documentation commit that introduced this report is
+`264d30505db4da820a3f1289470d8dedbf7ce0e5`, not the tested Workspace
+revision. This remains targeted Gate 1 evidence only.
 
 **INTENDED FUTURE STATE:** [M-014](milestones/M-014.md) is the single next
 bounded block: the existing manual feature-complete acceptance scope, refreshed

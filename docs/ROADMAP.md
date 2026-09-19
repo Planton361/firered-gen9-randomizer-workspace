@@ -223,11 +223,12 @@ by the current CFRU PR #48 merge pin
 documented in [M-013](milestones/M-013.md). UPR-FVX PR #185 is integrated at
 `0e3be63e94e34215cc35308d64e8db15e9a3c48c`; DPE remains unchanged.
 
-**CONFIRMED USER-SUPPLIED RUNTIME PASS, revision binding UNKNOWN:** The user
-reported the targeted [Runtime Gate 1](testing/runtime-gate-1-2026-09-19.md)
-scope as PASS. Because the exact tested workspace and component SHAs were not
-supplied, this is not revision-specific acceptance of the current pins and is
-not a full feature-complete or release gate.
+**CONFIRMED USER-SUPPLIED REVISION-BOUND RUNTIME PASS:** The user reported the
+targeted [Runtime Gate 1](testing/runtime-gate-1-2026-09-19.md) scope as PASS
+against the exact Workspace/test basis and component revisions recorded there.
+The run predates this documentation branch; the later documentation HEAD is
+not the tested Workspace revision. This remains targeted evidence and is not a
+full feature-complete or release gate.
 
 ## M-014 — Feature-Complete Manual Acceptance Block
 
@@ -272,9 +273,9 @@ evidence; the M-001 workspace branch and PR supersede it for integration.
   blocker describe the pre-M-009 state, not current integration status.
 - **CONFIRMED CURRENT STATE:** Friendship Boost remains optional and
   non-standard for Ironmon; it is not a mandatory ROM-QoL milestone.
-- **CONFIRMED USER-SUPPLIED RUNTIME PASS, revision binding UNKNOWN:** Runtime
-  Gate 1 is recorded for its targeted scope only; exact tested SHAs and broad
-  feature-complete coverage remain unresolved.
+- **CONFIRMED USER-SUPPLIED REVISION-BOUND RUNTIME PASS:** Runtime Gate 1 is
+  recorded for its targeted scope and exact tested revision set only; broad
+  feature-complete coverage remains unresolved.
 - **LEGACY / OBSOLETE:** Prior roadmap numbering, detailed queues,
   and status remain in
   [00_project-control/roadmap/roadmap-status.md](../00_project-control/roadmap/roadmap-status.md)

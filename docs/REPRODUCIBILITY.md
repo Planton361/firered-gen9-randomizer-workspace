@@ -17,11 +17,16 @@ The inspected Workspace baseline before this documentation closure is
 `85a963626791ff8ccbfad63bec04b2733558d41e` (Workspace PR #494 merge). CFRU
 #45/#48 and UPR-FVX #185 are integrated in the pins above; DPE is unchanged.
 
-**CONFIRMED USER-SUPPLIED RUNTIME PASS, revision binding UNKNOWN:** The
-targeted [Runtime Gate 1 report](testing/runtime-gate-1-2026-09-19.md) records
-the user's PASS report. Its exact tested workspace/CFRU/DPE/UPR-FVX SHAs were
-not supplied and are not inferred from the current Gitlinks. The report is
-therefore not revision-specific acceptance of this baseline.
+**CONFIRMED USER-SUPPLIED REVISION-BOUND RUNTIME PASS:** The targeted
+[Runtime Gate 1 report](testing/runtime-gate-1-2026-09-19.md) records the user's
+PASS report against Workspace/test basis
+`85a963626791ff8ccbfad63bec04b2733558d41e`, CFRU
+`8bc8c38210ddba0b05c933dbda06cb4539254c7a`, DPE
+`22ffa27ad09cfacbca841d90e6cbe31e6f9b7fdc`, and UPR-FVX
+`0e3be63e94e34215cc35308d64e8db15e9a3c48c`. The run predates this
+documentation branch; the documentation commit that introduced this report is
+`264d30505db4da820a3f1289470d8dedbf7ce0e5`, not the tested Workspace
+revision.
 
 **CONFIRMED CURRENT STATE, with targeted runtime caveat:** At M-009 closure,
 the
