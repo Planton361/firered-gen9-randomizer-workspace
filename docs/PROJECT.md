@@ -24,9 +24,9 @@ refactors. ROMs, saves, emulator states, builds, tool binaries, secrets, and
 
 ## Pilot product contract
 
-**CONFIRMED USER DECISION — repository sync pending merge of this scope
-realignment:** The pilot targets FireRed using the existing CFRU/DPE engine
-architecture, with Gen 1–9 Pokémon usable by UPR-FVX and modernized Gen-9 data
+**CONFIRMED USER DECISION — repository sync complete:** The pilot targets
+FireRed using the existing CFRU/DPE engine architecture, with Gen 1–9 Pokémon
+usable by UPR-FVX and modernized Gen-9 data
 where the selected engine can represent it safely. This is the product target,
 not a claim of complete compatibility or new battle-mechanic support.
 
@@ -57,16 +57,34 @@ Use the [repository source index](../01_docs/references/source-index.md) and
 established reference roles/order described in
 [Engineering rules](ENGINEERING_RULES.md#engine-data-and-qol-boundary).
 Do not port opaque binary patches. [M-012](milestones/M-012.md) is COMPLETE
-as an analysis-only parity audit of 36 entries; its findings become
-**CONFIRMED CURRENT STATE** once this documentation closure is merged.
-M-001 through M-009 remain complete and are not reopened.
+as an analysis-only parity audit of 36 entries, and its findings are now
+**CONFIRMED CURRENT STATE**. M-001 through M-009 remain complete and are not
+reopened.
 
-**INTENDED FUTURE STATE:** M-013 — NatDex Premier Ball purchase bonus is the
-remaining source-backed implementation candidate. Paid Move Reminder on
-Cinnabar remains optional backlog, not required for pilot feature-complete
-status unless explicitly promoted later. This closure starts no implementation,
-introduces no missing Gen-9 battle-mechanic work, and changes no CFRU/DPE/UPR-FVX
-source or component pins.
+**CONFIRMED CURRENT STATE:** M-013 — NatDex Premier Ball purchase bonus — is
+implemented in the integrated CFRU ancestry and pinned through CFRU
+`8bc8c38210ddba0b05c933dbda06cb4539254c7a`. UPR-FVX's safe Pickup guard is
+integrated at `0e3be63e94e34215cc35308d64e8db15e9a3c48c`; DPE remains pinned at
+`22ffa27ad09cfacbca841d90e6cbe31e6f9b7fdc`. See [M-013](milestones/M-013.md).
+
+**CONFIRMED USER-SUPPLIED REVISION-BOUND RUNTIME PASS:** The user reported the
+targeted [Runtime Gate 1](testing/runtime-gate-1-2026-09-19.md) scope as PASS,
+including Premier Ball controls, representative modernized learnsets,
+start/level-up/Move Reminder/Summary/save-reload, UPR-FVX detection and
+randomization, Pickup Unchanged/rejection, randomized output start,
+starter/wild/trainer paths, and tested Stats/Learnsets/Abilities. The run is
+bound to Workspace/test basis `85a963626791ff8ccbfad63bec04b2733558d41e`, CFRU
+`8bc8c38210ddba0b05c933dbda06cb4539254c7a`, DPE
+`22ffa27ad09cfacbca841d90e6cbe31e6f9b7fdc`, and UPR-FVX
+`0e3be63e94e34215cc35308d64e8db15e9a3c48c`. It predates this documentation
+branch; the documentation commit that introduced this report is
+`264d30505db4da820a3f1289470d8dedbf7ce0e5`, not the tested Workspace
+revision. This remains targeted Gate 1 evidence only.
+
+**INTENDED FUTURE STATE:** [M-014](milestones/M-014.md) is the single next
+bounded block: the existing manual feature-complete acceptance scope, refreshed
+to exact revision identity. Paid Move Reminder on Cinnabar remains optional
+backlog and is not part of M-014.
 
 ## Component ownership
 
