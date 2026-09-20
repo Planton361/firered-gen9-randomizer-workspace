@@ -1,5 +1,9 @@
 # Roadmap
 
+This file owns the stable product finish line and dependency order. Operational
+priority/status belongs to the GitHub Project and Workspace Issues; this file is
+not a day-to-day queue.
+
 ## M-000R closure
 
 **CONFIRMED CURRENT STATE:** M-000R — Workflow Adoption: **COMPLETE**. The
@@ -232,11 +236,14 @@ full feature-complete or release gate.
 
 ## M-014 — Feature-Complete Manual Acceptance Block
 
-**INTENDED FUTURE STATE:** [M-014](milestones/M-014.md) is the single next
-bounded test/documentation block. It refreshes the existing A–H manual package
-to exact revision identity and covers the remaining targeted regressions,
-continuous progression, display/form sanity and supported randomized-output
-smoke. It does not implement features or claim universal Gen-1–9 mechanics.
+**INTENDED FUTURE STATE:** [M-014](milestones/M-014.md) is the next product
+acceptance block after the workflow-only
+[Cross-device Development Readiness](https://github.com/Planton361/firered-gen9-randomizer-workspace/issues/497)
+gate. M-014 refreshes the existing A–H manual package to exact revision identity
+and covers the remaining targeted regressions, continuous progression,
+display/form sanity and supported randomized-output smoke. It does not
+implement features or claim universal Gen-1–9 mechanics. Active execution is
+owned by [Issue #498](https://github.com/Planton361/firered-gen9-randomizer-workspace/issues/498).
 
 ## Integrated M-001 rollout and legacy handoff
 
@@ -250,16 +257,29 @@ profile.
 `feature/cfru-tm-itemball-29-slot-rollout-pin` branch is historical supporting
 evidence; the M-001 workspace branch and PR supersede it for integration.
 
-## Later tracks
+## Pilot finish line
 
-- **CONFIRMED CURRENT STATE:** The bounded coherent Gen 1–9 data closure is
-  integrated within the selected CFRU/DPE semantics, with the documented blocked forms,
-  ability behavior and battle-mechanic limitations retained.
-- **INTENDED FUTURE STATE:** M-014 manual acceptance block.
-- **INTENDED FUTURE STATE:** BizHawk validation.
-- **INTENDED FUTURE STATE:** Ironmon Tracker integration.
-- **INTENDED FUTURE STATE:** Stable support profile, only after completed
-  evidence.
+- **CONFIRMED CURRENT STATE:** Integrated Pilot Pins — **DONE**. The bounded
+  coherent Gen 1–9 data closure is integrated within the selected CFRU/DPE
+  semantics, with documented blocked forms, ability behavior and battle-mechanic
+  limitations retained.
+- **INTENDED FUTURE STATE — workflow gate:** Cross-device Development Readiness,
+  owned by [Issue #497](https://github.com/Planton361/firered-gen9-randomizer-workspace/issues/497).
+  It proves GitHub-based handoff; it is not a product capability gate.
+- **INTENDED FUTURE STATE:** M-014 manual acceptance, owned by
+  [Issue #498](https://github.com/Planton361/firered-gen9-randomizer-workspace/issues/498).
+- **INTENDED FUTURE STATE:** lock the accepted pilot revision/profile after
+  M-014; M-014 alone does not declare freeze.
+- **INTENDED FUTURE STATE:** BizHawk validation, owned by
+  [Issue #499](https://github.com/Planton361/firered-gen9-randomizer-workspace/issues/499).
+- **INTENDED FUTURE STATE:** Ironmon Tracker integration, owned by
+  [Issue #500](https://github.com/Planton361/firered-gen9-randomizer-workspace/issues/500).
+- **INTENDED FUTURE STATE:** Stable Support Profile / Final Freeze, owned by
+  [Issue #501](https://github.com/Planton361/firered-gen9-randomizer-workspace/issues/501),
+  only after completed evidence.
+
+Hospitality/M-011, missing Gen-9 mechanics, optional QoL expansion and upstream
+contribution preparation are not reactivated by this finish line.
 
 ## Preserved status
 

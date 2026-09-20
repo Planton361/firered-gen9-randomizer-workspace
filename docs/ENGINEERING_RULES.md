@@ -2,12 +2,26 @@
 
 ## Git and work packages
 
-- **CONFIRMED CURRENT STATE:** `main` remains stable/protected. Use a bounded
-  work branch and PR for each change; never merge from Codex.
-- One milestone block per Codex session is the default. Keep one writing agent
-  per branch. An independent reviewer is for substantial risk, not ritual.
-- Start by confirming branch, `git status --short`, submodule status, scope,
-  and protected paths. Stop on unexpected changes.
+- **CONFIRMED CURRENT STATE:** `main` remains stable/protected. Read-only
+  inspection is allowed on `main`; all writes require a bounded approved
+  non-`main` branch. Never merge from Codex.
+- The program control loop is GitHub Project -> Workspace Issue -> bounded task
+  -> branch -> PR/evidence -> review -> user merge/acceptance.
+- Workspace Issues own program-level integration, acceptance and cross-repo
+  contracts. A Component Issue/PR exists only when that Workspace contract
+  requires technically independent Component implementation.
+- PRs are revision/evidence records, not queue items. Do not maintain the same
+  delivery as both an operative PR queue and an Issue queue.
+- A new Issue, materially new scope, or new branch starts a fresh Codex session.
+  Repair of the same contract/branch may resume. Keep one writing agent per
+  branch; an independent reviewer is for substantial risk, not ritual.
+- Start by confirming Issue/scope, branch, `git status --short`, submodule
+  status, and protected paths. Stop on unexpected changes.
+- `docs/ROADMAP.md` records the stable finish line and dependencies. Daily
+  order/status belongs to the Project/Issues. Historical session state,
+  NEXT_STEPS and handoff documents are supporting evidence only.
+- Preserve historical pointer/repoint/offset/ROM-layout/ABI/compatibility
+  evidence on demand; do not turn it back into active work instruction.
 - Prefer existing patterns and the minimal necessary diff. No broad refactors,
   dependency migrations, architecture modernization, or unrelated cleanup.
 
@@ -77,8 +91,9 @@ Definition of Done:
 
 ## Stop conditions
 
-Stop for `main`, an unexpected worktree change, protected data, unapproved
-external coordination, an unapproved product conflict, missing evidence, or a
-scope expansion. Technical conflicts may be resolved only when the repository
-and current environment unambiguously establish the answer; document that
-resolution. Product conflicts remain **CONFLICT** until directed.
+For writing work, stop on `main`. Read-only inspection on `main` is
+allowed. Also stop for an unexpected worktree change, protected data,
+unapproved external coordination, an unapproved product conflict, missing
+evidence, or a scope expansion. Technical conflicts may be resolved only when
+the repository and current environment unambiguously establish the answer;
+document that resolution. Product conflicts remain **CONFLICT** until directed.
