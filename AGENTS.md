@@ -8,7 +8,6 @@ Use this short entry point for repository work. The canonical workflow is in:
 - [docs/REPRODUCIBILITY.md](docs/REPRODUCIBILITY.md)
 - [docs/ROADMAP.md](docs/ROADMAP.md)
 - [docs/MODEL_POLICY.md](docs/MODEL_POLICY.md)
-- [docs/milestones/M-000R.md](docs/milestones/M-000R.md)
 
 `01_docs/` and `08_tests/` are historical/supporting evidence, not the
 normative workflow baseline. Read relevant evidence when a task requires it.
