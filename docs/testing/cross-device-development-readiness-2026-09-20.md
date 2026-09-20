@@ -221,16 +221,17 @@ No component branch, source, or Workspace Gitlink was changed.
 
 ### Project metadata limitation
 
-The live Issue read succeeded through `gh`. Authenticated Project inspection
-and mutation could not be completed because `gh auth status` reported that the
-configured GitHub token for the active account is invalid. Therefore the
-receiver did not assume Project option IDs, did not move #497, and did not
-claim a `Doing -> Review` transition. The source-side evidence records the
-expected live values (`P0`, `Verification`, `Doing`) and the six observed
-Status options, but this receiver session cannot independently re-verify those
-Project values through authenticated `gh`. #497 remains unchanged for CONTROL
-to repair when GitHub authentication is available; #498–#501 were not
-modified.
+The live Issue read succeeded through `gh`. The account is authenticated, but
+authenticated Project inspection and mutation could not be completed because
+`gh project list --owner Planton361 --format json` reported that the token is
+missing the required `read:project` scope. Therefore the receiver did not
+assume Project option IDs, did not move #497, and did not claim a
+`Doing -> Review` transition. The source-side evidence records the expected
+live values (`P0`, `Verification`, `Doing`) and the six observed Status
+options, but this receiver session cannot independently re-verify those
+Project values through the available authenticated `gh` scope. #497 remains
+unchanged for CONTROL to repair when the required scope is available;
+#498–#501 were not modified.
 
 ### Receiver state
 
