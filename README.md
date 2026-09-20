@@ -273,9 +273,9 @@ GitHub Project
 
 Workspace [Issue #496](https://github.com/Planton361/firered-gen9-randomizer-workspace/issues/496)
 owns the workflow cutover. The program Project is
-`FireRed Gen 9 Randomizer — Pilot Finish`; Project creation/attachment must be
-confirmed before the governance cutover is accepted. Issues own the operative
-queue; PRs must not duplicate it.
+`FireRed Gen 9 Randomizer — Pilot Finish`. Its manual configuration and the
+#496–#501 item mapping were confirmed by the user on 2026-09-20 and recorded
+in Issue #496. Issues own the operative queue; PRs must not duplicate it.
 
 ### Prepare the local environment
 
@@ -419,7 +419,8 @@ and dedicated runtime matrices.
 | [docs/ENGINEERING_RULES.md](docs/ENGINEERING_RULES.md) | Canonical Git, PR, safety, and completion rules |
 | [docs/ENVIRONMENT.md](docs/ENVIRONMENT.md) | Canonical environment baseline and verified tool expectations |
 | [docs/REPRODUCIBILITY.md](docs/REPRODUCIBILITY.md) | Revision and evidence requirements |
-| [docs/ROADMAP.md](docs/ROADMAP.md) | Canonical milestone roadmap |
+| [docs/ROADMAP.md](docs/ROADMAP.md) | Stable finish line and dependency order |
+| [docs/MODEL_POLICY.md](docs/MODEL_POLICY.md) | CONTROL/Codex role and session-routing policy |
 | [docs/ADOPTION_REPORT.md](docs/ADOPTION_REPORT.md) | Historical M-000R adoption evidence |
 | [`01_docs/PROJECT_BRIEF.md`](./01_docs/PROJECT_BRIEF.md) | Historical/supporting project brief |
 | [`00_project-control/roadmap/roadmap-status.md`](./00_project-control/roadmap/roadmap-status.md) | Historical roadmap/status evidence |

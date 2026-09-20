@@ -131,8 +131,8 @@ solution. No broad support or release claim follows from this acceptance.
 
 ## Operating control plane
 
-**INTENDED CUTOVER STATE:** One user Project named
-`FireRed Gen 9 Randomizer — Pilot Finish` owns operational order/status.
+**CONFIRMED USER DECISION — manual Project gate satisfied:** One user Project
+named `FireRed Gen 9 Randomizer — Pilot Finish` owns operational order/status.
 Workspace Issues are the program contracts for integration, acceptance and
 cross-repo work. Component Issues/PRs exist only when a Workspace contract
 requires a technically independent Component change. PRs are revision/evidence,
@@ -142,9 +142,9 @@ The initial active contracts are Workspace Issues
 [#496](https://github.com/Planton361/firered-gen9-randomizer-workspace/issues/496)
 through
 [#501](https://github.com/Planton361/firered-gen9-randomizer-workspace/issues/501).
-Project creation/attachment remains part of #496 until verified; do not claim
-the Project is active merely because the repository documents its intended
-name.
+The user confirmed the Project, its approved fields, and #496–#501 item
+configuration on 2026-09-20; the durable item/status record is in Issue #496.
+PR #502 is intentionally not a Project queue item.
 
 **CONFIRMED WORKFLOW BOUNDARY:** Read-only inspection is allowed on `main`.
 All writes require a bounded approved non-`main` branch. A new Issue,
@@ -168,7 +168,8 @@ Use this after the governance cutover is accepted:
 ```text
 Work from the repository and GitHub as the source of truth. Start with
 AGENTS.md, then docs/PROJECT.md, docs/ENGINEERING_RULES.md,
-docs/ENVIRONMENT.md, docs/REPRODUCIBILITY.md, and docs/ROADMAP.md.
+docs/ENVIRONMENT.md, docs/REPRODUCIBILITY.md, docs/ROADMAP.md, and
+docs/MODEL_POLICY.md.
 Use the GitHub Project "FireRed Gen 9 Randomizer — Pilot Finish" for
 operational order/status and Workspace Issues for active program contracts.
 Treat PRs as revision/evidence, not a second queue. Treat 01_docs/, 08_tests/,
