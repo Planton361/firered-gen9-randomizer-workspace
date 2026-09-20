@@ -141,3 +141,104 @@ saves, emulator states, builds, tool binaries, `.env` files, tokens, keys,
 secrets, private paths, or any of Issues #498–#501. No merge, force-push,
 history rewrite, or upstream-contribution preparation was performed;
 `UPSTREAM_CONTRIBUTION = DEFERRED`.
+
+## Receiver verification — 2026-09-20
+
+Evidence classification: **CONFIRMED CURRENT STATE — receiver verification
+complete; final HANDOFF_READY acceptance remains pending CONTROL review.**
+
+### GitHub reconstruction and receive
+
+- Receiver platform: `macOS`.
+- The live Issue #497, its work contract, and the canonical repository sources
+  (`AGENTS.md`, `docs/PROJECT.md`, `docs/ENGINEERING_RULES.md`,
+  `docs/ENVIRONMENT.md`, `docs/REPRODUCIBILITY.md`, `docs/ROADMAP.md`, and
+  `docs/MODEL_POLICY.md`) were read independently from GitHub state. The live
+  #498 entry gate confirms that #498 is gated behind acceptance of #497.
+- The reconstruction confirmed that this is workflow verification only,
+  `HANDOFF_READY` and `TASK_TOOLCHAIN_READY` are separate states,
+  `UPSTREAM_CONTRIBUTION = DEFERRED`, and protected artifacts remain outside
+  agent context. No previous Codex conversation, IDE-local state, copied
+  Linux checkout, or private path was needed or used as an authority.
+- Repository identity was confirmed as
+  `Planton361/firered-gen9-randomizer-workspace`.
+- `git fetch origin` was run. The fetched
+  `origin/verification/497-cross-device-readiness` ref remained exactly
+  `fae41fb99ad03a700be6fd86cb43e251e61b8f2e`; its parent and source base were
+  `ee7e2bc30170dd297540bbe0ed5e0792f490e0fb`.
+- The local branch did not exist, so it was created directly with tracking:
+  `git switch --track -c verification/497-cross-device-readiness
+  origin/verification/497-cross-device-readiness`. `git rev-parse HEAD`
+  matched the exact source checkpoint before this edit. No `--ff-only` merge
+  was needed; no rebase, reset, force-push, merge commit, or history rewrite
+  was used.
+
+### Recursive Gitlinks and physical checkouts
+
+The complete recursive Gitlink inventory was read from the Workspace tree with
+Git and matched `git submodule status --recursive`:
+
+| Gitlink path | Gitlink SHA |
+|---|---|
+| `02_external/CFRU-expansion` | `8bc8c38210ddba0b05c933dbda06cb4539254c7a` |
+| `02_external/Dynamic-Pokemon-Expansion-Gen-9` | `22ffa27ad09cfacbca841d90e6cbe31e6f9b7fdc` |
+| `02_external/Ironmon-Tracker` | `c450ecaee2d8131a2789bb656e3be792a93712fb` |
+| `02_external/NatDexExtension` | `a94b8844800308248bb5090b6c36c8b2d7e5d7b9` |
+| `02_external/references/cyansmp64-pokefirered-natdex` | `16b8b9ffd77607debe7ce332cd50d3615f47e125` |
+| `02_external/references/cyansmp64-upr-zx-natdex` | `9b63eb2876d901dc2e5af49855ae41ac255e1a72` |
+| `02_external/references/pret-pokefirered` | `e060ab955b5dc9ac1c4904c2cd141683615cf477` |
+| `02_external/references/upr-fvx-upstream` | `e0788edc6529c2605f201996e4807ff30165354c` |
+| `02_external/references/upr-zx-ajarmar` | `7f00eb866ed35c8fe3963f078b6a2e0979dc2b8c` |
+| `02_external/upr-fvx` | `0e3be63e94e34215cc35308d64e8db15e9a3c48c` |
+
+`git submodule sync --recursive` and `git submodule update --init --recursive`
+completed for the tracked public submodules. Required physical checkout
+comparisons passed:
+
+| Component | Workspace Gitlink | Physical checkout HEAD | Result |
+|---|---|---|---|
+| CFRU | `8bc8c38210ddba0b05c933dbda06cb4539254c7a` | `8bc8c38210ddba0b05c933dbda06cb4539254c7a` | **ALIGNED** |
+| DPE | `22ffa27ad09cfacbca841d90e6cbe31e6f9b7fdc` | `22ffa27ad09cfacbca841d90e6cbe31e6f9b7fdc` | **ALIGNED** |
+| UPR-FVX | `0e3be63e94e34215cc35308d64e8db15e9a3c48c` | `0e3be63e94e34215cc35308d64e8db15e9a3c48c` | **ALIGNED** |
+
+No component branch, source, or Workspace Gitlink was changed.
+
+### Safety and one-writer handoff
+
+- `python3 07_scripts/bootstrap/check_git_safety.py` passed on the receiver
+  branch.
+- `git status --short` was clean before the edit and after recursive
+  submodule synchronization; `git diff --submodule=short --exit-code` showed
+  no Gitlink change.
+- The live source-side evidence records that the Linux source checkpoint was
+  clean and pushed before handoff, with one designated writing agent and no
+  parallel writing agent launched for the source branch. This receiving Codex
+  session is the sole writer for this branch and launched no parallel writing
+  agent. No private process or host evidence was inferred.
+- The only permitted repository change in this receiver update is this
+  evidence file. No product implementation, #498 work, protected artifact,
+  or upstream-contribution preparation was accessed.
+
+### Project metadata limitation
+
+The live Issue read succeeded through `gh`. Authenticated Project inspection
+and mutation could not be completed because `gh auth status` reported that the
+configured GitHub token for the active account is invalid. Therefore the
+receiver did not assume Project option IDs, did not move #497, and did not
+claim a `Doing -> Review` transition. The source-side evidence records the
+expected live values (`P0`, `Verification`, `Doing`) and the six observed
+Status options, but this receiver session cannot independently re-verify those
+Project values through authenticated `gh`. #497 remains unchanged for CONTROL
+to repair when GitHub authentication is available; #498–#501 were not
+modified.
+
+### Receiver state
+
+`RECEIVER_VERIFIED / CONTROL_REVIEW_PENDING`
+
+The receiver-side requirements for `HANDOFF_READY` passed: the exact GitHub
+checkpoint was consumed with safe tracking semantics, live-source
+reconstruction was independent, recursive Gitlinks and required physical
+checkouts aligned, safety checks passed, and the worktree was clean before the
+edit. Final `HANDOFF_READY` acceptance belongs to CONTROL. `TASK_TOOLCHAIN_READY`
+was not tested and is not asserted.
