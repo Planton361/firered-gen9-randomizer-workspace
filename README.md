@@ -114,7 +114,7 @@ integration process.
 - small audit, bootstrap and validation scripts;
 - randomizer compatibility analyses;
 - sanitized smoke-test plans and results;
-- roadmap, session state and handoff documents;
+- roadmap plus historical session/handoff evidence;
 - rules for agent-assisted development;
 - references to upstream and comparison projects.
 
@@ -203,8 +203,9 @@ Current work focuses on compatibility hardening, Pokémon data alignment,
 randomizer behavior, source-backed quality-of-life changes and repeatable
 runtime evidence.
 
-The detailed and fast-changing status belongs in the project-control and
-handoff documents rather than in this README.
+The detailed and fast-changing operational status belongs in the GitHub
+Project and Workspace Issues rather than in this README or historical handoff
+documents. PRs record revision/evidence; they are not a second queue.
 
 ## Getting started
 
@@ -253,6 +254,28 @@ Start with:
 
 `01_docs/`, `08_tests/`, and `00_project-control/` remain valuable historical
 and supporting evidence. They do not override the canonical `docs/` workflow.
+In particular, `SESSION_STATE.md`, `NEXT_STEPS.md`, and old handoffs are
+non-operative; load them only when historical evidence is relevant.
+
+### GitHub operating model
+
+The approved control loop is:
+
+```text
+GitHub Project
+  -> Workspace Issue
+  -> bounded Component/Integration task
+  -> branch
+  -> PR/evidence
+  -> review
+  -> user merge/acceptance
+```
+
+Workspace [Issue #496](https://github.com/Planton361/firered-gen9-randomizer-workspace/issues/496)
+owns the workflow cutover. The program Project is
+`FireRed Gen 9 Randomizer — Pilot Finish`. Its manual configuration and the
+#496–#501 item mapping were confirmed by the user on 2026-09-20 and recorded
+in Issue #496. Issues own the operative queue; PRs must not duplicate it.
 
 ### Prepare the local environment
 
@@ -396,13 +419,14 @@ and dedicated runtime matrices.
 | [docs/ENGINEERING_RULES.md](docs/ENGINEERING_RULES.md) | Canonical Git, PR, safety, and completion rules |
 | [docs/ENVIRONMENT.md](docs/ENVIRONMENT.md) | Canonical environment baseline and verified tool expectations |
 | [docs/REPRODUCIBILITY.md](docs/REPRODUCIBILITY.md) | Revision and evidence requirements |
-| [docs/ROADMAP.md](docs/ROADMAP.md) | Canonical milestone roadmap |
-| [docs/ADOPTION_REPORT.md](docs/ADOPTION_REPORT.md) | M-000R migration findings and ChatGPT Project handoff |
-| [`01_docs/PROJECT_BRIEF.md`](./01_docs/PROJECT_BRIEF.md) | Stable project purpose and boundaries |
-| [`00_project-control/roadmap/roadmap-status.md`](./00_project-control/roadmap/roadmap-status.md) | Current roadmap-level status |
-| [`01_docs/SESSION_STATE.md`](./01_docs/SESSION_STATE.md) | Latest implementation and validation handoff |
-| [`01_docs/NEXT_STEPS.md`](./01_docs/NEXT_STEPS.md) | Immediate follow-up work and gates |
-| [`01_docs/DECISIONS_INDEX.md`](./01_docs/DECISIONS_INDEX.md) | Index of accepted technical decisions |
+| [docs/ROADMAP.md](docs/ROADMAP.md) | Stable finish line and dependency order |
+| [docs/MODEL_POLICY.md](docs/MODEL_POLICY.md) | CONTROL/Codex role and session-routing policy |
+| [docs/ADOPTION_REPORT.md](docs/ADOPTION_REPORT.md) | Historical M-000R adoption evidence |
+| [`01_docs/PROJECT_BRIEF.md`](./01_docs/PROJECT_BRIEF.md) | Historical/supporting project brief |
+| [`00_project-control/roadmap/roadmap-status.md`](./00_project-control/roadmap/roadmap-status.md) | Historical roadmap/status evidence |
+| [`01_docs/SESSION_STATE.md`](./01_docs/SESSION_STATE.md) | Historical session evidence; non-operative |
+| [`01_docs/NEXT_STEPS.md`](./01_docs/NEXT_STEPS.md) | Historical next-step record; non-operative |
+| [`01_docs/DECISIONS_INDEX.md`](./01_docs/DECISIONS_INDEX.md) | Historical decision index; use current canonical docs for active policy |
 | [`01_docs/references/source-index.md`](./01_docs/references/source-index.md) | External sources and reference projects |
 | [`01_docs/references/tool-manifest.md`](./01_docs/references/tool-manifest.md) | Tool versions, branches, commits and local assumptions |
 | [`08_tests/randomizer/README.md`](./08_tests/randomizer/README.md) | Smoke plans, compatibility matrices and sanitized evidence |
@@ -440,16 +464,18 @@ associated trademarks and assets.
 
 ## Roadmap
 
-The next major objectives are:
+The stable finish line is:
 
-1. keep the workspace pins aligned with merged compatibility branches;
-2. complete the remaining gated randomizer and runtime smoke matrices;
-3. continue controlled Gen 1–9 data alignment;
-4. harden source-backed CFRU quality-of-life changes;
-5. expand regression coverage for randomized outputs;
-6. validate BizHawk behavior;
-7. validate Ironmon Tracker integration;
-8. define a stable support profile only after the required evidence exists.
+1. integrated Pilot Pins — **DONE**;
+2. [Cross-device Development Readiness](https://github.com/Planton361/firered-gen9-randomizer-workspace/issues/497);
+3. [M-014 Manual Acceptance](https://github.com/Planton361/firered-gen9-randomizer-workspace/issues/498);
+4. lock the accepted pilot revision/profile;
+5. [BizHawk Validation](https://github.com/Planton361/firered-gen9-randomizer-workspace/issues/499);
+6. [Ironmon Tracker Integration](https://github.com/Planton361/firered-gen9-randomizer-workspace/issues/500);
+7. [Stable Support Profile / Final Freeze](https://github.com/Planton361/firered-gen9-randomizer-workspace/issues/501).
+
+This section records durable ordering only. Current status and priority belong
+to the GitHub Project/Issues.
 
 ## Project principle
 

@@ -129,20 +129,61 @@ later feature-complete playthrough gate. Earlier failed sparkle pilots are
 **LEGACY / OBSOLETE**, not evidence against the integrated source-owned
 solution. No broad support or release claim follows from this acceptance.
 
+## Operating control plane
+
+**CONFIRMED USER DECISION — manual Project gate satisfied:** One user Project
+named `FireRed Gen 9 Randomizer — Pilot Finish` owns operational order/status.
+Workspace Issues are the program contracts for integration, acceptance and
+cross-repo work. Component Issues/PRs exist only when a Workspace contract
+requires a technically independent Component change. PRs are revision/evidence,
+not a second queue.
+
+The initial active contracts are Workspace Issues
+[#496](https://github.com/Planton361/firered-gen9-randomizer-workspace/issues/496)
+through
+[#501](https://github.com/Planton361/firered-gen9-randomizer-workspace/issues/501).
+The user confirmed the Project, its approved fields, and #496–#501 item
+configuration on 2026-09-20; the durable item/status record is in Issue #496.
+PR #502 is intentionally not a Project queue item.
+
+**CONFIRMED WORKFLOW BOUNDARY:** Read-only inspection is allowed on `main`.
+All writes require a bounded approved non-`main` branch. A new Issue,
+materially new scope, or new branch starts a fresh Codex session; repair of the
+same contract/branch may resume. One writer per branch is the default.
+
+`docs/ROADMAP.md` owns the stable finish line and dependencies, not daily
+status. `01_docs/SESSION_STATE.md`, `01_docs/NEXT_STEPS.md`,
+`00_project-control/`, old handoffs and session reports are historical/
+supporting evidence only. Pointer/repoint/offset/ROM-layout/ABI/compatibility
+evidence remains available on demand.
+
+**CONFIRMED USER DECISION:** `UPSTREAM_CONTRIBUTION = DEFERRED`. Do not open
+upstream PRs, rewrite history for future contribution, or mix upstream
+preparation into the pilot finish.
+
 ## Canonical project instruction for ChatGPT Project settings
 
-After M-000R is merged, paste this into ChatGPT Project settings:
+Use this after the governance cutover is accepted:
 
 ```text
-Work from the repository as the source of truth. Start with AGENTS.md, then
-docs/PROJECT.md, docs/ENGINEERING_RULES.md, docs/ENVIRONMENT.md,
-docs/REPRODUCIBILITY.md, and docs/ROADMAP.md. Treat 01_docs/, 08_tests/, and
-00_project-control/ as historical/supporting evidence only. Use Linux/POSIX
-commands by default. Keep work to one bounded milestone and approved branch;
-never work directly on or merge main. Do not access or request ROMs, saves,
-emulator states, builds, tool binaries, .env files, tokens, keys, or secrets.
-Follow the pilot data/engine/QoL boundary in docs/PROJECT.md. Gen-9 data
-modernization does not authorize missing battle mechanics.
+Work from the repository and GitHub as the source of truth. Start with
+AGENTS.md, then docs/PROJECT.md, docs/ENGINEERING_RULES.md,
+docs/ENVIRONMENT.md, docs/REPRODUCIBILITY.md, docs/ROADMAP.md, and
+docs/MODEL_POLICY.md.
+Use the GitHub Project "FireRed Gen 9 Randomizer — Pilot Finish" for
+operational order/status and Workspace Issues for active program contracts.
+Treat PRs as revision/evidence, not a second queue. Treat 01_docs/, 08_tests/,
+00_project-control/, SESSION_STATE/NEXT_STEPS, and old handoffs as
+historical/supporting evidence only unless a current Issue explicitly needs
+them. Use Linux/POSIX commands by default. Read-only inspection is allowed on
+main; all writes require a bounded approved non-main branch. A new
+Issue/material scope/branch starts a fresh Codex session; repair of the same
+contract/branch may resume. Keep one writer per branch and never merge a PR.
+Do not access or request ROMs, saves, emulator states, builds, tool binaries,
+.env files, tokens, keys, secrets, or private paths. Do not change a Gitlink
+unless the Issue explicitly authorizes it. Follow the pilot
+data/engine/QoL boundary in docs/PROJECT.md; Gen-9 data modernization does not
+authorize missing battle mechanics. UPSTREAM_CONTRIBUTION remains DEFERRED.
 For a task, state the evidence classification: CONFIRMED USER DECISION,
 CONFIRMED CURRENT STATE, INTENDED FUTURE STATE, LEGACY / OBSOLETE, CONFLICT,
 or UNKNOWN.
