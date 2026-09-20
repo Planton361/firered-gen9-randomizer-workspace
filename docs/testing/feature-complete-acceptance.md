@@ -1,6 +1,6 @@
 # Feature-complete manual acceptance package
 
-Prepared for Workspace Issue #498 on 2026-09-20; **all 115 runtime cases remain NOT_RUN**. Documentation/preparation only. Terminal state: `RUN_PACKAGE_READY / USER_RUN_PENDING`.
+Prepared for Workspace Issue #498 on 2026-09-20; **all 115 runtime cases remain NOT_RUN**. Documentation/preparation only. Terminal state: `R1_RUN_PACKAGE_READY / ROM_RUN_PENDING`.
 
 > **USER-RUN PACKAGE BOUNDARY**
 >
@@ -13,34 +13,50 @@ Prepared for Workspace Issue #498 on 2026-09-20; **all 115 runtime cases remain 
 
 ## Release identity, prerequisites and execution policy
 
-M-014 runtime execution must not begin until the complete non-sensitive run
-identity below is recorded. The immutable Git revision identity and the
+Phase R1 runtime must not begin until the complete non-sensitive R1 identity
+below is recorded. Phase R2 has its own identity section and cannot begin
+before `ROM_PROFILE_READY`. The immutable Git revision identity and each
 user-owned runtime/profile identity are separate: later observations/results
-must not replace either one. Unknown user-run values must remain explicit
+must not replace them. Unknown user-run values must remain explicit
 placeholders such as `<RECORD BEFORE RUN>`.
 
 ### Immutable Git revision identity
 
-| Identity | Exact M-014 Workspace/test basis |
+| Identity | Exact Phase R1 Workspace/test basis |
 |---|---|
-| Workspace/test basis | `7b77600a3091cba1c26cac0b7ffc0bfeb63b291f` |
+| Workspace source/test basis | `b1dc157a4cfb000c1fa14a0e3323210c350d767a` |
 | CFRU Expansion | `8bc8c38210ddba0b05c933dbda06cb4539254c7a` |
 | DPE Gen 9 | `22ffa27ad09cfacbca841d90e6cbe31e6f9b7fdc` |
-| UPR-FVX | `0e3be63e94e34215cc35308d64e8db15e9a3c48c` |
+| UPR-FVX | `boundary/reference only during Phase R1 — 0e3be63e94e34215cc35308d64e8db15e9a3c48c` |
 
 The documentation branch commit that materializes this package is provenance
 only and must never be substituted for the Workspace/test basis above.
 
-### User-owned runtime/profile identity — record before the first case
+### Phase R1 user-owned ROM identity — record before the first R1 case
 
-| Required field | Entry before runtime |
+Randomizer settings, seed/run labels and output-profile identity do not belong
+in the Phase R1 identity. Record them only in the Phase R2 section below.
+
+| Required field | Entry before Phase R1 runtime |
 |---|---|
 | Source configuration differences | `<RECORD BEFORE RUN>` |
-| Randomizer settings | `<RECORD BEFORE RUN>` |
-| Non-sensitive seed/run label | `<RECORD BEFORE RUN>` |
 | Emulator identity / version / core | `<RECORD BEFORE RUN>` |
+| Non-sensitive ROM run label | `<RECORD BEFORE RUN>` |
 | Fresh New Game status | `<RECORD BEFORE RUN>` |
-| Clean/full source-build/module-test disposition where required | `<RECORD BEFORE RUN>` |
+| Clean/full source-build disposition | `<RECORD BEFORE RUN>` |
+| ROM-owned module-test disposition | `<RECORD BEFORE RUN>` |
+
+### Phase R2 user-owned Randomizer identity — record before any R2 case
+
+Phase R2 cannot begin until `ROM_PROFILE_READY` is accepted. Record these
+Randomizer/output values separately from the R1 ROM identity:
+
+| Required field | Entry before Phase R2 runtime |
+|---|---|
+| Randomizer settings | `<RECORD BEFORE R2 RUN>` |
+| Randomizer seed/run label | `<RECORD BEFORE R2 RUN>` |
+| Output profile identity | `<RECORD BEFORE R2 RUN>` |
+| Randomizer source/module-test disposition | `<RECORD BEFORE R2 RUN>` |
 
 Historical source: Workspace PR #489 / commit
 `391a200a20bd217feee9ca9b973b200c089e6de1`. That PR is supporting
@@ -48,10 +64,13 @@ documentation evidence only; it is not operative and provides no M-014 runtime
 result. Historical candidate-era pins, candidate PRs and preparation outcomes
 must not be copied into the current run identity.
 
-Before runtime acceptance, complete the clean/full source builds and affected
-module tests required by the package, and record their current sanitized
-disposition above. No final runtime result is implied by static/host tests,
-Runtime Gate 1, earlier milestone passes or historical PR #489 material.
+Before Phase R1 runtime acceptance, complete the clean/full ROM source build
+and affected ROM module tests required by the package, and record their
+current sanitized disposition above. R1 does not require Randomizer settings,
+a seed, an output profile or H-family execution. Before Phase R2, complete the
+separate Randomizer source/module gates and record them in the R2 identity.
+No final runtime result is implied by static/host tests, Runtime Gate 1,
+earlier milestone passes or historical PR #489 material.
 
 Historical PR #489 preparation note (supporting evidence only, not a current
 M-014 result): its candidate-era record stated that CFRU builds stopped at
@@ -59,9 +78,10 @@ missing audio tools and that UPR's full module build/JUnit did not run because
 Gradle was absent and Java 23 did not meet Java 25. Do not copy that note into
 the current disposition; record the current user-run result instead.
 
-Run order: A → early B/C → D with B/C repeated at checkpoints → E/F when
-reachable → G → H. Use a genuine Fresh New Game on the exact integrated
-revision above, not an earlier-candidate save, for the main path. The user may
+Run order: Phase R1 A → early B/C → D with B/C repeated at checkpoints → E/F
+when reachable → G → ordinary-shop Premier cases. Use a genuine Fresh New
+Game on the exact integrated revision above, not an earlier-candidate save,
+for the main path. The user may
 keep private recovery points for destructive-risk isolation; never upload them.
 Reach branches through normal gameplay. If a boundary needs inaccessible items,
 forms or quantities, record BLOCKED and a prerequisite; do not force memory,
@@ -79,6 +99,43 @@ mutation, and no new visual/script corruption. A family cannot pass by sampling
 one row unless that row explicitly specifies representatives. N/A requires a
 source-backed profile exclusion and reviewer acceptance; it is not a skipped
 mandatory gate. No cheats or tracker extensions in the control run.
+
+## R0 acceptance and phase ownership
+
+Phase R0 is complete and its audit is integrated on current `main`:
+[ROM finish-readiness audit](../audits/rom-finish-readiness-2026-09-20.md).
+Its accepted verdict is `ROM_SCOPE_READY_FOR_ACCEPTANCE` with
+`MISSING_BLOCKER = 0` and `UNKNOWN_BLOCKER = 0`. The documented intentional
+differences, optional backlog and out-of-pilot items are profile boundaries,
+not runtime failures.
+
+The 115 existing IDs are preserved. The table below is the authoritative phase
+map for both this procedure package and the sanitized report:
+
+| Case IDs | Phase owner | Preparation status |
+|---|---|---|
+| A01–A17 | Phase R1 — ROM-owned | NOT_RUN |
+| B01–B17, B19–B27 | Phase R1 — ROM-owned | NOT_RUN |
+| B18 | Phase R2 — Randomizer/output-owned | NOT_RUN; R2-gated |
+| C01–C10 | Phase R1 — ROM-owned | NOT_RUN |
+| D01–D16 | Phase R1 — ROM-owned continuous progression | NOT_RUN |
+| E01–E07 | Phase R1 — ROM-owned | NOT_RUN |
+| F01–F07 | Phase R1 — ROM-owned | NOT_RUN |
+| G01–G06 | Phase R1 — ROM-owned | NOT_RUN |
+| H01–H15 | Phase R2 — Randomizer/output-owned | NOT_RUN; R2-gated |
+| P01–P10 | Split variant: R1 ordinary shop; R2 randomized shop | NOT_RUN in both portions |
+
+There are 89 R1-only case IDs, 16 R2-only case IDs, and 10 split Premier
+case IDs. The split set contains 10 ordinary-shop R1 variants and 10
+randomized-shop R2 variants. R1 may be accepted without H01–H15, B18 or the
+randomized-shop portions; those portions still block final #498 and
+`RANDOMIZER_PROFILE_READY`.
+
+`ROM_PROFILE_READY` may be accepted only when all mandatory R1 cases have PASS
+or approved N/A/profile exclusion, no unresolved S0/S1 remains, every S2/S3
+has a disposition, D01–D16 is continuous, and the relevant M-009, M-013,
+data/form/QoL gates are satisfied. `RANDOMIZER_PROFILE_READY` is forbidden
+before `ROM_PROFILE_READY`.
 
 ## Pilot scope and exclusions
 
@@ -116,7 +173,7 @@ guess its engine cause. A failed capacity test must not be repeated against
 valuable progress. ROM freeze requires zero unresolved S0/S1 and explicit
 disposition of every S2/S3. Stop only the affected test; continue independent work.
 
-## A. Fresh New Game and early-game state
+## A. Phase R1 — Fresh New Game and early-game state
 
 For alternate trigger approaches, start an independent fresh run or a private
 user-maintained pre-event checkpoint from this exact revision. The main run
@@ -142,7 +199,7 @@ must still complete the entire flow once without restoring an older checkpoint.
 | A16 | Route 22 early Rival/League approach before and after relevant story state | Intended optional Rival encounter/state and badge gate; no premature progression or stale parcel block. |
 | A17 | Save/reload after starter, after Parcel, after Dex (three milestones) | Correct party, key items, five-ball accounting and persistent one-time event flags at each point. |
 
-## B. General QoL and item semantics
+## B. Phase R1 — ROM-owned QoL and item semantics (B18 is Phase R2)
 
 | ID | Procedure / variants | PASS criteria |
 |---|---|---|
@@ -163,7 +220,7 @@ must still complete the entire flow once without restoring an older checkpoint.
 | B15 | Pokemon PC deposit/withdraw/move/swap, box edge/last slot, summary | Identity/moves/ability/item/stat data preserved; no deleted/duplicated Pokemon or bad icons. |
 | B16 | Every exposed Options page; change/revert text/button/music selections; Start menus before/after flags | Valid labels/cursors, intended availability, cancel/return correct; configuration persists as designed; no overlapping AI/difficulty flag side effects. |
 | B17 | M-001 gold TM ball and HM07 ball, ordinary non-TM control | Gold graphic only approved targets; correct underlying reward, quantity and persistence; ordinary item graphic unchanged. |
-| B18 | M-001 randomized field/TM variants (H12) | 28 TM slots and HM07 distinction retained; gold does not force a non-TM into TM pool or make HM07 randomizable. |
+| B18 | M-001 randomized field/TM variants (H12; Phase R2 only) | 28 TM slots and HM07 distinction retained; gold does not force a non-TM into TM pool or make HM07 randomizable. This case is R2-gated and remains NOT_RUN during R1. |
 | B19 | Visible normal hidden item before/after pickup, stand directly on tile | Sparkle while eligible/in view; absent underfoot and after collection; actual A-button pickup unchanged. |
 | B20 | Hidden item with full Bag, then space available | Safe failed pickup retains availability; later successful pickup gives correct item once, then marker removed. |
 | B21 | Itemfinder near, far, underfoot and after collection | Native direction/underfoot behavior and availability correct; sparkle is not the pickup mechanism. |
@@ -174,7 +231,7 @@ must still complete the entire flow once without restoring an older checkpoint.
 | B26 | Center Name Rater: own Pokemon rename/cancel; egg and traded rejection | Correct target named, lowercase behavior and cancellation safe; egg/traded policy retained. Record each exposed Center NPC's accessibility; test rejection paths at least once. |
 | B27 | Save/reload after item transfer, rename, options change and healing | All intended persistent data retained; no duplicate transient UI/effects or event replay. |
 
-## C. M-009 global-frame regression pass
+## C. Phase R1 — M-009 global-frame regression pass
 
 Repeat C01–C09 in early outdoors, dense Game Corner/interior, cave, and late
 town/Sevii. Record per-location results. Legacy targeted sparkle PASS does not
@@ -193,13 +250,13 @@ cover these global lifecycle risks. Do not manufacture >36 events or new maps.
 | C09 | Quest Log record/replay after representative warp/battle/item/heal where practical | Playback/arrival behavior and exit correct; no re-awarded item or event-state mutation. If unavailable, BLOCKED with prerequisite rather than PASS. |
 | C10 | Save/reload and fresh boot after dense transition session | No persistent corruption, stale effects or changed map/event state; unrelated progress intact. |
 
-## D. Story progression through Hall of Fame
+## D. Phase R1 — Story progression through Hall of Fame
 
 Use one continuous main run; optional ordering is allowed but record the actual
 order. At every badge/chapter: verify reward once, map exits/return, relevant HM
 gate, Center/PC and save/reload; perform C02/C03/C04. Battle balance is not a
-Gen9 mechanics acceptance claim. An unfair random seed is separate from an
-engine softlock; keep a non-randomized progression control.
+Gen9 mechanics acceptance claim. An anomalous gameplay outcome is separate from
+an engine softlock; keep a ROM-owned progression control for R1.
 
 | ID | Chapter | PASS criteria |
 |---|---|---|
@@ -211,7 +268,7 @@ engine softlock; keep a non-randomized progression control.
 | D06 | Route 9 / Rock Tunnel / Lavender | Cave connections/light/escape and town arrival function; Tower initially respects story gates. |
 | D07 | Celadon / Erika / Rocket Game Corner | Gym reward, hideout switches/lift key/Giovanni/Silph Scope all work; dense objects and hidden items stable. |
 | D08 | Pokemon Tower / Mr. Fuji / Poke Flute | Scope-gated ghost sequence, rescue and Flute grant once; both Snorlax paths wake/resolve appropriately. |
-| D09 | Fuchsia / Koga / Safari Surf and Warden Strength | Safari admission/timeout/exit, Surf/teeth/Strength chain and badge work; required items not randomized away. |
+| D09 | Fuchsia / Koga / Safari Surf and Warden Strength | Safari admission/timeout/exit, Surf/teeth/Strength chain and badge work; required items remain present in the ROM-owned control. |
 | D10 | Saffron access / Silph / Sabrina | Entry gate, teleporters/Card Key/Rival/boss/Lapras-reward/President and Gym all progress; no linked static/script mismatch. |
 | D11 | Surf routes / Seafoam / Cinnabar Mansion | Surf transitions, boulder puzzle and optional static interaction safe; Secret Key permits Gym. |
 | D12 | Blaine / optional Bill | Badge works; no forced Sevii trip on Gym exit; F tests complete independently. |
@@ -220,7 +277,7 @@ engine softlock; keep a non-randomized progression control.
 | D15 | Elite Four / Champion | All four rooms, inter-battle healing/menus, Champion and defeat/retry where safely testable function; no invalid trainer/custom move row. |
 | D16 | Hall of Fame / credits / postgame return | Correct party recorded, credits exit, save/reload and Pallet return work; no progress or party corruption. |
 
-## E. M-004 renewable representatives
+## E. Phase R1 — M-004 renewable representatives
 
 Source contract: 1,500-step counter checked on entry to an eligible map. Renewal
 selects a populated tier, not necessarily the same tile or every item. Before a
@@ -237,13 +294,13 @@ cannot be established by normal gameplay is BLOCKED, not guessed.
 | E04 | Later representative Seven Island Tanoby Ruins (rare-only group) | Completed cycle cannot choose an empty tier; normal hidden item works. If unreachable, BLOCKED until postgame access. |
 | E05 | Mt. Moon B1F control over several cycles | Remains random/non-guaranteed. A nonempty sample is not evidence of a regression; no claim that finite samples prove randomness. |
 | E06 | Ordinary one-time hidden item outside group, collect then cycle | Does not respawn; renewable reset cannot globally clear normal collection flags. |
-| E07 | Randomized eligible slot through repeated cycles | Regeneration restores the slot's randomized reward, never hardcoded vanilla item; quantity, sprite/text, Itemfinder correct. |
+| E07 | ROM-owned randomized eligible slot through repeated cycles | Regeneration restores the slot's ROM-owned randomized reward, never hardcoded vanilla item; quantity, sprite/text, Itemfinder correct. This is not a Randomizer-output variant. |
 
 Other approved groups for additional coverage: Bond Bridge, Four Island,
 Memorial Pillar, Resort Gorgeous, Outcast Island, Green Path, Seven Island
 Trainer Tower exterior. Routes 20/21 and Mt. Moon are non-guaranteed controls.
 
-## F. M-008 optional Bill / Sevii
+## F. Phase R1 — M-008 optional Bill / Sevii
 
 | ID | Procedure | PASS criteria |
 |---|---|---|
@@ -255,7 +312,7 @@ Trainer Tower exterior. Routes 20/21 and Mt. Moon are non-guaranteed controls.
 | F06 | Two/Three Island intended errands, return travel and later revisit | Original island progression, services and return-from-Sevii scene work; no broken return ticket/warp flags. |
 | F07 | Save/reload after NO, after arrival, after return | Correct optional/completed state retained at each checkpoint; no replay or stranded player. |
 
-## G. Gen1–9 display, crash and form sanity only
+## G. Phase R1 — Gen1–9 display, crash and form sanity only
 
 No new battle-mechanics acceptance is requested. Commander/Hospitality/Embody
 Aspect and partial Palafin/Terapagos behavior remain documented baseline limits.
@@ -270,7 +327,11 @@ Do not interpret a displayed Gen9 name as implementation of its modern effect.
 | G05 | Late table bounds: safely supported Gen9 species including final entry Pecharunt; late move/item labels | Correct names/assets and safe navigation; no truncation into neighboring rows or null pointer crash. Unreachable forms remain BLOCKED/N/A by explicit profile. |
 | G06 | Capture/rename/deposit/withdraw/save/reload a later-gen representative | Identity, held item, ability slot, moves and nickname retained; no vanilla encrypted-struct assumption in any active service. |
 
-## H. Randomized output smoke
+## H. Phase R2 — Randomized output smoke
+
+H01–H15 are Randomizer/output-owned and are gated to Phase R2. They remain
+NOT_RUN during Phase R1. Do not begin them until `ROM_PROFILE_READY` is
+accepted; they remain required for `RANDOMIZER_PROFILE_READY` and final #498.
 
 Use the exact four immutable M-014 revisions in the identity table above.
 Historical candidate-era material and candidate PRs are provenance only; do not
@@ -300,24 +361,26 @@ supporting evidence. The user performs private output operations; share text onl
 | H14 | Logging and output error paths | Settings/run label and changed feature summaries consistent; no claim that Field Items have a full detailed log. Capacity/unsupported errors produce no usable partial-success result. |
 | H15 | Combined supported settings output; reopen then A, selected B/C, early/mid/late battles | No option interaction, invalid writer pointer, corrupted form/name or game softlock. A complete randomized playthrough is still required for a broad support claim. |
 
-### Premier bonus exact transaction matrix (M-013)
+### Premier bonus exact transaction matrix (M-013), split by phase
 
-Run on ordinary and randomized shop inventories where the user can safely
-obtain required stock/money. Count net purchases separately from rewards. All
-ball-pocket types qualify, including Premier itself. Nonball policy is preserved.
+The ordinary-shop portion is Phase R1 ROM acceptance. The randomized-shop
+portion is Phase R2 output acceptance and must not be treated as executed by
+the R1 run. Run each portion only when the user can safely obtain the required
+stock/money. Count net purchases separately from rewards. All ball-pocket types
+qualify, including Premier itself. Nonball policy is preserved.
 
-| ID | Case | PASS criteria |
-|---|---|---|
-| P01 | 1, 9, 10, 19, 20, 21 of Poke/Great/Ultra plus another ball type | Premier bonus respectively 0,0,1,1,2,2; no Dusk/Luxury custom reward for Great/Ultra. |
-| P02 | Separate 9+9 transactions, then 10+10 | First pair no reward; second pair one each. No cumulative remainder/carry. |
-| P03 | 99, 255, 256, 999 quantity boundary where supported | floor(quantity/10) = 9,25,25,99; no u8 wrap; displayed count correct. |
-| P04 | Buy Premier Balls themselves | Purchased count plus floor(quantity/10), subject to remaining capacity; purchase not confused with award. |
-| P05 | Partial Premier stack capacity less than reward | Only remaining capacity awarded; coherent message/count, no loss/overflow. |
-| P06 | Full ball pocket with existing Premier stack space vs no Premier capacity | Existing free stack capacity used; no room gives zero safely; ordinary purchase persists correctly. |
-| P07 | Purchase uses last free slot/capacity | Bonus uses capacity after purchase, not stale pre-purchase capacity. |
-| P08 | Cancel / insufficient funds / failed purchase / repeated A or B after success | No bonus on unsuccessful transaction; one award only per successful transaction; normal list return. |
-| P09 | Nonball at each configured reward threshold and just below | Existing nonball reward table unchanged; no Premier award for nonball purchase. |
-| P10 | Exit/re-enter shop and save/reload after reward | Correct money/inventory persists; no duplicate bonus/task on return. |
+| ID | Phase owner | Case | PASS criteria |
+|---|---|---|---|
+| P01 | Split: R1 ordinary shop / R2 randomized shop | 1, 9, 10, 19, 20, 21 of Poke/Great/Ultra plus another ball type | Premier bonus respectively 0,0,1,1,2,2; no Dusk/Luxury custom reward for Great/Ultra. Record ordinary-shop and randomized-shop variants separately. |
+| P02 | Split: R1 ordinary shop / R2 randomized shop | Separate 9+9 transactions, then 10+10 | First pair no reward; second pair one each. No cumulative remainder/carry. Record both shop variants separately. |
+| P03 | Split: R1 ordinary shop / R2 randomized shop | 99, 255, 256, 999 quantity boundary where supported | floor(quantity/10) = 9,25,25,99; no u8 wrap; displayed count correct. Record both shop variants separately where reachable. |
+| P04 | Split: R1 ordinary shop / R2 randomized shop | Buy Premier Balls themselves | Purchased count plus floor(quantity/10), subject to remaining capacity; purchase not confused with award. Record both shop variants separately. |
+| P05 | Split: R1 ordinary shop / R2 randomized shop | Partial Premier stack capacity less than reward | Only remaining capacity awarded; coherent message/count, no loss/overflow. Record both shop variants separately. |
+| P06 | Split: R1 ordinary shop / R2 randomized shop | Full ball pocket with existing Premier stack space vs no Premier capacity | Existing free stack capacity used; no room gives zero safely; ordinary purchase persists correctly. Record both shop variants separately. |
+| P07 | Split: R1 ordinary shop / R2 randomized shop | Purchase uses last free slot/capacity | Bonus uses capacity after purchase, not stale pre-purchase capacity. Record both shop variants separately. |
+| P08 | Split: R1 ordinary shop / R2 randomized shop | Cancel / insufficient funds / failed purchase / repeated A or B after success | No bonus on unsuccessful transaction; one award only per successful transaction; normal list return. Record both shop variants separately. |
+| P09 | Split: R1 ordinary shop / R2 randomized shop | Nonball at each configured reward threshold and just below | Existing nonball reward table unchanged; no Premier award for nonball purchase. Record both shop variants separately. |
+| P10 | Split: R1 ordinary shop / R2 randomized shop | Exit/re-enter shop and save/reload after reward | Correct money/inventory persists; no duplicate bonus/task on return. Record both shop variants separately. |
 
 ## Evidence and minimal sanitized report
 
@@ -328,8 +391,11 @@ For a defect include first failing case, initial state, minimal steps, expected
 vs observed, frequency, severity and whether a clean unchanged control reproduces.
 Do not infer a cause from a symptom or copy raw logs containing private paths.
 
-Completion requires every mandatory row PASS on the final integrated M-014
-or an explicitly approved scope exclusion, no unresolved STOP defect, and the
-full D01–D16 continuous run. Past targeted evidence remains useful but cannot
-replace the new A–H integration gates. Tracker integration is a later independent
-profile gate and is not silently enabled during this control acceptance.
+Phase R1 completion requires every mandatory R1-owned row PASS or an
+explicitly approved scope exclusion, no unresolved STOP defect, and the full
+D01–D16 continuous run. Phase R2 separately requires every R2-owned row and
+split randomized-output variant. Past targeted evidence remains useful but
+cannot replace the new phase-owned gates. Final #498 acceptance requires both
+`ROM_PROFILE_READY` and `RANDOMIZER_PROFILE_READY`. Tracker integration is a
+later independent profile gate and is not silently enabled during this control
+acceptance.
