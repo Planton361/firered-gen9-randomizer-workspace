@@ -10,7 +10,9 @@ Workspace PR.
 |---|---|
 | Workspace source basis | `6b940684b8af79f5cbfd8ecd03dd443d1900a650` |
 | Branch | `ai/515-ironmon-smart-host-policy` |
-| Validated implementation commit | `24e2ddd7e1a7a1c6eb4244e5dd06e71e931af41c` |
+| Initial implementation commit | `24e2ddd7e1a7a1c6eb4244e5dd06e71e931af41c` |
+| CONTROL-reviewed head | `5a33898f436c4d6ec0fdb4361441fc5201857796` |
+| Repaired implementation commit | `401d64b0f4386260c507a14456b47dd2544acbef` |
 | Final branch commit | The commit containing this evidence file; its exact SHA is recorded in the Workspace PR and sanitized #515 evidence comment. A commit cannot contain its own SHA. |
 | Ironmon fixture schema | `ai-policy-fixture-v3` |
 | Ironmon policy/config | `ironmon_smart` / `ironmon-smart-host-policy-v1` |
@@ -39,6 +41,15 @@ trainer data, ROM source, or runtime behavior. Exact changed files are:
 - `07_scripts/ai_policy/tests/test_ironmon_policy.py`;
 - `docs/testing/trainer-ai-ironmon-smart-host-policy-2026-09-21.md`.
 
+The same-contract repair after CONTROL review changed exactly:
+
+- `07_scripts/ai_policy/README.md`;
+- `07_scripts/ai_policy/fixtures/ironmon_fixtures.json`;
+- `07_scripts/ai_policy/ironmon.py`;
+- `07_scripts/ai_policy/metrics.py`;
+- `07_scripts/ai_policy/tests/test_ironmon_policy.py`;
+- this evidence document.
+
 ## Implemented contract
 
 The separate `ironmon_smart` policy retains the accepted common floor before
@@ -63,12 +74,14 @@ The v3 policy adds:
   gate requiring at least +8 after cost over the best productive alternative;
 - emergency, forced, and non-emergency switch paths; exact advantage boundaries
   below 12, 12–19, and at least 20; one policy-RNG admission draw in the middle
-  band; and epsilon-4 replacement/stay sampling after arbitration;
+  band; per-candidate +12 eligibility before epsilon-4 sampling; and individual
+  strict-dominance filtering of emergency candidates when a stay is defensible;
 - A-to-B-to-A cost 16, changed-public-threat and independently scored +8
   progress exceptions, a two-consecutive-switch guard, and rejection of
   Regenerator-only progress;
 - canonical public traces with response facts/weights, branch utilities,
-  uncertainty, repeat proof, loop facts, best stay/switch, advantage, threshold,
+  uncertainty, repeat proof, loop facts, best stay/switch, every candidate's
+  score/advantage and threshold eligibility, admitted replacement pool,
   admission RNG, tactical class, near-best set, total RNG state, and selection.
 
 The v1 and v2 loaders and trace paths remain separate. V3 rejects unknown or
@@ -78,9 +91,9 @@ integers, more than nine root actions, and more than eight response branches.
 
 ## Fixture and mandatory-tag inventory
 
-The corpus contains 59 v3 Ironmon fixtures and 57 distinct explicit coverage
-tags. Together with the retained 29 v1 and 30 v2 fixtures, validation covers
-118 fixtures. The machine-checked tag inventory is:
+The repaired corpus contains 63 v3 Ironmon fixtures and 58 distinct explicit
+coverage tags. Together with the retained 29 v1 and 30 v2 fixtures, validation
+covers 122 fixtures. The machine-checked tag inventory is:
 
 ```text
 aba_loop_prohibition
@@ -132,6 +145,7 @@ switch_advantage_11
 switch_advantage_12
 switch_advantage_19
 switch_advantage_20
+switch_candidate_min_advantage
 toxic_residual_line
 trapped_lock_no_switch
 two_speed_drops
@@ -155,15 +169,16 @@ emulator, state, screenshot, network service, or third-party package.
 python3 -m unittest discover -s 07_scripts/ai_policy/tests -p 'test_*.py'
 ```
 
-Result: **PASS — 95 tests, 0 failures, 0 errors**. This retains all 71 #508/#510
-tests and adds 24 Ironmon tests.
+Result: **PASS — 98 tests, 0 failures, 0 errors**. This retains all 71 #508/#510
+tests and runs 27 Ironmon tests, including the three repair-specific test
+methods.
 
 ```sh
 python3 -m unittest discover -s 07_scripts/ai_policy/tests -p 'test_ironmon_policy.py'
 python3 07_scripts/ai_policy/cli.py validate
 ```
 
-Results: **PASS — 24 Ironmon tests**; **PASS — 118 fixtures across explicit
+Results: **PASS — 27 Ironmon tests**; **PASS — 122 fixtures across explicit
 v1/v2/v3 schemas**. Mandatory tag inventory, malformed-v3 fail-closed cases,
 integer arithmetic, saturation, response weights, repeat/loop rules, switch
 boundaries, noninterference, entropy, and baseline replay are included.
@@ -180,7 +195,7 @@ Canonical digests:
 |---|---|---|
 | #508 v1 `uniform_legal` | `71fc84c8fd3e219c4e364ecd506127303ac8524a73d47a39999be384efbc95a7` | unchanged |
 | Standard v2 | `227ecebc2b937671cc4f2fbab1694abf1b7c186f7e455ed7daf22014b62d0a85` | unchanged |
-| Ironmon Smart v3 | `94a01c4620c712ee62fc315f72bfd076ebf84ee48753f5fd60124d00d5935e07` | new frozen canonical stream |
+| Ironmon Smart v3 | `0a637d0bc42cb2e37701bbfa33677ae95c878b1f9a67ec55a60e15a4fbdb85d7` | repaired frozen canonical stream |
 
 ```sh
 python3 07_scripts/ai_policy/cli.py replay \
@@ -197,19 +212,19 @@ reported:
 
 | Metric | Result |
 |---|---|
-| Decisions / allowed-best compliance | 59; 59 / 59, 1.0 |
-| Illegal selections | 0 / 59 |
-| Known invalid/no-effect selections | 0 / 58 productive opportunities |
+| Decisions / allowed-best compliance | 63; 63 / 63, 1.0 |
+| Illegal selections | 0 / 63 |
+| Known invalid/no-effect selections | 0 / 62 productive opportunities |
 | Missed robust KO | 0 / 1 |
 | Redundant status | 0 / 2 |
 | Harmful repeat | 0 / 1 |
-| Switch-threshold violations | 0 / 12 |
+| Switch-threshold violations | 0 / 16; below-threshold selections 0 |
 | Switch-loop-guard violations | 0 / 3 |
-| Near-best compliance | 59 / 59, 1.0 |
+| Near-best compliance | 63 / 63, 1.0 |
 | Deterministic replay mismatches | 0 |
-| Policy-eligible utility regret | average `0.0677966`; median `0`; max `4` |
-| Fixture-allowed utility regret | average `0.389831`; median `0`; max `19` |
-| Policy RNG draws | 16 total; 43 zero-draw, 16 one-draw; max 1 |
+| Policy-eligible utility regret | average `0.1269841`; median `0`; max `4` |
+| Fixture-allowed utility regret | average `0.8253968`; median `0`; max `19` |
+| Policy RNG draws | 19 total; 44 zero-draw, 19 one-draw; max 1 |
 
 The fixture-allowed regret maximum of 19 is the intentional 12–19 stochastic
 switch-admission band: a rejected switch remains an oracle-allowed result. The
@@ -217,7 +232,7 @@ post-arbitration near-best regret remains at most epsilon 4.
 
 ### Response model
 
-- no revealed moves: 53 cases, `UNKNOWN` weight 1 / 100%;
+- no revealed moves: 57 cases, `UNKNOWN` weight 1 / 100%;
 - partially revealed moves: 5 cases, exact aggregate `UNKNOWN` mass 25%;
 - fully revealed moves: 1 case, no `UNKNOWN` branch;
 - maximum represented response branches: 3;
@@ -233,8 +248,27 @@ post-arbitration near-best regret remains at most epsilon 4.
 
 - advantage 11: reject; exactly 12 and 19: `random_12_19`; exactly 20:
   deterministic admission;
-- 1,024 deterministic seeds at advantage 12: **502 admit / 522 reject**,
-  entropy `0.9997248103`; every admission used exactly one draw and replayed;
+- repaired +12/+8 witness: class `random_12_19`; only +12 is threshold
+  eligible and in the admitted/near-best replacement pool; +8 is excluded;
+- repaired +13/+9 witness: only +13 is threshold eligible and in the admitted
+  replacement pool; +9 is excluded;
+- repaired +20/+16 witness: deterministic class admission consumes no
+  admission draw; both candidates independently clear +12 and remain in the
+  epsilon-4 replacement pool; stable-ID sampling selected +16 at replicate 0
+  with its normal single near-best draw;
+- repaired emergency witness: the +4 candidate strictly dominates stay=0 and
+  is the sole emergency replacement; the within-epsilon candidate at 0 does
+  not dominate and is excluded before sampling;
+- 1,024 deterministic seeds for repaired +12/+8: **491 admit / 533 reject**,
+  entropy `0.9987861499`; the admission draw count and full policy draw count
+  are both exactly one for every seed; replay mismatches 0; +8 selections 0;
+  invalid selections 0;
+- the retained single-candidate +12 witness remains **502 admit / 522 reject**,
+  entropy `0.9997248103`, with exactly one admission draw and zero replay
+  mismatches;
+- the strengthened metric audits each candidate's public score, own advantage,
+  and threshold eligibility and reports **0 / 16 switch-threshold violations**
+  and **0 below-threshold selected candidates**;
 - entry KO, hazard-reduced advantage, trapped lock, and no-useful-bench cases
   reject unsafe/unhelpful switching;
 - forced revenge and voluntary revenge timing are distinct; preserve/sacrifice
@@ -271,17 +305,17 @@ branch scores, repeat/switch arbitration, RNG draws/state, and selected action.
 
 ## Synthetic baseline metrics
 
-The same 59 v3 fixtures were summarized under the retained deterministic
+The same 63 v3 fixtures were summarized under the retained deterministic
 baselines and the Standard policy. Utility below is the Ironmon fixture scale,
 used only for descriptive accounting.
 
 | Policy | Allowed-best | Chosen utility avg / median | Fixture-allowed regret avg / max | RNG draws |
 |---|---:|---:|---:|---:|
-| `ironmon_smart` | 59 / 59 | 32.5085 / 25 | 0.3898 / 19 | 16 |
-| Standard | 44 / 59 | 23.5254 / 25 | 9.3729 / 280 | 26 |
-| `uniform_legal` | 41 / 59 | 25.2203 / 25 | 9.2881 / 280 | 40 |
-| `ko_first_no_switch` | 44 / 59 | 23.5763 / 25 | 9.3220 / 280 | 0 |
-| `first_legal` | 46 / 59 | 29.6102 / 25 | 4.8983 / 110 | 0 |
+| `ironmon_smart` | 63 / 63 | 30.7619 / 25 | 0.8254 / 19 | 19 |
+| Standard | 47 / 63 | 22.0952 / 20 | 9.4921 / 280 | 27 |
+| `uniform_legal` | 44 / 63 | 24.1429 / 25 | 8.9524 / 280 | 44 |
+| `ko_first_no_switch` | 46 / 63 | 22.0794 / 20 | 9.5079 / 280 | 0 |
+| `first_legal` | 49 / 63 | 27.7937 / 25 | 5.3016 / 110 | 0 |
 
 All five runs are deterministic and have zero illegal selections, zero replay
 mismatches, and zero hidden/submitted/future-RNG mismatches. These are authored
