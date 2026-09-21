@@ -54,3 +54,12 @@ def detects_aba_switch_loop(decisions: Iterable[dict]) -> bool:
         if first[0] == second[1] and first[1] == second[0]:
             return True
     return False
+
+
+def would_form_aba_switch_loop(
+        decisions: Iterable[dict], switch_from: str | None, switch_to: str | None) -> bool:
+    """Return whether a proposed voluntary edge immediately reverses the last one."""
+    if not switch_from or not switch_to:
+        return False
+    edges = voluntary_switch_edges(decisions)
+    return bool(edges and edges[-1] == (switch_to, switch_from))

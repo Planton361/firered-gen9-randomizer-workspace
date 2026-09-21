@@ -1,0 +1,562 @@
+{
+  "schema_version": "ai-policy-fixture-v2",
+  "source_revision": "2a3ca0a81103ec5b4cc9335f83385a4b2ebfe7ff",
+  "policy_config_id": "standard-host-policy-v1",
+  "defaults": {
+    "profile": "standard",
+    "information_mode": "fair",
+    "public_state": {
+      "battle_mode": "trainer_singles",
+      "opponent_active": {
+        "species": "PUBLIC_TARGET",
+        "hp_fraction": 256,
+        "status": "none",
+        "stat_stages": {"accuracy": 0, "speed": 0}
+      },
+      "opponent_bench": [],
+      "own_party": [{"species": "ACTOR", "hp_fraction": 256}],
+      "field": {"weather": "none", "hazards": "none"},
+      "public_history": []
+    },
+    "private_state": {
+      "hidden_opponent": {
+        "moves": ["HIDDEN_MOVE"],
+        "item": "HIDDEN_ITEM",
+        "ability": "HIDDEN_ABILITY",
+        "stats": "HIDDEN_STATS"
+      },
+      "submitted_action": "HIDDEN_MOVE",
+      "future_rng": 0
+    },
+    "policy_memory": {"decisions": []}
+  },
+  "fixtures": [
+    {
+      "fixture_id": "standard_robust_ko_vs_utility",
+      "candidates": [
+        ["ko_move", "move", true, true, false, false, true, false, 0, 0, "damage", false, 100, false, false, false, 0, null, null, 1, 256, 0, 0, 0, 0, 0, false],
+        ["strong_accuracy_drop", "move", true, true, false, true, false, false, 0, -1, "sand_attack", false, 0, false, false, false, 0, null, null, 0, 0, 0, 40, 0, 0, 0, false]
+      ],
+      "seeds": {"team": 2102108530, "battle": 3705595916, "decision": 3289338304},
+      "expected": {
+        "legal_actions": ["ko_move", "strong_accuracy_drop"],
+        "allowed_best_set": ["ko_move"],
+        "forbidden_actions": ["strong_accuracy_drop"],
+        "required_reasons": ["ROBUST_SAFE_KO"],
+        "repeat_exceptions": [],
+        "coverage_tags": ["robust_ko_vs_strong_utility"]
+      }
+    },
+    {
+      "fixture_id": "standard_damage_vs_low_accuracy",
+      "candidates": [
+        ["meaningful_damage", "move", true, true, false, false, false, false, 0, 0, "damage", false, 38, false, false, false, 0, null, null, 0, 96, 0, 0, 0, 0, 0, false],
+        ["low_value_sand_attack", "move", true, true, false, true, false, false, 0, -1, "sand_attack", false, 0, false, false, false, 0, null, null, 0, 0, 0, 10, 0, 0, 0, false]
+      ],
+      "seeds": {"team": 4277474563, "battle": 3943058776, "decision": 1021892788},
+      "expected": {
+        "legal_actions": ["meaningful_damage", "low_value_sand_attack"],
+        "allowed_best_set": ["meaningful_damage"],
+        "forbidden_actions": ["low_value_sand_attack"],
+        "required_reasons": [],
+        "repeat_exceptions": [],
+        "coverage_tags": ["damage_vs_low_marginal_accuracy"]
+      }
+    },
+    {
+      "fixture_id": "standard_accuracy_first_useful",
+      "candidates": [
+        ["sand_attack", "move", true, true, false, true, false, false, 0, -1, "sand_attack", false, 0, false, false, false, 0, null, null, 0, 0, 0, 35, 0, 0, 0, false],
+        ["weak_damage", "move", true, true, false, false, false, false, 0, 0, "damage", false, 16, false, false, false, 0, null, null, 0, 40, 0, 0, 0, 0, 0, false]
+      ],
+      "seeds": {"team": 793064407, "battle": 3217407671, "decision": 3216795011},
+      "expected": {
+        "legal_actions": ["sand_attack", "weak_damage"],
+        "allowed_best_set": ["sand_attack"],
+        "forbidden_actions": ["weak_damage"],
+        "required_reasons": [],
+        "repeat_exceptions": [],
+        "coverage_tags": ["useful_first_accuracy_drop"]
+      }
+    },
+    {
+      "fixture_id": "standard_accuracy_diminishing",
+      "policy_memory": {
+        "decisions": [
+          {"action_id": "sand_attack", "kind": "move", "effect_family": "sand_attack", "success": true, "public_result": "accuracy_-1", "switch_from": null, "switch_to": null, "forced": false}
+        ]
+      },
+      "candidates": [
+        ["smokescreen", "move", true, true, false, true, false, false, -1, -2, "smokescreen", false, 0, false, false, false, 0, null, null, 0, 0, 0, 30, 0, 8, 0, false],
+        ["damage", "move", true, true, false, false, false, false, 0, 0, "damage", false, 31, false, false, false, 0, null, null, 0, 80, 0, 0, 0, 0, 0, false]
+      ],
+      "seeds": {"team": 1592798294, "battle": 758553390, "decision": 3556725809},
+      "expected": {
+        "legal_actions": ["smokescreen", "damage"],
+        "allowed_best_set": ["damage"],
+        "forbidden_actions": ["smokescreen"],
+        "required_reasons": [],
+        "repeat_exceptions": [],
+        "coverage_tags": ["diminishing_accuracy_drop"]
+      }
+    },
+    {
+      "fixture_id": "standard_accuracy_repeat_guard",
+      "policy_memory": {
+        "decisions": [
+          {"action_id": "sand_attack", "kind": "move", "effect_family": "sand_attack", "success": true, "public_result": "accuracy_-1", "switch_from": null, "switch_to": null, "forced": false},
+          {"action_id": "smokescreen", "kind": "move", "effect_family": "smokescreen", "success": true, "public_result": "accuracy_-2", "switch_from": null, "switch_to": null, "forced": false}
+        ]
+      },
+      "candidates": [
+        ["sand_attack_again", "move", true, true, false, true, false, false, -2, -3, "sand_attack", false, 0, false, false, false, 0, null, null, 0, 0, 0, 40, 0, 16, 0, false],
+        ["damage", "move", true, true, false, false, false, false, 0, 0, "damage", false, 13, false, false, false, 0, null, null, 0, 32, 0, 0, 0, 0, 0, false]
+      ],
+      "seeds": {"team": 3061199496, "battle": 2293260304, "decision": 2729186919},
+      "expected": {
+        "legal_actions": ["sand_attack_again", "damage"],
+        "allowed_best_set": ["damage"],
+        "forbidden_actions": ["sand_attack_again"],
+        "required_reasons": ["HARMFUL_REPEAT"],
+        "repeat_exceptions": [],
+        "coverage_tags": ["repeated_accuracy_family_guard"]
+      }
+    },
+    {
+      "fixture_id": "standard_string_shot_flip",
+      "candidates": [
+        ["string_shot", "move", true, true, false, true, false, false, 0, -1, "string_shot", false, 0, false, false, false, 0, null, null, 0, 0, 0, 40, 0, 0, 0, false],
+        ["damage", "move", true, true, false, false, false, false, 0, 0, "damage", false, 25, false, false, false, 0, null, null, 0, 64, 0, 0, 0, 0, 0, false]
+      ],
+      "seeds": {"team": 2665012926, "battle": 1723343527, "decision": 321947863},
+      "expected": {
+        "legal_actions": ["string_shot", "damage"],
+        "allowed_best_set": ["string_shot"],
+        "forbidden_actions": ["damage"],
+        "required_reasons": [],
+        "repeat_exceptions": [],
+        "coverage_tags": ["useful_string_shot_order_flip"]
+      }
+    },
+    {
+      "fixture_id": "standard_string_shot_useless",
+      "candidates": [
+        ["string_shot", "move", true, false, false, true, false, false, 0, -1, "string_shot", false, 0, false, false, false, 5, null, null, 0, 0, 0, 0, 0, 0, 0, false],
+        ["damage", "move", true, true, false, false, false, false, 0, 0, "damage", false, 25, false, false, false, 0, null, null, 0, 64, 0, 0, 0, 0, 0, false]
+      ],
+      "seeds": {"team": 761517381, "battle": 446033088, "decision": 3070911301},
+      "expected": {
+        "legal_actions": ["string_shot", "damage"],
+        "allowed_best_set": ["damage"],
+        "forbidden_actions": ["string_shot"],
+        "required_reasons": ["NO_MARGINAL_VALUE"],
+        "repeat_exceptions": [],
+        "coverage_tags": ["useless_string_shot"]
+      }
+    },
+    {
+      "fixture_id": "standard_setup_useful",
+      "candidates": [
+        ["setup", "move", true, true, false, true, false, false, 0, 1, "attack_up", false, 0, false, false, false, 0, null, null, 0, 0, 0, 40, 0, 0, 0, false],
+        ["damage", "move", true, true, false, false, false, false, 0, 0, "damage", false, 25, false, false, false, 0, null, null, 0, 64, 0, 0, 0, 0, 0, false]
+      ],
+      "seeds": {"team": 1289941495, "battle": 394939656, "decision": 3676144954},
+      "expected": {
+        "legal_actions": ["setup", "damage"],
+        "allowed_best_set": ["setup"],
+        "forbidden_actions": ["damage"],
+        "required_reasons": [],
+        "repeat_exceptions": [],
+        "coverage_tags": ["useful_setup_immediate_followup"]
+      }
+    },
+    {
+      "fixture_id": "standard_setup_useless",
+      "candidates": [
+        ["capped_setup", "move", true, false, false, true, false, false, 6, 6, "attack_up", false, 0, false, false, false, 5, null, null, 0, 0, 0, 0, 0, 0, 0, false],
+        ["damage", "move", true, true, false, false, false, false, 0, 0, "damage", false, 25, false, false, false, 0, null, null, 0, 64, 0, 0, 0, 0, 0, false]
+      ],
+      "seeds": {"team": 4023115684, "battle": 1636751372, "decision": 3634423329},
+      "expected": {
+        "legal_actions": ["capped_setup", "damage"],
+        "allowed_best_set": ["damage"],
+        "forbidden_actions": ["capped_setup"],
+        "required_reasons": ["CAPPED_STAT_CHANGE"],
+        "repeat_exceptions": [],
+        "coverage_tags": ["useless_setup"]
+      }
+    },
+    {
+      "fixture_id": "standard_recovery_useful",
+      "candidates": [
+        ["recover", "move", true, true, false, true, false, false, 0, 0, "recovery", false, 0, false, false, false, 0, null, null, 0, 0, -128, 0, 0, 0, 5, false],
+        ["damage", "move", true, true, false, false, false, false, 0, 0, "damage", false, 25, false, false, false, 0, null, null, 0, 64, 0, 0, 0, 0, 0, false]
+      ],
+      "seeds": {"team": 2422721470, "battle": 611886815, "decision": 1221440649},
+      "expected": {
+        "legal_actions": ["recover", "damage"],
+        "allowed_best_set": ["recover"],
+        "forbidden_actions": ["damage"],
+        "required_reasons": [],
+        "repeat_exceptions": [],
+        "coverage_tags": ["useful_recovery"]
+      }
+    },
+    {
+      "fixture_id": "standard_recovery_futile",
+      "candidates": [
+        ["recover_at_full_hp", "move", true, false, false, true, false, false, 0, 0, "recovery", false, 0, false, false, false, 5, null, null, 0, 0, 0, 0, 0, 0, 0, false],
+        ["damage", "move", true, true, false, false, false, false, 0, 0, "damage", false, 25, false, false, false, 0, null, null, 0, 64, 0, 0, 0, 0, 0, false]
+      ],
+      "seeds": {"team": 2969861100, "battle": 1798264309, "decision": 2916395111},
+      "expected": {
+        "legal_actions": ["recover_at_full_hp", "damage"],
+        "allowed_best_set": ["damage"],
+        "forbidden_actions": ["recover_at_full_hp"],
+        "required_reasons": ["NO_MARGINAL_VALUE"],
+        "repeat_exceptions": [],
+        "coverage_tags": ["futile_recovery"]
+      }
+    },
+    {
+      "fixture_id": "standard_major_status_useful",
+      "candidates": [
+        ["useful_status", "move", true, true, false, true, false, false, 0, 0, "major_status", false, 0, false, false, false, 0, null, null, 0, 0, 0, 35, 0, 0, 0, false],
+        ["damage", "move", true, true, false, false, false, false, 0, 0, "damage", false, 25, false, false, false, 0, null, null, 0, 64, 0, 0, 0, 0, 0, false]
+      ],
+      "seeds": {"team": 1305985657, "battle": 1677502472, "decision": 99357405},
+      "expected": {
+        "legal_actions": ["useful_status", "damage"],
+        "allowed_best_set": ["useful_status"],
+        "forbidden_actions": ["damage"],
+        "required_reasons": [],
+        "repeat_exceptions": [],
+        "coverage_tags": ["useful_major_status"]
+      }
+    },
+    {
+      "fixture_id": "standard_major_status_redundant",
+      "candidates": [
+        ["redundant_status", "move", true, false, false, true, false, true, 0, 0, "major_status", false, 0, false, false, false, 5, null, null, 0, 0, 0, 0, 0, 0, 0, false],
+        ["damage", "move", true, true, false, false, false, false, 0, 0, "damage", false, 25, false, false, false, 0, null, null, 0, 64, 0, 0, 0, 0, 0, false]
+      ],
+      "seeds": {"team": 3745702588, "battle": 3908378486, "decision": 2146177370},
+      "expected": {
+        "legal_actions": ["redundant_status", "damage"],
+        "allowed_best_set": ["damage"],
+        "forbidden_actions": ["redundant_status"],
+        "required_reasons": ["REDUNDANT_STATUS"],
+        "repeat_exceptions": [],
+        "coverage_tags": ["redundant_major_status"]
+      }
+    },
+    {
+      "fixture_id": "standard_switch_emergency",
+      "candidates": [
+        ["losing_stay", "move", true, true, false, false, false, false, 0, 0, "damage", false, 0, false, false, false, 10, null, null, -1, 0, 256, 0, 0, 0, 0, false],
+        ["safe_switch", "switch", true, true, false, false, false, false, 0, 0, null, false, 0, true, true, false, 0, "ACTIVE", "SAFE", 0, 0, 64, 0, 5, 0, 0, true]
+      ],
+      "seeds": {"team": 2855330310, "battle": 3440986602, "decision": 3234846217},
+      "expected": {
+        "legal_actions": ["losing_stay", "safe_switch"],
+        "allowed_best_set": ["safe_switch"],
+        "forbidden_actions": ["losing_stay"],
+        "required_reasons": [],
+        "repeat_exceptions": [],
+        "coverage_tags": ["emergency_switch"]
+      }
+    },
+    {
+      "fixture_id": "standard_switch_tactical_rejected",
+      "candidates": [
+        ["damage", "move", true, true, false, false, false, false, 0, 0, "damage", false, 25, false, false, false, 0, null, null, 0, 64, 0, 0, 0, 0, 0, false],
+        ["tactical_switch", "switch", true, true, false, false, false, false, 0, 0, null, false, 0, true, true, false, 0, "ACTIVE", "MATCHUP", 0, 0, 0, 40, 0, 0, 0, false]
+      ],
+      "seeds": {"team": 2228538681, "battle": 2028532124, "decision": 3637808071},
+      "expected": {
+        "legal_actions": ["damage", "tactical_switch"],
+        "allowed_best_set": ["damage"],
+        "forbidden_actions": ["tactical_switch"],
+        "required_reasons": [],
+        "repeat_exceptions": [],
+        "coverage_tags": ["non_emergency_tactical_switch_rejected"]
+      }
+    },
+    {
+      "fixture_id": "standard_switch_entry_ko",
+      "candidates": [
+        ["damage", "move", true, true, false, false, false, false, 0, 0, "damage", false, 13, false, false, false, 0, null, null, 0, 32, 0, 0, 0, 0, 0, false],
+        ["entry_ko_switch", "switch", true, false, false, false, false, false, 0, 0, null, false, 0, true, false, false, 5, "ACTIVE", "FRAGILE", 0, 0, 256, 0, 0, 0, 0, true]
+      ],
+      "seeds": {"team": 1721732668, "battle": 3332101391, "decision": 651224616},
+      "expected": {
+        "legal_actions": ["damage", "entry_ko_switch"],
+        "allowed_best_set": ["damage"],
+        "forbidden_actions": ["entry_ko_switch"],
+        "required_reasons": ["ENTRY_KO"],
+        "repeat_exceptions": [],
+        "coverage_tags": ["entry_ko_switch_rejected"]
+      }
+    },
+    {
+      "fixture_id": "standard_switch_loop_guard",
+      "policy_memory": {
+        "decisions": [
+          {"action_id": "switch_b", "kind": "switch", "effect_family": null, "success": true, "public_result": "A_to_B", "switch_from": "A", "switch_to": "B", "forced": false}
+        ]
+      },
+      "candidates": [
+        ["damage", "move", true, true, false, false, false, false, 0, 0, "damage", false, 20, false, false, false, 0, null, null, 0, 52, 0, 0, 0, 0, 0, false],
+        ["return_switch", "switch", true, true, false, false, false, false, 0, 0, null, false, 0, true, true, false, 0, "B", "A", 0, 0, 0, 40, 0, 16, 0, true]
+      ],
+      "seeds": {"team": 583503829, "battle": 4147972378, "decision": 1920768135},
+      "expected": {
+        "legal_actions": ["damage", "return_switch"],
+        "allowed_best_set": ["damage"],
+        "forbidden_actions": ["return_switch"],
+        "required_reasons": [],
+        "repeat_exceptions": [],
+        "coverage_tags": ["switch_loop_memory"]
+      }
+    },
+    {
+      "fixture_id": "standard_unique_best",
+      "candidates": [
+        ["best", "move", true, true, false, false, false, false, 0, 0, "damage", false, 30, false, false, false, 0, null, null, 0, 77, 0, 0, 0, 0, 0, false],
+        ["outside", "move", true, true, false, false, false, false, 0, 0, "damage", false, 21, false, false, false, 0, null, null, 0, 54, 0, 0, 0, 0, 0, false]
+      ],
+      "seeds": {"team": 1407566750, "battle": 1304829451, "decision": 3511617098},
+      "expected": {
+        "legal_actions": ["best", "outside"],
+        "allowed_best_set": ["best"],
+        "forbidden_actions": ["outside"],
+        "required_reasons": [],
+        "repeat_exceptions": [],
+        "coverage_tags": ["unique_best"]
+      }
+    },
+    {
+      "fixture_id": "standard_near_best_inside",
+      "candidates": [
+        ["best", "move", true, true, false, false, false, false, 0, 0, "damage", false, 30, false, false, false, 0, null, null, 0, 77, 0, 0, 0, 0, 0, false],
+        ["inside", "move", true, true, false, false, false, false, 0, 0, "damage", false, 25, false, false, false, 0, null, null, 0, 64, 0, 0, 0, 0, 0, false]
+      ],
+      "seeds": {"team": 1279824070, "battle": 801370364, "decision": 2858634345},
+      "expected": {
+        "legal_actions": ["best", "inside"],
+        "allowed_best_set": ["best", "inside"],
+        "forbidden_actions": [],
+        "required_reasons": [],
+        "repeat_exceptions": [],
+        "coverage_tags": ["near_best_inside_epsilon"]
+      }
+    },
+    {
+      "fixture_id": "standard_near_best_exact",
+      "candidates": [
+        ["best", "move", true, true, false, false, false, false, 0, 0, "damage", false, 30, false, false, false, 0, null, null, 0, 77, 0, 0, 0, 0, 0, false],
+        ["exact_boundary", "move", true, true, false, false, false, false, 0, 0, "damage", false, 22, false, false, false, 0, null, null, 0, 57, 0, 0, 0, 0, 0, false]
+      ],
+      "seeds": {"team": 1668300167, "battle": 2459902084, "decision": 2381340652},
+      "expected": {
+        "legal_actions": ["best", "exact_boundary"],
+        "allowed_best_set": ["best", "exact_boundary"],
+        "forbidden_actions": [],
+        "required_reasons": [],
+        "repeat_exceptions": [],
+        "coverage_tags": ["near_best_exact_epsilon"]
+      }
+    },
+    {
+      "fixture_id": "standard_near_best_outside",
+      "candidates": [
+        ["best", "move", true, true, false, false, false, false, 0, 0, "damage", false, 30, false, false, false, 0, null, null, 0, 77, 0, 0, 0, 0, 0, false],
+        ["just_outside", "move", true, true, false, false, false, false, 0, 0, "damage", false, 21, false, false, false, 0, null, null, 0, 56, 0, 0, 0, 0, 0, false]
+      ],
+      "seeds": {"team": 3866297550, "battle": 2320219187, "decision": 2206094032},
+      "expected": {
+        "legal_actions": ["best", "just_outside"],
+        "allowed_best_set": ["best"],
+        "forbidden_actions": ["just_outside"],
+        "required_reasons": [],
+        "repeat_exceptions": [],
+        "coverage_tags": ["near_best_outside_epsilon"]
+      }
+    },
+    {
+      "fixture_id": "standard_equal_two",
+      "candidates": [
+        ["equal_a", "move", true, true, false, false, false, false, 0, 0, "damage", false, 20, false, false, false, 0, null, null, 0, 52, 0, 0, 0, 0, 0, false],
+        ["equal_b", "move", true, true, false, false, false, false, 0, 0, "damage", false, 20, false, false, false, 0, null, null, 0, 52, 0, 0, 0, 0, 0, false]
+      ],
+      "seeds": {"team": 4223726206, "battle": 628710244, "decision": 1538344410},
+      "expected": {
+        "legal_actions": ["equal_a", "equal_b"],
+        "allowed_best_set": ["equal_a", "equal_b"],
+        "forbidden_actions": [],
+        "required_reasons": [],
+        "repeat_exceptions": [],
+        "coverage_tags": ["standard_two_equal_actions"]
+      }
+    },
+    {
+      "fixture_id": "standard_equal_four",
+      "candidates": [
+        ["equal_a", "move", true, true, false, false, false, false, 0, 0, "damage", false, 20, false, false, false, 0, null, null, 0, 52, 0, 0, 0, 0, 0, false],
+        ["equal_b", "move", true, true, false, false, false, false, 0, 0, "damage", false, 20, false, false, false, 0, null, null, 0, 52, 0, 0, 0, 0, 0, false],
+        ["equal_c", "move", true, true, false, false, false, false, 0, 0, "damage", false, 20, false, false, false, 0, null, null, 0, 52, 0, 0, 0, 0, 0, false],
+        ["equal_d", "move", true, true, false, false, false, false, 0, 0, "damage", false, 20, false, false, false, 0, null, null, 0, 52, 0, 0, 0, 0, 0, false]
+      ],
+      "seeds": {"team": 3674931299, "battle": 1305538280, "decision": 4021793640},
+      "expected": {
+        "legal_actions": ["equal_a", "equal_b", "equal_c", "equal_d"],
+        "allowed_best_set": ["equal_a", "equal_b", "equal_c", "equal_d"],
+        "forbidden_actions": [],
+        "required_reasons": [],
+        "repeat_exceptions": [],
+        "coverage_tags": ["standard_four_equal_actions"]
+      }
+    },
+    {
+      "fixture_id": "standard_hidden_twin_a",
+      "twin_group": "standard_hidden_information",
+      "twin_kind": "hidden_information",
+      "private_state": {
+        "hidden_opponent": {"moves": ["HIDDEN_FIRE"], "item": "ITEM_A", "ability": "ABILITY_A", "stats": "STATS_A"},
+        "submitted_action": "SAME_PUBLICLY_UNKNOWN_ACTION",
+        "future_rng": 111
+      },
+      "candidates": [
+        ["equal_a", "move", true, true, false, false, false, false, 0, 0, "damage", false, 20, false, false, false, 0, null, null, 0, 52, 0, 0, 0, 0, 0, false],
+        ["equal_b", "move", true, true, false, false, false, false, 0, 0, "damage", false, 20, false, false, false, 0, null, null, 0, 52, 0, 0, 0, 0, 0, false]
+      ],
+      "seeds": {"team": 1144767488, "battle": 389838735, "decision": 3178712079},
+      "expected": {
+        "legal_actions": ["equal_a", "equal_b"],
+        "allowed_best_set": ["equal_a", "equal_b"],
+        "forbidden_actions": [],
+        "required_reasons": [],
+        "repeat_exceptions": [],
+        "coverage_tags": ["standard_hidden_information_twin"]
+      }
+    },
+    {
+      "fixture_id": "standard_hidden_twin_b",
+      "twin_group": "standard_hidden_information",
+      "twin_kind": "hidden_information",
+      "private_state": {
+        "hidden_opponent": {"moves": ["HIDDEN_WATER"], "item": "ITEM_B", "ability": "ABILITY_B", "stats": "STATS_B"},
+        "submitted_action": "SAME_PUBLICLY_UNKNOWN_ACTION",
+        "future_rng": 999
+      },
+      "candidates": [
+        ["equal_a", "move", true, true, false, false, false, false, 0, 0, "damage", false, 20, false, false, false, 0, null, null, 0, 52, 0, 0, 0, 0, 0, false],
+        ["equal_b", "move", true, true, false, false, false, false, 0, 0, "damage", false, 20, false, false, false, 0, null, null, 0, 52, 0, 0, 0, 0, 0, false]
+      ],
+      "seeds": {"team": 1448942957, "battle": 981976355, "decision": 1669324206},
+      "expected": {
+        "legal_actions": ["equal_a", "equal_b"],
+        "allowed_best_set": ["equal_a", "equal_b"],
+        "forbidden_actions": [],
+        "required_reasons": [],
+        "repeat_exceptions": [],
+        "coverage_tags": ["standard_hidden_information_twin"]
+      }
+    },
+    {
+      "fixture_id": "standard_submitted_action_a",
+      "twin_group": "submitted_action_standard",
+      "twin_kind": "submitted_action",
+      "private_state": {
+        "hidden_opponent": {"moves": ["HIDDEN_MOVE"], "item": "HIDDEN_ITEM", "ability": "HIDDEN_ABILITY", "stats": "HIDDEN_STATS"},
+        "submitted_action": "PLAYER_ACTION_A",
+        "future_rng": 77
+      },
+      "candidates": [
+        ["equal_a", "move", true, true, false, false, false, false, 0, 0, "damage", false, 20, false, false, false, 0, null, null, 0, 52, 0, 0, 0, 0, 0, false],
+        ["equal_b", "move", true, true, false, false, false, false, 0, 0, "damage", false, 20, false, false, false, 0, null, null, 0, 52, 0, 0, 0, 0, 0, false]
+      ],
+      "seeds": {"team": 3057544617, "battle": 4186142673, "decision": 697633911},
+      "expected": {
+        "legal_actions": ["equal_a", "equal_b"],
+        "allowed_best_set": ["equal_a", "equal_b"],
+        "forbidden_actions": [],
+        "required_reasons": [],
+        "repeat_exceptions": [],
+        "coverage_tags": ["standard_submitted_action_twin"]
+      }
+    },
+    {
+      "fixture_id": "standard_submitted_action_b",
+      "twin_group": "submitted_action_standard",
+      "twin_kind": "submitted_action",
+      "private_state": {
+        "hidden_opponent": {"moves": ["HIDDEN_MOVE"], "item": "HIDDEN_ITEM", "ability": "HIDDEN_ABILITY", "stats": "HIDDEN_STATS"},
+        "submitted_action": "PLAYER_ACTION_B",
+        "future_rng": 77
+      },
+      "candidates": [
+        ["equal_a", "move", true, true, false, false, false, false, 0, 0, "damage", false, 20, false, false, false, 0, null, null, 0, 52, 0, 0, 0, 0, 0, false],
+        ["equal_b", "move", true, true, false, false, false, false, 0, 0, "damage", false, 20, false, false, false, 0, null, null, 0, 52, 0, 0, 0, 0, 0, false]
+      ],
+      "seeds": {"team": 3616566396, "battle": 4117609497, "decision": 2017650210},
+      "expected": {
+        "legal_actions": ["equal_a", "equal_b"],
+        "allowed_best_set": ["equal_a", "equal_b"],
+        "forbidden_actions": [],
+        "required_reasons": [],
+        "repeat_exceptions": [],
+        "coverage_tags": ["standard_submitted_action_twin"]
+      }
+    },
+    {
+      "fixture_id": "standard_all_futile",
+      "candidates": [
+        ["least_cost_futile", "move", true, false, true, false, false, false, 0, 0, "damage", false, 0, false, false, false, 1, null, null, 0, 0, 0, 0, 0, 0, 0, false],
+        ["redundant_status", "move", true, false, false, true, false, true, 0, 0, "major_status", false, 0, false, false, false, 4, null, null, 0, 0, 0, 0, 0, 0, 0, false],
+        ["capped_accuracy", "move", true, false, false, true, false, false, -6, -6, "sand_attack", false, 0, false, false, false, 3, null, null, 0, 0, 0, 0, 0, 0, 0, false]
+      ],
+      "seeds": {"team": 912293571, "battle": 1093235592, "decision": 694411743},
+      "expected": {
+        "legal_actions": ["least_cost_futile", "redundant_status", "capped_accuracy"],
+        "allowed_best_set": ["least_cost_futile"],
+        "forbidden_actions": ["redundant_status", "capped_accuracy"],
+        "required_reasons": ["NO_PRODUCTIVE_ACTION"],
+        "repeat_exceptions": [],
+        "coverage_tags": ["all_futile_standard_fallback"]
+      }
+    },
+    {
+      "fixture_id": "standard_extreme_saturation",
+      "candidates": [
+        ["safe_action", "move", true, true, false, false, false, false, 0, 0, "damage", false, 0, false, false, false, 0, null, null, 0, 0, 0, 0, 0, 0, 0, false],
+        ["extreme_cost", "move", true, true, false, false, false, false, 0, 0, "damage", false, 0, false, false, false, 0, null, null, 0, 0, 0, 40, 2147483647, 2147483647, 2147483647, false]
+      ],
+      "seeds": {"team": 3943650808, "battle": 2961111655, "decision": 1959758260},
+      "expected": {
+        "legal_actions": ["safe_action", "extreme_cost"],
+        "allowed_best_set": ["safe_action"],
+        "forbidden_actions": ["extreme_cost"],
+        "required_reasons": [],
+        "repeat_exceptions": [],
+        "coverage_tags": ["extreme_utility_saturation"]
+      }
+    },
+    {
+      "fixture_id": "standard_forced_replacement",
+      "candidates": [
+        ["forced_switch", "switch", true, true, false, false, false, false, 0, 0, null, false, 0, true, true, true, 0, "FAINTED", "REPLACEMENT", 0, 0, 64, 0, 0, 0, 0, false],
+        ["unavailable_stay", "move", true, true, false, false, false, false, 0, 0, "damage", false, 30, false, false, false, 0, null, null, 0, 77, 0, 0, 0, 0, 0, false]
+      ],
+      "seeds": {"team": 791345172, "battle": 409316381, "decision": 785788004},
+      "expected": {
+        "legal_actions": ["forced_switch", "unavailable_stay"],
+        "allowed_best_set": ["forced_switch"],
+        "forbidden_actions": ["unavailable_stay"],
+        "required_reasons": ["FORCED_ACTION"],
+        "repeat_exceptions": [],
+        "coverage_tags": ["forced_replacement_separate"]
+      }
+    }
+  ]
+}
