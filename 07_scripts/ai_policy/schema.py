@@ -8,6 +8,8 @@ from pathlib import Path
 from typing import Any
 
 from . import (
+    IRONMON_POLICY_CONFIG_ID,
+    IRONMON_SCHEMA_VERSION,
     POLICY_CONFIG_ID,
     SCHEMA_VERSION,
     STANDARD_POLICY_CONFIG_ID,
@@ -42,6 +44,17 @@ STANDARD_ACTION_FIELD_ORDER = ACTION_FIELD_ORDER + (
     "standard_switch_emergency",
 )
 STANDARD_ACTION_FIELDS = frozenset(STANDARD_ACTION_FIELD_ORDER)
+IRONMON_ACTION_FIELD_ORDER = STANDARD_ACTION_FIELD_ORDER + (
+    "tactical_class", "ironmon_switch_emergency", "stay_defensible",
+    "repeat_exception_reason", "public_threat_changed",
+    "progress_after_loop_cost", "regenerator_only", "responses",
+)
+IRONMON_ACTION_FIELDS = frozenset(IRONMON_ACTION_FIELD_ORDER)
+IRONMON_BRANCH_FIELD_ORDER = (
+    "response_id", "net_faints", "opponent_hp_fraction_lost",
+    "own_hp_fraction_lost", "future_gain_undiscounted", "entry_cost",
+)
+IRONMON_BRANCH_FIELDS = frozenset(IRONMON_BRANCH_FIELD_ORDER)
 STANDARD_DOCUMENT_FIELDS = frozenset({
     "schema_version", "source_revision", "policy_config_id", "defaults", "fixtures",
 })
@@ -67,6 +80,30 @@ STANDARD_LOADED_FIELDS = frozenset({
     "schema_version", "fixture_id", "source_revision", "profile", "information_mode",
     "policy_config_id", "public_state", "private_state", "policy_memory", "candidates",
     "seeds", "expected",
+})
+IRONMON_DOCUMENT_FIELDS = frozenset({
+    "schema_version", "source_revision", "policy_config_id", "defaults",
+    "action_defaults", "fixtures",
+})
+IRONMON_DEFAULT_FIELDS = STANDARD_DEFAULT_FIELDS
+IRONMON_FIXTURE_FIELDS = frozenset({
+    "fixture_id", "candidates", "expected", "public_state", "private_state",
+    "policy_memory", "twin_group", "twin_kind",
+})
+IRONMON_LOADED_FIELDS = STANDARD_LOADED_FIELDS
+IRONMON_PUBLIC_STATE_FIELDS = STANDARD_PUBLIC_STATE_FIELDS | {"response_model"}
+IRONMON_RESPONSE_MODEL_FIELDS = frozenset({
+    "revealed_moves", "move_counts", "unknown_move_slots",
+    "opponent_switch_weight",
+})
+IRONMON_TACTICAL_CLASSES = frozenset({
+    "damage", "two_hko", "speed_plan", "setup_plan", "residual",
+    "recovery", "field", "protect", "pivot", "switch",
+    "forced_replacement", "fallback", "unsupported",
+})
+IRONMON_REPEAT_EXCEPTION_REASONS = frozenset({
+    "certified_order_threshold", "ko_or_2hko_threshold", "survival_threshold",
+    "net_positive_recovery", "residual_win_line",
 })
 PUBLIC_ACTIVE_FIELDS = ("species", "level", "hp_fraction", "status", "stat_stages")
 OPPONENT_FIELDS = frozenset(PUBLIC_ACTIVE_FIELDS + ("moves", "item", "ability", "hidden_stats"))
@@ -106,6 +143,26 @@ def _string_list(value: Any, label: str) -> list[str]:
     if len(value) != len(set(value)):
         raise FixtureError(f"{label} contains duplicates")
     return value
+
+
+def _reject_floats(value: Any, label: str = "fixture") -> None:
+    if isinstance(value, float):
+        raise FixtureError(f"{label} contains a floating-point value")
+    if isinstance(value, dict):
+        for key, child in value.items():
+            _reject_floats(child, f"{label}.{key}")
+    elif isinstance(value, list):
+        for index, child in enumerate(value):
+            _reject_floats(child, f"{label}[{index}]")
+
+
+def _deep_overlay(base: Any, override: Any) -> Any:
+    if isinstance(base, dict) and isinstance(override, dict):
+        result = copy.deepcopy(base)
+        for key, value in override.items():
+            result[key] = _deep_overlay(result.get(key), value)
+        return result
+    return copy.deepcopy(override)
 
 
 def validate_action(action: Any, fixture_id: str) -> None:
@@ -179,6 +236,64 @@ def validate_standard_action(action: Any, fixture_id: str) -> None:
             raise FixtureError(f"{fixture_id}: action.{field} must be a non-negative int32")
     if action["kind"] == "move" and action["standard_switch_emergency"]:
         raise FixtureError(f"{fixture_id}: move cannot claim Standard switch emergency")
+
+
+def validate_ironmon_action(action: Any, fixture_id: str) -> None:
+    if not isinstance(action, dict):
+        raise FixtureError(f"{fixture_id}: Ironmon action must be an object")
+    _require_exact_keys(action, IRONMON_ACTION_FIELDS, f"{fixture_id}: Ironmon action")
+    validate_standard_action(
+        {field: action[field] for field in STANDARD_ACTION_FIELD_ORDER}, fixture_id)
+    if action["tactical_class"] not in IRONMON_TACTICAL_CLASSES:
+        raise FixtureError(f"{fixture_id}: unknown Ironmon tactical class")
+    for field in (
+            "ironmon_switch_emergency", "stay_defensible",
+            "public_threat_changed", "regenerator_only"):
+        if not isinstance(action[field], bool):
+            raise FixtureError(f"{fixture_id}: action.{field} must be boolean")
+    if (not isinstance(action["progress_after_loop_cost"], int)
+            or isinstance(action["progress_after_loop_cost"], bool)
+            or not -(2**31) <= action["progress_after_loop_cost"] <= 2**31 - 1):
+        raise FixtureError(
+            f"{fixture_id}: action.progress_after_loop_cost must be signed int32")
+    reason = action["repeat_exception_reason"]
+    if reason is not None and reason not in IRONMON_REPEAT_EXCEPTION_REASONS:
+        raise FixtureError(f"{fixture_id}: unknown repeat exception reason")
+    if action["positive_marginal_exception"] != (reason is not None):
+        raise FixtureError(f"{fixture_id}: repeat exception flag/reason mismatch")
+    if action["kind"] == "move" and action["ironmon_switch_emergency"]:
+        raise FixtureError(f"{fixture_id}: move cannot claim Ironmon switch emergency")
+    if action["kind"] == "switch" and action["stay_defensible"]:
+        raise FixtureError(f"{fixture_id}: switch cannot be a defensible stay")
+    if action["regenerator_only"] and action["kind"] != "switch":
+        raise FixtureError(f"{fixture_id}: Regenerator-only progress requires a switch")
+    branches = action["responses"]
+    if not isinstance(branches, list) or not 1 <= len(branches) <= 8:
+        raise FixtureError(f"{fixture_id}: action.responses must contain 1..8 branches")
+    response_ids: list[str] = []
+    for branch in branches:
+        if not isinstance(branch, dict):
+            raise FixtureError(f"{fixture_id}: response branch must be an object")
+        _require_exact_keys(branch, IRONMON_BRANCH_FIELDS, f"{fixture_id}: response branch")
+        _non_empty_string(branch["response_id"], f"{fixture_id}: response_id")
+        response_ids.append(branch["response_id"])
+        for field in (
+                "net_faints", "opponent_hp_fraction_lost", "own_hp_fraction_lost",
+                "future_gain_undiscounted", "entry_cost"):
+            if not isinstance(branch[field], int) or isinstance(branch[field], bool):
+                raise FixtureError(f"{fixture_id}: response.{field} must be integer")
+        if not -1 <= branch["net_faints"] <= 1:
+            raise FixtureError(f"{fixture_id}: response.net_faints must be in [-1, 1]")
+        if not 0 <= branch["opponent_hp_fraction_lost"] <= 256:
+            raise FixtureError(f"{fixture_id}: response opponent HP must be in [0, 256]")
+        if not -256 <= branch["own_hp_fraction_lost"] <= 256:
+            raise FixtureError(f"{fixture_id}: response own HP must be in [-256, 256]")
+        if not -80 <= branch["future_gain_undiscounted"] <= 80:
+            raise FixtureError(f"{fixture_id}: response future gain must be in [-80, 80]")
+        if not 0 <= branch["entry_cost"] <= 2**31 - 1:
+            raise FixtureError(f"{fixture_id}: response entry cost must be non-negative int32")
+    if len(response_ids) != len(set(response_ids)):
+        raise FixtureError(f"{fixture_id}: duplicate response branch")
 
 
 def _validate_policy_memory(memory: Any, fixture_id: str) -> None:
@@ -295,6 +410,151 @@ def validate_standard_fixture(fixture: Any) -> None:
     for action in candidates:
         validate_standard_action(action, fixture_id)
         action_ids.append(action["id"])
+    if len(action_ids) != len(set(action_ids)):
+        raise FixtureError(f"{fixture_id}: duplicate action ID")
+    ids = set(action_ids)
+    legal = {action["id"] for action in candidates if action["legal"]}
+    expected = fixture["expected"]
+    if legal != set(expected["legal_actions"]):
+        raise FixtureError(f"{fixture_id}: expected legal set contradicts truth")
+    for field in ("allowed_best_set", "forbidden_actions"):
+        if not set(expected[field]) <= ids:
+            raise FixtureError(f"{fixture_id}: expected.{field} references unknown action")
+    if not set(expected["allowed_best_set"]) <= legal or not expected["allowed_best_set"]:
+        raise FixtureError(f"{fixture_id}: allowed best set must be non-empty and legal")
+    if set(expected["allowed_best_set"]) & set(expected["forbidden_actions"]):
+        raise FixtureError(f"{fixture_id}: allowed/forbidden contradiction")
+    forced = [action["id"] for action in candidates if action["legal"] and action["forced"]]
+    if forced and set(expected["allowed_best_set"]) != set(forced):
+        raise FixtureError(f"{fixture_id}: forced actions contradict allowed best set")
+    if ("twin_group" in fixture) != ("twin_kind" in fixture):
+        raise FixtureError(f"{fixture_id}: twin group/kind must appear together")
+    if "twin_group" in fixture:
+        _non_empty_string(fixture["twin_group"], f"{fixture_id}: twin_group")
+        _non_empty_string(fixture["twin_kind"], f"{fixture_id}: twin_kind")
+
+
+def validate_ironmon_fixture(fixture: Any) -> None:
+    if not isinstance(fixture, dict):
+        raise FixtureError("Ironmon fixture must be an object")
+    _reject_floats(fixture, "Ironmon fixture")
+    unknown = sorted(fixture.keys() - (IRONMON_LOADED_FIELDS | {"twin_group", "twin_kind"}))
+    missing = sorted(IRONMON_LOADED_FIELDS - fixture.keys())
+    if missing or unknown:
+        raise FixtureError(f"Ironmon fixture: missing={missing}, unknown={unknown}")
+    fixture_id = fixture["fixture_id"]
+    if fixture["schema_version"] != IRONMON_SCHEMA_VERSION:
+        raise FixtureError(f"{fixture_id}: unknown Ironmon schema")
+    for field in ("fixture_id", "source_revision", "profile", "policy_config_id"):
+        _non_empty_string(fixture[field], f"{fixture_id}: {field}")
+    if fixture["profile"] != "ironmon_smart":
+        raise FixtureError(f"{fixture_id}: Ironmon fixture must use profile ironmon_smart")
+    if fixture["information_mode"] != "fair":
+        raise FixtureError(f"{fixture_id}: Ironmon Smart supports fair information only")
+    if fixture["policy_config_id"] != IRONMON_POLICY_CONFIG_ID:
+        raise FixtureError(f"{fixture_id}: unknown Ironmon policy config")
+    public = fixture["public_state"]
+    private = fixture["private_state"]
+    if not isinstance(public, dict) or not isinstance(private, dict):
+        raise FixtureError(f"{fixture_id}: public/private state must be objects")
+    _require_exact_keys(public, IRONMON_PUBLIC_STATE_FIELDS, f"{fixture_id}: public_state")
+    _require_exact_keys(private, STANDARD_PRIVATE_STATE_FIELDS, f"{fixture_id}: private_state")
+    if public["battle_mode"] != "trainer_singles":
+        raise FixtureError(f"{fixture_id}: Ironmon v1 supports trainer_singles only")
+    if (not isinstance(public["opponent_active"], dict)
+            or not isinstance(public["opponent_bench"], list)
+            or not isinstance(public["own_party"], list)
+            or not public["own_party"]
+            or not isinstance(public["field"], dict)
+            or not isinstance(public["public_history"], list)):
+        raise FixtureError(f"{fixture_id}: malformed public state")
+    public_opponents = [public["opponent_active"], *public["opponent_bench"]]
+    for slot, mon in enumerate(public_opponents):
+        if not isinstance(mon, dict):
+            raise FixtureError(f"{fixture_id}: public opponent {slot} must be an object")
+        _require_exact_keys(mon, STANDARD_PUBLIC_ACTIVE_FIELDS,
+                            f"{fixture_id}: public opponent {slot}")
+        _non_empty_string(mon["species"], f"{fixture_id}: public opponent species")
+        _non_empty_string(mon["status"], f"{fixture_id}: public opponent status")
+        if (not isinstance(mon["hp_fraction"], int) or isinstance(mon["hp_fraction"], bool)
+                or not 0 <= mon["hp_fraction"] <= 256):
+            raise FixtureError(f"{fixture_id}: public opponent HP must be in [0, 256]")
+        if (not isinstance(mon["stat_stages"], dict)
+                or any(not isinstance(value, int) or isinstance(value, bool) or not -6 <= value <= 6
+                       for value in mon["stat_stages"].values())):
+            raise FixtureError(f"{fixture_id}: public stat stages must be integers in [-6, 6]")
+    for slot, mon in enumerate(public["own_party"]):
+        if not isinstance(mon, dict):
+            raise FixtureError(f"{fixture_id}: own party {slot} must be an object")
+        _require_exact_keys(mon, STANDARD_OWN_PARTY_FIELDS, f"{fixture_id}: own party {slot}")
+        _non_empty_string(mon["species"], f"{fixture_id}: own party species")
+        if (not isinstance(mon["hp_fraction"], int) or isinstance(mon["hp_fraction"], bool)
+                or not 0 <= mon["hp_fraction"] <= 256):
+            raise FixtureError(f"{fixture_id}: own HP must be in [0, 256]")
+    if set(public["field"]) - {"weather", "hazards"}:
+        raise FixtureError(f"{fixture_id}: public field contains unknown keys")
+    for event in public["public_history"]:
+        if not isinstance(event, dict) or not set(event) <= PUBLIC_HISTORY_KEYS:
+            raise FixtureError(f"{fixture_id}: public history event has unknown fields")
+    model = public["response_model"]
+    if not isinstance(model, dict):
+        raise FixtureError(f"{fixture_id}: response_model must be an object")
+    _require_exact_keys(model, IRONMON_RESPONSE_MODEL_FIELDS, f"{fixture_id}: response_model")
+    moves = _string_list(model["revealed_moves"], f"{fixture_id}: revealed_moves")
+    if len(moves) > 4 or "UNKNOWN" in moves:
+        raise FixtureError(f"{fixture_id}: revealed moves must be at most four public move IDs")
+    counts = model["move_counts"]
+    if not isinstance(counts, dict) or set(counts) != set(moves):
+        raise FixtureError(f"{fixture_id}: move counts must exactly match revealed moves")
+    if any(not isinstance(value, int) or isinstance(value, bool) or not 0 <= value <= 65535
+           for value in counts.values()):
+        raise FixtureError(f"{fixture_id}: move counts must be integers in [0, 65535]")
+    unknown_slots = model["unknown_move_slots"]
+    if (not isinstance(unknown_slots, int) or isinstance(unknown_slots, bool)
+            or not 0 <= unknown_slots <= 4 or len(moves) + unknown_slots > 4):
+        raise FixtureError(f"{fixture_id}: invalid unknown move slot count")
+    if not moves and unknown_slots == 0:
+        raise FixtureError(f"{fixture_id}: no revealed moves requires UNKNOWN response mass")
+    if (not isinstance(model["opponent_switch_weight"], int)
+            or isinstance(model["opponent_switch_weight"], bool)
+            or model["opponent_switch_weight"] != 0):
+        raise FixtureError(f"{fixture_id}: Ironmon v1 opponent switch weight must be zero")
+    if not isinstance(private["hidden_opponent"], dict):
+        raise FixtureError(f"{fixture_id}: hidden_opponent must be an object")
+    _non_empty_string(private["submitted_action"], f"{fixture_id}: submitted_action")
+    if (not isinstance(private["future_rng"], int) or isinstance(private["future_rng"], bool)
+            or not 0 <= private["future_rng"] <= 0xFFFFFFFF):
+        raise FixtureError(f"{fixture_id}: future_rng must be uint32")
+    serialized_public = json.dumps(public, sort_keys=True)
+    if any(name in serialized_public for name in (
+            "hidden_opponent", "submitted_action", "future_rng")):
+        raise FixtureError(f"{fixture_id}: private field leaked into public state")
+    _validate_policy_memory(fixture["policy_memory"], fixture_id)
+    _require_exact_keys(fixture["seeds"], SEED_FIELDS, f"{fixture_id}: seeds")
+    expected_seeds = {
+        "team": derive_seed(IRONMON_SCHEMA_VERSION, fixture_id, 0, "team"),
+        "battle": derive_seed(IRONMON_SCHEMA_VERSION, fixture_id, 0, "battle"),
+        "decision": derive_seed(IRONMON_SCHEMA_VERSION, fixture_id, 0, "policy"),
+    }
+    if fixture["seeds"] != expected_seeds:
+        raise FixtureError(f"{fixture_id}: seed fields do not match deterministic derivation")
+    if not isinstance(fixture["expected"], dict):
+        raise FixtureError(f"{fixture_id}: expected must be an object")
+    _require_exact_keys(fixture["expected"], EXPECTED_FIELDS, f"{fixture_id}: expected")
+    for field in EXPECTED_FIELDS:
+        _string_list(fixture["expected"][field], f"{fixture_id}: expected.{field}")
+    candidates = fixture["candidates"]
+    if not isinstance(candidates, list) or not 1 <= len(candidates) <= 9:
+        raise FixtureError(f"{fixture_id}: candidates must contain 1..9 root actions")
+    expected_responses = set(moves)
+    if not moves or unknown_slots:
+        expected_responses.add("UNKNOWN")
+    action_ids: list[str] = []
+    for action in candidates:
+        validate_ironmon_action(action, fixture_id)
+        action_ids.append(action["id"])
+        if {branch["response_id"] for branch in action["responses"]} != expected_responses:
+            raise FixtureError(f"{fixture_id}: response branches do not match public model")
     if len(action_ids) != len(set(action_ids)):
         raise FixtureError(f"{fixture_id}: duplicate action ID")
     ids = set(action_ids)
@@ -542,6 +802,89 @@ def _load_standard_document(document: dict) -> list[dict]:
     return _validate_collection(materialized)
 
 
+def _load_ironmon_document(document: dict) -> list[dict]:
+    _reject_floats(document, "Ironmon fixture document")
+    _require_exact_keys(document, IRONMON_DOCUMENT_FIELDS, "Ironmon fixture document")
+    if document["schema_version"] != IRONMON_SCHEMA_VERSION:
+        raise FixtureError("fixture document has unknown Ironmon schema")
+    _non_empty_string(document["source_revision"], "Ironmon source_revision")
+    if document["policy_config_id"] != IRONMON_POLICY_CONFIG_ID:
+        raise FixtureError("fixture document has unknown Ironmon policy config")
+    defaults = document["defaults"]
+    if not isinstance(defaults, dict):
+        raise FixtureError("Ironmon fixture defaults must be an object")
+    _require_exact_keys(defaults, IRONMON_DEFAULT_FIELDS, "Ironmon fixture defaults")
+    action_defaults = document["action_defaults"]
+    if not isinstance(action_defaults, dict):
+        raise FixtureError("Ironmon action defaults must be an object")
+    _require_exact_keys(
+        action_defaults, IRONMON_ACTION_FIELDS - {"id", "responses"},
+        "Ironmon action defaults")
+    raw_fixtures = document["fixtures"]
+    if not isinstance(raw_fixtures, list) or not raw_fixtures:
+        raise FixtureError("Ironmon fixture document must have a non-empty fixture list")
+    materialized: list[dict] = []
+    required = {"fixture_id", "candidates", "expected"}
+    for raw in raw_fixtures:
+        if not isinstance(raw, dict):
+            raise FixtureError("Ironmon fixture row must be an object")
+        missing = sorted(required - raw.keys())
+        unknown = sorted(raw.keys() - IRONMON_FIXTURE_FIELDS)
+        if missing or unknown:
+            raise FixtureError(f"Ironmon fixture row: missing={missing}, unknown={unknown}")
+        fixture_id = raw["fixture_id"]
+        fixture = {
+            "schema_version": IRONMON_SCHEMA_VERSION,
+            "fixture_id": fixture_id,
+            "source_revision": document["source_revision"],
+            "profile": defaults["profile"],
+            "information_mode": defaults["information_mode"],
+            "policy_config_id": document["policy_config_id"],
+            "public_state": _deep_overlay(
+                defaults["public_state"], raw.get("public_state", {})),
+            "private_state": _deep_overlay(
+                defaults["private_state"], raw.get("private_state", {})),
+            "policy_memory": copy.deepcopy(raw.get("policy_memory", defaults["policy_memory"])),
+            "candidates": [],
+            "seeds": {
+                "team": derive_seed(IRONMON_SCHEMA_VERSION, fixture_id, 0, "team"),
+                "battle": derive_seed(IRONMON_SCHEMA_VERSION, fixture_id, 0, "battle"),
+                "decision": derive_seed(IRONMON_SCHEMA_VERSION, fixture_id, 0, "policy"),
+            },
+            "expected": copy.deepcopy(raw["expected"]),
+        }
+        for optional in ("twin_group", "twin_kind"):
+            if optional in raw:
+                fixture[optional] = raw[optional]
+        if not isinstance(raw["candidates"], list):
+            raise FixtureError(f"{fixture_id}: candidates must be a list")
+        for raw_action in raw["candidates"]:
+            if not isinstance(raw_action, dict):
+                raise FixtureError(f"{fixture_id}: Ironmon candidate must be an object")
+            missing_action = sorted({"id", "responses"} - raw_action.keys())
+            unknown_action = sorted(raw_action.keys() - IRONMON_ACTION_FIELDS)
+            if missing_action or unknown_action:
+                raise FixtureError(
+                    f"{fixture_id}: Ironmon candidate missing={missing_action}, "
+                    f"unknown={unknown_action}")
+            action = copy.deepcopy(action_defaults)
+            action.update(copy.deepcopy(raw_action))
+            responses = action["responses"]
+            if not isinstance(responses, list):
+                raise FixtureError(f"{fixture_id}: responses must be a list")
+            for index, branch in enumerate(responses):
+                if isinstance(branch, list):
+                    if len(branch) != len(IRONMON_BRANCH_FIELD_ORDER):
+                        raise FixtureError(
+                            f"{fixture_id}: compact Ironmon response has {len(branch)} "
+                            f"fields, expected {len(IRONMON_BRANCH_FIELD_ORDER)}")
+                    responses[index] = dict(zip(IRONMON_BRANCH_FIELD_ORDER, branch))
+            fixture["candidates"].append(action)
+        validate_ironmon_fixture(fixture)
+        materialized.append(fixture)
+    return _validate_collection(materialized)
+
+
 def load_fixtures(path: Path | str) -> list[dict]:
     try:
         document = json.loads(Path(path).read_text(encoding="utf-8"))
@@ -554,4 +897,6 @@ def load_fixtures(path: Path | str) -> list[dict]:
         return _load_v1_document(document)
     if schema == STANDARD_SCHEMA_VERSION:
         return _load_standard_document(document)
+    if schema == IRONMON_SCHEMA_VERSION:
+        return _load_ironmon_document(document)
     raise FixtureError("fixture document has unknown schema")

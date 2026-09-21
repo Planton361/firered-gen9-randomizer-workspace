@@ -1,0 +1,541 @@
+{
+  "schema_version": "ai-policy-fixture-v3",
+  "source_revision": "6b940684b8af79f5cbfd8ecd03dd443d1900a650",
+  "policy_config_id": "ironmon-smart-host-policy-v1",
+  "defaults": {
+    "profile": "ironmon_smart",
+    "information_mode": "fair",
+    "public_state": {
+      "battle_mode": "trainer_singles",
+      "opponent_active": {"species": "PUBLIC_OPPONENT", "hp_fraction": 256, "status": "none", "stat_stages": {}},
+      "opponent_bench": [],
+      "own_party": [{"species": "OWN_ACTIVE", "hp_fraction": 256}, {"species": "OWN_BENCH", "hp_fraction": 256}],
+      "field": {"weather": "none", "hazards": []},
+      "public_history": [],
+      "response_model": {"revealed_moves": [], "move_counts": {}, "unknown_move_slots": 4, "opponent_switch_weight": 0}
+    },
+    "private_state": {
+      "hidden_opponent": {"moves": ["HIDDEN_MOVE"], "item": "HIDDEN_ITEM", "ability": "HIDDEN_ABILITY", "exact_stats": "HIDDEN_STATS", "unseen_bench": ["HIDDEN_BENCH"]},
+      "submitted_action": "HIDDEN_CURRENT_ACTION",
+      "future_rng": 1
+    },
+    "policy_memory": {"decisions": []}
+  },
+  "action_defaults": {
+    "kind": "move", "legal": true, "productive": true, "known_no_effect": false,
+    "pure_status": false, "robust_safe_ko": false, "redundant_status": false,
+    "stat_stage_before": 0, "stat_stage_after": 0, "effect_family": "damage",
+    "positive_marginal_exception": false, "expected_damage": 0,
+    "switch_legal": false, "entry_survives": false, "forced": false,
+    "fallback_cost": 0, "switch_from": null, "switch_to": null,
+    "net_faints": 0, "opponent_hp_fraction_lost": 0, "own_hp_fraction_lost": 0,
+    "immediate_future_gain": 0, "entry_cost": 0, "repeat_cost": 0,
+    "uncertainty_cost": 0, "standard_switch_emergency": false,
+    "tactical_class": "damage", "ironmon_switch_emergency": false,
+    "stay_defensible": true, "repeat_exception_reason": null,
+    "public_threat_changed": false, "progress_after_loop_cost": 0,
+    "regenerator_only": false
+  },
+  "fixtures": [
+    {
+      "fixture_id": "ironmon_robust_ko",
+      "candidates": [
+        {"id": "robust_ko", "robust_safe_ko": true, "expected_damage": 256, "responses": [["UNKNOWN", 1, 256, 0, 0, 0]]},
+        {"id": "tactical_line", "pure_status": true, "effect_family": "setup", "tactical_class": "setup_plan", "responses": [["UNKNOWN", 0, 0, 0, 80, 0]]}
+      ],
+      "expected": {"legal_actions": ["robust_ko", "tactical_line"], "allowed_best_set": ["robust_ko"], "forbidden_actions": ["tactical_line"], "required_reasons": ["ROBUST_SAFE_KO"], "repeat_exceptions": [], "coverage_tags": ["immediate_robust_ko_vs_tactical", "singleton_zero_draw"]}
+    },
+    {
+      "fixture_id": "ironmon_clean_2hko",
+      "candidates": [
+        {"id": "clean_2hko", "tactical_class": "two_hko", "responses": [["UNKNOWN", 0, 64, 0, 80, 0]]},
+        {"id": "immediate_damage", "expected_damage": 128, "responses": [["UNKNOWN", 0, 128, 0, 0, 0]]}
+      ],
+      "expected": {"legal_actions": ["clean_2hko", "immediate_damage"], "allowed_best_set": ["clean_2hko"], "forbidden_actions": ["immediate_damage"], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["supported_2hko"]}
+    },
+    {
+      "fixture_id": "ironmon_high_roll_false_ko",
+      "candidates": [
+        {"id": "high_roll", "expected_damage": 180, "responses": [["UNKNOWN", 0, 180, 0, 0, 0]]},
+        {"id": "reliable_damage", "expected_damage": 192, "responses": [["UNKNOWN", 0, 192, 0, 0, 0]]}
+      ],
+      "expected": {"legal_actions": ["high_roll", "reliable_damage"], "allowed_best_set": ["reliable_damage"], "forbidden_actions": ["high_roll"], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["high_roll_false_ko"]}
+    },
+    {
+      "fixture_id": "ironmon_second_speed_drop",
+      "policy_memory": {"decisions": [{"action_id": "speed_drop_1", "kind": "move", "effect_family": "string_shot", "success": true, "public_result": "still_slower", "switch_from": null, "switch_to": null, "forced": false}]},
+      "candidates": [
+        {"id": "second_speed_drop", "pure_status": true, "effect_family": "speed_down", "stat_stage_before": 0, "stat_stage_after": -1, "tactical_class": "speed_plan", "responses": [["UNKNOWN", 0, 0, 0, 80, 0]]},
+        {"id": "weak_damage", "expected_damage": 52, "responses": [["UNKNOWN", 0, 52, 0, 0, 0]]}
+      ],
+      "expected": {"legal_actions": ["second_speed_drop", "weak_damage"], "allowed_best_set": ["second_speed_drop"], "forbidden_actions": ["weak_damage"], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["two_speed_drops"]}
+    },
+    {
+      "fixture_id": "ironmon_speed_plan_no_survival",
+      "candidates": [
+        {"id": "speed_drop", "productive": false, "pure_status": true, "effect_family": "speed_down", "stat_stage_before": 0, "stat_stage_after": -1, "tactical_class": "speed_plan", "fallback_cost": 4, "responses": [["UNKNOWN", -1, 0, 256, 0, 0]]},
+        {"id": "damage", "expected_damage": 90, "responses": [["UNKNOWN", 0, 90, 0, 0, 0]]}
+      ],
+      "expected": {"legal_actions": ["speed_drop", "damage"], "allowed_best_set": ["damage"], "forbidden_actions": ["speed_drop"], "required_reasons": ["NO_MARGINAL_VALUE"], "repeat_exceptions": [], "coverage_tags": ["two_speed_drops_no_survival"]}
+    },
+    {
+      "fixture_id": "ironmon_already_faster",
+      "candidates": [
+        {"id": "useless_speed_drop", "productive": false, "pure_status": true, "effect_family": "speed_down", "stat_stage_before": 0, "stat_stage_after": -1, "tactical_class": "speed_plan", "fallback_cost": 3, "responses": [["UNKNOWN", 0, 0, 0, 0, 0]]},
+        {"id": "damage", "expected_damage": 80, "responses": [["UNKNOWN", 0, 80, 0, 0, 0]]}
+      ],
+      "expected": {"legal_actions": ["useless_speed_drop", "damage"], "allowed_best_set": ["damage"], "forbidden_actions": ["useless_speed_drop"], "required_reasons": ["NO_MARGINAL_VALUE"], "repeat_exceptions": [], "coverage_tags": ["already_faster"]}
+    },
+    {
+      "fixture_id": "ironmon_priority_trick_room",
+      "candidates": [
+        {"id": "counterproductive_speed_drop", "productive": false, "pure_status": true, "effect_family": "speed_down", "stat_stage_before": 0, "stat_stage_after": -1, "tactical_class": "speed_plan", "fallback_cost": 3, "responses": [["UNKNOWN", 0, 0, 0, -40, 0]]},
+        {"id": "priority_damage", "expected_damage": 96, "responses": [["UNKNOWN", 0, 96, 0, 0, 0]]}
+      ],
+      "expected": {"legal_actions": ["counterproductive_speed_drop", "priority_damage"], "allowed_best_set": ["priority_damage"], "forbidden_actions": ["counterproductive_speed_drop"], "required_reasons": ["NO_MARGINAL_VALUE"], "repeat_exceptions": [], "coverage_tags": ["priority_trick_room_counterexample"]}
+    },
+    {
+      "fixture_id": "ironmon_setup_3hko_to_2hko",
+      "candidates": [
+        {"id": "threshold_setup", "pure_status": true, "effect_family": "attack_up", "stat_stage_before": 0, "stat_stage_after": 1, "tactical_class": "setup_plan", "responses": [["UNKNOWN", 0, 0, 0, 80, 0]]},
+        {"id": "ordinary_damage", "expected_damage": 64, "responses": [["UNKNOWN", 0, 64, 0, 0, 0]]}
+      ],
+      "expected": {"legal_actions": ["threshold_setup", "ordinary_damage"], "allowed_best_set": ["threshold_setup"], "forbidden_actions": ["ordinary_damage"], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["setup_3hko_to_2hko"]}
+    },
+    {
+      "fixture_id": "ironmon_setup_no_matching_attack",
+      "candidates": [
+        {"id": "unsupported_setup", "productive": false, "pure_status": true, "effect_family": "attack_up", "stat_stage_before": 0, "stat_stage_after": 1, "tactical_class": "setup_plan", "fallback_cost": 3, "responses": [["UNKNOWN", 0, 0, 0, 0, 0]]},
+        {"id": "damage", "expected_damage": 64, "responses": [["UNKNOWN", 0, 64, 0, 0, 0]]}
+      ],
+      "expected": {"legal_actions": ["unsupported_setup", "damage"], "allowed_best_set": ["damage"], "forbidden_actions": ["unsupported_setup"], "required_reasons": ["NO_MARGINAL_VALUE"], "repeat_exceptions": [], "coverage_tags": ["setup_no_matching_attack"]}
+    },
+    {
+      "fixture_id": "ironmon_accuracy_repeat_residual",
+      "policy_memory": {"decisions": [
+        {"action_id": "sand_attack", "kind": "move", "effect_family": "sand_attack", "success": true, "public_result": "accuracy_down", "switch_from": null, "switch_to": null, "forced": false},
+        {"action_id": "smokescreen", "kind": "move", "effect_family": "smokescreen", "success": true, "public_result": "accuracy_down", "switch_from": null, "switch_to": null, "forced": false}
+      ]},
+      "candidates": [
+        {"id": "residual_win_drop", "pure_status": true, "effect_family": "sand_attack", "stat_stage_before": -2, "stat_stage_after": -3, "positive_marginal_exception": true, "repeat_exception_reason": "residual_win_line", "tactical_class": "residual", "responses": [["UNKNOWN", 0, 64, 0, 80, 0]]},
+        {"id": "productive_damage", "expected_damage": 52, "responses": [["UNKNOWN", 0, 52, 0, 0, 0]]}
+      ],
+      "expected": {"legal_actions": ["residual_win_drop", "productive_damage"], "allowed_best_set": ["residual_win_drop"], "forbidden_actions": ["productive_damage"], "required_reasons": [], "repeat_exceptions": ["residual_win_line"], "coverage_tags": ["accuracy_repeat_residual_exception"]}
+    },
+    {
+      "fixture_id": "ironmon_speed_repeat_no_threshold",
+      "policy_memory": {"decisions": [
+        {"action_id": "string_shot", "kind": "move", "effect_family": "string_shot", "success": true, "public_result": "still_slower", "switch_from": null, "switch_to": null, "forced": false},
+        {"action_id": "scary_face", "kind": "move", "effect_family": "speed_down", "success": true, "public_result": "still_slower", "switch_from": null, "switch_to": null, "forced": false}
+      ]},
+      "candidates": [
+        {"id": "repeat_speed_drop", "pure_status": true, "effect_family": "string_shot", "stat_stage_before": -2, "stat_stage_after": -3, "tactical_class": "speed_plan", "responses": [["UNKNOWN", 0, 0, 0, 80, 0]]},
+        {"id": "damage", "expected_damage": 52, "responses": [["UNKNOWN", 0, 52, 0, 0, 0]]}
+      ],
+      "expected": {"legal_actions": ["repeat_speed_drop", "damage"], "allowed_best_set": ["damage"], "forbidden_actions": ["repeat_speed_drop"], "required_reasons": ["HARMFUL_REPEAT"], "repeat_exceptions": [], "coverage_tags": ["speed_repeat_no_exception"]}
+    },
+    {
+      "fixture_id": "ironmon_toxic_residual",
+      "candidates": [
+        {"id": "toxic_line", "pure_status": true, "effect_family": "toxic", "tactical_class": "residual", "responses": [["UNKNOWN", 0, 32, 0, 80, 0]]},
+        {"id": "damage", "expected_damage": 100, "responses": [["UNKNOWN", 0, 100, 0, 0, 0]]}
+      ],
+      "expected": {"legal_actions": ["toxic_line", "damage"], "allowed_best_set": ["toxic_line"], "forbidden_actions": ["damage"], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["toxic_residual_line"]}
+    },
+    {
+      "fixture_id": "ironmon_seed_yawn_duplicates",
+      "candidates": [
+        {"id": "duplicate_seed", "productive": false, "pure_status": true, "redundant_status": true, "effect_family": "leech_seed", "tactical_class": "residual", "fallback_cost": 4, "responses": [["UNKNOWN", 0, 0, 0, 0, 0]]},
+        {"id": "duplicate_yawn", "productive": false, "pure_status": true, "redundant_status": true, "effect_family": "yawn", "tactical_class": "residual", "fallback_cost": 4, "responses": [["UNKNOWN", 0, 0, 0, 0, 0]]},
+        {"id": "damage", "expected_damage": 80, "responses": [["UNKNOWN", 0, 80, 0, 0, 0]]}
+      ],
+      "expected": {"legal_actions": ["duplicate_seed", "duplicate_yawn", "damage"], "allowed_best_set": ["damage"], "forbidden_actions": ["duplicate_seed", "duplicate_yawn"], "required_reasons": ["REDUNDANT_STATUS"], "repeat_exceptions": [], "coverage_tags": ["seed_yawn_duplicate_rejection"]}
+    },
+    {
+      "fixture_id": "ironmon_recovery_residual_race",
+      "candidates": [
+        {"id": "recover_and_survive", "pure_status": true, "effect_family": "recovery", "tactical_class": "recovery", "responses": [["UNKNOWN", 0, 0, -128, 20, 0]]},
+        {"id": "attack", "expected_damage": 128, "responses": [["UNKNOWN", 0, 128, 0, 0, 0]]}
+      ],
+      "expected": {"legal_actions": ["recover_and_survive", "attack"], "allowed_best_set": ["recover_and_survive"], "forbidden_actions": ["attack"], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["recovery_residual_survival_race"]}
+    },
+    {
+      "fixture_id": "ironmon_futile_recovery",
+      "candidates": [
+        {"id": "slow_futile_recovery", "productive": false, "pure_status": true, "effect_family": "recovery", "tactical_class": "recovery", "fallback_cost": 4, "responses": [["UNKNOWN", -1, 0, 256, 0, 0]]},
+        {"id": "damage", "expected_damage": 90, "responses": [["UNKNOWN", 0, 90, 0, 0, 0]]}
+      ],
+      "expected": {"legal_actions": ["slow_futile_recovery", "damage"], "allowed_best_set": ["damage"], "forbidden_actions": ["slow_futile_recovery"], "required_reasons": ["NO_MARGINAL_VALUE"], "repeat_exceptions": [], "coverage_tags": ["futile_recovery"]}
+    },
+    {
+      "fixture_id": "ironmon_supported_field_protect_pivot",
+      "candidates": [
+        {"id": "supported_protect", "pure_status": true, "effect_family": "protect", "tactical_class": "protect", "responses": [["UNKNOWN", 0, 0, 0, 60, 0]]},
+        {"id": "supported_field", "pure_status": true, "effect_family": "field", "tactical_class": "field", "responses": [["UNKNOWN", 0, 0, 0, 20, 0]]},
+        {"id": "supported_pivot", "tactical_class": "pivot", "responses": [["UNKNOWN", 0, 64, 0, 0, 10]]},
+        {"id": "damage", "expected_damage": 64, "responses": [["UNKNOWN", 0, 64, 0, 0, 0]]}
+      ],
+      "expected": {"legal_actions": ["supported_protect", "supported_field", "supported_pivot", "damage"], "allowed_best_set": ["supported_protect"], "forbidden_actions": ["supported_field", "supported_pivot", "damage"], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["supported_field_protect_pivot"]}
+    },
+    {
+      "fixture_id": "ironmon_choice_encore_escape",
+      "candidates": [
+        {"id": "locked_no_effect", "productive": false, "known_no_effect": true, "expected_damage": 0, "fallback_cost": 8, "responses": [["UNKNOWN", 0, 0, 0, 0, 0]]},
+        {"id": "safe_escape", "kind": "switch", "effect_family": null, "switch_legal": true, "entry_survives": true, "switch_from": "ACTIVE", "switch_to": "SAFE", "stay_defensible": false, "tactical_class": "switch", "ironmon_switch_emergency": true, "standard_switch_emergency": true, "responses": [["UNKNOWN", 0, 0, 0, 0, 5]]}
+      ],
+      "expected": {"legal_actions": ["locked_no_effect", "safe_escape"], "allowed_best_set": ["safe_escape"], "forbidden_actions": ["locked_no_effect"], "required_reasons": ["KNOWN_NO_EFFECT"], "repeat_exceptions": [], "coverage_tags": ["choice_encore_safe_switch"]}
+    },
+    {
+      "fixture_id": "ironmon_trapped_lock",
+      "candidates": [
+        {"id": "locked_attack", "expected_damage": 40, "responses": [["UNKNOWN", 0, 40, 0, 0, 0]]},
+        {"id": "trapped_switch", "kind": "switch", "legal": false, "productive": false, "effect_family": null, "switch_legal": false, "entry_survives": true, "switch_from": "ACTIVE", "switch_to": "BENCH", "stay_defensible": false, "tactical_class": "switch", "responses": [["UNKNOWN", 0, 0, 0, 0, 0]]}
+      ],
+      "expected": {"legal_actions": ["locked_attack"], "allowed_best_set": ["locked_attack"], "forbidden_actions": ["trapped_switch"], "required_reasons": ["ILLEGAL_ACTION"], "repeat_exceptions": [], "coverage_tags": ["trapped_lock_no_switch"]}
+    },
+    {
+      "fixture_id": "ironmon_emergency_switch",
+      "candidates": [
+        {"id": "lethal_stay", "expected_damage": 0, "responses": [["UNKNOWN", -1, 0, 256, 0, 0]]},
+        {"id": "emergency_switch", "kind": "switch", "effect_family": null, "switch_legal": true, "entry_survives": true, "switch_from": "ACTIVE", "switch_to": "SAFE", "stay_defensible": false, "tactical_class": "switch", "ironmon_switch_emergency": true, "standard_switch_emergency": true, "responses": [["UNKNOWN", 0, 0, 0, 0, 20]]}
+      ],
+      "expected": {"legal_actions": ["lethal_stay", "emergency_switch"], "allowed_best_set": ["emergency_switch"], "forbidden_actions": ["lethal_stay"], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["emergency_switch"]}
+    },
+    {
+      "fixture_id": "ironmon_switch_advantage_11",
+      "candidates": [
+        {"id": "stay", "responses": [["UNKNOWN", 0, 0, 0, 0, 0]]},
+        {"id": "switch_11", "kind": "switch", "effect_family": null, "switch_legal": true, "entry_survives": true, "switch_from": "A", "switch_to": "B", "stay_defensible": false, "tactical_class": "switch", "responses": [["UNKNOWN", 0, 29, 0, 0, 0]]}
+      ],
+      "expected": {"legal_actions": ["stay", "switch_11"], "allowed_best_set": ["stay"], "forbidden_actions": ["switch_11"], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["switch_advantage_11"]}
+    },
+    {
+      "fixture_id": "ironmon_switch_advantage_12",
+      "candidates": [
+        {"id": "stay", "responses": [["UNKNOWN", 0, 0, 0, 0, 0]]},
+        {"id": "switch_12", "kind": "switch", "effect_family": null, "switch_legal": true, "entry_survives": true, "switch_from": "A", "switch_to": "B", "stay_defensible": false, "tactical_class": "switch", "responses": [["UNKNOWN", 0, 31, 0, 0, 0]]}
+      ],
+      "expected": {"legal_actions": ["stay", "switch_12"], "allowed_best_set": ["stay", "switch_12"], "forbidden_actions": [], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["switch_advantage_12", "deterministic_switch_admission"]}
+    },
+    {
+      "fixture_id": "ironmon_switch_advantage_19",
+      "candidates": [
+        {"id": "stay", "responses": [["UNKNOWN", 0, 0, 0, 0, 0]]},
+        {"id": "switch_19", "kind": "switch", "effect_family": null, "switch_legal": true, "entry_survives": true, "switch_from": "A", "switch_to": "B", "stay_defensible": false, "tactical_class": "switch", "responses": [["UNKNOWN", 0, 49, 0, 0, 0]]}
+      ],
+      "expected": {"legal_actions": ["stay", "switch_19"], "allowed_best_set": ["stay", "switch_19"], "forbidden_actions": [], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["switch_advantage_19"]}
+    },
+    {
+      "fixture_id": "ironmon_switch_advantage_20",
+      "candidates": [
+        {"id": "stay", "responses": [["UNKNOWN", 0, 0, 0, 0, 0]]},
+        {"id": "switch_20", "kind": "switch", "effect_family": null, "switch_legal": true, "entry_survives": true, "switch_from": "A", "switch_to": "B", "stay_defensible": false, "tactical_class": "switch", "responses": [["UNKNOWN", 0, 52, 0, 0, 0]]}
+      ],
+      "expected": {"legal_actions": ["stay", "switch_20"], "allowed_best_set": ["switch_20"], "forbidden_actions": ["stay"], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["switch_advantage_20"]}
+    },
+    {
+      "fixture_id": "ironmon_entry_ko_switch",
+      "candidates": [
+        {"id": "stay", "expected_damage": 40, "responses": [["UNKNOWN", 0, 40, 0, 0, 0]]},
+        {"id": "entry_ko", "kind": "switch", "productive": false, "effect_family": null, "switch_legal": true, "entry_survives": false, "switch_from": "A", "switch_to": "FRAGILE", "stay_defensible": false, "tactical_class": "switch", "fallback_cost": 8, "responses": [["UNKNOWN", -1, 0, 256, 0, 0]]}
+      ],
+      "expected": {"legal_actions": ["stay", "entry_ko"], "allowed_best_set": ["stay"], "forbidden_actions": ["entry_ko"], "required_reasons": ["ENTRY_KO"], "repeat_exceptions": [], "coverage_tags": ["entry_ko_switch_rejection"]}
+    },
+    {
+      "fixture_id": "ironmon_absorber_hidden_a",
+      "twin_group": "ironmon_hidden_state", "twin_kind": "hidden_information",
+      "public_state": {"response_model": {"revealed_moves": ["SURF"], "move_counts": {"SURF": 0}, "unknown_move_slots": 3, "opponent_switch_weight": 0}, "public_history": [{"moves_seen": ["SURF"]}]},
+      "private_state": {"hidden_opponent": {"moves": ["SURF", "HIDDEN_GRASS"], "item": "HIDDEN_ITEM", "ability": "HIDDEN_ABILITY", "exact_stats": "HIDDEN_STATS", "unseen_bench": ["HIDDEN_BENCH"]}},
+      "candidates": [
+        {"id": "stay", "responses": [["SURF", 0, 0, 0, 0, 0], ["UNKNOWN", 0, 0, 0, 0, 0]]},
+        {"id": "revealed_absorber", "kind": "switch", "effect_family": null, "switch_legal": true, "entry_survives": true, "switch_from": "A", "switch_to": "ABSORBER", "stay_defensible": false, "tactical_class": "switch", "responses": [["SURF", 0, 0, 0, 80, 0], ["UNKNOWN", 0, 0, 0, 0, 0]]}
+      ],
+      "expected": {"legal_actions": ["stay", "revealed_absorber"], "allowed_best_set": ["revealed_absorber"], "forbidden_actions": ["stay"], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["revealed_absorber_hidden_twin", "hidden_state_twin", "hidden_move_twin"]}
+    },
+    {
+      "fixture_id": "ironmon_absorber_hidden_b",
+      "twin_group": "ironmon_hidden_state", "twin_kind": "hidden_information",
+      "public_state": {"response_model": {"revealed_moves": ["SURF"], "move_counts": {"SURF": 0}, "unknown_move_slots": 3, "opponent_switch_weight": 0}, "public_history": [{"moves_seen": ["SURF"]}]},
+      "private_state": {"hidden_opponent": {"moves": ["SURF", "HIDDEN_ELECTRIC"], "item": "HIDDEN_ITEM", "ability": "HIDDEN_ABILITY", "exact_stats": "HIDDEN_STATS", "unseen_bench": ["HIDDEN_BENCH"]}},
+      "candidates": [
+        {"id": "stay", "responses": [["SURF", 0, 0, 0, 0, 0], ["UNKNOWN", 0, 0, 0, 0, 0]]},
+        {"id": "revealed_absorber", "kind": "switch", "effect_family": null, "switch_legal": true, "entry_survives": true, "switch_from": "A", "switch_to": "ABSORBER", "stay_defensible": false, "tactical_class": "switch", "responses": [["SURF", 0, 0, 0, 80, 0], ["UNKNOWN", 0, 0, 0, 0, 0]]}
+      ],
+      "expected": {"legal_actions": ["stay", "revealed_absorber"], "allowed_best_set": ["revealed_absorber"], "forbidden_actions": ["stay"], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["revealed_absorber_hidden_twin", "hidden_state_twin", "hidden_move_twin"]}
+    },
+    {
+      "fixture_id": "ironmon_hidden_item_a",
+      "twin_group": "ironmon_hidden_item", "twin_kind": "hidden_information",
+      "private_state": {"hidden_opponent": {"item": "ITEM_A"}},
+      "candidates": [{"id": "equal_a", "responses": [["UNKNOWN", 0, 64, 0, 0, 0]]}, {"id": "equal_b", "responses": [["UNKNOWN", 0, 64, 0, 0, 0]]}],
+      "expected": {"legal_actions": ["equal_a", "equal_b"], "allowed_best_set": ["equal_a", "equal_b"], "forbidden_actions": [], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["hidden_item_twin"]}
+    },
+    {
+      "fixture_id": "ironmon_hidden_item_b",
+      "twin_group": "ironmon_hidden_item", "twin_kind": "hidden_information",
+      "private_state": {"hidden_opponent": {"item": "ITEM_B"}},
+      "candidates": [{"id": "equal_a", "responses": [["UNKNOWN", 0, 64, 0, 0, 0]]}, {"id": "equal_b", "responses": [["UNKNOWN", 0, 64, 0, 0, 0]]}],
+      "expected": {"legal_actions": ["equal_a", "equal_b"], "allowed_best_set": ["equal_a", "equal_b"], "forbidden_actions": [], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["hidden_item_twin"]}
+    },
+    {
+      "fixture_id": "ironmon_hidden_ability_a",
+      "twin_group": "ironmon_hidden_ability", "twin_kind": "hidden_information",
+      "private_state": {"hidden_opponent": {"ability": "ABILITY_A"}},
+      "candidates": [{"id": "equal_a", "responses": [["UNKNOWN", 0, 64, 0, 0, 0]]}, {"id": "equal_b", "responses": [["UNKNOWN", 0, 64, 0, 0, 0]]}],
+      "expected": {"legal_actions": ["equal_a", "equal_b"], "allowed_best_set": ["equal_a", "equal_b"], "forbidden_actions": [], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["hidden_ability_twin"]}
+    },
+    {
+      "fixture_id": "ironmon_hidden_ability_b",
+      "twin_group": "ironmon_hidden_ability", "twin_kind": "hidden_information",
+      "private_state": {"hidden_opponent": {"ability": "ABILITY_B"}},
+      "candidates": [{"id": "equal_a", "responses": [["UNKNOWN", 0, 64, 0, 0, 0]]}, {"id": "equal_b", "responses": [["UNKNOWN", 0, 64, 0, 0, 0]]}],
+      "expected": {"legal_actions": ["equal_a", "equal_b"], "allowed_best_set": ["equal_a", "equal_b"], "forbidden_actions": [], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["hidden_ability_twin"]}
+    },
+    {
+      "fixture_id": "ironmon_hidden_stats_a",
+      "twin_group": "ironmon_hidden_stats", "twin_kind": "hidden_information",
+      "private_state": {"hidden_opponent": {"exact_stats": "STATS_A"}},
+      "candidates": [{"id": "equal_a", "responses": [["UNKNOWN", 0, 64, 0, 0, 0]]}, {"id": "equal_b", "responses": [["UNKNOWN", 0, 64, 0, 0, 0]]}],
+      "expected": {"legal_actions": ["equal_a", "equal_b"], "allowed_best_set": ["equal_a", "equal_b"], "forbidden_actions": [], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["hidden_stats_twin"]}
+    },
+    {
+      "fixture_id": "ironmon_hidden_stats_b",
+      "twin_group": "ironmon_hidden_stats", "twin_kind": "hidden_information",
+      "private_state": {"hidden_opponent": {"exact_stats": "STATS_B"}},
+      "candidates": [{"id": "equal_a", "responses": [["UNKNOWN", 0, 64, 0, 0, 0]]}, {"id": "equal_b", "responses": [["UNKNOWN", 0, 64, 0, 0, 0]]}],
+      "expected": {"legal_actions": ["equal_a", "equal_b"], "allowed_best_set": ["equal_a", "equal_b"], "forbidden_actions": [], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["hidden_stats_twin"]}
+    },
+    {
+      "fixture_id": "ironmon_hidden_bench_a",
+      "twin_group": "ironmon_hidden_bench", "twin_kind": "hidden_information",
+      "private_state": {"hidden_opponent": {"unseen_bench": ["BENCH_A"]}},
+      "candidates": [{"id": "equal_a", "responses": [["UNKNOWN", 0, 64, 0, 0, 0]]}, {"id": "equal_b", "responses": [["UNKNOWN", 0, 64, 0, 0, 0]]}],
+      "expected": {"legal_actions": ["equal_a", "equal_b"], "allowed_best_set": ["equal_a", "equal_b"], "forbidden_actions": [], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["hidden_bench_twin"]}
+    },
+    {
+      "fixture_id": "ironmon_hidden_bench_b",
+      "twin_group": "ironmon_hidden_bench", "twin_kind": "hidden_information",
+      "private_state": {"hidden_opponent": {"unseen_bench": ["BENCH_B"]}},
+      "candidates": [{"id": "equal_a", "responses": [["UNKNOWN", 0, 64, 0, 0, 0]]}, {"id": "equal_b", "responses": [["UNKNOWN", 0, 64, 0, 0, 0]]}],
+      "expected": {"legal_actions": ["equal_a", "equal_b"], "allowed_best_set": ["equal_a", "equal_b"], "forbidden_actions": [], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["hidden_bench_twin"]}
+    },
+    {
+      "fixture_id": "ironmon_forced_revenge",
+      "candidates": [
+        {"id": "safe_revenge_entry", "kind": "switch", "effect_family": null, "switch_legal": true, "entry_survives": true, "forced": true, "switch_from": "FAINTED", "switch_to": "REVENGE", "stay_defensible": false, "tactical_class": "forced_replacement", "responses": [["UNKNOWN", 1, 256, 0, 0, 0]]},
+        {"id": "unavailable_stay", "responses": [["UNKNOWN", 0, 0, 0, 0, 0]]}
+      ],
+      "expected": {"legal_actions": ["safe_revenge_entry", "unavailable_stay"], "allowed_best_set": ["safe_revenge_entry"], "forbidden_actions": ["unavailable_stay"], "required_reasons": ["FORCED_ACTION"], "repeat_exceptions": [], "coverage_tags": ["forced_revenge_replacement"]}
+    },
+    {
+      "fixture_id": "ironmon_voluntary_revenge_takes_hit",
+      "candidates": [
+        {"id": "stay", "expected_damage": 26, "responses": [["UNKNOWN", 0, 26, 0, 0, 0]]},
+        {"id": "bad_voluntary_revenge", "kind": "switch", "effect_family": null, "switch_legal": true, "entry_survives": true, "switch_from": "A", "switch_to": "REVENGE", "stay_defensible": false, "tactical_class": "switch", "responses": [["UNKNOWN", 0, 0, 256, 0, 0]]}
+      ],
+      "expected": {"legal_actions": ["stay", "bad_voluntary_revenge"], "allowed_best_set": ["stay"], "forbidden_actions": ["bad_voluntary_revenge"], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["voluntary_revenge_takes_hit"]}
+    },
+    {
+      "fixture_id": "ironmon_preserve_vs_sacrifice",
+      "candidates": [
+        {"id": "sacrifice_weak_active", "responses": [["UNKNOWN", 0, 0, 51, 0, 0]]},
+        {"id": "lose_healthy_switch", "kind": "switch", "effect_family": null, "switch_legal": true, "entry_survives": true, "switch_from": "WEAK", "switch_to": "HEALTHY", "stay_defensible": false, "tactical_class": "switch", "responses": [["UNKNOWN", 0, 0, 154, 0, 0]]}
+      ],
+      "expected": {"legal_actions": ["sacrifice_weak_active", "lose_healthy_switch"], "allowed_best_set": ["sacrifice_weak_active"], "forbidden_actions": ["lose_healthy_switch"], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["preserve_vs_sacrifice"]}
+    },
+    {
+      "fixture_id": "ironmon_aba_prohibited",
+      "policy_memory": {"decisions": [{"action_id": "a_to_b", "kind": "switch", "effect_family": null, "success": true, "public_result": "voluntary", "switch_from": "A", "switch_to": "B", "forced": false}]},
+      "candidates": [
+        {"id": "stay", "responses": [["UNKNOWN", 0, 0, 0, 0, 0]]},
+        {"id": "return_to_a", "kind": "switch", "effect_family": null, "switch_legal": true, "entry_survives": true, "switch_from": "B", "switch_to": "A", "stay_defensible": false, "tactical_class": "switch", "responses": [["UNKNOWN", 0, 128, 0, 0, 0]]}
+      ],
+      "expected": {"legal_actions": ["stay", "return_to_a"], "allowed_best_set": ["stay"], "forbidden_actions": ["return_to_a"], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["aba_loop_prohibition"]}
+    },
+    {
+      "fixture_id": "ironmon_aba_changed_threat",
+      "policy_memory": {"decisions": [{"action_id": "a_to_b", "kind": "switch", "effect_family": null, "success": true, "public_result": "voluntary", "switch_from": "A", "switch_to": "B", "forced": false}]},
+      "candidates": [
+        {"id": "stay", "responses": [["UNKNOWN", 0, 0, 0, 0, 0]]},
+        {"id": "return_after_change", "kind": "switch", "effect_family": null, "switch_legal": true, "entry_survives": true, "switch_from": "B", "switch_to": "A", "stay_defensible": false, "tactical_class": "switch", "public_threat_changed": true, "responses": [["UNKNOWN", 0, 128, 0, 0, 0]]}
+      ],
+      "expected": {"legal_actions": ["stay", "return_after_change"], "allowed_best_set": ["return_after_change"], "forbidden_actions": ["stay"], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["changed_public_threat_exception"]}
+    },
+    {
+      "fixture_id": "ironmon_consecutive_switch_guard",
+      "policy_memory": {"decisions": [
+        {"action_id": "a_to_b", "kind": "switch", "effect_family": null, "success": true, "public_result": "voluntary", "switch_from": "A", "switch_to": "B", "forced": false},
+        {"action_id": "b_to_c", "kind": "switch", "effect_family": null, "success": true, "public_result": "voluntary", "switch_from": "B", "switch_to": "C", "forced": false}
+      ]},
+      "candidates": [
+        {"id": "stay", "responses": [["UNKNOWN", 0, 0, 0, 0, 0]]},
+        {"id": "third_switch", "kind": "switch", "effect_family": null, "switch_legal": true, "entry_survives": true, "switch_from": "C", "switch_to": "D", "stay_defensible": false, "tactical_class": "switch", "responses": [["UNKNOWN", 0, 128, 0, 0, 0]]}
+      ],
+      "expected": {"legal_actions": ["stay", "third_switch"], "allowed_best_set": ["stay"], "forbidden_actions": ["third_switch"], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["consecutive_switch_guard"]}
+    },
+    {
+      "fixture_id": "ironmon_productive_regenerator_exception",
+      "policy_memory": {"decisions": [
+        {"action_id": "a_to_b", "kind": "switch", "effect_family": null, "success": true, "public_result": "voluntary", "switch_from": "A", "switch_to": "B", "forced": false},
+        {"action_id": "b_to_c", "kind": "switch", "effect_family": null, "success": true, "public_result": "voluntary", "switch_from": "B", "switch_to": "C", "forced": false}
+      ]},
+      "candidates": [
+        {"id": "stay", "responses": [["UNKNOWN", 0, 0, 0, 0, 0]]},
+        {"id": "productive_switch", "kind": "switch", "effect_family": null, "switch_legal": true, "entry_survives": true, "switch_from": "C", "switch_to": "D", "stay_defensible": false, "tactical_class": "switch", "progress_after_loop_cost": 8, "responses": [["UNKNOWN", 0, 52, 0, 0, 0]]}
+      ],
+      "expected": {"legal_actions": ["stay", "productive_switch"], "allowed_best_set": ["productive_switch"], "forbidden_actions": ["stay"], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["productive_regenerator_exception"]}
+    },
+    {
+      "fixture_id": "ironmon_pointless_regenerator_loop",
+      "policy_memory": {"decisions": [
+        {"action_id": "a_to_b", "kind": "switch", "effect_family": null, "success": true, "public_result": "voluntary", "switch_from": "A", "switch_to": "B", "forced": false},
+        {"action_id": "b_to_c", "kind": "switch", "effect_family": null, "success": true, "public_result": "voluntary", "switch_from": "B", "switch_to": "C", "forced": false}
+      ]},
+      "candidates": [
+        {"id": "stay", "responses": [["UNKNOWN", 0, 0, 0, 0, 0]]},
+        {"id": "regenerator_only", "kind": "switch", "effect_family": null, "switch_legal": true, "entry_survives": true, "switch_from": "C", "switch_to": "D", "stay_defensible": false, "tactical_class": "switch", "progress_after_loop_cost": 8, "regenerator_only": true, "responses": [["UNKNOWN", 0, 128, 0, 0, 0]]}
+      ],
+      "expected": {"legal_actions": ["stay", "regenerator_only"], "allowed_best_set": ["stay"], "forbidden_actions": ["regenerator_only"], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["pointless_regenerator_loop"]}
+    },
+    {
+      "fixture_id": "ironmon_response_one_known",
+      "public_state": {"response_model": {"revealed_moves": ["TACKLE"], "move_counts": {"TACKLE": 0}, "unknown_move_slots": 3, "opponent_switch_weight": 0}, "public_history": [{"moves_seen": ["TACKLE"]}]},
+      "candidates": [{"id": "observe", "responses": [["TACKLE", 0, 0, 0, 0, 0], ["UNKNOWN", 0, 0, 0, 0, 0]]}],
+      "expected": {"legal_actions": ["observe"], "allowed_best_set": ["observe"], "forbidden_actions": [], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["revealed_one_plus_unknown", "zero_speculative_switch_prior"]}
+    },
+    {
+      "fixture_id": "ironmon_response_none_known",
+      "candidates": [{"id": "observe", "responses": [["UNKNOWN", 0, 0, 0, 0, 0]]}],
+      "expected": {"legal_actions": ["observe"], "allowed_best_set": ["observe"], "forbidden_actions": [], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["unknown_response_100"]}
+    },
+    {
+      "fixture_id": "ironmon_response_all_revealed",
+      "public_state": {"response_model": {"revealed_moves": ["TACKLE", "GROWL"], "move_counts": {"TACKLE": 0, "GROWL": 0}, "unknown_move_slots": 0, "opponent_switch_weight": 0}, "public_history": [{"moves_seen": ["TACKLE", "GROWL"]}]},
+      "candidates": [{"id": "observe", "responses": [["TACKLE", 0, 0, 0, 0, 0], ["GROWL", 0, 0, 0, 0, 0]]}],
+      "expected": {"legal_actions": ["observe"], "allowed_best_set": ["observe"], "forbidden_actions": [], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["all_revealed_no_unknown"]}
+    },
+    {
+      "fixture_id": "ironmon_response_frequency",
+      "public_state": {"response_model": {"revealed_moves": ["TACKLE", "GROWL"], "move_counts": {"TACKLE": 2, "GROWL": 0}, "unknown_move_slots": 2, "opponent_switch_weight": 0}, "public_history": [{"moves_seen": ["TACKLE", "GROWL"]}]},
+      "candidates": [{"id": "weighted_line", "responses": [["TACKLE", 0, 256, 0, 0, 0], ["GROWL", 0, 0, 0, 0, 0], ["UNKNOWN", 0, 0, 0, 0, 0]]}],
+      "expected": {"legal_actions": ["weighted_line"], "allowed_best_set": ["weighted_line"], "forbidden_actions": [], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["frequency_add_one_smoothing"]}
+    },
+    {
+      "fixture_id": "ironmon_submitted_action_a",
+      "twin_group": "ironmon_submitted_action", "twin_kind": "submitted_action",
+      "private_state": {"submitted_action": "MOVE_A"},
+      "candidates": [
+        {"id": "equal_a", "responses": [["UNKNOWN", 0, 64, 0, 0, 0]]},
+        {"id": "equal_b", "responses": [["UNKNOWN", 0, 64, 0, 0, 0]]}
+      ],
+      "expected": {"legal_actions": ["equal_a", "equal_b"], "allowed_best_set": ["equal_a", "equal_b"], "forbidden_actions": [], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["submitted_action_twin"]}
+    },
+    {
+      "fixture_id": "ironmon_submitted_action_b",
+      "twin_group": "ironmon_submitted_action", "twin_kind": "submitted_action",
+      "private_state": {"submitted_action": "SWITCH_B"},
+      "candidates": [
+        {"id": "equal_a", "responses": [["UNKNOWN", 0, 64, 0, 0, 0]]},
+        {"id": "equal_b", "responses": [["UNKNOWN", 0, 64, 0, 0, 0]]}
+      ],
+      "expected": {"legal_actions": ["equal_a", "equal_b"], "allowed_best_set": ["equal_a", "equal_b"], "forbidden_actions": [], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["submitted_action_twin"]}
+    },
+    {
+      "fixture_id": "ironmon_future_rng_a",
+      "twin_group": "ironmon_future_rng", "twin_kind": "future_rng",
+      "private_state": {"future_rng": 17},
+      "candidates": [
+        {"id": "equal_a", "responses": [["UNKNOWN", 0, 64, 0, 0, 0]]},
+        {"id": "equal_b", "responses": [["UNKNOWN", 0, 64, 0, 0, 0]]}
+      ],
+      "expected": {"legal_actions": ["equal_a", "equal_b"], "allowed_best_set": ["equal_a", "equal_b"], "forbidden_actions": [], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["future_rng_twin"]}
+    },
+    {
+      "fixture_id": "ironmon_future_rng_b",
+      "twin_group": "ironmon_future_rng", "twin_kind": "future_rng",
+      "private_state": {"future_rng": 4294967295},
+      "candidates": [
+        {"id": "equal_a", "responses": [["UNKNOWN", 0, 64, 0, 0, 0]]},
+        {"id": "equal_b", "responses": [["UNKNOWN", 0, 64, 0, 0, 0]]}
+      ],
+      "expected": {"legal_actions": ["equal_a", "equal_b"], "allowed_best_set": ["equal_a", "equal_b"], "forbidden_actions": [], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["future_rng_twin"]}
+    },
+    {
+      "fixture_id": "ironmon_before_reveal",
+      "candidates": [
+        {"id": "revealed_plan", "responses": [["UNKNOWN", 0, 0, 0, 0, 0]]},
+        {"id": "fallback", "responses": [["UNKNOWN", 0, 26, 0, 0, 0]]}
+      ],
+      "expected": {"legal_actions": ["revealed_plan", "fallback"], "allowed_best_set": ["fallback"], "forbidden_actions": ["revealed_plan"], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["public_reveal_transition"]}
+    },
+    {
+      "fixture_id": "ironmon_after_reveal",
+      "public_state": {"response_model": {"revealed_moves": ["TACKLE"], "move_counts": {"TACKLE": 0}, "unknown_move_slots": 3, "opponent_switch_weight": 0}, "public_history": [{"moves_seen": ["TACKLE"]}]},
+      "candidates": [
+        {"id": "revealed_plan", "responses": [["TACKLE", 0, 0, 0, 80, 0], ["UNKNOWN", 0, 0, 0, 0, 0]]},
+        {"id": "fallback", "responses": [["TACKLE", 0, 26, 0, 0, 0], ["UNKNOWN", 0, 26, 0, 0, 0]]}
+      ],
+      "expected": {"legal_actions": ["revealed_plan", "fallback"], "allowed_best_set": ["revealed_plan"], "forbidden_actions": ["fallback"], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["public_reveal_transition"]}
+    },
+    {
+      "fixture_id": "ironmon_epsilon_4",
+      "candidates": [
+        {"id": "best", "responses": [["UNKNOWN", 0, 256, 0, 0, 0]]},
+        {"id": "inside", "responses": [["UNKNOWN", 0, 251, 0, 0, 0]]},
+        {"id": "exact_boundary", "responses": [["UNKNOWN", 0, 246, 0, 0, 0]]},
+        {"id": "outside", "responses": [["UNKNOWN", 0, 244, 0, 0, 0]]}
+      ],
+      "expected": {"legal_actions": ["best", "inside", "exact_boundary", "outside"], "allowed_best_set": ["best", "inside", "exact_boundary"], "forbidden_actions": ["outside"], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["epsilon_4_boundaries"]}
+    },
+    {
+      "fixture_id": "ironmon_equal_four",
+      "candidates": [
+        {"id": "equal_d", "responses": [["UNKNOWN", 0, 64, 0, 0, 0]]},
+        {"id": "equal_b", "responses": [["UNKNOWN", 0, 64, 0, 0, 0]]},
+        {"id": "equal_a", "responses": [["UNKNOWN", 0, 64, 0, 0, 0]]},
+        {"id": "equal_c", "responses": [["UNKNOWN", 0, 64, 0, 0, 0]]}
+      ],
+      "expected": {"legal_actions": ["equal_d", "equal_b", "equal_a", "equal_c"], "allowed_best_set": ["equal_a", "equal_b", "equal_c", "equal_d"], "forbidden_actions": [], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["equal_action_entropy", "stable_action_id_order"]}
+    },
+    {
+      "fixture_id": "ironmon_all_futile",
+      "candidates": [
+        {"id": "least_cost", "productive": false, "known_no_effect": true, "fallback_cost": 1, "tactical_class": "fallback", "responses": [["UNKNOWN", 0, 0, 0, 0, 0]]},
+        {"id": "redundant", "productive": false, "pure_status": true, "redundant_status": true, "effect_family": "major_status", "fallback_cost": 3, "tactical_class": "fallback", "responses": [["UNKNOWN", 0, 0, 0, 0, 0]]}
+      ],
+      "expected": {"legal_actions": ["least_cost", "redundant"], "allowed_best_set": ["least_cost"], "forbidden_actions": ["redundant"], "required_reasons": ["NO_PRODUCTIVE_ACTION"], "repeat_exceptions": [], "coverage_tags": ["all_futile_fallback"]}
+    },
+    {
+      "fixture_id": "ironmon_unsupported_tactical",
+      "candidates": [
+        {"id": "unsupported_effect", "productive": false, "pure_status": true, "effect_family": "unsupported_effect", "fallback_cost": 4, "tactical_class": "unsupported", "responses": [["UNKNOWN", 0, 0, 0, 0, 0]]},
+        {"id": "damage", "expected_damage": 60, "responses": [["UNKNOWN", 0, 60, 0, 0, 0]]}
+      ],
+      "expected": {"legal_actions": ["unsupported_effect", "damage"], "allowed_best_set": ["damage"], "forbidden_actions": ["unsupported_effect"], "required_reasons": ["NO_MARGINAL_VALUE"], "repeat_exceptions": [], "coverage_tags": ["unsupported_tactical_unknown"]}
+    },
+    {
+      "fixture_id": "ironmon_no_useful_bench",
+      "candidates": [
+        {"id": "stay", "expected_damage": 50, "responses": [["UNKNOWN", 0, 50, 0, 0, 0]]},
+        {"id": "useless_bench", "kind": "switch", "productive": false, "effect_family": null, "switch_legal": true, "entry_survives": true, "switch_from": "A", "switch_to": "B", "stay_defensible": false, "tactical_class": "switch", "fallback_cost": 4, "responses": [["UNKNOWN", 0, 0, 0, 0, 0]]}
+      ],
+      "expected": {"legal_actions": ["stay", "useless_bench"], "allowed_best_set": ["stay"], "forbidden_actions": ["useless_bench"], "required_reasons": ["NO_MARGINAL_VALUE"], "repeat_exceptions": [], "coverage_tags": ["no_useful_bench"]}
+    },
+    {
+      "fixture_id": "ironmon_entry_hazard_cost",
+      "candidates": [
+        {"id": "stay", "responses": [["UNKNOWN", 0, 0, 0, 0, 0]]},
+        {"id": "hazard_switch", "kind": "switch", "effect_family": null, "switch_legal": true, "entry_survives": true, "switch_from": "A", "switch_to": "B", "stay_defensible": false, "tactical_class": "switch", "responses": [["UNKNOWN", 0, 128, 0, 0, 39]]}
+      ],
+      "expected": {"legal_actions": ["stay", "hazard_switch"], "allowed_best_set": ["stay"], "forbidden_actions": ["hazard_switch"], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["entry_hazard_cost"]}
+    },
+    {
+      "fixture_id": "ironmon_residual_combination",
+      "candidates": [
+        {"id": "burn_seed_line", "pure_status": true, "effect_family": "residual_combo", "tactical_class": "residual", "responses": [["UNKNOWN", 0, 64, 0, 60, 0]]},
+        {"id": "damage", "expected_damage": 100, "responses": [["UNKNOWN", 0, 100, 0, 0, 0]]}
+      ],
+      "expected": {"legal_actions": ["burn_seed_line", "damage"], "allowed_best_set": ["burn_seed_line"], "forbidden_actions": ["damage"], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["residual_combinations"]}
+    }
+  ]
+}

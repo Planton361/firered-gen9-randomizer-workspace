@@ -6,5 +6,7 @@ not consume ROM, save, emulator, or build artifacts.
 
 SCHEMA_VERSION = "ai-policy-fixture-v1"
 STANDARD_SCHEMA_VERSION = "ai-policy-fixture-v2"
+IRONMON_SCHEMA_VERSION = "ai-policy-fixture-v3"
 POLICY_CONFIG_ID = "host-contract-v1"
 STANDARD_POLICY_CONFIG_ID = "standard-host-policy-v1"
+IRONMON_POLICY_CONFIG_ID = "ironmon-smart-host-policy-v1"

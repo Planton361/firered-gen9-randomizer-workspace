@@ -2,7 +2,8 @@
 
 This standard-library Python package is the synthetic host contract from
 Workspace Issue #508 plus the executable `standard` host policy from Issue
-#510. It does not consume ROM, save, emulator, state, build, or component data.
+#510 and the separate `ironmon_smart` host policy from Issue #515. It does not
+consume ROM, save, emulator, state, build, or component data.
 Candidate facts are source-authored referee declarations; they are not claimed
 to be derived from CFRU mechanics.
 
@@ -13,13 +14,17 @@ python3 07_scripts/ai_policy/cli.py validate
 python3 07_scripts/ai_policy/cli.py run --policy standard --replicate 0
 python3 07_scripts/ai_policy/cli.py replay --fixture-id standard_equal_four --policy standard --replicate 37
 python3 07_scripts/ai_policy/cli.py summarize --policy standard --replicate 0
+python3 07_scripts/ai_policy/cli.py run --policy ironmon_smart --replicate 0
+python3 07_scripts/ai_policy/cli.py replay --fixture-id ironmon_equal_four --policy ironmon_smart --replicate 37
+python3 07_scripts/ai_policy/cli.py summarize --policy ironmon_smart --replicate 0
 python3 -m unittest discover -s 07_scripts/ai_policy/tests -p 'test_*.py'
 ```
 
-`validate` checks both committed fixture documents by default. The `standard`
-policy automatically selects `fixtures/standard_fixtures.json`; the three
-baseline policies automatically select the unchanged #508 corpus. An explicit
-document can be selected before the subcommand, for example:
+`validate` checks all three committed fixture documents by default. The
+`standard` policy automatically selects `fixtures/standard_fixtures.json`,
+`ironmon_smart` selects `fixtures/ironmon_fixtures.json`, and the three baseline
+policies automatically select the unchanged #508 corpus. An explicit document
+can be selected before the subcommand, for example:
 
 ```sh
 python3 07_scripts/ai_policy/cli.py \
@@ -88,3 +93,32 @@ The baselines remain `uniform_legal`, `ko_first_no_switch`, and `first_legal`.
 Their definitions and v1 canonical trace bytes are unchanged. None represents
 current CFRU, Standard gameplay strength, Ironmon Smart, Expert, or a gameplay
 tournament result.
+
+`ai-policy-fixture-v3` is a separate strict Ironmon schema and does not
+reinterpret v1 or v2. It retains the common action floor and Standard utility
+facts for baseline comparison, then adds supported tactical class, switch and
+loop facts plus at most eight response branches per action. The document
+materializes deterministic team/battle/policy seeds from the accepted SHA-256
+derivation; every policy value is integer-only.
+
+The fair response model contains only revealed move IDs and public use counts.
+Add-one smoothed revealed moves receive 75% aggregate weight while any slot is
+unknown, with the remaining 25% assigned to one `UNKNOWN` branch. With no
+revealed move, `UNKNOWN` receives 100%; with all slots revealed it receives no
+weight. Ironmon v1 rejects every nonzero speculative opponent-switch weight.
+
+Each response branch supplies net faints, 1/256 HP deltas, one bounded
+undiscounted future term, and entry cost. The future term is divided by two
+with toward-zero rounding and capped at 40. The policy subtracts the computed
+repeat cost, any A->B->A loop cost, and one quarter of the branch-utility range
+(maximum 25), then saturates the final signed result to int32. There is no
+move-class bonus and no recursive search.
+
+Ironmon compares the best admissible voluntary switch with the best defensible
+stay. Advantages below 12 reject switching; 12 through 19 consume exactly one
+50/50 policy-stream admission draw; 20 or more admit deterministically.
+Emergency and forced replacement paths remain separate. Selection then samples
+stable action IDs within epsilon 4 of the best member of the admitted stay,
+switch, emergency, or forced tactical class. Canonical traces record the public
+response weights, branch utilities, uncertainty/repeat/loop costs, best stay and
+switch, threshold, admission RNG, near-best set, total RNG state, and action.

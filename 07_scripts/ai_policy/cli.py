@@ -19,6 +19,7 @@ from ai_policy.schema import FixtureError, load_fixtures
 FIXTURE_DIRECTORY = Path(__file__).resolve().parent / "fixtures"
 DEFAULT_FIXTURES = FIXTURE_DIRECTORY / "synthetic_fixtures.json"
 STANDARD_FIXTURES = FIXTURE_DIRECTORY / "standard_fixtures.json"
+IRONMON_FIXTURES = FIXTURE_DIRECTORY / "ironmon_fixtures.json"
 
 
 def parser() -> argparse.ArgumentParser:
@@ -47,9 +48,11 @@ def _fixture_paths(args: argparse.Namespace) -> tuple[Path, ...]:
     if args.fixtures is not None:
         return (args.fixtures,)
     if args.command == "validate":
-        return (DEFAULT_FIXTURES, STANDARD_FIXTURES)
+        return (DEFAULT_FIXTURES, STANDARD_FIXTURES, IRONMON_FIXTURES)
     if getattr(args, "policy", None) == "standard":
         return (STANDARD_FIXTURES,)
+    if getattr(args, "policy", None) == "ironmon_smart":
+        return (IRONMON_FIXTURES,)
     return (DEFAULT_FIXTURES,)
 
 
