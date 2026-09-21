@@ -289,17 +289,54 @@ def choose_ironmon(
         min(defensible_stays, key=lambda item: (-scores[item].total, item))
         if defensible_stays else None
     )
-    best_switch_ids = emergencies or voluntary_switches
+    best_stay_score = scores[best_stay_id].total if best_stay_id else None
+    eligible_emergencies = sorted(
+        action_id for action_id in emergencies
+        if best_stay_score is None or scores[action_id].total > best_stay_score
+    )
+    eligible_voluntary_switches = sorted(
+        action_id for action_id in voluntary_switches
+        if best_stay_score is not None
+        and scores[action_id].total - best_stay_score >= SWITCH_RANDOM_MIN
+    )
+    # Emergency replacements take priority only when they independently
+    # dominate staying. Otherwise the normal voluntary comparison remains
+    # available. Forced replacement is kept outside this comparison.
+    best_switch_ids = (
+        eligible_emergencies
+        or voluntary_switches
+        or emergencies
+    )
     best_switch_id = (
         min(best_switch_ids, key=lambda item: (-scores[item].total, item))
         if best_switch_ids else None
     )
-    best_stay_score = scores[best_stay_id].total if best_stay_id else None
     best_switch_score = scores[best_switch_id].total if best_switch_id else None
     advantage = (
         best_switch_score - best_stay_score
         if best_switch_score is not None and best_stay_score is not None else None
     )
+    threshold_eligible_switches = set(
+        forced + eligible_emergencies + eligible_voluntary_switches)
+    switch_candidates = []
+    for action_id in sorted(set(emergencies + voluntary_switches)):
+        action = by_id[action_id]
+        candidate_advantage = (
+            scores[action_id].total - best_stay_score
+            if best_stay_score is not None else None
+        )
+        switch_candidates.append({
+            "action_id": action_id,
+            "advantage": candidate_advantage,
+            "clears_minimum_advantage": (
+                candidate_advantage is not None
+                and candidate_advantage >= SWITCH_RANDOM_MIN),
+            "emergency": action["ironmon_switch_emergency"],
+            "score": scores[action_id].total,
+            "strictly_dominates_stay": (
+                None if candidate_advantage is None else candidate_advantage > 0),
+            "threshold_eligible": action_id in threshold_eligible_switches,
+        })
     admission_pre = rng.state
     admission_draws_before = rng.draw_count
     admission_result: bool | None = None
@@ -309,10 +346,8 @@ def choose_ironmon(
         threshold_class = "forced_replacement"
         admitted_class = "forced_replacement"
         admission_result = True
-    elif emergencies:
-        if best_stay_score is not None and best_switch_score <= best_stay_score:
-            raise ValueError("emergency switch must strictly dominate defensible staying")
-        pool = emergencies
+    elif eligible_emergencies:
+        pool = eligible_emergencies
         threshold_class = "emergency"
         admitted_class = "emergency_switch"
         admission_result = True
@@ -332,9 +367,9 @@ def choose_ironmon(
         admission_result = bool(rng.bounded(2))
         threshold_class = "random_12_19"
         admitted_class = "voluntary_switch" if admission_result else "stay"
-        pool = voluntary_switches if admission_result else defensible_stays
+        pool = eligible_voluntary_switches if admission_result else defensible_stays
     elif advantage >= SWITCH_DETERMINISTIC_MIN:
-        pool = voluntary_switches
+        pool = eligible_voluntary_switches
         threshold_class = "at_least_20"
         admitted_class = "voluntary_switch"
         admission_result = True
@@ -344,11 +379,21 @@ def choose_ironmon(
     admission_post = rng.state
     admission_draw_count = rng.draw_count - admission_draws_before
     selected, best_score, near_best = _select_near_best(pool, scores, rng)
+    selected_candidate_advantage = (
+        scores[selected].total - best_stay_score
+        if by_id[selected]["kind"] == "switch" and best_stay_score is not None
+        else None
+    )
     diagnostics = []
     for action_id in sorted(by_id):
         action = by_id[action_id]
         score = scores[action_id]
         repeat_reason = action["repeat_exception_reason"]
+        switch_advantage = (
+            score.total - best_stay_score
+            if action["kind"] == "switch" and best_stay_score is not None
+            else None
+        )
         diagnostics.append({
             "action_id": action_id,
             "admission_reasons": sorted(excluded.get(action_id, [])),
@@ -369,6 +414,8 @@ def choose_ironmon(
             "repeat_exception_margin": repeat_evidence[action_id]["exception_margin"],
             "repeat_exception_reason": repeat_reason,
             "selected": action_id == selected,
+            "switch_advantage": switch_advantage,
+            "switch_threshold_eligible": action_id in threshold_eligible_switches,
             "tactical_class": action["tactical_class"],
             "uncertainty_cost": score.uncertainty_cost,
             "utility_total": score.total,
@@ -382,11 +429,15 @@ def choose_ironmon(
             "pre_state": admission_pre,
         },
         "admitted_tactical_class": admitted_class,
+        "admitted_replacement_pool": (
+            sorted(pool) if admitted_class != "stay" else []),
         "advantage": advantage,
         "best_stay": None if best_stay_id is None else {
             "action_id": best_stay_id, "score": best_stay_score},
         "best_switch": None if best_switch_id is None else {
             "action_id": best_switch_id, "score": best_switch_score},
+        "selected_candidate_advantage": selected_candidate_advantage,
+        "switch_candidates": switch_candidates,
         "threshold_class": threshold_class,
     }
     return IronmonDecision(

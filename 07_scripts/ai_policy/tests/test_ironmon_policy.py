@@ -16,7 +16,7 @@ from ai_policy import IRONMON_SCHEMA_VERSION
 from ai_policy.ironmon import ironmon_utility, response_distribution
 from ai_policy.metrics import summarize
 from ai_policy.observation import project_observation
-from ai_policy.runner import replay_matches, run_all, run_fixture, twin_mismatches
+from ai_policy.runner import RunResult, replay_matches, run_all, run_fixture, twin_mismatches
 from ai_policy.schema import FixtureError, load_fixtures, validate_ironmon_fixture
 from ai_policy.standard import INT32_MIN
 
@@ -54,6 +54,7 @@ MANDATORY_TAGS = {
     "all_futile_fallback", "unsupported_tactical_unknown",
     "supported_field_protect_pivot", "no_useful_bench", "entry_hazard_cost",
     "residual_combinations", "singleton_zero_draw", "stable_action_id_order",
+    "switch_candidate_min_advantage",
 }
 
 
@@ -80,12 +81,13 @@ class IronmonPolicyTests(unittest.TestCase):
         return path
 
     def test_v3_corpus_and_machine_checked_mandatory_inventory(self):
-        self.assertEqual(59, len(self.fixtures))
+        self.assertEqual(63, len(self.fixtures))
         self.assertTrue(all(fixture["schema_version"] == IRONMON_SCHEMA_VERSION
                             for fixture in self.fixtures))
         tags = {
             tag for fixture in self.fixtures for tag in fixture["expected"]["coverage_tags"]
         }
+        self.assertEqual(58, len(tags))
         self.assertEqual(set(), MANDATORY_TAGS - tags)
 
     def test_every_fixture_obeys_allowed_forbidden_and_reason_oracles(self):
@@ -239,6 +241,113 @@ class IronmonPolicyTests(unittest.TestCase):
         self.assertTrue(all(replay_matches(fixture, "ironmon_smart", index)
                             for index in range(1024)))
 
+    def test_each_switch_candidate_clears_its_own_admission_threshold(self):
+        random_cases = {
+            "ironmon_switch_candidates_12_8": {
+                "switch_12": (12, True), "switch_8": (8, False)},
+            "ironmon_switch_candidates_13_9": {
+                "switch_13": (13, True), "switch_9": (9, False)},
+        }
+        for fixture_id, expected in random_cases.items():
+            with self.subTest(fixture=fixture_id):
+                results = [self.result(fixture_id, index) for index in range(8)]
+                admitted = next(
+                    result for result in results
+                    if result.trace["ironmon_policy"]["switch_arbitration"][
+                        "admission_rng"]["admitted"]
+                )
+                arbitration = admitted.trace["ironmon_policy"]["switch_arbitration"]
+                candidates = {
+                    row["action_id"]: (row["advantage"], row["threshold_eligible"])
+                    for row in arbitration["switch_candidates"]
+                }
+                self.assertEqual(expected, candidates)
+                self.assertEqual("random_12_19", arbitration["threshold_class"])
+                self.assertEqual(1, arbitration["admission_rng"]["draw_count"])
+                self.assertEqual(
+                    [next(action_id for action_id, facts in expected.items() if facts[1])],
+                    arbitration["admitted_replacement_pool"],
+                )
+                self.assertNotIn(
+                    next(action_id for action_id, facts in expected.items() if not facts[1]),
+                    admitted.trace["ironmon_policy"]["near_best_action_ids"],
+                )
+
+        deterministic = self.result("ironmon_switch_candidates_20_16")
+        arbitration = deterministic.trace["ironmon_policy"]["switch_arbitration"]
+        self.assertEqual("at_least_20", arbitration["threshold_class"])
+        self.assertEqual(0, arbitration["admission_rng"]["draw_count"])
+        self.assertEqual(
+            ["switch_16", "switch_20"], arbitration["admitted_replacement_pool"])
+        self.assertEqual(
+            ["switch_16", "switch_20"],
+            deterministic.trace["ironmon_policy"]["near_best_action_ids"],
+        )
+        self.assertEqual(
+            {"switch_16": (16, True), "switch_20": (20, True)},
+            {
+                row["action_id"]: (row["advantage"], row["threshold_eligible"])
+                for row in arbitration["switch_candidates"]
+            },
+        )
+
+        emergency = self.result("ironmon_emergency_candidates_dominance")
+        arbitration = emergency.trace["ironmon_policy"]["switch_arbitration"]
+        self.assertEqual("emergency", arbitration["threshold_class"])
+        self.assertEqual(["emergency_dominating"],
+                         arbitration["admitted_replacement_pool"])
+        self.assertEqual(["emergency_dominating"],
+                         emergency.trace["ironmon_policy"]["near_best_action_ids"])
+        self.assertEqual("emergency_dominating", emergency.trace["selected_action_id"])
+        self.assertEqual(
+            {
+                "emergency_dominating": (4, True),
+                "emergency_nondominating": (0, False),
+            },
+            {
+                row["action_id"]: (row["advantage"], row["threshold_eligible"])
+                for row in arbitration["switch_candidates"]
+            },
+        )
+
+    def test_multi_switch_admission_1024_seed_replay_and_rng_order(self):
+        fixture = self.by_id["ironmon_switch_candidates_12_8"]
+        results = [run_fixture(fixture, "ironmon_smart", index) for index in range(1024)]
+        admissions = [
+            result.trace["ironmon_policy"]["switch_arbitration"]["admission_rng"]
+            for result in results
+        ]
+        counts = Counter(row["admitted"] for row in admissions)
+        probabilities = [counts[value] / 1024 for value in (False, True)]
+        entropy = -sum(p * math.log2(p) for p in probabilities)
+        selected = Counter(result.trace["selected_action_id"] for result in results)
+        self.assertGreaterEqual(entropy, 0.95)
+        self.assertTrue(all(abs(p - 0.5) <= 0.05 for p in probabilities))
+        self.assertTrue(all(row["draw_count"] == 1 for row in admissions))
+        self.assertTrue(all(result.trace["policy_rng"]["draw_count"] == 1
+                            for result in results))
+        self.assertEqual(0, selected["switch_8"])
+        self.assertEqual({"stay", "switch_12"}, set(selected))
+        self.assertTrue(all(replay_matches(fixture, "ironmon_smart", index)
+                            for index in range(1024)))
+
+    def test_switch_threshold_metric_detects_selected_candidate_own_advantage(self):
+        fixture = self.by_id["ironmon_switch_candidates_12_8"]
+        results = [run_fixture(fixture, "ironmon_smart", index) for index in range(16)]
+        result = next(
+            candidate for candidate in results
+            if candidate.trace[
+                "ironmon_policy"]["switch_arbitration"]["admission_rng"]["admitted"]
+        )
+        trace = copy.deepcopy(result.trace)
+        trace["selected_action_id"] = "switch_8"
+        tampered = RunResult(
+            result.fixture, result.observation, trace, result.line, result.replicate)
+        metric = summarize([tampered])["ironmon_switch_threshold_violation"]
+        self.assertEqual(1, metric["count"])
+        self.assertEqual(1, metric["below_threshold_selected_count"])
+        self.assertEqual(8, metric["below_threshold_selections"][0]["advantage"])
+
     def test_switch_loop_and_progress_guards(self):
         aba = self.diagnostic("ironmon_aba_prohibited", "return_to_a")
         self.assertEqual(16, aba["loop_cost"])
@@ -354,12 +463,13 @@ class IronmonPolicyTests(unittest.TestCase):
         }, trace["ironmon_policy"].keys())
         self.assertLessEqual({
             "best_stay", "best_switch", "advantage", "threshold_class",
-            "admission_rng", "admitted_tactical_class",
+            "admission_rng", "admitted_tactical_class", "admitted_replacement_pool",
+            "selected_candidate_advantage", "switch_candidates",
         }, trace["ironmon_policy"]["switch_arbitration"].keys())
 
     def test_summary_meets_acceptance_gates(self):
         metrics = summarize(run_all(self.fixtures, "ironmon_smart"))
-        self.assertEqual(59, metrics["decision_count"])
+        self.assertEqual(63, metrics["decision_count"])
         for key in (
                 "illegal_action", "invalid_no_effect", "missed_robust_ko",
                 "redundant_status", "harmful_repeated_status",
@@ -391,7 +501,7 @@ class IronmonPolicyTests(unittest.TestCase):
         stream = b"".join(
             result.line for result in run_all(self.fixtures, "ironmon_smart"))
         self.assertEqual(
-            "94a01c4620c712ee62fc315f72bfd076ebf84ee48753f5fd60124d00d5935e07",
+            "0a637d0bc42cb2e37701bbfa33677ae95c878b1f9a67ec55a60e15a4fbdb85d7",
             hashlib.sha256(stream).hexdigest(),
         )
 
@@ -434,7 +544,7 @@ class IronmonPolicyTests(unittest.TestCase):
                 metrics = summarize(run_all(self.fixtures, policy_id))
                 self.assertEqual(0, metrics["illegal_action"]["count"])
                 self.assertEqual(0, metrics["deterministic_replay_mismatch_count"])
-                self.assertEqual(59, metrics["chosen_utility"]["count"])
+                self.assertEqual(63, metrics["chosen_utility"]["count"])
 
     def test_cli_supports_v3_validate_run_replay_and_summarize(self):
         commands = (
@@ -452,7 +562,7 @@ class IronmonPolicyTests(unittest.TestCase):
                 )
                 self.assertEqual("", completed.stderr)
                 lines = completed.stdout.splitlines()
-                expected_lines = 59 if arguments[0] == "run" else 1
+                expected_lines = 63 if arguments[0] == "run" else 1
                 self.assertEqual(expected_lines, len(lines))
                 self.assertTrue(all(isinstance(json.loads(line), dict) for line in lines))
 

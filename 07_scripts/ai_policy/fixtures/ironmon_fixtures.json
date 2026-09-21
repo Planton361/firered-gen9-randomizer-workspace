@@ -234,6 +234,42 @@
       "expected": {"legal_actions": ["stay", "switch_20"], "allowed_best_set": ["switch_20"], "forbidden_actions": ["stay"], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["switch_advantage_20"]}
     },
     {
+      "fixture_id": "ironmon_switch_candidates_12_8",
+      "candidates": [
+        {"id": "stay", "responses": [["UNKNOWN", 0, 0, 0, 0, 0]]},
+        {"id": "switch_12", "kind": "switch", "effect_family": null, "switch_legal": true, "entry_survives": true, "switch_from": "A", "switch_to": "B", "stay_defensible": false, "tactical_class": "switch", "responses": [["UNKNOWN", 0, 31, 0, 0, 0]]},
+        {"id": "switch_8", "kind": "switch", "effect_family": null, "switch_legal": true, "entry_survives": true, "switch_from": "A", "switch_to": "C", "stay_defensible": false, "tactical_class": "switch", "responses": [["UNKNOWN", 0, 21, 0, 0, 0]]}
+      ],
+      "expected": {"legal_actions": ["stay", "switch_12", "switch_8"], "allowed_best_set": ["stay", "switch_12"], "forbidden_actions": ["switch_8"], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["switch_candidate_min_advantage"]}
+    },
+    {
+      "fixture_id": "ironmon_switch_candidates_13_9",
+      "candidates": [
+        {"id": "stay", "responses": [["UNKNOWN", 0, 0, 0, 0, 0]]},
+        {"id": "switch_13", "kind": "switch", "effect_family": null, "switch_legal": true, "entry_survives": true, "switch_from": "A", "switch_to": "B", "stay_defensible": false, "tactical_class": "switch", "responses": [["UNKNOWN", 0, 34, 0, 0, 0]]},
+        {"id": "switch_9", "kind": "switch", "effect_family": null, "switch_legal": true, "entry_survives": true, "switch_from": "A", "switch_to": "C", "stay_defensible": false, "tactical_class": "switch", "responses": [["UNKNOWN", 0, 24, 0, 0, 0]]}
+      ],
+      "expected": {"legal_actions": ["stay", "switch_13", "switch_9"], "allowed_best_set": ["stay", "switch_13"], "forbidden_actions": ["switch_9"], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["switch_candidate_min_advantage"]}
+    },
+    {
+      "fixture_id": "ironmon_switch_candidates_20_16",
+      "candidates": [
+        {"id": "stay", "responses": [["UNKNOWN", 0, 0, 0, 0, 0]]},
+        {"id": "switch_20", "kind": "switch", "effect_family": null, "switch_legal": true, "entry_survives": true, "switch_from": "A", "switch_to": "B", "stay_defensible": false, "tactical_class": "switch", "responses": [["UNKNOWN", 0, 52, 0, 0, 0]]},
+        {"id": "switch_16", "kind": "switch", "effect_family": null, "switch_legal": true, "entry_survives": true, "switch_from": "A", "switch_to": "C", "stay_defensible": false, "tactical_class": "switch", "responses": [["UNKNOWN", 0, 41, 0, 0, 0]]}
+      ],
+      "expected": {"legal_actions": ["stay", "switch_20", "switch_16"], "allowed_best_set": ["switch_20", "switch_16"], "forbidden_actions": ["stay"], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["switch_candidate_min_advantage"]}
+    },
+    {
+      "fixture_id": "ironmon_emergency_candidates_dominance",
+      "candidates": [
+        {"id": "stay", "responses": [["UNKNOWN", 0, 0, 0, 0, 0]]},
+        {"id": "emergency_dominating", "kind": "switch", "effect_family": null, "switch_legal": true, "entry_survives": true, "switch_from": "A", "switch_to": "B", "stay_defensible": false, "tactical_class": "switch", "ironmon_switch_emergency": true, "standard_switch_emergency": true, "responses": [["UNKNOWN", 0, 11, 0, 0, 0]]},
+        {"id": "emergency_nondominating", "kind": "switch", "effect_family": null, "switch_legal": true, "entry_survives": true, "switch_from": "A", "switch_to": "C", "stay_defensible": false, "tactical_class": "switch", "ironmon_switch_emergency": true, "standard_switch_emergency": true, "responses": [["UNKNOWN", 0, 0, 0, 0, 0]]}
+      ],
+      "expected": {"legal_actions": ["stay", "emergency_dominating", "emergency_nondominating"], "allowed_best_set": ["emergency_dominating"], "forbidden_actions": ["stay", "emergency_nondominating"], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["switch_candidate_min_advantage"]}
+    },
+    {
       "fixture_id": "ironmon_entry_ko_switch",
       "candidates": [
         {"id": "stay", "expected_damage": 40, "responses": [["UNKNOWN", 0, 40, 0, 0, 0]]},

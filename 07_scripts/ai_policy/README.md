@@ -114,11 +114,14 @@ repeat cost, any A->B->A loop cost, and one quarter of the branch-utility range
 (maximum 25), then saturates the final signed result to int32. There is no
 move-class bonus and no recursive search.
 
-Ironmon compares the best admissible voluntary switch with the best defensible
-stay. Advantages below 12 reject switching; 12 through 19 consume exactly one
-50/50 policy-stream admission draw; 20 or more admit deterministically.
-Emergency and forced replacement paths remain separate. Selection then samples
-stable action IDs within epsilon 4 of the best member of the admitted stay,
-switch, emergency, or forced tactical class. Canonical traces record the public
-response weights, branch utilities, uncertainty/repeat/loop costs, best stay and
-switch, threshold, admission RNG, near-best set, total RNG state, and action.
+Ironmon compares each admissible voluntary switch with the best defensible stay
+and excludes every candidate whose own advantage is below 12. The best
+remaining advantage from 12 through 19 consumes exactly one 50/50 policy-stream
+admission draw; 20 or more admits deterministically. Emergency candidates must
+each strictly dominate a defensible stay; forced replacement remains separate.
+Selection then samples stable action IDs within epsilon 4 of the best member of
+the admitted stay or individually eligible replacement class. Canonical traces
+record the public response weights, branch utilities, uncertainty/repeat/loop
+costs, best stay, each switch score/advantage and eligibility, the admitted
+replacement pool, threshold, admission RNG, near-best set, total RNG state, and
+action.

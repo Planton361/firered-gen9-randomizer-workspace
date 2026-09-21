@@ -6,7 +6,7 @@ import statistics
 
 from . import IRONMON_SCHEMA_VERSION, STANDARD_SCHEMA_VERSION
 from .floor import apply_common_floor
-from .ironmon import ironmon_utility, response_distribution
+from .ironmon import SWITCH_RANDOM_MIN, ironmon_utility, response_distribution
 from .memory import consecutive_successes, detects_aba_switch_loop
 from .runner import RunResult, replay_matches, twin_mismatches
 from .standard import STANDARD_EPSILON, standard_admitted_ids, utility
@@ -37,6 +37,8 @@ def summarize(results: list[RunResult]) -> dict:
     non_emergency_switch_opportunities = 0
     ironmon_switch_threshold_violations = 0
     ironmon_switch_threshold_opportunities = 0
+    ironmon_below_threshold_selections: list[dict] = []
+    ironmon_switch_candidate_audits: list[dict] = []
     ironmon_loop_guard_violations = 0
     ironmon_loop_guard_opportunities = 0
     response_no_known = 0
@@ -167,17 +169,49 @@ def summarize(results: list[RunResult]) -> dict:
                 ironmon_loop_guard_opportunities += bool(guarded)
                 ironmon_loop_guard_violations += any(
                     diagnostic["selected"] for diagnostic in guarded)
-                if arbitration["best_switch"] is not None and arbitration["best_stay"] is not None:
+                if arbitration["switch_candidates"] and arbitration["best_stay"] is not None:
                     ironmon_switch_threshold_opportunities += 1
                     selected_switch = selected["kind"] == "switch"
                     threshold = arbitration["threshold_class"]
                     admitted = arbitration["admission_rng"]["admitted"]
-                    violation = (
+                    selected_advantage = (
+                        utility_rows[selected["id"]].total
+                        - arbitration["best_stay"]["score"]
+                        if selected_switch else None
+                    )
+                    selected_below_minimum = bool(
+                        selected_switch
+                        and not selected["forced"]
+                        and not selected["ironmon_switch_emergency"]
+                        and selected_advantage < SWITCH_RANDOM_MIN
+                    )
+                    selected_nondominating_emergency = bool(
+                        selected_switch
+                        and selected["ironmon_switch_emergency"]
+                        and selected_advantage <= 0
+                    )
+                    class_violation = (
                         (threshold == "below_12" and selected_switch)
                         or (threshold == "at_least_20" and not selected_switch)
                         or (threshold == "random_12_19" and selected_switch != admitted)
                     )
+                    violation = bool(
+                        class_violation
+                        or selected_below_minimum
+                        or selected_nondominating_emergency)
                     ironmon_switch_threshold_violations += violation
+                    if selected_below_minimum:
+                        ironmon_below_threshold_selections.append({
+                            "action_id": selected["id"],
+                            "advantage": selected_advantage,
+                            "fixture_id": result.fixture["fixture_id"],
+                        })
+                    ironmon_switch_candidate_audits.append({
+                        "candidates": arbitration["switch_candidates"],
+                        "fixture_id": result.fixture["fixture_id"],
+                        "selected_action_id": selected["id"],
+                        "selected_candidate_advantage": selected_advantage,
+                    })
             elif result.trace["policy_id"] == "standard":
                 eligible = [
                     diagnostic["action_id"]
@@ -264,6 +298,10 @@ def summarize(results: list[RunResult]) -> dict:
             "rate": _rate(non_emergency_switches, non_emergency_switch_opportunities),
         },
         "ironmon_switch_threshold_violation": {
+            "below_threshold_selected_count": len(
+                ironmon_below_threshold_selections),
+            "below_threshold_selections": ironmon_below_threshold_selections,
+            "candidate_audits": ironmon_switch_candidate_audits,
             "count": ironmon_switch_threshold_violations,
             "opportunities": ironmon_switch_threshold_opportunities,
             "rate": _rate(
