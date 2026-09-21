@@ -1,32 +1,39 @@
-# Trainer AI host contract harness
+# Trainer AI deterministic host harness
 
-This standard-library Python package is a deterministic executable specification
-for Workspace Issue #508. It operates only on the committed synthetic JSON
-fixtures. It is not a Trainer AI implementation, CFRU adapter, battle simulator,
-or tournament runner.
+This standard-library Python package is the synthetic host contract from
+Workspace Issue #508 plus the executable `standard` host policy from Issue
+#510. It does not consume ROM, save, emulator, state, build, or component data.
+Candidate facts are source-authored referee declarations; they are not claimed
+to be derived from CFRU mechanics.
 
 Run from the Workspace root:
 
 ```sh
 python3 07_scripts/ai_policy/cli.py validate
-python3 07_scripts/ai_policy/cli.py run --policy uniform_legal --replicate 0
-python3 07_scripts/ai_policy/cli.py replay --fixture-id equal_four --replicate 37
-python3 07_scripts/ai_policy/cli.py summarize --policy uniform_legal --replicate 0
+python3 07_scripts/ai_policy/cli.py run --policy standard --replicate 0
+python3 07_scripts/ai_policy/cli.py replay --fixture-id standard_equal_four --policy standard --replicate 37
+python3 07_scripts/ai_policy/cli.py summarize --policy standard --replicate 0
 python3 -m unittest discover -s 07_scripts/ai_policy/tests -p 'test_*.py'
 ```
 
-All commands are offline and require no ROM, save, emulator, component build,
-network service, or third-party Python package. `run` writes canonical JSONL to
-standard output; redirect it only to an untracked location when a retained local
-copy is needed.
+`validate` checks both committed fixture documents by default. The `standard`
+policy automatically selects `fixtures/standard_fixtures.json`; the three
+baseline policies automatically select the unchanged #508 corpus. An explicit
+document can be selected before the subcommand, for example:
 
-The fixture document and every fixture use schema `ai-policy-fixture-v1`.
-Validation requires the complete logical contract and rejects unknown fields,
-schemas, policy configuration, malformed action rows, contradictory truth and
-expectations, duplicate IDs, inconsistent reveal history, and seed values that
-do not match the required SHA-256 derivation.
+```sh
+python3 07_scripts/ai_policy/cli.py \
+  --fixtures 07_scripts/ai_policy/fixtures/standard_fixtures.json \
+  summarize --policy ko_first_no_switch --replicate 0
+```
 
-Actions use this fixed compact row order in the JSON corpus:
+`run` writes canonical JSONL to standard output. Retained local output belongs
+only in an untracked location.
+
+## Fixture versions
+
+`ai-policy-fixture-v1` remains byte-for-byte unchanged. Its compact action row
+order is:
 
 ```text
 id, kind, legal, productive, known_no_effect, pure_status,
@@ -35,16 +42,49 @@ effect_family, positive_marginal_exception, expected_damage,
 switch_legal, entry_survives, forced, fallback_cost, switch_from, switch_to
 ```
 
-The loader expands each validated row into a named mapping before projection or
-policy execution. Changing this order requires a new schema version.
+`ai-policy-fixture-v2` is a separate, strict Standard schema. It appends only
+the synthetic facts required by the accepted policy:
 
-Fair observations contain only declared public state and explicitly revealed
-opponent facts. Challenge observations may contain the authorized full opposing
-team, moves/PP, items, abilities and stats. Neither mode projects the submitted
-player action or future RNG. Candidate action facts are synthetic referee
-declarations; hidden-state twins verify that fair results do not change when
-private truth changes.
+```text
+net_faints, opponent_hp_fraction_lost, own_hp_fraction_lost,
+immediate_future_gain, entry_cost, repeat_cost, uncertainty_cost,
+standard_switch_emergency
+```
 
-The baselines are `uniform_legal`, `ko_first_no_switch`, and `first_legal`.
-Their names are literal: none represents current CFRU, Standard, Ironmon Smart,
-Expert, or production battle behavior.
+HP fractions use an exact 1/256 scale. `own_hp_fraction_lost` may be negative
+to represent certified net recovery. `net_faints` is bounded to `[-1, 1]`, HP
+terms to their documented fixed-point ranges, future gain to `[-40, 40]`, and
+costs to non-negative signed-int32 values. Non-integers and out-of-range inputs
+fail closed. The exact utility expression is evaluated within signed-int64
+bounds and its final result is clamped once to signed int32; the trace records
+whether saturation occurred. Division rounds toward zero.
+
+The Standard utility is:
+
+```text
+U = 200 * net_faints
+  + trunc_toward_zero(100 * (opponent_HP_fraction_lost
+                              - own_HP_fraction_lost) / 256)
+  + immediate_future_gain
+  - entry_cost
+  - repeat_cost
+  - uncertainty_cost
+```
+
+The policy performs no recursive search. It applies the #508 hard floor and
+robust-KO dominance first, admits only forced replacements or referee-certified
+emergency/dominance voluntary switches, applies the A->B->A loop guard, then
+scores. It uniformly samples the stable-ID set `score >= best_score - 8` with
+the existing rejection-sampled xorshift32 policy stream. A singleton consumes
+zero draws; a multi-action set performs one bounded selection, whose raw draw
+count (including any rejection) is recorded.
+
+Canonical Standard traces add total utility, every utility term, saturation,
+admission/exclusion reasons, eligibility, near-best membership, selection, and
+policy RNG pre/post/draw state. Private truth, submitted actions, and future RNG
+are never projected into the fair observation.
+
+The baselines remain `uniform_legal`, `ko_first_no_switch`, and `first_legal`.
+Their definitions and v1 canonical trace bytes are unchanged. None represents
+current CFRU, Standard gameplay strength, Ironmon Smart, Expert, or a gameplay
+tournament result.

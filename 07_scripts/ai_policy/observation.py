@@ -5,6 +5,8 @@ from __future__ import annotations
 import hashlib
 import json
 
+from . import STANDARD_SCHEMA_VERSION
+
 
 PUBLIC_ACTIVE_FIELDS = ("species", "level", "hp_fraction", "status", "stat_stages")
 CHALLENGE_FIELDS = ("species", "level", "hp_fraction", "status", "stat_stages",
@@ -15,6 +17,11 @@ ACTION_VISIBLE_FIELDS = (
     "effect_family", "positive_marginal_exception", "expected_damage",
     "switch_legal", "entry_survives", "forced", "fallback_cost",
     "switch_from", "switch_to",
+)
+STANDARD_ACTION_VISIBLE_FIELDS = ACTION_VISIBLE_FIELDS + (
+    "net_faints", "opponent_hp_fraction_lost", "own_hp_fraction_lost",
+    "immediate_future_gain", "entry_cost", "repeat_cost", "uncertainty_cost",
+    "standard_switch_emergency",
 )
 
 
@@ -46,6 +53,21 @@ def _fair_bench(bench: list[dict], mask: dict) -> list[dict]:
 
 
 def project_observation(fixture: dict) -> dict:
+    if fixture["schema_version"] == STANDARD_SCHEMA_VERSION:
+        public = fixture["public_state"]
+        return {
+            "schema_version": fixture["schema_version"],
+            "battle_mode": public["battle_mode"],
+            "field": public["field"],
+            "public_history": public["public_history"],
+            "own_party": public["own_party"],
+            "opponent_active": public["opponent_active"],
+            "opponent_bench": public["opponent_bench"],
+            "candidates": [
+                {field: action[field] for field in STANDARD_ACTION_VISIBLE_FIELDS}
+                for action in fixture["candidates"]
+            ],
+        }
     truth = fixture["truth_state"]
     mode = fixture["information_mode"]
     if mode == "challenge":
