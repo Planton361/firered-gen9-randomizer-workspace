@@ -5,7 +5,7 @@ from __future__ import annotations
 import hashlib
 import json
 
-from . import STANDARD_SCHEMA_VERSION
+from . import IRONMON_SCHEMA_VERSION, STANDARD_SCHEMA_VERSION
 
 
 PUBLIC_ACTIVE_FIELDS = ("species", "level", "hp_fraction", "status", "stat_stages")
@@ -22,6 +22,11 @@ STANDARD_ACTION_VISIBLE_FIELDS = ACTION_VISIBLE_FIELDS + (
     "net_faints", "opponent_hp_fraction_lost", "own_hp_fraction_lost",
     "immediate_future_gain", "entry_cost", "repeat_cost", "uncertainty_cost",
     "standard_switch_emergency",
+)
+IRONMON_ACTION_VISIBLE_FIELDS = STANDARD_ACTION_VISIBLE_FIELDS + (
+    "tactical_class", "ironmon_switch_emergency", "stay_defensible",
+    "repeat_exception_reason", "public_threat_changed",
+    "progress_after_loop_cost", "regenerator_only", "responses",
 )
 
 
@@ -53,6 +58,22 @@ def _fair_bench(bench: list[dict], mask: dict) -> list[dict]:
 
 
 def project_observation(fixture: dict) -> dict:
+    if fixture["schema_version"] == IRONMON_SCHEMA_VERSION:
+        public = fixture["public_state"]
+        return {
+            "schema_version": fixture["schema_version"],
+            "battle_mode": public["battle_mode"],
+            "field": public["field"],
+            "public_history": public["public_history"],
+            "own_party": public["own_party"],
+            "opponent_active": public["opponent_active"],
+            "opponent_bench": public["opponent_bench"],
+            "response_model": public["response_model"],
+            "candidates": [
+                {field: action[field] for field in IRONMON_ACTION_VISIBLE_FIELDS}
+                for action in fixture["candidates"]
+            ],
+        }
     if fixture["schema_version"] == STANDARD_SCHEMA_VERSION:
         public = fixture["public_state"]
         return {
