@@ -1,0 +1,377 @@
+{
+  "schema_version": "ai-policy-fixture-v1",
+  "fixtures": [
+    {
+      "schema_version": "ai-policy-fixture-v1", "fixture_id": "ko_vs_accuracy",
+      "source_revision": "1e58214fd6364a0a76082328c52a4a40d3f41268", "mechanics_config_id": "mechanics-light-v1",
+      "battle_mode": "trainer_singles", "power_profile": "fixed_synthetic", "scaling_profile": "off", "rules_profile": "synthetic",
+      "truth_state": {
+        "opponent_active": {"species": "TARGET", "level": 20, "hp_fraction": 20, "status": "none", "stat_stages": {"accuracy": 0, "speed": 0}, "moves": [{"id": "TACKLE", "pp": 35}], "item": "NONE", "ability": "NONE", "hidden_stats": {"ivs": 12, "evs": 0, "nature": "neutral", "speed": 30}},
+        "opponent_bench": [], "field": {"weather": "none"}, "submitted_action": "TACKLE", "future_rng": 123,
+        "actions": [
+          ["ko_move", "move", true, true, false, false, true, false, 0, 0, "damage", false, 100, false, false, false, 0, null, null],
+          ["sand_attack", "move", true, true, false, true, false, false, 0, -1, "sand_attack", false, 0, false, false, false, 20, null, null],
+          ["smokescreen", "move", true, true, false, true, false, false, 0, -1, "smokescreen", false, 0, false, false, false, 20, null, null]
+        ]
+      },
+      "public_history": [], "observation_mask": {"revealed_moves": [], "item_revealed": false, "ability_revealed": false, "revealed_bench_slots": []},
+      "own_party": [{"species": "ACTOR", "hp_fraction": 100}], "policy_memory": {"decisions": []},
+      "profile": "contract_reference", "information_mode": "fair", "policy_config_id": "host-contract-v1",
+      "seeds": {"team": 3480121376, "battle": 368916648, "decision": 77631893},
+      "expected": {"legal_actions": ["ko_move", "sand_attack", "smokescreen"], "allowed_best_set": ["ko_move"], "forbidden_actions": ["sand_attack", "smokescreen"], "required_reasons": ["ROBUST_SAFE_KO"], "repeat_exceptions": [], "coverage_tags": ["guaranteed_ko_vs_accuracy"]}
+    },
+    {
+      "schema_version": "ai-policy-fixture-v1", "fixture_id": "accuracy_neutral",
+      "source_revision": "1e58214fd6364a0a76082328c52a4a40d3f41268", "mechanics_config_id": "mechanics-light-v1",
+      "battle_mode": "trainer_singles", "power_profile": "fixed_synthetic", "scaling_profile": "off", "rules_profile": "synthetic",
+      "truth_state": {
+        "opponent_active": {"species": "TARGET", "level": 20, "hp_fraction": 100, "status": "none", "stat_stages": {"accuracy": 0, "speed": 0}, "moves": [{"id": "HIT", "pp": 20}], "item": "NONE", "ability": "NONE", "hidden_stats": {"ivs": 0, "evs": 0, "nature": "neutral", "speed": 40}},
+        "opponent_bench": [], "field": {"weather": "none"}, "submitted_action": "HIT", "future_rng": 1,
+        "actions": [
+          ["sand_attack", "move", true, true, false, true, false, false, 0, -1, "sand_attack", false, 0, false, false, false, 0, null, null],
+          ["wait", "move", true, false, false, false, false, false, 0, 0, "wait", false, 0, false, false, false, 20, null, null]
+        ]
+      },
+      "public_history": [], "observation_mask": {"revealed_moves": ["HIT"], "item_revealed": false, "ability_revealed": false, "revealed_bench_slots": []},
+      "own_party": [{"species": "ACTOR", "hp_fraction": 100}], "policy_memory": {"decisions": []},
+      "profile": "contract_reference", "information_mode": "fair", "policy_config_id": "host-contract-v1",
+      "seeds": {"team": 3698660084, "battle": 2940962418, "decision": 2368570023},
+      "expected": {"legal_actions": ["sand_attack", "wait"], "allowed_best_set": ["sand_attack"], "forbidden_actions": ["wait"], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["accuracy_neutral"]}
+    },
+    {
+      "schema_version": "ai-policy-fixture-v1", "fixture_id": "accuracy_lowered",
+      "source_revision": "1e58214fd6364a0a76082328c52a4a40d3f41268", "mechanics_config_id": "mechanics-light-v1",
+      "battle_mode": "trainer_singles", "power_profile": "fixed_synthetic", "scaling_profile": "off", "rules_profile": "synthetic",
+      "truth_state": {
+        "opponent_active": {"species": "TARGET", "level": 20, "hp_fraction": 100, "status": "none", "stat_stages": {"accuracy": -1, "speed": 0}, "moves": [{"id": "HIT", "pp": 20}], "item": "NONE", "ability": "NONE", "hidden_stats": {"ivs": 0, "evs": 0, "nature": "neutral", "speed": 40}},
+        "opponent_bench": [], "field": {"weather": "none"}, "submitted_action": "HIT", "future_rng": 2,
+        "actions": [
+          ["smokescreen", "move", true, true, false, true, false, false, -1, -2, "smokescreen", true, 0, false, false, false, 0, null, null],
+          ["wait", "move", true, false, false, false, false, false, 0, 0, "wait", false, 0, false, false, false, 20, null, null]
+        ]
+      },
+      "public_history": [{"turn": 1, "effect": "accuracy_down"}], "observation_mask": {"revealed_moves": ["HIT"], "item_revealed": false, "ability_revealed": false, "revealed_bench_slots": []},
+      "own_party": [{"species": "ACTOR", "hp_fraction": 100}], "policy_memory": {"decisions": [{"action_id": "sand_attack", "kind": "move", "effect_family": "sand_attack", "success": true, "public_result": "accuracy_-1", "switch_from": null, "switch_to": null, "forced": false}]},
+      "profile": "contract_reference", "information_mode": "fair", "policy_config_id": "host-contract-v1",
+      "seeds": {"team": 617469939, "battle": 2150631549, "decision": 3476617412},
+      "expected": {"legal_actions": ["smokescreen", "wait"], "allowed_best_set": ["smokescreen"], "forbidden_actions": ["wait"], "required_reasons": [], "repeat_exceptions": ["smokescreen"], "coverage_tags": ["accuracy_lowered"]}
+    },
+    {
+      "schema_version": "ai-policy-fixture-v1", "fixture_id": "accuracy_capped",
+      "source_revision": "1e58214fd6364a0a76082328c52a4a40d3f41268", "mechanics_config_id": "mechanics-light-v1",
+      "battle_mode": "trainer_singles", "power_profile": "fixed_synthetic", "scaling_profile": "off", "rules_profile": "synthetic",
+      "truth_state": {
+        "opponent_active": {"species": "TARGET", "level": 20, "hp_fraction": 50, "status": "none", "stat_stages": {"accuracy": -6, "speed": 0}, "moves": [{"id": "HIT", "pp": 20}], "item": "NONE", "ability": "NONE", "hidden_stats": {"ivs": 0, "evs": 0, "nature": "neutral", "speed": 40}},
+        "opponent_bench": [], "field": {"weather": "none"}, "submitted_action": "HIT", "future_rng": 3,
+        "actions": [
+          ["damage", "move", true, true, false, false, false, false, 0, 0, "damage", false, 35, false, false, false, 0, null, null],
+          ["sand_attack", "move", true, false, false, true, false, false, -6, -6, "sand_attack", false, 0, false, false, false, 10, null, null]
+        ]
+      },
+      "public_history": [], "observation_mask": {"revealed_moves": ["HIT"], "item_revealed": false, "ability_revealed": false, "revealed_bench_slots": []},
+      "own_party": [{"species": "ACTOR", "hp_fraction": 100}], "policy_memory": {"decisions": []},
+      "profile": "contract_reference", "information_mode": "fair", "policy_config_id": "host-contract-v1",
+      "seeds": {"team": 3758480625, "battle": 1827078965, "decision": 694255140},
+      "expected": {"legal_actions": ["damage", "sand_attack"], "allowed_best_set": ["damage"], "forbidden_actions": ["sand_attack"], "required_reasons": ["CAPPED_STAT_CHANGE"], "repeat_exceptions": [], "coverage_tags": ["accuracy_capped"]}
+    },
+    {
+      "schema_version": "ai-policy-fixture-v1", "fixture_id": "string_shot_flip",
+      "source_revision": "1e58214fd6364a0a76082328c52a4a40d3f41268", "mechanics_config_id": "mechanics-light-v1",
+      "battle_mode": "trainer_singles", "power_profile": "fixed_synthetic", "scaling_profile": "off", "rules_profile": "synthetic",
+      "truth_state": {
+        "opponent_active": {"species": "FASTER_TARGET", "level": 20, "hp_fraction": 100, "status": "none", "stat_stages": {"accuracy": 0, "speed": 0}, "moves": [{"id": "HIT", "pp": 20}], "item": "NONE", "ability": "NONE", "hidden_stats": {"ivs": 0, "evs": 0, "nature": "neutral", "speed": 51}},
+        "opponent_bench": [], "field": {"weather": "none"}, "submitted_action": "HIT", "future_rng": 4,
+        "actions": [
+          ["string_shot", "move", true, true, false, true, false, false, 0, -1, "string_shot", false, 0, false, false, false, 0, null, null],
+          ["weak_attack", "move", true, false, false, false, false, false, 0, 0, "damage", false, 5, false, false, false, 10, null, null]
+        ]
+      },
+      "public_history": [{"inference": "one_speed_drop_flips_order"}], "observation_mask": {"revealed_moves": ["HIT"], "item_revealed": false, "ability_revealed": false, "revealed_bench_slots": []},
+      "own_party": [{"species": "ACTOR", "hp_fraction": 100, "speed_interval": [50, 50]}], "policy_memory": {"decisions": []},
+      "profile": "contract_reference", "information_mode": "fair", "policy_config_id": "host-contract-v1",
+      "seeds": {"team": 3509279116, "battle": 125651966, "decision": 1060342653},
+      "expected": {"legal_actions": ["string_shot", "weak_attack"], "allowed_best_set": ["string_shot"], "forbidden_actions": ["weak_attack"], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["string_shot_order_flip"]}
+    },
+    {
+      "schema_version": "ai-policy-fixture-v1", "fixture_id": "string_shot_no_benefit",
+      "source_revision": "1e58214fd6364a0a76082328c52a4a40d3f41268", "mechanics_config_id": "mechanics-light-v1",
+      "battle_mode": "trainer_singles", "power_profile": "fixed_synthetic", "scaling_profile": "off", "rules_profile": "synthetic",
+      "truth_state": {
+        "opponent_active": {"species": "SLOW_TARGET", "level": 20, "hp_fraction": 100, "status": "none", "stat_stages": {"accuracy": 0, "speed": -1}, "moves": [{"id": "HIT", "pp": 20}], "item": "NONE", "ability": "NONE", "hidden_stats": {"ivs": 0, "evs": 0, "nature": "neutral", "speed": 30}},
+        "opponent_bench": [], "field": {"weather": "none"}, "submitted_action": "HIT", "future_rng": 5,
+        "actions": [
+          ["damage", "move", true, true, false, false, false, false, 0, 0, "damage", false, 30, false, false, false, 0, null, null],
+          ["string_shot", "move", true, false, false, true, false, false, -1, -2, "string_shot", false, 0, false, false, false, 10, null, null]
+        ]
+      },
+      "public_history": [{"inference": "actor_already_faster"}], "observation_mask": {"revealed_moves": ["HIT"], "item_revealed": false, "ability_revealed": false, "revealed_bench_slots": []},
+      "own_party": [{"species": "ACTOR", "hp_fraction": 100, "speed_interval": [50, 50]}], "policy_memory": {"decisions": []},
+      "profile": "contract_reference", "information_mode": "fair", "policy_config_id": "host-contract-v1",
+      "seeds": {"team": 2435486001, "battle": 1203002907, "decision": 2606538619},
+      "expected": {"legal_actions": ["damage", "string_shot"], "allowed_best_set": ["damage"], "forbidden_actions": ["string_shot"], "required_reasons": ["NO_MARGINAL_VALUE"], "repeat_exceptions": [], "coverage_tags": ["string_shot_no_order_benefit"]}
+    },
+    {
+      "schema_version": "ai-policy-fixture-v1", "fixture_id": "redundant_status",
+      "source_revision": "1e58214fd6364a0a76082328c52a4a40d3f41268", "mechanics_config_id": "mechanics-light-v1",
+      "battle_mode": "trainer_singles", "power_profile": "fixed_synthetic", "scaling_profile": "off", "rules_profile": "synthetic",
+      "truth_state": {
+        "opponent_active": {"species": "POISONED_TARGET", "level": 20, "hp_fraction": 80, "status": "poison", "stat_stages": {"accuracy": 0, "speed": 0}, "moves": [{"id": "HIT", "pp": 20}], "item": "NONE", "ability": "NONE", "hidden_stats": {"ivs": 0, "evs": 0, "nature": "neutral", "speed": 40}},
+        "opponent_bench": [], "field": {"weather": "none"}, "submitted_action": "HIT", "future_rng": 6,
+        "actions": [
+          ["damage", "move", true, true, false, false, false, false, 0, 0, "damage", false, 25, false, false, false, 0, null, null],
+          ["poison_again", "move", true, false, false, true, false, true, 0, 0, "major_status", false, 0, false, false, false, 10, null, null]
+        ]
+      },
+      "public_history": [{"status": "poison"}], "observation_mask": {"revealed_moves": [], "item_revealed": false, "ability_revealed": false, "revealed_bench_slots": []},
+      "own_party": [{"species": "ACTOR", "hp_fraction": 100}], "policy_memory": {"decisions": []},
+      "profile": "contract_reference", "information_mode": "fair", "policy_config_id": "host-contract-v1",
+      "seeds": {"team": 2236719612, "battle": 4018120997, "decision": 4141285094},
+      "expected": {"legal_actions": ["damage", "poison_again"], "allowed_best_set": ["damage"], "forbidden_actions": ["poison_again"], "required_reasons": ["REDUNDANT_STATUS"], "repeat_exceptions": [], "coverage_tags": ["redundant_major_status"]}
+    },
+    {
+      "schema_version": "ai-policy-fixture-v1", "fixture_id": "useful_setup",
+      "source_revision": "1e58214fd6364a0a76082328c52a4a40d3f41268", "mechanics_config_id": "mechanics-light-v1",
+      "battle_mode": "trainer_singles", "power_profile": "fixed_synthetic", "scaling_profile": "off", "rules_profile": "synthetic",
+      "truth_state": {
+        "opponent_active": {"species": "WALL", "level": 20, "hp_fraction": 100, "status": "none", "stat_stages": {"accuracy": 0, "speed": 0}, "moves": [{"id": "WEAK_HIT", "pp": 20}], "item": "NONE", "ability": "NONE", "hidden_stats": {"ivs": 0, "evs": 0, "nature": "neutral", "speed": 20}},
+        "opponent_bench": [], "field": {"weather": "none"}, "submitted_action": "WEAK_HIT", "future_rng": 7,
+        "actions": [
+          ["setup", "move", true, true, false, true, false, false, 0, 1, "attack_up", false, 0, false, false, false, 0, null, null],
+          ["stall", "move", true, false, false, false, false, false, 0, 0, "wait", false, 0, false, false, false, 10, null, null]
+        ]
+      },
+      "public_history": [{"calculation": "setup_changes_3hko_to_2hko"}], "observation_mask": {"revealed_moves": ["WEAK_HIT"], "item_revealed": false, "ability_revealed": false, "revealed_bench_slots": []},
+      "own_party": [{"species": "ACTOR", "hp_fraction": 100}], "policy_memory": {"decisions": []},
+      "profile": "contract_reference", "information_mode": "fair", "policy_config_id": "host-contract-v1",
+      "seeds": {"team": 1517649358, "battle": 761759833, "decision": 1937593745},
+      "expected": {"legal_actions": ["setup", "stall"], "allowed_best_set": ["setup"], "forbidden_actions": ["stall"], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["useful_setup"]}
+    },
+    {
+      "schema_version": "ai-policy-fixture-v1", "fixture_id": "capped_setup",
+      "source_revision": "1e58214fd6364a0a76082328c52a4a40d3f41268", "mechanics_config_id": "mechanics-light-v1",
+      "battle_mode": "trainer_singles", "power_profile": "fixed_synthetic", "scaling_profile": "off", "rules_profile": "synthetic",
+      "truth_state": {
+        "opponent_active": {"species": "TARGET", "level": 20, "hp_fraction": 100, "status": "none", "stat_stages": {"accuracy": 0, "speed": 0}, "moves": [{"id": "HIT", "pp": 20}], "item": "NONE", "ability": "NONE", "hidden_stats": {"ivs": 0, "evs": 0, "nature": "neutral", "speed": 20}},
+        "opponent_bench": [], "field": {"weather": "none"}, "submitted_action": "HIT", "future_rng": 8,
+        "actions": [
+          ["damage", "move", true, true, false, false, false, false, 0, 0, "damage", false, 20, false, false, false, 0, null, null],
+          ["setup_capped", "move", true, false, false, true, false, false, 6, 6, "attack_up", false, 0, false, false, false, 10, null, null]
+        ]
+      },
+      "public_history": [{"own_attack_stage": 6}], "observation_mask": {"revealed_moves": [], "item_revealed": false, "ability_revealed": false, "revealed_bench_slots": []},
+      "own_party": [{"species": "ACTOR", "hp_fraction": 100}], "policy_memory": {"decisions": []},
+      "profile": "contract_reference", "information_mode": "fair", "policy_config_id": "host-contract-v1",
+      "seeds": {"team": 779520986, "battle": 3501329202, "decision": 2126691014},
+      "expected": {"legal_actions": ["damage", "setup_capped"], "allowed_best_set": ["damage"], "forbidden_actions": ["setup_capped"], "required_reasons": ["CAPPED_STAT_CHANGE"], "repeat_exceptions": [], "coverage_tags": ["capped_setup"]}
+    },
+    {
+      "schema_version": "ai-policy-fixture-v1", "fixture_id": "full_hp_recovery",
+      "source_revision": "1e58214fd6364a0a76082328c52a4a40d3f41268", "mechanics_config_id": "mechanics-light-v1",
+      "battle_mode": "trainer_singles", "power_profile": "fixed_synthetic", "scaling_profile": "off", "rules_profile": "synthetic",
+      "truth_state": {
+        "opponent_active": {"species": "TARGET", "level": 20, "hp_fraction": 100, "status": "none", "stat_stages": {"accuracy": 0, "speed": 0}, "moves": [{"id": "HIT", "pp": 20}], "item": "NONE", "ability": "NONE", "hidden_stats": {"ivs": 0, "evs": 0, "nature": "neutral", "speed": 20}},
+        "opponent_bench": [], "field": {"weather": "none"}, "submitted_action": "HIT", "future_rng": 9,
+        "actions": [
+          ["damage", "move", true, true, false, false, false, false, 0, 0, "damage", false, 30, false, false, false, 0, null, null],
+          ["recover", "move", true, false, false, true, false, false, 0, 0, "recovery", false, 0, false, false, false, 10, null, null]
+        ]
+      },
+      "public_history": [{"own_hp_fraction": 100}], "observation_mask": {"revealed_moves": [], "item_revealed": false, "ability_revealed": false, "revealed_bench_slots": []},
+      "own_party": [{"species": "ACTOR", "hp_fraction": 100}], "policy_memory": {"decisions": []},
+      "profile": "contract_reference", "information_mode": "fair", "policy_config_id": "host-contract-v1",
+      "seeds": {"team": 3105183671, "battle": 1586361798, "decision": 1022198388},
+      "expected": {"legal_actions": ["damage", "recover"], "allowed_best_set": ["damage"], "forbidden_actions": ["recover"], "required_reasons": ["NO_MARGINAL_VALUE"], "repeat_exceptions": [], "coverage_tags": ["full_hp_recovery"]}
+    },
+    {
+      "schema_version": "ai-policy-fixture-v1", "fixture_id": "known_immunity",
+      "source_revision": "1e58214fd6364a0a76082328c52a4a40d3f41268", "mechanics_config_id": "mechanics-light-v1",
+      "battle_mode": "trainer_singles", "power_profile": "fixed_synthetic", "scaling_profile": "off", "rules_profile": "synthetic",
+      "truth_state": {
+        "opponent_active": {"species": "IMMUNE_TARGET", "level": 20, "hp_fraction": 100, "status": "none", "stat_stages": {"accuracy": 0, "speed": 0}, "moves": [{"id": "HIT", "pp": 20}], "item": "NONE", "ability": "ABSORBER", "hidden_stats": {"ivs": 0, "evs": 0, "nature": "neutral", "speed": 20}},
+        "opponent_bench": [], "field": {"weather": "none"}, "submitted_action": "HIT", "future_rng": 10,
+        "actions": [
+          ["neutral_hit", "move", true, true, false, false, false, false, 0, 0, "damage", false, 25, false, false, false, 0, null, null],
+          ["absorbed_hit", "move", true, false, true, false, false, false, 0, 0, "damage", false, 0, false, false, false, 10, null, null]
+        ]
+      },
+      "public_history": [{"revealed_ability": "ABSORBER"}], "observation_mask": {"revealed_moves": [], "item_revealed": false, "ability_revealed": true, "revealed_bench_slots": []},
+      "own_party": [{"species": "ACTOR", "hp_fraction": 100}], "policy_memory": {"decisions": []},
+      "profile": "contract_reference", "information_mode": "fair", "policy_config_id": "host-contract-v1",
+      "seeds": {"team": 208329253, "battle": 751196180, "decision": 655495415},
+      "expected": {"legal_actions": ["neutral_hit", "absorbed_hit"], "allowed_best_set": ["neutral_hit"], "forbidden_actions": ["absorbed_hit"], "required_reasons": ["KNOWN_NO_EFFECT"], "repeat_exceptions": [], "coverage_tags": ["known_immunity"]}
+    },
+    {
+      "schema_version": "ai-policy-fixture-v1", "fixture_id": "forced_choice",
+      "source_revision": "1e58214fd6364a0a76082328c52a4a40d3f41268", "mechanics_config_id": "mechanics-light-v1",
+      "battle_mode": "trainer_singles", "power_profile": "fixed_synthetic", "scaling_profile": "off", "rules_profile": "synthetic",
+      "truth_state": {
+        "opponent_active": {"species": "IMMUNE_TARGET", "level": 20, "hp_fraction": 100, "status": "none", "stat_stages": {"accuracy": 0, "speed": 0}, "moves": [{"id": "HIT", "pp": 20}], "item": "NONE", "ability": "NONE", "hidden_stats": {"ivs": 0, "evs": 0, "nature": "neutral", "speed": 20}},
+        "opponent_bench": [], "field": {"weather": "none"}, "submitted_action": "HIT", "future_rng": 11,
+        "actions": [
+          ["forced_locked_move", "move", true, false, true, false, false, false, 0, 0, "damage", false, 0, false, false, true, 0, null, null],
+          ["unavailable_move", "move", false, false, false, false, false, false, 0, 0, "damage", false, 80, false, false, false, 0, null, null]
+        ]
+      },
+      "public_history": [{"lock": "choice_or_encore"}], "observation_mask": {"revealed_moves": [], "item_revealed": false, "ability_revealed": false, "revealed_bench_slots": []},
+      "own_party": [{"species": "ACTOR", "hp_fraction": 100}], "policy_memory": {"decisions": []},
+      "profile": "contract_reference", "information_mode": "fair", "policy_config_id": "host-contract-v1",
+      "seeds": {"team": 3575934235, "battle": 1443502403, "decision": 505577464},
+      "expected": {"legal_actions": ["forced_locked_move"], "allowed_best_set": ["forced_locked_move"], "forbidden_actions": ["unavailable_move"], "required_reasons": ["FORCED_ACTION"], "repeat_exceptions": [], "coverage_tags": ["forced_choice_encore"]}
+    },
+    {
+      "schema_version": "ai-policy-fixture-v1", "fixture_id": "emergency_switch",
+      "source_revision": "1e58214fd6364a0a76082328c52a4a40d3f41268", "mechanics_config_id": "mechanics-light-v1",
+      "battle_mode": "trainer_singles", "power_profile": "fixed_synthetic", "scaling_profile": "off", "rules_profile": "synthetic",
+      "truth_state": {
+        "opponent_active": {"species": "THREAT", "level": 20, "hp_fraction": 100, "status": "none", "stat_stages": {"accuracy": 0, "speed": 0}, "moves": [{"id": "LETHAL", "pp": 5}], "item": "NONE", "ability": "NONE", "hidden_stats": {"ivs": 0, "evs": 0, "nature": "neutral", "speed": 80}},
+        "opponent_bench": [], "field": {"weather": "none", "hazards": "synthetic"}, "submitted_action": "LETHAL", "future_rng": 12,
+        "actions": [
+          ["futile_move", "move", true, false, false, false, false, false, 0, 0, "damage", false, 0, false, false, false, 20, null, null],
+          ["good_switch", "switch", true, true, false, false, false, false, 0, 0, null, false, 0, true, true, false, 0, "ACTIVE", "SAFE_BENCH"],
+          ["entry_ko_switch", "switch", true, false, false, false, false, false, 0, 0, null, false, 0, true, false, false, 30, "ACTIVE", "FRAGILE_BENCH"]
+        ]
+      },
+      "public_history": [{"threat": "unavoidable_ko_if_stay"}], "observation_mask": {"revealed_moves": ["LETHAL"], "item_revealed": false, "ability_revealed": false, "revealed_bench_slots": []},
+      "own_party": [{"species": "ACTIVE", "hp_fraction": 10}, {"species": "SAFE_BENCH", "hp_fraction": 100}, {"species": "FRAGILE_BENCH", "hp_fraction": 1}], "policy_memory": {"decisions": []},
+      "profile": "contract_reference", "information_mode": "fair", "policy_config_id": "host-contract-v1",
+      "seeds": {"team": 1379548548, "battle": 214805943, "decision": 3479423243},
+      "expected": {"legal_actions": ["futile_move", "good_switch", "entry_ko_switch"], "allowed_best_set": ["good_switch"], "forbidden_actions": ["entry_ko_switch", "futile_move"], "required_reasons": ["ENTRY_KO"], "repeat_exceptions": [], "coverage_tags": ["emergency_good_vs_entry_ko_switch"]}
+    },
+    {
+      "schema_version": "ai-policy-fixture-v1", "fixture_id": "switch_loop",
+      "source_revision": "1e58214fd6364a0a76082328c52a4a40d3f41268", "mechanics_config_id": "mechanics-light-v1",
+      "battle_mode": "trainer_singles", "power_profile": "fixed_synthetic", "scaling_profile": "off", "rules_profile": "synthetic",
+      "truth_state": {
+        "opponent_active": {"species": "TARGET", "level": 20, "hp_fraction": 60, "status": "none", "stat_stages": {"accuracy": 0, "speed": 0}, "moves": [{"id": "HIT", "pp": 20}], "item": "NONE", "ability": "NONE", "hidden_stats": {"ivs": 0, "evs": 0, "nature": "neutral", "speed": 40}},
+        "opponent_bench": [], "field": {"weather": "none"}, "submitted_action": "HIT", "future_rng": 13,
+        "actions": [["damage", "move", true, true, false, false, false, false, 0, 0, "damage", false, 40, false, false, false, 0, null, null]]
+      },
+      "public_history": [], "observation_mask": {"revealed_moves": [], "item_revealed": false, "ability_revealed": false, "revealed_bench_slots": []},
+      "own_party": [{"species": "A", "hp_fraction": 80}, {"species": "B", "hp_fraction": 80}],
+      "policy_memory": {"decisions": [
+        {"action_id": "switch_b", "kind": "switch", "effect_family": null, "success": true, "public_result": "A_to_B", "switch_from": "A", "switch_to": "B", "forced": false},
+        {"action_id": "forced_replacement", "kind": "switch", "effect_family": null, "success": true, "public_result": "ignored_budget", "switch_from": "X", "switch_to": "Y", "forced": true},
+        {"action_id": "switch_a", "kind": "switch", "effect_family": null, "success": true, "public_result": "B_to_A", "switch_from": "B", "switch_to": "A", "forced": false}
+      ]},
+      "profile": "contract_reference", "information_mode": "fair", "policy_config_id": "host-contract-v1",
+      "seeds": {"team": 1345547437, "battle": 1661383539, "decision": 2422842435},
+      "expected": {"legal_actions": ["damage"], "allowed_best_set": ["damage"], "forbidden_actions": [], "required_reasons": ["VOLUNTARY_SWITCH_LOOP_DETECTED"], "repeat_exceptions": [], "coverage_tags": ["aba_switch_loop", "forced_replacement_budget"]}
+    },
+    {
+      "schema_version": "ai-policy-fixture-v1", "fixture_id": "equal_two",
+      "source_revision": "1e58214fd6364a0a76082328c52a4a40d3f41268", "mechanics_config_id": "mechanics-light-v1",
+      "battle_mode": "trainer_singles", "power_profile": "fixed_synthetic", "scaling_profile": "off", "rules_profile": "synthetic",
+      "truth_state": {
+        "opponent_active": {"species": "TARGET", "level": 20, "hp_fraction": 100, "status": "none", "stat_stages": {"accuracy": 0, "speed": 0}, "moves": [{"id": "HIT", "pp": 20}], "item": "NONE", "ability": "NONE", "hidden_stats": {"ivs": 0, "evs": 0, "nature": "neutral", "speed": 40}},
+        "opponent_bench": [], "field": {"weather": "none"}, "submitted_action": "HIT", "future_rng": 14,
+        "actions": [
+          ["equal_a", "move", true, true, false, false, false, false, 0, 0, "damage", false, 20, false, false, false, 0, null, null],
+          ["equal_b", "move", true, true, false, false, false, false, 0, 0, "damage", false, 20, false, false, false, 0, null, null]
+        ]
+      },
+      "public_history": [], "observation_mask": {"revealed_moves": [], "item_revealed": false, "ability_revealed": false, "revealed_bench_slots": []},
+      "own_party": [{"species": "ACTOR", "hp_fraction": 100}], "policy_memory": {"decisions": []},
+      "profile": "contract_reference", "information_mode": "fair", "policy_config_id": "host-contract-v1",
+      "seeds": {"team": 1315624179, "battle": 996224637, "decision": 3487243962},
+      "expected": {"legal_actions": ["equal_a", "equal_b"], "allowed_best_set": ["equal_a", "equal_b"], "forbidden_actions": [], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["two_equal_actions"]}
+    },
+    {
+      "schema_version": "ai-policy-fixture-v1", "fixture_id": "equal_four",
+      "source_revision": "1e58214fd6364a0a76082328c52a4a40d3f41268", "mechanics_config_id": "mechanics-light-v1",
+      "battle_mode": "trainer_singles", "power_profile": "fixed_synthetic", "scaling_profile": "off", "rules_profile": "synthetic",
+      "truth_state": {
+        "opponent_active": {"species": "TARGET", "level": 20, "hp_fraction": 100, "status": "none", "stat_stages": {"accuracy": 0, "speed": 0}, "moves": [{"id": "HIT", "pp": 20}], "item": "NONE", "ability": "NONE", "hidden_stats": {"ivs": 0, "evs": 0, "nature": "neutral", "speed": 40}},
+        "opponent_bench": [], "field": {"weather": "none"}, "submitted_action": "HIT", "future_rng": 15,
+        "actions": [
+          ["equal_a", "move", true, true, false, false, false, false, 0, 0, "damage", false, 20, false, false, false, 0, null, null],
+          ["equal_b", "move", true, true, false, false, false, false, 0, 0, "damage", false, 20, false, false, false, 0, null, null],
+          ["equal_c", "move", true, true, false, false, false, false, 0, 0, "damage", false, 20, false, false, false, 0, null, null],
+          ["equal_d", "move", true, true, false, false, false, false, 0, 0, "damage", false, 20, false, false, false, 0, null, null]
+        ]
+      },
+      "public_history": [], "observation_mask": {"revealed_moves": [], "item_revealed": false, "ability_revealed": false, "revealed_bench_slots": []},
+      "own_party": [{"species": "ACTOR", "hp_fraction": 100}], "policy_memory": {"decisions": []},
+      "profile": "contract_reference", "information_mode": "fair", "policy_config_id": "host-contract-v1",
+      "seeds": {"team": 1317803907, "battle": 1723409614, "decision": 2301151667},
+      "expected": {"legal_actions": ["equal_a", "equal_b", "equal_c", "equal_d"], "allowed_best_set": ["equal_a", "equal_b", "equal_c", "equal_d"], "forbidden_actions": [], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["four_equal_actions"]}
+    },
+    {
+      "schema_version": "ai-policy-fixture-v1", "fixture_id": "hidden_move_a", "twin_group": "hidden_move", "twin_kind": "hidden_move",
+      "source_revision": "1e58214fd6364a0a76082328c52a4a40d3f41268", "mechanics_config_id": "mechanics-light-v1", "battle_mode": "trainer_singles", "power_profile": "fixed_synthetic", "scaling_profile": "off", "rules_profile": "synthetic",
+      "truth_state": {"opponent_active": {"species": "TARGET", "level": 20, "hp_fraction": 100, "status": "none", "stat_stages": {"accuracy": 0, "speed": 0}, "moves": [{"id": "HIDDEN_FIRE", "pp": 10}], "item": "HIDDEN_ITEM", "ability": "HIDDEN_ABILITY", "hidden_stats": {"ivs": 1, "evs": 2, "nature": "a", "speed": 40}}, "opponent_bench": [], "field": {"weather": "none"}, "submitted_action": "HIDDEN_FIRE", "future_rng": 100, "actions": [["equal_a", "move", true, true, false, false, false, false, 0, 0, "damage", false, 20, false, false, false, 0, null, null], ["equal_b", "move", true, true, false, false, false, false, 0, 0, "damage", false, 20, false, false, false, 0, null, null]]},
+      "public_history": [], "observation_mask": {"revealed_moves": [], "item_revealed": false, "ability_revealed": false, "revealed_bench_slots": []}, "own_party": [{"species": "ACTOR", "hp_fraction": 100}], "policy_memory": {"decisions": []}, "profile": "contract_reference", "information_mode": "fair", "policy_config_id": "host-contract-v1", "seeds": {"team": 323670759, "battle": 459462521, "decision": 4023762320}, "expected": {"legal_actions": ["equal_a", "equal_b"], "allowed_best_set": ["equal_a", "equal_b"], "forbidden_actions": [], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["hidden_move_twin"]}
+    },
+    {
+      "schema_version": "ai-policy-fixture-v1", "fixture_id": "hidden_move_b", "twin_group": "hidden_move", "twin_kind": "hidden_move",
+      "source_revision": "1e58214fd6364a0a76082328c52a4a40d3f41268", "mechanics_config_id": "mechanics-light-v1", "battle_mode": "trainer_singles", "power_profile": "fixed_synthetic", "scaling_profile": "off", "rules_profile": "synthetic",
+      "truth_state": {"opponent_active": {"species": "TARGET", "level": 20, "hp_fraction": 100, "status": "none", "stat_stages": {"accuracy": 0, "speed": 0}, "moves": [{"id": "HIDDEN_WATER", "pp": 5}], "item": "HIDDEN_ITEM", "ability": "HIDDEN_ABILITY", "hidden_stats": {"ivs": 1, "evs": 2, "nature": "a", "speed": 40}}, "opponent_bench": [], "field": {"weather": "none"}, "submitted_action": "HIDDEN_WATER", "future_rng": 200, "actions": [["equal_a", "move", true, true, false, false, false, false, 0, 0, "damage", false, 20, false, false, false, 0, null, null], ["equal_b", "move", true, true, false, false, false, false, 0, 0, "damage", false, 20, false, false, false, 0, null, null]]},
+      "public_history": [], "observation_mask": {"revealed_moves": [], "item_revealed": false, "ability_revealed": false, "revealed_bench_slots": []}, "own_party": [{"species": "ACTOR", "hp_fraction": 100}], "policy_memory": {"decisions": []}, "profile": "contract_reference", "information_mode": "fair", "policy_config_id": "host-contract-v1", "seeds": {"team": 2485145895, "battle": 1299030328, "decision": 2047313694}, "expected": {"legal_actions": ["equal_a", "equal_b"], "allowed_best_set": ["equal_a", "equal_b"], "forbidden_actions": [], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["hidden_move_twin"]}
+    },
+    {
+      "schema_version": "ai-policy-fixture-v1", "fixture_id": "hidden_item_a", "twin_group": "hidden_item", "twin_kind": "hidden_item",
+      "source_revision": "1e58214fd6364a0a76082328c52a4a40d3f41268", "mechanics_config_id": "mechanics-light-v1", "battle_mode": "trainer_singles", "power_profile": "fixed_synthetic", "scaling_profile": "off", "rules_profile": "synthetic",
+      "truth_state": {"opponent_active": {"species": "TARGET", "level": 20, "hp_fraction": 100, "status": "none", "stat_stages": {"accuracy": 0, "speed": 0}, "moves": [{"id": "HIDDEN_MOVE", "pp": 10}], "item": "BERRY_A", "ability": "HIDDEN_ABILITY", "hidden_stats": {"ivs": 1, "evs": 2, "nature": "a", "speed": 40}}, "opponent_bench": [], "field": {"weather": "none"}, "submitted_action": "HIDDEN_MOVE", "future_rng": 300, "actions": [["damage", "move", true, true, false, false, false, false, 0, 0, "damage", false, 20, false, false, false, 0, null, null]]},
+      "public_history": [], "observation_mask": {"revealed_moves": [], "item_revealed": false, "ability_revealed": false, "revealed_bench_slots": []}, "own_party": [{"species": "ACTOR", "hp_fraction": 100}], "policy_memory": {"decisions": []}, "profile": "contract_reference", "information_mode": "fair", "policy_config_id": "host-contract-v1", "seeds": {"team": 222862323, "battle": 3453063534, "decision": 967207037}, "expected": {"legal_actions": ["damage"], "allowed_best_set": ["damage"], "forbidden_actions": [], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["hidden_item_twin"]}
+    },
+    {
+      "schema_version": "ai-policy-fixture-v1", "fixture_id": "hidden_item_b", "twin_group": "hidden_item", "twin_kind": "hidden_item",
+      "source_revision": "1e58214fd6364a0a76082328c52a4a40d3f41268", "mechanics_config_id": "mechanics-light-v1", "battle_mode": "trainer_singles", "power_profile": "fixed_synthetic", "scaling_profile": "off", "rules_profile": "synthetic",
+      "truth_state": {"opponent_active": {"species": "TARGET", "level": 20, "hp_fraction": 100, "status": "none", "stat_stages": {"accuracy": 0, "speed": 0}, "moves": [{"id": "HIDDEN_MOVE", "pp": 10}], "item": "CHOICE_ITEM_B", "ability": "HIDDEN_ABILITY", "hidden_stats": {"ivs": 1, "evs": 2, "nature": "a", "speed": 40}}, "opponent_bench": [], "field": {"weather": "none"}, "submitted_action": "HIDDEN_MOVE", "future_rng": 400, "actions": [["damage", "move", true, true, false, false, false, false, 0, 0, "damage", false, 20, false, false, false, 0, null, null]]},
+      "public_history": [], "observation_mask": {"revealed_moves": [], "item_revealed": false, "ability_revealed": false, "revealed_bench_slots": []}, "own_party": [{"species": "ACTOR", "hp_fraction": 100}], "policy_memory": {"decisions": []}, "profile": "contract_reference", "information_mode": "fair", "policy_config_id": "host-contract-v1", "seeds": {"team": 2590424362, "battle": 1718221605, "decision": 3246148476}, "expected": {"legal_actions": ["damage"], "allowed_best_set": ["damage"], "forbidden_actions": [], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["hidden_item_twin"]}
+    },
+    {
+      "schema_version": "ai-policy-fixture-v1", "fixture_id": "hidden_ability_a", "twin_group": "hidden_ability", "twin_kind": "hidden_ability",
+      "source_revision": "1e58214fd6364a0a76082328c52a4a40d3f41268", "mechanics_config_id": "mechanics-light-v1", "battle_mode": "trainer_singles", "power_profile": "fixed_synthetic", "scaling_profile": "off", "rules_profile": "synthetic",
+      "truth_state": {"opponent_active": {"species": "TARGET", "level": 20, "hp_fraction": 100, "status": "none", "stat_stages": {"accuracy": 0, "speed": 0}, "moves": [{"id": "HIDDEN_MOVE", "pp": 10}], "item": "HIDDEN_ITEM", "ability": "ABSORBER_A", "hidden_stats": {"ivs": 1, "evs": 2, "nature": "a", "speed": 40}}, "opponent_bench": [], "field": {"weather": "none"}, "submitted_action": "HIDDEN_MOVE", "future_rng": 500, "actions": [["damage", "move", true, true, false, false, false, false, 0, 0, "damage", false, 20, false, false, false, 0, null, null]]},
+      "public_history": [], "observation_mask": {"revealed_moves": [], "item_revealed": false, "ability_revealed": false, "revealed_bench_slots": []}, "own_party": [{"species": "ACTOR", "hp_fraction": 100}], "policy_memory": {"decisions": []}, "profile": "contract_reference", "information_mode": "fair", "policy_config_id": "host-contract-v1", "seeds": {"team": 2465186614, "battle": 2612266917, "decision": 3397701147}, "expected": {"legal_actions": ["damage"], "allowed_best_set": ["damage"], "forbidden_actions": [], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["hidden_ability_twin"]}
+    },
+    {
+      "schema_version": "ai-policy-fixture-v1", "fixture_id": "hidden_ability_b", "twin_group": "hidden_ability", "twin_kind": "hidden_ability",
+      "source_revision": "1e58214fd6364a0a76082328c52a4a40d3f41268", "mechanics_config_id": "mechanics-light-v1", "battle_mode": "trainer_singles", "power_profile": "fixed_synthetic", "scaling_profile": "off", "rules_profile": "synthetic",
+      "truth_state": {"opponent_active": {"species": "TARGET", "level": 20, "hp_fraction": 100, "status": "none", "stat_stages": {"accuracy": 0, "speed": 0}, "moves": [{"id": "HIDDEN_MOVE", "pp": 10}], "item": "HIDDEN_ITEM", "ability": "REFLECTOR_B", "hidden_stats": {"ivs": 1, "evs": 2, "nature": "a", "speed": 40}}, "opponent_bench": [], "field": {"weather": "none"}, "submitted_action": "HIDDEN_MOVE", "future_rng": 600, "actions": [["damage", "move", true, true, false, false, false, false, 0, 0, "damage", false, 20, false, false, false, 0, null, null]]},
+      "public_history": [], "observation_mask": {"revealed_moves": [], "item_revealed": false, "ability_revealed": false, "revealed_bench_slots": []}, "own_party": [{"species": "ACTOR", "hp_fraction": 100}], "policy_memory": {"decisions": []}, "profile": "contract_reference", "information_mode": "fair", "policy_config_id": "host-contract-v1", "seeds": {"team": 1895399849, "battle": 2878892678, "decision": 1595786551}, "expected": {"legal_actions": ["damage"], "allowed_best_set": ["damage"], "forbidden_actions": [], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["hidden_ability_twin"]}
+    },
+    {
+      "schema_version": "ai-policy-fixture-v1", "fixture_id": "hidden_bench_a", "twin_group": "hidden_bench", "twin_kind": "hidden_bench",
+      "source_revision": "1e58214fd6364a0a76082328c52a4a40d3f41268", "mechanics_config_id": "mechanics-light-v1", "battle_mode": "trainer_singles", "power_profile": "fixed_synthetic", "scaling_profile": "off", "rules_profile": "synthetic",
+      "truth_state": {"opponent_active": {"species": "TARGET", "level": 20, "hp_fraction": 100, "status": "none", "stat_stages": {"accuracy": 0, "speed": 0}, "moves": [{"id": "HIDDEN_MOVE", "pp": 10}], "item": "HIDDEN_ITEM", "ability": "HIDDEN_ABILITY", "hidden_stats": {"ivs": 1, "evs": 2, "nature": "a", "speed": 40}}, "opponent_bench": [{"species": "HIDDEN_FIRE_BENCH", "level": 20, "hp_fraction": 100, "status": "none", "stat_stages": {"accuracy": 0, "speed": 0}, "moves": [{"id": "FIRE", "pp": 10}], "item": "ITEM_A", "ability": "ABILITY_A", "hidden_stats": {"ivs": 5, "evs": 0, "nature": "a", "speed": 30}}], "field": {"weather": "none"}, "submitted_action": "HIDDEN_MOVE", "future_rng": 700, "actions": [["damage", "move", true, true, false, false, false, false, 0, 0, "damage", false, 20, false, false, false, 0, null, null]]},
+      "public_history": [], "observation_mask": {"revealed_moves": [], "item_revealed": false, "ability_revealed": false, "revealed_bench_slots": []}, "own_party": [{"species": "ACTOR", "hp_fraction": 100}], "policy_memory": {"decisions": []}, "profile": "contract_reference", "information_mode": "fair", "policy_config_id": "host-contract-v1", "seeds": {"team": 1556711795, "battle": 2436862105, "decision": 3028389105}, "expected": {"legal_actions": ["damage"], "allowed_best_set": ["damage"], "forbidden_actions": [], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["hidden_bench_twin"]}
+    },
+    {
+      "schema_version": "ai-policy-fixture-v1", "fixture_id": "hidden_bench_b", "twin_group": "hidden_bench", "twin_kind": "hidden_bench",
+      "source_revision": "1e58214fd6364a0a76082328c52a4a40d3f41268", "mechanics_config_id": "mechanics-light-v1", "battle_mode": "trainer_singles", "power_profile": "fixed_synthetic", "scaling_profile": "off", "rules_profile": "synthetic",
+      "truth_state": {"opponent_active": {"species": "TARGET", "level": 20, "hp_fraction": 100, "status": "none", "stat_stages": {"accuracy": 0, "speed": 0}, "moves": [{"id": "HIDDEN_MOVE", "pp": 10}], "item": "HIDDEN_ITEM", "ability": "HIDDEN_ABILITY", "hidden_stats": {"ivs": 1, "evs": 2, "nature": "a", "speed": 40}}, "opponent_bench": [{"species": "HIDDEN_WATER_BENCH", "level": 20, "hp_fraction": 100, "status": "none", "stat_stages": {"accuracy": 0, "speed": 0}, "moves": [{"id": "WATER", "pp": 10}], "item": "ITEM_B", "ability": "ABILITY_B", "hidden_stats": {"ivs": 31, "evs": 252, "nature": "b", "speed": 90}}], "field": {"weather": "none"}, "submitted_action": "HIDDEN_MOVE", "future_rng": 800, "actions": [["damage", "move", true, true, false, false, false, false, 0, 0, "damage", false, 20, false, false, false, 0, null, null]]},
+      "public_history": [], "observation_mask": {"revealed_moves": [], "item_revealed": false, "ability_revealed": false, "revealed_bench_slots": []}, "own_party": [{"species": "ACTOR", "hp_fraction": 100}], "policy_memory": {"decisions": []}, "profile": "contract_reference", "information_mode": "fair", "policy_config_id": "host-contract-v1", "seeds": {"team": 1258963851, "battle": 3574265127, "decision": 2516089706}, "expected": {"legal_actions": ["damage"], "allowed_best_set": ["damage"], "forbidden_actions": [], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["hidden_bench_twin"]}
+    },
+    {
+      "schema_version": "ai-policy-fixture-v1", "fixture_id": "submitted_action_a", "twin_group": "submitted_action", "twin_kind": "submitted_action",
+      "source_revision": "1e58214fd6364a0a76082328c52a4a40d3f41268", "mechanics_config_id": "mechanics-light-v1", "battle_mode": "trainer_singles", "power_profile": "fixed_synthetic", "scaling_profile": "off", "rules_profile": "synthetic",
+      "truth_state": {"opponent_active": {"species": "TARGET", "level": 20, "hp_fraction": 100, "status": "none", "stat_stages": {"accuracy": 0, "speed": 0}, "moves": [{"id": "REVEALED_A", "pp": 10}, {"id": "REVEALED_B", "pp": 10}], "item": "NONE", "ability": "NONE", "hidden_stats": {"ivs": 1, "evs": 2, "nature": "a", "speed": 40}}, "opponent_bench": [], "field": {"weather": "none"}, "submitted_action": "REVEALED_A", "future_rng": 900, "actions": [["equal_a", "move", true, true, false, false, false, false, 0, 0, "damage", false, 20, false, false, false, 0, null, null], ["equal_b", "move", true, true, false, false, false, false, 0, 0, "damage", false, 20, false, false, false, 0, null, null]]},
+      "public_history": [{"moves_seen": ["REVEALED_A", "REVEALED_B"]}], "observation_mask": {"revealed_moves": ["REVEALED_A", "REVEALED_B"], "item_revealed": false, "ability_revealed": false, "revealed_bench_slots": []}, "own_party": [{"species": "ACTOR", "hp_fraction": 100}], "policy_memory": {"decisions": []}, "profile": "contract_reference", "information_mode": "fair", "policy_config_id": "host-contract-v1", "seeds": {"team": 3174801479, "battle": 360579543, "decision": 3742470848}, "expected": {"legal_actions": ["equal_a", "equal_b"], "allowed_best_set": ["equal_a", "equal_b"], "forbidden_actions": [], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["submitted_action_twin"]}
+    },
+    {
+      "schema_version": "ai-policy-fixture-v1", "fixture_id": "submitted_action_b", "twin_group": "submitted_action", "twin_kind": "submitted_action",
+      "source_revision": "1e58214fd6364a0a76082328c52a4a40d3f41268", "mechanics_config_id": "mechanics-light-v1", "battle_mode": "trainer_singles", "power_profile": "fixed_synthetic", "scaling_profile": "off", "rules_profile": "synthetic",
+      "truth_state": {"opponent_active": {"species": "TARGET", "level": 20, "hp_fraction": 100, "status": "none", "stat_stages": {"accuracy": 0, "speed": 0}, "moves": [{"id": "REVEALED_A", "pp": 10}, {"id": "REVEALED_B", "pp": 10}], "item": "NONE", "ability": "NONE", "hidden_stats": {"ivs": 1, "evs": 2, "nature": "a", "speed": 40}}, "opponent_bench": [], "field": {"weather": "none"}, "submitted_action": "REVEALED_B", "future_rng": 999, "actions": [["equal_a", "move", true, true, false, false, false, false, 0, 0, "damage", false, 20, false, false, false, 0, null, null], ["equal_b", "move", true, true, false, false, false, false, 0, 0, "damage", false, 20, false, false, false, 0, null, null]]},
+      "public_history": [{"moves_seen": ["REVEALED_A", "REVEALED_B"]}], "observation_mask": {"revealed_moves": ["REVEALED_A", "REVEALED_B"], "item_revealed": false, "ability_revealed": false, "revealed_bench_slots": []}, "own_party": [{"species": "ACTOR", "hp_fraction": 100}], "policy_memory": {"decisions": []}, "profile": "contract_reference", "information_mode": "fair", "policy_config_id": "host-contract-v1", "seeds": {"team": 4243707286, "battle": 4189419024, "decision": 2554369522}, "expected": {"legal_actions": ["equal_a", "equal_b"], "allowed_best_set": ["equal_a", "equal_b"], "forbidden_actions": [], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["submitted_action_twin"]}
+    },
+    {
+      "schema_version": "ai-policy-fixture-v1", "fixture_id": "all_futile",
+      "source_revision": "1e58214fd6364a0a76082328c52a4a40d3f41268", "mechanics_config_id": "mechanics-light-v1", "battle_mode": "trainer_singles", "power_profile": "fixed_synthetic", "scaling_profile": "off", "rules_profile": "synthetic",
+      "truth_state": {"opponent_active": {"species": "IMMUNE_TARGET", "level": 20, "hp_fraction": 100, "status": "poison", "stat_stages": {"accuracy": -6, "speed": 0}, "moves": [{"id": "HIT", "pp": 10}], "item": "NONE", "ability": "IMMUNE", "hidden_stats": {"ivs": 0, "evs": 0, "nature": "neutral", "speed": 40}}, "opponent_bench": [], "field": {"weather": "none"}, "submitted_action": "HIT", "future_rng": 16, "actions": [["least_cost_futile", "move", true, false, true, false, false, false, 0, 0, "damage", false, 0, false, false, false, 1, null, null], ["redundant_poison", "move", true, false, false, true, false, true, 0, 0, "major_status", false, 0, false, false, false, 4, null, null], ["capped_accuracy", "move", true, false, false, true, false, false, -6, -6, "sand_attack", false, 0, false, false, false, 3, null, null]]},
+      "public_history": [{"all_lines": "futile"}], "observation_mask": {"revealed_moves": [], "item_revealed": false, "ability_revealed": true, "revealed_bench_slots": []}, "own_party": [{"species": "ACTOR", "hp_fraction": 100}], "policy_memory": {"decisions": []}, "profile": "contract_reference", "information_mode": "fair", "policy_config_id": "host-contract-v1", "seeds": {"team": 1752141134, "battle": 4047172342, "decision": 2689211461}, "expected": {"legal_actions": ["least_cost_futile", "redundant_poison", "capped_accuracy"], "allowed_best_set": ["least_cost_futile"], "forbidden_actions": ["redundant_poison", "capped_accuracy"], "required_reasons": ["NO_PRODUCTIVE_ACTION"], "repeat_exceptions": [], "coverage_tags": ["all_futile_fallback"]}
+    },
+    {
+      "schema_version": "ai-policy-fixture-v1", "fixture_id": "accuracy_alternating_repeat",
+      "source_revision": "1e58214fd6364a0a76082328c52a4a40d3f41268", "mechanics_config_id": "mechanics-light-v1", "battle_mode": "trainer_singles", "power_profile": "fixed_synthetic", "scaling_profile": "off", "rules_profile": "synthetic",
+      "truth_state": {"opponent_active": {"species": "TARGET", "level": 20, "hp_fraction": 60, "status": "none", "stat_stages": {"accuracy": -2, "speed": 0}, "moves": [{"id": "HIT", "pp": 10}], "item": "NONE", "ability": "NONE", "hidden_stats": {"ivs": 0, "evs": 0, "nature": "neutral", "speed": 40}}, "opponent_bench": [], "field": {"weather": "none"}, "submitted_action": "HIT", "future_rng": 17, "actions": [["damage", "move", true, true, false, false, false, false, 0, 0, "damage", false, 35, false, false, false, 0, null, null], ["sand_attack", "move", true, true, false, true, false, false, -2, -3, "sand_attack", false, 0, false, false, false, 10, null, null]]},
+      "public_history": [{"accuracy_drops": 2}], "observation_mask": {"revealed_moves": ["HIT"], "item_revealed": false, "ability_revealed": false, "revealed_bench_slots": []}, "own_party": [{"species": "ACTOR", "hp_fraction": 100}], "policy_memory": {"decisions": [{"action_id": "sand_attack", "kind": "move", "effect_family": "sand_attack", "success": true, "public_result": "accuracy_-1", "switch_from": null, "switch_to": null, "forced": false}, {"action_id": "smokescreen", "kind": "move", "effect_family": "smokescreen", "success": true, "public_result": "accuracy_-2", "switch_from": null, "switch_to": null, "forced": false}]}, "profile": "contract_reference", "information_mode": "fair", "policy_config_id": "host-contract-v1", "seeds": {"team": 1456433682, "battle": 4124801876, "decision": 2635541998}, "expected": {"legal_actions": ["damage", "sand_attack"], "allowed_best_set": ["damage"], "forbidden_actions": ["sand_attack"], "required_reasons": ["HARMFUL_REPEAT"], "repeat_exceptions": [], "coverage_tags": ["accuracy_repeat_family", "alternating_ids"]}
+    },
+    {
+      "schema_version": "ai-policy-fixture-v1", "fixture_id": "challenge_boundary",
+      "source_revision": "1e58214fd6364a0a76082328c52a4a40d3f41268", "mechanics_config_id": "mechanics-light-v1", "battle_mode": "trainer_singles", "power_profile": "fixed_synthetic", "scaling_profile": "off", "rules_profile": "synthetic",
+      "truth_state": {"opponent_active": {"species": "FULL_KNOWN", "level": 20, "hp_fraction": 75, "status": "none", "stat_stages": {"accuracy": 0, "speed": 0}, "moves": [{"id": "KNOWN_MOVE", "pp": 7}], "item": "KNOWN_ITEM", "ability": "KNOWN_ABILITY", "hidden_stats": {"ivs": 31, "evs": 252, "nature": "fast", "speed": 90}}, "opponent_bench": [{"species": "KNOWN_BENCH", "level": 20, "hp_fraction": 100, "status": "none", "stat_stages": {"accuracy": 0, "speed": 0}, "moves": [{"id": "BENCH_MOVE", "pp": 12}], "item": "BENCH_ITEM", "ability": "BENCH_ABILITY", "hidden_stats": {"ivs": 10, "evs": 0, "nature": "neutral", "speed": 35}}], "field": {"weather": "none"}, "submitted_action": "KNOWN_MOVE", "future_rng": 999999, "actions": [["damage", "move", true, true, false, false, false, false, 0, 0, "damage", false, 30, false, false, false, 0, null, null]]},
+      "public_history": [], "observation_mask": {"revealed_moves": [], "item_revealed": false, "ability_revealed": false, "revealed_bench_slots": []}, "own_party": [{"species": "ACTOR", "hp_fraction": 100}], "policy_memory": {"decisions": []}, "profile": "challenge_contract_reference", "information_mode": "challenge", "policy_config_id": "host-contract-v1", "seeds": {"team": 451309727, "battle": 743978240, "decision": 132907687}, "expected": {"legal_actions": ["damage"], "allowed_best_set": ["damage"], "forbidden_actions": [], "required_reasons": [], "repeat_exceptions": [], "coverage_tags": ["challenge_authorized_full_team", "challenge_forbids_submitted_action_future_rng"]}
+    }
+  ]
+}
