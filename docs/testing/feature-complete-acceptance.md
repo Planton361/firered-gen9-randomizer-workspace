@@ -1,6 +1,6 @@
 # Feature-complete manual acceptance package
 
-Prepared for Workspace Issue #498 on 2026-09-20; **all 115 runtime cases remain NOT_RUN**. Documentation/preparation only. Terminal state: `R1_RUN_PACKAGE_READY / ROM_RUN_PENDING`.
+Prepared for Workspace Issue #498 on 2026-09-22; **all 115 runtime cases remain NOT_RUN**. Documentation/preparation only. Terminal state: `R1_RUN_PACKAGE_REBASELINED / ROM_RUN_PENDING`.
 
 > **USER-RUN PACKAGE BOUNDARY**
 >
@@ -24,10 +24,15 @@ placeholders such as `<RECORD BEFORE RUN>`.
 
 | Identity | Exact Phase R1 Workspace/test basis |
 |---|---|
-| Workspace source/test basis | `b1dc157a4cfb000c1fa14a0e3323210c350d767a` |
-| CFRU Expansion | `8bc8c38210ddba0b05c933dbda06cb4539254c7a` |
+| Workspace source/test basis | `21f2d4288920a02a7f4de26ab93217c84c48a5d9` |
+| CFRU Expansion | `3c2f38140ed07991a04ae63ff1108ff2f25547a6` |
 | DPE Gen 9 | `22ffa27ad09cfacbca841d90e6cbe31e6f9b7fdc` |
 | UPR-FVX | `boundary/reference only during Phase R1 — 0e3be63e94e34215cc35308d64e8db15e9a3c48c` |
+
+The accepted #520/#521 source, module and ARM/object evidence may be cited
+when it is revision-correct for the integrated CFRU pin above. It is source
+disposition evidence only and never promotes an M-014 runtime row or variant
+to PASS.
 
 The documentation branch commit that materializes this package is provenance
 only and must never be substituted for the Workspace/test basis above.
@@ -181,7 +186,7 @@ must still complete the entire flow once without restoring an older checkpoint.
 
 | ID | Procedure / variants | PASS criteria |
 |---|---|---|
-| A01 | Start New Game, naming and intro | No controls-guide detour; naming/Oak introduction completes; mixed-case name entry works; correct room/input/camera. |
+| A01 | Start New Game, naming, intro and fresh Options state | No controls-guide detour; naming/Oak introduction completes; mixed-case name entry works; correct room/input/camera; fresh Options visibly show Game Difficulty = Vanilla, Trainer Level Scaling = Off, Wild Level Scaling = Off and Trainer AI = Standard; no unrelated rule or setting changes implicitly. |
 | A02 | Open Player PC before Mom | No initial Potion in item storage; no phantom occupied slot. |
 | A03 | Attempt house exit before talking to Mom; repeat | Mandatory exit guard prevents departure, gives coherent response, releases input; cannot bypass by repeated direction/menu. |
 | A04 | Talk to Mom | Handoff occurs once; fast Lab scene reaches direct starter selection, Oak at (6,3) facing down; correct camera/player placement. |
@@ -218,7 +223,7 @@ must still complete the entire flow once without restoring an older checkpoint.
 | B13 | Game Corner prize-room acquisition and subsequent menu/warp | Record existing presentation caveat; no crash/stuck sprite/control loss. Cosmetic deviation is logged, not presumed fixed. |
 | B14 | Player PC item deposit/withdraw, no initial Potion, full/empty boundaries | Correct inventory counts and safe capacity refusal; Lab reward remains independent. |
 | B15 | Pokemon PC deposit/withdraw/move/swap, box edge/last slot, summary | Identity/moves/ability/item/stat data preserved; no deleted/duplicated Pokemon or bad icons. |
-| B16 | Every exposed Options page; change/revert text/button/music selections; Start menus before/after flags | Valid labels/cursors, intended availability, cancel/return correct; configuration persists as designed; no overlapping AI/difficulty flag side effects. |
+| B16 | Every exposed Options page; Standard/Ironmon Smart and legacy entries; change/revert text/button/music selections; Start menus before/after flags; trainer integration smoke under each profile | Standard and Ironmon Smart are selectable and correctly labeled while legacy entries remain distinct; open/close without editing does not rewrite settings; changing Trainer AI leaves Difficulty, Trainer Level Scaling, Wild Level Scaling, Hard Cap/Nuzlocke and other independent rules unchanged, and changing those rules leaves Trainer AI unchanged; one representative ordinary trainer battle routes and remains stable under Standard and one under Ironmon Smart, without inferring AI strength. Restore Standard for the continuous main run after the targeted Ironmon Smart check unless it uses an independent private checkpoint/run. |
 | B17 | M-001 gold TM ball and HM07 ball, ordinary non-TM control | Gold graphic only approved targets; correct underlying reward, quantity and persistence; ordinary item graphic unchanged. |
 | B18 | M-001 randomized field/TM variants (H12; Phase R2 only) | 28 TM slots and HM07 distinction retained; gold does not force a non-TM into TM pool or make HM07 randomizable. This case is R2-gated and remains NOT_RUN during R1. |
 | B19 | Visible normal hidden item before/after pickup, stand directly on tile | Sparkle while eligible/in view; absent underfoot and after collection; actual A-button pickup unchanged. |
@@ -229,7 +234,18 @@ must still complete the entire flow once without restoring an older checkpoint.
 | B24 | Instant heal in every one of the 19 ordinary Center targets during traversal | Short path heals HP/PP/status, returns control; no residual ball animation/palette; healing/stat bookkeeping preserved. Record each Center by name. |
 | B25 | Trainer Tower healer control; accessible Union Room entry/cancel | Excluded Tower behavior preserved; ordinary Center bookkeeping doesn't break upstairs/Union Room flow. Do not require network partner; external link functionality may be N/A. |
 | B26 | Center Name Rater: own Pokemon rename/cancel; egg and traded rejection | Correct target named, lowercase behavior and cancellation safe; egg/traded policy retained. Record each exposed Center NPC's accessibility; test rejection paths at least once. |
-| B27 | Save/reload after item transfer, rename, options change and healing | All intended persistent data retained; no duplicate transient UI/effects or event replay. |
+| B27 | Save/reload after item transfer, rename, options change and healing; explicit AI/Difficulty/Scaling selections | All intended persistent data and the selected Trainer AI plus relevant Difficulty/Scaling values persist through save/reload; no duplicate transient UI/effects or event replay. Use only user-owned private save/state; return no save/state artifact to agents. |
+
+### Integrated Trainer-AI/settings runtime witnesses within existing cases
+
+The fresh-default, options-isolation, persistence and trainer-battle checks above
+are variants of A01, B16 and B27; they do not add base IDs or a second
+acceptance framework. The trainer-battle smoke is limited to routing, profile
+selection and runtime stability: run at least one representative ordinary
+trainer battle under Standard and one under Ironmon Smart. Host/policy gates
+already accepted separately remain source/host evidence, and no conclusion
+about AI strength or superiority is part of this smoke. Do not require a
+one-click Ironmon preset; #520 intentionally added no user-facing preset UI.
 
 ## C. Phase R1 — M-009 global-frame regression pass
 

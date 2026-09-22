@@ -1,6 +1,6 @@
 # Sanitized acceptance result
 
-**State:** `R1_RUN_PACKAGE_READY / ROM_RUN_PENDING`
+**State:** `R1_RUN_PACKAGE_REBASELINED / ROM_RUN_PENDING`
 **Evidence classification:** **CONFIRMED CURRENT STATE** for accepted R0;
 **INTENDED FUTURE STATE** for Phase R1/R2 runtime acceptance.
 **Preparation status:** All 115 required case rows remain `NOT_RUN`; no M-014 runtime execution occurred.
@@ -31,10 +31,14 @@ repair branch tip is provenance only and is not the tested Workspace basis.
 
 | Identity | Exact revision |
 |---|---|
-| Workspace source/test basis | `b1dc157a4cfb000c1fa14a0e3323210c350d767a` |
-| CFRU Expansion | `8bc8c38210ddba0b05c933dbda06cb4539254c7a` |
+| Workspace source/test basis | `21f2d4288920a02a7f4de26ab93217c84c48a5d9` |
+| CFRU Expansion | `3c2f38140ed07991a04ae63ff1108ff2f25547a6` |
 | DPE Gen 9 | `22ffa27ad09cfacbca841d90e6cbe31e6f9b7fdc` |
 | UPR-FVX | `boundary/reference only during Phase R1 — 0e3be63e94e34215cc35308d64e8db15e9a3c48c` |
+
+The revision-correct #520/#521 source, module and ARM/object evidence may be
+referenced for source disposition at the integrated CFRU pin above. It is not
+M-014 runtime evidence and must never change a runtime row or variant to PASS.
 
 ## Phase R1 user-owned ROM identity — record before the first R1 case
 
@@ -95,6 +99,24 @@ Runtime Gate 1 remains separate targeted evidence. Add any independent
 case/variant rows needed during the user run without changing the base IDs or
 package scope.
 
+## Integrated Trainer-AI/settings witness coverage
+
+These are additional variants of existing A01, B16 and B27 coverage; no new
+base case IDs are added. Every witness remains `NOT_RUN` until the user-owned
+Phase R1 run records sanitized observations.
+
+| Existing row | Required R1 witness | Initial status |
+|---|---|---|
+| A01 | Fresh Options visibly show Game Difficulty = Vanilla, Trainer Level Scaling = Off, Wild Level Scaling = Off and Trainer AI = Standard; no unrelated rule or setting changes implicitly. | NOT_RUN |
+| B16 | Standard and Ironmon Smart are selectable/displayable with legacy entries distinct; open/close without editing does not rewrite settings; Trainer AI changes do not alter Difficulty, Trainer Scaling, Wild Scaling, Hard Cap/Nuzlocke or other independent rules, and those settings do not rewrite Trainer AI. | NOT_RUN |
+| B27 | Explicit Trainer AI plus relevant Difficulty/Scaling values persist through save/reload as designed; no save/state artifact is returned to agents. | NOT_RUN |
+| B16/B27 variant | One representative ordinary trainer battle under Standard and one under Ironmon Smart, checking only runtime routing, stability and profile integration; no AI-strength conclusion. Restore Standard for the continuous main run after the targeted Ironmon Smart check unless using an independent private checkpoint/run. | NOT_RUN |
+
+No one-click Ironmon preset is required: #520 intentionally added no
+user-facing preset UI. The trainer-battle smoke and settings witnesses remain
+user-owned runtime checks, separate from accepted host/policy and source/ARM
+evidence.
+
 ## Phase ownership and acceptance gates
 
 All 115 existing IDs are preserved. The phase owner is recorded per row below:
@@ -129,7 +151,7 @@ be treated as PASS.
 
 | Case ID | Phase owner | Required case/variant coverage | Result | Observed result (sanitized) | Defect / reason |
 |---|---|---|---|---|---|
-| A01 | R1 ROM | All procedure-prescribed variants for A01 | NOT_RUN | | |
+| A01 | R1 ROM | Start/intro plus fresh Vanilla / Off / Off / Standard Options witness; all other procedure-prescribed A01 variants | NOT_RUN | | |
 | A02 | R1 ROM | All procedure-prescribed variants for A02 | NOT_RUN | | |
 | A03 | R1 ROM | All procedure-prescribed variants for A03 | NOT_RUN | | |
 | A04 | R1 ROM | All procedure-prescribed variants for A04 | NOT_RUN | | |
@@ -161,7 +183,7 @@ be treated as PASS.
 | B13 | R1 ROM | All procedure-prescribed variants for B13 | NOT_RUN | | |
 | B14 | R1 ROM | All procedure-prescribed variants for B14 | NOT_RUN | | |
 | B15 | R1 ROM | All procedure-prescribed variants for B15 | NOT_RUN | | |
-| B16 | R1 ROM | All procedure-prescribed variants for B16 | NOT_RUN | | |
+| B16 | R1 ROM | Options isolation plus Standard/Ironmon Smart/legacy display and trainer-battle integration variants; all other procedure-prescribed B16 variants | NOT_RUN | | |
 | B17 | R1 ROM | All procedure-prescribed variants for B17 | NOT_RUN | | |
 | B18 | R2 Randomizer | Randomized Field/TM variants from H12; R2 only | NOT_RUN | | |
 | B19 | R1 ROM | All procedure-prescribed variants for B19 | NOT_RUN | | |
@@ -172,7 +194,7 @@ be treated as PASS.
 | B24 | R1 ROM | All procedure-prescribed variants for B24 | NOT_RUN | | |
 | B25 | R1 ROM | All procedure-prescribed variants for B25 | NOT_RUN | | |
 | B26 | R1 ROM | All procedure-prescribed variants for B26 | NOT_RUN | | |
-| B27 | R1 ROM | All procedure-prescribed variants for B27 | NOT_RUN | | |
+| B27 | R1 ROM | Save/reload persistence for AI/Difficulty/Scaling plus all procedure-prescribed B27 variants | NOT_RUN | | |
 | C01 | R1 ROM | All procedure-prescribed variants for C01 | NOT_RUN | | |
 | C02 | R1 ROM | All procedure-prescribed variants for C02 | NOT_RUN | | |
 | C03 | R1 ROM | All procedure-prescribed variants for C03 | NOT_RUN | | |
