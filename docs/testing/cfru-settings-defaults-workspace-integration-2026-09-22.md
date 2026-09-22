@@ -140,8 +140,8 @@ generated/private build, cache bypass, emulator, or runtime work was run.
 - Project `FireRed Gen 9 Randomizer — Pilot Finish`: #520 is `P0 / Integration
   / Done`; #521 is `P0 / Integration / Doing`; #498 remains Blocked; #499,
   #500, and #501 remain unchanged.
-- The required sanitized #498 rebaseline comment is posted after the final
-  Workspace commit and is linked in the final #521 Issue handoff.
+- Required sanitized #498 rebaseline comment:
+  [issuecomment-5777936804](https://github.com/Planton361/firered-gen9-randomizer-workspace/issues/498#issuecomment-5777936804).
 
 No ROM, save, emulator state, generated build, tool binary, private path,
 `.env`, token, key, secret, screenshot, or raw binary was accessed or copied.
