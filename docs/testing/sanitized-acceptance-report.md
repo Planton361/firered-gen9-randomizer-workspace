@@ -1,6 +1,6 @@
 # Sanitized acceptance result
 
-**State:** `R1_RUN_PACKAGE_REBASELINED / ROM_RUN_PENDING`
+**State:** `R1_RUN_PACKAGE_FINAL_REBASELINE_READY / ROM_RUN_PENDING`
 **Evidence classification:** **CONFIRMED CURRENT STATE** for accepted R0;
 **INTENDED FUTURE STATE** for Phase R1/R2 runtime acceptance.
 **Preparation status:** All 115 required case rows remain `NOT_RUN`; no M-014 runtime execution occurred.
@@ -13,11 +13,14 @@ runtime acceptance. The user may execute private runtime operations locally;
 only sanitized text results return to GitHub/CONTROL. No artifact hashes are
 required.
 
-Phase R0 is complete and integrated on current `main`. The accepted [ROM
-finish-readiness audit](../audits/rom-finish-readiness-2026-09-20.md) records
-`ROM_SCOPE_READY_FOR_ACCEPTANCE`, `MISSING_BLOCKER = 0`, and
-`UNKNOWN_BLOCKER = 0`. Its documented intentional differences, optional
-backlog and out-of-pilot items are profile boundaries, not runtime failures.
+The sole operative R0 gate is the accepted #563
+[final ROM scope audit](../audits/m014-r0-final-rom-scope-2026-09-29.md),
+merged through #564: `ROM_SCOPE_READY_FOR_ACCEPTANCE`, `MISSING_BLOCKER = 0`,
+`UNKNOWN_BLOCKER = 0`. Earlier R0 audits are historical supporting evidence
+only. Final R1 can be released only on this #563 closure and after #565 is
+accepted and merged. This preparation does not claim `ROM_PROFILE_READY`.
+Intentional differences, optional backlog and out-of-pilot items are profile
+boundaries, not runtime failures.
 
 Historical source: Workspace PR #489 / commit
 `391a200a20bd217feee9ca9b973b200c089e6de1`; historical documentation
@@ -26,23 +29,35 @@ or make PR #489 operative.
 
 ## Immutable Phase R1 Git revision identity
 
-These exact revisions define the Phase R1 Workspace/source-test basis. The
-repair branch tip is provenance only and is not the tested Workspace basis.
+These exact revisions define the final Phase R1 ROM product-source identity.
 
 | Identity | Exact revision |
 |---|---|
-| Workspace source/test basis | `21f2d4288920a02a7f4de26ab93217c84c48a5d9` |
-| CFRU Expansion | `3c2f38140ed07991a04ae63ff1108ff2f25547a6` |
+| Workspace ROM product-source basis | `b20454789e375383eb852d749c0357d58af461dc` |
+| CFRU Expansion | `8af56bc2fb71a6a392d7e79d3a22732a4de4fae6` |
 | DPE Gen 9 | `22ffa27ad09cfacbca841d90e6cbe31e6f9b7fdc` |
-| UPR-FVX | `boundary/reference only during Phase R1 — 0e3be63e94e34215cc35308d64e8db15e9a3c48c` |
+| UPR-FVX | `boundary/reference only during Phase R1 — 7bf79ee1e7c46c972f7a9c84942970a950be0723` |
 
-The revision-correct #520/#521 source, module and ARM/object evidence may be
-referenced for source disposition at the integrated CFRU pin above. It is not
-M-014 runtime evidence and must never change a runtime row or variant to PASS.
+### Workspace repository/package provenance
+
+Current accepted Workspace repository/documentation base:
+`87ae5807cd7f5e72831256256c84eb7ae2440a1f`. After product-source basis
+`b20454789e375383eb852d749c0357d58af461dc`, this revision contains only the
+accepted #563/#564 R0 audit documentation; no component source or Gitlink
+changed. These later documentation commits do not change the ROM product-source
+basis. Package, PR, audit and later documentation commit SHAs are provenance
+only and must never replace the ROM product-source basis above.
+
+Exact-pin source/host evidence from #563 and earlier integration Issues may be
+cited as revision-bound supporting evidence only, never as final runtime PASS.
+Older-pin build/module PASS results must not be transferred to this final pin.
 
 ## Phase R1 user-owned ROM identity — record before the first R1 case
 
-Phase R1 runtime must not begin until every field below has sanitized text.
+Phase R1 runtime must not begin until every field below has sanitized text
+recording the current disposition at the exact final product-source identity.
+Complete the required clean/full source build and ROM-owned module tests before
+the private run; older-pin build PASS results do not establish these gates.
 Randomizer settings, seed/run labels and output-profile identity are not R1
 prerequisites and belong only to the Phase R2 section.
 
@@ -54,6 +69,15 @@ prerequisites and belong only to the Phase R2 section.
 | Fresh New Game status | `<RECORD BEFORE RUN>` |
 | Clean/full source-build disposition | `<RECORD BEFORE RUN>` |
 | ROM-owned module-test disposition | `<RECORD BEFORE RUN>` |
+
+The final continuous D01–D16 main run must restart from a genuine Fresh New
+Game on the final ROM product-source basis; no earlier-candidate save or
+historical D01/D02 result can replace it. The Fresh-New-Game source profile is
+Game Difficulty = Vanilla, Trainer Level Scaling = Off, Wild Level Scaling =
+Off, Trainer AI = Standard. Normal running is already enabled; Auto-Run is
+separate and initially Off until the user toggles it. The post-Brock Running
+Shoes Aide is only the accepted short, non-gating cleanup and does not unlock
+normal running.
 
 ## Phase R2 user-owned Randomizer identity — record before any R2 case
 
@@ -95,9 +119,10 @@ rules. This is not universal Gen-1–9 compatibility testing.
 
 Do not report, infer, copy forward or promote any M-014 PASS from Runtime Gate 1,
 earlier milestone runtime passes, PR #489 or historical acceptance records.
-Runtime Gate 1 remains separate targeted evidence. Add any independent
-case/variant rows needed during the user run without changing the base IDs or
-package scope.
+Runtime Gate 1 remains separate targeted evidence. Historical D01/D02 results
+remain revision-bound supporting evidence only; all final results stay NOT_RUN
+until the new final-pin run. Add sanitized variant observations under existing
+IDs only; do not add official case IDs or change package scope.
 
 ## Integrated Trainer-AI/settings witness coverage
 
@@ -107,7 +132,7 @@ Phase R1 run records sanitized observations.
 
 | Existing row | Required R1 witness | Initial status |
 |---|---|---|
-| A01 | Fresh Options visibly show Game Difficulty = Vanilla, Trainer Level Scaling = Off, Wild Level Scaling = Off and Trainer AI = Standard; no unrelated rule or setting changes implicitly. | NOT_RUN |
+| A01 | Fresh Options visibly show Game Difficulty = Vanilla, Trainer Level Scaling = Off, Wild Level Scaling = Off and Trainer AI = Standard; normal running already enabled, separate Auto-Run initially Off; National Dex inactive; no unrelated rule or setting changes implicitly. | NOT_RUN |
 | B16 | Standard and Ironmon Smart are selectable/displayable with legacy entries distinct; open/close without editing does not rewrite settings; Trainer AI changes do not alter Difficulty, Trainer Scaling, Wild Scaling, Hard Cap/Nuzlocke or other independent rules, and those settings do not rewrite Trainer AI. | NOT_RUN |
 | B27 | Explicit Trainer AI plus relevant Difficulty/Scaling values persist through save/reload as designed; no save/state artifact is returned to agents. | NOT_RUN |
 | B16/B27 variant | One representative ordinary trainer battle under Standard and one under Ironmon Smart, checking only runtime routing, stability and profile integration; no AI-strength conclusion. Restore Standard for the continuous main run after the targeted Ironmon Smart check unless using an independent private checkpoint/run. | NOT_RUN |
@@ -116,6 +141,24 @@ No one-click Ironmon preset is required: #520 intentionally added no
 user-facing preset UI. The trainer-battle smoke and settings witnesses remain
 user-owned runtime checks, separate from accepted host/policy and source/ARM
 evidence.
+
+## Mandatory Phase R1 final-pin overlays within existing cases
+
+These mandatory observations extend the named existing cases; they add no
+case IDs and do not change phase ownership or the 115-ID count. Record each
+observation as a sanitized variant of its mapped case. Every overlay remains
+`NOT_RUN`; no mapped case may pass while a required overlay is undisposed.
+The package's severity, STOP and approved-exclusion rules still apply.
+
+| Overlay / existing cases | Required final-pin observations | Initial status |
+|---|---|---|
+| Settings UX — A01, B16, B27 | Page 3 labels/help fully visible with no clipped labels; cycle long to short values with no stale pixels. Trainer Level Scaling raw 0 = `Auto (Diff.)`; Trainer AI raw 0 = `Auto (Diff.)`; Hard Cap raw 0 = `Auto`. Legacy labels render as `Legacy Vanil.`, `Legacy Easy`, `Legacy Normal`, `Legacy Hard`, `Legacy Expert`, `Legacy Smart`; `Standard` and `Ironmon Smart` render correctly. Difficulty, Trainer Level Scaling and Trainer AI remain independent; relevant selections and original-raw behavior remain correct after Save/Reload. | NOT_RUN |
+| Route 10 HM05 — D06, B07, B08, B27 | Before reward, Hiker present at `(17,22)`. Full-Bag/no-room path awards no HM05 and leaves the NPC available for retry. Retry awards exactly one HM05 and sets the shared reward flag. After success, Hiker remains absent after re-entry and Save/Reload; original Route 2 Aide cannot award a second HM05. Check HM field-use independently: corresponding HM item present, compatible non-egg Party Pokémon, required badge, and valid location/field condition; each missing prerequisite safely blocks use. | NOT_RUN |
+| National Dex — A01, A09, A12, A13, A17 | No National Dex at genuine Fresh New Game or before Parcel/normal Pokédex handoff. Parcel removed at the normal Pokédex handoff, ordinary Pokédex unlocked, full National Dex activated exactly there, exactly five Poké Balls awarded once, and Oak/story state ends correctly. National View/Registration works afterward. Save/Reload preserves national state; revisit/reload repeats neither Dex handoff, reward nor script; five-ball accounting remains exactly once and normal onward progression is intact. | NOT_RUN |
+
+The UPR-FVX stale/direct National-Dex request guard is an integrated
+compatibility boundary, not an R1 ROM runtime result. Its Randomizer/output
+behavior belongs to R2 and remains gated there.
 
 ## Phase ownership and acceptance gates
 
@@ -162,12 +205,12 @@ be treated as PASS.
 | A09 | R1 ROM | All procedure-prescribed variants for A09 | NOT_RUN | | |
 | A10 | R1 ROM | All procedure-prescribed variants for A10 | NOT_RUN | | |
 | A11 | R1 ROM | All procedure-prescribed variants for A11 | NOT_RUN | | |
-| A12 | R1 ROM | All procedure-prescribed variants for A12 | NOT_RUN | | |
-| A13 | R1 ROM | All procedure-prescribed variants for A13 | NOT_RUN | | |
+| A12 | R1 ROM | Parcel removed, normal Dex unlocked and full National Dex activated exactly at handoff; five Poké Balls exactly once, Oak/story state correct; all procedure-prescribed A12 variants | NOT_RUN | | |
+| A13 | R1 ROM | National-Dex persistence, no duplicate Dex/balls/script, intact onward progression; all procedure-prescribed A13 variants | NOT_RUN | | |
 | A14 | R1 ROM | All procedure-prescribed variants for A14 | NOT_RUN | | |
 | A15 | R1 ROM | All procedure-prescribed variants for A15 | NOT_RUN | | |
 | A16 | R1 ROM | All procedure-prescribed variants for A16 | NOT_RUN | | |
-| A17 | R1 ROM | All procedure-prescribed variants for A17 | NOT_RUN | | |
+| A17 | R1 ROM | Pre-handoff inactive / post-handoff persistent National Dex and exactly-once five-ball accounting; all procedure-prescribed A17 variants | NOT_RUN | | |
 | B01 | R1 ROM | All procedure-prescribed variants for B01 | NOT_RUN | | |
 | B02 | R1 ROM | All procedure-prescribed variants for B02 | NOT_RUN | | |
 | B03 | R1 ROM | All procedure-prescribed variants for B03 | NOT_RUN | | |
@@ -210,7 +253,7 @@ be treated as PASS.
 | D03 | R1 ROM | All procedure-prescribed variants for D03 | NOT_RUN | | |
 | D04 | R1 ROM | All procedure-prescribed variants for D04 | NOT_RUN | | |
 | D05 | R1 ROM | All procedure-prescribed variants for D05 | NOT_RUN | | |
-| D06 | R1 ROM | All procedure-prescribed variants for D06 | NOT_RUN | | |
+| D06 | R1 ROM | Route 10 HM05 final-pin overlay plus all procedure-prescribed D06 variants | NOT_RUN | | |
 | D07 | R1 ROM | All procedure-prescribed variants for D07 | NOT_RUN | | |
 | D08 | R1 ROM | All procedure-prescribed variants for D08 | NOT_RUN | | |
 | D09 | R1 ROM | All procedure-prescribed variants for D09 | NOT_RUN | | |
@@ -331,6 +374,7 @@ units remain required for final #498 acceptance even if R1 is accepted first.
 
 All 115 base case IDs and all split variants remain `NOT_RUN`. No ROM runtime,
 Randomizer output, emulator or private acceptance execution occurred in this
-repair. Record the complete Phase R1 identity and user-owned ROM results first;
+#565 rebaseline. Record the complete Phase R1 identity and user-owned ROM
+results first;
 only after `ROM_PROFILE_READY` may the Phase R2 identity and randomized-output
 results be recorded.
