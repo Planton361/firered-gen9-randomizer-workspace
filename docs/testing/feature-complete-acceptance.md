@@ -1,6 +1,6 @@
 # Feature-complete manual acceptance package
 
-Prepared for Workspace Issue #498 on 2026-09-22; **all 115 runtime cases remain NOT_RUN**. Documentation/preparation only. Terminal state: `R1_RUN_PACKAGE_REBASELINED / ROM_RUN_PENDING`.
+Rebaselined for Workspace Issue #565 / parent #498 on 2026-09-29; **all 115 runtime cases remain NOT_RUN**. Documentation/preparation only. Terminal state: `R1_RUN_PACKAGE_FINAL_REBASELINE_READY / ROM_RUN_PENDING`.
 
 > **USER-RUN PACKAGE BOUNDARY**
 >
@@ -22,20 +22,26 @@ placeholders such as `<RECORD BEFORE RUN>`.
 
 ### Immutable Git revision identity
 
-| Identity | Exact Phase R1 Workspace/test basis |
+| Identity | Exact Phase R1 ROM product-source basis |
 |---|---|
-| Workspace source/test basis | `21f2d4288920a02a7f4de26ab93217c84c48a5d9` |
-| CFRU Expansion | `3c2f38140ed07991a04ae63ff1108ff2f25547a6` |
+| Workspace ROM product-source basis | `b20454789e375383eb852d749c0357d58af461dc` |
+| CFRU Expansion | `8af56bc2fb71a6a392d7e79d3a22732a4de4fae6` |
 | DPE Gen 9 | `22ffa27ad09cfacbca841d90e6cbe31e6f9b7fdc` |
-| UPR-FVX | `boundary/reference only during Phase R1 — 0e3be63e94e34215cc35308d64e8db15e9a3c48c` |
+| UPR-FVX | `boundary/reference only during Phase R1 — 7bf79ee1e7c46c972f7a9c84942970a950be0723` |
 
-The accepted #520/#521 source, module and ARM/object evidence may be cited
-when it is revision-correct for the integrated CFRU pin above. It is source
-disposition evidence only and never promotes an M-014 runtime row or variant
-to PASS.
+### Workspace repository/package provenance
 
-The documentation branch commit that materializes this package is provenance
-only and must never be substituted for the Workspace/test basis above.
+Current accepted Workspace repository/documentation base:
+`87ae5807cd7f5e72831256256c84eb7ae2440a1f`. After product-source basis
+`b20454789e375383eb852d749c0357d58af461dc`, this revision contains only the
+accepted #563/#564 R0 audit documentation; no component source or Gitlink
+changed. These later documentation commits do not change the ROM product-source
+basis. Package, PR, audit and later documentation commit SHAs are provenance
+only and must never replace the ROM product-source basis above.
+
+Exact-pin source/host evidence from #563 and earlier integration Issues may be
+cited as revision-bound supporting evidence only, never as final runtime PASS.
+Older-pin build/module PASS results must not be transferred to this final pin.
 
 ### Phase R1 user-owned ROM identity — record before the first R1 case
 
@@ -69,8 +75,9 @@ documentation evidence only; it is not operative and provides no M-014 runtime
 result. Historical candidate-era pins, candidate PRs and preparation outcomes
 must not be copied into the current run identity.
 
-Before Phase R1 runtime acceptance, complete the clean/full ROM source build
-and affected ROM module tests required by the package, and record their
+Before Phase R1 runtime acceptance at the exact final product-source identity,
+complete the clean/full ROM source build and affected ROM module tests required
+by the package, and record their
 current sanitized disposition above. R1 does not require Randomizer settings,
 a seed, an output profile or H-family execution. Before Phase R2, complete the
 separate Randomizer source/module gates and record them in the R2 identity.
@@ -93,7 +100,18 @@ forms or quantities, record BLOCKED and a prerequisite; do not force memory,
 invent a fixture result, or expand engine scope. In particular, 999-ball and
 rare-form cases may need a separately approved user-owned test setup.
 
-At package preparation, every runtime case is NOT_RUN. Do not report, infer,
+The final continuous D01–D16 main run must restart from a genuine Fresh New
+Game on the final ROM product-source basis; no earlier-candidate save or
+historical D01/D02 result can replace it. The Fresh-New-Game source profile is
+Game Difficulty = Vanilla, Trainer Level Scaling = Off, Wild Level Scaling =
+Off, Trainer AI = Standard. Normal running is already enabled; Auto-Run is
+separate and initially Off until the user toggles it. The post-Brock Running
+Shoes Aide is only the accepted short, non-gating cleanup and does not unlock
+normal running.
+
+At package preparation, every runtime case is NOT_RUN. Historical D01/D02
+results are revision-bound supporting evidence only, never final-pin PASS.
+Do not report, infer,
 copy forward or promote any M-014 PASS from Runtime Gate 1, earlier milestone
 runtime passes, PR #489 or historical acceptance records. Runtime Gate 1 remains
 separate targeted evidence.
@@ -107,12 +125,14 @@ mandatory gate. No cheats or tracker extensions in the control run.
 
 ## R0 acceptance and phase ownership
 
-Phase R0 is complete and its audit is integrated on current `main`:
-[ROM finish-readiness audit](../audits/rom-finish-readiness-2026-09-20.md).
-Its accepted verdict is `ROM_SCOPE_READY_FOR_ACCEPTANCE` with
-`MISSING_BLOCKER = 0` and `UNKNOWN_BLOCKER = 0`. The documented intentional
-differences, optional backlog and out-of-pilot items are profile boundaries,
-not runtime failures.
+The sole operative R0 gate is the accepted #563
+[final ROM scope audit](../audits/m014-r0-final-rom-scope-2026-09-29.md),
+merged through #564. Verdict: `ROM_SCOPE_READY_FOR_ACCEPTANCE`;
+`MISSING_BLOCKER = 0`; `UNKNOWN_BLOCKER = 0`. Earlier R0 audits are historical
+supporting evidence only. Final R1 can be released only on this #563 closure
+and after #565's package/report rebaseline is accepted and merged. This
+preparation does not claim `ROM_PROFILE_READY`. The documented intentional
+differences, optional backlog and out-of-pilot items remain profile boundaries.
 
 The 115 existing IDs are preserved. The table below is the authoritative phase
 map for both this procedure package and the sanitized report:
@@ -197,24 +217,24 @@ must still complete the entire flow once without restoring an older checkpoint.
 | A09 | Check Pallet before Parcel; talk to original Route 1 Potion Clerk | Temporary parcel Oak absent; original Potion Clerk reward/dialogue remains independent and one-time. |
 | A10 | Approach temporary Route 1 Parcel Clerk from each of its four scripted trigger tiles | Each approach awards Parcel once, removes temporary Clerk, retains input/Route 1 travel; item/name/flags coherent. |
 | A11 | Re-enter/reload after Parcel acquisition but before delivery; visit Viridian Mart | Parcel retained exactly once; temporary Clerk stays absent; Mart cannot give another Parcel. |
-| A12 | Return to Pallet through each of outdoor Oak's two scripted trigger tiles | Parcel removed; Pokédex/unlock state and exactly five Poké Balls awarded once; Oak disappears; no accidental early National Dex policy change. |
-| A13 | Revisit/reload Pallet, Lab and Mart after delivery | No duplicate Dex/balls, no vanilla Lab parcel replay, normal Mart purchasing, no stranded temporary objects. |
+| A12 | Return to Pallet through each of outdoor Oak's two scripted trigger tiles | Parcel removed; normal Pokédex handoff/unlock occurs; exactly five Poké Balls awarded exactly once; Oak disappears and story state ends correctly; full National Dex activates exactly at this handoff, having been inactive at Fresh New Game and before the handoff; revisit/reload repeats neither handoff nor reward. |
+| A13 | Revisit/reload Pallet, Lab and Mart after delivery | National-Dex state persists after Save/Reload; no duplicate Dex/balls/script or vanilla Lab parcel replay; normal Mart purchasing and onward progression intact, no stranded temporary objects. |
 | A14 | Walk past Old Man; interact if available | No roadblock/forced catching tutorial; normal control and northward progression. |
 | A15 | Talk to Daisy after parcel, acquire/use Town Map; repeat | Map granted through intended dialogue once and works; no blocked post-parcel state. |
 | A16 | Route 22 early Rival/League approach before and after relevant story state | Intended optional Rival encounter/state and badge gate; no premature progression or stale parcel block. |
-| A17 | Save/reload after starter, after Parcel, after Dex (three milestones) | Correct party, key items, five-ball accounting and persistent one-time event flags at each point. |
+| A17 | Save/reload after starter, after Parcel, after Dex (three milestones) | Correct party, key items, exactly-once five-ball accounting and persistent one-time event flags at each point; National Dex remains inactive before handoff and fully active after handoff through Save/Reload, with no duplicate Dex/balls/script. |
 
 ## B. Phase R1 — ROM-owned QoL and item semantics (B18 is Phase R2)
 
 | ID | Procedure / variants | PASS criteria |
 |---|---|---|
-| B01 | After running is enabled, hold B indoors in house/Center/large interior | Indoor running works on legal tiles; collisions, restricted terrain and doors remain correct. |
+| B01 | From Fresh New Game with normal running already enabled, hold B indoors in house/Center/large interior | Indoor running works on legal tiles; collisions, restricted terrain and doors remain correct. |
 | B02 | L auto-run on/off, B inversion; repeat after menu/warp/reload | L toggles only when available, B walks in auto-run, normal controls restored on toggle; configured persistence recorded. |
 | B03 | Test L=A option vs normal L mapping | Document known conflict; no stuck buttons or unintended service selection; return to standard mapping for acceptance. |
 | B04 | Exhaust Repel/Super/Max (100/200/250 steps), choose Yes/No, no remaining stock | Correct expiry/reuse prompt, exact one-item consumption on Yes, none on No; no negative count or loop when empty. |
 | B05 | Teach same TM to two compatible Pokemon, including four-move replacement; cancel once | Reusable TM remains; selected move taught/replaced only on success; canceled/incompatible teaching changes nothing. |
 | B06 | Overwrite an HM move via normal learning | Forgettable HM behavior works; no unintended forced permanence or lost unrelated move. |
-| B07 | Cut/Surf/Strength/Flash convenience without move learned | Requires corresponding item, compatible party member, badge and valid location. Flash uses target TM70 mapping; no false assumption of NatDex's larger HM menu. |
+| B07 | Cut/Surf/Strength/Flash convenience without move learned | Requires corresponding item, compatible non-egg party member, badge and valid location/field condition. Flash uses target TM70 mapping; no false assumption of NatDex's larger HM menu. |
 | B08 | B07 negative variants: no item / no compatible member / no badge / wrong location | Each missing prerequisite blocks use safely; compatible member restored permits expected action. |
 | B09 | Script-aware Select from PC at a service that explicitly exposes it; cancel/select/full-party variants | Correct boxed target/party identity and data preserved; no forced deposit/lost Pokemon. If no installed service exposes it, record capability-only N/A with source reason, not universal UI failure. |
 | B10 | Party Move Items: transfer to empty holder, swap two items, cancel | Exact items transfer/swap once; Bag quantities unchanged; held icons and summaries agree. |
@@ -246,6 +266,24 @@ trainer battle under Standard and one under Ironmon Smart. Host/policy gates
 already accepted separately remain source/host evidence, and no conclusion
 about AI strength or superiority is part of this smoke. Do not require a
 one-click Ironmon preset; #520 intentionally added no user-facing preset UI.
+
+## Mandatory Phase R1 final-pin overlays within existing cases
+
+These mandatory observations extend the named existing cases; they add no
+case IDs and do not change phase ownership or the 115-ID count. Record each
+observation as a sanitized variant of its mapped case. Every overlay remains
+`NOT_RUN`; no mapped case may pass while a required overlay is undisposed.
+The package's severity, STOP and approved-exclusion rules still apply.
+
+| Overlay / existing cases | Required final-pin observations | Initial status |
+|---|---|---|
+| Settings UX — A01, B16, B27 | Page 3 labels/help fully visible with no clipped labels; cycle long to short values with no stale pixels. Trainer Level Scaling raw 0 = `Auto (Diff.)`; Trainer AI raw 0 = `Auto (Diff.)`; Hard Cap raw 0 = `Auto`. Legacy labels render as `Legacy Vanil.`, `Legacy Easy`, `Legacy Normal`, `Legacy Hard`, `Legacy Expert`, `Legacy Smart`; `Standard` and `Ironmon Smart` render correctly. Difficulty, Trainer Level Scaling and Trainer AI remain independent; relevant selections and original-raw behavior remain correct after Save/Reload. | NOT_RUN |
+| Route 10 HM05 — D06, B07, B08, B27 | Before reward, Hiker present at `(17,22)`. Full-Bag/no-room path awards no HM05 and leaves the NPC available for retry. Retry awards exactly one HM05 and sets the shared reward flag. After success, Hiker remains absent after re-entry and Save/Reload; original Route 2 Aide cannot award a second HM05. Check HM field-use independently: corresponding HM item present, compatible non-egg Party Pokémon, required badge, and valid location/field condition; each missing prerequisite safely blocks use. | NOT_RUN |
+| National Dex — A01, A09, A12, A13, A17 | No National Dex at genuine Fresh New Game or before Parcel/normal Pokédex handoff. Parcel removed at the normal Pokédex handoff, ordinary Pokédex unlocked, full National Dex activated exactly there, exactly five Poké Balls awarded once, and Oak/story state ends correctly. National View/Registration works afterward. Save/Reload preserves national state; revisit/reload repeats neither Dex handoff, reward nor script; five-ball accounting remains exactly once and normal onward progression is intact. | NOT_RUN |
+
+The UPR-FVX stale/direct National-Dex request guard is an integrated
+compatibility boundary, not an R1 ROM runtime result. Its Randomizer/output
+behavior belongs to R2 and remains gated there.
 
 ## C. Phase R1 — M-009 global-frame regression pass
 
