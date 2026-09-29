@@ -6,7 +6,7 @@
 
 - Workspace base: `8260d03162ce8843a477a466f240e7de00afe839`
 - Workspace branch: `integration/upr-national-dex-guard-pin`
-- Final Workspace branch head: the commit containing this report; GitHub PR metadata records its full SHA.
+- Workspace pin integration commit: a93f9282beb2735845a11edf5b0d4adafb417417
 - UPR-FVX Gitlink: `0e3be63e94e34215cc35308d64e8db15e9a3c48c` → `7bf79ee1e7c46c972f7a9c84942970a950be0723`
 - Accepted #550 source head: `3fbe7afc0a6ececf63aa446b04ba7e5e3577faa0`
 - UPR-FVX PR #186 squash merge: `7bf79ee1e7c46c972f7a9c84942970a950be0723`
