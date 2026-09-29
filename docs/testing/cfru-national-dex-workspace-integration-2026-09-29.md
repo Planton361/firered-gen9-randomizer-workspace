@@ -11,7 +11,7 @@
 - Accepted CFRU #549 head: `974f203f2feac10dafee86bb6b781f1c147e248b`
 - CFRU #59 merged revision: `818f65090b1af2b60287f9dbc60302c2b27ac404`
 
-CFRU PR #59 is merged into `compat/firered-gen9-randomizer`. The merge commit has the previous CFRU pin and accepted #549 head as its parents; the accepted head is its first parent. The accepted-head-to-merge range contains one commit, and `git diff --quiet 974f203f2feac10dafee86bb6b781f1c147e248b 818f65090b1af2b60287f9dbc60302c2b27ac404` reports identical trees. The live compat branch resolves to the merged revision.
+CFRU PR #59 is merged into `compat/firered-gen9-randomizer`. The merge commit's first parent is the previous compat base `ec4e1b7410a65b23e081010c580ecb8c078a64a1`; its second parent is the accepted #549 head `974f203f2feac10dafee86bb6b781f1c147e248b`. The accepted-head-to-merge range contains one commit, and `git diff --quiet 974f203f2feac10dafee86bb6b781f1c147e248b 818f65090b1af2b60287f9dbc60302c2b27ac404` reports identical trees. The live compat branch resolves to the merged revision.
 
 The exact-pin checks below ran with the Workspace Gitlink staged at the target. Workspace commit `e374a49e9dbdc7a1ab5bcecad9e884393059efc7` records that pin; the evidence-file commit follows it without changing the pin.
 
