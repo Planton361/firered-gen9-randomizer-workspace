@@ -5,6 +5,7 @@ import importlib.util
 import io
 import os
 from pathlib import Path
+import re
 import subprocess
 import sys
 import tempfile
@@ -313,6 +314,133 @@ class PreflightTests(unittest.TestCase):
                 r.main(['--PRIVATE_PATH_MARKER'])
         self.assertEqual(error.exception.code, 2)
         self.assertNotIn('PRIVATE_PATH_MARKER', stream.getvalue())
+
+
+class SourceExportTests(unittest.TestCase):
+    @staticmethod
+    def excluded(name):
+        path = Path(name)
+        return (path.parts[0] in ('deps', 'build', '.git')
+                or path.suffix.lower() in
+                ('.gba', '.gb', '.gbc', '.sav', '.state', '.exe', '.dll', '.jar', '.zip', '.7z', '.srm')
+                or re.fullmatch(r'\.ss[0-9].*', path.suffix, re.IGNORECASE) is not None
+                or any(part.startswith('.env') for part in path.parts))
+
+    def assert_export(self, component, pin, exported):
+        with patch.object(r.subprocess, 'Popen', wraps=subprocess.Popen) as invocation:
+            r.export_source(component, pin, exported)
+        invocation.assert_called_once()
+        command = invocation.call_args.args[0]
+        self.assertEqual(command, ['git', '-C', str(component), 'archive', pin,
+                                   '--', '.', *r.EXPORT_EXCLUDES])
+        self.assertLessEqual(len(command), 32)
+        self.assertLess(sum(len(os.fsencode(arg)) + 1 for arg in command), 2048)
+        return command
+
+    def test_thousands_of_committed_paths_keep_archive_argv_bounded(self):
+        with tempfile.TemporaryDirectory(prefix='r1-large-synthetic-') as directory:
+            root = Path(directory)
+            repo = root / 'component'
+            repo.mkdir()
+            subprocess.run(['git', 'init', '-q', str(repo)], check=True)
+            def commit():
+                subprocess.run(['git', '-C', str(repo), 'add', '.'], check=True)
+                subprocess.run(['git', '-C', str(repo), '-c', 'user.name=Synthetic',
+                                '-c', 'user.email=synthetic@example.invalid', 'commit',
+                                '-qm', 'NON-ROM synthetic source export fixture'], check=True)
+                return r.git(repo, 'rev-parse', 'HEAD')
+            (repo / 'source.py').write_text('committed synthetic source')
+            small_pin = commit()
+            small_command = self.assert_export(repo, small_pin, root / 'small-export')
+            sources = {'source.py'}
+            for index in range(6000):
+                name = f'src/group_{index // 100}/source_{index:04d}_{"x" * 64}.c'
+                sources.add(name)
+                target = repo / name
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_text('/* NON-ROM synthetic source fixture */')
+            # All exclusions at root and nested depth, including mixed case.
+            blocked = {'deps/not_a_binary.txt', 'build/not_a_build.txt',
+                       '.env', '.env.local', 'nested/.env', 'nested/.environment',
+                       'nested/.envdir/fixture.txt'}
+            for suffix in ('.gba', '.gb', '.gbc', '.sav', '.state', '.exe', '.dll',
+                           '.jar', '.zip', '.7z', '.srm', '.ss4', '.ss5'):
+                blocked.update({f'fixture{suffix}', f'nested/deep/fixture{suffix.upper()}'})
+            for name in blocked:
+                target = repo / name
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_text('EXCLUDED NON-ROM NON-BINARY synthetic fixture only')
+            # Nested directories with these names remain legitimate source.
+            for name in ('src/deps/keep.c', 'src/build/keep.c', 'src/env_config.c'):
+                sources.add(name)
+                target = repo / name
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_text('/* legitimate synthetic source */')
+            large_pin = commit()
+            # Committed-tree guarantee despite dirty and untracked files.
+            (repo / 'source.py').write_text('dirty source must remain untouched')
+            (repo / 'untracked.c').write_text('untracked synthetic source')
+            before = r.git(repo, 'status', '--porcelain')
+            exported = root / 'large-export'
+            large_command = self.assert_export(repo, large_pin, exported)
+            self.assertEqual(small_command[:4] + small_command[5:],
+                             large_command[:4] + large_command[5:])
+            self.assertGreater(sum(len(name) + 1 for name in sources), 248276)
+            files = {str(path.relative_to(exported)) for path in exported.rglob('*') if path.is_file()}
+            self.assertEqual(files, sources)
+            self.assertTrue(files.isdisjoint(blocked))
+            self.assertEqual((exported / 'source.py').read_text(), 'committed synthetic source')
+            self.assertEqual(r.git(repo, 'status', '--porcelain'), before)
+            # Inspect the actual Git archive listing before extraction: excluded
+            # fixtures must never have entered the stream, not merely be skipped.
+            result = subprocess.run(large_command, stdout=subprocess.PIPE,
+                                    stderr=subprocess.PIPE, check=True)
+            with r.tarfile.open(fileobj=io.BytesIO(result.stdout)) as archive:
+                archived_files = {member.name for member in archive if member.isfile()}
+            self.assertEqual(archived_files, sources)
+            self.assertNotIn(b'EXCLUDED NON-ROM NON-BINARY', result.stdout)
+            print(f'Bounded export: {len(sources)} sources, {len(large_command)} argv entries; '
+                  'small/large command shape identical; stream exclusions PASS')
+
+    def smoke_exact_pin(self, name):
+        workspace = RUNNER.parents[2]
+        relative, pin = r.PINS[name]
+        component = workspace / relative
+        def identity():
+            return (r.git(component, 'rev-parse', 'HEAD'),
+                    r.git(component, 'status', '--porcelain', '--untracked-files=all'),
+                    r.git(component, 'ls-files', '--stage', '-z'))
+        before = identity()
+        self.assertEqual(before[0], pin)
+        self.assertEqual(before[1], '')
+        names = set(filter(None, r.git(component, 'ls-tree', '-r', '--name-only', '-z', pin).split('\0')))
+        expected = {name for name in names if not self.excluded(name)}
+        with tempfile.TemporaryDirectory(prefix='r1-exact-source-smoke-') as directory:
+            exported = Path(directory) / name
+            command = self.assert_export(component, pin, exported)
+            for required in ('scripts/build.py', 'scripts/make.py', 'scripts/insert.py',
+                             'BPRE.ld', 'linker.ld', 'special_inserts.asm',
+                             'hooks', 'repoints', 'functionrewrites'):
+                self.assertTrue((exported / required).is_file(), required)
+            for required in ('src', 'include', 'assembly', 'graphics', 'strings'):
+                self.assertTrue((exported / required).is_dir(), required)
+                self.assertTrue(any((exported / required).rglob('*')), required)
+            for excluded in ('deps', 'build', '.git'):
+                self.assertFalse((exported / excluded).exists(), excluded)
+            files = {str(path.relative_to(exported)) for path in exported.rglob('*') if path.is_file()}
+            self.assertEqual(files, expected, 'legitimate committed source set changed')
+            self.assertFalse(any(self.excluded(path) for path in files))
+            self.assertEqual(identity(), before, 'registered component changed during export')
+            print(f'{name} exact-pin export: PASS; {len(files)} committed files; '
+                  f'{len(command)} argv entries; required structure/exclusions/unchanged PASS')
+        self.assertFalse(exported.exists())
+        self.assertEqual(identity(), before)
+
+    def test_cfru_exact_pin_export_smoke(self):
+        self.smoke_exact_pin('CFRU')
+
+    def test_dpe_exact_pin_export_smoke(self):
+        self.smoke_exact_pin('DPE')
 
 
 class RealChildTests(unittest.TestCase):

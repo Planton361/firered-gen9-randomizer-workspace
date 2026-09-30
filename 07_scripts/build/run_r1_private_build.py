@@ -21,6 +21,15 @@ PINS = {
 TOOLS = ('python3', 'arm-none-eabi-as', 'arm-none-eabi-gcc',
          'arm-none-eabi-ld', 'arm-none-eabi-objcopy', 'arm-none-eabi-objdump',
          'arm-none-eabi-nm', 'grit', 'wav2agb', 'mid2agb')
+# Fixed Git-side exclusions: argv never grows with committed file count.
+# Glob **/ covers root and nested names; icase preserves suffix.lower() behavior.
+EXPORT_EXCLUDES = (
+    ':(top,exclude)deps', ':(top,exclude)build', ':(top,exclude).git',
+    *(f':(glob,icase,exclude)**/*{suffix}' for suffix in
+      ('.gba', '.gb', '.gbc', '.sav', '.state', '.exe', '.dll', '.jar', '.zip', '.7z')),
+    ':(glob,icase,exclude)**/*.srm', ':(glob,icase,exclude)**/*.ss[0-9]*',
+    ':(glob,exclude)**/.env*', ':(glob,exclude)**/.env*/**',
+)
 PROFILE_FILES = {'07_scripts/build/run_r1_private_build.py',
                  '07_scripts/build/tests/test_r1_private_build.py',
                  'docs/build/r1-private-build.md'}
@@ -93,16 +102,10 @@ def validate_output(workspace: Path, output: Path) -> None:
 
 def export_source(component: Path, pin: str, destination: Path) -> None:
     destination.mkdir()
-    # Do not export bundled tool binaries or prebuilt/protected artifacts.
-    names = git(component, 'ls-tree', '-r', '--name-only', pin).splitlines()
-    names = [name for name in names
-             if name.split('/')[0] not in ('deps', 'build', '.git')
-             and Path(name).suffix.lower() not in
-             ('.gba', '.gb', '.gbc', '.sav', '.state', '.exe', '.dll', '.jar', '.zip', '.7z')
-             and not Path(name).name.startswith('.env')]
-    if not names:
-        raise BuildFailure('empty source export')
-    with subprocess.Popen(['git', '-C', str(component), 'archive', pin, '--', *names],
+    # Git excludes protected entries before producing the archive stream.
+    exported_files = 0
+    with subprocess.Popen(['git', '-C', str(component), 'archive', pin, '--',
+                           '.', *EXPORT_EXCLUDES],
                           stdout=subprocess.PIPE, stderr=subprocess.DEVNULL) as child:
         try:
             with tarfile.open(fileobj=child.stdout, mode='r|') as archive:
@@ -118,12 +121,15 @@ def export_source(component: Path, pin: str, destination: Path) -> None:
                         with archive.extractfile(member) as source, target.open('xb') as sink:
                             shutil.copyfileobj(source, sink)
                         target.chmod(member.mode & 0o777)
+                        exported_files += 1
         except BaseException:
             child.kill()
             child.wait()
             raise
         if child.wait() != 0:
             raise BuildFailure('source export returned non-zero')
+    if not exported_files:
+        raise BuildFailure('empty source export')
 
 
 def run_child(tree: Path, script: str, *, dpe_make: bool = False) -> None:

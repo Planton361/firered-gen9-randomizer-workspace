@@ -35,6 +35,10 @@ Workspace descendants are supported only when their diff from the integration
 base is confined to this runner, its focused test file, and this usage document.
 HEAD Gitlinks, index Gitlinks and component HEADs must match. Local component
 file edits are never consumed: only the exact committed trees are exported.
+Source export uses `git archive` with a fixed set of Git-side excludes, so
+command size does not grow with repository file count. Top-level `deps/`,
+`build/`, `.git/`, ROM/save/state files, executable/archive extensions and
+`.env*` entries are excluded before the archive stream is produced.
 Pre-tooling ROM product-source provenance remains
 `b20454789e375383eb852d749c0357d58af461dc`.
 
