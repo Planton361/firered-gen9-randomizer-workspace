@@ -20,16 +20,40 @@ spec.loader.exec_module(r)
 FIXTURE = b'NON-ROM synthetic fixture for orchestration only\n'
 
 
+def init_storage_checkout(root, *, ignore_input=True, ignore_output=True):
+    root.mkdir(parents=True)
+    subprocess.run(['git', 'init', '-q', str(root)], check=True)
+    ignored = []
+    if ignore_input:
+        ignored.append('04_private_roms/')
+    if ignore_output:
+        ignored.append('05_builds/')
+    (root / '.gitignore').write_text('\n'.join(ignored) + ('\n' if ignored else ''))
+    source = root / '02_external' / 'CFRU-expansion' / 'tracked-source.txt'
+    source.parent.mkdir(parents=True)
+    source.write_text('tracked synthetic source')
+    subprocess.run(['git', '-C', str(root), 'add', '.gitignore', '02_external'], check=True)
+    subprocess.run(['git', '-C', str(root), '-c', 'user.name=Synthetic',
+                    '-c', 'user.email=synthetic@example.invalid', 'commit', '-qm',
+                    'NON-ROM synthetic storage checkout'], check=True)
+    (root / '04_private_roms').mkdir()
+    (root / '05_builds').mkdir()
+    (root / '07_scripts').mkdir()
+    (root / 'docs').mkdir()
+    (root / 'arbitrary' / 'subdir').mkdir(parents=True)
+    return root
+
+
 class PipelineTests(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory(prefix='r1-synthetic-tests-')
         self.addCleanup(self.temp.cleanup)
         self.root = Path(self.temp.name)
         self.workspace = self.root / 'workspace'
-        self.workspace.mkdir()
-        self.base = self.root / 'PRIVATE_INPUT_MARKER.gba'
+        init_storage_checkout(self.workspace)
+        self.base = self.workspace / '04_private_roms' / 'PRIVATE INPUT MARKER.gba'
         self.base.write_bytes(FIXTURE)
-        self.output = self.root / 'PRIVATE_OUTPUT_MARKER.gba'
+        self.output = self.workspace / '05_builds' / 'PRIVATE OUTPUT MARKER.gba'
         self.calls = []
         self.areas = []
         self.mode = {}
@@ -316,6 +340,128 @@ class PreflightTests(unittest.TestCase):
         self.assertNotIn('PRIVATE_PATH_MARKER', stream.getvalue())
 
 
+class CanonicalPathPolicyTests(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory(prefix='r1-path-policy-')
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name)
+        self.runner_workspace = init_storage_checkout(self.root / 'runner-workspace')
+        self.storage = init_storage_checkout(self.root / 'storage-workspace')
+        self.input = self.storage / '04_private_roms' / 'base with spaces.gba'
+        self.input.write_bytes(FIXTURE)
+        self.output = self.storage / '05_builds' / 'test.gba'
+
+    def test_allowed_canonical_private_input_with_spaces(self):
+        self.assertEqual(r.validate_input(self.runner_workspace, self.input),
+                         self.input.resolve())
+
+    def test_allowed_canonical_output_and_directory_shorthand(self):
+        self.assertEqual(r.validate_output(self.runner_workspace, self.output),
+                         self.output.resolve())
+        self.assertEqual(r.validate_output(self.runner_workspace,
+                                           self.storage / '05_builds'), self.output.resolve())
+
+        outside_alias = self.root / 'outside-build-alias'
+        outside_alias.symlink_to(self.storage / '05_builds', target_is_directory=True)
+        self.assertEqual(r.validate_output(self.runner_workspace, outside_alias / 'alias.gba'),
+                         (self.storage / '05_builds' / 'alias.gba').resolve())
+        self.assertEqual(r.validate_output(self.runner_workspace, outside_alias),
+                         self.output.resolve())
+        with self.assertRaises(r.BuildFailure):
+            r.validate_output(self.runner_workspace, self.storage / 'arbitrary')
+
+    def test_existing_final_output_fails_without_overwrite(self):
+        original = b'existing NON-ROM output bytes'
+        self.output.write_bytes(original)
+        with self.assertRaises(r.BuildFailure):
+            r.validate_output(self.runner_workspace, self.output)
+
+        calls = []
+        with patch.object(r, 'validate_profile'), patch.object(r, 'validate_tools'), \
+             patch.object(r, 'export_source', side_effect=lambda *args: calls.append('export')), \
+             patch.object(r, 'run_child', side_effect=lambda *args, **kwargs: calls.append('child')), \
+             contextlib.redirect_stdout(io.StringIO()):
+            result = r.execute(self.runner_workspace, self.input, self.output)
+        self.assertEqual(result, 1)
+        self.assertEqual(self.output.read_bytes(), original)
+        self.assertEqual(calls, [])
+
+    def test_dirty_old_storage_checkout_zones_are_accepted_and_untouched(self):
+        source = self.storage / '02_external' / 'CFRU-expansion' / 'tracked-source.txt'
+        source.write_text('unrelated dirty tracked source')
+        before_status = r.git(self.storage, 'status', '--porcelain')
+        before_source = source.read_bytes()
+
+        self.assertEqual(r.validate_input(self.runner_workspace, self.input), self.input.resolve())
+        self.assertEqual(r.validate_output(self.runner_workspace, self.output), self.output.resolve())
+        self.assertEqual(r.git(self.storage, 'status', '--porcelain'), before_status)
+        self.assertEqual(source.read_bytes(), before_source)
+
+    def test_ignore_contract_requires_the_zone_itself_to_be_ignored(self):
+        no_private_ignore = init_storage_checkout(self.root / 'no-private-ignore',
+                                                  ignore_input=False)
+        private_input = no_private_ignore / '04_private_roms' / 'base.gba'
+        private_input.write_bytes(FIXTURE)
+        with self.assertRaises(r.BuildFailure):
+            r.validate_input(self.runner_workspace, private_input)
+
+        no_build_ignore = init_storage_checkout(self.root / 'no-build-ignore',
+                                                 ignore_output=False)
+        with self.assertRaises(r.BuildFailure):
+            r.validate_output(self.runner_workspace,
+                              no_build_ignore / '05_builds' / 'test.gba')
+
+    def test_source_and_noncanonical_destinations_are_rejected(self):
+        candidates = (
+            self.storage / '02_external' / 'CFRU-expansion' / 'test.gba',
+            self.storage / '07_scripts' / 'foo.gba',
+            self.storage / 'docs' / 'foo.gba',
+            self.storage / 'arbitrary' / 'subdir' / 'foo.gba',
+        )
+        for candidate in candidates:
+            with self.subTest(candidate=candidate.relative_to(self.storage)):
+                with self.assertRaises(r.BuildFailure):
+                    r.validate_output(self.runner_workspace, candidate)
+
+    def test_symlinks_that_do_not_resolve_to_the_canonical_zone_fail_closed(self):
+        source = self.storage / '02_external' / 'CFRU-expansion' / 'tracked-source.txt'
+        input_link = self.storage / '04_private_roms' / 'linked.gba'
+        input_link.symlink_to(source)
+        with self.assertRaises(r.BuildFailure):
+            r.validate_input(self.runner_workspace, input_link)
+
+        private_alias = self.storage / '04_private_roms' / 'source-alias'
+        private_alias.symlink_to(source.parent, target_is_directory=True)
+        with self.assertRaises(r.BuildFailure):
+            r.validate_input(self.runner_workspace, private_alias / source.name)
+
+        escaped_parent = self.storage / '05_builds' / 'source-alias'
+        escaped_parent.symlink_to(source.parent, target_is_directory=True)
+        with self.assertRaises(r.BuildFailure):
+            r.validate_output(self.runner_workspace, escaped_parent / 'test.gba')
+
+        linked_output = self.storage / '05_builds' / 'existing-link.gba'
+        linked_output.symlink_to(source)
+        with self.assertRaises(r.BuildFailure):
+            r.validate_output(self.runner_workspace, linked_output)
+
+        linked_zone_root = init_storage_checkout(self.root / 'linked-zone-root')
+        (linked_zone_root / '05_builds').rmdir()
+        (linked_zone_root / '05_builds').symlink_to(
+            linked_zone_root / '02_external' / 'CFRU-expansion', target_is_directory=True)
+        with self.assertRaises(r.BuildFailure):
+            r.validate_output(self.runner_workspace,
+                              linked_zone_root / '05_builds' / 'test.gba')
+
+        private_zone_root = init_storage_checkout(self.root / 'linked-private-root')
+        (private_zone_root / '04_private_roms').rmdir()
+        (private_zone_root / '04_private_roms').symlink_to(
+            private_zone_root / '02_external' / 'CFRU-expansion', target_is_directory=True)
+        with self.assertRaises(r.BuildFailure):
+            r.validate_input(self.runner_workspace,
+                             private_zone_root / '04_private_roms' / source.name)
+
+
 class SourceExportTests(unittest.TestCase):
     @staticmethod
     def excluded(name):
@@ -520,7 +666,7 @@ class RealChildTests(unittest.TestCase):
         with tempfile.TemporaryDirectory(prefix='r1-full-synthetic-') as directory:
             root = Path(directory)
             workspace = root / 'workspace'
-            workspace.mkdir()
+            init_storage_checkout(workspace)
             pins = {}
             for name in ('DPE', 'CFRU'):
                 repo = workspace / name
@@ -535,9 +681,9 @@ class RealChildTests(unittest.TestCase):
                                 '-c', 'user.email=synthetic@example.invalid', 'commit',
                                 '-qm', 'NON-ROM synthetic sources'], check=True)
                 pins[name] = (name, r.git(repo, 'rev-parse', 'HEAD'))
-            input_path = root / 'PRIVATE_INPUT_MARKER.gba'
+            input_path = workspace / '04_private_roms' / 'PRIVATE_INPUT_MARKER.gba'
             input_path.write_bytes(FIXTURE)
-            output_path = root / 'PRIVATE_OUTPUT_MARKER.gba'
+            output_path = workspace / '05_builds' / 'PRIVATE_OUTPUT_MARKER.gba'
             calls, areas = [], []
             original_child, original_export = r.run_child, r.export_source
             def child(tree, script, **kwargs):
@@ -560,7 +706,7 @@ class RealChildTests(unittest.TestCase):
             for marker in ('PRIVATE_INPUT_MARKER', 'PRIVATE_OUTPUT_MARKER', 'PRIVATE_CHILD_PATH_MARKER'):
                 self.assertNotIn(marker, stream.getvalue())
             self.assertEqual(before, {name: r.git(workspace / name, 'status', '--porcelain') for name in pins})
-            self.assertFalse(list(workspace.rglob('*.gba')))
+            self.assertEqual(set(workspace.rglob('*.gba')), {input_path, output_path})
 
     def test_interrupt_stops_child_process_group(self):
         class FakeChild:

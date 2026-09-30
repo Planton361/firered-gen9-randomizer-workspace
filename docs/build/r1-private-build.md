@@ -1,15 +1,46 @@
 # R1 private build
 
+The canonical private artifact flow is:
+
+```text
+04_private_roms/<input>.gba
+          ↓
+       runner
+          ↓
+05_builds/test.gba
+```
+
 This user-owned POSIX command builds Clean FireRed → DPE → CFRU using exact
-committed source exports. Run from the Workspace root:
+committed source exports. Run it from the Workspace checkout containing the
+runner:
 
 ```sh
 python3 07_scripts/build/run_r1_private_build.py \
-  --base-rom /private/path/BPRE0.gba \
-  --output /private/path/firered-gen9-r1.gba
+  --base-rom "/workspace/04_private_roms/FireRed private input.gba" \
+  --output /workspace/05_builds/test.gba
 ```
 
-The example paths are placeholders. Keep the ROM outside the repository.
+The example path is a placeholder. The input may have any filename, including
+spaces; the runner copies it into its disposable DPE tree as `BPRE0.gba`. The
+input and output may live in a different local Workspace checkout than the one
+containing the runner. That storage checkout may be dirty or on an older branch:
+the runner reads only the private input there and publishes only the final
+output there. It does not use that checkout as a build source, change its
+Gitlinks or branch, or run Git write commands there.
+
+Artifact paths are accepted only after canonical path resolution proves they
+are below that checkout's `04_private_roms/` or `05_builds/` directory and Git
+reports both the zone and target path as ignored. Symlink inputs are rejected;
+symlinked zones or parent paths that resolve outside the approved zone are
+rejected. An outside alias is accepted only when its resolved path proves the
+same canonical ignored zone. The output parent must already exist. An existing
+output is preserved and causes failure; there is no overwrite option.
+
+`--output /workspace/05_builds` is a directory shorthand for
+`/workspace/05_builds/test.gba`, but only when the argument resolves to that
+existing canonical ignored build directory. The runner never writes the
+persistent final ROM to `02_external/CFRU-expansion/test.gba`.
+
 Private paths stay local; the runner neither analyzes ROM contents nor requires
 a ROM hash. It does not upload artifacts or perform Git writes. Routine status,
 CLI errors, and child-process failures do not echo private paths. Child output
@@ -42,12 +73,15 @@ command size does not grow with repository file count. Top-level `deps/`,
 Pre-tooling ROM product-source provenance remains
 `b20454789e375383eb852d749c0357d58af461dc`.
 
-The output parent must already exist. Input must be a regular file outside the
-Workspace; symlink inputs are rejected. Output and temporary build storage must
-be outside Git checkouts. Existing destinations, including dangling symlinks,
-are rejected; there is no overwrite option. Publication uses an atomic,
-no-overwrite hard link within the destination filesystem. A filesystem that
-cannot support this operation fails safely.
+The output parent must already exist. The private input must be an existing
+regular, non-symlink file below a canonical `04_private_roms/` directory of a
+Git worktree; Git must report both the zone and input path as ignored. The
+final output must be a new path below a canonical `05_builds/` directory of a
+Git worktree, with both the zone and target path ignored by Git. Temporary
+build storage remains outside Git worktrees. Existing destinations, including
+dangling symlinks, are rejected; there is no overwrite option. Publication
+uses an atomic, no-overwrite hard link within the destination filesystem. A
+filesystem that cannot support this operation fails safely.
 
 Profile/toolchain validation and DPE source build precede private input copying.
 The pipeline runs DPE `scripts/build.py`, DPE `scripts/make.py`, CFRU
@@ -61,13 +95,17 @@ suite. DPE has no standalone source/module test gate at this pin.
 
 Each insertion requires absence of `test.gba` immediately before invocation,
 exit 0, and a regular, non-symlink output afterward. Isolated trees establish
-freshness without ROM analysis. A later step never runs after a failed stage.
-Temporary source trees and private intermediate outputs are removed on success,
-failure and handled interruption. The final output is staged locally, the build
-area is cleaned, and only then is the destination published. If cleanup cannot
-complete, the runner reports failure rather than READY. OS/filesystem failures
-that prevent removal require local user attention; abrupt kill/power loss cannot
-run Python cleanup.
+freshness without ROM analysis. DPE's `test.gba` is handed to CFRU as
+`BPRE0.gba`; CFRU still creates its own internal `test.gba` only inside the
+disposable build tree. The final persistent `test.gba` is copied to
+`05_builds/test.gba` only after both insertions succeed and temporary cleanup
+completes. A later step never runs after a failed stage. Temporary source trees
+and private intermediate outputs are removed on success, failure and handled
+interruption. The final output is staged locally, the build area is cleaned,
+and only then is the destination published. If cleanup cannot complete, the
+runner reports failure rather than READY. OS/filesystem failures that prevent
+removal require local user attention; abrupt kill/power loss cannot run Python
+cleanup.
 
 CLI exit codes:
 
