@@ -33,6 +33,9 @@ EXPORT_EXCLUDES = (
 PROFILE_FILES = {'07_scripts/build/run_r1_private_build.py',
                  '07_scripts/build/tests/test_r1_private_build.py',
                  'docs/build/r1-private-build.md'}
+PRIVATE_INPUT_DIR = '04_private_roms'
+BUILD_OUTPUT_DIR = '05_builds'
+DEFAULT_OUTPUT_NAME = 'test.gba'
 # DPE's committed make.py ignores os.system insert status. Adapt execution,
 # without editing its source, so a failed nested build/insert always fails.
 DPE_MAKE = """import os, runpy, subprocess, sys
@@ -84,20 +87,102 @@ def validate_tools() -> None:
         raise BuildFailure('unsupported host; POSIX required')
 
 
-def validate_output(workspace: Path, output: Path) -> None:
-    resolved = output.resolve()
-    if resolved == workspace.resolve() or workspace.resolve() in resolved.parents:
-        raise BuildFailure('output inside Workspace is prohibited')
-    if os.path.lexists(output):
-        raise BuildFailure('output already exists')
-    if not output.parent.is_dir():
-        raise BuildFailure('output parent must be an existing directory')
-    # Also reject tracked/source destinations in other Git checkouts.
-    result = subprocess.run(['git', '-C', str(output.parent), 'rev-parse',
+def worktree_root(path: Path) -> Path:
+    result = subprocess.run(['git', '-C', str(path), 'rev-parse',
+                             '--show-toplevel'], stdout=subprocess.PIPE,
+                            stderr=subprocess.DEVNULL)
+    if result.returncode:
+        raise BuildFailure('artifact path must be inside a Git worktree')
+    try:
+        return Path(os.fsdecode(result.stdout).strip()).resolve(strict=True)
+    except (OSError, RuntimeError):
+        raise BuildFailure('artifact worktree metadata unavailable') from None
+
+
+def ignored_by_git(root: Path, relative: Path) -> bool:
+    result = subprocess.run(['git', '-C', str(root), 'check-ignore', '-q', '--',
+                             relative.as_posix()], stdout=subprocess.DEVNULL,
+                            stderr=subprocess.DEVNULL)
+    return result.returncode == 0
+
+
+def canonical_zone(root: Path, zone_name: str) -> Path:
+    zone = root / zone_name
+    try:
+        resolved = zone.resolve(strict=True)
+    except (OSError, RuntimeError):
+        raise BuildFailure('canonical artifact directory unavailable') from None
+    if zone.is_symlink() or resolved != zone or not resolved.is_dir():
+        raise BuildFailure('canonical artifact directory rejected')
+    if not ignored_by_git(root, Path(zone_name)):
+        raise BuildFailure('artifact directory is not ignored by Git')
+    return zone
+
+
+def validate_zone_path(path: Path, zone_name: str) -> Path:
+    """Prove a resolved artifact path is under the matching ignored Git zone."""
+    try:
+        root = worktree_root(path.parent)
+        relative = path.relative_to(root)
+    except BuildFailure:
+        raise
+    except (OSError, RuntimeError, ValueError):
+        raise BuildFailure('artifact path is outside its canonical Git zone') from None
+    canonical_zone(root, zone_name)
+    if len(relative.parts) < 2 or relative.parts[0] != zone_name:
+        raise BuildFailure('artifact path is outside its canonical Git zone')
+    if not ignored_by_git(root, relative):
+        raise BuildFailure('artifact path is not ignored by Git')
+    return path
+
+
+def validate_input(workspace: Path, base_rom: Path) -> Path:
+    del workspace  # Storage may be a different, dirty Workspace checkout.
+    if base_rom.is_symlink() or not base_rom.is_file():
+        raise BuildFailure('input must be an existing regular file')
+    try:
+        resolved = base_rom.resolve(strict=True)
+    except (OSError, RuntimeError):
+        raise BuildFailure('input must be an existing regular file') from None
+    return validate_zone_path(resolved, PRIVATE_INPUT_DIR)
+
+
+def validate_output(workspace: Path, output: Path) -> Path:
+    del workspace  # Storage may be a different, dirty Workspace checkout.
+    try:
+        if os.path.lexists(output) and output.is_dir():
+            directory = output.resolve(strict=True)
+            root = worktree_root(directory)
+            zone = canonical_zone(root, BUILD_OUTPUT_DIR)
+            if directory != zone:
+                raise BuildFailure('output directory shorthand requires canonical build directory')
+            final = zone / DEFAULT_OUTPUT_NAME
+        else:
+            if os.path.lexists(output):
+                raise BuildFailure('output already exists')
+            parent = output.parent.resolve(strict=True)
+            if not parent.is_dir():
+                raise BuildFailure('output parent must be an existing directory')
+            final = parent / output.name
+        if os.path.lexists(final):
+            raise BuildFailure('output already exists')
+        return validate_zone_path(final, BUILD_OUTPUT_DIR)
+    except BuildFailure:
+        raise
+    except (OSError, RuntimeError, ValueError):
+        raise BuildFailure('output path is not a valid canonical build destination') from None
+
+
+def validate_temporary_area(workspace: Path, area: Path) -> None:
+    resolved = area.resolve(strict=True)
+    source_root = workspace.resolve(strict=True)
+    if resolved == source_root or source_root in resolved.parents:
+        raise BuildFailure('temporary build area inside Workspace is prohibited')
+    result = subprocess.run(['git', '-C', str(resolved), 'rev-parse',
                              '--is-inside-work-tree'], stdout=subprocess.PIPE,
                             stderr=subprocess.DEVNULL)
     if result.returncode == 0 and result.stdout.strip() == b'true':
-        raise BuildFailure('output inside a Git checkout is prohibited')
+        raise BuildFailure('temporary build area inside a Git checkout is prohibited')
 
 
 def export_source(component: Path, pin: str, destination: Path) -> None:
@@ -175,12 +260,12 @@ def execute(workspace: Path, base_rom: Path, output: Path) -> int:
         validate_tools()
         print('Toolchain: OK')
         stage = 'Final output preflight'
-        validate_output(workspace, output)
+        output = validate_output(workspace, output)
         stage = 'Source export'
         temporary = tempfile.TemporaryDirectory(prefix='r1-private-build-')
         area = Path(temporary.name)
         # Refuse a TMPDIR configured inside any source checkout.
-        validate_output(workspace, area / 'unused-output')
+        validate_temporary_area(workspace, area)
         for name in ('DPE', 'CFRU'):
             relative, pin = PINS[name]
             export_source(workspace / relative, pin, area / name)
@@ -191,11 +276,7 @@ def execute(workspace: Path, base_rom: Path, output: Path) -> int:
         run_child(dpe, 'scripts/build.py')
         print(stage + ': PASS')
         stage = 'Private input'
-        if base_rom.is_symlink() or not base_rom.is_file():
-            raise BuildFailure('input must be an existing regular file')
-        # Input within the Workspace is prohibited too; no source-file copying.
-        if workspace.resolve() in base_rom.resolve().parents:
-            raise BuildFailure('input inside Workspace is prohibited')
+        base_rom = validate_input(workspace, base_rom)
         shutil.copyfile(base_rom, dpe / 'BPRE0.gba')
         stage = 'DPE insertion'
         require_absent(dpe / 'test.gba')
@@ -214,7 +295,7 @@ def execute(workspace: Path, base_rom: Path, output: Path) -> int:
         require_fresh(cfru / 'test.gba')
         print(stage + ': PASS')
         stage = 'Final output'
-        validate_output(workspace, output)
+        output = validate_output(workspace, output)
         descriptor, name = tempfile.mkstemp(prefix='.r1-publish-', dir=output.parent)
         staged_output = Path(name)
         with os.fdopen(descriptor, 'wb') as sink, (cfru / 'test.gba').open('rb') as source:
