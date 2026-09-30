@@ -73,12 +73,15 @@ command size does not grow with repository file count. Top-level `deps/`,
 Pre-tooling ROM product-source provenance remains
 `b20454789e375383eb852d749c0357d58af461dc`.
 
-The output parent must already exist. Input must be a regular file outside the
-Workspace; symlink inputs are rejected. Output and temporary build storage must
-be outside Git checkouts. Existing destinations, including dangling symlinks,
-are rejected; there is no overwrite option. Publication uses an atomic,
-no-overwrite hard link within the destination filesystem. A filesystem that
-cannot support this operation fails safely.
+The output parent must already exist. The private input must be an existing
+regular, non-symlink file below a canonical `04_private_roms/` directory of a
+Git worktree; Git must report both the zone and input path as ignored. The
+final output must be a new path below a canonical `05_builds/` directory of a
+Git worktree, with both the zone and target path ignored by Git. Temporary
+build storage remains outside Git worktrees. Existing destinations, including
+dangling symlinks, are rejected; there is no overwrite option. Publication
+uses an atomic, no-overwrite hard link within the destination filesystem. A
+filesystem that cannot support this operation fails safely.
 
 Profile/toolchain validation and DPE source build precede private input copying.
 The pipeline runs DPE `scripts/build.py`, DPE `scripts/make.py`, CFRU
