@@ -1,6 +1,6 @@
 # Feature-complete manual acceptance package
 
-Rebaselined for Workspace Issue #565 / parent #498 on 2026-09-29; **all 115 runtime cases remain NOT_RUN**. Documentation/preparation only. Terminal state: `R1_RUN_PACKAGE_FINAL_REBASELINE_READY / ROM_RUN_PENDING`.
+Rebaselined for Workspace Issue #614 / parent #498 on 2026-10-03; **all 115 runtime cases remain NOT_RUN**. Documentation/preparation only. Terminal state: `M014_FINAL_REBASELINE_READY / ROM_RUN_PENDING`.
 
 > **USER-RUN PACKAGE BOUNDARY**
 >
@@ -24,24 +24,33 @@ placeholders such as `<RECORD BEFORE RUN>`.
 
 | Identity | Exact Phase R1 ROM product-source basis |
 |---|---|
-| Workspace ROM product-source basis | `b20454789e375383eb852d749c0357d58af461dc` |
-| CFRU Expansion | `8af56bc2fb71a6a392d7e79d3a22732a4de4fae6` |
+| Workspace ROM product-source basis | `1a3e73871730783f7fe2108b335e3d86f69adbe8` |
+| CFRU Expansion | `237e1dfaa785af332ddad72af906b3bba5beaab9` |
 | DPE Gen 9 | `22ffa27ad09cfacbca841d90e6cbe31e6f9b7fdc` |
-| UPR-FVX | `boundary/reference only during Phase R1 — 7bf79ee1e7c46c972f7a9c84942970a950be0723` |
+| UPR-FVX (boundary/reference during R1; execution in R2) | `7bf79ee1e7c46c972f7a9c84942970a950be0723` |
+| Pinned pret FireRed structural reference | `e060ab955b5dc9ac1c4904c2cd141683615cf477` |
 
 ### Workspace repository/package provenance
 
-Current accepted Workspace repository/documentation base:
-`87ae5807cd7f5e72831256256c84eb7ae2440a1f`. After product-source basis
-`b20454789e375383eb852d749c0357d58af461dc`, this revision contains only the
-accepted #563/#564 R0 audit documentation; no component source or Gitlink
-changed. These later documentation commits do not change the ROM product-source
-basis. Package, PR, audit and later documentation commit SHAs are provenance
-only and must never replace the ROM product-source basis above.
+Current integrated Workspace product-source base:
+`1a3e73871730783f7fe2108b335e3d86f69adbe8`. This #614 documentation
+branch changes no component source or Gitlink. Its later commit/PR identity is
+package provenance, never a substitute for the frozen product-source basis.
 
-Exact-pin source/host evidence from #563 and earlier integration Issues may be
-cited as revision-bound supporting evidence only, never as final runtime PASS.
-Older-pin build/module PASS results must not be transferred to this final pin.
+**LEGACY / OBSOLETE:** #563/#564 R0 and #565 package preparation are
+historical/supporting evidence at their own revisions. They do not prove the
+current selected profile; the #614 current-source audit reconciles the later
+closures and decisions. Earlier targeted runtime PASS results, including
+D11/D22/hint and Runtime Gate 1, are supporting evidence only.
+
+**CONFIRMED USER-SUPPLIED EXACT-PIN PRE-RUN EVIDENCE:** CONTROL accepted
+#611/#614 native build/insertion PASS on the immutable basis above: data-owner
+verification; M-009 frame/scanner/Pewter/stateless-entry/insertion invariants;
+AI ownership/linker/load-span checks; ARM allocation/result/observation checks;
+exact objcopy re-extraction; final CFRU insertion. Accepted production-source
+host regression owns D20's 65,536+ saturation boundary. No build or component
+test is rerun by this documentation task. This evidence establishes supporting
+pre-run gates only and makes no M-014 runtime row PASS.
 
 ### Phase R1 user-owned ROM identity — record before the first R1 case
 
@@ -54,8 +63,8 @@ in the Phase R1 identity. Record them only in the Phase R2 section below.
 | Emulator identity / version / core | `<RECORD BEFORE RUN>` |
 | Non-sensitive ROM run label | `<RECORD BEFORE RUN>` |
 | Fresh New Game status | `<RECORD BEFORE RUN>` |
-| Clean/full source-build disposition | `<RECORD BEFORE RUN>` |
-| ROM-owned module-test disposition | `<RECORD BEFORE RUN>` |
+| Clean/full source-build disposition | `CONTROL-accepted exact-pin native build/insertion PASS (#611/#614); supporting pre-run gate only` |
+| ROM-owned module-test disposition | `CONTROL-accepted data/M-009/AI/ARM/objcopy checks; D20 production-host evidence; supporting pre-run gates only` |
 
 ### Phase R2 user-owned Randomizer identity — record before any R2 case
 
@@ -75,14 +84,11 @@ documentation evidence only; it is not operative and provides no M-014 runtime
 result. Historical candidate-era pins, candidate PRs and preparation outcomes
 must not be copied into the current run identity.
 
-Before Phase R1 runtime acceptance at the exact final product-source identity,
-complete the clean/full ROM source build and affected ROM module tests required
-by the package, and record their
-current sanitized disposition above. R1 does not require Randomizer settings,
-a seed, an output profile or H-family execution. Before Phase R2, complete the
-separate Randomizer source/module gates and record them in the R2 identity.
-No final runtime result is implied by static/host tests, Runtime Gate 1,
-earlier milestone passes or historical PR #489 material.
+Before Phase R1, bind the user-owned run identity to the accepted exact-pin
+pre-run evidence above; no repeat build is required by this rebaseline. Record
+configuration differences and fresh execution identity before the run. Before
+Phase R2, complete the separate Randomizer source/module gates and record them
+in the R2 identity. No runtime PASS follows from these pre-run gates.
 
 Historical PR #489 preparation note (supporting evidence only, not a current
 M-014 result): its candidate-era record stated that CFRU builds stopped at
@@ -125,14 +131,20 @@ mandatory gate. No cheats or tracker extensions in the control run.
 
 ## R0 acceptance and phase ownership
 
-The sole operative R0 gate is the accepted #563
-[final ROM scope audit](../audits/m014-r0-final-rom-scope-2026-09-29.md),
-merged through #564. Verdict: `ROM_SCOPE_READY_FOR_ACCEPTANCE`;
-`MISSING_BLOCKER = 0`; `UNKNOWN_BLOCKER = 0`. Earlier R0 audits are historical
-supporting evidence only. Final R1 can be released only on this #563 closure
-and after #565's package/report rebaseline is accepted and merged. This
-preparation does not claim `ROM_PROFILE_READY`. The documented intentional
-differences, optional backlog and out-of-pilot items remain profile boundaries.
+The operative current-pin R0 gate is the #614
+[final ROM scope audit](../audits/m014-r0-final-rom-scope-2026-10-03.md):
+`ROM_SCOPE_READY_FOR_ACCEPTANCE`; `MISSING_BLOCKER = 0`;
+`UNKNOWN_BLOCKER = 0`. #563/#565 and earlier R0/package states are
+historical/supporting. Final R1 becomes eligible after CONTROL review and user
+merge/acceptance of this #614 rebaseline. This preparation does not claim
+`ROM_PROFILE_READY` or execute R1/R2.
+
+Audit closure F03 (#598) and F04 (#599) are skipped/not planned; presentation-only
+audit D03/F05 are nonblocking/deprioritized by later user decision. These audit
+labels are a separate namespace from package case IDs: package F03/F04 remain
+mandatory Bill/Sevii cases, and package D03/F05 retain their existing procedures.
+Intentional differences, optional backlog and out-of-pilot items remain profile
+boundaries.
 
 The 115 existing IDs are preserved. The table below is the authoritative phase
 map for both this procedure package and the sanitized report:
@@ -206,11 +218,11 @@ must still complete the entire flow once without restoring an older checkpoint.
 
 | ID | Procedure / variants | PASS criteria |
 |---|---|---|
-| A01 | Start New Game, naming, intro and fresh Options state | No controls-guide detour; naming/Oak introduction completes; mixed-case name entry works; correct room/input/camera; fresh Options visibly show Game Difficulty = Vanilla, Trainer Level Scaling = Off, Wild Level Scaling = Off and Trainer AI = Standard; no unrelated rule or setting changes implicitly. |
+| A01 | Start New Game, naming, intro and fresh Options state | No controls-guide detour; minimal Oak exposition with normal gender choice, freely selected player/rival names, confirmation/retry/default paths and generated Trainer ID; identity/naming/fade cleanup coherent; mixed-case name entry works; correct room/input/camera; fresh Options visibly show Game Difficulty = Vanilla, Trainer Level Scaling = Off, Wild Level Scaling = Off and Trainer AI = Standard; no unrelated rule or setting changes implicitly. |
 | A02 | Open Player PC before Mom | No initial Potion in item storage; no phantom occupied slot. |
 | A03 | Attempt house exit before talking to Mom; repeat | Mandatory exit guard prevents departure, gives coherent response, releases input; cannot bypass by repeated direction/menu. |
 | A04 | Talk to Mom | Handoff occurs once; fast Lab scene reaches direct starter selection, Oak at (6,3) facing down; correct camera/player placement. |
-| A05 | Each of the three starter choices on separate starts | Chosen species matches display and party; Rival chooses intended counterpart; no old starter species/script mismatch. |
+| A05 | Each of the three starter choices on separate starts | Starter Yes/No and nickname Yes/No paths preserved; isolated energetic Oak flavor omitted; chosen species matches display and party; Rival chooses intended counterpart; no old starter species/script mismatch. |
 | A06 | Complete Rival battle, win and separate loss branch | Battle returns to correct Lab state; exit/warps/input work; no replayed starter or accidental second starter. |
 | A07 | Obtain Lab Potion before/after battle as accessible; attempt duplicate | Normal one-time Item Ball, correct item+quantity; disappears and stays gone after re-entry/reload. |
 | A08 | Return to Mom with damage after Rival | Post-rival healing restores expected party HP/status; no repeat starter warp. |
@@ -240,7 +252,7 @@ must still complete the entire flow once without restoring an older checkpoint.
 | B10 | Party Move Items: transfer to empty holder, swap two items, cancel | Exact items transfer/swap once; Bag quantities unchanged; held icons and summaries agree. |
 | B11 | Move Items self/egg/invalid target; mail if supported | Invalid targets safely reject; no item duplication/loss. Mail-only unavailable path may be N/A with reason. |
 | B12 | Obtain new item then repeat same item, visible/hidden/shop/gift paths | Correct item icon/name/pocket and first-obtain description; input/effects release; subsequent acquisition doesn't corrupt or block. |
-| B13 | Game Corner prize-room acquisition and subsequent menu/warp | Record existing presentation caveat; no crash/stuck sprite/control loss. Cosmetic deviation is logged, not presumed fixed. |
+| B13 | At natural Celadon arrival, redeem one normally reachable inexpensive Prize Room prize and return/exit | Correct reward; Coins deducted once; no control/window/sprite corruption; normal return/exit. D20 high-balance saturation is source/host/native evidence, not a manual fixture; the old acquire-UI warning is not a current known break. |
 | B14 | Player PC item deposit/withdraw, no initial Potion, full/empty boundaries | Correct inventory counts and safe capacity refusal; Lab reward remains independent. |
 | B15 | Pokemon PC deposit/withdraw/move/swap, box edge/last slot, summary | Identity/moves/ability/item/stat data preserved; no deleted/duplicated Pokemon or bad icons. |
 | B16 | Every exposed Options page; Standard/Ironmon Smart and legacy entries; change/revert text/button/music selections; Start menus before/after flags; trainer integration smoke under each profile | Standard and Ironmon Smart are selectable and correctly labeled while legacy entries remain distinct; open/close without editing does not rewrite settings; changing Trainer AI leaves Difficulty, Trainer Level Scaling, Wild Level Scaling, Hard Cap/Nuzlocke and other independent rules unchanged, and changing those rules leaves Trainer AI unchanged; one representative ordinary trainer battle routes and remains stable under Standard and one under Ironmon Smart, without inferring AI strength. Restore Standard for the continuous main run after the targeted Ironmon Smart check unless it uses an independent private checkpoint/run. |
@@ -280,6 +292,9 @@ The package's severity, STOP and approved-exclusion rules still apply.
 | Settings UX — A01, B16, B27 | Page 3 labels/help fully visible with no clipped labels; cycle long to short values with no stale pixels. Trainer Level Scaling raw 0 = `Auto (Diff.)`; Trainer AI raw 0 = `Auto (Diff.)`; Hard Cap raw 0 = `Auto`. Legacy labels render as `Legacy Vanil.`, `Legacy Easy`, `Legacy Normal`, `Legacy Hard`, `Legacy Expert`, `Legacy Smart`; `Standard` and `Ironmon Smart` render correctly. Difficulty, Trainer Level Scaling and Trainer AI remain independent; relevant selections and original-raw behavior remain correct after Save/Reload. | NOT_RUN |
 | Route 10 HM05 — D06, B07, B08, B27 | Before reward, Hiker present at `(17,22)`. Full-Bag/no-room path awards no HM05 and leaves the NPC available for retry. Retry awards exactly one HM05 and sets the shared reward flag. After success, Hiker remains absent after re-entry and Save/Reload; original Route 2 Aide cannot award a second HM05. Check HM field-use independently: corresponding HM item present, compatible non-egg Party Pokémon, required badge, and valid location/field condition; each missing prerequisite safely blocks use. | NOT_RUN |
 | National Dex — A01, A09, A12, A13, A17 | No National Dex at genuine Fresh New Game or before Parcel/normal Pokédex handoff. Parcel removed at the normal Pokédex handoff, ordinary Pokédex unlocked, full National Dex activated exactly there, exactly five Poké Balls awarded once, and Oak/story state ends correctly. National View/Registration works afterward. Save/Reload preserves national state; revisit/reload repeats neither Dex handoff, reward nor script; five-ball accounting remains exactly once and normal onward progression is intact. | NOT_RUN |
+| D11 Fast Battle Messages — A01, B16, B27, D01–D16 battle checkpoints | Fresh default Off; toggle On and Off; enabled mode skips completed battle-message waits while ordinary text animation remains normal rather than whole-engine instant text. Check isolation from Text Speed, AI, Difficulty, scaling and unrelated rules, and save/reload persistence of explicit On/Off selections. D07 Fastest Text is separate and R2-owned. | NOT_RUN |
+| D22 B Quick Run + visual hint — C04, D01–D16 battle checkpoints | Ordinary wild single shows the B-button glyph beside Run; B performs the existing normal Run attempt with normal escape success/failure/restrictions. Trainer action menu neither advertises nor dispatches B Quick Run. Manual A-on-RUN and R quick Run still work. Choose FIGHT after the hinted menu and check normal PSS icons/move-type colors. Where conveniently reachable, local-double second-battler Back/partner-cancel remains higher priority. No Shiny safeguard is required. | NOT_RUN |
+| D20 Game Corner — B13, D07 Celadon checkpoint | At natural Celadon arrival in the continuous R1 run, buy/redeem one normally reachable inexpensive Prize Room prize: correct reward, Coins deducted once, no control/window/sprite corruption, normal return/exit. No memory editing, artificial 65,536-Coin setup or special Game Corner save is required. The 65,536+ saturation boundary is supporting source/production-host/native-build evidence, not a manual runtime case. | NOT_RUN |
 
 The UPR-FVX stale/direct National-Dex request guard is an integrated
 compatibility boundary, not an R1 ROM runtime result. Its Randomizer/output
@@ -414,6 +429,12 @@ supporting evidence. The user performs private output operations; share text onl
 | H13 | Base Stats, Move Data, optional bounded Type Effectiveness | Source-width values survive output/reload and representative gameplay; category/type translation correct. Oversize chaos chart must safely reject, never truncate or overflow. |
 | H14 | Logging and output error paths | Settings/run label and changed feature summaries consistent; no claim that Field Items have a full detailed log. Capacity/unsupported errors produce no usable partial-success result. |
 | H15 | Combined supported settings output; reopen then A, selected B/C, early/mid/late battles | No option interaction, invalid writer pointer, corrupted form/name or game softlock. A complete randomized playthrough is still required for a broad support claim. |
+
+## Mandatory Phase R2 final-pin overlay within existing cases
+
+| Overlay / existing cases | Required final-pin observations | Initial status |
+|---|---|---|
+| D07 Fastest Text — H15 combined supported profile | Selected owner: UPR-FVX `MiscTweak.FASTEST_TEXT` / Gen3 `applyFastestTextPatch()`. Verify option availability/application against the exact locked ROM profile, coherent output/reload, and actual output runtime exhibiting the selected Fastest Text behavior. No duplicate CFRU Instant Text option is required. This is separate from D11 completed battle-message waits and cannot run before `ROM_PROFILE_READY`. | NOT_RUN |
 
 ### Premier bonus exact transaction matrix (M-013), split by phase
 
