@@ -1,7 +1,7 @@
 # Sanitized acceptance result
 
-**State:** `R1_RUN_PACKAGE_FINAL_REBASELINE_READY / ROM_RUN_PENDING`
-**Evidence classification:** **CONFIRMED CURRENT STATE** for accepted R0;
+**State:** `M014_FINAL_REBASELINE_READY / ROM_RUN_PENDING`
+**Evidence classification:** **CONFIRMED CURRENT STATE** for current-source R0;
 **INTENDED FUTURE STATE** for Phase R1/R2 runtime acceptance.
 **Preparation status:** All 115 required case rows remain `NOT_RUN`; no M-014 runtime execution occurred.
 
@@ -13,14 +13,20 @@ runtime acceptance. The user may execute private runtime operations locally;
 only sanitized text results return to GitHub/CONTROL. No artifact hashes are
 required.
 
-The sole operative R0 gate is the accepted #563
-[final ROM scope audit](../audits/m014-r0-final-rom-scope-2026-09-29.md),
-merged through #564: `ROM_SCOPE_READY_FOR_ACCEPTANCE`, `MISSING_BLOCKER = 0`,
-`UNKNOWN_BLOCKER = 0`. Earlier R0 audits are historical supporting evidence
-only. Final R1 can be released only on this #563 closure and after #565 is
-accepted and merged. This preparation does not claim `ROM_PROFILE_READY`.
-Intentional differences, optional backlog and out-of-pilot items are profile
-boundaries, not runtime failures.
+The operative current-pin R0 gate is the #614
+[final ROM scope audit](../audits/m014-r0-final-rom-scope-2026-10-03.md):
+`ROM_SCOPE_READY_FOR_ACCEPTANCE`; `MISSING_BLOCKER = 0`;
+`UNKNOWN_BLOCKER = 0`. #563/#565 and earlier R0/package states are
+historical/supporting. Final R1 becomes eligible after CONTROL review and user
+merge/acceptance of this #614 rebaseline. This preparation does not claim
+`ROM_PROFILE_READY` or execute R1/R2.
+
+Audit closure F03 (#598) and F04 (#599) are skipped/not planned; presentation-only
+audit D03/F05 are nonblocking/deprioritized by later user decision. These audit
+labels are a separate namespace from package case IDs: package F03/F04 remain
+mandatory Bill/Sevii cases, and package D03/F05 retain their existing procedures.
+Intentional differences, optional backlog and out-of-pilot items remain profile
+boundaries.
 
 Historical source: Workspace PR #489 / commit
 `391a200a20bd217feee9ca9b973b200c089e6de1`; historical documentation
@@ -33,31 +39,40 @@ These exact revisions define the final Phase R1 ROM product-source identity.
 
 | Identity | Exact revision |
 |---|---|
-| Workspace ROM product-source basis | `b20454789e375383eb852d749c0357d58af461dc` |
-| CFRU Expansion | `8af56bc2fb71a6a392d7e79d3a22732a4de4fae6` |
+| Workspace ROM product-source basis | `1a3e73871730783f7fe2108b335e3d86f69adbe8` |
+| CFRU Expansion | `237e1dfaa785af332ddad72af906b3bba5beaab9` |
 | DPE Gen 9 | `22ffa27ad09cfacbca841d90e6cbe31e6f9b7fdc` |
-| UPR-FVX | `boundary/reference only during Phase R1 — 7bf79ee1e7c46c972f7a9c84942970a950be0723` |
+| UPR-FVX (boundary/reference during R1; execution in R2) | `7bf79ee1e7c46c972f7a9c84942970a950be0723` |
+| Pinned pret FireRed structural reference | `e060ab955b5dc9ac1c4904c2cd141683615cf477` |
 
 ### Workspace repository/package provenance
 
-Current accepted Workspace repository/documentation base:
-`87ae5807cd7f5e72831256256c84eb7ae2440a1f`. After product-source basis
-`b20454789e375383eb852d749c0357d58af461dc`, this revision contains only the
-accepted #563/#564 R0 audit documentation; no component source or Gitlink
-changed. These later documentation commits do not change the ROM product-source
-basis. Package, PR, audit and later documentation commit SHAs are provenance
-only and must never replace the ROM product-source basis above.
+Current integrated Workspace product-source base:
+`1a3e73871730783f7fe2108b335e3d86f69adbe8`. This #614 documentation
+branch changes no component source or Gitlink. Its later commit/PR identity is
+package provenance, never a substitute for the frozen product-source basis.
 
-Exact-pin source/host evidence from #563 and earlier integration Issues may be
-cited as revision-bound supporting evidence only, never as final runtime PASS.
-Older-pin build/module PASS results must not be transferred to this final pin.
+**LEGACY / OBSOLETE:** #563/#564 R0 and #565 package preparation are
+historical/supporting evidence at their own revisions. They do not prove the
+current selected profile; the #614 current-source audit reconciles the later
+closures and decisions. Earlier targeted runtime PASS results, including
+D11/D22/hint and Runtime Gate 1, are supporting evidence only.
+
+**CONFIRMED USER-SUPPLIED EXACT-PIN PRE-RUN EVIDENCE:** CONTROL accepted
+#611/#614 native build/insertion PASS on the immutable basis above: data-owner
+verification; M-009 frame/scanner/Pewter/stateless-entry/insertion invariants;
+AI ownership/linker/load-span checks; ARM allocation/result/observation checks;
+exact objcopy re-extraction; final CFRU insertion. Accepted production-source
+host regression owns D20's 65,536+ saturation boundary. No build or component
+test is rerun by this documentation task. This evidence establishes supporting
+pre-run gates only and makes no M-014 runtime row PASS.
 
 ## Phase R1 user-owned ROM identity — record before the first R1 case
 
 Phase R1 runtime must not begin until every field below has sanitized text
 recording the current disposition at the exact final product-source identity.
-Complete the required clean/full source build and ROM-owned module tests before
-the private run; older-pin build PASS results do not establish these gates.
+Use the CONTROL-accepted exact-pin pre-run gates below; no repeat build is
+required by this rebaseline. Older-pin PASS results do not establish these gates.
 Randomizer settings, seed/run labels and output-profile identity are not R1
 prerequisites and belong only to the Phase R2 section.
 
@@ -67,8 +82,8 @@ prerequisites and belong only to the Phase R2 section.
 | Emulator identity / version / core | `<RECORD BEFORE RUN>` |
 | Non-sensitive ROM run label | `<RECORD BEFORE RUN>` |
 | Fresh New Game status | `<RECORD BEFORE RUN>` |
-| Clean/full source-build disposition | `<RECORD BEFORE RUN>` |
-| ROM-owned module-test disposition | `<RECORD BEFORE RUN>` |
+| Clean/full source-build disposition | `CONTROL-accepted exact-pin native build/insertion PASS (#611/#614); supporting pre-run gate only` |
+| ROM-owned module-test disposition | `CONTROL-accepted data/M-009/AI/ARM/objcopy checks; D20 production-host evidence; supporting pre-run gates only` |
 
 The final continuous D01–D16 main run must restart from a genuine Fresh New
 Game on the final ROM product-source basis; no earlier-candidate save or
@@ -155,10 +170,19 @@ The package's severity, STOP and approved-exclusion rules still apply.
 | Settings UX — A01, B16, B27 | Page 3 labels/help fully visible with no clipped labels; cycle long to short values with no stale pixels. Trainer Level Scaling raw 0 = `Auto (Diff.)`; Trainer AI raw 0 = `Auto (Diff.)`; Hard Cap raw 0 = `Auto`. Legacy labels render as `Legacy Vanil.`, `Legacy Easy`, `Legacy Normal`, `Legacy Hard`, `Legacy Expert`, `Legacy Smart`; `Standard` and `Ironmon Smart` render correctly. Difficulty, Trainer Level Scaling and Trainer AI remain independent; relevant selections and original-raw behavior remain correct after Save/Reload. | NOT_RUN |
 | Route 10 HM05 — D06, B07, B08, B27 | Before reward, Hiker present at `(17,22)`. Full-Bag/no-room path awards no HM05 and leaves the NPC available for retry. Retry awards exactly one HM05 and sets the shared reward flag. After success, Hiker remains absent after re-entry and Save/Reload; original Route 2 Aide cannot award a second HM05. Check HM field-use independently: corresponding HM item present, compatible non-egg Party Pokémon, required badge, and valid location/field condition; each missing prerequisite safely blocks use. | NOT_RUN |
 | National Dex — A01, A09, A12, A13, A17 | No National Dex at genuine Fresh New Game or before Parcel/normal Pokédex handoff. Parcel removed at the normal Pokédex handoff, ordinary Pokédex unlocked, full National Dex activated exactly there, exactly five Poké Balls awarded once, and Oak/story state ends correctly. National View/Registration works afterward. Save/Reload preserves national state; revisit/reload repeats neither Dex handoff, reward nor script; five-ball accounting remains exactly once and normal onward progression is intact. | NOT_RUN |
+| D11 Fast Battle Messages — A01, B16, B27, D01–D16 battle checkpoints | Fresh default Off; toggle On and Off; enabled mode skips completed battle-message waits while ordinary text animation remains normal rather than whole-engine instant text. Check isolation from Text Speed, AI, Difficulty, scaling and unrelated rules, and save/reload persistence of explicit On/Off selections. D07 Fastest Text is separate and R2-owned. | NOT_RUN |
+| D22 B Quick Run + visual hint — C04, D01–D16 battle checkpoints | Ordinary wild single shows the B-button glyph beside Run; B performs the existing normal Run attempt with normal escape success/failure/restrictions. Trainer action menu neither advertises nor dispatches B Quick Run. Manual A-on-RUN and R quick Run still work. Choose FIGHT after the hinted menu and check normal PSS icons/move-type colors. Where conveniently reachable, local-double second-battler Back/partner-cancel remains higher priority. No Shiny safeguard is required. | NOT_RUN |
+| D20 Game Corner — B13, D07 Celadon checkpoint | At natural Celadon arrival in the continuous R1 run, buy/redeem one normally reachable inexpensive Prize Room prize: correct reward, Coins deducted once, no control/window/sprite corruption, normal return/exit. No memory editing, artificial 65,536-Coin setup or special Game Corner save is required. The 65,536+ saturation boundary is supporting source/production-host/native-build evidence, not a manual runtime case. | NOT_RUN |
 
 The UPR-FVX stale/direct National-Dex request guard is an integrated
 compatibility boundary, not an R1 ROM runtime result. Its Randomizer/output
 behavior belongs to R2 and remains gated there.
+
+## Mandatory Phase R2 final-pin overlay within existing cases
+
+| Overlay / existing cases | Required final-pin observations | Initial status |
+|---|---|---|
+| D07 Fastest Text — H15 combined supported profile | Selected owner: UPR-FVX `MiscTweak.FASTEST_TEXT` / Gen3 `applyFastestTextPatch()`. Verify option availability/application against the exact locked ROM profile, coherent output/reload, and actual output runtime exhibiting the selected Fastest Text behavior. No duplicate CFRU Instant Text option is required. This is separate from D11 completed battle-message waits and cannot run before `ROM_PROFILE_READY`. | NOT_RUN |
 
 ## Phase ownership and acceptance gates
 
@@ -194,7 +218,7 @@ be treated as PASS.
 
 | Case ID | Phase owner | Required case/variant coverage | Result | Observed result (sanitized) | Defect / reason |
 |---|---|---|---|---|---|
-| A01 | R1 ROM | Start/intro plus fresh Vanilla / Off / Off / Standard Options witness; all other procedure-prescribed A01 variants | NOT_RUN | | |
+| A01 | R1 ROM | Minimal Oak exposition with normal creation/identity/retry paths and D11 fresh Off; fresh Vanilla / Off / Off / Standard Options witness; all other procedure-prescribed A01 variants | NOT_RUN | | |
 | A02 | R1 ROM | All procedure-prescribed variants for A02 | NOT_RUN | | |
 | A03 | R1 ROM | All procedure-prescribed variants for A03 | NOT_RUN | | |
 | A04 | R1 ROM | All procedure-prescribed variants for A04 | NOT_RUN | | |
@@ -223,10 +247,10 @@ be treated as PASS.
 | B10 | R1 ROM | All procedure-prescribed variants for B10 | NOT_RUN | | |
 | B11 | R1 ROM | All procedure-prescribed variants for B11 | NOT_RUN | | |
 | B12 | R1 ROM | All procedure-prescribed variants for B12 | NOT_RUN | | |
-| B13 | R1 ROM | All procedure-prescribed variants for B13 | NOT_RUN | | |
+| B13 | R1 ROM | D20 normal inexpensive Prize Room smoke at natural Celadon arrival; high-balance boundary is source/host evidence only | NOT_RUN | | |
 | B14 | R1 ROM | All procedure-prescribed variants for B14 | NOT_RUN | | |
 | B15 | R1 ROM | All procedure-prescribed variants for B15 | NOT_RUN | | |
-| B16 | R1 ROM | Options isolation plus Standard/Ironmon Smart/legacy display and trainer-battle integration variants; all other procedure-prescribed B16 variants | NOT_RUN | | |
+| B16 | R1 ROM | D11 toggle/wait-skip/text-animation/isolation plus Standard/Ironmon Smart/legacy display and trainer-battle integration variants; all other procedure-prescribed B16 variants | NOT_RUN | | |
 | B17 | R1 ROM | All procedure-prescribed variants for B17 | NOT_RUN | | |
 | B18 | R2 Randomizer | Randomized Field/TM variants from H12; R2 only | NOT_RUN | | |
 | B19 | R1 ROM | All procedure-prescribed variants for B19 | NOT_RUN | | |
@@ -237,11 +261,11 @@ be treated as PASS.
 | B24 | R1 ROM | All procedure-prescribed variants for B24 | NOT_RUN | | |
 | B25 | R1 ROM | All procedure-prescribed variants for B25 | NOT_RUN | | |
 | B26 | R1 ROM | All procedure-prescribed variants for B26 | NOT_RUN | | |
-| B27 | R1 ROM | Save/reload persistence for AI/Difficulty/Scaling plus all procedure-prescribed B27 variants | NOT_RUN | | |
+| B27 | R1 ROM | D11 On/Off persistence; save/reload persistence for AI/Difficulty/Scaling plus all procedure-prescribed B27 variants | NOT_RUN | | |
 | C01 | R1 ROM | All procedure-prescribed variants for C01 | NOT_RUN | | |
 | C02 | R1 ROM | All procedure-prescribed variants for C02 | NOT_RUN | | |
 | C03 | R1 ROM | All procedure-prescribed variants for C03 | NOT_RUN | | |
-| C04 | R1 ROM | All procedure-prescribed variants for C04 | NOT_RUN | | |
+| C04 | R1 ROM | D22 B Quick Run/hint, normal escape/manual A/R/trainer controls and post-hint FIGHT colors; all procedure-prescribed variants for C04 | NOT_RUN | | |
 | C05 | R1 ROM | All procedure-prescribed variants for C05 | NOT_RUN | | |
 | C06 | R1 ROM | All procedure-prescribed variants for C06 | NOT_RUN | | |
 | C07 | R1 ROM | All procedure-prescribed variants for C07 | NOT_RUN | | |
@@ -298,7 +322,7 @@ be treated as PASS.
 | H12 | R2 Randomizer | Randomizer/output procedure variants for H12; R2 only | NOT_RUN | | |
 | H13 | R2 Randomizer | Randomizer/output procedure variants for H13; R2 only | NOT_RUN | | |
 | H14 | R2 Randomizer | Randomizer/output procedure variants for H14; R2 only | NOT_RUN | | |
-| H15 | R2 Randomizer | Randomizer/output procedure variants for H15; R2 only | NOT_RUN | | |
+| H15 | R2 Randomizer | D07 FASTEST_TEXT locked-profile/output/reload/runtime overlay plus combined-profile procedure variants for H15; R2 only | NOT_RUN | | |
 | P01 | Split: R1 ordinary shop / R2 randomized shop | Ordinary-shop and randomized-shop variants for P01 | NOT_RUN | | |
 | P02 | Split: R1 ordinary shop / R2 randomized shop | Ordinary-shop and randomized-shop variants for P02 | NOT_RUN | | |
 | P03 | Split: R1 ordinary shop / R2 randomized shop | Ordinary-shop and randomized-shop variants for P03 | NOT_RUN | | |
@@ -374,7 +398,7 @@ units remain required for final #498 acceptance even if R1 is accepted first.
 
 All 115 base case IDs and all split variants remain `NOT_RUN`. No ROM runtime,
 Randomizer output, emulator or private acceptance execution occurred in this
-#565 rebaseline. Record the complete Phase R1 identity and user-owned ROM
+#614 rebaseline. Record the complete Phase R1 identity and user-owned ROM
 results first;
 only after `ROM_PROFILE_READY` may the Phase R2 identity and randomized-output
 results be recorded.
