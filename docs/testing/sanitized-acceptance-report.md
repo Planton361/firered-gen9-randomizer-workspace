@@ -1,6 +1,6 @@
 # Sanitized acceptance result
 
-**State:** `M014_FINAL_REBASELINE_READY / ROM_RUN_PENDING`
+**State:** `M014_R1_CURRENT_DATA_REBASELINE_READY / CURRENT_PIN_BUILD_PENDING`
 **Evidence classification:** **CONFIRMED CURRENT STATE** for current-source R0;
 **INTENDED FUTURE STATE** for Phase R1/R2 runtime acceptance.
 **Preparation status:** All 115 required case rows remain `NOT_RUN`; no M-014 runtime execution occurred.
@@ -13,13 +13,51 @@ runtime acceptance. The user may execute private runtime operations locally;
 only sanitized text results return to GitHub/CONTROL. No artifact hashes are
 required.
 
-The operative current-pin R0 gate is the #614
-[final ROM scope audit](../audits/m014-r0-final-rom-scope-2026-10-03.md):
+**CONFIRMED CURRENT STATE — #629 exact source-continuity revalidation:**
 `ROM_SCOPE_READY_FOR_ACCEPTANCE`; `MISSING_BLOCKER = 0`;
-`UNKNOWN_BLOCKER = 0`. #563/#565 and earlier R0/package states are
-historical/supporting. Final R1 becomes eligible after CONTROL review and user
-merge/acceptance of this #614 rebaseline. This preparation does not claim
-`ROM_PROFILE_READY` or execute R1/R2.
+`UNKNOWN_BLOCKER = 0` on the immutable current identity in this package. #614 remains the
+complete [ROM/QoL/flow R0 classification audit](../audits/m014-r0-final-rom-scope-2026-10-03.md);
+its historical pins are superseded as the operative R1 identity, not as the
+accepted scope/classification evidence. #563/#565 remain historical/supporting.
+
+The accepted #616–#627 data-parity/repair chain is fully integrated:
+
+| Accepted contract / evidence | Audited disposition |
+|---|---|
+| #616 / #617 [data-domain audit](../audits/gen9-data-parity-2026-10-03.md) | Original genuine comparable/source-structure ledger: 67 |
+| #618 / #619 / #620 [DPE evolution repair/integration](../audits/gen9-data-parity-dpe-integration-2026-10-03.md) | 15 level repairs; evolution DATA_MISMATCH = 0; ledger 52 |
+| #621 / #622 / #623 [CFRU move repair/integration](../audits/gen9-data-parity-cfru-integration-2026-10-03.md) | 785 DATA_MATCH / 0 DATA_MISMATCH; ledger 1 = TM07 |
+| #624 / #625 [TM07 policy evidence](../audits/tm07-low-kick-policy-2026-10-03.md), accepted Policy A | Exact selected Gen-9 machine manifest: 212 constants; 42 B-only additions excluded; tutor evidence not promoted to TM membership |
+| #626 / #627 [Policy A repair/integration](../audits/tm07-policy-a-integration-2026-10-03.md), merged through #628 | TM07 212/212; machine/tutor layout issues = 0; final audited ledger = 0 (`[]`) |
+
+The #629 Git comparison from the historical #614 pins to current pins proves:
+CFRU changes only `src/Tables/battle_moves.c` (51 accepted move rows);
+DPE changes only `src/Evolution Table.c` (exactly 15 level tokens) and replaces
+`src/tm_compatibility/7 - Hail.txt` with `7 - Low Kick.txt` (exact Policy A).
+All other component source, including ROM/QoL/flow owners and classifications,
+is unchanged. UPR-FVX and pret are unchanged exact pins. The accepted #627
+ledger-zero report is present at Workspace `a4537bfcdab823326bca5034ce2a39dff189826f`.
+This revalidates R0 by source continuity; it does not repeat the full #614 audit
+or independently rerun the data-domain comparators.
+
+Retained limitations remain separate from the zero audited ledger and are
+**not reclassified as new R0 blockers**: 263 Ability behavior-owner UNKNOWNs
+(zero independently certified native behavior owners), missing Commander /
+Hospitality / Embody Aspect, partial Palafin / Terapagos, engine/form/
+transformation and unsupported-move boundaries, and broader egg/tutor/machine/
+acquisition-policy uncertainties. Assignment/name or scalar parity does not
+certify effects, safe form selection or universal Gen-9 mechanics.
+**UPR evolution preservation is explicitly Phase R2 Randomizer ownership**:
+272 method>15 rows risk deletion and the recognized Froslass auxiliary gender
+field risks zeroing; actual output manifestation remains UNKNOWN. Generated
+move exposure and selection/Ability-alias risks likewise remain R2 limitations.
+
+**Next gate:** after CONTROL review and user merge of #629, a fresh user-owned
+current-pin clean/full native DPE → CFRU build/insertion is
+`REQUIRED BEFORE CURRENT-PIN R1` / pending. Only sanitized current-pin PASS
+allows CONTROL to release Fresh-New-Game R1 under #498. All runtime cases and
+variants remain `NOT_RUN`; no `ROM_PROFILE_READY` is claimed. R2 remains gated
+behind accepted `ROM_PROFILE_READY`; #499–#501 remain gated.
 
 Audit closure F03 (#598) and F04 (#599) are skipped/not planned; presentation-only
 audit D03/F05 are nonblocking/deprioritized by later user decision. These audit
@@ -39,40 +77,52 @@ These exact revisions define the final Phase R1 ROM product-source identity.
 
 | Identity | Exact revision |
 |---|---|
-| Workspace ROM product-source basis | `1a3e73871730783f7fe2108b335e3d86f69adbe8` |
-| CFRU Expansion | `237e1dfaa785af332ddad72af906b3bba5beaab9` |
-| DPE Gen 9 | `22ffa27ad09cfacbca841d90e6cbe31e6f9b7fdc` |
+| Workspace ROM product-source basis | `a4537bfcdab823326bca5034ce2a39dff189826f` |
+| CFRU Expansion | `fe61d5473c015db71f5f4c5a3335a4a67f943254` |
+| DPE Gen 9 | `d887185de1f6ae6a78e85c4311bbadde17041d00` |
 | UPR-FVX (boundary/reference during R1; execution in R2) | `7bf79ee1e7c46c972f7a9c84942970a950be0723` |
 | Pinned pret FireRed structural reference | `e060ab955b5dc9ac1c4904c2cd141683615cf477` |
 
 ### Workspace repository/package provenance
 
 Current integrated Workspace product-source base:
-`1a3e73871730783f7fe2108b335e3d86f69adbe8`. This #614 documentation
-branch changes no component source or Gitlink. Its later commit/PR identity is
-package provenance, never a substitute for the frozen product-source basis.
+`a4537bfcdab823326bca5034ce2a39dff189826f`. This #629 documentation
+branch changes only the two operative acceptance documents, with no component
+source or Gitlink change. Package provenance is the #629 branch
+`acceptance/629-m014-current-data-rebaseline` and its containing commit / PR head
+(`git log -1 --format=%H -- docs/testing/feature-complete-acceptance.md`). The later documentation identity
+is separate from, and never replaces, the immutable ROM source/test basis.
 
 **LEGACY / OBSOLETE:** #563/#564 R0 and #565 package preparation are
 historical/supporting evidence at their own revisions. They do not prove the
-current selected profile; the #614 current-source audit reconciles the later
+current selected profile; the accepted #614 scope audit reconciles the later
 closures and decisions. Earlier targeted runtime PASS results, including
 D11/D22/hint and Runtime Gate 1, are supporting evidence only.
 
-**CONFIRMED USER-SUPPLIED EXACT-PIN PRE-RUN EVIDENCE:** CONTROL accepted
-#611/#614 native build/insertion PASS on the immutable basis above: data-owner
-verification; M-009 frame/scanner/Pewter/stateless-entry/insertion invariants;
-AI ownership/linker/load-span checks; ARM allocation/result/observation checks;
-exact objcopy re-extraction; final CFRU insertion. Accepted production-source
-host regression owns D20's 65,536+ saturation boundary. No build or component
-test is rerun by this documentation task. This evidence establishes supporting
-pre-run gates only and makes no M-014 runtime row PASS.
+**LEGACY / OBSOLETE AS CURRENT-PIN BUILD EVIDENCE:** the CONTROL-accepted
+#611/#614 native build/insertion PASS belongs only to historical Workspace
+`1a3e73871730783f7fe2108b335e3d86f69adbe8`, CFRU
+`237e1dfaa785af332ddad72af906b3bba5beaab9` and DPE
+`22ffa27ad09cfacbca841d90e6cbe31e6f9b7fdc`. Its data-owner,
+M-009 frame/scanner/Pewter/stateless-entry/insertion, AI/linker/load-span,
+ARM allocation/result/observation and objcopy checks remain revision-bound
+supporting evidence. D20's accepted production-source host regression remains
+supporting boundary evidence through unchanged source ownership. Neither the
+historical build PASS nor earlier runtime PASS is transferred to the new pins.
+
+**INTENDED FUTURE STATE — CURRENT_PIN_BUILD_PENDING:** fresh current-pin
+clean/full native DPE → CFRU build/insertion is
+`REQUIRED BEFORE CURRENT-PIN R1`. Record sanitized user-owned PASS/FAIL against
+the immutable identity above and obtain CONTROL release before any R1 case.
+No build or component test is rerun by #629; no runtime row becomes PASS.
 
 ## Phase R1 user-owned ROM identity — record before the first R1 case
 
 Phase R1 runtime must not begin until every field below has sanitized text
 recording the current disposition at the exact final product-source identity.
-Use the CONTROL-accepted exact-pin pre-run gates below; no repeat build is
-required by this rebaseline. Older-pin PASS results do not establish these gates.
+The fresh current-pin native build/insertion below is pending and required
+before any R1 case; CONTROL must record sanitized PASS and release the run.
+Older-pin PASS results do not establish this gate.
 Randomizer settings, seed/run labels and output-profile identity are not R1
 prerequisites and belong only to the Phase R2 section.
 
@@ -82,8 +132,8 @@ prerequisites and belong only to the Phase R2 section.
 | Emulator identity / version / core | `<RECORD BEFORE RUN>` |
 | Non-sensitive ROM run label | `<RECORD BEFORE RUN>` |
 | Fresh New Game status | `<RECORD BEFORE RUN>` |
-| Clean/full source-build disposition | `CONTROL-accepted exact-pin native build/insertion PASS (#611/#614); supporting pre-run gate only` |
-| ROM-owned module-test disposition | `CONTROL-accepted data/M-009/AI/ARM/objcopy checks; D20 production-host evidence; supporting pre-run gates only` |
+| Clean/full source-build disposition | `REQUIRED BEFORE CURRENT-PIN R1 / pending; fresh user-owned clean/full native DPE → CFRU build/insertion` |
+| ROM-owned module-test disposition | `Current-pin native checks pending; #611/#614 historical only; unchanged D20 production-host boundary evidence retained` |
 
 The final continuous D01–D16 main run must restart from a genuine Fresh New
 Game on the final ROM product-source basis; no earlier-candidate save or
@@ -398,7 +448,8 @@ units remain required for final #498 acceptance even if R1 is accepted first.
 
 All 115 base case IDs and all split variants remain `NOT_RUN`. No ROM runtime,
 Randomizer output, emulator or private acceptance execution occurred in this
-#614 rebaseline. Record the complete Phase R1 identity and user-owned ROM
+#629 rebaseline. Complete the pending current-pin native build gate, obtain
+CONTROL release, then record the complete Phase R1 identity and user-owned ROM
 results first;
 only after `ROM_PROFILE_READY` may the Phase R2 identity and randomized-output
 results be recorded.
