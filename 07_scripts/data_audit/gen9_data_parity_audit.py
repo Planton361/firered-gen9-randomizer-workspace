@@ -52,7 +52,82 @@ def c_rows(text, prefix):
 
 
 def c_fields(body):
-    return dict(re.findall(r'\.(\w+)\s*=\s*([^,\n]+)', body))
+    fields = re.findall(r'\.(\w+)\s*=\s*([^,\n]+)', body)
+    require(len({k for k, _ in fields}) == len(fields), "Duplicate active C field")
+    return dict(fields)
+
+
+def preprocess(text, macros=None):
+    """Evaluate presence conditionals only; reject every unsupported directive.
+
+    No compiler, macro-value expansion, or implicit choice for #if/#elif.
+    Includes are retained: callers must independently establish macro ownership.
+    """
+    macros = set(macros or ())
+    stack, output = [], []
+    active = True
+    for number, line in enumerate(closure.uncomment(text).splitlines(), 1):
+        match = re.match(r'\s*#\s*(\w+)\b(.*)', line)
+        if not match:
+            if active:
+                output.append(line)
+            continue
+        directive, arg = match.group(1), match.group(2).strip()
+        if directive in ("ifdef", "ifndef"):
+            require(re.fullmatch(r'[A-Za-z_]\w*', arg) is not None, f"Invalid #{directive} at {number}")
+            condition = (arg in macros) == (directive == "ifdef")
+            stack.append((active, condition, False))
+            active = active and condition
+        elif directive == "else":
+            require(stack and not arg and not stack[-1][2], f"Invalid #else at {number}")
+            parent, condition, _ = stack[-1]
+            stack[-1] = (parent, condition, True)
+            active = parent and not condition
+        elif directive == "endif":
+            require(stack and not arg, f"Invalid #endif at {number}")
+            active = stack.pop()[0]
+        elif directive in ("define", "undef"):
+            name = re.match(r'([A-Za-z_]\w*)', arg)
+            require(name is not None, f"Invalid #{directive} at {number}")
+            if active:
+                if directive == "define":
+                    macros.add(name.group(1))
+                else:
+                    require(arg == name.group(1), f"Invalid #undef at {number}")
+                    macros.discard(arg)
+        elif directive in ("include", "pragma"):
+            if active:
+                output.append(line)
+        else:
+            raise ValueError(f"Unsupported preprocessor directive #{directive} at {number}")
+    require(not stack, "Unclosed preprocessor conditional")
+    return "\n".join(output), macros
+
+
+def active_move_source():
+    """Pinned config owns every table condition; verify that source invariant.
+
+    Scanning tracked C/header sources prevents an ignored include from silently
+    redefining a relevant flag. Non-config definitions/undefinitions fail closed.
+    """
+    config = sync.CFRU_ROOT / "src/config.h"
+    table = sync.CFRU_ROOT / "src/Tables/battle_moves.c"
+    source = table.read_text()
+    conditions = set(re.findall(r'^\s*#\s*ifn?def\s+(\w+)', closure.uncomment(source), re.M))
+    require('#include "config.h"' in (sync.CFRU_ROOT / "src/defines.h").read_text(), "Move config include missing")
+    require('#include "../defines.h"' in source, "Move defines include missing")
+    mutations = re.compile(r'^\s*#\s*(?:define|undef)\s+(' + '|'.join(sorted(conditions)) + r')\b', re.M)
+    for name in closure.git(sync.CFRU_ROOT, "ls-files").splitlines():
+        path = sync.CFRU_ROOT / name
+        if path.suffix in (".c", ".h") and path != config:
+            require(not mutations.search(closure.uncomment(path.read_text(encoding="latin-1"))), "Move flag owner outside config: " + name)
+    _, macros = preprocess(config.read_text())
+    active, _ = preprocess(source, macros)
+    return active, {"condition_macros": {k: k in macros for k in sorted(conditions)},
+                    "config_sha256": closure.digest(config),
+                    "defines_sha256": closure.digest(sync.CFRU_ROOT / "src/defines.h"),
+                    "active_source_sha256": hashlib.sha256(active.encode()).hexdigest(),
+                    "method": "presence conditionals; config-only flag ownership verified across tracked C/headers; unsupported directives fail closed"}
 
 
 def counts(rows):
@@ -136,7 +211,8 @@ def species_audit(dex, aliases, constants):
 def move_audit(data, aliases):
     blocks = sync.parse_ts_blocks(data / "moves.ts")
     constants = sync.constants_by_kind("moves")
-    local = {k: c_fields(v) for k, v in c_rows((sync.CFRU_ROOT / "src/Tables/battle_moves.c").read_text(), "MOVE_").items()}
+    active, preprocessor = active_move_source()
+    local = {k: c_fields(v) for k, v in c_rows(active, "MOVE_").items()}
     targets = {"normal": "MOVE_TARGET_SELECTED", "self": "MOVE_TARGET_USER",
                "allAdjacentFoes": "MOVE_TARGET_BOTH", "allAdjacent": "MOVE_TARGET_ALL",
                "allySide": "MOVE_TARGET_USER", "foeSide": "MOVE_TARGET_OPPONENTS_FIELD"}
@@ -202,7 +278,7 @@ def move_audit(data, aliases):
         rows.append(row)
     extra = sorted(set(local) - mapped_local - {"MOVE_NONE"})
     return {"counts": counts(rows), "rows": rows, "local_uncompared": extra,
-            "normal_mapping_count": len(mapped_local), "behavior_certified": 0}
+            "normal_mapping_count": len(mapped_local), "behavior_certified": 0, "preprocessor": preprocessor}
 
 
 def ability_audit(data, dex, aliases, mapped):
@@ -241,16 +317,19 @@ def ability_audit(data, dex, aliases, mapped):
             category = "ALIAS_PLUS_HOOK" if hook and runtime.count(hook + "(") > 1 else "ALIAS_APPROXIMATION"
         elif any(sync.blocked_entry(e) for e in entries):
             category = "NAME_ONLY_OR_BEHAVIOR_BLOCKED"
-        elif constant in runtime:
-            category = "NATIVE_BEHAVIOR_SUPPORTED"
+        # Textual constant occurrence is not behavior-owner evidence.
+        # Unreviewed native identities retain UNKNOWN, including full semantics.
         rows.append({"source": key, "class": category, "local": constant, "definition": target or None,
                      "hook": hook, "reference_name": fields.get(key, {}).get("name"),
                      "name_string_present": sync.norm(str(fields.get(key, {}).get("name", key))) in sync.norm(strings),
-                     "policy": entries})
+                     "policy": entries, "assignment_identity": "accepted base-slot comparison or explicit blocked slot; see base domain",
+                     "numeric_alias": target if target.startswith("ABILITY_") else None,
+                     "species_helper_referenced": bool(hook and runtime.count(hook + "(") > 1),
+                     "behavior_owner_evidence": None, "full_effect_semantics": "UNCERTIFIED"})
     gen9 = (sync.DPE_ROOT / "include/abilities.h").read_text().split("//Gen 9 Abilities Leeches", 1)[1]
     return {"counts": counts(rows), "rows": rows,
             "gen9_aliases": dict(re.findall(r'#define\s+(ABILITY_\w+)\s+(ABILITY_\w+)', gen9)),
-            "semantics": "NATIVE_BEHAVIOR_SUPPORTED means existing handler evidence, not exhaustive Gen9 semantic proof; alias hooks remain approximations/partial until separately certified"}
+            "semantics": "No native behavior is certified by textual occurrence. UNKNOWN denotes unreviewed behavior ownership. ALIAS_PLUS_HOOK records numeric alias plus species-helper reference/display override, not proof of battle behavior. Assignment/name identity are separate; full effect semantics remain uncertified."}
 
 
 def evolution_rows(text):
@@ -347,8 +426,8 @@ def evolution_audit(data, mapped):
             elif condition == "with a Dark-type in the party" and any(r[0] == "EVO_TYPE_IN_PARTY" and r[3] == "TYPE_DARK" for r in row["local"]):
                 row["class"] = "REFERENCE_MATCH"
     unsupported = {k: [r for r in v if r[0] not in methods and r[0] not in ("EVO_MEGA", "EVO_GIGANTAMAX")] for k, v in local.items()}
-    malformed = re.findall(r'\[(SPECIES_\w+)\]\s+\{', closure.uncomment((sync.DPE_ROOT / "src/Evolution Table.c").read_text()))
-    return {"counts": counts(rows), "rows": rows, "malformed_designators": malformed,
+    gnu_style = re.findall(r'\[(SPECIES_\w+)\]\s+\{', closure.uncomment((sync.DPE_ROOT / "src/Evolution Table.c").read_text()))
+    return {"counts": counts(rows), "rows": rows, "gnu_obsolete_designators": gnu_style, "designator_disposition": "Obsolete GNU initializer syntax; accepted target source flow, no functional defect established",
             "methods_without_cfru_case": {k: v for k, v in unsupported.items() if v},
             "battle_transitions": {k: v for k, v in transitions.items() if v},
             "other_local_edges": {k: v for k, v in local.items() if any(r[0] not in ("EVO_MEGA", "EVO_GIGANTAMAX", "EVO_PRIMAL") for r in v)}}
@@ -559,6 +638,20 @@ def upr_audit():
             "mechanics_exclusion_registry": "not found in Gen3 handler; asset guard does not check coherent-reference/ability-mechanics exclusions"}
 
 
+def mismatch_ledger(result):
+    """Complete genuine ledger, keyed by domain/identity; style is not a defect."""
+    rows = []
+    for domain in ("moves", "evolutions"):
+        rows += [{"domain": domain, "identity": r["source"], "evidence": r}
+                 for r in result[domain]["rows"] if r["class"] == "DATA_MISMATCH"]
+    for domain in ("machines", "tutors"):
+        rows += [{"domain": domain, "identity": f"slot-{r['slot']}", "evidence": r}
+                 for r in result[domain]["layout_issues"] if r["class"] == "DATA_MISMATCH"]
+    require(not result["base"]["genuine_mismatches"], "Unexpected core mismatch requires ledger extension")
+    require(len({(r["domain"], r["identity"]) for r in rows}) == len(rows), "Duplicate genuine mismatch ledger identity")
+    return rows
+
+
 def run(data):
     reference, hashes = verify(data)
     aliases, _ = sync.alias_indexes()
@@ -590,8 +683,10 @@ def run(data):
               "evolutions": evolution_audit(data, mapped), "eggs": egg_audit(learnsets, mapped, aliases),
               "machines": compatibility_audit(data, learnsets, mapped, aliases),
               "tutors": compatibility_audit(data, learnsets, mapped, aliases, True), "upr": upr_audit()}
-    # Source hashes cover every tracked textual owner read by the new domains.
-    paths = [sync.CFRU_ROOT / "src/Tables/battle_moves.c", sync.CFRU_ROOT / "strings/attack_name_table.string",
+    result["genuine_mismatch_ledger"] = mismatch_ledger(result)
+    result["genuine_mismatch_counts"] = dict(sorted(Counter(r["domain"] for r in result["genuine_mismatch_ledger"]).items()))
+    # Primary normalization-owner hashes; other inspected source is bound by component pins.
+    paths = [sync.CFRU_ROOT / "src/config.h", sync.CFRU_ROOT / "src/defines.h", sync.CFRU_ROOT / "src/Tables/battle_moves.c", sync.CFRU_ROOT / "strings/attack_name_table.string",
              sync.CFRU_ROOT / "strings/ability_name_table.string", sync.DPE_BASE_STATS, sync.CFRU_LEARNSETS,
              sync.DPE_ROOT / "include/abilities.h", sync.DPE_ROOT / "src/Evolution Table.c",
              sync.DPE_ROOT / "include/evolution.h", sync.DPE_ROOT / "src/Egg_Moves.c",

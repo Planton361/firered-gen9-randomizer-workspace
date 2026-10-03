@@ -8,6 +8,59 @@ import gen9_data_parity_audit as audit
 
 
 class ParityTests(unittest.TestCase):
+    def test_presence_conditionals(self):
+        for directive, defined, expected in (("ifdef", True, "yes"), ("ifdef", False, "no"),
+                                              ("ifndef", True, "no"), ("ifndef", False, "yes")):
+            with self.subTest(directive=directive, defined=defined):
+                active, _ = audit.preprocess(f"#{directive} FLAG\nyes\n#else\nno\n#endif", {"FLAG"} if defined else set())
+                self.assertEqual(active, expected)
+
+    def test_nested_conditionals(self):
+        active, _ = audit.preprocess("#ifdef A\n#ifdef B\nboth\n#else\nonly-a\n#endif\n#else\n#ifdef B\nonly-b\n#endif\n#endif", {"B"})
+        self.assertEqual(active, "only-b")
+
+    def test_opposite_branch_duplicate_fields(self):
+        active, _ = audit.preprocess("#ifdef A\n.power = 80,\n#else\n.power = 20,\n#endif", {"A"})
+        self.assertEqual(audit.c_fields(active), {"power": "80"})
+        with self.assertRaisesRegex(ValueError, "Duplicate active"):
+            audit.c_fields(".power = 80,\n.power = 20,")
+
+    def test_unsupported_and_unbalanced_preprocessor_fails_closed(self):
+        for text in ("#if 1\nyes\n#endif", "#ifdef A\n#elif B\n#endif", "#ifdef A", "#else", "#endif", "#ifdef A\n#else\n#else\n#endif"):
+            with self.subTest(text=text), self.assertRaises(ValueError):
+                audit.preprocess(text)
+
+    def test_current_pinned_move_branches(self):
+        self.assertEqual(audit.closure.git(audit.sync.CFRU_ROOT, "rev-parse", "HEAD"), audit.PINS["CFRU"])
+        active, evidence = audit.active_move_source()
+        local = {k: audit.c_fields(v) for k, v in audit.c_rows(active, "MOVE_").items()}
+        for move, expected in {"MOVE_BLIZZARD": {"power": "110"}, "MOVE_AURASPHERE": {"power": "80"},
+                               "MOVE_LEECHLIFE": {"power": "80", "pp": "10"}, "MOVE_DARKVOID": {"accuracy": "50"},
+                               "MOVE_SUCKERPUNCH": {"power": "70"}, "MOVE_FEINT": {"power": "30"}}.items():
+            for field, value in expected.items():
+                self.assertEqual(local[move][field], value, (move, field))
+        self.assertFalse(evidence["condition_macros"]["UNBOUND"])
+        self.assertFalse(evidence["condition_macros"]["ACTUAL_PLA_MOVE_POWERS"])
+
+    def test_textual_ability_occurrence_is_not_native_support(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            data = Path(tmp)
+            (data / "abilities.ts").write_text('export const Abilities = {\n\tintimidate: {\n\t\tname: "Intimidate",\n\t},\n};\n')
+            result = audit.ability_audit(data, {"x": {"abilities": {"0": "intimidate"}}}, {}, {"x"})
+            row = result["rows"][0]
+            self.assertEqual(row["class"], "UNKNOWN")
+            self.assertIsNone(row["behavior_owner_evidence"])
+            self.assertEqual(row["full_effect_semantics"], "UNCERTIFIED")
+
+    def test_mismatch_ledger_excludes_style_and_includes_every_data_row(self):
+        bad = {"class": "DATA_MISMATCH", "source": "move"}
+        result = {"moves": {"rows": [bad, {"class": "DATA_MATCH", "source": "ok"}]},
+                  "evolutions": {"rows": [{"class": "DATA_MISMATCH", "source": "evo"}], "gnu_obsolete_designators": ["SPECIES_STANTLER"]},
+                  "machines": {"layout_issues": [{"class": "DATA_MISMATCH", "slot": 7}]},
+                  "tutors": {"layout_issues": []}, "base": {"genuine_mismatches": []}}
+        ledger = audit.mismatch_ledger(result)
+        self.assertEqual([(r["domain"], r["identity"]) for r in ledger], [("moves", "move"), ("evolutions", "evo"), ("machines", "slot-7")])
+
     def test_ts_literals_do_not_read_callback_properties(self):
         fields = audit.direct_fields('\t\taccuracy: true,\n\t\tpriority: -6,\n\t\tonHit() {\n\t\t\tpp: 99,\n\t\t},\n')
         self.assertEqual(fields, {"accuracy": True, "priority": -6})
@@ -55,7 +108,7 @@ class ParityTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "cycle"):
             audit.acquisition_evidence("a", {}, {"a": {"prevo": "b"}, "b": {"prevo": "a"}}, "M")
 
-    def test_evolution_parser_retains_malformed_designator_evidence(self):
+    def test_evolution_parser_retains_gnu_obsolete_designator(self):
         parsed = audit.evolution_rows("[SPECIES_STANTLER] {{EVO_MOVE, MOVE_PSYSHIELDBASH, SPECIES_WYRDEER, 0}},\n};")
         self.assertEqual(parsed["SPECIES_STANTLER"][0][2], "SPECIES_WYRDEER")
         parsed = audit.evolution_rows("[SPECIES_ROCKRUFF] = {{EVO_LEVEL_SPECIFIC_TIME_RANGE, 25, SPECIES_LYCANROC_DUSK, TIME_RANGE(17, 20)}},\n};")

@@ -2,7 +2,7 @@
 
 Contract: [Workspace #616](https://github.com/Planton361/firered-gen9-randomizer-workspace/issues/616). Nonblocking side audit; #498 Phase R1 is unchanged. Branch: `audit/616-gen9-data-parity`; target: `main`; never merge.
 
-**Verdict: `DATA_MISMATCH_FOUND`. The pilot is not comprehensively Gen-9-current even within its documented engine boundary.** The accepted base-field and coherent-level-up closure still holds. This wider audit finds 77 move records with comparable field differences, 15 evolution-level differences, one TM order/compatibility identity conflict, and one malformed evolution source designator. Missing/partial mechanics and unselected aggregate acquisition policies remain separate from those data findings. Source evidence does not change or pause acceptance, repair the frozen pilot, or certify runtime behavior.
+**Verdict: `DATA_MISMATCH_FOUND`. The pilot is not comprehensively Gen-9-current even within its documented engine boundary.** The accepted base-field and coherent-level-up closure still holds. The regenerated pipeline finds 51 move records with comparable field differences, 15 evolution-level differences and one TM order/compatibility identity conflict: 67 records/contracts. Missing/partial mechanics and unselected aggregate acquisition policies remain separate. Stantler’s obsolete GNU initializer syntax is a source-style quirk, not an established functional defect. This source audit does not change or pause #498, repair the frozen pilot, or certify runtime behavior.
 
 Evidence: **CONFIRMED CURRENT STATE** for inspected pinned source and deterministic comparisons; **CONFIRMED USER DECISION** for scope and reviewed policies; **UNKNOWN** for the uncertified semantics/policies below; **CONFLICT** for source defects versus any broad claim that all data domains are already current. Historical union-generation learnset policy is **LEGACY / OBSOLETE**.
 
@@ -35,9 +35,28 @@ Only the four Showdown data files were acquired/read from the sparse source chec
 
 Read the canonical entry point and all requested existing data evidence/helpers before normalization. The new read-only wrapper composes existing parsers, reviewed aliases, selected-generation form ownership and `build_inventory`. It never calls table-writing functions. Existing CFRU/DPE species/move/Ability constants, DPE base/learnset inputs and CFRU learn-move owners are byte-identical to the historical normalization baseline. The old whole-file `config.h` check rejects later approved QoL changes; the wrapper instead verifies current source pins plus `EXPAND_MOVESETS`, disabled DPE `EXPAND_LEARNSETS`, and unchanged actual normalization/runtime dependencies. It does not modify or override the old helper.
 
-TS literals are read only at top-level property indentation; callback values are not interpreted as data fields. C table rows are parsed without comments, including the final Psychic Noise row without a trailing comma. Signed priority bytes are normalized as `s8` (e.g. 250 → −6); `MOVE_TARGET_ALL` and `MOVE_TARGET_FOES_AND_ALLY` both encode 0x20. Dynamic-power/damage sentinels and typeless Struggle are engine encodings, not raw-field errors. Effect IDs, hook names and displayed strings never prove complete modern effect semantics.
+TS literals are read only at top-level property indentation; callback values are not interpreted as data fields. Before field extraction, battle_moves.c is evaluated under the pinned CFRU config’s active presence-macro state. Nested #ifdef/#ifndef/#else/#endif are handled; unsupported directives/conditional expressions, unmatched branches and duplicate active fields FAIL CLOSED. Opposite textual branches cannot overwrite the compiled field. The helper verifies that every table condition macro is owned only by config.h across tracked C/header sources; the config include chain is checked. No compiler or product build is invoked for preprocessing. Final Psychic Noise rows without a trailing comma remain parsed. Signed priority bytes normalize as s8; ALL and FOES_AND_ALLY both encode 0x20. Dynamic-power/damage sentinels and typeless Struggle are engine encodings. Effect IDs, helper references and strings do not prove behavior.
 
-TM/Tutor comparisons retain the local move order. Their evidence oracle uses literal M/T sources, explicit missing-form parents and pre-evolution inheritance, with generations preserved in the external JSON. TM positives in the selected coherent species/form generation are reference matches; older same-method and cross-method positives are project aggregate-policy candidates. Tutors use the best available historical same-method evidence because the local aggregate is not an SV tutor contract. Absence is not treated as a definitive compatibility prohibition. No new species/form alias or acquisition policy is silently approved. Egg evidence is literal E-source union only; no inferred breeding/inheritance policy is invented.
+| Move condition macro | Active |
+| --- | --- |
+| ACTUAL_PLA_MOVE_POWERS | False |
+| BUFFED_LEECH_LIFE | True |
+| DARK_VOID_ACC_NERF | True |
+| DYNAMAX_FEATURE | True |
+| FROSTBITE | True |
+| GEN_6_POWER_NERFS | True |
+| GEN_7_POWER_NERFS | True |
+| UNBOUND | False |
+
+| Preprocessing evidence | SHA-256 |
+| --- | --- |
+| active_source_sha256 | 0aa98143f5cd06b043428465522da0500a48c07b97495be552428fc378e868e7 |
+| config_sha256 | 32ec0b81ed8cb872d010ba181962986c9a6beca684a156e64a9cf68251de5f67 |
+| defines_sha256 | 96b717303e2fd4594d22c2719535334ca6359a946225450dfd0a2c3b27f43a39 |
+
+Exact pinned-source regressions PASS: Blizzard power 110; Aura Sphere 80; Leech Life power 80 / PP 10; Dark Void accuracy 50; Sucker Punch power 70; Feint power 30. The entire move domain was regenerated, with no move-specific exception patch.
+
+TM/Tutor comparisons retain the local move order. Their evidence oracle uses literal M/T sources, explicit missing-form parents and pre-evolution inheritance, with generations preserved in the external JSON. TM positives in the selected coherent generation are reference matches; earlier same-method and cross-method positives are project-policy candidates. Tutors use best available historical same-method evidence because the aggregate contract is not an SV tutor list. Absence is not treated as a definitive compatibility prohibition. No new species/form alias or acquisition policy is silently approved. Egg evidence is literal E-source union only; no inferred breeding/inheritance policy is invented.
 
 Replay from the Workspace root, with Python ≥3.10 (this session used Python 3.12.14; the system `python3` is 3.9.6 and cannot run the existing strict-zip parser):
 
@@ -51,7 +70,7 @@ python3 07_scripts/bootstrap/check_git_safety.py
 git diff --check
 ```
 
-Deterministic JSON output SHA-256: `7f8895af4c9ccc6f292b12b298e4117a8af20e3df6ff201ebb30377745f4b949`. Output has no timestamps or absolute/private paths. It contains complete derived domain records, all input hashes and exception sets, stays outside Git, and can be regenerated from the pins. The Markdown tables below retain all genuine mismatches and all exception sets; unchanged raw Showdown records are not committed.
+Deterministic JSON output SHA-256: `03d646d972917a23d0443ac77fb991d552d16757364a530c56cdd1ddd119f77f`. Output has no timestamps or absolute/private paths. It contains complete derived domain records, all input hashes and exception sets, stays outside Git, and can be regenerated from the pins. The Markdown tables below retain all genuine mismatches and all exception sets; unchanged raw Showdown records are not committed.
 
 ## 3. Species and form coverage
 
@@ -96,19 +115,19 @@ Level 0 is retained as an evolution/start entry and is eligible at initial level
 
 ## 6. Move data
 
-Classification: `DATA_MISMATCH_FOUND`. `DATA_MATCH` 708; `DATA_MISMATCH` 77; `ENGINE_BEHAVIOR_UNVERIFIED` 6; `INTENTIONAL_ENGINE_DIFFERENCE` 129; `MAPPING_BLOCK` 14; `MISSING_LOCAL_MOVE` 1.
+Classification: `DATA_MISMATCH_FOUND`. `DATA_MATCH` 734; `DATA_MISMATCH` 51; `ENGINE_BEHAVIOR_UNVERIFIED` 6; `INTENTIONAL_ENGINE_DIFFERENCE` 129; `MAPPING_BLOCK` 14; `MISSING_LOCAL_MOVE` 1.
 
-833 ordinary mapped records are compared. The 935-record classification inventory also includes 87 generated Z/Max/GMax source records (excluded from ordinary acquisition), 13 blocked LGPE partner moves, Ally Switch, and ignored Future Nihil Light. Of 129 intentional engine-difference records, 87 are generated moves and 42 use explicit dynamic-power/typeless encodings. 708 records match all compared literal fields; this does not mean their effects or every target class are Gen-9-correct. Six delegated-target records remain behavior-unverified. Type/category/power/accuracy/PP/priority are checked; only normal, self, all adjacent foes and all adjacent battlers have an exact target mapping. Other target classes remain explicitly uncertified. No move effect is certified by its Effect ID.
+833 ordinary mapped records are compared. The 935-record inventory includes 87 generated Z/Max/GMax source records, 13 blocked LGPE partner moves, Ally Switch and ignored Future Nihil Light. Of 129 intentional engine-difference records, 87 are generated and 42 use dynamic-power/typeless encodings. 734 records match the compared fields and 51 have genuine differences; six delegated-target records remain behavior-unverified. Type/category/power/accuracy/PP/priority are checked; only normal, self, all adjacent foes and all adjacent battlers have exact target mappings. Other targets and full effect semantics remain uncertified.
 
 Ally Switch has no approved local move mapping and blocks 18 learnset tables / 21 consumers. It is an engine/mapping limitation, not a silently fixed data row. Local project Leech Fang/Steely Hit, split constants, sentinel/helpers and reference typed Hidden Power variants stay outside normal learnset imports. Move name identity follows reviewed constant mapping; 94 full reference display names are not found literally in the local short-name table. The 12-character local ABI/abbreviations are a name-format boundary, not automatically 94 identity mismatches. The complete list is retained in Appendix D; no new name alias is approved.
 
 ## 7. Ability assignment, identity/name and behavior
 
-Assignment results are in §4. Behavior/representation classification across **310 Ability identities relevant to the 1,293 mapped source records**: `ALIAS_APPROXIMATION` 1; `ALIAS_PLUS_HOOK` 30; `MISSING_LOCAL` 7; `NAME_ONLY_OR_BEHAVIOR_BLOCKED` 9; `NATIVE_BEHAVIOR_SUPPORTED` 263.
+Assignment results are in §4. Behavior/representation classification across **310 Ability identities relevant to the 1,293 mapped source records**: `ALIAS_APPROXIMATION` 1; `ALIAS_PLUS_HOOK` 30; `MISSING_LOCAL` 7; `NAME_ONLY_OR_BEHAVIOR_BLOCKED` 9; `UNKNOWN` 263.
 
-`NATIVE_BEHAVIOR_SUPPORTED` means the existing local Ability constant has native source-handler evidence; it is not a proof of every Gen-9 trigger, nerf, suppression, interaction or random assignment. Complete effect semantics are not certified. `ALIAS_PLUS_HOOK` means an older numeric effect plus species-gated code/name plumbing exists; hooks may be partial, disabled or identity-only, and none are counted as exact Gen-9 behavior. `ALIAS_APPROXIMATION` is Opportunist → Dancer without a matched dedicated hook. The 32 Gen-9 alias defines are all explicitly listed below, including the Tablets of Ruin spelling alias. Protosynthesis aliases Quark Drive, which itself repurposes older Tangling Hair ID 0xAF; it is not an older-generation Ability identity simply because its numeric slot is reused. Accepted alias assignments and blocked slots remain disjoint ledgers.
+No Ability is classified NATIVE_BEHAVIOR_SUPPORTED by this audit: zero behavior owners have been independently reviewed to that standard. The 263 previously overclaimed identities are UNKNOWN. A constant in concatenated source may be bookkeeping, an exclusion or a display path. Assignment identity is independently compared in §4; display evidence is normalized literal-name occurrence, not proof of numeric-slot or species-display binding; numeric aliases are explicit. ALIAS_PLUS_HOOK means an older numeric alias plus a species-helper reference or display override exists, with behavior-owner evidence still unverified. ALIAS_APPROXIMATION is Opportunist → Dancer without a dedicated matched helper. No helper’s textual occurrence proves battle support. Appendix E records assignment-policy context, display evidence, numeric alias, helper reference and behavior-owner evidence separately. Full effect semantics remain uncertified for all 310 identities. The 32 Gen-9 alias defines remain explicit below.
 
-| Gen-9 named constant | Local aliased effect / ID |
+| Gen-9 named constant | Older numeric effect |
 | --- | --- |
 | ABILITY_ANGERSHELL | ABILITY_WEAKARMOR |
 | ABILITY_ARMORTAIL | ABILITY_DAZZLING |
@@ -151,9 +170,11 @@ Chilling Neigh is represented via Moxie and a species name override, not a missi
 
 Classification: `DATA_MISMATCH_FOUND` plus `UNVERIFIABLE_FROM_SELECTED_REFERENCE` for incomplete trigger metadata. `DATA_MISMATCH` 15; `ENGINE_TRIGGER_REVIEW` 41; `MAPPING_BLOCK` 2; `PROJECT_POLICY` 5; `REFERENCE_MATCH` 459; `UNVERIFIABLE_FROM_SELECTED_REFERENCE` 1.
 
-623 mapped source evolution metadata records are accounted for. The 459 reference matches compare the supplied relationship/level/item/move/method subset; omitted regional, version, friendship threshold or form probability metadata is not inferred. The 15 level mismatches are complete in §13. There is no remaining definitive missing/wrong target after examining alternate local parent ownership, but two parent mappings are blocked (Basculegion-F and Lycanroc-Dusk), five relationships use alternate local parents, and Vivillon-Fancy has unresolved event/form-versus-ordinary-evolution semantics. The complete remaining 41 trigger/form exception records and all local evolution edges are preserved in Appendix F.
+523 mapped source evolution metadata records are accounted for. The 459 reference matches compare the supplied relationship/level/item/move/method subset; omitted regional, version, friendship threshold or form probability metadata is not inferred. The 15 level mismatches are complete in §13. There is no remaining definitive missing/wrong target after examining alternate local parent ownership, but two parent mappings are blocked (Basculegion-F and Lycanroc-Dusk), five relationships use alternate local parents, and Vivillon-Fancy has unresolved event/form-versus-ordinary-evolution semantics. The complete remaining 41 trigger/form exception records and all local evolution edges are preserved in Appendix F.
 
-DPE EvolutionMethods extends CFRU’s enum with `EVO_COINS`, `EVO_MAUSHOLD_THREE`, `EVO_MAUSHOLD_FOUR`; CFRU `src/evolution.c` has no corresponding cases. Gimmighoul and Roaming Gimmighoul use EVO_COINS parameter 2999 instead of the reference’s 999 item-coin condition; Tandemaus uses the two Maushold methods. This is an engine/data-contract limitation, not a certified inexpressible trigger made correct by names. DPE also contains `[SPECIES_STANTLER] {{...}}` without `=`. The parser retains that malformed row as evidence and reports the syntax defect; it does not repair it. A future clean DPE source build implication is unresolved under this source-only contract. Earlier CFRU insertion/native-build evidence cannot waive this DPE textual defect or prove that the frozen artifact realizes every evolution row.
+DPE EvolutionMethods extends CFRU’s enum with `EVO_COINS`, `EVO_MAUSHOLD_THREE`, `EVO_MAUSHOLD_FOUR`; CFRU `src/evolution.c` has no corresponding cases. Gimmighoul and Roaming Gimmighoul use EVO_COINS parameter 2999 instead of the reference’s 999 item-coin condition; Tandemaus uses the two Maushold methods. This is an engine/data-contract limitation, not a certified inexpressible trigger made correct by names.
+
+DPE contains `[SPECIES_STANTLER] {{...}}` without `=`. This is obsolete GNU designated-initializer syntax accepted by the selected GNU GCC source flow, a source-style quirk. No target-toolchain rejection or functional defect is established. It is retained by the parser, excluded from the genuine mismatch ledger and not modified. No build rerun was performed.
 
 Move-use counts/style (Annihilape, Overqwil, Wyrdeer), Let’s Go steps (Pawmot, Rabsca, Brambleghast), leader battles (Kingambit), inverted console (Malamar), regional map/damage gates (Runerigus), full-moon condition (Ursaluna), Tower progression (Urshifu), fog extension (Goodra), Hisui Rock gating, day/night/version shortcuts, and friendship-versus-affection replacements are separately listed mechanics/project substitutions. Brambleghast’s friendship parameter 1000 is ignored by the inspected CFRU friendship handler, which checks friendship ≥220. Palafin’s reference evoLevel 38 alone does not certify Union Circle semantics, which this selected metadata does not encode. Gender/nature/personality and Shedinja special methods with matching levels remain metadata/engine-review entries where this reference cannot prove every omitted form condition. Mega/Gigantamax/Primal/Ultra-style DPE entries are battle transition metadata, not ordinary evolutionary relationships; they are listed separately. No transformation is claimed implemented by an evolution row.
 
@@ -167,15 +188,15 @@ Showdown E notation supplies acquisition provenance, not a complete project-loca
 
 Classification: `DATA_MISMATCH_FOUND` for TM07’s identity contract; compatibility policy is partly `UNVERIFIABLE_FROM_SELECTED_REFERENCE`. Exact local order is 128 moves = 120 TMs + 8 HMs, frozen in Appendix H; 16 bytes × 1,440 rows, little-endian bit order, one file per slot, source-only encode/decode replay PASS. No generated assembly/build artifact is opened. `MAPPING_BLOCK` 1,293; `PROJECT_POLICY` 14,133; `REFERENCE_MATCH` 27,841; `UNVERIFIABLE_FROM_SELECTED_REFERENCE` 122,237.
 
-The comparison accounts for all **165,504 mapped source/slot pairs**. There are 27,841 comparable positive selected-generation machine agreements; 14,133 policy candidates (13,777 older same-method positives + 356 cross-method positives); 1,293 mapping blocks (the project Leech Fang slot); 122,237 unverifiable pairs, including absent/absent pairs and acquisition disagreements. Local positives: 47,660; reference same-method positives: 46,673. A true-negative certificate count is zero: an absent method string is not a complete prohibitory oracle for this aggregate contract. A full current-Gen9 binary mismatch count is **UNKNOWN**, not zero. Every positive disagreement and mapping block is listed by exact local species-ID set in Appendix H.
+The comparison accounts for all **165,504 mapped source/slot pairs**: 27,841 selected-generation positive machine agreements; 14,133 policy candidates (13,777 older same-method + 356 cross-method); 1,293 mapping blocks (Leech Fang); 122,237 unverifiable pairs. Local positives: 47,660; reference same-method positives: 46,673. True-negative certificates: zero; absent method strings are not a prohibitory oracle. Full current-Gen9 binary mismatch count remains UNKNOWN. Complete positive disagreements and mapping blocks are in Appendix H.
 
-TM07 `gTMHMMoves[6]` is Low Kick, but compatibility file `7 - Hail.txt` is labeled Hail and supplies its species list to that bit position. The filename/header/order conflict is a concrete data-contract mismatch; its exact affected source membership and source-reconstructed bitset are frozen by the helper. It is not a Scarlet/Violet TM-list comparison. Façade’s cedilla is normalized and produces no false identity mismatch. No slot is reordered or repaired.
+TM07 `gTMHMMoves[6]` is Low Kick, but compatibility file `7 - Hail.txt` is labeled Hail and supplies its species list to that bit position. DPE scripts/tm_tutor.py derives tmId from the numeric filename and ignores header move identity, encoding Hail membership into the Low Kick bit. The filename/header/order conflict is a concrete data-contract mismatch; its exact affected source membership and source-reconstructed bitset are frozen by the helper. It is not a Scarlet/Violet TM-list comparison. Façade’s cedilla is normalized and produces no false identity mismatch. No slot is reordered or repaired.
 
 ## 11. Tutor compatibility
 
 Classification: `PROJECT_POLICY_DIFFERENCE` / `UNVERIFIABLE_FROM_SELECTED_REFERENCE`. **152 explicit moves**, 152 compatibility files, **19 bytes per species**, 1,440 rows; one-to-one slot/name order and source encode/decode replay PASS. Stale inline comments had suggested 151; parsing the initializer proves 152, with Confuse Ray at slot 147 and Tera Blast at 152. Zero structural slot/name mismatch. `PROJECT_POLICY` 12,047; `REFERENCE_MATCH` 10,408; `UNVERIFIABLE_FROM_SELECTED_REFERENCE` 174,081.
 
-All **196,536 mapped source/slot pairs** are accounted for. Positive same-method reference agreements: 10,408; cross-method aggregate-policy candidates: 12,047; unverifiable pairs: 174,081; mapping blocks: zero. Local positives: 25,191; same-method reference positives: 11,501. Of the 10,408 same-method positive tutor matches, 783 have evidence in the selected coherent species/form generation and 9,625 rely on earlier tutor evidence; they are not 10,408 literal Gen9 tutor matches. Of the 10,408 same-method positive tutor matches, 783 have evidence in the selected coherent species/form generation and 9,625 rely on earlier tutor evidence; they are not 10,408 literal Gen9 tutor matches. Full binary current-Gen9 compatibility mismatches remain UNKNOWN until a selected project aggregation policy is supplied; no Scarlet/Violet-specific tutor system is imposed. The exact local order, bitset hashes and complete observable disagreements are in Appendix I.
+All **196,536 mapped source/slot pairs** are accounted for: 10,408 same-method positive agreements; 12,047 cross-method policy candidates; 174,081 unverifiable pairs; zero mapping blocks. Local positives: 25,191; same-method reference positives: 11,501. Of the same-method agreements, 783 have selected coherent-generation evidence and 9,625 rely on earlier tutor evidence. These are not literal Gen9 tutor matches. Full binary mismatches remain UNKNOWN pending the project aggregation policy. Exact order, bitset hashes and disagreements are in Appendix I.
 
 ## 12. UPR-FVX source implications
 
@@ -187,7 +208,7 @@ Ability randomization chooses numeric IDs through 0xFE and standard option-depen
 
 **Generated move exposure:** source-level replay finds 156 local generated Z/Max/GMax constants not removed by the standard numeric Z-Move/bannedRandomMoves filters. Example: local Breakneck Blitz-P is 767; UPR `MoveIDs.breakneckBlitzPhysical` is 622. Local Max Strike-P is 821, outside the standard bans. Gen3 inherits empty `getIllegalMoves` / `getMovesBannedFromLevelup`; ordinary moveset selection iterates loaded moves after those filters. All 156 counterexample IDs are in Appendix J. This flags capability conditional on loading/settings, not observed randomized output. No automatic policy change follows.
 
-Evolution preservation has a concrete source-level gap: `Gen3Constants.evolutionMethodCount=15`; `loadEvolutions` ignores later methods, Mega/Gigantamax entries and other unmapped records. `AbstractRomHandler.prepareSaveRom` calls `saveSpeciesStats`, which calls `writeEvolutions` even without an evolution-randomization choice. The writer emits only imported relationships, writes auxiliary u16 fields as zero, and zeroes remaining slots. Thus 272 DPE source rows have methods outside the import domain and are at risk of deletion when present in loaded species; Froslass’s recognized Dawn Stone row loses its nonzero female gate (MON_FEMALE=0xFE → 0). Gallade’s male gate is already zero and is not counted as a lost value. Appendix J lists the exact 272 rows and the one nonzero auxiliary-field case. These are source capability findings, not observed artifact output; frozen table realization and loaded membership remain UNKNOWN. No preservation guarantee is asserted. The exact rows without CFRU cases and the syntax defect are explicitly retained. Starter/static paths are distinct from the wild/trainer asset guard; universal selection exclusion is not inferred.
+Evolution preservation has a concrete source-level gap: Gen3Constants.evolutionMethodCount=15; loadEvolutions imports only method IDs 1..15. AbstractRomHandler.prepareSaveRom calls saveSpeciesStats, which always calls writeEvolutions. The writer emits only imported relationships, writes auxiliary u16 at +6 as zero, and zeroes remaining slots. Thus 272 DPE source rows with methods beyond 15 are at risk of deletion when loaded; 1 recognized row loses a nonzero auxiliary condition: Froslass’s EVO_ITEM / Dawn Stone / MON_FEMALE=0xFE becomes zero. Gallade’s male gate is already zero and is not counted. Appendix J lists every affected row. These are source preservation risks; frozen randomized-output manifestation and loaded membership remain UNKNOWN. Starter/static paths remain distinct from wild/trainer asset guards. No Randomizer is run.
 
 ## 13. Complete genuine data-mismatch ledger
 
@@ -197,52 +218,30 @@ This ledger contains every confirmed comparable-field or source-structure defect
 | --- | --- |
 | absorb | power: 25 → 20 |
 | alluringvoice | target: MOVE_TARGET_ALL → MOVE_TARGET_SELECTED |
-| aurasphere | power: 90 → 80 |
 | barbbarrage | power: 75 → 60; pp: 15 → 10 |
 | bittermalice | power: 60 → 75; pp: 15 → 10 |
 | bleakwindstorm | power: 105 → 100; pp: 5 → 10; target: MOVE_TARGET_SELECTED → MOVE_TARGET_BOTH |
-| blizzard | power: 120 → 110 |
-| burnup | power: 140 → 130 |
 | ceaselessedge | power: 80 → 65 |
-| clangingscales | power: 120 → 110 |
 | corrosivegas | target: MOVE_TARGET_SELECTED → MOVE_TARGET_ALL |
-| darkvoid | accuracy: 80 → 50 |
 | direclaw | power: 60 → 80 |
 | doodle | pp: 15 → 10 |
-| dracometeor | power: 140 → 130 |
-| dragonpulse | power: 90 → 85 |
 | eeriespell | accuracy: 90 → 100; pp: 15 → 5 |
 | esperwing | accuracy: 90 → 100; power: 75 → 80; priority: 1 → 0 |
 | expandingforce | pp: 20 → 10 |
-| feint | power: 50 → 30 |
-| fireblast | power: 120 → 110 |
-| flamethrower | power: 95 → 90 |
-| fleurcannon | power: 140 → 130 |
 | flowertrick | accuracy: 100 → 0 |
 | glaciallance | power: 130 → 120 |
 | grassyglide | power: 70 → 55 |
-| heatwave | power: 100 → 95 |
-| hurricane | power: 120 → 110 |
-| hydropump | power: 120 → 110 |
-| icebeam | power: 95 → 90 |
 | infernalparade | power: 75 → 60 |
-| leafstorm | power: 140 → 130 |
-| leechlife | power: 20 → 80; pp: 15 → 10 |
 | lunarblessing | pp: 10 → 5 |
 | lusterpurge | power: 70 → 95 |
-| magmastorm | power: 120 → 100 |
 | makeitrain | target: MOVE_TARGET_OPPONENTS_FIELD → MOVE_TARGET_BOTH |
 | malignantchain | pp: 20 → 5 |
 | matchagotcha | target: MOVE_TARGET_SELECTED → MOVE_TARGET_BOTH |
-| meteormash | power: 100 → 90 |
 | mightycleave | pp: 10 → 5; priority: 3 → 0 |
 | milkdrink | pp: 10 → 5 |
 | mistball | power: 70 → 95 |
 | mortalspin | target: MOVE_TARGET_SELECTED → MOVE_TARGET_BOTH |
 | mountaingale | power: 110 → 100; pp: 5 → 10 |
-| muddywater | power: 95 → 90 |
-| originpulse | power: 120 → 110 |
-| overheat | power: 140 → 130 |
 | psychicnoise | power: 90 → 75 |
 | ragingfury | accuracy: 85 → 100 |
 | recover | pp: 10 → 5 |
@@ -259,14 +258,10 @@ This ledger contains every confirmed comparable-field or source-structure defect
 | springtidestorm | power: 105 → 100; target: MOVE_TARGET_SELECTED → MOVE_TARGET_BOTH |
 | steameruption | power: 120 → 110 |
 | stoneaxe | power: 80 → 65 |
-| suckerpunch | power: 80 → 70 |
 | supercellslam | accuracy: 100 → 95 |
-| surf | power: 95 → 90 |
 | syrupbomb | pp: 15 → 10 |
 | tachyoncutter | type: TYPE_DRAGON → TYPE_STEEL |
 | takeheart | pp: 20 → 15 |
-| thunder | power: 120 → 110 |
-| thunderbolt | power: 95 → 90 |
 | triplearrows | power: 60 → 90; pp: 15 → 10 |
 | wavecrash | power: 75 → 120; priority: 1 → 0 |
 | wickedblow | power: 80 → 75 |
@@ -293,20 +288,19 @@ This ledger contains every confirmed comparable-field or source-structure defect
 
 | Other defect | Evidence / consequence |
 | --- | --- |
-| TM07 identity conflict | Low Kick move slot; Hail-labeled compatibility file at the same bit index. |
-| DPE Stantler malformed designator | Missing = before {{EVO_MOVE, MOVE_PSYSHIELDBASH, SPECIES_WYRDEER, 0}}. Source defect; frozen-artifact manifestation UNKNOWN. |
+| slot-7 | {"class":"DATA_MISMATCH","file":"7 - Hail.txt","move":"MOVE_LOWKICK","reason":"header/order identity differs","slot":7} |
 
-Total: **94 affected records/contracts** = 77 move records + 15 evolution-level records + TM07 + Stantler source syntax. This is not 94 species and not an exhaustive effect-semantics error count. No genuine base-field or accepted coherent-learnset mismatch was found. Egg/compatibility disagreements and unsupported triggers are separately classified, not hidden in this total.
+Total: **67 affected records/contracts** = 51 move records + 15 evolution-level records + TM07. This is not a species count or exhaustive effect-semantics count. The JSON genuine_mismatch_ledger and genuine_mismatch_counts are generated from all DATA_MISMATCH domain records and layout issues, with unique domain/identity keys; all entries appear above. Stantler is excluded as a GNU source-style quirk. No genuine base-field or accepted coherent-learnset mismatch was found. Egg/compatibility evidence disagreements and unsupported triggers remain separate.
 
 ## 14. Complete engine/mechanics-limit ledger
 
-All limits established or left unverified by this audit are retained in the appendices: every blocked Ability slot (B), move-behavior/form target (C), generated/delegated/unsupported move identity (D), older Ability alias/native-handler-only identity (E), trigger/form transition and missing CFRU method (F), inheritance/source limitations (G–I), and UPR selection/writer exposures (J). The domain boundaries are: unsupported Commander/Hospitality/Embody Aspect; partial Palafin and Terapagos; all 32 Gen9 alias defines / reused numeric Ability slots; no universal transfer of species-gated hooks; missing Ally Switch and LGPE partner moves; generated moves not normal acquisition; no complete Move/Ability effects or transformations proof; incomplete evolution methods/conditions; source-only initial-move proof; reference-incomplete breeding and aggregate compatibility; asset checks that do not enforce mechanics policy. No alias is exact Gen9 mechanics parity.
+All limits established or left unverified by this audit are retained in the appendices: every blocked Ability slot (B), move-behavior/form target (C), generated/delegated/unsupported move identity (D), older Ability aliases and unverified behavior-owner identities (E), trigger/form transition and missing CFRU method (F), inheritance/source limitations (G–I), and UPR selection/writer exposures (J). The domain boundaries are: unsupported Commander/Hospitality/Embody Aspect; partial Palafin and Terapagos; all 32 Gen9 older-ID Ability defines; no universal transfer of species-gated hooks; missing Ally Switch and LGPE partner moves; generated moves not normal acquisition; no complete Move/Ability effects or transformations proof; incomplete evolution methods/conditions; source-only initial-move proof; reference-incomplete breeding and aggregate compatibility; asset checks that do not enforce mechanics policy. No alias is exact Gen9 mechanics parity.
 
 ## 15. Complete project-policy-difference ledger
 
 Established policy: coherent newest-one-generation L selection with explicit older-form priority; locked surviving same-level local tie order; duplicate second type/egg-group representation and NONE Ability slots; enumerated species/form aliases and learnset-only ownership; eight explicit custom/noncombat excluded consumers; local Leech Fang/Steely Hit; generated split move representation; dynamic power and Struggle encodings; 120+8 local machines and 152 aggregate tutors. Full mappings, engine encodings and orders are in A–I.
 
-Observable substitutions needing policy disposition: five alternative evolution parents; Hisui Rock routes; day/night/version and regional substitutes; movement/battle-counter/story-trigger shortcuts; fog and friendship/affection extensions; alternative trade/item and battle transition routes (all local edges in F); 13,777 older machine positives, 13,777 older machine positives, 356 machine and 12,047 tutor cross-method positive pairs (H/I); historical E unions and all acquisition disagreements (G–I). `PROJECT_POLICY` identifies a project-local observable representation, **not proof that CONTROL reviewed every individual deviation**. Their intentional approval is UNKNOWN where no existing rule covers the row. No repair or new policy is adopted.
+Observable substitutions needing policy disposition: five alternate evolution parents; Hisui Rock routes; day/night/version and regional substitutes; movement/battle-counter/story-trigger shortcuts; fog and friendship/affection extensions; alternate trade/item and battle transitions (F); 13,777 older machine positives, 356 machine cross-method positives and 12,047 tutor cross-method positives (H/I); historical E unions and acquisition disagreements (G–I). PROJECT_POLICY is an observable project representation, not evidence that every deviation is approved. Approval remains UNKNOWN where no reviewed rule covers it. No new policy is adopted.
 
 ## 16. NOT CERTIFIED BY SELECTED REFERENCE
 
@@ -316,22 +310,23 @@ Catch rate; Base EXP yield; EV yield; growth rate; egg cycles; base friendship; 
 
 | Proposed bounded contract | Evidence to resolve |
 | --- | --- |
-| Move parameter parity decision/repair | Review the complete 77-record field ledger, selected-generation parameter policy and target mappings; preserve mechanics exclusions. |
-| Evolution data and source-owner repair | Review 15 wrong levels and malformed Stantler source; reconcile DPE/CFRU enum/handler boundary, alternate parents and frozen-artifact lineage. |
-| TM07 identity and compatibility policy | Choose intended Low Kick/Hail identity; review exact compatibility memberships; define a reproducible aggregate machine oracle. |
-| Egg/Tutor aggregate reference policy | Select generation/form/inheritance/transfer rules; then recalculate the complete exception sets without treating absence as prohibition. |
-| UPR mechanics/generation exclusion contract | Audit generated numeric move pools, species-only aliases, supported-form exclusions, and each selection/writer path; preserve current #498 work until CONTROL explicitly authorizes changes. |
-| Post-pilot mechanics validation, only if requested | Full Gen9 effect/transform behavior remains outside the pilot; no implementation Issue is automatically opened. |
+| Move parameter parity decision/repair | Review all 51 regenerated move records, selected parameter policy and exact targets. |
+| Evolution data and source-owner boundary | Review 15 source-real level differences; reconcile enum/handler boundary and alternate parents. Stantler is only a GNU style quirk. |
+| TM07 identity and compatibility policy | Resolve Low Kick/Hail identity and define reproducible aggregate machine evidence. |
+| Egg/Tutor aggregate reference policy | Select generation/form/inheritance/transfer rules without treating absence as prohibition. |
+| Ability behavior-owner evidence | Review the 263 UNKNOWN identities independently; preserve all known Gen9 missing/partial mechanics and aliases. |
+| UPR preservation and exclusion contract | Resolve methods >15, Froslass auxiliary-field loss, generated numeric move pools and species-gated Ability aliases; runtime manifestation remains UNKNOWN. |
+| Post-pilot mechanics validation, only if requested | Full Gen9 effects/transforms are outside this audit; no implementation is opened. |
 
 These are proposals only; no Issue is created, no component change is made, and #498’s state/scope is not edited.
 
 ## 18. Verification, UNKNOWN / CONFLICT and final verdict
 
-Exact Workspace basis/Gitlinks/component HEADs and clean tracked component sources PASS; exact Showdown commit and four source SHA-256s PASS; alias/reference/ownership locks PASS; core dependency continuity and runtime learnset owner checks PASS. Existing 27 synthetic coherent regressions PASS. New focused tests: 13 PASS; combined existing/new helper suite: 40 PASS (including TS property scope, Unicode identity, array overflow/implicit slot handling, missing/order-invalid files, bounds, inheritance separation/cycles, malformed evolution evidence, and pin rejection). Existing source ownership/negative mutations and 144,000 host initial-move cases PASS. Two full audit outputs compare byte-identical. No raw Showdown files are staged. Changed-file allowlist, no Gitlink/component diff, diff whitespace check, safety, and post-commit clean status are verified for the PR handoff.
+Exact Workspace basis/Gitlinks/component HEADs and clean tracked source PASS; exact Showdown commit/four hashes and alias/reference/ownership locks PASS. Existing 27 coherent regressions and all 20 helper tests PASS (47 total), including all four defined/undefined conditional cases, nesting, opposite-branch fields, unsupported syntax, six current-source move assertions, Ability occurrence downgrade and complete mismatch-ledger construction. Source ownership/negative mutations and all 144,000 host initial-move cases PASS. Two full outputs are byte-identical. No raw Showdown source is staged. Exact three-file allowlist, no component/Gitlink diff, diff whitespace, Workspace safety and clean post-commit status are verified for handoff. No product build rerun.
 
-UNKNOWN: full native Move/Ability behavior and runtime consequences; frozen-artifact realization of Stantler/modern evolution methods; unsupported-form asset eligibility and every Randomizer setting/path; intended egg/M/T aggregation and deliberate approval of each acquisition/evolution substitution; omitted reference evolution conditions. CONFLICT: an unqualified comprehensive Gen9-current claim is contradicted by the 94-record defect ledger. No change to the earlier bounded core-data closure or #498 acceptance disposition is inferred. No unreviewed product conflict is silently resolved.
+UNKNOWN: native Ability behavior owners (263 identities), full Move/Ability semantics and runtime consequences; frozen randomized-output manifestation of evolution preservation risks; unsupported-form eligibility and Randomizer settings/paths; intended egg/M/T policy and approval of evolution substitutions; omitted reference conditions. CONFLICT: broad comprehensive Gen9-current claims are contradicted by the regenerated 67-record ledger. The accepted core-data closure and #498 state remain unchanged. Stantler is not a functional conflict.
 
-**Final answer:** the accepted Base Stats/types/gender/egg-group/assignment subset and coherent learnsets are current against the selected reference within their reviewed exclusions. The pilot’s Pokémon data as a whole is **not comprehensively Gen9-current within the CFRU/DPE boundary**: comparable move/evolution data and the TM07 contract differ, while Ability mechanics and acquisition policies are only partially represented/certifiable. `GEN9_DATA_PARITY_AUDIT_READY` denotes a reviewable completed source audit, not product parity or runtime acceptance.
+**Final answer:** the accepted Base Stats/types/gender/egg-group/assignment subset and coherent learnsets are current against the selected reference within their reviewed exclusions. The pilot’s Pokémon data as a whole is **not comprehensively Gen9-current within the CFRU/DPE boundary**: comparable move/evolution data and the TM07 contract differ, while Ability mechanics and acquisition policies are only partially represented/certifiable. `GEN9_DATA_PARITY_AUDIT_REPAIRED` denotes a reviewable completed source audit, not product parity or runtime acceptance.
 
 No implementation, component/config/Gitlink write, game runtime, Randomizer execution, emulator, ROM/save/state/product-build/tool-binary/private-artifact or secret access; no upstream PR; no merge. `UPSTREAM_CONTRIBUTION = DEFERRED`. Only the authorized report, read-only helper and focused tests are changed.
 
@@ -1139,318 +1134,318 @@ Uncompared local battle constants (generated/project/helper scope): MOVE_1000000
 
 ## Appendix E — every relevant Ability
 
-| Identity | Class | Local representation | Name string evidence | Hook |
-| --- | --- | --- | --- | --- |
-| adaptability | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_ADAPTABILITY / 0x58 | True | none |
-| aerilate | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_AERILATE / 0x89 | True | none |
-| aftermath | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_AFTERMATH / 0x77 | True | none |
-| airlock | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_CLOUDNINE / 0xD | True | none |
-| analytic | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_ANALYTIC / 0x7D | True | none |
-| angerpoint | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_ANGERPOINT / 0xBB | True | none |
-| angershell | ALIAS_PLUS_HOOK | ABILITY_ANGERSHELL / ABILITY_WEAKARMOR | True | SpeciesHasAngerShell |
-| anticipation | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_ANTICIPATION / 0xBC | True | none |
-| arenatrap | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_ARENATRAP / 0x47 | True | none |
-| armortail | ALIAS_PLUS_HOOK | ABILITY_ARMORTAIL / ABILITY_DAZZLING | True | SpeciesHasArmorTail |
-| aromaveil | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_AROMAVEIL / 0xC9 | True | none |
-| asoneglastrier | NAME_ONLY_OR_BEHAVIOR_BLOCKED | ABILITY_ASONE_CHILLING / 0x9A | False | none |
-| asonespectrier | NAME_ONLY_OR_BEHAVIOR_BLOCKED | ABILITY_ASONE_GRIM / 0x99 | False | none |
-| aurabreak | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_AURABREAK / 0x86 | True | none |
-| baddreams | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_BADDREAMS / 0xCE | True | none |
-| ballfetch | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_BALLFETCH / 0xF0 | True | none |
-| battery | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_BATTERY / 0xE9 | True | none |
-| battlearmor | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_BATTLEARMOR / 0x4 | True | none |
-| battlebond | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_BATTLEBOND / 0x9C | True | none |
-| beadsofruin | ALIAS_PLUS_HOOK | ABILITY_BEADSOFRUIN / ABILITY_STALL | True | SpeciesHasBeadsofRuin |
-| beastboost | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_BEASTBOOST / 0x9D | True | none |
-| berserk | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_BERSERK / 0xD8 | True | none |
-| bigpecks | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_BIGPECKS / 0x59 | True | none |
-| blaze | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_BLAZE / 0x42 | True | none |
-| bulletproof | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_BULLETPROOF / 0x74 | True | none |
-| cheekpouch | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_CHEEKPOUCH / 0xE4 | True | none |
-| chillingneigh | ALIAS_PLUS_HOOK | ABILITY_MOXIE / ABILITY_MOXIE (species name override) | True | none |
-| chlorophyll | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_CHLOROPHYLL / 0x22 | True | none |
-| clearbody | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_CLEARBODY / 0x1D | True | none |
-| cloudnine | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_CLOUDNINE / 0xD | True | none |
-| colorchange | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_COLORCHANGE / 0x10 | True | none |
-| comatose | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_COMATOSE / 0xE7 | True | none |
-| commander | MISSING_LOCAL | none / none | False | none |
-| competitive | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_COMPETITIVE / 0x8F | True | none |
-| compoundeyes | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_COMPOUNDEYES / 0xE | True | none |
-| contrary | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_CONTRARY / 0xBF | True | none |
-| corrosion | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_CORROSION / 0x9E | True | none |
-| costar | ALIAS_PLUS_HOOK | ABILITY_COSTAR / ABILITY_CURIOUSMEDICINE | True | SpeciesHasCostar |
-| cottondown | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_COTTONDOWN / 0xF1 | True | none |
-| cudchew | ALIAS_PLUS_HOOK | ABILITY_CUDCHEW / ABILITY_HARVEST | True | SpeciesHasCudChew |
-| curiousmedicine | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_CURIOUSMEDICINE / 0xEB | True | none |
-| cursedbody | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_CURSEDBODY / 0x78 | True | none |
-| cutecharm | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_CUTECHARM / 0x38 | True | none |
-| damp | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_DAMP / 0x6 | True | none |
-| dancer | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_DANCER / 0xE8 | True | none |
-| darkaura | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_DARKAURA / 0x84 | True | none |
-| dauntlessshield | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_DAUNTLESSSHIELD / 0xEF | True | none |
-| dazzling | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_DAZZLING / 0xDD | True | none |
-| defeatist | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_DEFEATIST / 0x90 | True | none |
-| defiant | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_DEFIANT / 0x8E | True | none |
-| deltastream | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_DELTASTREAM / 0xD6 | True | none |
-| desolateland | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_DESOLATELAND / 0xD5 | True | none |
-| disguise | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_DISGUISE / 0x9F | True | none |
-| download | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_DOWNLOAD / 0x67 | True | none |
-| dragonsmaw | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_DRAGONSMAW / 0x49 | True | none |
-| drizzle | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_DRIZZLE / 0x2 | True | none |
-| drought | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_DROUGHT / 0x46 | True | none |
-| dryskin | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_DRYSKIN / 0x62 | True | none |
-| earlybird | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_EARLYBIRD / 0x30 | True | none |
-| eartheater | ALIAS_PLUS_HOOK | ABILITY_EARTHEATER / ABILITY_VOLTABSORB | True | SpeciesHasEarthEater |
-| effectspore | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_EFFECTSPORE / 0x1B | True | none |
-| electricsurge | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_ELECTRICSURGE / 0xB5 | True | none |
-| electromorphosis | ALIAS_PLUS_HOOK | ABILITY_ELECTROMORPHOSIS / ABILITY_COLORCHANGE | True | SpeciesHasElectromorphosis |
-| embodyaspectcornerstone | MISSING_LOCAL | none / none | False | none |
-| embodyaspecthearthflame | MISSING_LOCAL | none / none | False | none |
-| embodyaspectteal | MISSING_LOCAL | none / none | False | none |
-| embodyaspectwellspring | MISSING_LOCAL | none / none | False | none |
-| emergencyexit | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_EMERGENCYEXIT / 0xA0 | True | none |
-| fairyaura | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_FAIRYAURA / 0x85 | True | none |
-| filter | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_FILTER / 0x65 | True | none |
-| flamebody | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_FLAMEBODY / 0x31 | True | none |
-| flareboost | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_FLAREBOOST / 0x93 | True | none |
-| flashfire | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_FLASHFIRE / 0x12 | True | none |
-| flowergift | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_FLOWERGIFT / 0xCD | True | none |
-| flowerveil | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_FLOWERVEIL / 0xCA | True | none |
-| fluffy | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_FLUFFY / 0xA1 | True | none |
-| forecast | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_FORECAST / 0x3B | True | none |
-| forewarn | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_FOREWARN / 0xBD | True | none |
-| friendguard | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_FRIENDGUARD / 0xE0 | True | none |
-| frisk | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_FRISK / 0xBE | True | none |
-| fullmetalbody | NAME_ONLY_OR_BEHAVIOR_BLOCKED | ABILITY_CLEARBODY / 0x1D | True | none |
-| furcoat | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_FURCOAT / 0x94 | True | none |
-| galewings | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_GALEWINGS / 0x75 | True | none |
-| galvanize | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_GALVANIZE / 0xED | True | none |
-| gluttony | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_GLUTTONY / 0xDE | True | none |
-| goodasgold | ALIAS_PLUS_HOOK | ABILITY_GOODASGOLD / ABILITY_CLEARBODY | True | SpeciesHasGoodAsGold |
-| gooey | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_GOOEY / 0x79 | True | none |
-| gorillatactics | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_GORILLATACTICS / 0xD7 | True | none |
-| grasspelt | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_GRASSPELT / 0xBA | True | none |
-| grassysurge | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_GRASSYSURGE / 0xB6 | True | none |
-| grimneigh | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_GRIMNEIGH / 0x7B | True | none |
-| guarddog | ALIAS_PLUS_HOOK | ABILITY_GUARDDOG / ABILITY_INNERFOCUS | True | SpeciesHasGuardDog |
-| gulpmissile | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_GULPMISSILE / 0xF3 | True | none |
-| guts | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_GUTS / 0x3E | True | none |
-| hadronengine | ALIAS_PLUS_HOOK | ABILITY_HADRONENGINE / ABILITY_ELECTRICSURGE | True | SpeciesHasHadronEngine |
-| harvest | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_HARVEST / 0xE1 | True | none |
-| healer | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_HEALER / 0x6C | True | none |
-| heatproof | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_HEATPROOF / 0x61 | True | none |
-| heavymetal | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_HEAVYMETAL / 0xC2 | True | none |
-| honeygather | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_HONEYGATHER / 0xDF | True | none |
-| hospitality | MISSING_LOCAL | none / none | False | none |
-| hugepower | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_HUGEPOWER / 0x25 | True | none |
-| hungerswitch | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_HUNGERSWITCH / 0x4C | True | none |
-| hustle | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_HUSTLE / 0x37 | True | none |
-| hydration | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_HYDRATION / 0x6B | True | none |
-| hypercutter | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_HYPERCUTTER / 0x34 | True | none |
-| icebody | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_ICEBODY / 0x69 | True | none |
-| iceface | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_ICEFACE / 0xFA | True | none |
-| icescales | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_ICESCALES / 0xF8 | True | none |
-| illuminate | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_ILLUMINATE / 0x23 | True | none |
-| illusion | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_ILLUSION / 0xE3 | True | none |
-| immunity | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_IMMUNITY / 0x11 | True | none |
-| imposter | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_IMPOSTER / 0xC5 | True | none |
-| infiltrator | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_INFILTRATOR / 0x66 | True | none |
-| innardsout | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_INNARDSOUT / 0xDC | True | none |
-| innerfocus | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_INNERFOCUS / 0x27 | True | none |
-| insomnia | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_INSOMNIA / 0xF | True | none |
-| intimidate | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_INTIMIDATE / 0x16 | True | none |
-| intrepidsword | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_INTREPIDSWORD / 0xEE | True | none |
-| ironbarbs | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_ROUGHSKIN / 0x18 | True | none |
-| ironfist | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_IRONFIST / 0x5D | True | none |
-| justified | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_JUSTIFIED / 0xC6 | True | none |
-| keeneye | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_KEENEYE / 0x33 | True | none |
-| klutz | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_KLUTZ / 0xCC | True | none |
-| leafguard | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_LEAFGUARD / 0xCB | True | none |
-| levitate | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_LEVITATE / 0x1A | True | none |
-| libero | NAME_ONLY_OR_BEHAVIOR_BLOCKED | ABILITY_PROTEAN / 0x96 | True | none |
-| lightmetal | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_LIGHTMETAL / 0xC3 | True | none |
-| lightningrod | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_LIGHTNINGROD / 0x1F | True | none |
-| limber | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_LIMBER / 0x7 | True | none |
-| lingeringaroma | NAME_ONLY_OR_BEHAVIOR_BLOCKED | ABILITY_UNUSED / 0x4D; CFRU ABILITY_LINGERINGAROMA | True | none |
-| liquidooze | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_LIQUIDOOZE / 0x40 | True | none |
-| liquidvoice | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_LIQUIDVOICE / 0xDA | True | none |
-| longreach | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_LONGREACH / 0xD9 | True | none |
-| magicbounce | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_MAGICBOUNCE / 0x5A | True | none |
-| magicguard | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_MAGICGUARD / 0x73 | True | none |
-| magician | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_MAGICIAN / 0xD2 | True | none |
-| magmaarmor | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_MAGMAARMOR / 0x28 | True | none |
-| magnetpull | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_MAGNETPULL / 0x2A | True | none |
-| marvelscale | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_MARVELSCALE / 0x3F | True | none |
-| megalauncher | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_MEGALAUNCHER / 0x7F | True | none |
-| merciless | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_MERCILESS / 0xC8 | True | none |
-| mimicry | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_MIMICRY / 0xFC | True | none |
-| mindseye | ALIAS_PLUS_HOOK | ABILITY_MINDSEYE / ABILITY_SCRAPPY | True | SpeciesHasMindsEye |
-| minus | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_MINUS / 0x3A | True | none |
-| mirrorarmor | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_MIRRORARMOR / 0xF2 | True | none |
-| mistysurge | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_MISTYSURGE / 0xB7 | True | none |
-| moldbreaker | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_MOLDBREAKER / 0x98 | True | none |
-| moody | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_MOODY / 0x6A | True | none |
-| motordrive | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_MOTORDRIVE / 0x50 | True | none |
-| moxie | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_MOXIE / 0x76 | True | none |
-| multiscale | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_MULTISCALE / 0x51 | True | none |
-| multitype | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_MULTITYPE / 0xB4 | True | none |
-| mummy | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_MUMMY / 0x7A | True | none |
-| myceliummight | ALIAS_PLUS_HOOK | ABILITY_MYCELIUMMIGHT / ABILITY_MOLDBREAKER | True | SpeciesHasMyceliumMight |
-| naturalcure | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_NATURALCURE / 0x1E | True | none |
-| neuroforce | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_NEUROFORCE / 0xEC | True | none |
-| neutralizinggas | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_NEUTRALIZINGGAS / 0x4A | False | none |
-| noguard | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_NOGUARD / 0x7E | True | none |
-| normalize | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_NORMALIZE / 0x8A | True | none |
-| oblivious | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_OBLIVIOUS / 0xC | True | none |
-| opportunist | ALIAS_APPROXIMATION | ABILITY_OPPORTUNIST / ABILITY_DANCER | True | none |
-| orichalcumpulse | ALIAS_PLUS_HOOK | ABILITY_ORICHALCUMPULSE / ABILITY_DROUGHT | True | SpeciesHasOrichalcumPulse |
-| overcoat | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_OVERCOAT / 0x72 | True | none |
-| overgrow | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_OVERGROW / 0x41 | True | none |
-| owntempo | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_OWNTEMPO / 0x14 | True | none |
-| parentalbond | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_PARENTALBOND / 0x97 | True | none |
-| pastelveil | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_PASTELVEIL / 0xFE | True | none |
-| perishbody | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_PERISHBODY / 0xA3 | True | none |
-| pickpocket | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_PICKPOCKET / 0xCF | True | none |
-| pickup | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_PICKUP / 0x35 | True | none |
-| pixilate | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_PIXILATE / 0x88 | True | none |
-| plus | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_PLUS / 0x39 | True | none |
-| poisonheal | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_POISONHEAL / 0x68 | True | none |
-| poisonpoint | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_POISONPOINT / 0x26 | True | none |
-| poisonpuppeteer | ALIAS_PLUS_HOOK | ABILITY_POISONPUPPETEER / ABILITY_PLUS | True | SpeciesHasPoisonPuppeteer |
-| poisontouch | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_POISONTOUCH / 0xD1 | True | none |
-| powerconstruct | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_POWERCONSTRUCT / 0xA5 | True | none |
-| powerofalchemy | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_RECEIVER / 0xEA | True | none |
-| powerspot | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_POWERSPOT / 0xFB | True | none |
-| prankster | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_PRANKSTER / 0x57 | True | none |
-| pressure | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_PRESSURE / 0x2E | True | none |
-| primordialsea | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_PRIMORDIALSEA / 0xD4 | True | none |
-| prismarmor | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_PRISMARMOR / 0xA6 | True | none |
-| propellertail | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_STALWART / 0xF4 | True | none |
-| protean | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_PROTEAN / 0x96 | True | none |
-| protosynthesis | ALIAS_PLUS_HOOK | ABILITY_PROTOSYNTHESIS / ABILITY_QUARKDRIVE | True | SpeciesHasProtosynthesis |
-| psychicsurge | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_PSYCHICSURGE / 0xB8 | True | none |
-| punkrock | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_PUNKROCK / 0xF6 | True | none |
-| purepower | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_HUGEPOWER / 0x25 | True | none |
-| purifyingsalt | ALIAS_PLUS_HOOK | ABILITY_PURIFYINGSALT / ABILITY_IMMUNITY | True | SpeciesHasPurifyingSalt |
-| quarkdrive | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_QUARKDRIVE / 0xAF | True | none |
-| queenlymajesty | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_DAZZLING / 0xDD | True | none |
-| quickdraw | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_QUICKDRAW / 0xDB | True | none |
-| quickfeet | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_QUICKFEET / 0x70 | True | none |
-| raindish | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_RAINDISH / 0x2C | True | none |
-| rattled | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_RATTLED / 0xC7 | True | none |
-| receiver | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_RECEIVER / 0xEA | True | none |
-| reckless | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_RECKLESS / 0x5B | True | none |
-| refrigerate | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_REFRIGERATE / 0x87 | True | none |
-| regenerator | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_REGENERATOR / 0x56 | True | none |
-| ripen | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_RIPEN / 0xF9 | True | none |
-| rivalry | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_RIVALRY / 0x5E | True | none |
-| rkssystem | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_RKS_SYSTEM / 0xA7 | True | none |
-| rockhead | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_ROCKHEAD / 0x45 | True | none |
-| rockypayload | ALIAS_PLUS_HOOK | ABILITY_ROCKYPAYLOAD / ABILITY_STEELWORKER | True | SpeciesHasRockyPayload |
-| roughskin | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_ROUGHSKIN / 0x18 | True | none |
-| runaway | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_RUNAWAY / 0x32 | True | none |
-| sandforce | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_SANDFORCE / 0x5F | True | none |
-| sandrush | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_SANDRUSH / 0x7C | True | none |
-| sandspit | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_SANDSPIT / 0xF7 | True | none |
-| sandstream | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_SANDSTREAM / 0x2D | True | none |
-| sandveil | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_SANDVEIL / 0x8 | True | none |
-| sapsipper | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_SAPSIPPER / 0x71 | True | none |
-| schooling | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_SCHOOLING / 0xA8 | True | none |
-| scrappy | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_SCRAPPY / 0x53 | True | none |
-| screencleaner | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_SCREENCLEANER / 0xFD | True | none |
-| seedsower | ALIAS_PLUS_HOOK | ABILITY_SEEDSOWER / ABILITY_GRASSYSURGE | True | SpeciesHasSeedSower |
-| serenegrace | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_SERENEGRACE / 0x20 | True | none |
-| shadowshield | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_SHADOWSHIELD / 0xA9 | True | none |
-| shadowtag | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_SHADOWTAG / 0x17 | True | none |
-| sharpness | ALIAS_PLUS_HOOK | ABILITY_SHARPNESS / ABILITY_STRONGJAW | True | SpeciesHasSharpness |
-| shedskin | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_SHEDSKIN / 0x3D | True | none |
-| sheerforce | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_SHEERFORCE / 0x5C | True | none |
-| shellarmor | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_SHELLARMOR / 0x4B | True | none |
-| shielddust | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_SHIELDDUST / 0x13 | True | none |
-| shieldsdown | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_SHIELDSDOWN / 0xAA | True | none |
-| simple | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_SIMPLE / 0x8C | True | none |
-| skilllink | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_SKILLLINK / 0x4F | True | none |
-| slowstart | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_SLOWSTART / 0x91 | True | none |
-| slushrush | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_SLUSHRUSH / 0xAB | True | none |
-| sniper | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_SNIPER / 0x55 | True | none |
-| snowcloak | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_SNOWCLOAK / 0x6D | True | none |
-| snowwarning | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_SNOWWARNING / 0x6F | True | none |
-| solarpower | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_SOLARPOWER / 0x60 | True | none |
-| solidrock | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_FILTER / 0x65 | True | none |
-| soulheart | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_SOULHEART / 0xAC | True | none |
-| soundproof | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_SOUNDPROOF / 0x2B | True | none |
-| speedboost | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_SPEEDBOOST / 0x3 | True | none |
-| stakeout | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_STAKEOUT / 0xE6 | True | none |
-| stall | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_STALL / 0xB3 | True | none |
-| stalwart | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_STALWART / 0xF4 | True | none |
-| stamina | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_STAMINA / 0xAD | True | none |
-| stancechange | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_STANCECHANGE / 0xD3 | True | none |
-| static | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_STATIC / 0x9 | True | none |
-| steadfast | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_STEADFAST / 0xC4 | True | none |
-| steamengine | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_STEAMENGINE / 0xF5 | True | none |
-| steelworker | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_STEELWORKER / 0xAE | True | none |
-| steelyspirit | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_STEELYSPIRIT / 0xA2 | True | none |
-| stench | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_STENCH / 0x1 | True | none |
-| stickyhold | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_STICKYHOLD / 0x3C | True | none |
-| stormdrain | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_STORMDRAIN / 0x83 | True | none |
-| strongjaw | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_STRONGJAW / 0x81 | True | none |
-| sturdy | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_STURDY / 0x5 | True | none |
-| suctioncups | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_SUCTIONCUPS / 0x15 | True | none |
-| superluck | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_SUPERLUCK / 0x54 | True | none |
-| supersweetsyrup | ALIAS_PLUS_HOOK | ABILITY_SUPERSWEETSYRUP / ABILITY_INTIMIDATE | True | SpeciesHasSuperSweetSyrup |
-| supremeoverlord | ALIAS_PLUS_HOOK | ABILITY_SUPREMEOVERLORD / ABILITY_HUGEPOWER | True | SpeciesHasSupremeOverlord |
-| surgesurfer | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_SURGESURFER / 0xB9 | True | none |
-| swarm | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_SWARM / 0x44 | True | none |
-| sweetveil | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_SWEETVEIL / 0x4E | True | none |
-| swiftswim | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_SWIFTSWIM / 0x21 | True | none |
-| swordofruin | ALIAS_PLUS_HOOK | ABILITY_SWORDOFRUIN / ABILITY_STALL | True | SpeciesHasSwordofRuin |
-| symbiosis | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_SYMBIOSIS / 0xE5 | True | none |
-| synchronize | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_SYNCHRONIZE / 0x1C | True | none |
-| tabletsofruin | NAME_ONLY_OR_BEHAVIOR_BLOCKED | ABILITY_TABLETOFRUIN / ABILITY_STALL | True | SpeciesHasTabletsofRuin |
-| tangledfeet | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_TANGLEDFEET / 0x6E | True | none |
-| tanglinghair | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_GOOEY / 0x79 | True | none |
-| technician | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_TECHNICIAN / 0x52 | True | none |
-| telepathy | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_TELEPATHY / 0xE2 | True | none |
-| teraformzero | MISSING_LOCAL | none / none | False | none |
-| terashell | NAME_ONLY_OR_BEHAVIOR_BLOCKED | none / none | True | SpeciesHasTeraShell |
-| terashift | NAME_ONLY_OR_BEHAVIOR_BLOCKED | none / none | True | SpeciesHasTeraShift |
-| teravolt | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_MOLDBREAKER / 0x98 | True | SpeciesHasTeravolt |
-| thermalexchange | ALIAS_PLUS_HOOK | ABILITY_THERMALEXCHANGE / ABILITY_STEAMENGINE | True | SpeciesHasThermalExchange |
-| thickfat | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_THICKFAT / 0x2F | True | none |
-| tintedlens | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_TINTEDLENS / 0x63 | True | none |
-| torrent | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_TORRENT / 0x43 | True | none |
-| toughclaws | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_TOUGHCLAWS / 0x80 | True | none |
-| toxicboost | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_TOXICBOOST / 0x92 | True | none |
-| toxicchain | ALIAS_PLUS_HOOK | ABILITY_TOXICCHAIN / ABILITY_POISONTOUCH | True | SpeciesHasToxicChain |
-| toxicdebris | ALIAS_PLUS_HOOK | ABILITY_TOXICDEBRIS / ABILITY_POISONPOINT | True | SpeciesHasToxicDebris |
-| trace | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_TRACE / 0x24 | True | none |
-| transistor | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_TRANSISTOR / 0x48 | True | none |
-| triage | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_TRIAGE / 0xB0 | True | none |
-| truant | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_TRUANT / 0x36 | True | none |
-| turboblaze | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_MOLDBREAKER / 0x98 | True | SpeciesHasTurboblaze |
-| unaware | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_UNAWARE / 0x8D | True | none |
-| unburden | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_UNBURDEN / 0x8B | True | none |
-| unnerve | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_UNNERVE / 0xC0 | True | none |
-| unseenfist | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_UNSEENFIST / 0x64 | True | none |
-| vesselofruin | ALIAS_PLUS_HOOK | ABILITY_VESSELOFRUIN / ABILITY_STALL | True | SpeciesHasVesselofRuin |
-| victorystar | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_VICTORYSTAR / 0x82 | True | none |
-| vitalspirit | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_INSOMNIA / 0xF | True | none |
-| voltabsorb | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_VOLTABSORB / 0xA | True | none |
-| wanderingspirit | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_WANDERINGSPIRIT / 0xA4 | True | none |
-| waterabsorb | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_WATERABSORB / 0xB | True | none |
-| waterbubble | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_WATERBUBBLE / 0xB1 | True | none |
-| watercompaction | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_WATERCOMPACTION / 0xB2 | True | none |
-| waterveil | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_WATERVEIL / 0x29 | True | none |
-| weakarmor | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_WEAKARMOR / 0xC1 | True | none |
-| wellbakedbody | ALIAS_PLUS_HOOK | ABILITY_WELLBAKEDBODY / ABILITY_STEAMENGINE | True | SpeciesHasWellBakedBody |
-| whitesmoke | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_CLEARBODY / 0x1D | True | none |
-| wimpout | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_EMERGENCYEXIT / 0xA0 | True | none |
-| windpower | ALIAS_PLUS_HOOK | ABILITY_WINDPOWER / ABILITY_BERSERK | True | SpeciesHasWindPower |
-| windrider | ALIAS_PLUS_HOOK | ABILITY_WINDRIDER / ABILITY_ANGERPOINT | True | SpeciesHasWindRider |
-| wonderguard | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_WONDERGUARD / 0x19 | True | none |
-| wonderskin | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_WONDERSKIN / 0x95 | True | none |
-| zenmode | NATIVE_BEHAVIOR_SUPPORTED | ABILITY_ZENMODE / 0x9B | True | none |
-| zerotohero | NAME_ONLY_OR_BEHAVIOR_BLOCKED | ABILITY_ZEROTOHERO / ABILITY_TORRENT | True | SpeciesHasZerotoHero |
+| Identity | Class | Local / definition | Literal display-name occurrence | Numeric alias | Species helper / referenced | Behavior owner / full semantics |
+| --- | --- | --- | --- | --- | --- | --- |
+| adaptability | UNKNOWN | ABILITY_ADAPTABILITY / 0x58 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| aerilate | UNKNOWN | ABILITY_AERILATE / 0x89 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| aftermath | UNKNOWN | ABILITY_AFTERMATH / 0x77 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| airlock | UNKNOWN | ABILITY_CLOUDNINE / 0xD | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| analytic | UNKNOWN | ABILITY_ANALYTIC / 0x7D | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| angerpoint | UNKNOWN | ABILITY_ANGERPOINT / 0xBB | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| angershell | ALIAS_PLUS_HOOK | ABILITY_ANGERSHELL / ABILITY_WEAKARMOR | True | ABILITY_WEAKARMOR | SpeciesHasAngerShell / True | UNVERIFIED / UNCERTIFIED |
+| anticipation | UNKNOWN | ABILITY_ANTICIPATION / 0xBC | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| arenatrap | UNKNOWN | ABILITY_ARENATRAP / 0x47 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| armortail | ALIAS_PLUS_HOOK | ABILITY_ARMORTAIL / ABILITY_DAZZLING | True | ABILITY_DAZZLING | SpeciesHasArmorTail / True | UNVERIFIED / UNCERTIFIED |
+| aromaveil | UNKNOWN | ABILITY_AROMAVEIL / 0xC9 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| asoneglastrier | NAME_ONLY_OR_BEHAVIOR_BLOCKED | ABILITY_ASONE_CHILLING / 0x9A | False | none | none / False | UNVERIFIED / UNCERTIFIED |
+| asonespectrier | NAME_ONLY_OR_BEHAVIOR_BLOCKED | ABILITY_ASONE_GRIM / 0x99 | False | none | none / False | UNVERIFIED / UNCERTIFIED |
+| aurabreak | UNKNOWN | ABILITY_AURABREAK / 0x86 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| baddreams | UNKNOWN | ABILITY_BADDREAMS / 0xCE | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| ballfetch | UNKNOWN | ABILITY_BALLFETCH / 0xF0 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| battery | UNKNOWN | ABILITY_BATTERY / 0xE9 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| battlearmor | UNKNOWN | ABILITY_BATTLEARMOR / 0x4 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| battlebond | UNKNOWN | ABILITY_BATTLEBOND / 0x9C | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| beadsofruin | ALIAS_PLUS_HOOK | ABILITY_BEADSOFRUIN / ABILITY_STALL | True | ABILITY_STALL | SpeciesHasBeadsofRuin / True | UNVERIFIED / UNCERTIFIED |
+| beastboost | UNKNOWN | ABILITY_BEASTBOOST / 0x9D | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| berserk | UNKNOWN | ABILITY_BERSERK / 0xD8 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| bigpecks | UNKNOWN | ABILITY_BIGPECKS / 0x59 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| blaze | UNKNOWN | ABILITY_BLAZE / 0x42 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| bulletproof | UNKNOWN | ABILITY_BULLETPROOF / 0x74 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| cheekpouch | UNKNOWN | ABILITY_CHEEKPOUCH / 0xE4 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| chillingneigh | ALIAS_PLUS_HOOK | ABILITY_MOXIE / ABILITY_MOXIE (species name override) | True | ABILITY_MOXIE (species name override) | none / False | UNVERIFIED / UNCERTIFIED |
+| chlorophyll | UNKNOWN | ABILITY_CHLOROPHYLL / 0x22 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| clearbody | UNKNOWN | ABILITY_CLEARBODY / 0x1D | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| cloudnine | UNKNOWN | ABILITY_CLOUDNINE / 0xD | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| colorchange | UNKNOWN | ABILITY_COLORCHANGE / 0x10 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| comatose | UNKNOWN | ABILITY_COMATOSE / 0xE7 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| commander | MISSING_LOCAL | none / none | False | none | none / False | UNVERIFIED / UNCERTIFIED |
+| competitive | UNKNOWN | ABILITY_COMPETITIVE / 0x8F | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| compoundeyes | UNKNOWN | ABILITY_COMPOUNDEYES / 0xE | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| contrary | UNKNOWN | ABILITY_CONTRARY / 0xBF | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| corrosion | UNKNOWN | ABILITY_CORROSION / 0x9E | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| costar | ALIAS_PLUS_HOOK | ABILITY_COSTAR / ABILITY_CURIOUSMEDICINE | True | ABILITY_CURIOUSMEDICINE | SpeciesHasCostar / True | UNVERIFIED / UNCERTIFIED |
+| cottondown | UNKNOWN | ABILITY_COTTONDOWN / 0xF1 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| cudchew | ALIAS_PLUS_HOOK | ABILITY_CUDCHEW / ABILITY_HARVEST | True | ABILITY_HARVEST | SpeciesHasCudChew / True | UNVERIFIED / UNCERTIFIED |
+| curiousmedicine | UNKNOWN | ABILITY_CURIOUSMEDICINE / 0xEB | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| cursedbody | UNKNOWN | ABILITY_CURSEDBODY / 0x78 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| cutecharm | UNKNOWN | ABILITY_CUTECHARM / 0x38 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| damp | UNKNOWN | ABILITY_DAMP / 0x6 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| dancer | UNKNOWN | ABILITY_DANCER / 0xE8 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| darkaura | UNKNOWN | ABILITY_DARKAURA / 0x84 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| dauntlessshield | UNKNOWN | ABILITY_DAUNTLESSSHIELD / 0xEF | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| dazzling | UNKNOWN | ABILITY_DAZZLING / 0xDD | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| defeatist | UNKNOWN | ABILITY_DEFEATIST / 0x90 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| defiant | UNKNOWN | ABILITY_DEFIANT / 0x8E | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| deltastream | UNKNOWN | ABILITY_DELTASTREAM / 0xD6 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| desolateland | UNKNOWN | ABILITY_DESOLATELAND / 0xD5 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| disguise | UNKNOWN | ABILITY_DISGUISE / 0x9F | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| download | UNKNOWN | ABILITY_DOWNLOAD / 0x67 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| dragonsmaw | UNKNOWN | ABILITY_DRAGONSMAW / 0x49 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| drizzle | UNKNOWN | ABILITY_DRIZZLE / 0x2 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| drought | UNKNOWN | ABILITY_DROUGHT / 0x46 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| dryskin | UNKNOWN | ABILITY_DRYSKIN / 0x62 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| earlybird | UNKNOWN | ABILITY_EARLYBIRD / 0x30 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| eartheater | ALIAS_PLUS_HOOK | ABILITY_EARTHEATER / ABILITY_VOLTABSORB | True | ABILITY_VOLTABSORB | SpeciesHasEarthEater / True | UNVERIFIED / UNCERTIFIED |
+| effectspore | UNKNOWN | ABILITY_EFFECTSPORE / 0x1B | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| electricsurge | UNKNOWN | ABILITY_ELECTRICSURGE / 0xB5 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| electromorphosis | ALIAS_PLUS_HOOK | ABILITY_ELECTROMORPHOSIS / ABILITY_COLORCHANGE | True | ABILITY_COLORCHANGE | SpeciesHasElectromorphosis / True | UNVERIFIED / UNCERTIFIED |
+| embodyaspectcornerstone | MISSING_LOCAL | none / none | False | none | none / False | UNVERIFIED / UNCERTIFIED |
+| embodyaspecthearthflame | MISSING_LOCAL | none / none | False | none | none / False | UNVERIFIED / UNCERTIFIED |
+| embodyaspectteal | MISSING_LOCAL | none / none | False | none | none / False | UNVERIFIED / UNCERTIFIED |
+| embodyaspectwellspring | MISSING_LOCAL | none / none | False | none | none / False | UNVERIFIED / UNCERTIFIED |
+| emergencyexit | UNKNOWN | ABILITY_EMERGENCYEXIT / 0xA0 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| fairyaura | UNKNOWN | ABILITY_FAIRYAURA / 0x85 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| filter | UNKNOWN | ABILITY_FILTER / 0x65 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| flamebody | UNKNOWN | ABILITY_FLAMEBODY / 0x31 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| flareboost | UNKNOWN | ABILITY_FLAREBOOST / 0x93 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| flashfire | UNKNOWN | ABILITY_FLASHFIRE / 0x12 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| flowergift | UNKNOWN | ABILITY_FLOWERGIFT / 0xCD | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| flowerveil | UNKNOWN | ABILITY_FLOWERVEIL / 0xCA | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| fluffy | UNKNOWN | ABILITY_FLUFFY / 0xA1 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| forecast | UNKNOWN | ABILITY_FORECAST / 0x3B | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| forewarn | UNKNOWN | ABILITY_FOREWARN / 0xBD | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| friendguard | UNKNOWN | ABILITY_FRIENDGUARD / 0xE0 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| frisk | UNKNOWN | ABILITY_FRISK / 0xBE | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| fullmetalbody | NAME_ONLY_OR_BEHAVIOR_BLOCKED | ABILITY_CLEARBODY / 0x1D | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| furcoat | UNKNOWN | ABILITY_FURCOAT / 0x94 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| galewings | UNKNOWN | ABILITY_GALEWINGS / 0x75 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| galvanize | UNKNOWN | ABILITY_GALVANIZE / 0xED | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| gluttony | UNKNOWN | ABILITY_GLUTTONY / 0xDE | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| goodasgold | ALIAS_PLUS_HOOK | ABILITY_GOODASGOLD / ABILITY_CLEARBODY | True | ABILITY_CLEARBODY | SpeciesHasGoodAsGold / True | UNVERIFIED / UNCERTIFIED |
+| gooey | UNKNOWN | ABILITY_GOOEY / 0x79 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| gorillatactics | UNKNOWN | ABILITY_GORILLATACTICS / 0xD7 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| grasspelt | UNKNOWN | ABILITY_GRASSPELT / 0xBA | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| grassysurge | UNKNOWN | ABILITY_GRASSYSURGE / 0xB6 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| grimneigh | UNKNOWN | ABILITY_GRIMNEIGH / 0x7B | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| guarddog | ALIAS_PLUS_HOOK | ABILITY_GUARDDOG / ABILITY_INNERFOCUS | True | ABILITY_INNERFOCUS | SpeciesHasGuardDog / True | UNVERIFIED / UNCERTIFIED |
+| gulpmissile | UNKNOWN | ABILITY_GULPMISSILE / 0xF3 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| guts | UNKNOWN | ABILITY_GUTS / 0x3E | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| hadronengine | ALIAS_PLUS_HOOK | ABILITY_HADRONENGINE / ABILITY_ELECTRICSURGE | True | ABILITY_ELECTRICSURGE | SpeciesHasHadronEngine / True | UNVERIFIED / UNCERTIFIED |
+| harvest | UNKNOWN | ABILITY_HARVEST / 0xE1 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| healer | UNKNOWN | ABILITY_HEALER / 0x6C | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| heatproof | UNKNOWN | ABILITY_HEATPROOF / 0x61 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| heavymetal | UNKNOWN | ABILITY_HEAVYMETAL / 0xC2 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| honeygather | UNKNOWN | ABILITY_HONEYGATHER / 0xDF | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| hospitality | MISSING_LOCAL | none / none | False | none | none / False | UNVERIFIED / UNCERTIFIED |
+| hugepower | UNKNOWN | ABILITY_HUGEPOWER / 0x25 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| hungerswitch | UNKNOWN | ABILITY_HUNGERSWITCH / 0x4C | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| hustle | UNKNOWN | ABILITY_HUSTLE / 0x37 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| hydration | UNKNOWN | ABILITY_HYDRATION / 0x6B | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| hypercutter | UNKNOWN | ABILITY_HYPERCUTTER / 0x34 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| icebody | UNKNOWN | ABILITY_ICEBODY / 0x69 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| iceface | UNKNOWN | ABILITY_ICEFACE / 0xFA | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| icescales | UNKNOWN | ABILITY_ICESCALES / 0xF8 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| illuminate | UNKNOWN | ABILITY_ILLUMINATE / 0x23 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| illusion | UNKNOWN | ABILITY_ILLUSION / 0xE3 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| immunity | UNKNOWN | ABILITY_IMMUNITY / 0x11 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| imposter | UNKNOWN | ABILITY_IMPOSTER / 0xC5 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| infiltrator | UNKNOWN | ABILITY_INFILTRATOR / 0x66 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| innardsout | UNKNOWN | ABILITY_INNARDSOUT / 0xDC | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| innerfocus | UNKNOWN | ABILITY_INNERFOCUS / 0x27 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| insomnia | UNKNOWN | ABILITY_INSOMNIA / 0xF | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| intimidate | UNKNOWN | ABILITY_INTIMIDATE / 0x16 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| intrepidsword | UNKNOWN | ABILITY_INTREPIDSWORD / 0xEE | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| ironbarbs | UNKNOWN | ABILITY_ROUGHSKIN / 0x18 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| ironfist | UNKNOWN | ABILITY_IRONFIST / 0x5D | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| justified | UNKNOWN | ABILITY_JUSTIFIED / 0xC6 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| keeneye | UNKNOWN | ABILITY_KEENEYE / 0x33 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| klutz | UNKNOWN | ABILITY_KLUTZ / 0xCC | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| leafguard | UNKNOWN | ABILITY_LEAFGUARD / 0xCB | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| levitate | UNKNOWN | ABILITY_LEVITATE / 0x1A | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| libero | NAME_ONLY_OR_BEHAVIOR_BLOCKED | ABILITY_PROTEAN / 0x96 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| lightmetal | UNKNOWN | ABILITY_LIGHTMETAL / 0xC3 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| lightningrod | UNKNOWN | ABILITY_LIGHTNINGROD / 0x1F | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| limber | UNKNOWN | ABILITY_LIMBER / 0x7 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| lingeringaroma | NAME_ONLY_OR_BEHAVIOR_BLOCKED | ABILITY_UNUSED / 0x4D; CFRU ABILITY_LINGERINGAROMA | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| liquidooze | UNKNOWN | ABILITY_LIQUIDOOZE / 0x40 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| liquidvoice | UNKNOWN | ABILITY_LIQUIDVOICE / 0xDA | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| longreach | UNKNOWN | ABILITY_LONGREACH / 0xD9 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| magicbounce | UNKNOWN | ABILITY_MAGICBOUNCE / 0x5A | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| magicguard | UNKNOWN | ABILITY_MAGICGUARD / 0x73 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| magician | UNKNOWN | ABILITY_MAGICIAN / 0xD2 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| magmaarmor | UNKNOWN | ABILITY_MAGMAARMOR / 0x28 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| magnetpull | UNKNOWN | ABILITY_MAGNETPULL / 0x2A | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| marvelscale | UNKNOWN | ABILITY_MARVELSCALE / 0x3F | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| megalauncher | UNKNOWN | ABILITY_MEGALAUNCHER / 0x7F | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| merciless | UNKNOWN | ABILITY_MERCILESS / 0xC8 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| mimicry | UNKNOWN | ABILITY_MIMICRY / 0xFC | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| mindseye | ALIAS_PLUS_HOOK | ABILITY_MINDSEYE / ABILITY_SCRAPPY | True | ABILITY_SCRAPPY | SpeciesHasMindsEye / True | UNVERIFIED / UNCERTIFIED |
+| minus | UNKNOWN | ABILITY_MINUS / 0x3A | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| mirrorarmor | UNKNOWN | ABILITY_MIRRORARMOR / 0xF2 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| mistysurge | UNKNOWN | ABILITY_MISTYSURGE / 0xB7 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| moldbreaker | UNKNOWN | ABILITY_MOLDBREAKER / 0x98 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| moody | UNKNOWN | ABILITY_MOODY / 0x6A | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| motordrive | UNKNOWN | ABILITY_MOTORDRIVE / 0x50 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| moxie | UNKNOWN | ABILITY_MOXIE / 0x76 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| multiscale | UNKNOWN | ABILITY_MULTISCALE / 0x51 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| multitype | UNKNOWN | ABILITY_MULTITYPE / 0xB4 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| mummy | UNKNOWN | ABILITY_MUMMY / 0x7A | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| myceliummight | ALIAS_PLUS_HOOK | ABILITY_MYCELIUMMIGHT / ABILITY_MOLDBREAKER | True | ABILITY_MOLDBREAKER | SpeciesHasMyceliumMight / True | UNVERIFIED / UNCERTIFIED |
+| naturalcure | UNKNOWN | ABILITY_NATURALCURE / 0x1E | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| neuroforce | UNKNOWN | ABILITY_NEUROFORCE / 0xEC | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| neutralizinggas | UNKNOWN | ABILITY_NEUTRALIZINGGAS / 0x4A | False | none | none / False | UNVERIFIED / UNCERTIFIED |
+| noguard | UNKNOWN | ABILITY_NOGUARD / 0x7E | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| normalize | UNKNOWN | ABILITY_NORMALIZE / 0x8A | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| oblivious | UNKNOWN | ABILITY_OBLIVIOUS / 0xC | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| opportunist | ALIAS_APPROXIMATION | ABILITY_OPPORTUNIST / ABILITY_DANCER | True | ABILITY_DANCER | none / False | UNVERIFIED / UNCERTIFIED |
+| orichalcumpulse | ALIAS_PLUS_HOOK | ABILITY_ORICHALCUMPULSE / ABILITY_DROUGHT | True | ABILITY_DROUGHT | SpeciesHasOrichalcumPulse / True | UNVERIFIED / UNCERTIFIED |
+| overcoat | UNKNOWN | ABILITY_OVERCOAT / 0x72 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| overgrow | UNKNOWN | ABILITY_OVERGROW / 0x41 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| owntempo | UNKNOWN | ABILITY_OWNTEMPO / 0x14 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| parentalbond | UNKNOWN | ABILITY_PARENTALBOND / 0x97 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| pastelveil | UNKNOWN | ABILITY_PASTELVEIL / 0xFE | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| perishbody | UNKNOWN | ABILITY_PERISHBODY / 0xA3 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| pickpocket | UNKNOWN | ABILITY_PICKPOCKET / 0xCF | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| pickup | UNKNOWN | ABILITY_PICKUP / 0x35 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| pixilate | UNKNOWN | ABILITY_PIXILATE / 0x88 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| plus | UNKNOWN | ABILITY_PLUS / 0x39 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| poisonheal | UNKNOWN | ABILITY_POISONHEAL / 0x68 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| poisonpoint | UNKNOWN | ABILITY_POISONPOINT / 0x26 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| poisonpuppeteer | ALIAS_PLUS_HOOK | ABILITY_POISONPUPPETEER / ABILITY_PLUS | True | ABILITY_PLUS | SpeciesHasPoisonPuppeteer / True | UNVERIFIED / UNCERTIFIED |
+| poisontouch | UNKNOWN | ABILITY_POISONTOUCH / 0xD1 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| powerconstruct | UNKNOWN | ABILITY_POWERCONSTRUCT / 0xA5 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| powerofalchemy | UNKNOWN | ABILITY_RECEIVER / 0xEA | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| powerspot | UNKNOWN | ABILITY_POWERSPOT / 0xFB | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| prankster | UNKNOWN | ABILITY_PRANKSTER / 0x57 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| pressure | UNKNOWN | ABILITY_PRESSURE / 0x2E | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| primordialsea | UNKNOWN | ABILITY_PRIMORDIALSEA / 0xD4 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| prismarmor | UNKNOWN | ABILITY_PRISMARMOR / 0xA6 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| propellertail | UNKNOWN | ABILITY_STALWART / 0xF4 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| protean | UNKNOWN | ABILITY_PROTEAN / 0x96 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| protosynthesis | ALIAS_PLUS_HOOK | ABILITY_PROTOSYNTHESIS / ABILITY_QUARKDRIVE | True | ABILITY_QUARKDRIVE | SpeciesHasProtosynthesis / True | UNVERIFIED / UNCERTIFIED |
+| psychicsurge | UNKNOWN | ABILITY_PSYCHICSURGE / 0xB8 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| punkrock | UNKNOWN | ABILITY_PUNKROCK / 0xF6 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| purepower | UNKNOWN | ABILITY_HUGEPOWER / 0x25 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| purifyingsalt | ALIAS_PLUS_HOOK | ABILITY_PURIFYINGSALT / ABILITY_IMMUNITY | True | ABILITY_IMMUNITY | SpeciesHasPurifyingSalt / True | UNVERIFIED / UNCERTIFIED |
+| quarkdrive | UNKNOWN | ABILITY_QUARKDRIVE / 0xAF | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| queenlymajesty | UNKNOWN | ABILITY_DAZZLING / 0xDD | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| quickdraw | UNKNOWN | ABILITY_QUICKDRAW / 0xDB | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| quickfeet | UNKNOWN | ABILITY_QUICKFEET / 0x70 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| raindish | UNKNOWN | ABILITY_RAINDISH / 0x2C | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| rattled | UNKNOWN | ABILITY_RATTLED / 0xC7 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| receiver | UNKNOWN | ABILITY_RECEIVER / 0xEA | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| reckless | UNKNOWN | ABILITY_RECKLESS / 0x5B | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| refrigerate | UNKNOWN | ABILITY_REFRIGERATE / 0x87 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| regenerator | UNKNOWN | ABILITY_REGENERATOR / 0x56 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| ripen | UNKNOWN | ABILITY_RIPEN / 0xF9 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| rivalry | UNKNOWN | ABILITY_RIVALRY / 0x5E | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| rkssystem | UNKNOWN | ABILITY_RKS_SYSTEM / 0xA7 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| rockhead | UNKNOWN | ABILITY_ROCKHEAD / 0x45 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| rockypayload | ALIAS_PLUS_HOOK | ABILITY_ROCKYPAYLOAD / ABILITY_STEELWORKER | True | ABILITY_STEELWORKER | SpeciesHasRockyPayload / True | UNVERIFIED / UNCERTIFIED |
+| roughskin | UNKNOWN | ABILITY_ROUGHSKIN / 0x18 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| runaway | UNKNOWN | ABILITY_RUNAWAY / 0x32 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| sandforce | UNKNOWN | ABILITY_SANDFORCE / 0x5F | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| sandrush | UNKNOWN | ABILITY_SANDRUSH / 0x7C | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| sandspit | UNKNOWN | ABILITY_SANDSPIT / 0xF7 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| sandstream | UNKNOWN | ABILITY_SANDSTREAM / 0x2D | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| sandveil | UNKNOWN | ABILITY_SANDVEIL / 0x8 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| sapsipper | UNKNOWN | ABILITY_SAPSIPPER / 0x71 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| schooling | UNKNOWN | ABILITY_SCHOOLING / 0xA8 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| scrappy | UNKNOWN | ABILITY_SCRAPPY / 0x53 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| screencleaner | UNKNOWN | ABILITY_SCREENCLEANER / 0xFD | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| seedsower | ALIAS_PLUS_HOOK | ABILITY_SEEDSOWER / ABILITY_GRASSYSURGE | True | ABILITY_GRASSYSURGE | SpeciesHasSeedSower / True | UNVERIFIED / UNCERTIFIED |
+| serenegrace | UNKNOWN | ABILITY_SERENEGRACE / 0x20 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| shadowshield | UNKNOWN | ABILITY_SHADOWSHIELD / 0xA9 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| shadowtag | UNKNOWN | ABILITY_SHADOWTAG / 0x17 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| sharpness | ALIAS_PLUS_HOOK | ABILITY_SHARPNESS / ABILITY_STRONGJAW | True | ABILITY_STRONGJAW | SpeciesHasSharpness / True | UNVERIFIED / UNCERTIFIED |
+| shedskin | UNKNOWN | ABILITY_SHEDSKIN / 0x3D | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| sheerforce | UNKNOWN | ABILITY_SHEERFORCE / 0x5C | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| shellarmor | UNKNOWN | ABILITY_SHELLARMOR / 0x4B | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| shielddust | UNKNOWN | ABILITY_SHIELDDUST / 0x13 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| shieldsdown | UNKNOWN | ABILITY_SHIELDSDOWN / 0xAA | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| simple | UNKNOWN | ABILITY_SIMPLE / 0x8C | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| skilllink | UNKNOWN | ABILITY_SKILLLINK / 0x4F | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| slowstart | UNKNOWN | ABILITY_SLOWSTART / 0x91 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| slushrush | UNKNOWN | ABILITY_SLUSHRUSH / 0xAB | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| sniper | UNKNOWN | ABILITY_SNIPER / 0x55 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| snowcloak | UNKNOWN | ABILITY_SNOWCLOAK / 0x6D | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| snowwarning | UNKNOWN | ABILITY_SNOWWARNING / 0x6F | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| solarpower | UNKNOWN | ABILITY_SOLARPOWER / 0x60 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| solidrock | UNKNOWN | ABILITY_FILTER / 0x65 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| soulheart | UNKNOWN | ABILITY_SOULHEART / 0xAC | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| soundproof | UNKNOWN | ABILITY_SOUNDPROOF / 0x2B | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| speedboost | UNKNOWN | ABILITY_SPEEDBOOST / 0x3 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| stakeout | UNKNOWN | ABILITY_STAKEOUT / 0xE6 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| stall | UNKNOWN | ABILITY_STALL / 0xB3 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| stalwart | UNKNOWN | ABILITY_STALWART / 0xF4 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| stamina | UNKNOWN | ABILITY_STAMINA / 0xAD | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| stancechange | UNKNOWN | ABILITY_STANCECHANGE / 0xD3 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| static | UNKNOWN | ABILITY_STATIC / 0x9 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| steadfast | UNKNOWN | ABILITY_STEADFAST / 0xC4 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| steamengine | UNKNOWN | ABILITY_STEAMENGINE / 0xF5 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| steelworker | UNKNOWN | ABILITY_STEELWORKER / 0xAE | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| steelyspirit | UNKNOWN | ABILITY_STEELYSPIRIT / 0xA2 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| stench | UNKNOWN | ABILITY_STENCH / 0x1 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| stickyhold | UNKNOWN | ABILITY_STICKYHOLD / 0x3C | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| stormdrain | UNKNOWN | ABILITY_STORMDRAIN / 0x83 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| strongjaw | UNKNOWN | ABILITY_STRONGJAW / 0x81 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| sturdy | UNKNOWN | ABILITY_STURDY / 0x5 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| suctioncups | UNKNOWN | ABILITY_SUCTIONCUPS / 0x15 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| superluck | UNKNOWN | ABILITY_SUPERLUCK / 0x54 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| supersweetsyrup | ALIAS_PLUS_HOOK | ABILITY_SUPERSWEETSYRUP / ABILITY_INTIMIDATE | True | ABILITY_INTIMIDATE | SpeciesHasSuperSweetSyrup / True | UNVERIFIED / UNCERTIFIED |
+| supremeoverlord | ALIAS_PLUS_HOOK | ABILITY_SUPREMEOVERLORD / ABILITY_HUGEPOWER | True | ABILITY_HUGEPOWER | SpeciesHasSupremeOverlord / True | UNVERIFIED / UNCERTIFIED |
+| surgesurfer | UNKNOWN | ABILITY_SURGESURFER / 0xB9 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| swarm | UNKNOWN | ABILITY_SWARM / 0x44 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| sweetveil | UNKNOWN | ABILITY_SWEETVEIL / 0x4E | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| swiftswim | UNKNOWN | ABILITY_SWIFTSWIM / 0x21 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| swordofruin | ALIAS_PLUS_HOOK | ABILITY_SWORDOFRUIN / ABILITY_STALL | True | ABILITY_STALL | SpeciesHasSwordofRuin / True | UNVERIFIED / UNCERTIFIED |
+| symbiosis | UNKNOWN | ABILITY_SYMBIOSIS / 0xE5 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| synchronize | UNKNOWN | ABILITY_SYNCHRONIZE / 0x1C | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| tabletsofruin | NAME_ONLY_OR_BEHAVIOR_BLOCKED | ABILITY_TABLETOFRUIN / ABILITY_STALL | True | ABILITY_STALL | SpeciesHasTabletsofRuin / True | UNVERIFIED / UNCERTIFIED |
+| tangledfeet | UNKNOWN | ABILITY_TANGLEDFEET / 0x6E | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| tanglinghair | UNKNOWN | ABILITY_GOOEY / 0x79 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| technician | UNKNOWN | ABILITY_TECHNICIAN / 0x52 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| telepathy | UNKNOWN | ABILITY_TELEPATHY / 0xE2 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| teraformzero | MISSING_LOCAL | none / none | False | none | none / False | UNVERIFIED / UNCERTIFIED |
+| terashell | NAME_ONLY_OR_BEHAVIOR_BLOCKED | none / none | True | none | SpeciesHasTeraShell / True | UNVERIFIED / UNCERTIFIED |
+| terashift | NAME_ONLY_OR_BEHAVIOR_BLOCKED | none / none | True | none | SpeciesHasTeraShift / True | UNVERIFIED / UNCERTIFIED |
+| teravolt | UNKNOWN | ABILITY_MOLDBREAKER / 0x98 | True | none | SpeciesHasTeravolt / True | UNVERIFIED / UNCERTIFIED |
+| thermalexchange | ALIAS_PLUS_HOOK | ABILITY_THERMALEXCHANGE / ABILITY_STEAMENGINE | True | ABILITY_STEAMENGINE | SpeciesHasThermalExchange / True | UNVERIFIED / UNCERTIFIED |
+| thickfat | UNKNOWN | ABILITY_THICKFAT / 0x2F | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| tintedlens | UNKNOWN | ABILITY_TINTEDLENS / 0x63 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| torrent | UNKNOWN | ABILITY_TORRENT / 0x43 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| toughclaws | UNKNOWN | ABILITY_TOUGHCLAWS / 0x80 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| toxicboost | UNKNOWN | ABILITY_TOXICBOOST / 0x92 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| toxicchain | ALIAS_PLUS_HOOK | ABILITY_TOXICCHAIN / ABILITY_POISONTOUCH | True | ABILITY_POISONTOUCH | SpeciesHasToxicChain / True | UNVERIFIED / UNCERTIFIED |
+| toxicdebris | ALIAS_PLUS_HOOK | ABILITY_TOXICDEBRIS / ABILITY_POISONPOINT | True | ABILITY_POISONPOINT | SpeciesHasToxicDebris / True | UNVERIFIED / UNCERTIFIED |
+| trace | UNKNOWN | ABILITY_TRACE / 0x24 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| transistor | UNKNOWN | ABILITY_TRANSISTOR / 0x48 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| triage | UNKNOWN | ABILITY_TRIAGE / 0xB0 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| truant | UNKNOWN | ABILITY_TRUANT / 0x36 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| turboblaze | UNKNOWN | ABILITY_MOLDBREAKER / 0x98 | True | none | SpeciesHasTurboblaze / True | UNVERIFIED / UNCERTIFIED |
+| unaware | UNKNOWN | ABILITY_UNAWARE / 0x8D | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| unburden | UNKNOWN | ABILITY_UNBURDEN / 0x8B | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| unnerve | UNKNOWN | ABILITY_UNNERVE / 0xC0 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| unseenfist | UNKNOWN | ABILITY_UNSEENFIST / 0x64 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| vesselofruin | ALIAS_PLUS_HOOK | ABILITY_VESSELOFRUIN / ABILITY_STALL | True | ABILITY_STALL | SpeciesHasVesselofRuin / True | UNVERIFIED / UNCERTIFIED |
+| victorystar | UNKNOWN | ABILITY_VICTORYSTAR / 0x82 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| vitalspirit | UNKNOWN | ABILITY_INSOMNIA / 0xF | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| voltabsorb | UNKNOWN | ABILITY_VOLTABSORB / 0xA | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| wanderingspirit | UNKNOWN | ABILITY_WANDERINGSPIRIT / 0xA4 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| waterabsorb | UNKNOWN | ABILITY_WATERABSORB / 0xB | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| waterbubble | UNKNOWN | ABILITY_WATERBUBBLE / 0xB1 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| watercompaction | UNKNOWN | ABILITY_WATERCOMPACTION / 0xB2 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| waterveil | UNKNOWN | ABILITY_WATERVEIL / 0x29 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| weakarmor | UNKNOWN | ABILITY_WEAKARMOR / 0xC1 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| wellbakedbody | ALIAS_PLUS_HOOK | ABILITY_WELLBAKEDBODY / ABILITY_STEAMENGINE | True | ABILITY_STEAMENGINE | SpeciesHasWellBakedBody / True | UNVERIFIED / UNCERTIFIED |
+| whitesmoke | UNKNOWN | ABILITY_CLEARBODY / 0x1D | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| wimpout | UNKNOWN | ABILITY_EMERGENCYEXIT / 0xA0 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| windpower | ALIAS_PLUS_HOOK | ABILITY_WINDPOWER / ABILITY_BERSERK | True | ABILITY_BERSERK | SpeciesHasWindPower / True | UNVERIFIED / UNCERTIFIED |
+| windrider | ALIAS_PLUS_HOOK | ABILITY_WINDRIDER / ABILITY_ANGERPOINT | True | ABILITY_ANGERPOINT | SpeciesHasWindRider / True | UNVERIFIED / UNCERTIFIED |
+| wonderguard | UNKNOWN | ABILITY_WONDERGUARD / 0x19 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| wonderskin | UNKNOWN | ABILITY_WONDERSKIN / 0x95 | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| zenmode | UNKNOWN | ABILITY_ZENMODE / 0x9B | True | none | none / False | UNVERIFIED / UNCERTIFIED |
+| zerotohero | NAME_ONLY_OR_BEHAVIOR_BLOCKED | ABILITY_ZEROTOHERO / ABILITY_TORRENT | True | ABILITY_TORRENT | SpeciesHasZerotoHero / True | UNVERIFIED / UNCERTIFIED |
 
 ## Appendix F — complete evolution/form exceptions and local edges
 
@@ -2551,7 +2546,7 @@ Local egg entries without safe general species mapping: basculinblue, basculinh,
 
 ## Appendix H — exact TM/HM order and complete positive disagreement sets
 
-Ordered move-list SHA-256: `1b10d4dcda17781fbeea3d904a70c6d0dbbdf13b997735d4c32b265921633998`. Source-reconstructed bitset SHA-256: `104a1f03d198ea5376c12243e0b2b1c3a3504c3b1e1b4c240e99ec25af054d9a`. These hashes cover source normalization, not a ROM or build artifact.
+Ordered move-list SHA-256: `1b10d4dcda17781fbeea3d904a70c6d0dbbdf13b997735d4c32b265921633998`. Source-reconstructed bitset SHA-256: `104a1f03d198ea5376c12243e0b2b1c3a3504c3b1e1b4c240e99ec25af054d9a`. These hashes cover source text normalization, not a ROM or build artifact.
 
 | 1-based slot | Move |
 | --- | --- |
@@ -2684,7 +2679,7 @@ Ordered move-list SHA-256: `1b10d4dcda17781fbeea3d904a70c6d0dbbdf13b997735d4c32b
 | 127 | MOVE_WATERFALL |
 | 128 | MOVE_ROCKCLIMB |
 
-Exception sets use **decimal local DPE species IDs**, inclusive ranges. Resolve against pinned `include/species.h` and Appendix A; the helper JSON gives every source key. Every set is complete. Unverifiable absent/absent pairs are counted but are not disagreements. LOCAL_POSITIVE project-policy rows contain older same-method or cross-method evidence; REF-positive/local-negative remains unverifiable without the aggregate contract. The selected-generation match count is 27,841, with 13,777 historical same-method and 356 cross-method positive policy candidates.
+Exception sets use **decimal local DPE species IDs**, inclusive ranges. Resolve them against the pinned `include/species.h` and Appendix A; the helper’s JSON gives every corresponding source key. Each displayed set is complete, not a sample. Mapping blocks are shown even for absent bits. Unverifiable absent/absent pairs are not disagreements and are included only in the aggregate count. A REFERENCE_POSITIVE_LOCAL_NEGATIVE entry is missing observable acquisition evidence locally; LOCAL_POSITIVE means extra/cross-method/unmapped local compatibility. Neither is silently declared an approved policy or a genuine binary mismatch.
 
 | Slot / move | Classification and direction | Records | Complete local species-ID set |
 | --- | --- | --- | --- |
@@ -3957,9 +3952,9 @@ Relevant source anchors: UPR `Gen3RomHandler.java` profile constants 175–207, 
 | SPECIES_YANMA | [["EVO_MOVE","MOVE_ANCIENTPOWER","SPECIES_YANMEGA","0"]] |
 | SPECIES_YUNGOOS | [["EVO_LEVEL_DAY","20","SPECIES_GUMSHOOS","0"]] |
 
-Recognized rows whose nonzero auxiliary field is zeroed:
+### UPR recognized evolution auxiliary fields zeroed
 
-| Local parent | Row |
+| Local parent | Exact row losing auxiliary field |
 | --- | --- |
 | SPECIES_SNORUNT | [["EVO_ITEM","ITEM_DAWN_STONE","SPECIES_FROSLASS","MON_FEMALE"]] |
 
@@ -3969,6 +3964,8 @@ Core audited source SHA-256s:
 | --- | --- |
 | 02_external/CFRU-expansion/src/Tables/battle_moves.c | 0f9e024e3e40cfa265ffddf663de72e0cabfd7a41e54edf6f9c0e28b56541047 |
 | 02_external/CFRU-expansion/src/Tables/level_up_learnsets.c | fe6f670a6ff2abcdf4059c72500909bab4b5ce6c08c7186372f22c870a07545f |
+| 02_external/CFRU-expansion/src/config.h | 32ec0b81ed8cb872d010ba181962986c9a6beca684a156e64a9cf68251de5f67 |
+| 02_external/CFRU-expansion/src/defines.h | 96b717303e2fd4594d22c2719535334ca6359a946225450dfd0a2c3b27f43a39 |
 | 02_external/Dynamic-Pokemon-Expansion-Gen-9/include/abilities.h | 9d866db85216091b8018cda7af544d92dcc5624fc5192fbf4fe5238ed7281953 |
 | 02_external/Dynamic-Pokemon-Expansion-Gen-9/include/evolution.h | c40ab5de94d26a0fe2c54dc1ef16f01e0b374850afad481d7aa61e76a989f159 |
 | 02_external/Dynamic-Pokemon-Expansion-Gen-9/src/Base_Stats.c | 79b6fcb057b719c28246b92d1bff088ab5293c69df8067afe2a5f386d2784026 |
