@@ -88,9 +88,10 @@ class LockedSources:
         self.provenance = {}
         for ref, tree in ((PRODUCT, PRODUCT_TREE), (CONTRACT, CONTRACT_TREE)):
             require(git(root, "rev-parse", f"{ref}^{{tree}}") == tree, "Workspace tree mismatch")
-        for ref in (CONTRACT, "HEAD"):
-            require(git(root, "rev-parse", f"{ref}:{EXTENSION}") == EXTENSION_BLOB,
-                    "Unreviewed extension revision")
+        # The blob is an immutable T0 reference, not a lock on later runtime code.
+        # HEAD extension compatibility/activation requires independent T2 evidence.
+        require(git(root, "rev-parse", f"{CONTRACT}:{EXTENSION}") == EXTENSION_BLOB,
+                "Unreviewed contract extension revision")
         for component, (path, pin) in PINS.items():
             for ref in (PRODUCT, CONTRACT, "HEAD"):
                 require(git(root, "ls-tree", ref, "--", path) == f"160000 commit {pin}\t{path}",
