@@ -6,8 +6,9 @@ loaded-manifest. The older shell helpers require operator-supplied baselines,
 retain outputs, and do not reopen/replay, so their UPR interfaces are reused
 directly. No serializer or randomizer is reimplemented here.
 
-CONTROL-approved derivation: 07_ITEMS_SAFE is 07_ITEMS_FULL minus FVX-ITEM-010.
-The original profile is source evidence only, never a required PASS case.
+CONTROL-approved safe bundles are derived in Workspace orchestration only.
+Replaced Traits/Graphics/Misc and original Items FULL profiles remain source
+evidence, never required PASS cases.
 """
 
 import argparse
@@ -25,8 +26,8 @@ from dataclasses import dataclass, field
 
 
 ROOT = Path(__file__).resolve().parents[2]
-WORKSPACE = "768e3b8b24c3e27ea41844849dd942f65df880e6"
-TREE = "72bc4020f2b9fffc128a201c8579ae2853232075"
+WORKSPACE = "39c98850db7b6cf386715558605090527e4d5705"
+TREE = "3ae05f02864b44773abb1790f60c1092e19b900e"
 PINS = {
     "CFRU": ("02_external/CFRU-expansion", "e68a701aa4e68733ef8ad1e7cadb68825c0d16c2"),
     "DPE": ("02_external/Dynamic-Pokemon-Expansion-Gen-9", "d887185de1f6ae6a78e85c4311bbadde17041d00"),
@@ -35,13 +36,29 @@ PINS = {
 SOURCE = "random/src/main/java/com/uprfvx/random/cli/SettingsProfileGenerator.java"
 PRIMARY = 20261005658
 SECONDARY = (0, 1, 677, PRIMARY)
+TARGET_EXCLUSIONS = {
+    "FVX-TRAIT-025": "UNSAFE_CFRU_DPE_EVOLUTION_IMPROVEMENT_RAW_ROW",
+    "FVX-TRAIT-027": "UNSAFE_CFRU_DPE_EVOLUTION_IMPROVEMENT_RAW_ROW",
+    "FVX-GFX-002": "UNSAFE_CFRU_DPE_OPTIONAL_PALETTE_SUBOPTION",
+    "FVX-GFX-004": "UNSAFE_CFRU_DPE_OPTIONAL_PALETTE_SUBOPTION",
+    "FVX-MISC-011": "REDUNDANT_CFRU_NATIVE_REUSABLE_TMS",
+}
 EXCLUDED = frozenset({
     "FVX-TRAIT-017", "MODE-INCLUDE-MEGAS", "MODE-INCLUDE-GMAX",
     "MODE-INCLUDE-MEGA-ITEMS", "MODE-INCLUDE-Z-CRYSTALS",
     "MODE-INCLUDE-DYNAMAX-GMAX-ITEMS", "FVX-ITEM-010",
     "FVX-FOE-SENSIBLE-HELD-ITEMS",
-})
+}) | TARGET_EXCLUSIONS.keys()
 ITEMS_SAFE = tuple(f"FVX-ITEM-{n:03}" for n in (2, 4, 6, 7, 8, 9))
+TRAITS_SAFE = tuple(f"FVX-TRAIT-{n:03}" for n in (1, 6, 8, 13, 14, 15, 16, 22))
+GRAPHICS_PALETTES_SAFE = ("FVX-GFX-001", "FVX-GFX-003")
+# Native/normalized CFRU QoL owners (002/004/010/012) stay in Layer B only.
+MISC_SAFE = tuple(f"FVX-MISC-{n:03}" for n in (1, 3, 5, 6, 7, 8, 9))
+SAFE_PROFILES = {
+    "01_TRAITS_SAFE": ("01_TRAITS_FULL", TRAITS_SAFE),
+    "09_GRAPHICS_PALETTES_SAFE": ("09_GRAPHICS_PALETTES", GRAPHICS_PALETTES_SAFE),
+    "10_MISC_SAFE": ("10_MISC_TWEAKS", MISC_SAFE),
+}
 # Accepted exact public identity: #676 issuecomment-6035738033. Hidden GUI
 # controls are retained exactly as accepted, never silently forced on.
 IRONMON = (
@@ -49,9 +66,9 @@ IRONMON = (
     "AEBAAAAAAAJBBAKKBhQb2tlbW9uIEZpcmUgUmVkIChVKSAxLjBk9WWq48M4ig=="
 )
 FULL = (
-    "01_TRAITS_FULL", "02_STARTERS_STATICS_TRADES_FULL", "03_MOVES_MOVESETS_FULL",
+    "01_TRAITS_SAFE", "02_STARTERS_STATICS_TRADES_FULL", "03_MOVES_MOVESETS_FULL",
     "04_FOE_BASE", "04_FOE_HELD_ITEMS_BASIC", "05_WILD_FULL", "06_TM_TUTOR_FULL",
-    "07_ITEMS_SAFE", "08_TYPES_FULL", "09_GRAPHICS_PALETTES", "10_MISC_TWEAKS",
+    "07_ITEMS_SAFE", "08_TYPES_FULL", "09_GRAPHICS_PALETTES_SAFE", "10_MISC_SAFE",
     "11_SPECIAL_WILD",
 )
 FAMILIES = (
@@ -132,12 +149,41 @@ def source_model(source):
     profiles = {}
     for name, body in re.findall(r'profiles\.put\("([^"]+)",\s*(.*?)\);', source, re.S):
         profiles[name] = tuple(re.findall(r'"([A-Z0-9_-]+)"', body))
-    if not overlays or not unsupported or not EXCLUDED <= overlays.keys():
+    counts = inventory_counts(overlays, unsupported)
+    if counts != {"SOURCE_OVERLAY_IDS": 159, "GENERATOR_UNSUPPORTED": 4,
+                  "TARGET_EXCLUDED": 13, "REQUIRED_OVERLAY_CASES": 142}:
+        raise MatrixError("Pinned settings inventory counts changed.")
+    if not EXCLUDED <= overlays.keys() or unsupported & EXCLUDED:
         raise MatrixError("Pinned settings inventory could not be derived.")
     if profiles.get("07_ITEMS_FULL") != ITEMS_SAFE + ("FVX-ITEM-010",):
         raise MatrixError("CONTROL-approved items derivation no longer matches source.")
     profiles["07_ITEMS_SAFE"] = ITEMS_SAFE
+    for name, (original, members) in SAFE_PROFILES.items():
+        if not set(members) <= set(profiles.get(original, ())):
+            raise MatrixError("Safe family derivation no longer matches source.")
+        if set(members) & (unsupported | EXCLUDED):
+            raise MatrixError("Excluded overlay in safe family.")
+        profiles[name] = members
     return overlays, unsupported, profiles
+
+
+def inventory_counts(overlays, unsupported):
+    """Account for every exact-source ID, including non-executable paths."""
+    ids = set(overlays)
+    return {
+        "SOURCE_OVERLAY_IDS": len(ids),
+        "GENERATOR_UNSUPPORTED": len(ids & unsupported),
+        "TARGET_EXCLUDED": len(ids & EXCLUDED),
+        "REQUIRED_OVERLAY_CASES": len(ids - unsupported - EXCLUDED),
+    }
+
+
+def print_inventory(counts):
+    for name, count in counts.items():
+        print(f"{name}: {count}")
+    print("Target exclusions:")
+    for overlay, reason in TARGET_EXCLUSIONS.items():
+        print(overlay + ": " + reason)
 
 
 def assignments(body):
@@ -763,7 +809,7 @@ def run_case(group, seed, rom, jar, temp):
 
 def diagnostic_status(out):
     if out.passed:
-        return "UNEXPECTED_PASS"
+        return "GENERATION_PASS_WITH_KNOWN_SEMANTIC_LIMITATION"
     if out.generate == "FAIL" and out.error_class in ERROR_CLASSES:
         return "EXPECTED_FAIL"
     return "DIAGNOSTIC_FAIL"
@@ -777,7 +823,7 @@ def progress_outcome(group, out):
         print("          " + out.error_class + ": " + out.message, flush=True)
 
 
-def print_report(cases, groups, records, excluded_count, result, normalized=(), adaptations=()):
+def print_report(cases, groups, records, counts, result, normalized=(), adaptations=()):
     required = [(g, seed, out) for g, seed, out in records
                 if any(c.classification != "DIAGNOSTIC" for c in g.aliases)]
     failed = [record for record in required if not record[2].passed]
@@ -785,6 +831,7 @@ def print_report(cases, groups, records, excluded_count, result, normalized=(), 
     print("\nMatrix basis:\nWorkspace: " + WORKSPACE)
     for name, (_, pin) in PINS.items():
         print(name + ": " + pin)
+    print_inventory(counts)
     print(f"\nCASE_INTENTS: {len(cases)}\nUNIQUE_EFFECTIVE_CASES: {len(groups)}")
     print(f"UPR_NORMALIZED_CASE_INTENTS: {len(normalized)}")
     if normalized:
@@ -797,8 +844,10 @@ def print_report(cases, groups, records, excluded_count, result, normalized=(), 
     print(f"EXPECTED_FAIL / diagnostic: {sum(diagnostic_status(r[2]) == 'EXPECTED_FAIL' for r in diagnostics)} / {len(diagnostics)}")
     for group, _, out in diagnostics:
         print("Diagnostic " + group.aliases[0].id + ": " + diagnostic_status(out))
+    if diagnostics:
+        print("Sensible Held Items: optional, selected C/I OFF; generation does not accept heuristic/runtime semantics.")
     planned = len(groups) + 3 * sum(any(c.secondary for c in g.aliases) for g in groups)
-    print(f"SKIP / excluded: {max(0, planned - len(records))} / {excluded_count}")
+    print(f"SKIP / excluded: {max(0, planned - len(records))} / {counts['GENERATOR_UNSUPPORTED'] + counts['TARGET_EXCLUDED']}")
     print("\nFirst failure:")
     if failed:
         group, seed, out = failed[0]
@@ -846,7 +895,7 @@ def main(argv=None):
         cases = build_matrix(overlays, unsupported, profiles)
         if args.dry_run:
             print(f"CASE_INTENTS: {len(cases)}\nUNIQUE_EFFECTIVE_CASES: runtime Settings API canonicalization required")
-            print(f"Overlays: {len(overlays)}; unsupported: {len(unsupported)}; excluded: {len(EXCLUDED)}")
+            print_inventory(inventory_counts(overlays, unsupported))
             for case in cases:
                 print(case.layer + " " + case.id)
             print("PRIVATE_ROM_MATRIX = NOT_RUN")
@@ -894,11 +943,10 @@ def main(argv=None):
                         break
             required_ok = all(out.passed for group, _, out in records
                               if any(c.classification != "DIAGNOSTIC" for c in group.aliases))
-            diagnostic_ok = all(diagnostic_status(out) == "EXPECTED_FAIL" for group, _, out in records
-                                if all(c.classification == "DIAGNOSTIC" for c in group.aliases))
-            result = "R2_RANDOMIZER_GENERATION_MATRIX_PASS" if required_ok and diagnostic_ok else "R2_RANDOMIZER_GENERATION_MATRIX_FAIL" if not required_ok else "DIAGNOSTIC_REVIEW_REQUIRED"
-            print_report(cases, groups, records, len(unsupported | EXCLUDED), result, normalized, adaptations)
-            return 0 if required_ok and diagnostic_ok else 1
+            # Optional heuristic diagnostics never establish or block required PASS.
+            result = "R2_RANDOMIZER_GENERATION_MATRIX_PASS" if required_ok else "R2_RANDOMIZER_GENERATION_MATRIX_FAIL"
+            print_report(cases, groups, records, inventory_counts(overlays, unsupported), result, normalized, adaptations)
+            return 0 if required_ok else 1
     except MatrixError as exc:
         print("Result: STOP\nSanitized message: " + str(exc))
     except (KeyboardInterrupt, InterruptedError):

@@ -69,14 +69,14 @@ class MatrixStructureTest(unittest.TestCase):
     def test_inventory_at_exact_pin(self):
         self.assertEqual(159, len(OVERLAYS))
         self.assertEqual({"FVX-SST-001", "FVX-MOVE-006", "FVX-GFX-005", "FVX-GFX-006"}, UNSUPPORTED)
-        self.assertEqual(8, len(m.EXCLUDED))
+        self.assertEqual(13, len(m.EXCLUDED))
         required = set(OVERLAYS) - UNSUPPORTED - m.EXCLUDED
-        self.assertEqual(147, len(required))
+        self.assertEqual(142, len(required))
         self.assertEqual(required, {c.id for c in self.cases if c.layer == "STRESS"})
 
     def test_deterministic_order_and_identity(self):
         self.assertEqual(self.cases, m.build_matrix(OVERLAYS, UNSUPPORTED, PROFILES))
-        self.assertEqual(302, len(self.cases))
+        self.assertEqual(297, len(self.cases))
         self.assertEqual(len(self.cases), len({c.id for c in self.cases}))
         self.assertEqual(list(m.SELECTED), [c.id for c in self.cases[:3]])
         self.assertEqual(56, sum(c.layer == "MODE" for c in self.cases))
@@ -113,10 +113,112 @@ class MatrixStructureTest(unittest.TestCase):
         self.assertNotIn('"07_ITEMS_FULL"', source)
         self.assertNotIn('"FVX-ITEM-010"', source)
 
+    def test_exact_target_exclusion_reasons(self):
+        self.assertEqual({
+            "FVX-TRAIT-025": "UNSAFE_CFRU_DPE_EVOLUTION_IMPROVEMENT_RAW_ROW",
+            "FVX-TRAIT-027": "UNSAFE_CFRU_DPE_EVOLUTION_IMPROVEMENT_RAW_ROW",
+            "FVX-GFX-002": "UNSAFE_CFRU_DPE_OPTIONAL_PALETTE_SUBOPTION",
+            "FVX-GFX-004": "UNSAFE_CFRU_DPE_OPTIONAL_PALETTE_SUBOPTION",
+            "FVX-MISC-011": "REDUNDANT_CFRU_NATIVE_REUSABLE_TMS",
+        }, m.TARGET_EXCLUSIONS)
+        self.assertEqual({"SOURCE_OVERLAY_IDS": 159, "GENERATOR_UNSUPPORTED": 4,
+                          "TARGET_EXCLUDED": 13, "REQUIRED_OVERLAY_CASES": 142},
+                         m.inventory_counts(OVERLAYS, UNSUPPORTED))
+
+    def test_safe_bundles_exact_source_semantics(self):
+        self.assertEqual(tuple(f"FVX-TRAIT-{n:03}" for n in (1, 6, 8, 13, 14, 15, 16, 22)),
+                         PROFILES["01_TRAITS_SAFE"])
+        state = m.effective(m.Intent("TRAITS_SAFE", "FULL", PROFILES["01_TRAITS_SAFE"]), OVERLAYS)
+        self.assertEqual({
+            "BaseStatisticsMod": "Settings.BaseStatisticsMod.RANDOM",
+            "SpeciesTypesMod": "Settings.SpeciesTypesMod.COMPLETELY_RANDOM",
+            "AbilitiesMod": "Settings.AbilitiesMod.RANDOMIZE",
+            "BanTrappingAbilities": "true", "BanNegativeAbilities": "true",
+            "BanBadAbilities": "true", "EvolutionsMod": "Settings.EvolutionsMod.RANDOM",
+            "EvosForceChange": "true",
+        }, state)
+        self.assertEqual(("FVX-GFX-001", "FVX-GFX-003"), PROFILES["09_GRAPHICS_PALETTES_SAFE"])
+        state = m.effective(m.Intent("GRAPHICS_SAFE", "FULL", PROFILES["09_GRAPHICS_PALETTES_SAFE"]), OVERLAYS)
+        self.assertEqual({"PokemonPalettesMod": "Settings.PokemonPalettesMod.RANDOM",
+                          "PokemonPalettesFollowEvolutions": "true"}, state)
+        self.assertEqual(tuple(f"FVX-MISC-{n:03}" for n in (1, 3, 5, 6, 7, 8, 9)),
+                         PROFILES["10_MISC_SAFE"])
+        state = m.effective(m.Intent("MISC_SAFE", "FULL", PROFILES["10_MISC_SAFE"]), OVERLAYS)
+        self.assertEqual({"MiscTweak": " | ".join(sorted("MiscTweak." + name for name in (
+            "FASTEST_TEXT", "RANDOMIZE_PC_POTION", "FAST_EGG_HATCHING", "LOWER_CASE_POKEMON_NAMES",
+            "RANDOMIZE_CATCHING_TUTORIAL", "BAN_LUCKY_EGG", "BALANCE_STATIC_LEVELS")))}, state)
+
+    def test_full_pair_triple_max_transitive_safety_and_single_coverage(self):
+        originals = {"01_TRAITS_FULL", "09_GRAPHICS_PALETTES", "10_MISC_TWEAKS"}
+        self.assertFalse(originals & {c.id for c in self.cases})
+        for case in self.cases:
+            if case.layer in {"FULL", "PAIR", "TRIPLE", "MAX"}:
+                self.assertFalse(set(case.overlays) & (m.EXCLUDED | UNSUPPORTED), case.id)
+                state = m.effective(case, OVERLAYS)
+                for key in ("MakeEvolutionsEasier", "RemoveTimeBasedEvolutions",
+                            "PokemonPalettesFollowTypes", "PokemonPalettesShinyFromNormal"):
+                    self.assertNotEqual("true", state.get(key), case.id)
+                self.assertNotIn("MiscTweak.REUSABLE_TMS", state.get("MiscTweak", ""), case.id)
+                for family, profile in (("TRAITS", "01_TRAITS_SAFE"),
+                                        ("GRAPHICS_PALETTES", "09_GRAPHICS_PALETTES_SAFE"),
+                                        ("MISC", "10_MISC_SAFE")):
+                    if family in case.families:
+                        self.assertTrue(set(PROFILES[profile]) <= set(case.overlays), case.id)
+        # Supported suboptions omitted from family stress still run individually.
+        leaves = {c.id for c in self.cases if c.layer == "STRESS"}
+        for original in originals:
+            self.assertTrue((set(PROFILES[original]) - m.EXCLUDED - UNSUPPORTED) <= leaves)
+        for name in ("FVX-MISC-002", "FVX-MISC-004", "FVX-MISC-010", "FVX-MISC-012"):
+            self.assertIn(name, leaves)
+            self.assertNotIn(name, PROFILES["10_MISC_SAFE"])
+
+    def test_transitive_exclusion_injected_into_each_family_fails_closed(self):
+        for profile in m.FULL:
+            for excluded in m.EXCLUDED | UNSUPPORTED:
+                altered = dict(PROFILES, **{profile: PROFILES[profile] + (excluded,)})
+                with self.subTest(profile=profile, excluded=excluded), self.assertRaises(m.MatrixError):
+                    m.build_matrix(OVERLAYS, UNSUPPORTED, altered)
+
+    def test_max_safe_composition_and_world_unchanged(self):
+        by_id = {c.id: c for c in self.cases}
+        # Exact original MAX_SAFE_WORLD source sequence, including unchanged Items SAFE.
+        expected_world = tuple(
+            [f"FVX-SST-{n:03}" for n in (2, 6, 7, 8, 11, 13, 14, 15)]
+            + [f"FVX-FOE-{n:03}" for n in (1, 2, 3, 4, 13, 14)]
+            + [f"FVX-WILD-{n:03}" for n in range(1, 13)]
+            + [f"FVX-TM-{n:03}" for n in range(1, 16)]
+            + [f"FVX-ITEM-{n:03}" for n in (2, 4, 6, 7, 8, 9)])
+        self.assertEqual(expected_world, by_id["MAX_SAFE_WORLD"].overlays)
+        gen = ("MODE-GEN-LIMIT-1-9-NO-RELATIVES", "MODE-ALLOW-REGIONAL-FORMS",
+               "MODE-GEN-LIMIT-1-9-NO-MEGAS", "MODE-GEN-LIMIT-1-9-NO-GMAX")
+        expected_data = tuple(dict.fromkeys(gen + PROFILES["01_TRAITS_SAFE"]
+                                           + PROFILES["03_MOVES_MOVESETS_FULL"]
+                                           + ("FVX-TRAIT-016", "FVX-TRAIT-022")))
+        self.assertEqual(expected_data, by_id["MAX_SAFE_DATA"].overlays)
+        expected_combined = tuple(dict.fromkeys(expected_data + expected_world
+                                  + PROFILES["09_GRAPHICS_PALETTES_SAFE"]
+                                  + PROFILES["10_MISC_SAFE"] + PROFILES["11_SPECIAL_WILD"]))
+        self.assertEqual(expected_combined, by_id["MAX_SAFE_COMBINED"].overlays)
+
+    def test_derived_structure_counts(self):
+        counts = {layer: sum(c.layer == layer for c in self.cases)
+                  for layer in ("ACCEPTANCE", "STRESS", "MODE", "FULL", "PAIR", "TRIPLE", "MAX", "DIAGNOSTIC")}
+        self.assertEqual(dict(zip(counts, (3, 142, 56, 12, 66, 12, 5, 1))), counts)
+        self.assertEqual(sum(counts.values()), len(self.cases))
+
     def test_source_drift_fails_closed(self):
         source = (PUBLIC / m.SOURCE).read_text()
         with self.assertRaises(m.MatrixError):
             m.source_model(source.replace('"FVX-ITEM-008", "FVX-ITEM-009", "FVX-ITEM-010"', '"FVX-ITEM-009", "FVX-ITEM-010"'))
+
+    def test_source_inventory_cardinality_drift_fails_closed(self):
+        source = (PUBLIC / m.SOURCE).read_text()
+        for altered in (source.replace('"FVX-GEN-003"', '"FVX-GEN-002"'),
+                        source.replace('return Collections.unmodifiableMap(overlays);',
+                                       'overlays.put("NEW-UNREVIEWED", s -> s.setRaceMode(true));\n'
+                                       'return Collections.unmodifiableMap(overlays);')):
+            with self.assertRaises(m.MatrixError):
+                m.source_model(altered)
 
     def test_no_mutually_exclusive_intent_modes(self):
         for case in self.cases:
@@ -432,7 +534,7 @@ class NormalizationAccountingTest(unittest.TestCase):
     def test_report_public_marker_and_count_only(self):
         report = io.StringIO()
         with contextlib.redirect_stdout(report):
-            m.print_report([], [], [], 12, "NOT_RUN", adaptations={0: 1022, 1: 1023})
+            m.print_report([], [], [], m.inventory_counts(OVERLAYS, UNSUPPORTED), "NOT_RUN", adaptations={0: 1022, 1: 1023})
         text = report.getvalue()
         self.assertIn("UPR target-normalized adaptations: " + m.GEN_NORMALIZATION, text)
         self.assertIn("Gen-limit intents normalized by target: 2", text)
@@ -630,7 +732,7 @@ class ExecutionTest(unittest.TestCase):
         self.assertEqual("ReopenIdentityFailure", out.error_class)
         report = io.StringIO()
         with contextlib.redirect_stdout(report):
-            m.print_report(self.group.aliases, [self.group], [(self.group, 1, out)], 12, "FAIL")
+            m.print_report(self.group.aliases, [self.group], [(self.group, 1, out)], m.inventory_counts(OVERLAYS, UNSUPPORTED), "FAIL")
         for marker in (private, "Private Filename", "/fictional", "Secret.gba", "IllegalStateException"):
             self.assertNotIn(marker, str(out))
             self.assertNotIn(marker, report.getvalue())
@@ -730,7 +832,7 @@ class ExecutionTest(unittest.TestCase):
     def test_diagnostic_expectation_does_not_mask_infrastructure_failure(self):
         self.assertEqual("EXPECTED_FAIL", m.diagnostic_status(m.Outcome("FAIL", error_class="RomIOException")))
         self.assertEqual("DIAGNOSTIC_FAIL", m.diagnostic_status(m.Outcome("FAIL", error_class="ProcessFailure")))
-        self.assertEqual("UNEXPECTED_PASS", m.diagnostic_status(m.Outcome("PASS", "PASS")))
+        self.assertEqual("GENERATION_PASS_WITH_KNOWN_SEMANTIC_LIMITATION", m.diagnostic_status(m.Outcome("PASS", "PASS")))
 
     def test_exception_timeout_and_interrupt_cleanup(self):
         for error in (OSError(self.rom), subprocess.TimeoutExpired(self.rom, 1), KeyboardInterrupt(), InterruptedError()):
@@ -761,7 +863,7 @@ class ExecutionTest(unittest.TestCase):
         out = m.Outcome("FAIL", message="UPR step failed; raw details discarded.")
         text = io.StringIO()
         with contextlib.redirect_stdout(text):
-            m.print_report(self.group.aliases, [self.group], [(self.group, m.PRIMARY, out)], 12, "FAIL")
+            m.print_report(self.group.aliases, [self.group], [(self.group, m.PRIMARY, out)], m.inventory_counts(OVERLAYS, UNSUPPORTED), "FAIL")
         report = text.getvalue()
         self.assertIn("CASE_INTENTS: 2", report)
         self.assertIn("UNIQUE_EFFECTIVE_CASES: 1", report)
@@ -797,6 +899,39 @@ class EntryPointTest(unittest.TestCase):
             code = m.main(argv)
         return code, calls, prompt, output.getvalue()
 
+    def test_diagnostics_nonblocking_success_and_failure(self):
+        cases = [m.Intent("CONTROL_UNCHANGED", "ACCEPTANCE", classification="ACCEPTANCE"),
+                 m.Intent("OPTIONAL_DIAGNOSTIC", "DIAGNOSTIC", classification="DIAGNOSTIC")]
+        for diagnostic in (m.Outcome("PASS", "PASS"),
+                           m.Outcome("FAIL", error_class="RomIOException"),
+                           m.Outcome("PASS", "FAIL", error_class="ProcessFailure")):
+            with patch.object(m, "verify_pins"), patch.object(m, "build_matrix", return_value=cases), patch.object(m, "prepare_tool", return_value=Path("synthetic.jar")), patch.object(m, "generate_settings", return_value=["control", "diagnostic"]), patch.object(m, "normalize_settings", return_value=(["control", "diagnostic"], {})), patch.object(m, "run_case", side_effect=[m.Outcome("PASS", "PASS"), diagnostic]), contextlib.redirect_stdout(io.StringIO()) as output:
+                self.assertEqual(0, m.main(["--rom", "/fictional/input.gba", "--stop-on-fail"]))
+            text = output.getvalue()
+            self.assertIn("PASS: 1\nFAIL: 0", text)
+            self.assertIn("Diagnostic OPTIONAL_DIAGNOSTIC: " + m.diagnostic_status(diagnostic), text)
+            self.assertIn("CASUAL_NATDEX: NOT_RUN", text)
+            self.assertIn("Result: R2_RANDOMIZER_GENERATION_MATRIX_PASS", text)
+
+    def test_diagnostic_never_masks_required_failure(self):
+        cases = [m.Intent("CASUAL_NATDEX", "ACCEPTANCE", classification="ACCEPTANCE"),
+                 m.Intent("OPTIONAL_DIAGNOSTIC", "DIAGNOSTIC", classification="DIAGNOSTIC")]
+        with patch.object(m, "verify_pins"), patch.object(m, "build_matrix", return_value=cases), patch.object(m, "prepare_tool", return_value=Path("synthetic.jar")), patch.object(m, "generate_settings", return_value=["casual", "diagnostic"]), patch.object(m, "normalize_settings", return_value=(["casual", "diagnostic"], {})), patch.object(m, "run_case", side_effect=[m.Outcome("FAIL"), m.Outcome("FAIL", error_class="RomIOException")]), contextlib.redirect_stdout(io.StringIO()) as output:
+            self.assertEqual(1, m.main(["--rom", "/fictional/input.gba"]))
+        self.assertIn("CASUAL_NATDEX: FAIL", output.getvalue())
+        self.assertIn("PASS: 0\nFAIL: 1", output.getvalue())
+
+    def test_inventory_report_and_dry_run_exclusions(self):
+        with patch.object(m, "verify_pins"), contextlib.redirect_stdout(io.StringIO()) as output:
+            self.assertEqual(0, m.main(["--dry-run"]))
+        text = output.getvalue()
+        for line in ("SOURCE_OVERLAY_IDS: 159", "GENERATOR_UNSUPPORTED: 4",
+                     "TARGET_EXCLUDED: 13", "REQUIRED_OVERLAY_CASES: 142", "CASE_INTENTS: 297"):
+            self.assertIn(line, text)
+        for overlay, reason in m.TARGET_EXCLUSIONS.items():
+            self.assertIn(overlay + ": " + reason, text)
+            self.assertNotIn("STRESS " + overlay, text)
+
     def test_interactive_once_then_automatic_seed_sweep(self):
         code, calls, prompt, text = self.entry_run([])
         self.assertEqual(0, code)
@@ -816,7 +951,7 @@ class EntryPointTest(unittest.TestCase):
         self.assertEqual(1, code)
         self.assertEqual(1, len(calls))
         self.assertIn("CASUAL_NATDEX: NOT_RUN", text)
-        self.assertIn("SKIP / excluded: 4 / 12", text)
+        self.assertIn("SKIP / excluded: 4 / 17", text)
 
     def test_normalization_after_single_prompt_and_before_any_case(self):
         order = []
