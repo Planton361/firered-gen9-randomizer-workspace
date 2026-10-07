@@ -128,3 +128,11 @@ Trainer A/B runtime binding, resource/UI fidelity and runtime ABI acceptance.
 No capability is marked runtime-ready. B1 remains `PENDING_LINUX_HOST / NOT_RUN`;
 T2 activation and subsequent runtime gates retain their own authorization and
 acceptance requirements.
+
+## Detached T3 Phase A candidate (#692)
+
+`source_party_decoder.lua` provides a pure public-source resolver and synthetic
+six-slot party decoder. It is deliberately not loaded by the production
+extension. Its API, source bindings, per-field TEST_ONLY confidence, tests and
+gated handoff are documented in [T3_PHASE_A.md](../../../docs/tracker/T3_PHASE_A.md).
+The production-denied early guard remains unchanged.
