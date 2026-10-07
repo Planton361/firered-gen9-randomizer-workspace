@@ -1,10 +1,61 @@
 # CFRU/DPE Tracker profile contract
 
-**INTENDED FUTURE STATE — normative implementation contract from #688/T0.**
-This defines requirements for #690–#695, not an implemented JSON schema or
+**T1 #690 implemented for source/synthetic scope; T2–T6 remain INTENDED FUTURE STATE.**
+`CFRUDPE_TRACKER_PROFILE_READY` confirms the public source profile only, not a
 runtime-ready profile. The exact locked revisions and source evidence are in
 [README.md](README.md). No local runtime addresses or protected artifacts were
 used to establish this contract.
+
+## T1 implementation and source evidence
+
+The existing [generator](../../07_scripts/tracker/generate_cfru_dpe_source_data.py)
+produces [source-data.json](../../03_tools/tracker-extensions/CFRUDPEExtension/data/source-data.json)
+as schema `cfru-dpe-tracker-source-profile`, version 2. The concrete serialization,
+field meanings, rejection rules and reproducibility commands are in the extension
+[schema](../../03_tools/tracker-extensions/CFRUDPEExtension/SCHEMA.md) and
+[README](../../03_tools/tracker-extensions/CFRUDPEExtension/README.md).
+The Lua runtime behavior remains unchanged and does not enforce this schema.
+
+The profile separately binds locked product Workspace
+`3bdfe9919afc0b7bea55c79f37285e832be495c3` / tree
+`f6bc65355811d7de153a91091b223fec9b50991e` and T0 contract merge
+`e6e0e867a5cca4fd2d373acf82504af45986e6fa` / tree
+`d3b5b87fd8575ef4313e32be9c3e9490c3fe9b11`. Component/Tracker/reference pins
+remain those in the README. Exact generator and public input hashes plus the
+canonical content hash identify the T1 implementation without a circular
+self-reference to the commit containing the generated output.
+
+**CONFIRMED SOURCE FACTS:** source bounds are species 1440, moves 992,
+abilities 255 (the count macro is in CFRU), effective CFRU items 779 and types
+25. Counts include holes/sentinels. The 779 `gItemData` rows match active CFRU
+IDs with `EXPANDED_NEW_ITEMS` enabled and `UNBOUND` disabled. Three final free
+slots are reserved; DPE Shiny slots 779–798 have no effective CFRU rows and are
+explicitly `UNAVAILABLE`, not silently admitted under DPE's 799 bound.
+
+Names use source string-row order/encoding and actual item-name tokens.
+Numeric aliases are explicit; inactivated UNBOUND definitions are excluded.
+The Ogerpon color/Terastal spellings at 1426–1429 and DPE `ABILITY_UNUSED` /
+CFRU `ABILITY_LINGERINGAROMA` at 77 are recorded as cross-component slot
+differences. Ability dynamic-name selection remains `UNRESOLVED`: the baseline
+table name and catalog are source facts, not a live-name fallback. Species
+252–276 are ID holes; 706/835/836 lack explicit BaseStats initializers and their
+zero-initialized baseline data is unavailable.
+
+Target proof uses Clang ARM `thumbv4t-none-eabi` syntax-only record layouts of
+full extracted declarations and source-checked typedefs/constants. No game build
+or object is emitted. Sizes are Pokemon 100, BattlePokemon 88, BattleMove 12,
+BaseStats 28, Trainer 40, TrainerMonItemCustomMoves 32 and Item 44 bytes. All
+member offsets, bitfields and alignment carry source provenance. These are
+declared GBA ABI facts, not private-output or runtime validation.
+
+The focused synthetic suite covers representative Gen1/mid-dex/Gen8/Gen9 and
+regional IDs, six party slots, expanded moves/abilities/items, byte-10 move
+category, aliases/holes/sentinels, missing/invalid source definitions,
+schema/revision rejection, dubious layouts/descriptors and byte-identical
+regeneration. `--check` validates exact regeneration, including unknown keys.
+All address descriptors retain `runtimeAddress: UNRESOLVED`; capability runtime
+confidence is `UNKNOWN` with no sample epoch. No T2 activation or BizHawk gate
+is satisfied by these tests.
 
 ## Identity and trust boundaries
 
@@ -43,8 +94,9 @@ unknown address chains must not be probed to discover a profile.
 
 ## Manifest split and lifecycle
 
-T1 will version the concrete serialization. The following fields/semantics are
-required; this document deliberately contains no executable address template.
+T1 versions the concrete serialization in the schema linked above. The following
+fields/semantics are required; this document contains no executable runtime
+address template.
 
 | Artifact / area | Required contents and boundary |
 | --- | --- |
@@ -161,7 +213,7 @@ they cannot validate a local runtime address or emulator integration.
 
 | Owner | Required evidence / current unknown |
 | --- | --- |
-| T1 #690 | Exact reproducible schema/provenance, mappings and ABI/layout derivation; reconcile item-table coverage, aliases and string sources. Synthetic Gen1/mid-dex/Gen8/Gen9/regional and expanded move/ability/item fixtures, negative missing-fact tests and deterministic regeneration. Existing generated JSON is not accepted as this profile. |
+| T1 #690 | **Source/synthetic PASS:** schema v2, exact provenance, authoritative table names, explicit mapping boundaries, item coverage and ARM ABI extraction; synthetic/negative fixtures and byte-identical regeneration. The old v1 prototype is superseded. No runtime acceptance. |
 | B1 #689 | **PENDING_LINUX_HOST / NOT_RUN:** exact BizHawk build/core/Lua settings, read domains/frame execution, boot/input/save-reload/battles. No emulator failure is inferred from host unavailability. |
 | T2 #691 | Loaded-output identity mechanism, transactional import/read-back, early initialization guard, wrapper ownership, reset/reload/unload and zero memory writes. Mock wrong pins/schema, partial/missing manifests, invalid pointers and stale sessions; local Linux smoke follows CONTROL review. |
 | T3 #692 | Direct party ABI/decoder and effective randomized values, hidden ability/name aliases, field and multi-slot fidelity. |
