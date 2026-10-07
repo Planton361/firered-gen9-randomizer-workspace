@@ -1,6 +1,9 @@
 # CFRU/DPE Tracker profile contract
 
-**T1 #690 implemented for source/synthetic scope; T2–T6 remain INTENDED FUTURE STATE.**
+**T1 #690 source/synthetic PASS; T2 #691 Phase A source/mock candidate only.**
+[Phase A evidence](T2_PHASE_A.md) records source PASS (33/33) and Lua 5.4.9 mock
+PASS (55/55), pending CONTROL acceptance. Lua 5.1 and BizHawk remain `NOT_RUN`.
+Production activation and T2 Phase B / T3–T6 remain **INTENDED FUTURE STATE**.
 `CFRUDPE_TRACKER_PROFILE_READY` confirms the public source profile only, not a
 runtime-ready profile. The exact locked revisions and source evidence are in
 [README.md](README.md). No local runtime addresses or protected artifacts were
@@ -14,7 +17,9 @@ as schema `cfru-dpe-tracker-source-profile`, version 2. The concrete serializati
 field meanings, rejection rules and reproducibility commands are in the extension
 [schema](../../03_tools/tracker-extensions/CFRUDPEExtension/SCHEMA.md) and
 [README](../../03_tools/tracker-extensions/CFRUDPEExtension/README.md).
-The Lua runtime behavior remains unchanged and does not enforce this schema.
+T2 Phase A now locks the complete public serialization in Lua before decoding.
+Its detached synthetic adapter cannot activate production. Lua 5.4 execution
+passed; full Phase A acceptance remains pending CONTROL review.
 
 The profile separately binds locked product Workspace
 `3bdfe9919afc0b7bea55c79f37285e832be495c3` / tree
@@ -255,7 +260,8 @@ they cannot validate a local runtime address or emulator integration.
 | T5 #694 | Complete consumer/view coverage in unmodified Tracker, including suppression of stock derived values and persisted stale data. API/wrapper sufficiency must be demonstrated, not assumed. |
 | T6 #695 | Revision-bound Control/Casual/IronMON E2E and residual limitations after B1–T5. No unresolved wrong-data S0/S1-equivalent defect; explicit unsupported fields. |
 
-Only T1 source/synthetic preparation is currently authorized to advance after
-T0 review/merge while B1 waits. Further Mac-only contracts need explicit CONTROL
-routing. No T0 source finding grants live compatibility, #500 acceptance or #501
-freeze. The dependency order and final markers are maintained in the README.
+CONTROL's 2026-10-07 #691/#500 disposition additionally authorizes T2 Phase A
+Mac-only source/mock preparation after #690 / PR #697. Its exit marker requires
+actual mock PASS and is not live activation. Further Mac-only contracts still
+need explicit CONTROL routing. No T0 source finding grants live compatibility,
+#500 acceptance or #501 freeze. The dependency order and final markers are maintained in the README.
