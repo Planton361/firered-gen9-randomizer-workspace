@@ -76,7 +76,11 @@ persisted Tracker consumer coverage remain `UNAVAILABLE` here and belong to
 T3–T5. This candidate blocks initial production module loading; it does not
 claim complete T5 UI coverage or integration API sufficiency.
 
-## Verification on the Mac host
+## Initial verification before the first T2 commit
+
+The following PASS results were obtained before committing the extension change,
+while Git HEAD still contained the T1 extension blob. They are historical evidence;
+the current committed T2 revision's T1 lock failure is recorded below.
 
 | Check | Result |
 | --- | --- |
@@ -116,8 +120,47 @@ Mock write functions raise `FORBIDDEN memory write`; ordinary cases assert zero
 invocations, and one negative injection asserts the attempted call is rejected
 as a lifecycle failure without any memory backend.
 
+## CONTROL repair — accepted-session early reentry
+
+The review of PR #698 at `6f0b9d0fac67c1b803dfebc0059a5da2ef741174` found that
+`beforeGameDataLoad()` cleared published state without revoking the accepted
+internal session. The repair explicitly records that session/epoch as revoked
+and clears `accepted` / `source` before rollback and early-guard setup. Repeated
+hooks before the first acceptance remain idempotent; owned wrappers are retained.
+
+The added Lua regression accepts epoch 1, reenters the early hook, checks rollback,
+snapshot invalidation and wrapper references, rejects epoch 1 before memory reads,
+and rejects advancing the host epoch without a fresh binding. A fresh synthetic
+epoch-2 binding must pass the complete transaction and session checks to recover
+`TEST_ONLY`; live confidence remains `UNKNOWN`. This regression is **NOT_RUN**.
+
+All available Phase A / T1 Python tests were rerun on the existing repair branch:
+
+| Repair check | Current result |
+| --- | --- |
+| Phase A source tests | **PASS — 4 tests** |
+| T1 parser tests | **PASS — 8 tests** |
+| Full Tracker Python discovery | **FAIL — 12 tests pass; 16 profile tests blocked by class setup** |
+| T1 generator `--check` | **FAIL — `Unreviewed extension revision`** |
+| Python compilation, Git safety, whitespace and explicit-file/Gitlink review | **PASS** |
+| Lua suite including reentry regression, syntax, SHA vectors and 5.1/5.4 execution | **NOT_RUN — no installed compatible interpreter; runner exits 2** |
+| Production activation / Linux-BizHawk acceptance | **UNKNOWN / NOT_RUN; activation remains denied** |
+
+The unchanged T1 generator checks `HEAD:CFRUDPEExtension.lua` against its historical
+`294cac84152e87010eb806c6331c90100d204a83` blob. The committed T2 extension differs,
+so `LockedSources` rejects it before source regeneration/profile tests. This also
+affects the previously reviewed T2 commit, not just the three-line reset repair.
+The Phase A source checks still confirm the unchanged public JSON byte hash.
+Generator, profile JSON and Gitlinks remain unchanged. Resolving this independent
+lock compatibility issue needs CONTROL disposition within the source-contract
+boundary. The old pre-commit PASS does not establish current T1 regression PASS.
+
+No tools were installed. `CFRUDPE_EXTENSION_PROFILE_MOCK_GUARD_READY` remains
+**NOT_ESTABLISHED** until actual permitted Lua execution passes and review defects
+are cleared; PR #698 remains DRAFT and #691 remains OPEN.
+
 ## Next handoff
 
-CONTROL reviews the candidate PR, including the explicit Lua `NOT_RUN` gap;
+CONTROL reviews the candidate PR, including the Lua `NOT_RUN` and T1 lock gaps;
 Phase A acceptance remains pending actual mock execution on an allowed runtime.
 Do not close #691 or route live integration until Phase B's existing gates pass.

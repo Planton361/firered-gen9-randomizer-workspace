@@ -255,6 +255,36 @@ test("session changes during identity read invalidate before import",function()
     assertBlocked(h,e)
 end)
 
+test("accepted session early reentry revokes old epoch and requires fresh binding",function()
+    local h,e=fixture(); assert(h.GameSettings.initialize())
+    assert(e.state.status=="TEST_ONLY" and e.state.binding.epoch==1)
+    local initialize,restart=h.GameSettings.initialize,h.IronmonTracker.startTracker
+    local previousEpoch,reads=e.state.epoch,h.reads
+    e.state.snapshots={party={species=25}}
+
+    assert(e.beforeGameDataLoad())
+    assert(h.GameSettings.initialize==initialize and h.IronmonTracker.startTracker==restart)
+    assert(e.state.epoch>previousEpoch)
+    assert(h.GameSettings.pstats==99 and h.GameSettings.estats==98)
+    assert(h.Program.Addresses.sizeofPokemonStruct==77)
+    assert(h.PokemonData.Addresses.offsetTypes==3)
+    assertBlocked(h,e)
+
+    assert(not h.GameSettings.initialize())
+    assert(e.state.reason:find("revoked session",1,true) and h.reads==reads)
+    assertBlocked(h,e)
+    h.current.epoch=2
+    assert(not h.GameSettings.initialize()) -- advancing host epoch alone is insufficient
+    assertBlocked(h,e)
+
+    e.setMockInputs(request(h)) -- new binding for the fresh synthetic epoch
+    assert(e.beforeGameDataLoad() and h.GameSettings.initialize())
+    assert(e.state.status=="TEST_ONLY" and e.state.binding.epoch==2)
+    assert(e.checkSession() and e.state.confidence=="UNKNOWN")
+    assert(h.GameSettings.initialize==initialize and h.IronmonTracker.startTracker==restart)
+    assert(h.stockInitializations==0 and h.writes==0)
+end)
+
 test("stale session invalidation and fresh epoch recovery",function()
     local h,e=fixture(); assert(h.GameSettings.initialize())
     e.state.snapshots={party={species=25}}

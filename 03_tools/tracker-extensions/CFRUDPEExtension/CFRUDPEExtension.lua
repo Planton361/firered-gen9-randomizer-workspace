@@ -273,6 +273,9 @@ local function newLifecycle(host, mock)
         input = copy(request)
     end
     function ext.beforeGameDataLoad()
+        -- Reentry starts a new lifecycle; prior accepted proof cannot be reused.
+        if accepted then revoked[accepted.session .. ":" .. accepted.epoch] = true end
+        accepted, source = nil,nil
         rollback()
         clear("early guard pending")
         local ok,reason = pcall(function()
