@@ -57,6 +57,40 @@ All address descriptors retain `runtimeAddress: UNRESOLVED`; capability runtime
 confidence is `UNKNOWN` with no sample epoch. No T2 activation or BizHawk gate
 is satisfied by these tests.
 
+## T1 extension evolution lock repair — Issue #699
+
+**CONFIRMED SOURCE/SYNTHETIC EVIDENCE:** the T1 generator verifies historical
+extension blob `294cac84152e87010eb806c6331c90100d204a83` only at the immutable
+T0 contract above. Later authorized extension development at Workspace HEAD no
+longer invalidates locked source facts. Exact product/contract trees, all five
+current HEAD component Gitlinks, component checkout revisions, allowlisted
+committed inputs, configuration, schema and ARM ABI checks remain required.
+Extension/runtime compatibility remains the independent, unproved #691/T2 gate.
+
+The generator change intentionally regenerates schema v2 without changing
+source facts. Only `metadata.generator.sha256` and `metadata.profileId` differ
+from the #690 profile; every input hash, mapping, layout and historical reference
+is preserved. The whole public JSON hash also changes:
+
+| Identity | Accepted #690 | Repaired #699 |
+| --- | --- | --- |
+| Generator SHA-256 | `1e515d7cf924ac7ab2f3bc311c8f4f6b2f348c25656d4e307356390341422210` | `9c6fcf0a631557defaef64f5ac78db8df483d359d4f6e7a4708011ee2dd70beb` |
+| Canonical profileId | `sha256:3986250cf9fa35ec26b063c785b034c2d96406e681b77e4c557922c948225235` | `sha256:31be9e07697f939b274c56eea5d92a81dd10c43e7c876586effccb335535ca75` |
+| source-data.json SHA-256 | `c89e9767bdd40dc2a2c127c0273cb61ee35c0fdb24ff25c728821ac3271fa353` | `8f49fd4156fcd87fefa01a329b7257e61afa0cd997e504d3660bc286c2e87981` |
+
+Regression coverage permits an evolved HEAD extension while retaining identical
+source output and unresolved runtime capabilities. It rejects a wrong T0
+extension blob/tree, drift in each HEAD component Gitlink, and altered generator
+or historical-extension provenance even with a recomputed profile identity.
+The existing wrong-checkout/input/configuration/schema/mapping/layout/alias tests
+remain required.
+
+**Required follow-up after user merge:** resume #691 Phase A on its same draft
+branch with a normal integration of current main, without history rewrite or
+force-push. Update only that branch's own locked source SHA/profileId constants
+and fixtures to the accepted T1 identity, then finish its independent Lua
+execution gate. #699 does not change PR #698, its branch or runtime code.
+
 ## Identity and trust boundaries
 
 A profile identifies the locked Workspace commit/tree, CFRU, DPE, UPR-FVX and
