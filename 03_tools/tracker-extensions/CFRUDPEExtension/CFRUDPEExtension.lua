@@ -3,8 +3,8 @@
 -- No local manifests, emulator memory, source tables or stock initializers are read.
 local ROOT = debug.getinfo(1, "S").source:sub(2):match("^(.*)[/\\]") or "."
 local sha256 -- Lazy public helper loading; missing helper cannot disable the early stop guard.
-local SOURCE_SHA256 = "c89e9767bdd40dc2a2c127c0273cb61ee35c0fdb24ff25c728821ac3271fa353"
-local PROFILE_ID = "sha256:3986250cf9fa35ec26b063c785b034c2d96406e681b77e4c557922c948225235"
+local SOURCE_SHA256 = "8f49fd4156fcd87fefa01a329b7257e61afa0cd997e504d3660bc286c2e87981"
+local PROFILE_ID = "sha256:31be9e07697f939b274c56eea5d92a81dd10c43e7c876586effccb335535ca75"
 local TRACKER_PIN = "c450ecaee2d8131a2789bb656e3be792a93712fb"
 local KEY = "CFRUDPEExtension"
 local function requireThat(ok, reason) if not ok then error(reason, 0) end end

@@ -19,7 +19,11 @@ ownership/rollback rules, the persistent unload/restart stop guard and commands
 are recorded in [T2_PHASE_A.md](../../../docs/tracker/T2_PHASE_A.md).
 
 For future local installation, keep `profile_sha256.lua` alongside the extension
-Lua file; `data/source-data.json` remains the unchanged public T1 profile. Do not
+Lua file; `data/source-data.json` exactly matches the accepted #699 T1 profile.
+The same #691 branch integrated accepted main normally and updated its source
+hash/profileId constants; synthetic fixtures derive that identity from the public
+JSON. [Phase A evidence](../../../docs/tracker/T2_PHASE_A.md) records the new lock
+and verification. Do not
 activate a real session as a Phase A test. The old example manifests remain inert.
 
 ## T1 source profile — Issue #690

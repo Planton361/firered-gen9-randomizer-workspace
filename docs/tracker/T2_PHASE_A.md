@@ -15,11 +15,16 @@ must remain open. This candidate requires review before acceptance.
 
 ## Revision and protected boundaries
 
-Base: Workspace `057b727cc7e6528bac212777addafc730dfa1a46`, tree
+Original branch base: Workspace `057b727cc7e6528bac212777addafc730dfa1a46`, tree
 `9541ee678280032211b8c74811bbd1e65a95e9ba` (accepted #690 / PR #697 merge).
+Accepted #699 / PR #700 main `f7cde29ece11fa648a88ea5c2f88cb394264cf1d`, tree
+`e230c547e78c67f8a33a61d273f4d60a64fe3aea`, was integrated with a regular merge
+on the same `feature/691-extension-mock-activation` branch. Both #699 identity
+documentation and #691 Phase A limitations were retained without conflicts.
 The locked product and source-profile identities remain distinct from this
 extension delivery. CFRU, DPE, UPR-FVX, Tracker, NatDexExtension and all Gitlinks
-are unchanged. The T1 generator and generated `source-data.json` are unchanged.
+are unchanged. The T1 generator and generated `source-data.json` exactly match
+accepted main; this continuation changes neither file after integrating #699.
 The known untracked `CASUAL_NATDEX.rnqs` was neither opened nor staged.
 No game artifacts, builds, private paths, local manifests or `offsets.ini`
 were used. No emulator, real Tracker runtime or memory session was run.
@@ -80,7 +85,7 @@ claim complete T5 UI coverage or integration API sufficiency.
 
 The following PASS results were obtained before committing the extension change,
 while Git HEAD still contained the T1 extension blob. They are historical evidence;
-the current committed T2 revision's T1 lock failure is recorded below.
+the subsequent historical T1 lock failure and its resolution are recorded below.
 
 | Check | Result |
 | --- | --- |
@@ -134,9 +139,9 @@ and rejects advancing the host epoch without a fresh binding. A fresh synthetic
 epoch-2 binding must pass the complete transaction and session checks to recover
 `TEST_ONLY`; live confidence remains `UNKNOWN`. This regression is **NOT_RUN**.
 
-All available Phase A / T1 Python tests were rerun on the existing repair branch:
+Historical rerun at `89d1df2b8c9ccf80a976781b47d658793af55af5`, before #699:
 
-| Repair check | Current result |
+| Repair check | Historical result |
 | --- | --- |
 | Phase A source tests | **PASS — 4 tests** |
 | T1 parser tests | **PASS — 8 tests** |
@@ -146,21 +151,53 @@ All available Phase A / T1 Python tests were rerun on the existing repair branch
 | Lua suite including reentry regression, syntax, SHA vectors and 5.1/5.4 execution | **NOT_RUN — no installed compatible interpreter; runner exits 2** |
 | Production activation / Linux-BizHawk acceptance | **UNKNOWN / NOT_RUN; activation remains denied** |
 
-The unchanged T1 generator checks `HEAD:CFRUDPEExtension.lua` against its historical
+At that revision the unchanged T1 generator checked `HEAD:CFRUDPEExtension.lua` against its historical
 `294cac84152e87010eb806c6331c90100d204a83` blob. The committed T2 extension differs,
 so `LockedSources` rejects it before source regeneration/profile tests. This also
 affects the previously reviewed T2 commit, not just the three-line reset repair.
 The Phase A source checks still confirm the unchanged public JSON byte hash.
-Generator, profile JSON and Gitlinks remain unchanged. Resolving this independent
-lock compatibility issue needs CONTROL disposition within the source-contract
-boundary. The old pre-commit PASS does not establish current T1 regression PASS.
+Generator, profile JSON and Gitlinks were unchanged by that repair. #699 resolved
+this independent lock compatibility issue within its own source-contract branch;
+the accepted result is integrated below. The old pre-commit PASS was not evidence
+of that repair revision's T1 regression PASS.
 
 No tools were installed. `CFRUDPE_EXTENSION_PROFILE_MOCK_GUARD_READY` remains
 **NOT_ESTABLISHED** until actual permitted Lua execution passes and review defects
 are cleared; PR #698 remains DRAFT and #691 remains OPEN.
 
+## Accepted #699 identity integration and current verification
+
+The extension now locks the accepted public profile from merged #699. Only its
+`SOURCE_SHA256` and `PROFILE_ID` constants change; production denial and the
+accepted-session reentry repair remain intact. The Lua mock runner derives its
+in-memory source/profile fixtures directly from the accepted public JSON, and
+binding fixtures derive `profileId` from that injected profile. No fixture keeps
+an old hardcoded identity or creates a local runtime manifest.
+
+| Accepted identity | Value |
+| --- | --- |
+| Canonical profileId | `sha256:31be9e07697f939b274c56eea5d92a81dd10c43e7c876586effccb335535ca75` |
+| source-data.json SHA-256 | `8f49fd4156fcd87fefa01a329b7257e61afa0cd997e504d3660bc286c2e87981` |
+| Generator SHA-256 | `9c6fcf0a631557defaef64f5ac78db8df483d359d4f6e7a4708011ee2dd70beb` |
+
+| Current continuation check | Result |
+| --- | --- |
+| Full T1 source/parser/ABI/synthetic suite | **PASS — 29 tests** |
+| Phase A source checks | **PASS — 4 tests**, including exact accepted public JSON hash/identity |
+| T1 generator `--check` | **PASS — byte-identical** |
+| Python compilation | **PASS** |
+| Git safety, whitespace, explicit-file/Gitlink and merge ancestry review | **PASS** |
+| Lua mock suite, accepted-session reentry, syntax and SHA known-answer vectors | **NOT_RUN — no permitted compatible runtime on PATH; runner exits 2** |
+| Lua 5.1 and Lua 5.4 execution coverage | **NOT_RUN**, each interpreter unavailable |
+| Linux/BizHawk, real Tracker output/session binding and read-only memory acceptance | **NOT_RUN / PENDING_LINUX_HOST** |
+
+These source checks are rerun after the identity update commit; its exact revision
+and results are recorded in Draft PR #698. The former T1 extension-HEAD lock
+blocker is resolved. The independent Lua execution gate remains open. No tools
+were installed, no Phase A completion is claimed, and production remains denied.
+
 ## Next handoff
 
-CONTROL reviews the candidate PR, including the Lua `NOT_RUN` and T1 lock gaps;
+CONTROL reviews the updated Draft PR #698, including the remaining Lua `NOT_RUN`;
 Phase A acceptance remains pending actual mock execution on an allowed runtime.
 Do not close #691 or route live integration until Phase B's existing gates pass.
