@@ -4,14 +4,15 @@ Contract: [Workspace #691](https://github.com/Planton361/firered-gen9-randomizer
 under [#500](https://github.com/Planton361/firered-gen9-randomizer-workspace/issues/500).
 CONTROL authorized Mac-only / ROM-free / synthetic work on 2026-10-07.
 
-**CONFIRMED CURRENT STATE:** implementation and source checks are present.
-**UNKNOWN / NOT_RUN:** Lua execution, including mock behavior, syntax and the
-portable SHA-256 implementation. No installed Lua 5.1/5.4 executable, LuaJIT,
-Python Lupa, Node Lua package or Vim Lua support was available on this Mac.
-No runtime or package was installed. The Phase A exit marker
-`CFRUDPE_EXTENSION_PROFILE_MOCK_GUARD_READY` is **NOT_ESTABLISHED** until the
-mock suite actually passes. The production marker is not achieved, and #691
-must remain open. This candidate requires review before acceptance.
+**CONFIRMED CURRENT STATE — 2026-10-08:** Lua 5.4.9 executes all **55 mock tests
+PASS**, including SHA-256 vectors, complete public-profile hashing, session
+revocation/reset, rollback and failure injection. All **33 Python tests** and
+the byte-identical T1 profile check also pass. The existing interpreter was used;
+no runtime or package was installed and no global PATH was changed.
+**NOT_RUN:** Lua 5.1 compatibility and Linux/BizHawk / real Tracker acceptance.
+The Phase A exit marker `CFRUDPE_EXTENSION_PROFILE_MOCK_GUARD_READY` remains
+**NOT_ESTABLISHED pending CONTROL acceptance** of this revision's execution
+evidence. Production remains denied, and #691 must remain open.
 
 ## Revision and protected boundaries
 
@@ -137,7 +138,8 @@ The added Lua regression accepts epoch 1, reenters the early hook, checks rollba
 snapshot invalidation and wrapper references, rejects epoch 1 before memory reads,
 and rejects advancing the host epoch without a fresh binding. A fresh synthetic
 epoch-2 binding must pass the complete transaction and session checks to recover
-`TEST_ONLY`; live confidence remains `UNKNOWN`. This regression is **NOT_RUN**.
+`TEST_ONLY`; live confidence remains `UNKNOWN`. This regression passed on
+Lua 5.4.9 on 2026-10-08; its earlier NOT_RUN result is historical.
 
 Historical rerun at `89d1df2b8c9ccf80a976781b47d658793af55af5`, before #699:
 
@@ -161,11 +163,11 @@ this independent lock compatibility issue within its own source-contract branch;
 the accepted result is integrated below. The old pre-commit PASS was not evidence
 of that repair revision's T1 regression PASS.
 
-No tools were installed. `CFRUDPE_EXTENSION_PROFILE_MOCK_GUARD_READY` remains
-**NOT_ESTABLISHED** until actual permitted Lua execution passes and review defects
-are cleared; PR #698 remains DRAFT and #691 remains OPEN.
+No tools were installed during that historical repair. Its Lua execution gap is
+resolved by the 2026-10-08 run below; CONTROL acceptance remains pending.
+PR #698 remains DRAFT and #691 remains OPEN.
 
-## Accepted #699 identity integration and current verification
+## Accepted #699 identity integration — historical verification
 
 The extension now locks the accepted public profile from merged #699. Only its
 `SOURCE_SHA256` and `PROFILE_ID` constants change; production denial and the
@@ -180,7 +182,7 @@ an old hardcoded identity or creates a local runtime manifest.
 | source-data.json SHA-256 | `8f49fd4156fcd87fefa01a329b7257e61afa0cd997e504d3660bc286c2e87981` |
 | Generator SHA-256 | `9c6fcf0a631557defaef64f5ac78db8df483d359d4f6e7a4708011ee2dd70beb` |
 
-| Current continuation check | Result |
+| Identity continuation check at `fb4646fc7277db8abbbe06f77ceccf9808b8e13f` | Historical result |
 | --- | --- |
 | Full T1 source/parser/ABI/synthetic suite | **PASS — 29 tests** |
 | Phase A source checks | **PASS — 4 tests**, including exact accepted public JSON hash/identity |
@@ -191,13 +193,56 @@ an old hardcoded identity or creates a local runtime manifest.
 | Lua 5.1 and Lua 5.4 execution coverage | **NOT_RUN**, each interpreter unavailable |
 | Linux/BizHawk, real Tracker output/session binding and read-only memory acceptance | **NOT_RUN / PENDING_LINUX_HOST** |
 
-These source checks are rerun after the identity update commit; its exact revision
-and results are recorded in Draft PR #698. The former T1 extension-HEAD lock
-blocker is resolved. The independent Lua execution gate remains open. No tools
-were installed, no Phase A completion is claimed, and production remains denied.
+These source checks were rerun after the identity update commit; its exact revision
+and results were recorded in Draft PR #698. The former T1 extension-HEAD lock
+blocker was resolved. The independent Lua execution gate was still open. No tools
+were installed, no Phase A completion was claimed, and production remained denied.
+
+## Lua 5.4 execution evidence — 2026-10-08
+
+The user authorized Lua 5.4 installation solely for these ROM-free synthetic
+tests, using existing Homebrew's official `lua@5.4` formula if necessary.
+The initial PATH probes found `/opt/homebrew/bin/lua5.4` already available,
+reporting **Lua 5.4.9**. No installation, Homebrew mutation, additional package
+source, administrator command or global PATH change was needed.
+
+The first complete execution passed against
+`fb4646fc7277db8abbbe06f77ceccf9808b8e13f`. This continuation changes only
+associated evidence documentation; no extension, helper, mock fixture, runner,
+T1 generator/profile, component source or Gitlink repair was necessary. All
+checks are rerun after the documentation commit; Draft PR #698 records that
+exact delivered revision and the post-commit results.
+
+```sh
+python3 07_scripts/tracker/run_cfru_dpe_extension_mock_tests.py --lua /opt/homebrew/bin/lua5.4
+python3 -m unittest discover -s 07_scripts/tracker -p 'test_*.py' -v
+python3 07_scripts/tracker/generate_cfru_dpe_source_data.py --check
+python3 07_scripts/bootstrap/check_git_safety.py
+git diff --check
+```
+
+| Execution/safety check | Result |
+| --- | --- |
+| Existing Lua mock suite under Lua 5.4.9, including parsing/execution of all three Lua files | **PASS — 55/55** |
+| SHA-256 known answers: empty string, `abc`, and `a` repeated 55, 56, 63, 64, 65 and 128 times | **PASS — 8 vectors**; boundary-vector expectations supplied by Python `hashlib` |
+| Entire canonical public profile: 1,092,720 bytes, exact accepted SHA-256 | **PASS** via the production-source validation and synthetic fixtures |
+| Accepted-session early reentry, old-epoch denial before reads, fresh-binding recovery, reset/stale-state invalidation | **PASS** |
+| Nested read-back, rollback, partial/false/thrown imports, wrapper ownership and lifecycle/error cases | **PASS**; includes all 27 import-prefix/result combinations |
+| Forbidden memory-write injection | **PASS — trap raises and lifecycle fails closed**; ordinary cases assert zero invocations, no memory backend exists |
+| Full Python discovery | **PASS — 33/33**: 29 T1 and 4 Phase A source tests |
+| T1 `--check`, exact accepted hashes/profile identity and unchanged main source bytes | **PASS — byte-identical** |
+| Python compilation | **PASS — 5 files**, temporary bytecode outside the repository |
+| Git safety, whitespace, explicit staged/PR paths, ancestry and component/Gitlink review | **PASS** |
+| Lua 5.1 compatibility | **NOT_RUN — no `lua5.1`, `lua51` or `luajit` on PATH**; not installed |
+| Linux/BizHawk, real Tracker lifecycle, output/session proof and live memory/UI | **NOT_RUN / PENDING_LINUX_HOST**; no emulator executable found on PATH and none run |
+
+No executed check failed. These are local source/synthetic results, not independent
+CI or real emulator evidence. Synthetic success remains `TEST_ONLY`, live
+confidence remains `UNKNOWN`, and production remains `Unsupported Game` / DENIED.
 
 ## Next handoff
 
-CONTROL reviews the updated Draft PR #698, including the remaining Lua `NOT_RUN`;
-Phase A acceptance remains pending actual mock execution on an allowed runtime.
+CONTROL reviews the updated Draft PR #698 and its actual Lua 5.4 execution PASS.
+The execution gate has passed for Lua 5.4; Phase A acceptance still requires
+CONTROL review. Lua 5.1 and Phase B remain separately untested.
 Do not close #691 or route live integration until Phase B's existing gates pass.

@@ -1,7 +1,8 @@
 # CFRU/DPE Tracker profile contract
 
 **T1 #690 source/synthetic PASS; T2 #691 Phase A source/mock candidate only.**
-[Phase A evidence](T2_PHASE_A.md) records source PASS and Lua mock `NOT_RUN`.
+[Phase A evidence](T2_PHASE_A.md) records source PASS (33/33) and Lua 5.4.9 mock
+PASS (55/55), pending CONTROL acceptance. Lua 5.1 and BizHawk remain `NOT_RUN`.
 Production activation and T2 Phase B / T3–T6 remain **INTENDED FUTURE STATE**.
 `CFRUDPE_TRACKER_PROFILE_READY` confirms the public source profile only, not a
 runtime-ready profile. The exact locked revisions and source evidence are in
@@ -17,8 +18,8 @@ field meanings, rejection rules and reproducibility commands are in the extensio
 [schema](../../03_tools/tracker-extensions/CFRUDPEExtension/SCHEMA.md) and
 [README](../../03_tools/tracker-extensions/CFRUDPEExtension/README.md).
 T2 Phase A now locks the complete public serialization in Lua before decoding.
-Its detached synthetic adapter cannot activate production; Lua execution and
-full Phase A acceptance remain pending.
+Its detached synthetic adapter cannot activate production. Lua 5.4 execution
+passed; full Phase A acceptance remains pending CONTROL review.
 
 The profile separately binds locked product Workspace
 `3bdfe9919afc0b7bea55c79f37285e832be495c3` / tree

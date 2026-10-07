@@ -13,8 +13,10 @@ session identity remains `UNKNOWN`. No local manifests or emulator reads are
 performed by the production instance. The mock factory refuses Tracker/emulator
 hosts and can publish only `TEST_ONLY`, never verified live data.
 
-**Source checks PASS; Lua mock/syntax checks NOT_RUN on this Mac.**
-`CFRUDPE_EXTENSION_PROFILE_MOCK_GUARD_READY` is not yet established. Full behavior,
+**Source checks PASS (33/33); Lua 5.4.9 mock execution PASS (55/55).**
+Lua 5.1 and Linux/BizHawk remain separately NOT_RUN. The existing interpreter
+was used without installation. `CFRUDPE_EXTENSION_PROFILE_MOCK_GUARD_READY`
+remains not established pending CONTROL acceptance. Full behavior,
 ownership/rollback rules, the persistent unload/restart stop guard and commands
 are recorded in [T2_PHASE_A.md](../../../docs/tracker/T2_PHASE_A.md).
 
@@ -37,7 +39,7 @@ Runtime addresses, extension activation, or Tracker UI compatibility.
 | --- | --- |
 | `data/source-data.json` | Deterministic public profile: exact pins, input hashes, mappings, authoritative baseline names, bounds, ARM layouts and unresolved runtime dependencies. |
 | [SCHEMA.md](SCHEMA.md) | Concrete schema v2 semantics and validation rules. |
-| `CFRUDPEExtension.lua` | T2 source-v2 guard and isolated mock lifecycle candidate; production always unsupported. Lua behavior awaits actual mock execution; live data adapters remain T3–T5 work. |
+| `CFRUDPEExtension.lua` | T2 source-v2 guard and isolated mock lifecycle candidate; production always unsupported. Lua 5.4 synthetic behavior passed; CONTROL acceptance and live data adapters remain pending. |
 | `data/*.example.json` | Historical prototypes, not valid v2 profiles or runtime acceptance templates. |
 
 `game-addresses.local.json` and `tracker-overrides.local.json` remain ignored,

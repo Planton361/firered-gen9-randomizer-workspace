@@ -218,14 +218,15 @@ This is a dependency contract, not a duplicate daily queue. Operational status
 stays in the Project/Issues. T1 is source/synthetic PASS. CONTROL's 2026-10-07
 #691/#500 disposition permits
 T2 Phase A on Mac before B1; [its evidence](T2_PHASE_A.md) records source PASS
-and Lua mock `NOT_RUN`, so the Phase A marker is not yet established. Runtime
+and Lua 5.4.9 mock PASS (55/55); Lua 5.1 remains `NOT_RUN`. The Phase A marker
+is not yet established pending CONTROL acceptance. Runtime
 acceptance and T3–T6 remain future work.
 
 | Contract | Entry and exit evidence |
 | --- | --- |
 | [B1 #689](https://github.com/Planton361/firered-gen9-randomizer-workspace/issues/689) | After T0; **PENDING_LINUX_HOST / NOT_RUN**, not FAIL. User-owned boot/new game/input/save-reload/wild/trainer/Lua/read/frame smoke, exact BizHawk/core/settings. `BIZHAWK_LOCKED_PILOT_READY`; closes #499 only with accepted T0 and B1. No Tracker data correctness claim. |
 | [T1 #690](https://github.com/Planton361/firered-gen9-randomizer-workspace/issues/690) | After T0 review/merge: Mac public-source generator and synthetic fixtures explicitly permitted before B1. Deterministic identity/mappings/layout manifest, missing required facts fail generation. `CFRUDPE_TRACKER_PROFILE_READY` is source-only. |
-| [T2 #691](https://github.com/Planton361/firered-gen9-randomizer-workspace/issues/691) | T1 enables explicitly approved Mac-only Phase A source/mock guard preparation. `CFRUDPE_EXTENSION_PROFILE_MOCK_GUARD_READY` requires actual mock PASS (currently NOT_RUN). Phase B and `CFRUDPE_EXTENSION_PROFILE_ACTIVE` still require #499/#689 Linux acceptance plus real identity/load/unload proof. |
+| [T2 #691](https://github.com/Planton361/firered-gen9-randomizer-workspace/issues/691) | T1 enables explicitly approved Mac-only Phase A source/mock guard preparation. Lua 5.4.9 mock PASS (55/55); `CFRUDPE_EXTENSION_PROFILE_MOCK_GUARD_READY` awaits CONTROL acceptance. Lua 5.1 remains NOT_RUN. Phase B and `CFRUDPE_EXTENSION_PROFILE_ACTIVE` still require #499/#689 Linux acceptance plus real identity/load/unload proof. |
 | [T3 #692](https://github.com/Planton361/firered-gen9-randomizer-workspace/issues/692) | T2; species/move/ability/item/type and multi-slot player-party fidelity, Gen1/8/9/regional controls. `CFRUDPE_TRACKER_DATA_FIDELITY_READY`. No enemy/trainer acceptance yet. |
 | [T4 #693](https://github.com/Planton361/firered-gen9-randomizer-workspace/issues/693) | T3; live parties/battle/context, transition clearing, supported doubles/multi mapping; owns future `docs/tracker/RUNTIME_CONTRACT.md`. `CFRUDPE_TRACKER_BATTLE_FIDELITY_READY`. |
 | [T5 #694](https://github.com/Planton361/firered-gen9-randomizer-workspace/issues/694) | T4; normal Tracker views and derived values honor field trust, no stock/stale fallback. `IRONMON_TRACKER_CFRUDPE_UI_READY`. |

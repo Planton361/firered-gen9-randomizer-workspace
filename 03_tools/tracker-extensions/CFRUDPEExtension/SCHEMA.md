@@ -5,7 +5,7 @@ This schema supersedes the historical v1 source-data prototype. It is a public
 source contract only. T2 Phase A's Lua adapter locks its complete canonical bytes
 before decoding; production output/session validation remains unavailable. See
 [T2 evidence](../../../docs/tracker/T2_PHASE_A.md) for the mock-only boundary and
-unexecuted Lua checks.
+Lua 5.4 execution evidence and separate Lua 5.1 / BizHawk NOT_RUN boundaries.
 
 ## Serialization and identity
 
