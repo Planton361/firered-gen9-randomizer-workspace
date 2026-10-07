@@ -127,6 +127,69 @@ class LockedProfileTests(unittest.TestCase):
         with patch.object(g, "git", wrong_revision), self.assertRaisesRegex(g.ProfileError, "revision mismatch"):
             g.LockedSources(ROOT)
 
+    def test_evolved_head_extension_preserves_source_profile_only(self):
+        real_git = g.git
+
+        def evolved_extension(root, *args):
+            if args == ("rev-parse", f"HEAD:{g.EXTENSION}"):
+                return "0" * 40  # A different implementation, not runtime acceptance.
+            return real_git(root, *args)
+
+        with patch.object(g, "git", side_effect=evolved_extension) as mocked_git:
+            evolved = g.generate(ROOT)
+        self.assertEqual(g.serialized(evolved), g.serialized(self.profile))
+        self.assertNotIn((ROOT, "rev-parse", f"HEAD:{g.EXTENSION}"),
+                         [call.args for call in mocked_git.call_args_list])
+        compatibility = evolved["metadata"]["extensionCompatibility"]
+        self.assertEqual(compatibility["workspaceCommit"], g.CONTRACT)
+        self.assertEqual(compatibility["gitBlob"], g.EXTENSION_BLOB)
+        self.assertEqual(compatibility["runtimeSchemaSupport"], "UNRESOLVED")
+        self.assertTrue(all(c["confidence"] == "UNKNOWN" for c in evolved["capabilities"].values()))
+
+    def test_wrong_contract_extension_blob_rejected(self):
+        real_git = g.git
+
+        def wrong_anchor(root, *args):
+            if args == ("rev-parse", f"{g.CONTRACT}:{g.EXTENSION}"):
+                return "0" * 40
+            return real_git(root, *args)
+
+        with patch.object(g, "git", wrong_anchor), self.assertRaisesRegex(g.ProfileError, "extension revision"):
+            g.LockedSources(ROOT)
+
+    def test_evolved_extension_does_not_allow_head_gitlink_drift(self):
+        real_git = g.git
+        for component, (path, _) in g.PINS.items():
+            def wrong_pin(root, *args):
+                if args == ("rev-parse", f"HEAD:{g.EXTENSION}"):
+                    return "0" * 40
+                if args == ("ls-tree", "HEAD", "--", path):
+                    return f"160000 commit {'0' * 40}\t{path}"
+                return real_git(root, *args)
+
+            with self.subTest(component=component), patch.object(g, "git", wrong_pin), \
+                    self.assertRaisesRegex(g.ProfileError, f"{component}: incompatible Gitlink at HEAD"):
+                g.LockedSources(ROOT)
+
+    def test_wrong_immutable_workspace_tree_rejected(self):
+        real_git = g.git
+        for ref in (g.PRODUCT, g.CONTRACT):
+            def wrong_tree(root, *args):
+                if args == ("rev-parse", f"{ref}^{{tree}}"):
+                    return "0" * 40
+                return real_git(root, *args)
+
+            with self.subTest(ref=ref), patch.object(g, "git", wrong_tree), \
+                    self.assertRaisesRegex(g.ProfileError, "Workspace tree mismatch"):
+                g.LockedSources(ROOT)
+
+    def test_exact_generator_hash_and_canonical_profile_identity(self):
+        self.assertEqual(self.profile["metadata"]["generator"]["sha256"],
+                         g.digest((ROOT / g.GENERATOR).read_bytes()))
+        payload = copy.deepcopy(self.profile)
+        profile_id = payload["metadata"].pop("profileId")
+        self.assertEqual(profile_id, "sha256:" + g.digest(g.serialized(payload)))
+
     def test_non_allowlisted_input_rejected_before_read(self):
         reader = g.LockedSources(ROOT)
         with self.assertRaisesRegex(g.ProfileError, "allowlisted"):
@@ -272,6 +335,8 @@ class LockedProfileTests(unittest.TestCase):
         mutations = [lambda p: p["metadata"].update(schemaVersion=1),
                      lambda p: p["metadata"].update(schemaVersion=True),
                      lambda p: p["metadata"]["revisions"].update(CFRU="0" * 40),
+                     lambda p: p["metadata"]["generator"].update(sha256="0" * 64),
+                     lambda p: p["metadata"]["extensionCompatibility"].update(gitBlob="0" * 40),
                      lambda p: p.pop("moves"), lambda p: p.update(unreviewed=True),
                      lambda p: p["species"][1].update(id=2),
                      lambda p: p["moves"][991].update(name="guessed"),

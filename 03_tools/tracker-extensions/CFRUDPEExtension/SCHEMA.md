@@ -19,6 +19,14 @@ single generator source; source provenance binds each allowlisted input to its
 component revision and raw-byte SHA-256. No moving branch names select inputs.
 The product Workspace commit/tree and T0 contract commit/tree are separate.
 
+`metadata.extensionCompatibility.workspaceCommit` / `path` / `gitBlob` bind
+the historical extension at the immutable T0 contract, whose tree and extension
+blob are verified. They do not constrain the extension implementation at later
+Workspace HEADs. Current HEAD component Gitlinks and component checkout revisions
+must still match every locked pin. Extension changes do not select source inputs
+or certify runtime compatibility; `runtimeSchemaSupport` remains `UNRESOLVED`
+until the separate T2 contract establishes acceptance.
+
 `validate_profile(candidate, regenerated)` requires exact schema/version and
 exact canonical equality with fresh generation from the locked inputs. It
 rejects omitted/extra keys, changed pins, mappings, layouts, descriptors and

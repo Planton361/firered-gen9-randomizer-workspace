@@ -15873,7 +15873,7 @@
     },
     "generator": {
       "path": "07_scripts/tracker/generate_cfru_dpe_source_data.py",
-      "sha256": "1e515d7cf924ac7ab2f3bc311c8f4f6b2f348c25656d4e307356390341422210"
+      "sha256": "9c6fcf0a631557defaef64f5ac78db8df483d359d4f6e7a4708011ee2dd70beb"
     },
     "inputs": {
       "CFRU:BPRE.ld": {
@@ -16035,7 +16035,7 @@
       "commit": "3bdfe9919afc0b7bea55c79f37285e832be495c3",
       "tree": "f6bc65355811d7de153a91091b223fec9b50991e"
     },
-    "profileId": "sha256:3986250cf9fa35ec26b063c785b034c2d96406e681b77e4c557922c948225235",
+    "profileId": "sha256:31be9e07697f939b274c56eea5d92a81dd10c43e7c876586effccb335535ca75",
     "revisions": {
       "CFRU": "e68a701aa4e68733ef8ad1e7cadb68825c0d16c2",
       "DPE": "d887185de1f6ae6a78e85c4311bbadde17041d00",
