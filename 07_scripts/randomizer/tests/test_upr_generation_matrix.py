@@ -299,13 +299,25 @@ class ExecutionTest(unittest.TestCase):
         self.rom = "/fictional/private/Personal Name.gba"
         self.jar = Path("/fictional/tool/UPR.jar")
 
-    def executor(self, generate=None, reopen=None, mismatch=False):
+    def executor(self, generate=None, reopen=None, mismatch=False, identity_states=None, identity_result=None):
         calls = []
+        states = iter(identity_states or [(True, True, True), (True, True, True)])
 
         def execute(args, cwd, timeout=600):
             calls.append((args, Path(cwd)))
             self.assertTrue(Path(cwd).is_relative_to(self.directory))
             self.assertEqual("java", args[0])
+            if args[1] == "--class-path":
+                adapter = Path(args[3])
+                self.assertEqual(Path(cwd) / "MatrixReopen.java", adapter)
+                self.assertEqual(m.REOPEN_IDENTITY, adapter.read_text())
+                output = Path(args[4])
+                self.assertTrue(output.is_relative_to(Path(cwd)))
+                self.assertTrue(output.is_file())
+                if identity_result is not None:
+                    return identity_result
+                opened, gen3_handler, cfru_dpe_policy = next(states)
+                return result(text="Supported CFRU/DPE output identity verified.") if opened and gen3_handler and cfru_dpe_policy else result(1)
             if args[3] == "cli":
                 output = Path(args[args.index("-o") + 1])
                 self.assertTrue(output.is_relative_to(Path(cwd)))
@@ -331,7 +343,9 @@ class ExecutionTest(unittest.TestCase):
             out = m.attempt(self.group, m.PRIMARY, self.rom, self.jar, self.directory, True)
         self.assertTrue(out.passed)
         self.assertEqual("PASS", out.replay)
-        self.assertEqual(4, len(calls))
+        self.assertEqual(6, len(calls))
+        self.assertEqual(["cli", "identity", "loaded-manifest"] * 2,
+                         ["identity" if a[1] == "--class-path" else a[3] for a, _ in calls])
         self.assertEqual([m.PRIMARY, m.PRIMARY], [int(a[a.index("-z") + 1]) for a, _ in calls if a[3] == "cli"])
         self.assert_clean()
 
@@ -367,8 +381,101 @@ class ExecutionTest(unittest.TestCase):
             self.assertEqual("PASS", out.generate)
             self.assertEqual("FAIL", out.reopen)
             self.assertEqual("NOT_APPLICABLE", out.replay)
-            self.assertEqual(2, len(calls))
+            self.assertEqual(3, len(calls))
             self.assert_clean()
+
+    def test_cfru_dpe_identity_pass_then_manifest_pass(self):
+        calls, execute = self.executor(identity_states=[(True, True, True)])
+        with patch.object(m, "command", side_effect=execute):
+            out = m.attempt(self.group, m.PRIMARY, self.rom, self.jar, self.directory, False)
+        self.assertTrue(out.passed)
+        self.assertEqual("PASS", out.reopen)
+        self.assertEqual(["cli", "identity", "loaded-manifest"],
+                         ["identity" if a[1] == "--class-path" else a[3] for a, _ in calls])
+        self.assert_clean()
+
+    def test_openable_generic_gen3_identity_fails_closed(self):
+        calls, execute = self.executor(identity_states=[(True, True, False)])
+        with patch.object(m, "command", side_effect=execute):
+            out = m.attempt(self.group, m.PRIMARY, self.rom, self.jar, self.directory, True)
+        self.assertEqual("PASS", out.generate)
+        self.assertEqual("FAIL", out.reopen)
+        self.assertEqual("ReopenIdentityFailure", out.error_class)
+        self.assertEqual("Output was not recognized as the supported CFRU/DPE profile.", out.message)
+        self.assertFalse(out.passed)
+        self.assertEqual(2, len(calls))  # no manifest/replay after failed identity
+        self.assert_clean()
+
+    def test_identity_open_failure_and_wrong_handler(self):
+        for state in ((False, False, False), (True, False, False)):
+            with self.subTest(state=state):
+                calls, execute = self.executor(identity_states=[state])
+                with patch.object(m, "command", side_effect=execute):
+                    out = m.attempt(self.group, 1, self.rom, self.jar, self.directory, False)
+                self.assertEqual("PASS", out.generate)
+                self.assertEqual("FAIL", out.reopen)
+                self.assertEqual("ReopenIdentityFailure", out.error_class)
+                self.assertEqual(2, len(calls))
+                self.assert_clean()
+
+    def test_identity_nonzero_and_private_java_details_are_discarded(self):
+        private = 'Private Filename.gba /fictional/private/Secret.gba ' + self.rom
+        calls, execute = self.executor(identity_result=result(1, private, "IllegalStateException: " + private))
+        with patch.object(m, "command", side_effect=execute):
+            out = m.attempt(self.group, 1, self.rom, self.jar, self.directory, False)
+        self.assertEqual("PASS", out.generate)
+        self.assertEqual("FAIL", out.reopen)
+        self.assertEqual("ReopenIdentityFailure", out.error_class)
+        report = io.StringIO()
+        with contextlib.redirect_stdout(report):
+            m.print_report(self.group.aliases, [self.group], [(self.group, 1, out)], 12, "FAIL")
+        for marker in (private, "Private Filename", "/fictional", "Secret.gba", "IllegalStateException"):
+            self.assertNotIn(marker, str(out))
+            self.assertNotIn(marker, report.getvalue())
+        self.assertEqual(2, len(calls))
+        self.assert_clean()
+
+    def test_identity_missing_marker_or_partial_success_rejected(self):
+        for response in (result(), result(text="Supported CFRU/DPE output identity verified.\nERROR: failure"),
+                         result(1, "Supported CFRU/DPE output identity verified.")):
+            _, execute = self.executor(identity_result=response)
+            with patch.object(m, "command", side_effect=execute):
+                out = m.attempt(self.group, 1, self.rom, self.jar, self.directory, False)
+            self.assertEqual("FAIL", out.reopen)
+            self.assertEqual("ReopenIdentityFailure", out.error_class)
+            self.assert_clean()
+
+    def test_replay_identity_failure_before_manifest_or_byte_comparison(self):
+        calls, execute = self.executor(identity_states=[(True, True, True), (True, True, False)])
+        with patch.object(m, "command", side_effect=execute), patch.object(m, "same_bytes") as compare:
+            out = m.attempt(self.group, m.PRIMARY, self.rom, self.jar, self.directory, True)
+        self.assertEqual("PASS", out.generate)
+        self.assertEqual("FAIL", out.reopen)
+        self.assertEqual("FAIL", out.replay)
+        self.assertEqual("ReopenIdentityFailure", out.error_class)
+        self.assertFalse(out.passed)
+        compare.assert_not_called()  # even byte-identical synthetic ROMs cannot pass
+        self.assertEqual(["cli", "identity", "loaded-manifest", "cli", "identity"],
+                         ["identity" if a[1] == "--class-path" else a[3] for a, _ in calls])
+        # Includes removal of first manifest, both ROMs/logs and Java adapter.
+        self.assert_clean()
+
+    def test_identity_adapter_checks_exact_pinned_public_api_without_raw_errors(self):
+        source = m.REOPEN_IDENTITY
+        self.assertIn("RomOpener.Results loaded = new RomOpener().openRomFile(new File(args[0]))", source)
+        self.assertIn("!loaded.wasOpeningSuccessful()", source)
+        self.assertIn("!(loaded.getRomHandler() instanceof Gen3RomHandler)", source)
+        self.assertIn("!((Gen3RomHandler) loaded.getRomHandler()).usesCfruDpeRandomPoolPolicy()", source)
+        self.assertIn("System.exit(1)", source)
+        self.assertIn("catch (Exception ignored)", source)
+        self.assertNotIn("printStackTrace", source)
+        self.assertNotIn("System.err", source)
+        gen3 = (PUBLIC / "romio/src/main/java/com/uprfvx/romio/romhandlers/Gen3RomHandler.java").read_text()
+        opener = (PUBLIC / "romio/src/main/java/com/uprfvx/romio/romio/RomOpener.java").read_text()
+        self.assertIn("public boolean usesCfruDpeRandomPoolPolicy()", gen3)
+        self.assertIn("public Results openRomFile(File", opener)
+        self.assertIn("public boolean wasOpeningSuccessful()", opener)
+        self.assertIn("public RomHandler getRomHandler()", opener)
 
     def test_replay_mismatch(self):
         _, execute = self.executor(mismatch=True)
@@ -401,7 +508,7 @@ class ExecutionTest(unittest.TestCase):
         self.assertEqual("FAIL", out.retry)
 
     def test_replay_generation_and_reopen_failure(self):
-        for fail_step in (3, 4):
+        for fail_step in (4, 6):
             _, execute = self.executor()
             count = 0
 

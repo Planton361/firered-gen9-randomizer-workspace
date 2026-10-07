@@ -601,6 +601,31 @@ def same_bytes(a, b):
                 return True
 
 
+REOPEN_IDENTITY = '''import com.uprfvx.random.Settings;
+import com.uprfvx.romio.RootPath;
+import com.uprfvx.romio.romio.RomOpener;
+import com.uprfvx.romio.romhandlers.Gen3RomHandler;
+import java.io.File;
+class MatrixReopen {
+  public static void main(String[] args) {
+    try {
+      RootPath.path = new File(Settings.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getParent() + File.separator;
+      RomOpener.Results loaded = new RomOpener().openRomFile(new File(args[0]));
+      if (!loaded.wasOpeningSuccessful() || !(loaded.getRomHandler() instanceof Gen3RomHandler)
+          || !((Gen3RomHandler) loaded.getRomHandler()).usesCfruDpeRandomPoolPolicy()) {
+        System.exit(1);
+        return;
+      }
+      System.out.println("Supported CFRU/DPE output identity verified.");
+    } catch (Exception ignored) {
+      // Never expose a private filename, loader exception or stacktrace.
+      System.exit(1);
+    }
+  }
+}
+'''
+
+
 def attempt(group, seed, rom, jar, temp, replay):
     out = Outcome()
     with tempfile.TemporaryDirectory(prefix="case-", dir=temp) as case_dir:
@@ -614,6 +639,12 @@ def attempt(group, seed, rom, jar, temp, replay):
             if result.returncode or "Randomized successfully!" not in text or ERROR_MARKERS.search(text) or not output.is_file() or output.stat().st_size == 0:
                 out.error_class, out.message = safe_error(text, "GenerationFailure")
                 return None, "FAIL", "NOT_RUN"
+            result = command(["java", "--class-path", str(jar), str(identity_adapter), str(output)], directory)
+            text = result.stdout + result.stderr
+            if result.returncode or ERROR_MARKERS.search(text) or "Supported CFRU/DPE output identity verified." not in text:
+                out.error_class = "ReopenIdentityFailure"
+                out.message = "Output was not recognized as the supported CFRU/DPE profile."
+                return None, "PASS", "FAIL"
             result = command(["java", "-jar", str(jar), "loaded-manifest", "-i", str(output),
                               "-o", str(directory / (filename + "-manifest"))], directory)
             text = result.stdout + result.stderr
@@ -623,6 +654,8 @@ def attempt(group, seed, rom, jar, temp, replay):
             return output, "PASS", "PASS"
 
         try:
+            identity_adapter = directory / "MatrixReopen.java"
+            identity_adapter.write_text(REOPEN_IDENTITY)
             output, out.generate, out.reopen = run_one("output.gba")
             if output and replay:
                 repeated, generated, reopened = run_one("replay.gba")
