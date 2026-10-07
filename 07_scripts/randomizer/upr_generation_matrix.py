@@ -26,12 +26,12 @@ from dataclasses import dataclass, field
 
 
 ROOT = Path(__file__).resolve().parents[2]
-WORKSPACE = "39c98850db7b6cf386715558605090527e4d5705"
-TREE = "3ae05f02864b44773abb1790f60c1092e19b900e"
+WORKSPACE = "4e7bffa45d2d68919e48d5329ad8bcb55dc8408e"
+TREE = "6186d011e5daf958142e6fd0c9a98099f96fa85f"
 PINS = {
     "CFRU": ("02_external/CFRU-expansion", "e68a701aa4e68733ef8ad1e7cadb68825c0d16c2"),
     "DPE": ("02_external/Dynamic-Pokemon-Expansion-Gen-9", "d887185de1f6ae6a78e85c4311bbadde17041d00"),
-    "UPR-FVX": ("02_external/upr-fvx", "213ed055e301263c4577ac329b81a6cb9ff587a9"),
+    "UPR-FVX": ("02_external/upr-fvx", "4670a5413104ec02bc08c09ff584470a8a6cb7bd"),
 }
 SOURCE = "random/src/main/java/com/uprfvx/random/cli/SettingsProfileGenerator.java"
 PRIMARY = 20261005658
@@ -94,6 +94,7 @@ TRIPLES = (
 SELECTED = ("CONTROL_UNCHANGED", "CASUAL_NATDEX", "IRONMON_NATDEX")
 MAXIMUM = ("MAX_SAFE_DATA", "MAX_SAFE_WORLD", "MAX_SAFE_COMBINED")
 ALLOWED_FILES = frozenset({
+    "02_external/upr-fvx",  # #686 authorized delta; exact pin checks below still apply.
     "07_scripts/randomizer/run_upr_generation_matrix.sh",
     "07_scripts/randomizer/upr_generation_matrix.py",
     "07_scripts/randomizer/tests/test_upr_generation_matrix.py",
@@ -894,6 +895,9 @@ def main(argv=None):
         overlays, unsupported, profiles = source_model(source)
         cases = build_matrix(overlays, unsupported, profiles)
         if args.dry_run:
+            print("Matrix basis:\nWorkspace: " + WORKSPACE + "\nTree: " + TREE)
+            for name, (_, pin) in PINS.items():
+                print(name + ": " + pin)
             print(f"CASE_INTENTS: {len(cases)}\nUNIQUE_EFFECTIVE_CASES: runtime Settings API canonicalization required")
             print_inventory(inventory_counts(overlays, unsupported))
             for case in cases:

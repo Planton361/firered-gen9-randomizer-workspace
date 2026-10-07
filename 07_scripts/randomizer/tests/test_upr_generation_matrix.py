@@ -883,6 +883,15 @@ class EntryPointTest(unittest.TestCase):
         attempt.assert_not_called()
         prompt.assert_not_called()
         self.assertIn("PRIVATE_ROM_MATRIX = NOT_RUN", output.getvalue())
+        for line in (
+            "Workspace: 4e7bffa45d2d68919e48d5329ad8bcb55dc8408e",
+            "Tree: 6186d011e5daf958142e6fd0c9a98099f96fa85f",
+            "UPR-FVX: 4670a5413104ec02bc08c09ff584470a8a6cb7bd",
+            "CASE_INTENTS: 297", "SOURCE_OVERLAY_IDS: 159",
+            "GENERATOR_UNSUPPORTED: 4", "TARGET_EXCLUDED: 13",
+            "REQUIRED_OVERLAY_CASES: 142",
+        ):
+            self.assertIn(line, output.getvalue())
 
     def entry_run(self, argv, fail=False):
         cases = [m.Intent("CONTROL_UNCHANGED", "ACCEPTANCE", classification="ACCEPTANCE"),
@@ -1037,6 +1046,79 @@ class PinTest(unittest.TestCase):
     def test_pins_allow_only_runner_descendant(self):
         with patch.object(m, "git", side_effect=self.public_git):
             m.verify_pins(m.ROOT)
+
+    def test_686_exact_integration_basis(self):
+        self.assertEqual("4e7bffa45d2d68919e48d5329ad8bcb55dc8408e", m.WORKSPACE)
+        self.assertEqual("6186d011e5daf958142e6fd0c9a98099f96fa85f", m.TREE)
+        self.assertEqual(("02_external/upr-fvx", "4670a5413104ec02bc08c09ff584470a8a6cb7bd"), m.PINS["UPR-FVX"])
+        self.assertEqual({
+            "02_external/upr-fvx",
+            "07_scripts/randomizer/run_upr_generation_matrix.sh",
+            "07_scripts/randomizer/upr_generation_matrix.py",
+            "07_scripts/randomizer/tests/test_upr_generation_matrix.py",
+        }, m.ALLOWED_FILES)
+
+    def integration_git(self, root, *args):
+        if args[0] == "diff":
+            return "\n".join(sorted(m.ALLOWED_FILES))
+        return self.public_git(root, *args)
+
+    def test_authorized_gitlink_delta_with_exact_pins_passes(self):
+        with patch.object(m, "git", side_effect=self.integration_git):
+            m.verify_pins(m.ROOT)
+
+    def test_allowed_upr_path_does_not_allow_wrong_gitlink(self):
+        relative, pin = m.PINS["UPR-FVX"]
+        for entry in (
+            "160000 commit 213ed055e301263c4577ac329b81a6cb9ff587a9\t" + relative,
+            "160000 commit " + "f" * 40 + "\t" + relative,
+            "100644 blob " + pin + "\t" + relative,
+            "",
+        ):
+            def git(root, *args):
+                if args == ("ls-tree", "HEAD", relative):
+                    return entry
+                return self.integration_git(root, *args)
+            with self.subTest(entry=entry), patch.object(m, "git", side_effect=git):
+                with self.assertRaisesRegex(m.MatrixError, "UPR-FVX Gitlink mismatch"):
+                    m.verify_pins(m.ROOT)
+
+    def test_integrated_upr_checkout_and_remote_still_require_exact_pin(self):
+        for boundary in ("checkout", "target", "dirty"):
+            def git(root, *args):
+                if Path(root) == m.ROOT / m.PINS["UPR-FVX"][0]:
+                    if boundary == "checkout" and args == ("rev-parse", "HEAD"):
+                        return "213ed055e301263c4577ac329b81a6cb9ff587a9"
+                    if boundary == "target" and args[0] == "ls-remote":
+                        return "f" * 40 + "\trefs/heads/compat/firered-cfru-dpe"
+                    if boundary == "dirty" and args[0] == "status":
+                        return " M synthetic-source.java"
+                return self.integration_git(root, *args)
+            with self.subTest(boundary=boundary), patch.object(m, "git", side_effect=git):
+                with self.assertRaises(m.MatrixError):
+                    m.verify_pins(m.ROOT)
+
+    def test_other_component_or_source_delta_still_stops(self):
+        for relative in (m.PINS["CFRU"][0], m.PINS["DPE"][0],
+                         "02_external/unexpected-component", "docs/outside_scope.md"):
+            def git(root, *args):
+                if args[0] == "diff":
+                    return self.integration_git(root, *args) + "\n" + relative
+                return self.integration_git(root, *args)
+            with self.subTest(path=relative), patch.object(m, "git", side_effect=git):
+                with self.assertRaisesRegex(m.MatrixError, "Workspace has unexpected changes"):
+                    m.verify_pins(m.ROOT)
+
+    def test_integrated_cfru_and_dpe_pins_cannot_drift(self):
+        for name in ("CFRU", "DPE"):
+            relative = m.PINS[name][0]
+            def git(root, *args):
+                if args == ("ls-tree", "HEAD", relative):
+                    return "160000 commit " + "f" * 40 + "\t" + relative
+                return self.integration_git(root, *args)
+            with self.subTest(component=name), patch.object(m, "git", side_effect=git):
+                with self.assertRaisesRegex(m.MatrixError, name + " Gitlink mismatch"):
+                    m.verify_pins(m.ROOT)
 
     def test_every_pin_and_dirty_boundary_fail_closed(self):
         for broken in ("tree", "checkout", "gitlink", "target", "dirty", "scope"):
