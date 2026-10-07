@@ -13,6 +13,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+import zlib
 from unittest.mock import patch
 
 
@@ -208,11 +209,12 @@ class IdentityAndDedupTest(unittest.TestCase):
                 for i, payload in enumerate(payloads):
                     (temp / f"{i}.settings").write_text(payload)
                     (temp / f"{i}.rnqs").write_text("synthetic settings")
+                    (temp / f"{i}.normalization").write_text("NONE")
                 return result()
 
             with patch.object(m, "command", side_effect=execute) as command:
                 self.assertEqual(payloads, m.generate_settings(cases, OVERLAYS, Path("synthetic.jar"), temp))
-                self.assertEqual(payloads, m.normalize_settings(cases, Path("synthetic.jar"), "/fictional/input.gba", temp))
+                self.assertEqual((payloads, {}), m.normalize_settings(cases, Path("synthetic.jar"), "/fictional/input.gba", temp, payloads))
                 self.assertEqual(2, command.call_count)
             self.assertTrue((temp / "MatrixSettings.java").is_file())
             self.assertIn("s.tweakForRom", (temp / "MatrixNormalize.java").read_text())
@@ -226,11 +228,12 @@ class IdentityAndDedupTest(unittest.TestCase):
                 with self.assertRaises(m.MatrixError):
                     m.generate_settings(cases, OVERLAYS, Path("synthetic.jar"), temp)
                 with self.assertRaises(m.MatrixError):
-                    m.normalize_settings(cases, Path("synthetic.jar"), "/fictional/input.gba", temp)
+                    m.normalize_settings(cases, Path("synthetic.jar"), "/fictional/input.gba", temp, [m.IRONMON])
             (temp / "0.settings").write_text(synthetic_payload(bytes(67)))
+            (temp / "0.normalization").write_text("NONE")
             with patch.object(m, "command", return_value=result()):
                 with self.assertRaises(m.MatrixError):
-                    m.normalize_settings(cases, Path("synthetic.jar"), "/fictional/input.gba", temp)
+                    m.normalize_settings(cases, Path("synthetic.jar"), "/fictional/input.gba", temp, [m.IRONMON])
 
     def test_exact_casual_all_serialized_boolean_and_enum_fields(self):
         fields = decoded_fields(m.CASUAL_BYTES)
@@ -285,6 +288,205 @@ class IdentityAndDedupTest(unittest.TestCase):
             self.assertEqual(2, len(groups))
             self.assertEqual(["A", "B"], [c.id for c in groups[0].aliases])
             self.assertEqual(["C"], [c.id for c in groups[1].aliases])
+
+
+class NormalizationAccountingTest(unittest.TestCase):
+    """CONTROL-disposed C/I delta; only synthetic API witness/payload fixtures."""
+
+    def selected(self, name):
+        before = m.IRONMON if name == "IRONMON_NATDEX" else synthetic_payload(m.CASUAL_BYTES)
+        return [m.Intent(name, "ACCEPTANCE")], [before]
+
+    def adapted(self, payload, extra=None):
+        data = bytearray(m.settings_data(payload))
+        data[30:34] = b"\xff" * 4
+        data[65] &= ~8
+        if extra is not None:
+            index, bit = extra
+            data[index] ^= bit
+        data[-8:-4] = zlib.crc32(data[:-8]).to_bytes(4, "big")
+        return "422" + base64.b64encode(data).decode()
+
+    def witness(self, **changes):
+        fields = [m.GEN_NORMALIZATION, "true", "true", "false", "true", "1022", "false", "-1"]
+        for index, value in changes.items():
+            fields[int(index)] = value
+        return "\t".join(fields)
+
+    def verify(self, name, marker=True, extra=None):
+        cases, before = self.selected(name)
+        events = {0: m.parse_normalization_witness(self.witness())} if marker else {}
+        m.verify_selected_normalized_payloads(cases, before, [self.adapted(before[0], extra)], events)
+
+    def test_pre_rom_casual_exact_identity(self):
+        m.verify_selected_payloads(*self.selected("CASUAL_NATDEX"))
+
+    def test_pre_rom_ironmon_exact_identity(self):
+        m.verify_selected_payloads(*self.selected("IRONMON_NATDEX"))
+
+    def test_pre_rom_drift_still_stops_even_with_marker(self):
+        for name in ("CASUAL_NATDEX", "IRONMON_NATDEX"):
+            cases, before = self.selected(name)
+            data = bytearray(m.settings_data(before[0]))
+            data[0] ^= 1
+            before[0] = "422" + base64.b64encode(data).decode()
+            with self.assertRaises(m.MatrixError):
+                m.verify_selected_normalized_payloads(cases, before, [self.adapted(before[0])], {0: 1022})
+
+    def test_post_rom_casual_exact_delta_with_witness(self):
+        self.verify("CASUAL_NATDEX")
+
+    def test_post_rom_ironmon_exact_delta_with_witness(self):
+        self.verify("IRONMON_NATDEX")
+
+    def test_identical_delta_without_marker_stops(self):
+        for name in ("CASUAL_NATDEX", "IRONMON_NATDEX"):
+            with self.subTest(name=name), self.assertRaises(m.MatrixError):
+                self.verify(name, marker=False)
+
+    def test_non_cfru_policy_marker_rejected(self):
+        with self.assertRaises(m.MatrixError):
+            m.parse_normalization_witness(self.witness(**{"2": "false"}))
+
+    def test_valid_rom_marker_rejected(self):
+        with self.assertRaises(m.MatrixError):
+            m.parse_normalization_witness(self.witness(**{"3": "true"}))
+
+    def test_wrong_handler_marker_rejected(self):
+        with self.assertRaises(m.MatrixError):
+            m.parse_normalization_witness(self.witness(**{"1": "false"}))
+
+    def test_every_other_serialized_profile_field_drift_stops(self):
+        # Exhaust every bit in all 67 settings bytes (starter/trainer/wild,
+        # items, misc, inactive flags, mechanics, etc.), beyond the two deltas.
+        for name in ("CASUAL_NATDEX", "IRONMON_NATDEX"):
+            for index in range(67):
+                if 30 <= index < 34:
+                    continue
+                for bit in (1, 2, 4, 8, 16, 32, 64, 128):
+                    if index == 65 and bit == 8:
+                        continue
+                    with self.subTest(name=name, index=index, bit=bit), self.assertRaises(m.MatrixError):
+                        self.verify(name, extra=(index, bit))
+
+    def test_misc_fastest_text_removal_stops(self):
+        for name in ("CASUAL_NATDEX", "IRONMON_NATDEX"):
+            with self.assertRaises(m.MatrixError):
+                self.verify(name, extra=(37, 8))  # big-endian CurrentMiscTweaks=8
+
+    def test_pickup_change_stops(self):
+        # Derive the Pickup field offset from the pinned public decoder.
+        match = re.search(r'settings.setPickupItemsMod\(restoreEnum\([^;]+data\[(\d+)\]', SETTINGS_SOURCE)
+        self.assertIsNotNone(match)
+        for name in ("CASUAL_NATDEX", "IRONMON_NATDEX"):
+            with self.assertRaises(m.MatrixError):
+                self.verify(name, extra=(int(match[1]), 1))
+
+    def test_extra_restriction_or_limit_delta_stops(self):
+        for mutation in ((30, 1), (65, 8)):
+            with self.assertRaises(m.MatrixError):
+                self.verify("CASUAL_NATDEX", extra=mutation)
+
+    def test_post_normalization_metadata_and_checksum_drift_stop(self):
+        cases, before = self.selected("IRONMON_NATDEX")
+        after = self.adapted(before[0])
+        for index in (67, 68, -8, -4):
+            data = bytearray(m.settings_data(after))
+            data[index] ^= 1
+            changed = "422" + base64.b64encode(data).decode()
+            with self.subTest(index=index), self.assertRaises(m.MatrixError):
+                m.verify_selected_normalized_payloads(cases, before, [changed], {0: 1022})
+
+    def test_incomplete_accounting_stops(self):
+        cases, before = self.selected("CASUAL_NATDEX")
+        with self.assertRaises(m.MatrixError):
+            m.verify_selected_normalized_payloads(cases, before, [], {})
+
+    def test_normalization_stop_cleans_runtime_workspace(self):
+        cases, before = self.selected("CASUAL_NATDEX")
+        directories = []
+        def execute(args, cwd, timeout=600):
+            directories.append(cwd)
+            (cwd / "0.settings").write_text(self.adapted(before[0], (37, 8)))
+            (cwd / "0.normalization").write_text(self.witness())
+            return result(text="Private.gba /fictional/private DD88761C")
+        output = io.StringIO()
+        with patch.object(m, "verify_pins"), patch.object(m, "build_matrix", return_value=cases), patch.object(m, "prepare_tool", return_value=Path("synthetic.jar")), patch.object(m, "generate_settings", return_value=before), patch.object(m, "command", side_effect=execute), patch.object(m, "run_case") as run, patch("builtins.input", return_value="/fictional/private/Private.gba"), contextlib.redirect_stdout(output):
+            self.assertEqual(1, m.main([]))
+        run.assert_not_called()
+        self.assertTrue(directories)
+        self.assertTrue(all(not d.exists() for d in directories))
+        for private in ("Private.gba", "/fictional", "DD88761C"):
+            self.assertNotIn(private, output.getvalue())
+
+    def test_unchanged_post_rom_selected_payloads_pass(self):
+        for name in ("CASUAL_NATDEX", "IRONMON_NATDEX"):
+            cases, before = self.selected(name)
+            m.verify_selected_normalized_payloads(cases, before, before, {})
+
+    def test_marker_without_actual_transition_stops(self):
+        cases, before = self.selected("CASUAL_NATDEX")
+        with self.assertRaises(m.MatrixError):
+            m.verify_selected_normalized_payloads(cases, before, before, {0: 1022})
+
+    def test_report_public_marker_and_count_only(self):
+        report = io.StringIO()
+        with contextlib.redirect_stdout(report):
+            m.print_report([], [], [], 12, "NOT_RUN", adaptations={0: 1022, 1: 1023})
+        text = report.getvalue()
+        self.assertIn("UPR target-normalized adaptations: " + m.GEN_NORMALIZATION, text)
+        self.assertIn("Gen-limit intents normalized by target: 2", text)
+        self.assertIn("effective Gen-limit execution not claimed", text)
+        for private in ("1022", "1023", "DD88761C", ".gba", "/fictional", "CRC", "hash"):
+            self.assertNotIn(private, text)
+
+    def test_gen_limit_alias_survives_effective_deduplication(self):
+        cases, before = self.selected("CASUAL_NATDEX")
+        cases.append(m.Intent("GEN_LIMIT_RELATIVES", "MODE"))
+        relatives = bytearray(m.settings_data(before[0]))
+        relatives[30:34] = (0x3FF).to_bytes(4, "little")
+        before.append("422" + base64.b64encode(relatives).decode())
+        after = [self.adapted(p) for p in before]
+        m.verify_selected_normalized_payloads(cases, before, after, {0: 1022, 1: 1023})
+        with tempfile.TemporaryDirectory() as directory:
+            groups = m.deduplicate(cases, after, Path(directory))
+            self.assertEqual(1, len(groups))
+            self.assertEqual([c.id for c in cases], [c.id for c in groups[0].aliases])
+
+    def test_runtime_adapter_api_guards_and_marker(self):
+        for source in ("instanceof Gen3RomHandler", "usesCfruDpeRandomPoolPolicy()",
+                       "handler.isRomValid(null)", "s.isLimitPokemon()", "s.getCurrentRestrictions().toInt()",
+                       "policy && !valid && beforeLimit && beforeRestrictions >= 0",
+                       "!afterLimit && s.getCurrentRestrictions() == null && afterRestrictions == -1", m.GEN_NORMALIZATION):
+            self.assertIn(source, m.NORMALIZER)
+        self.assertLess(m.NORMALIZER.index("boolean beforeLimit"), m.NORMALIZER.index("s.tweakForRom(handler)"))
+        self.assertLess(m.NORMALIZER.index("s.tweakForRom(handler)"), m.NORMALIZER.index("boolean afterLimit"))
+        # Java's actual tab escape must reach the generated source.
+        self.assertIn('"\\ttrue\\t"', m.NORMALIZER)
+
+    def test_mocked_adapter_witness_and_cleanup_after_stop(self):
+        cases, before = self.selected("CASUAL_NATDEX")
+        for witness in (self.witness(), self.witness(**{"2": "false"}), "NONE",
+                        "/fictional/private/Secret.gba DD88761C"):
+            directory = None
+            with tempfile.TemporaryDirectory() as name:
+                directory = Path(name)
+                def execute(args, cwd, timeout=600):
+                    (cwd / "0.settings").write_text(self.adapted(before[0]))
+                    (cwd / "0.rnqs").write_text("synthetic")
+                    (cwd / "0.normalization").write_text(witness)
+                    return result(text="/fictional/private/Secret.gba DD88761C")
+                with patch.object(m, "command", side_effect=execute):
+                    if witness == self.witness():
+                        after, events = m.normalize_settings(cases, Path("synthetic.jar"), "/fictional/Private.gba", directory, before)
+                        self.assertEqual({0: 1022}, events)
+                        self.assertEqual([self.adapted(before[0])], after)
+                    else:
+                        with self.assertRaises(m.MatrixError) as caught:
+                            m.normalize_settings(cases, Path("synthetic.jar"), "/fictional/Private.gba", directory, before)
+                        self.assertNotIn("Secret.gba", str(caught.exception))
+                        self.assertNotIn("DD88761C", str(caught.exception))
+            self.assertFalse(directory.exists())  # adapter, witness, settings all removed
 
 
 class ExecutionTest(unittest.TestCase):
@@ -591,7 +793,7 @@ class EntryPointTest(unittest.TestCase):
             calls.append((group.aliases[0].id, seed, rom, Path(temp)))
             return m.Outcome("FAIL") if fail else m.Outcome("PASS", "PASS")
 
-        with patch.object(m, "verify_pins"), patch.object(m, "build_matrix", return_value=cases), patch.object(m, "prepare_tool", return_value=Path("synthetic.jar")), patch.object(m, "generate_settings", return_value=payloads), patch.object(m, "normalize_settings", return_value=payloads), patch.object(m, "run_case", side_effect=run), patch("builtins.input", return_value="/fictional/private.gba") as prompt, contextlib.redirect_stdout(io.StringIO()) as output:
+        with patch.object(m, "verify_pins"), patch.object(m, "build_matrix", return_value=cases), patch.object(m, "prepare_tool", return_value=Path("synthetic.jar")), patch.object(m, "generate_settings", return_value=payloads), patch.object(m, "normalize_settings", return_value=(payloads, {})), patch.object(m, "run_case", side_effect=run), patch("builtins.input", return_value="/fictional/private.gba") as prompt, contextlib.redirect_stdout(io.StringIO()) as output:
             code = m.main(argv)
         return code, calls, prompt, output.getvalue()
 

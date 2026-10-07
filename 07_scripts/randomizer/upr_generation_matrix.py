@@ -20,12 +20,13 @@ import signal
 import subprocess
 import sys
 import tempfile
+import zlib
 from dataclasses import dataclass, field
 
 
 ROOT = Path(__file__).resolve().parents[2]
-WORKSPACE = "38e0007391cedcb74591e57b4954d17a42b4fb48"
-TREE = "7b9096d7e9404eb247e0ca1fedc25070728c51f6"
+WORKSPACE = "768e3b8b24c3e27ea41844849dd942f65df880e6"
+TREE = "72bc4020f2b9fffc128a201c8579ae2853232075"
 PINS = {
     "CFRU": ("02_external/CFRU-expansion", "e68a701aa4e68733ef8ad1e7cadb68825c0d16c2"),
     "DPE": ("02_external/Dynamic-Pokemon-Expansion-Gen-9", "d887185de1f6ae6a78e85c4311bbadde17041d00"),
@@ -466,6 +467,9 @@ def generate_settings(cases, overlays, jar, temp):
     return payloads
 
 
+GEN_NORMALIZATION = "CFRU_DPE_GEN_RESTRICTIONS_NORMALIZED_BY_GEN3_VALIDITY"
+
+
 NORMALIZER = '''import com.uprfvx.random.Settings;
 import com.uprfvx.romio.RootPath;
 import com.uprfvx.romio.romio.RomOpener;
@@ -480,12 +484,29 @@ class MatrixNormalize {
         || !((Gen3RomHandler) loaded.getRomHandler()).usesCfruDpeRandomPoolPolicy()) {
       throw new IllegalStateException("Input is not a supported CFRU/DPE profile");
     }
+    Gen3RomHandler handler = (Gen3RomHandler) loaded.getRomHandler();
+    boolean policy = handler.usesCfruDpeRandomPoolPolicy();
+    boolean valid = handler.isRomValid(null); // No CRC or diagnostic output.
     for (int i = 0; i < Integer.parseInt(args[1]); i++) {
       Settings s;
       try (FileInputStream in = new FileInputStream(i + ".rnqs")) { s = Settings.readFromFileFormat(in); }
       // Same public normalization as CliRandomizer.displaySettingsWarnings.
       // This may disable unavailable generic options, e.g. Gen5 MAINPLAYTHROUGH.
-      s.tweakForRom(loaded.getRomHandler());
+      boolean beforeLimit = s.isLimitPokemon();
+      int beforeRestrictions = s.getCurrentRestrictions() == null ? -1 : s.getCurrentRestrictions().toInt();
+      s.tweakForRom(handler);
+      boolean afterLimit = s.isLimitPokemon();
+      int afterRestrictions = s.getCurrentRestrictions() == null ? -1 : s.getCurrentRestrictions().toInt();
+      // Record the actual pinned API transition per intent, never infer it from bytes.
+      // Other generation masks are accounting only, not accepted C/I semantics.
+      String adaptation = "NONE";
+      if (policy && !valid && beforeLimit && beforeRestrictions >= 0
+          && !afterLimit && s.getCurrentRestrictions() == null && afterRestrictions == -1) {
+        adaptation = "CFRU_DPE_GEN_RESTRICTIONS_NORMALIZED_BY_GEN3_VALIDITY"
+            + "\\ttrue\\t" + policy + "\\t" + valid + "\\t" + beforeLimit
+            + "\\t" + beforeRestrictions + "\\t" + afterLimit + "\\t" + afterRestrictions;
+      }
+      Files.writeString(Path.of(i + ".normalization"), adaptation);
       try (FileOutputStream out = new FileOutputStream(i + ".rnqs")) { s.writeToFileFormat(out); }
       Files.writeString(Path.of(i + ".settings"), s.toString());
     }
@@ -494,7 +515,7 @@ class MatrixNormalize {
 '''
 
 
-def normalize_settings(cases, jar, rom, temp):
+def normalize_settings(cases, jar, rom, temp, before_payloads):
     """User runtime only: normalize with UPR's loader before exact deduplication."""
     adapter = temp / "MatrixNormalize.java"
     adapter.write_text(NORMALIZER)
@@ -502,8 +523,63 @@ def normalize_settings(cases, jar, rom, temp):
     if result.returncode:
         raise MatrixError("UPR input recognition/Settings normalization failed; details discarded.")
     payloads = [(temp / f"{i}.settings").read_text() for i in range(len(cases))]
-    verify_selected_payloads(cases, payloads)
-    return payloads
+    adaptations = {}
+    for i in range(len(cases)):
+        witness = (temp / f"{i}.normalization").read_text()
+        if witness != "NONE":
+            adaptations[i] = parse_normalization_witness(witness)
+    verify_selected_normalized_payloads(cases, before_payloads, payloads, adaptations)
+    return payloads, adaptations
+
+
+def parse_normalization_witness(witness):
+    parts = witness.split("\t")
+    # Fixed public schema: marker, Gen3, CFRU/DPE policy, validity, before
+    # limit/mask, after limit/mask. Never propagate untrusted adapter output.
+    if (len(parts) != 8 or parts[0] != GEN_NORMALIZATION
+            or parts[1:5] != ["true", "true", "false", "true"]
+            or parts[6:] != ["false", "-1"]
+            or not re.fullmatch(r"[0-9]{1,10}", parts[5])):
+        raise MatrixError("Unconfirmed target normalization; STOP.")
+    return int(parts[5])
+
+
+def verify_selected_normalized_payloads(cases, before_payloads, payloads, adaptations):
+    """CONTROL #681: only the witnessed Gen3 restriction delta is allowed for C/I.
+
+    CONTROL disposition applies only to C/I full NatDex on this pinned target:
+    its modeled Gen1-9 universe needs no additional later-generation exclusion.
+    Other Gen-limit intents receive accounting, not this semantic acceptance.
+    Pre-ROM identity is independent and stays exact. For C/I, compare every
+    serialized byte, including inactive fields and metadata, allowing only the
+    two specified fields and their derived Settings checksum. No ROM checksum
+    is calculated, retained or reported.
+    """
+    if len(cases) != len(before_payloads) or len(cases) != len(payloads):
+        raise MatrixError("Incomplete normalization accounting; STOP.")
+    verify_selected_payloads(cases, before_payloads)
+    for i, (case, before, after) in enumerate(zip(cases, before_payloads, payloads)):
+        original, effective = settings_data(before), settings_data(after)
+        before_mask = int.from_bytes(original[30:34], "little", signed=True)
+        after_mask = int.from_bytes(effective[30:34], "little", signed=True)
+        before_limit, after_limit = bool(original[65] & 8), bool(effective[65] & 8)
+        witnessed = i in adaptations
+        if witnessed and (adaptations[i] != before_mask or not before_limit
+                          or after_limit or after_mask != -1):
+            raise MatrixError("Target normalization witness/Settings mismatch; STOP.")
+        if before_limit and not after_limit and after_mask == -1 and not witnessed:
+            raise MatrixError("Unconfirmed target normalization; STOP.")
+        if selected_name(case) not in ("CASUAL_NATDEX", "IRONMON_NATDEX"):
+            continue
+        expected = bytearray(original)
+        if witnessed:
+            if before_mask != 0x3FE:
+                raise MatrixError("Selected profile normalization outside CONTROL disposition; STOP.")
+            expected[30:34] = b"\xff" * 4
+            expected[65] &= ~8
+            expected[-8:-4] = zlib.crc32(expected[:-8]).to_bytes(4, "big")
+        if effective != expected:
+            raise MatrixError("Selected profile post-normalization Settings drift; STOP.")
 
 
 def settings_data(payload):
@@ -701,7 +777,7 @@ def progress_outcome(group, out):
         print("          " + out.error_class + ": " + out.message, flush=True)
 
 
-def print_report(cases, groups, records, excluded_count, result, normalized=()):
+def print_report(cases, groups, records, excluded_count, result, normalized=(), adaptations=()):
     required = [(g, seed, out) for g, seed, out in records
                 if any(c.classification != "DIAGNOSTIC" for c in g.aliases)]
     failed = [record for record in required if not record[2].passed]
@@ -712,7 +788,11 @@ def print_report(cases, groups, records, excluded_count, result, normalized=()):
     print(f"\nCASE_INTENTS: {len(cases)}\nUNIQUE_EFFECTIVE_CASES: {len(groups)}")
     print(f"UPR_NORMALIZED_CASE_INTENTS: {len(normalized)}")
     if normalized:
-        print("UPR unavailable-option adaptations: " + ", ".join(normalized))
+        print("UPR normalized case intents: " + ", ".join(normalized))
+    if adaptations:
+        print("UPR target-normalized adaptations: " + GEN_NORMALIZATION)
+        print(f"Gen-limit intents normalized by target: {len(adaptations)}")
+        print("Gen-limit coverage: intent aliases retained; effective Gen-limit execution not claimed.")
     print(f"Cases run: {len(records)}\nPASS: {len(required) - len(failed)}\nFAIL: {len(failed)}")
     print(f"EXPECTED_FAIL / diagnostic: {sum(diagnostic_status(r[2]) == 'EXPECTED_FAIL' for r in diagnostics)} / {len(diagnostics)}")
     for group, _, out in diagnostics:
@@ -780,7 +860,7 @@ def main(argv=None):
             rom = args.rom if args.rom is not None else input("Private ROM: ")
             if not rom:
                 raise MatrixError("Private input was not supplied.")
-            effective_payloads = normalize_settings(cases, jar, rom, temp)
+            effective_payloads, adaptations = normalize_settings(cases, jar, rom, temp, payloads)
             normalized = [case.id for case, before, after in zip(cases, payloads, effective_payloads)
                           if before != after]
             groups = deduplicate(cases, effective_payloads, temp)
@@ -817,7 +897,7 @@ def main(argv=None):
             diagnostic_ok = all(diagnostic_status(out) == "EXPECTED_FAIL" for group, _, out in records
                                 if all(c.classification == "DIAGNOSTIC" for c in group.aliases))
             result = "R2_RANDOMIZER_GENERATION_MATRIX_PASS" if required_ok and diagnostic_ok else "R2_RANDOMIZER_GENERATION_MATRIX_FAIL" if not required_ok else "DIAGNOSTIC_REVIEW_REQUIRED"
-            print_report(cases, groups, records, len(unsupported | EXCLUDED), result, normalized)
+            print_report(cases, groups, records, len(unsupported | EXCLUDED), result, normalized, adaptations)
             return 0 if required_ok and diagnostic_ok else 1
     except MatrixError as exc:
         print("Result: STOP\nSanitized message: " + str(exc))
