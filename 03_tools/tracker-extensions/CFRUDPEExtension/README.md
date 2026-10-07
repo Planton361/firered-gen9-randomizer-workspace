@@ -5,6 +5,23 @@ fork or NatDexExtension dependency. The normative architecture and lifecycle
 contract are in [the Tracker docs](../../../docs/tracker/README.md) and
 [PROFILE_CONTRACT.md](../../../docs/tracker/PROFILE_CONTRACT.md).
 
+## T2 Phase A — Issue #691
+
+The extension now has a fail-closed early guard and a detached, in-memory mock
+transaction adapter. Production activation is always denied: actual output /
+session identity remains `UNKNOWN`. No local manifests or emulator reads are
+performed by the production instance. The mock factory refuses Tracker/emulator
+hosts and can publish only `TEST_ONLY`, never verified live data.
+
+**Source checks PASS; Lua mock/syntax checks NOT_RUN on this Mac.**
+`CFRUDPE_EXTENSION_PROFILE_MOCK_GUARD_READY` is not yet established. Full behavior,
+ownership/rollback rules, the persistent unload/restart stop guard and commands
+are recorded in [T2_PHASE_A.md](../../../docs/tracker/T2_PHASE_A.md).
+
+For future local installation, keep `profile_sha256.lua` alongside the extension
+Lua file; `data/source-data.json` remains the unchanged public T1 profile. Do not
+activate a real session as a Phase A test. The old example manifests remain inert.
+
 ## T1 source profile — Issue #690
 
 **CFRUDPE_TRACKER_PROFILE_READY — source/synthetic evidence only.**
@@ -16,13 +33,13 @@ Runtime addresses, extension activation, or Tracker UI compatibility.
 | --- | --- |
 | `data/source-data.json` | Deterministic public profile: exact pins, input hashes, mappings, authoritative baseline names, bounds, ARM layouts and unresolved runtime dependencies. |
 | [SCHEMA.md](SCHEMA.md) | Concrete schema v2 semantics and validation rules. |
-| `CFRUDPEExtension.lua` | Unchanged historical diagnostic implementation. It does not enforce the v2 contract; successful import/logging is not activation evidence. Repair belongs to T2/T3. |
+| `CFRUDPEExtension.lua` | T2 source-v2 guard and isolated mock lifecycle candidate; production always unsupported. Lua behavior awaits actual mock execution; live data adapters remain T3–T5 work. |
 | `data/*.example.json` | Historical prototypes, not valid v2 profiles or runtime acceptance templates. |
 
 `game-addresses.local.json` and `tracker-overrides.local.json` remain ignored,
 local-only future inputs. T1 does not inspect or generate these files, execute
 the local address/override helpers, or access protected game/build artifacts.
-Do not activate this profile through the existing Lua loader as a T1 test.
+No source-only check authorizes a real Tracker session.
 
 ## Reproduce and check
 

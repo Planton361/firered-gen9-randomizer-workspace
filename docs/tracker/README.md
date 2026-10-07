@@ -169,6 +169,11 @@ CFRU/DPE source provenance.
 No implementation is changed by T0. Module below means a responsibility within
 the current single Lua file or its data/helper files.
 
+This inventory describes the T0 inspected baseline, retained as historical
+source evidence. T2 Phase A supersedes its activation/unload and executable
+diagnostics as documented in [T2_PHASE_A.md](T2_PHASE_A.md); it does not promote
+any old reader to accepted live behavior.
+
 | Existing module | Disposition for successors |
 | --- | --- |
 | Metadata, path helpers, hook shell | **Keep/repair (T2):** preserve workspace ownership and explicit `.local.json` paths; bind schema, pins and activation to the contract. Examples remain inert. |
@@ -210,13 +215,17 @@ metadata are deferred scope, not a T0–T6 dependency.
 ## Dependency and acceptance sequence
 
 This is a dependency contract, not a duplicate daily queue. Operational status
-stays in the Project/Issues. All successors below remain future work.
+stays in the Project/Issues. T1 is source/synthetic PASS. CONTROL's 2026-10-07
+#691/#500 disposition permits
+T2 Phase A on Mac before B1; [its evidence](T2_PHASE_A.md) records source PASS
+and Lua mock `NOT_RUN`, so the Phase A marker is not yet established. Runtime
+acceptance and T3–T6 remain future work.
 
 | Contract | Entry and exit evidence |
 | --- | --- |
 | [B1 #689](https://github.com/Planton361/firered-gen9-randomizer-workspace/issues/689) | After T0; **PENDING_LINUX_HOST / NOT_RUN**, not FAIL. User-owned boot/new game/input/save-reload/wild/trainer/Lua/read/frame smoke, exact BizHawk/core/settings. `BIZHAWK_LOCKED_PILOT_READY`; closes #499 only with accepted T0 and B1. No Tracker data correctness claim. |
 | [T1 #690](https://github.com/Planton361/firered-gen9-randomizer-workspace/issues/690) | After T0 review/merge: Mac public-source generator and synthetic fixtures explicitly permitted before B1. Deterministic identity/mappings/layout manifest, missing required facts fail generation. `CFRUDPE_TRACKER_PROFILE_READY` is source-only. |
-| [T2 #691](https://github.com/Planton361/firered-gen9-randomizer-workspace/issues/691) | T1 plus #499 acceptance for integration activation; any further Mac-only work needs explicit CONTROL disposition. Mocked lifecycle/identity/failure tests and later Linux load/unload smoke. `CFRUDPE_EXTENSION_PROFILE_ACTIVE`. |
+| [T2 #691](https://github.com/Planton361/firered-gen9-randomizer-workspace/issues/691) | T1 enables explicitly approved Mac-only Phase A source/mock guard preparation. `CFRUDPE_EXTENSION_PROFILE_MOCK_GUARD_READY` requires actual mock PASS (currently NOT_RUN). Phase B and `CFRUDPE_EXTENSION_PROFILE_ACTIVE` still require #499/#689 Linux acceptance plus real identity/load/unload proof. |
 | [T3 #692](https://github.com/Planton361/firered-gen9-randomizer-workspace/issues/692) | T2; species/move/ability/item/type and multi-slot player-party fidelity, Gen1/8/9/regional controls. `CFRUDPE_TRACKER_DATA_FIDELITY_READY`. No enemy/trainer acceptance yet. |
 | [T4 #693](https://github.com/Planton361/firered-gen9-randomizer-workspace/issues/693) | T3; live parties/battle/context, transition clearing, supported doubles/multi mapping; owns future `docs/tracker/RUNTIME_CONTRACT.md`. `CFRUDPE_TRACKER_BATTLE_FIDELITY_READY`. |
 | [T5 #694](https://github.com/Planton361/firered-gen9-randomizer-workspace/issues/694) | T4; normal Tracker views and derived values honor field trust, no stock/stale fallback. `IRONMON_TRACKER_CFRUDPE_UI_READY`. |
