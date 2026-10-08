@@ -1,7 +1,15 @@
 -- #707 trusted bootstrap. SOURCES contains only Python-verified original definitions.
 -- Nothing below is installed into the real Tracker. No launcher or module is loaded.
-local trustedLoad, trustedHook = load, debug.sethook
+local trustedLoad, trustedHook, trustedStringMeta = load, debug.sethook, debug.setmetatable
 local tests, counts, traps = {}, {}, {}
+-- Lua strings otherwise inherit the complete process string library (including dump).
+-- Restrict that intrinsic lookup in this disposable standalone interpreter as well.
+local safeStringMethods={lower=string.lower,find=string.find,match=string.match,sub=string.sub}
+trustedStringMeta('',{__index=function(_,key)
+    if safeStringMethods[key] then return safeStringMethods[key] end
+    local name='string.'..tostring(key); traps[name]=(traps[name] or 0)+1
+    error('TRAP:'..name,0)
+end,__metatable=false})
 local function test(class,name,fn,hazard) tests[#tests+1]={class,name,fn,hazard} end
 local function eq(a,b) assert(a==b, tostring(a)..' != '..tostring(b)) end
 local function denied(fn, expected)
@@ -395,6 +403,7 @@ test('safety','compiled hostile fixture resolves only restricted environment',fu
         {'os.execute("SYNTHETIC")','os.execute'}, {'require("foreign")','require'},
         {'memory.write_u8(1,1)','memory.write_u8'}, {'savestate.save()','savestate.save'},
         {'io={}','global.write.io'},
+        {'("x").dump(function() end)','string.dump'},
         {'Memory.readbyte=function() return 0 end','Memory.unapproved-write.readbyte'}, {'Tracker.Data.isNewGame=false','Tracker.Data.mutation'},
         {'local _,backing=pairs(Tracker.Data); assert(backing==nil)','SAFE'}}) do
         local chunk=assert(trustedLoad(case[1],'@deliberate-negative-fixture','t',s.env))

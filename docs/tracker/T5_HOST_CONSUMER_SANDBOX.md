@@ -54,7 +54,9 @@ allow only declared synthetic volatile state after installation; function rewrit
 and unknown keys trap. Trusted fixture overrides stay outside the restricted code.
 Frozen config/catalog/notes/persistence tables cannot be mutated, including existing
 keys; their pairs iterator does not leak its backing table. Standard functions are
-explicitly allowlisted. Only the pinned, reviewed code and fixed negative probes
+explicitly allowlisted. The disposable interpreter also restricts intrinsic string
+method lookup to lower/find/match/sub; string.dump is deliberately trapped, so a
+string literal cannot recover the unrestricted process string library. Only the pinned, reviewed code and fixed negative probes
 are compiled; this is not an arbitrary untrusted-code execution service.
 
 Memory reads resolve only exact width/address pairs in synthetic 100-byte party
@@ -156,7 +158,7 @@ another environment's function; live wrapper install/unload remains NOT_RUN.
 
 ## Safety evidence
 
-There are **47 distinct confirmed trap identifiers and 56 rejected invocations**.
+There are **48 distinct confirmed trap identifiers and 57 rejected invocations**.
 Every refused operation is asserted to fail with its specific TRAP identifier,
 not merely a generic exception. Confirmed categories:
 
