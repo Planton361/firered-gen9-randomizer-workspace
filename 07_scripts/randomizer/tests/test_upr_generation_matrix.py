@@ -1,4 +1,4 @@
-"""#681 tests: public source + synthetic temp artifacts + mocked subprocesses only.
+"""#727 tests: exact public source + synthetic temp artifacts + mocked subprocesses.
 
 Never launches Java/Gradle/UPR or opens a real ROM, jar, build, save or state.
 """
@@ -15,6 +15,7 @@ import tempfile
 import unittest
 import zlib
 from unittest.mock import patch
+from urllib.request import urlopen
 
 
 SCRIPT = Path(__file__).resolve().parents[1] / "upr_generation_matrix.py"
@@ -22,9 +23,19 @@ SPEC = importlib.util.spec_from_file_location("upr_generation_matrix", SCRIPT)
 m = importlib.util.module_from_spec(SPEC)
 sys.modules[SPEC.name] = m
 SPEC.loader.exec_module(m)
-PUBLIC = m.ROOT / m.PINS["UPR-FVX"][0]
-SETTINGS_SOURCE = (PUBLIC / "random/src/main/java/com/uprfvx/random/Settings.java").read_text()
-OVERLAYS, UNSUPPORTED, PROFILES = m.source_model((PUBLIC / m.SOURCE).read_text())
+# Immutable public GitHub text, verified against the exact commit's blob IDs.
+# Never inspect the user's local component worktrees or binary artifacts.
+SETTINGS_SOURCE = m.read_public_source(m.SETTINGS_SOURCE)
+GENERATOR_SOURCE = m.read_public_source()
+OVERLAYS, UNSUPPORTED, PROFILES = m.source_model(GENERATOR_SOURCE)
+
+
+def public_fixture(path, blob):
+    with urlopen(m.PUBLIC_SOURCE_URL + path, timeout=30) as response:
+        data = response.read()
+    if m.public_blob_id(data) != blob:
+        raise AssertionError("Exact public fixture mismatch")
+    return data.decode("utf-8")
 
 
 def result(code=0, text="", err=""):
@@ -69,14 +80,14 @@ class MatrixStructureTest(unittest.TestCase):
     def test_inventory_at_exact_pin(self):
         self.assertEqual(159, len(OVERLAYS))
         self.assertEqual({"FVX-SST-001", "FVX-MOVE-006", "FVX-GFX-005", "FVX-GFX-006"}, UNSUPPORTED)
-        self.assertEqual(13, len(m.EXCLUDED))
+        self.assertEqual(9, len(m.EXCLUDED))
         required = set(OVERLAYS) - UNSUPPORTED - m.EXCLUDED
-        self.assertEqual(142, len(required))
+        self.assertEqual(146, len(required))
         self.assertEqual(required, {c.id for c in self.cases if c.layer == "STRESS"})
 
     def test_deterministic_order_and_identity(self):
         self.assertEqual(self.cases, m.build_matrix(OVERLAYS, UNSUPPORTED, PROFILES))
-        self.assertEqual(297, len(self.cases))
+        self.assertEqual(303, len(self.cases))
         self.assertEqual(len(self.cases), len({c.id for c in self.cases}))
         self.assertEqual(list(m.SELECTED), [c.id for c in self.cases[:3]])
         self.assertEqual(56, sum(c.layer == "MODE" for c in self.cases))
@@ -92,7 +103,7 @@ class MatrixStructureTest(unittest.TestCase):
         self.assertEqual(12, len(m.TRIPLES))
         self.assertTrue(set(m.MAXIMUM) <= {c.id for c in self.cases})
         secondary = {m.selected_name(c) for c in self.cases if c.secondary}
-        self.assertEqual(set(m.MAXIMUM + m.SELECTED[1:]), secondary)
+        self.assertEqual(set(m.MAXIMUM + m.SELECTED[1:]) | m.RISK_IDS, secondary)
         self.assertEqual((0, 1, 677, 20261005658), m.SECONDARY)
         self.assertEqual(20261005658, m.PRIMARY)
 
@@ -105,24 +116,23 @@ class MatrixStructureTest(unittest.TestCase):
                 self.assertNotEqual("07_ITEMS_FULL", case.id)
                 self.assertFalse(set(case.overlays) & m.EXCLUDED)
                 state = m.effective(case, OVERLAYS)
-                self.assertNotIn("PickupItemsMod", state)  # baseline UNCHANGED
+                if case.id not in m.PICKUP_APPROVED_IDS:
+                    self.assertNotIn("PickupItemsMod", state)  # safe families stay unchanged
                 if "ITEMS_SHOPS" in case.families:
                     self.assertTrue(set(m.ITEMS_SAFE) <= set(case.overlays))
         source = m.bridge_source(self.cases, OVERLAYS)
         self.assertIn("s.getPickupItemsMod() != Settings.PickupItemsMod.UNCHANGED", source)
         self.assertNotIn('"07_ITEMS_FULL"', source)
-        self.assertNotIn('"FVX-ITEM-010"', source)
+        self.assertIn("s.setPickupItemsMod(Settings.PickupItemsMod.RANDOM)", source)
+        self.assertIn(".contains(id)", source)
 
     def test_exact_target_exclusion_reasons(self):
         self.assertEqual({
-            "FVX-TRAIT-025": "UNSAFE_CFRU_DPE_EVOLUTION_IMPROVEMENT_RAW_ROW",
-            "FVX-TRAIT-027": "UNSAFE_CFRU_DPE_EVOLUTION_IMPROVEMENT_RAW_ROW",
-            "FVX-GFX-002": "UNSAFE_CFRU_DPE_OPTIONAL_PALETTE_SUBOPTION",
-            "FVX-GFX-004": "UNSAFE_CFRU_DPE_OPTIONAL_PALETTE_SUBOPTION",
+            "FVX-TRAIT-025": "OWNERSHIP_WITNESS_V1_REQUIRED",
             "FVX-MISC-011": "REDUNDANT_CFRU_NATIVE_REUSABLE_TMS",
         }, m.TARGET_EXCLUSIONS)
         self.assertEqual({"SOURCE_OVERLAY_IDS": 159, "GENERATOR_UNSUPPORTED": 4,
-                          "TARGET_EXCLUDED": 13, "REQUIRED_OVERLAY_CASES": 142},
+                          "TARGET_EXCLUDED": 9, "REQUIRED_OVERLAY_CASES": 146},
                          m.inventory_counts(OVERLAYS, UNSUPPORTED))
 
     def test_safe_bundles_exact_source_semantics(self):
@@ -202,17 +212,17 @@ class MatrixStructureTest(unittest.TestCase):
 
     def test_derived_structure_counts(self):
         counts = {layer: sum(c.layer == layer for c in self.cases)
-                  for layer in ("ACCEPTANCE", "STRESS", "MODE", "FULL", "PAIR", "TRIPLE", "MAX", "DIAGNOSTIC")}
-        self.assertEqual(dict(zip(counts, (3, 142, 56, 12, 66, 12, 5, 1))), counts)
+                  for layer in ("ACCEPTANCE", "STRESS", "MODE", "FULL", "PAIR", "TRIPLE", "MAX", "RISK", "DIAGNOSTIC")}
+        self.assertEqual(dict(zip(counts, (3, 146, 56, 12, 66, 12, 5, 2, 1))), counts)
         self.assertEqual(sum(counts.values()), len(self.cases))
 
     def test_source_drift_fails_closed(self):
-        source = (PUBLIC / m.SOURCE).read_text()
+        source = GENERATOR_SOURCE
         with self.assertRaises(m.MatrixError):
             m.source_model(source.replace('"FVX-ITEM-008", "FVX-ITEM-009", "FVX-ITEM-010"', '"FVX-ITEM-009", "FVX-ITEM-010"'))
 
     def test_source_inventory_cardinality_drift_fails_closed(self):
-        source = (PUBLIC / m.SOURCE).read_text()
+        source = GENERATOR_SOURCE
         for altered in (source.replace('"FVX-GEN-003"', '"FVX-GEN-002"'),
                         source.replace('return Collections.unmodifiableMap(overlays);',
                                        'overlays.put("NEW-UNREVIEWED", s -> s.setRaceMode(true));\n'
@@ -292,9 +302,9 @@ class ClosureTest(unittest.TestCase):
             self.assertEqual(s, m.closure(s))
 
     def test_misc_bits_union_not_last_writer(self):
-        case = m.Intent("MISC", "FULL", PROFILES["10_MISC_TWEAKS"])
+        case = m.Intent("MISC", "FULL", tuple(n for n in PROFILES["10_MISC_TWEAKS"] if n not in m.EXCLUDED))
         bits = m.effective(case, OVERLAYS)["MiscTweak"].split(" | ")
-        self.assertEqual(12, len(bits))
+        self.assertEqual(11, len(bits))
         self.assertIn("MiscTweak.FASTEST_TEXT", bits)
 
 
@@ -394,6 +404,11 @@ class IdentityAndDedupTest(unittest.TestCase):
 
 class NormalizationAccountingTest(unittest.TestCase):
     """CONTROL-disposed C/I delta; only synthetic API witness/payload fixtures."""
+
+    def setUp(self):
+        mock = patch.object(m, "input_digest", return_value=b"synthetic input")
+        mock.start()
+        self.addCleanup(mock.stop)
 
     def selected(self, name):
         before = m.IRONMON if name == "IRONMON_NATDEX" else synthetic_payload(m.CASUAL_BYTES)
@@ -593,6 +608,9 @@ class NormalizationAccountingTest(unittest.TestCase):
 
 class ExecutionTest(unittest.TestCase):
     def setUp(self):
+        self.digest_mock = patch.object(m, "input_digest", return_value=b"synthetic input")
+        self.digest_mock.start()
+        self.addCleanup(self.digest_mock.stop)
         self.temp = tempfile.TemporaryDirectory()
         self.directory = Path(self.temp.name)
         self.addCleanup(self.temp.cleanup)
@@ -774,12 +792,22 @@ class ExecutionTest(unittest.TestCase):
         self.assertIn("catch (Exception ignored)", source)
         self.assertNotIn("printStackTrace", source)
         self.assertNotIn("System.err", source)
-        gen3 = (PUBLIC / "romio/src/main/java/com/uprfvx/romio/romhandlers/Gen3RomHandler.java").read_text()
-        opener = (PUBLIC / "romio/src/main/java/com/uprfvx/romio/romio/RomOpener.java").read_text()
+        gen3 = public_fixture("romio/src/main/java/com/uprfvx/romio/romhandlers/Gen3RomHandler.java",
+                              "7206af0126ccf61aea4a2ebe22772928f63ad4c5")
+        opener = public_fixture("romio/src/main/java/com/uprfvx/romio/romio/RomOpener.java",
+                                "ce0003feef079c764db6f3c3d3904e5a38e9274b")
         self.assertIn("public boolean usesCfruDpeRandomPoolPolicy()", gen3)
         self.assertIn("public Results openRomFile(File", opener)
         self.assertIn("public boolean wasOpeningSuccessful()", opener)
         self.assertIn("public RomHandler getRomHandler()", opener)
+
+    def test_input_mutation_after_cli_stops_before_reopen_or_replay(self):
+        calls, execute = self.executor()
+        with patch.object(m, "input_digest", side_effect=[b"original", b"original", b"modified", b"modified"]), patch.object(m, "command", side_effect=execute), self.assertRaises(m.MatrixError):
+            m.attempt(self.group, m.PRIMARY, self.rom, self.jar, self.directory, True)
+        self.assertEqual(1, len(calls))
+        self.assertEqual("cli", calls[0][0][3])
+        self.assert_clean()
 
     def test_replay_mismatch(self):
         _, execute = self.executor(mismatch=True)
@@ -792,7 +820,7 @@ class ExecutionTest(unittest.TestCase):
     def test_retry_once_identical_settings_and_seed(self):
         for second_pass in (False, True):
             first = m.Outcome("FAIL", error_class="GenerationFailure")
-            second = m.Outcome("PASS", "PASS") if second_pass else m.Outcome("FAIL", error_class="GenerationFailure")
+            second = m.Outcome("PASS", "PASS", input_unchanged="PASS") if second_pass else m.Outcome("FAIL", error_class="GenerationFailure")
             with patch.object(m, "attempt", side_effect=[first, second]) as attempt, contextlib.redirect_stdout(io.StringIO()):
                 out = m.run_case(self.group, m.PRIMARY, self.rom, self.jar, self.directory)
             self.assertEqual(2, attempt.call_count)
@@ -801,7 +829,7 @@ class ExecutionTest(unittest.TestCase):
             self.assertFalse(out.passed)
 
     def test_no_retry_on_pass(self):
-        with patch.object(m, "attempt", return_value=m.Outcome("PASS", "PASS", "PASS")) as attempt:
+        with patch.object(m, "attempt", return_value=m.Outcome("PASS", "PASS", "PASS", input_unchanged="PASS")) as attempt:
             self.assertTrue(m.run_case(self.group, 1, self.rom, self.jar, self.directory).passed)
         self.assertEqual(1, attempt.call_count)
 
@@ -832,7 +860,7 @@ class ExecutionTest(unittest.TestCase):
     def test_diagnostic_expectation_does_not_mask_infrastructure_failure(self):
         self.assertEqual("EXPECTED_FAIL", m.diagnostic_status(m.Outcome("FAIL", error_class="RomIOException")))
         self.assertEqual("DIAGNOSTIC_FAIL", m.diagnostic_status(m.Outcome("FAIL", error_class="ProcessFailure")))
-        self.assertEqual("GENERATION_PASS_WITH_KNOWN_SEMANTIC_LIMITATION", m.diagnostic_status(m.Outcome("PASS", "PASS")))
+        self.assertEqual("GENERATION_PASS_WITH_KNOWN_SEMANTIC_LIMITATION", m.diagnostic_status(m.Outcome("PASS", "PASS", input_unchanged="PASS")))
 
     def test_exception_timeout_and_interrupt_cleanup(self):
         for error in (OSError(self.rom), subprocess.TimeoutExpired(self.rom, 1), KeyboardInterrupt(), InterruptedError()):
@@ -876,6 +904,12 @@ class ExecutionTest(unittest.TestCase):
 
 
 class EntryPointTest(unittest.TestCase):
+    def setUp(self):
+        for name, value in (("read_public_source", GENERATOR_SOURCE), ("input_digest", b"synthetic input")):
+            mock = patch.object(m, name, return_value=value)
+            mock.start()
+            self.addCleanup(mock.stop)
+
     def test_dry_run_no_rom_java_build_or_output_access(self):
         with patch.object(m, "verify_pins"), patch.object(m, "prepare_tool") as tool, patch.object(m, "attempt") as attempt, patch("builtins.input") as prompt, contextlib.redirect_stdout(io.StringIO()) as output:
             self.assertEqual(0, m.main(["--dry-run", "--rom", "/fictional/never-read.gba"]))
@@ -884,12 +918,12 @@ class EntryPointTest(unittest.TestCase):
         prompt.assert_not_called()
         self.assertIn("PRIVATE_ROM_MATRIX = NOT_RUN", output.getvalue())
         for line in (
-            "Workspace: 4e7bffa45d2d68919e48d5329ad8bcb55dc8408e",
-            "Tree: 6186d011e5daf958142e6fd0c9a98099f96fa85f",
-            "UPR-FVX: 4670a5413104ec02bc08c09ff584470a8a6cb7bd",
-            "CASE_INTENTS: 297", "SOURCE_OVERLAY_IDS: 159",
-            "GENERATOR_UNSUPPORTED: 4", "TARGET_EXCLUDED: 13",
-            "REQUIRED_OVERLAY_CASES: 142",
+            "Workspace: 9411c39f472d1d08555be988d2f7ab9482902580",
+            "Tree: e56df52bb79f3239fa4e9534cd252525d6229685",
+            "UPR-FVX: f979c3c6ec4d32a92ecf632a3d9d38151d5cb19c",
+            "CASE_INTENTS: 303", "SOURCE_OVERLAY_IDS: 159",
+            "GENERATOR_UNSUPPORTED: 4", "TARGET_EXCLUDED: 9",
+            "REQUIRED_OVERLAY_CASES: 146",
         ):
             self.assertIn(line, output.getvalue())
 
@@ -902,7 +936,7 @@ class EntryPointTest(unittest.TestCase):
         def run(group, seed, rom, jar, temp):
             self.assertTrue(Path(temp).is_dir())
             calls.append((group.aliases[0].id, seed, rom, Path(temp)))
-            return m.Outcome("FAIL") if fail else m.Outcome("PASS", "PASS")
+            return m.Outcome("FAIL") if fail else m.Outcome("PASS", "PASS", input_unchanged="PASS")
 
         with patch.object(m, "verify_pins"), patch.object(m, "build_matrix", return_value=cases), patch.object(m, "prepare_tool", return_value=Path("synthetic.jar")), patch.object(m, "generate_settings", return_value=payloads), patch.object(m, "normalize_settings", return_value=(payloads, {})), patch.object(m, "run_case", side_effect=run), patch("builtins.input", return_value="/fictional/private.gba") as prompt, contextlib.redirect_stdout(io.StringIO()) as output:
             code = m.main(argv)
@@ -911,10 +945,10 @@ class EntryPointTest(unittest.TestCase):
     def test_diagnostics_nonblocking_success_and_failure(self):
         cases = [m.Intent("CONTROL_UNCHANGED", "ACCEPTANCE", classification="ACCEPTANCE"),
                  m.Intent("OPTIONAL_DIAGNOSTIC", "DIAGNOSTIC", classification="DIAGNOSTIC")]
-        for diagnostic in (m.Outcome("PASS", "PASS"),
+        for diagnostic in (m.Outcome("PASS", "PASS", input_unchanged="PASS"),
                            m.Outcome("FAIL", error_class="RomIOException"),
                            m.Outcome("PASS", "FAIL", error_class="ProcessFailure")):
-            with patch.object(m, "verify_pins"), patch.object(m, "build_matrix", return_value=cases), patch.object(m, "prepare_tool", return_value=Path("synthetic.jar")), patch.object(m, "generate_settings", return_value=["control", "diagnostic"]), patch.object(m, "normalize_settings", return_value=(["control", "diagnostic"], {})), patch.object(m, "run_case", side_effect=[m.Outcome("PASS", "PASS"), diagnostic]), contextlib.redirect_stdout(io.StringIO()) as output:
+            with patch.object(m, "verify_pins"), patch.object(m, "build_matrix", return_value=cases), patch.object(m, "prepare_tool", return_value=Path("synthetic.jar")), patch.object(m, "generate_settings", return_value=["control", "diagnostic"]), patch.object(m, "normalize_settings", return_value=(["control", "diagnostic"], {})), patch.object(m, "run_case", side_effect=[m.Outcome("PASS", "PASS", input_unchanged="PASS"), diagnostic]), contextlib.redirect_stdout(io.StringIO()) as output:
                 self.assertEqual(0, m.main(["--rom", "/fictional/input.gba", "--stop-on-fail"]))
             text = output.getvalue()
             self.assertIn("PASS: 1\nFAIL: 0", text)
@@ -935,7 +969,7 @@ class EntryPointTest(unittest.TestCase):
             self.assertEqual(0, m.main(["--dry-run"]))
         text = output.getvalue()
         for line in ("SOURCE_OVERLAY_IDS: 159", "GENERATOR_UNSUPPORTED: 4",
-                     "TARGET_EXCLUDED: 13", "REQUIRED_OVERLAY_CASES: 142", "CASE_INTENTS: 297"):
+                     "TARGET_EXCLUDED: 9", "REQUIRED_OVERLAY_CASES: 146", "CASE_INTENTS: 303"):
             self.assertIn(line, text)
         for overlay, reason in m.TARGET_EXCLUSIONS.items():
             self.assertIn(overlay + ": " + reason, text)
@@ -960,7 +994,7 @@ class EntryPointTest(unittest.TestCase):
         self.assertEqual(1, code)
         self.assertEqual(1, len(calls))
         self.assertIn("CASUAL_NATDEX: NOT_RUN", text)
-        self.assertIn("SKIP / excluded: 4 / 17", text)
+        self.assertIn("SKIP / excluded: 4 / 13", text)
 
     def test_normalization_after_single_prompt_and_before_any_case(self):
         order = []
@@ -994,24 +1028,11 @@ class EntryPointTest(unittest.TestCase):
 
     def test_java_missing_or_wrong_version(self):
         for response in (result(1), result(err='openjdk version "21"')):
-            with patch.object(m, "command", return_value=response) as command:
+            with patch.object(m, "command", return_value=response) as command, patch.object(Path, "is_file", return_value=True):
                 with self.assertRaises(m.MatrixError):
-                    m.prepare_tool(m.ROOT, Path("/synthetic/temp"))
+                    m.prepare_tool(m.ROOT, Path("/synthetic/temp"), Path("/synthetic/candidate.jar"),
+                                   m.CANDIDATES["UPR-FVX"], GENERATOR_SOURCE)
             self.assertEqual(1, command.call_count)
-
-    def test_build_failure_or_missing_jar_before_rom_use(self):
-        for build, jar_exists in ((result(1), False), (result(), False)):
-            with patch.object(m, "command", side_effect=[result(err='openjdk version "25"'), build]), patch.object(Path, "is_file", return_value=jar_exists), contextlib.redirect_stdout(io.StringIO()):
-                with self.assertRaises(m.MatrixError):
-                    m.prepare_tool(m.ROOT, Path("/synthetic/temp"))
-
-    def test_build_exact_pin_then_reverify(self):
-        with patch.object(m, "command", side_effect=[result(err='openjdk version "25"'), result()]) as command, patch.object(Path, "is_file", return_value=True), patch.object(m, "verify_pins") as verify, contextlib.redirect_stdout(io.StringIO()):
-            jar = m.prepare_tool(m.ROOT, Path("/synthetic/temp"))
-        self.assertEqual(PUBLIC / "random/build/libs/UPR-FVX.jar", jar)
-        self.assertIn("--rerun-tasks", command.call_args_list[1].args[0])
-        self.assertIn(":random:jar", command.call_args_list[1].args[0])
-        verify.assert_called_once_with(m.ROOT)
 
     def test_invalid_cli_argument_does_not_echo_private_value(self):
         with contextlib.redirect_stderr(io.StringIO()) as output:
@@ -1028,117 +1049,442 @@ class EntryPointTest(unittest.TestCase):
 
 class PinTest(unittest.TestCase):
     def public_git(self, root, *args):
-        if args[0] == "merge-base":
+        self.assertEqual(m.ROOT, root)  # No submodule cwd is ever accessed.
+        self.assertNotIn(args[0], ("fetch", "checkout", "reset", "clean", "ls-remote"))
+        if args[0] in ("merge-base", "diff", "status"):
+            if args[0] == "status":
+                self.assertIn("--ignore-submodules=all", args)
+                self.assertIn("--untracked-files=no", args)
             return ""
-        if args[0] == "diff" or args[0] == "status":
-            return ""
-        if args[0] == "ls-remote":
-            return m.PINS["UPR-FVX"][1] + "\trefs/heads/compat/firered-cfru-dpe"
         if args[0] == "ls-tree":
-            pin = next(pin for relative, pin in m.PINS.values() if relative == args[-1])
+            pin = next(pin for relative, pin in m.BASELINE_GITLINKS.values() if relative == args[-1])
             return "160000 commit " + pin + "\t" + args[-1]
-        if args[0] == "rev-parse":
-            if args[-1].endswith("^{tree}"):
-                return m.TREE
-            return next(pin for relative, pin in m.PINS.values() if Path(root) == m.ROOT / relative)
+        if args == ("rev-parse", m.WORKSPACE + "^{tree}"):
+            return m.TREE
         self.fail(args)
 
-    def test_pins_allow_only_runner_descendant(self):
-        with patch.object(m, "git", side_effect=self.public_git):
-            m.verify_pins(m.ROOT)
-
-    def test_686_exact_integration_basis(self):
-        self.assertEqual("4e7bffa45d2d68919e48d5329ad8bcb55dc8408e", m.WORKSPACE)
-        self.assertEqual("6186d011e5daf958142e6fd0c9a98099f96fa85f", m.TREE)
-        self.assertEqual(("02_external/upr-fvx", "4670a5413104ec02bc08c09ff584470a8a6cb7bd"), m.PINS["UPR-FVX"])
+    def test_baseline_and_candidates_are_separate(self):
+        self.assertEqual("9411c39f472d1d08555be988d2f7ab9482902580", m.WORKSPACE)
+        self.assertEqual("e56df52bb79f3239fa4e9534cd252525d6229685", m.TREE)
+        self.assertEqual("4670a5413104ec02bc08c09ff584470a8a6cb7bd", m.BASELINE_GITLINKS["UPR-FVX"][1])
+        self.assertEqual("f979c3c6ec4d32a92ecf632a3d9d38151d5cb19c", m.CANDIDATES["UPR-FVX"])
+        self.assertEqual("e27e2113e4d59dc76cf5da8d4c43b067addae348", m.CANDIDATES["CFRU"])
+        self.assertEqual("d887185de1f6ae6a78e85c4311bbadde17041d00", m.CANDIDATES["DPE"])
         self.assertEqual({
-            "02_external/upr-fvx",
-            "07_scripts/randomizer/run_upr_generation_matrix.sh",
             "07_scripts/randomizer/upr_generation_matrix.py",
             "07_scripts/randomizer/tests/test_upr_generation_matrix.py",
+            "08_tests/randomizer/fvx_feature_test_status_matrix.tsv",
+            "08_tests/randomizer/195_fvx_feature_test_status_matrix.md",
         }, m.ALLOWED_FILES)
 
-    def integration_git(self, root, *args):
-        if args[0] == "diff":
-            return "\n".join(sorted(m.ALLOWED_FILES))
-        return self.public_git(root, *args)
+    def test_dirty_component_worktrees_are_never_inspected(self):
+        with patch.object(m, "git", side_effect=self.public_git) as git:
+            m.verify_pins(m.ROOT)
+        self.assertTrue(all(call.args[0] == m.ROOT for call in git.call_args_list))
 
-    def test_authorized_gitlink_delta_with_exact_pins_passes(self):
-        with patch.object(m, "git", side_effect=self.integration_git):
+    def test_allowed_four_file_descendant(self):
+        def git(root, *args):
+            if args == ("diff", "--name-only", m.WORKSPACE, "HEAD"):
+                return "\n".join(sorted(m.ALLOWED_FILES))
+            return self.public_git(root, *args)
+        with patch.object(m, "git", side_effect=git):
             m.verify_pins(m.ROOT)
 
-    def test_allowed_upr_path_does_not_allow_wrong_gitlink(self):
-        relative, pin = m.PINS["UPR-FVX"]
-        for entry in (
-            "160000 commit 213ed055e301263c4577ac329b81a6cb9ff587a9\t" + relative,
-            "160000 commit " + "f" * 40 + "\t" + relative,
-            "100644 blob " + pin + "\t" + relative,
-            "",
-        ):
-            def git(root, *args):
-                if args == ("ls-tree", "HEAD", relative):
-                    return entry
-                return self.integration_git(root, *args)
-            with self.subTest(entry=entry), patch.object(m, "git", side_effect=git):
-                with self.assertRaisesRegex(m.MatrixError, "UPR-FVX Gitlink mismatch"):
+    def test_candidate_gitlink_or_mode_mismatch_stops(self):
+        for name, (relative, pin) in m.BASELINE_GITLINKS.items():
+            for entry in ("", "100644 blob " + pin + "\t" + relative,
+                          "160000 commit " + m.CANDIDATES[name] + "\t" + relative,
+                          "160000 commit " + "f" * 40 + "\t" + relative):
+                if entry == "160000 commit " + pin + "\t" + relative:
+                    continue
+                def git(root, *args):
+                    return entry if args == ("ls-tree", "HEAD", relative) else self.public_git(root, *args)
+                with self.subTest(component=name, entry=entry), patch.object(m, "git", side_effect=git), self.assertRaises(m.MatrixError):
                     m.verify_pins(m.ROOT)
 
-    def test_integrated_upr_checkout_and_remote_still_require_exact_pin(self):
-        for boundary in ("checkout", "target", "dirty"):
+    def test_tree_tracked_staged_and_scope_fail_closed(self):
+        for broken in ("tree", "tracked", "staged", "scope", "ancestry"):
             def git(root, *args):
-                if Path(root) == m.ROOT / m.PINS["UPR-FVX"][0]:
-                    if boundary == "checkout" and args == ("rev-parse", "HEAD"):
-                        return "213ed055e301263c4577ac329b81a6cb9ff587a9"
-                    if boundary == "target" and args[0] == "ls-remote":
-                        return "f" * 40 + "\trefs/heads/compat/firered-cfru-dpe"
-                    if boundary == "dirty" and args[0] == "status":
-                        return " M synthetic-source.java"
-                return self.integration_git(root, *args)
-            with self.subTest(boundary=boundary), patch.object(m, "git", side_effect=git):
-                with self.assertRaises(m.MatrixError):
-                    m.verify_pins(m.ROOT)
-
-    def test_other_component_or_source_delta_still_stops(self):
-        for relative in (m.PINS["CFRU"][0], m.PINS["DPE"][0],
-                         "02_external/unexpected-component", "docs/outside_scope.md"):
-            def git(root, *args):
-                if args[0] == "diff":
-                    return self.integration_git(root, *args) + "\n" + relative
-                return self.integration_git(root, *args)
-            with self.subTest(path=relative), patch.object(m, "git", side_effect=git):
-                with self.assertRaisesRegex(m.MatrixError, "Workspace has unexpected changes"):
-                    m.verify_pins(m.ROOT)
-
-    def test_integrated_cfru_and_dpe_pins_cannot_drift(self):
-        for name in ("CFRU", "DPE"):
-            relative = m.PINS[name][0]
-            def git(root, *args):
-                if args == ("ls-tree", "HEAD", relative):
-                    return "160000 commit " + "f" * 40 + "\t" + relative
-                return self.integration_git(root, *args)
-            with self.subTest(component=name), patch.object(m, "git", side_effect=git):
-                with self.assertRaisesRegex(m.MatrixError, name + " Gitlink mismatch"):
-                    m.verify_pins(m.ROOT)
-
-    def test_every_pin_and_dirty_boundary_fail_closed(self):
-        for broken in ("tree", "checkout", "gitlink", "target", "dirty", "scope"):
-            def git(root, *args):
-                if broken == "tree" and args[0] == "rev-parse" and args[-1].endswith("^{tree}"):
-                    return "wrong"
-                if broken == "checkout" and args == ("rev-parse", "HEAD"):
-                    return "wrong"
-                if broken == "gitlink" and args[0] == "ls-tree":
-                    return "160000 commit wrong"
-                if broken == "target" and args[0] == "ls-remote":
-                    return "wrong"
-                if broken == "dirty" and args[0] == "status":
-                    return "modified synthetic source"
-                if broken == "scope" and args[0] == "diff":
+                if broken == "tree" and args[0] == "rev-parse":
+                    return "f" * 40
+                if broken == "tracked" and args[0] == "status":
+                    return " M synthetic.py"
+                if broken == "staged" and args[:2] == ("diff", "--cached"):
+                    return "02_external/upr-fvx"
+                if broken == "scope" and args == ("diff", "--name-only", m.WORKSPACE, "HEAD"):
                     return "docs/outside_scope.md"
+                if broken == "ancestry" and args[0] == "merge-base":
+                    raise m.MatrixError("Public Git prerequisite could not be verified.")
                 return self.public_git(root, *args)
-            with self.subTest(broken=broken), patch.object(m, "git", side_effect=git):
-                with self.assertRaises(m.MatrixError):
-                    m.verify_pins(m.ROOT)
+            with self.subTest(broken=broken), patch.object(m, "git", side_effect=git), self.assertRaises(m.MatrixError):
+                m.verify_pins(m.ROOT)
+
+
+
+class CandidateSourceTest(unittest.TestCase):
+    def response(self, body, url=None):
+        response = io.BytesIO(body)
+        response.geturl = lambda: url or m.PUBLIC_SOURCE_URL + m.SOURCE
+        return response
+
+    def test_exact_public_blob_and_commit_url(self):
+        with patch.object(m, "urlopen", return_value=self.response(GENERATOR_SOURCE.encode())) as get, patch.object(Path, "read_bytes", side_effect=AssertionError("No checkout source")), patch.object(m, "git", side_effect=AssertionError("No component Git")):
+            self.assertEqual(GENERATOR_SOURCE, m.read_public_source())
+        get.assert_called_once_with(m.PUBLIC_SOURCE_URL + m.SOURCE, timeout=30)
+        self.assertIn(m.CANDIDATES["UPR-FVX"], get.call_args.args[0])
+        self.assertEqual("b679e3e6bea9d908fef804af21456275974484c5",
+                         m.public_blob_id(GENERATOR_SOURCE.encode()))
+
+    def test_reject_component_source_before_path_resolution(self):
+        with patch.object(Path, "resolve", side_effect=AssertionError("No component metadata")), patch.object(Path, "read_bytes") as read, self.assertRaises(m.MatrixError):
+            m.read_public_source(local_file=m.ROOT / "02_external/upr-fvx/SettingsProfileGenerator.java")
+        read.assert_not_called()
+
+    def test_stale_missing_redirect_and_unapproved_source_fail_closed(self):
+        for body in (b"", GENERATOR_SOURCE.replace("setRemoveTimeBasedEvolutions(true)", "setRemoveTimeBasedEvolutions(false)").encode()):
+            with patch.object(m, "urlopen", return_value=self.response(body)), self.assertRaises(m.MatrixError):
+                m.read_public_source()
+        with patch.object(m, "urlopen", return_value=self.response(b"", "https://example.invalid/private")), self.assertRaises(m.MatrixError):
+            m.read_public_source()
+        with patch.object(m, "urlopen") as get, self.assertRaises(m.MatrixError):
+            m.read_public_source("unapproved.java")
+        get.assert_not_called()
+
+    def test_public_source_failure_never_echoes_network_details(self):
+        with patch.object(m, "urlopen", side_effect=OSError("/fictional/Secret token")), self.assertRaises(m.MatrixError) as caught:
+            m.read_public_source()
+        self.assertNotIn("Secret", str(caught.exception))
+        self.assertNotIn("token", str(caught.exception))
+
+    def test_local_public_snapshot_has_exact_content(self):
+        with tempfile.TemporaryDirectory() as directory:
+            file = Path(directory) / "SettingsProfileGenerator.java"
+            file.write_text(GENERATOR_SOURCE)
+            with patch.object(m, "urlopen") as get:
+                self.assertEqual(GENERATOR_SOURCE, m.read_public_source(local_file=file))
+            get.assert_not_called()
+            file.write_text(GENERATOR_SOURCE + "// source drift")
+            with self.assertRaises(m.MatrixError):
+                m.read_public_source(local_file=file)
+
+    def test_component_or_protected_source_not_opened(self):
+        for relative in ("02_external/upr-fvx", "02_external/CFRU-expansion",
+                         "04_private_roms", "05_builds", "03_tools/releases"):
+            with patch.object(Path, "read_bytes") as read, patch.object(m, "urlopen") as get, self.assertRaises(m.MatrixError):
+                m.read_public_source(local_file=m.ROOT / relative / "SettingsProfileGenerator.java")
+            read.assert_not_called()
+            get.assert_not_called()
+
+
+class CandidateJarTest(unittest.TestCase):
+    def catalogue(self):
+        features = "\n".join(name + "\t" + ("unsupported\tpublic reason" if name in UNSUPPORTED else "supported") for name in OVERLAYS)
+        profiles = []
+        for name, body in re.findall(r'profiles\.put\("([^"]+)",\s*(.*?)\);', GENERATOR_SOURCE, re.S):
+            profiles.append(name + "\t" + ",".join(re.findall(r'"([A-Z0-9_-]+)"', body)))
+        return features, "\n".join(profiles)
+
+    def prepare(self, feature=None, profile=None):
+        features, profiles = self.catalogue()
+        with patch.object(Path, "is_file", return_value=True), patch.object(Path, "read_bytes", side_effect=AssertionError("Never inspect a JAR")), patch.object(m, "command", side_effect=[
+            result(err='openjdk version "25"'),
+            feature or result(text=features),
+            profile or result(text=profiles),
+        ]) as command, contextlib.redirect_stdout(io.StringIO()):
+            jar = m.prepare_tool(m.ROOT, Path("/synthetic/temp"), Path("/synthetic/prebuilt.jar"),
+                                 m.CANDIDATES["UPR-FVX"], GENERATOR_SOURCE)
+        return jar, command.call_args_list
+
+    def test_supplied_candidate_attestation_and_cli_no_auto_build(self):
+        jar, calls = self.prepare()
+        self.assertEqual(Path("/synthetic/prebuilt.jar"), jar)
+        self.assertEqual(3, len(calls))
+        self.assertTrue(all(c.args[0][0] == "java" for c in calls))
+        self.assertEqual("--list-features", calls[1].args[0][-1])
+        self.assertEqual("--list-profiles", calls[2].args[0][-1])
+        self.assertFalse(any("gradlew" in str(c) or "fetch" in str(c) for c in calls))
+
+    def test_filename_version_or_wrong_commit_never_proves_provenance(self):
+        for commit in (None, m.BASELINE_GITLINKS["UPR-FVX"][1], "f" * 40):
+            with patch.object(Path, "is_file") as exists, patch.object(m, "command") as command, self.assertRaises(m.MatrixError):
+                m.prepare_tool(m.ROOT, Path("/synthetic/temp"), Path("/synthetic/PR217-UPR-FVX-v1.5.1.jar"),
+                               commit, GENERATOR_SOURCE)
+            command.assert_not_called()
+            exists.assert_not_called()
+
+    def test_stale_source_rejected_before_jar_access(self):
+        for source in (None, GENERATOR_SOURCE + "// not the public blob"):
+            with patch.object(Path, "is_file") as exists, patch.object(m, "command") as command, self.assertRaises(m.MatrixError):
+                m.prepare_tool(m.ROOT, Path("/synthetic/temp"), Path("/synthetic/candidate.jar"),
+                               m.CANDIDATES["UPR-FVX"], source)
+            exists.assert_not_called()
+            command.assert_not_called()
+
+    def test_old_worktree_jar_and_missing_jar_are_not_built(self):
+        with patch.object(Path, "is_file") as exists, patch.object(m, "command") as command, self.assertRaises(m.MatrixError):
+            m.prepare_tool(m.ROOT, Path("/synthetic/temp"), m.ROOT / "02_external/upr-fvx/random/build/libs/UPR-FVX.jar",
+                           m.CANDIDATES["UPR-FVX"], GENERATOR_SOURCE)
+        exists.assert_not_called()
+        command.assert_not_called()
+        with patch.object(Path, "is_file", return_value=False), patch.object(m, "command") as command, self.assertRaises(m.MatrixError):
+            m.prepare_tool(m.ROOT, Path("/synthetic/temp"), Path("/synthetic/unavailable.jar"),
+                           m.CANDIDATES["UPR-FVX"], GENERATOR_SOURCE)
+        command.assert_not_called()
+
+    def test_source_cli_inventory_profile_and_capability_mismatch(self):
+        features, profiles = self.catalogue()
+        for feature, profile in (
+            (result(1, "/fictional/private.jar Exception"), None),
+            (result(text=features.replace("FVX-ITEM-010\tsupported", "FVX-ITEM-010\tunsupported")), None),
+            (result(text=features + "\nFVX-ITEM-010\tsupported"), None),
+            (None, result(text=profiles + "\nUNREVIEWED\tFVX-ITEM-010")),
+            (None, result(1, "/fictional/private details")),
+        ):
+            with self.subTest(feature=bool(feature), profile=bool(profile)), self.assertRaises(m.MatrixError) as caught:
+                self.prepare(feature, profile)
+            self.assertNotIn("/fictional", str(caught.exception))
+
+
+class CandidateRiskTest(unittest.TestCase):
+    def setUp(self):
+        self.cases = m.build_matrix(OVERLAYS, UNSUPPORTED, PROFILES)
+        self.by_id = {c.id: c for c in self.cases}
+
+    def observed(self, **changes):
+        # Independent synthetic Settings-getter response, not a serializer.
+        fields = {
+            "LimitPokemon": "false", "CurrentRestrictions": "1022",
+            "EvolutionsMod": "UNCHANGED", "ChangeImpossibleEvolutions": "false",
+            "MakeEvolutionsEasier": "false", "EstimateLevelForEvolutionImprovements": "false",
+            "RemoveTimeBasedEvolutions": "false", "PickupItemsMod": "UNCHANGED",
+            "BanBadRandomPickupItems": "false", "ShopItemsMod": "UNCHANGED",
+            "PokemonPalettesMod": "UNCHANGED", "PokemonPalettesFollowTypes": "false",
+            "PokemonPalettesFollowEvolutions": "false", "PokemonPalettesShinyFromNormal": "false",
+            "UseTimeBasedEncounters": "false",
+        }
+        fields.update(changes)
+        return fields
+
+    def evo_observed(self):
+        return self.observed(LimitPokemon="true", CurrentRestrictions="1023", EvolutionsMod="RANDOM",
+                             ChangeImpossibleEvolutions="true", EstimateLevelForEvolutionImprovements="true",
+                             RemoveTimeBasedEvolutions="true")
+
+    def test_exact_six_new_positive_intents_all_seed_replay(self):
+        self.assertEqual(set(m.RISK_SINGLES), {c.id for c in self.cases if c.layer == "STRESS" and c.id in m.RISK_IDS})
+        self.assertEqual({m.RISK_EVOLUTION, m.RISK_PICKUP}, {c.id for c in self.cases if c.layer == "RISK"})
+        for name in m.RISK_IDS:
+            self.assertTrue(self.by_id[name].replay)
+            self.assertTrue(self.by_id[name].secondary)
+        for case in self.cases:
+            if case.layer in ("FULL", "PAIR", "TRIPLE", "MAX"):
+                self.assertFalse(set(case.overlays) & set(m.RISK_SINGLES))
+
+    def test_evolution_user_case_relatives_on_and_no_relatives_preserved(self):
+        state = m.effective(self.by_id[m.RISK_EVOLUTION], OVERLAYS)
+        self.assertEqual("new GenRestrictions(0x3FF)", state["CurrentRestrictions"])
+        for flag in ("LimitPokemon", "ChangeImpossibleEvolutions", "EstimateLevelForEvolutionImprovements", "RemoveTimeBasedEvolutions"):
+            self.assertEqual("true", state[flag])
+        self.assertEqual("Settings.EvolutionsMod.RANDOM", state["EvolutionsMod"])
+        self.assertEqual("false", state["MakeEvolutionsEasier"])
+        self.assertEqual("new GenRestrictions(0x3FE)",
+                         m.effective(self.by_id["MODE-GEN-LIMIT-1-9-NO-RELATIVES"], OVERLAYS)["CurrentRestrictions"])
+
+    def test_pickup_and_shop_exact_supported_owner(self):
+        for name in ("FVX-ITEM-010", m.RISK_PICKUP):
+            state = m.effective(self.by_id[name], OVERLAYS)
+            self.assertEqual("Settings.PickupItemsMod.RANDOM", state["PickupItemsMod"])
+            self.assertEqual("true", state["BanBadRandomPickupItems"])
+        self.assertEqual("Settings.ShopItemsMod.RANDOM",
+                         m.effective(self.by_id[m.RISK_PICKUP], OVERLAYS)["ShopItemsMod"])
+        self.assertNotIn("FVX-ITEM-010", PROFILES["07_ITEMS_SAFE"])
+
+    def test_palette_singles_do_not_enable_the_pair(self):
+        for name, own, other in (("FVX-GFX-002", "PokemonPalettesFollowTypes", "PokemonPalettesShinyFromNormal"),
+                                 ("FVX-GFX-004", "PokemonPalettesShinyFromNormal", "PokemonPalettesFollowTypes")):
+            state = m.effective(self.by_id[name], OVERLAYS)
+            self.assertEqual("Settings.PokemonPalettesMod.RANDOM", state["PokemonPalettesMod"])
+            self.assertEqual("true", state[own])
+            self.assertNotEqual("true", state.get(other))
+
+    def test_incompatible_palette_request_rejected_before_override(self):
+        for extra in ({}, {"PokemonPalettesShinyFromNormal": "false"}, {"PokemonPalettesMod": "Settings.PokemonPalettesMod.UNCHANGED"}):
+            with self.assertRaises(m.MatrixError):
+                m.effective(m.Intent("NEGATIVE", "DIAGNOSTIC", ("FVX-GFX-002", "FVX-GFX-004"), extra=extra), OVERLAYS)
+
+    def test_make_easier_is_not_ungated_with_time_or_fake_off_override(self):
+        for leaves in (("FVX-TRAIT-025",), ("FVX-TRAIT-025", "FVX-TRAIT-027"),
+                       ("FVX-TRAIT-024", "FVX-TRAIT-025", "FVX-TRAIT-027")):
+            for extra in ({}, {"MakeEvolutionsEasier": "false"}):
+                with self.assertRaisesRegex(m.MatrixError, "OWNERSHIP_WITNESS_V1"):
+                    m.effective(m.Intent("NEGATIVE", "STRESS", leaves, extra=extra), OVERLAYS)
+
+    def test_risk_leaf_in_any_safe_family_fails_closed(self):
+        for family in m.FULL:
+            for leaf in m.RISK_SINGLES:
+                altered = dict(PROFILES, **{family: PROFILES[family] + (leaf,)})
+                with self.subTest(family=family, leaf=leaf), self.assertRaises(m.MatrixError):
+                    m.build_matrix(OVERLAYS, UNSUPPORTED, altered)
+
+    def test_pickup_writer_allowlist_and_negative_guards(self):
+        source = m.bridge_source(self.cases, OVERLAYS)
+        expected = [str(i) for i, c in enumerate(self.cases) if c.id in ("FVX-ITEM-010", m.RISK_PICKUP)]
+        match = re.search(r'Set\.of\(([^)]*)\)\.contains\(id\)', source)
+        self.assertEqual(expected, re.findall(r'"([0-9]+)"', match[1]))
+        self.assertIn("s.isMakeEvolutionsEasier()", source)
+        self.assertIn("s.isPokemonPalettesFollowTypes() && s.isPokemonPalettesShinyFromNormal()", source)
+        self.assertIn("MiscTweak.REUSABLE_TMS.getValue()", source)
+        self.assertIn("Settings.PickupItemsMod.RANDOM", source)
+        self.assertIn("RANDOM_EVERY_LEVEL", source)
+
+    def test_observer_getters_exist_in_exact_public_settings(self):
+        getters = set(re.findall(r's\.(\w+)\(', m.OBSERVE_JAVA))
+        for method in getters:
+            self.assertRegex(SETTINGS_SOURCE, r'public [\w<>]+ ' + method + r'\(')
+        self.assertIn("!observe(s).equals(observe(restored))", m.bridge_source(self.cases, OVERLAYS))
+        self.assertIn("!observe(s).equals(observe(restored))", m.NORMALIZER)
+
+    def test_risk_source_and_normalized_state_are_observed(self):
+        cases = [self.by_id[m.RISK_EVOLUTION]]
+        actual = self.evo_observed()
+        for stage in ("Settings round-trip", "target normalization"):
+            m.verify_risk_states(cases, OVERLAYS, {0: actual}, stage)
+            for key in ("LimitPokemon", "CurrentRestrictions", "EvolutionsMod", "ChangeImpossibleEvolutions",
+                        "EstimateLevelForEvolutionImprovements", "RemoveTimeBasedEvolutions", "MakeEvolutionsEasier"):
+                changed = dict(actual, **{key: "false" if actual[key] == "true" else "true"})
+                with self.subTest(stage=stage, key=key), self.assertRaises(m.MatrixError):
+                    m.verify_risk_states(cases, OVERLAYS, {0: changed}, stage)
+        with self.assertRaises(m.MatrixError):
+            m.verify_risk_states(cases, OVERLAYS, {}, "round-trip")
+
+    def test_normalized_away_user_gen_limit_not_counted_or_substituted(self):
+        cases = [self.by_id[m.RISK_EVOLUTION]]
+        normalized = dict(self.evo_observed(), LimitPokemon="false", CurrentRestrictions="-1")
+        with self.assertRaisesRegex(m.MatrixError, "coverage NOT_RUN"):
+            m.verify_risk_states(cases, OVERLAYS, {0: normalized}, "target normalization")
+        self.assertIn(m.RISK_EVOLUTION, self.by_id)  # no silently dropped intent
+        self.assertEqual("new GenRestrictions(0x3FF)", m.effective(cases[0], OVERLAYS)["CurrentRestrictions"])
+
+    def test_observation_schema_discards_private_content(self):
+        text = "\n".join(k + "=" + v for k, v in self.evo_observed().items())
+        self.assertEqual(self.evo_observed(), m.parse_observation(text))
+        for changed in (text + "\nSecret=/fictional/private.gba", text.replace("RANDOM", "/fictional/private"),
+                        text.replace("LimitPokemon=true", "LimitPokemon=true\nLimitPokemon=true")):
+            with self.assertRaises(m.MatrixError) as caught:
+                m.parse_observation(changed)
+            self.assertNotIn("/fictional", str(caught.exception))
+
+    def test_selected_hidden_flags_preserve_guarded_owner_state(self):
+        for data in (m.settings_data(m.IRONMON), m.CASUAL_BYTES + bytes(33)):
+            fields = decoded_fields(data)
+            self.assertFalse(fields["MakeEvolutionsEasier"])
+            self.assertFalse(fields["PokemonPalettesFollowTypes"] and fields["PokemonPalettesShinyFromNormal"])
+            self.assertEqual("UNCHANGED", fields["PickupItemsMod"])
+            for flag in ("AllowMegaForms", "AllowGigantamaxForms", "IncludeMegaItems", "IncludeZCrystalItems", "IncludeDynamaxGmaxItems"):
+                self.assertFalse(fields[flag])
+
+    def test_mocked_settings_and_normalizer_gate_observations(self):
+        cases = [self.by_id[m.RISK_EVOLUTION]]
+        payloads = [synthetic_payload(bytes(67))]
+        text = "\n".join(k + "=" + v for k, v in self.evo_observed().items())
+        with tempfile.TemporaryDirectory() as directory:
+            temp = Path(directory)
+            def execute(args, cwd, timeout=600):
+                (cwd / "0.settings").write_text(payloads[0])
+                (cwd / "0.rnqs").write_text("synthetic")
+                (cwd / "0.normalization").write_text("NONE")
+                (cwd / "0.state").write_text(text)
+                (cwd / "0.post-state").write_text(text)
+                return result()
+            with patch.object(m, "command", side_effect=execute):
+                self.assertEqual(payloads, m.generate_settings(cases, OVERLAYS, Path("synthetic.jar"), temp))
+                self.assertEqual((payloads, {}), m.normalize_settings(cases, Path("synthetic.jar"), "/fictional/input", temp, payloads, OVERLAYS))
+            (temp / "0.post-state").write_text(text.replace("CurrentRestrictions=1023", "CurrentRestrictions=-1"))
+            with patch.object(m, "command", return_value=result()), self.assertRaises(m.MatrixError):
+                m.normalize_settings(cases, Path("synthetic.jar"), "/fictional/input", temp, payloads, OVERLAYS)
+
+    def test_two_current_overlays_accounted_without_acceptance(self):
+        self.assertIn("FVX-SPECIAL-WILD-001", self.by_id)
+        self.assertIn("FVX-FOE-SENSIBLE-HELD-ITEMS", m.EXCLUDED)
+        diagnostic = self.by_id["04_FOE_HELD_ITEMS_SENSIBLE_EXPECTED_FAIL"]
+        self.assertEqual("DIAGNOSTIC", diagnostic.classification)
+        self.assertIn("FVX-FOE-SENSIBLE-HELD-ITEMS", diagnostic.overlays)
+
+
+class InputAtomicityTest(unittest.TestCase):
+    def test_private_input_comparison_only_uses_synthetic_bytes_here(self):
+        with tempfile.TemporaryDirectory() as directory:
+            file = Path(directory) / "synthetic.data"
+            file.write_bytes(b"public synthetic bytes")
+            before = m.input_digest(file)
+            self.assertEqual(before, m.input_digest(file))
+            file.write_bytes(b"altered synthetic bytes")
+            self.assertNotEqual(before, m.input_digest(file))
+
+    def test_failed_input_read_is_sanitized(self):
+        with patch.object(Path, "open", side_effect=OSError("/fictional/Private.gba")), self.assertRaises(m.MatrixError) as caught:
+            m.input_digest("/fictional/Private.gba")
+        self.assertNotIn("Private.gba", str(caught.exception))
+
+    def test_input_change_stops_before_retry(self):
+        altered = m.Outcome("FAIL", input_unchanged="FAIL")
+        with patch.object(m, "attempt", return_value=altered) as attempt, self.assertRaises(m.MatrixError):
+            m.run_case(m.Group("synthetic", Path("synthetic"), []), 1, "/fictional/input", Path("/fictional/jar"), Path("/synthetic"))
+        self.assertEqual(1, attempt.call_count)
+
+    def test_input_change_after_retry_stops(self):
+        with patch.object(m, "attempt", side_effect=[m.Outcome("FAIL", input_unchanged="PASS"),
+                                                    m.Outcome("FAIL", input_unchanged="FAIL")]) as attempt, self.assertRaises(m.MatrixError):
+            m.run_case(m.Group("synthetic", Path("synthetic"), []), 1, "/fictional/input", Path("/fictional/jar"), Path("/synthetic"))
+        self.assertEqual(2, attempt.call_count)
+
+    def test_normalization_failure_still_checks_input_and_cleans(self):
+        created = []
+        def normalize(cases, jar, rom, temp, payloads, overlays=None):
+            created.append(temp)
+            raise m.MatrixError("Synthetic normalization failure")
+        with patch.object(m, "verify_pins"), patch.object(m, "read_public_source", return_value=GENERATOR_SOURCE), patch.object(m, "prepare_tool", return_value=Path("/fictional/jar")), patch.object(m, "generate_settings", return_value=[]), patch.object(m, "normalize_settings", side_effect=normalize), patch.object(m, "input_digest", side_effect=[b"before", b"after"]), patch.object(m, "run_case") as run, contextlib.redirect_stdout(io.StringIO()) as output:
+            self.assertEqual(1, m.main(["--rom", "/fictional/private"]))
+        run.assert_not_called()
+        self.assertTrue(created and all(not d.exists() for d in created))
+        self.assertIn("Input unchanged check failed", output.getvalue())
+        self.assertNotIn("/fictional", output.getvalue())
+
+    def test_seed_hash_log_settings_or_gameplay_not_reported_as_evidence(self):
+        report = io.StringIO()
+        group = m.Group("secret settings", Path("/fictional/private"), [m.Intent("CASE", "STRESS")])
+        with contextlib.redirect_stdout(report):
+            m.print_report([], [group], [(group, m.PRIMARY, m.Outcome("FAIL"))],
+                           m.inventory_counts(OVERLAYS, UNSUPPORTED), "FAIL")
+        text = report.getvalue()
+        for private in (str(m.PRIMARY), "/fictional/private", "secret settings"):
+            self.assertNotIn(private, text)
+        for status in ("LOG_CONTENT=NOT_RUN", "MANIFEST_SEMANTICS=NOT_RUN", "GAMEPLAY=NOT_RUN"):
+            self.assertIn(status, text)
+
+
+class LedgerTest(unittest.TestCase):
+    def test_only_two_rows_added_and_130_original_rows_unchanged(self):
+        body = (m.ROOT / "08_tests/randomizer/fvx_feature_test_status_matrix.tsv").read_bytes()
+        lines = body.splitlines(keepends=True)
+        additions = {b"FVX-SPECIAL-WILD-001", b"FVX-FOE-SENSIBLE-HELD-ITEMS"}
+        original = b"".join(l for l in lines if l.split(b"\t", 1)[0] not in additions)
+        self.assertEqual("7919b6f73f1ed64b84ec8174028e4eabeb0ad9e9", m.public_blob_id(original))
+        rows = [line.decode().rstrip("\n").split("\t") for line in lines[1:]]
+        self.assertEqual(132, len(rows))
+        self.assertEqual(132, len({r[0] for r in rows}))
+        self.assertTrue(all(len(r) == 11 for r in rows))
+        self.assertEqual({r[0] for r in rows}, {n for n in OVERLAYS if n.startswith("FVX-")})
+        for row in rows:
+            if row[0].encode() in additions:
+                self.assertEqual(["NOT_STARTED", "NOT_STARTED"], row[5:7])
+
+    def test_existing_matrix_doc_revision_and_method_distinctions(self):
+        text = (m.ROOT / "08_tests/randomizer/195_fvx_feature_test_status_matrix.md").read_text()
+        for marker in ("132", "Legacy Revisions Only", "NOT_RUN", "USER-only", m.RISK_EVOLUTION,
+                       m.RISK_PICKUP, "OWNERSHIP_WITNESS_V1", "GFX-002+GFX-004"):
+            self.assertIn(marker, text)
+
 
 
 if __name__ == "__main__":

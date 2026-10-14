@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""#681: disposable, user-owned generation matrix; no emulator/runtime claim.
+"""#727: disposable, user-owned candidate generation matrix; no runtime claim.
 
 Compose the pinned Settings API, SettingsProfileGenerator.invoke, cli and
 loaded-manifest. The older shell helpers require operator-supplied baselines,
@@ -14,7 +14,9 @@ evidence, never required PASS cases.
 import argparse
 import base64
 import itertools
+import hashlib
 import json
+import os
 from pathlib import Path
 import re
 import signal
@@ -22,33 +24,49 @@ import subprocess
 import sys
 import tempfile
 import zlib
+from urllib.request import urlopen
 from dataclasses import dataclass, field
 
 
 ROOT = Path(__file__).resolve().parents[2]
-WORKSPACE = "4e7bffa45d2d68919e48d5329ad8bcb55dc8408e"
-TREE = "6186d011e5daf958142e6fd0c9a98099f96fa85f"
-PINS = {
+WORKSPACE = "9411c39f472d1d08555be988d2f7ab9482902580"
+TREE = "e56df52bb79f3239fa4e9534cd252525d6229685"
+BASELINE_GITLINKS = {
     "CFRU": ("02_external/CFRU-expansion", "e68a701aa4e68733ef8ad1e7cadb68825c0d16c2"),
     "DPE": ("02_external/Dynamic-Pokemon-Expansion-Gen-9", "d887185de1f6ae6a78e85c4311bbadde17041d00"),
     "UPR-FVX": ("02_external/upr-fvx", "4670a5413104ec02bc08c09ff584470a8a6cb7bd"),
 }
+# These unmerged source candidates are deliberately not Workspace Gitlinks.
+CANDIDATES = {
+    "CFRU": "e27e2113e4d59dc76cf5da8d4c43b067addae348",
+    "DPE": "d887185de1f6ae6a78e85c4311bbadde17041d00",
+    "UPR-FVX": "f979c3c6ec4d32a92ecf632a3d9d38151d5cb19c",
+}
 SOURCE = "random/src/main/java/com/uprfvx/random/cli/SettingsProfileGenerator.java"
+SETTINGS_SOURCE = "random/src/main/java/com/uprfvx/random/Settings.java"
+PUBLIC_BLOBS = {
+    SOURCE: "b679e3e6bea9d908fef804af21456275974484c5",
+    SETTINGS_SOURCE: "26760855a7642d38f6fb72afce694a0f215124ed",
+}
+PUBLIC_SOURCE_URL = ("https://raw.githubusercontent.com/Planton361/"
+                     "universal-pokemon-randomizer-fvx/" + CANDIDATES["UPR-FVX"] + "/")
 PRIMARY = 20261005658
 SECONDARY = (0, 1, 677, PRIMARY)
 TARGET_EXCLUSIONS = {
-    "FVX-TRAIT-025": "UNSAFE_CFRU_DPE_EVOLUTION_IMPROVEMENT_RAW_ROW",
-    "FVX-TRAIT-027": "UNSAFE_CFRU_DPE_EVOLUTION_IMPROVEMENT_RAW_ROW",
-    "FVX-GFX-002": "UNSAFE_CFRU_DPE_OPTIONAL_PALETTE_SUBOPTION",
-    "FVX-GFX-004": "UNSAFE_CFRU_DPE_OPTIONAL_PALETTE_SUBOPTION",
+    "FVX-TRAIT-025": "OWNERSHIP_WITNESS_V1_REQUIRED",
     "FVX-MISC-011": "REDUNDANT_CFRU_NATIVE_REUSABLE_TMS",
 }
 EXCLUDED = frozenset({
     "FVX-TRAIT-017", "MODE-INCLUDE-MEGAS", "MODE-INCLUDE-GMAX",
     "MODE-INCLUDE-MEGA-ITEMS", "MODE-INCLUDE-Z-CRYSTALS",
-    "MODE-INCLUDE-DYNAMAX-GMAX-ITEMS", "FVX-ITEM-010",
+    "MODE-INCLUDE-DYNAMAX-GMAX-ITEMS",
     "FVX-FOE-SENSIBLE-HELD-ITEMS",
 }) | TARGET_EXCLUSIONS.keys()
+RISK_SINGLES = ("FVX-TRAIT-027", "FVX-ITEM-010", "FVX-GFX-002", "FVX-GFX-004")
+RISK_EVOLUTION = "CANDIDATE_EVOLUTION_TARGET_LINKED"
+RISK_PICKUP = "CANDIDATE_PICKUP_SHOP"
+RISK_IDS = frozenset(RISK_SINGLES + (RISK_EVOLUTION, RISK_PICKUP))
+PICKUP_APPROVED_IDS = frozenset(("FVX-ITEM-010", RISK_PICKUP))
 ITEMS_SAFE = tuple(f"FVX-ITEM-{n:03}" for n in (2, 4, 6, 7, 8, 9))
 TRAITS_SAFE = tuple(f"FVX-TRAIT-{n:03}" for n in (1, 6, 8, 13, 14, 15, 16, 22))
 GRAPHICS_PALETTES_SAFE = ("FVX-GFX-001", "FVX-GFX-003")
@@ -94,8 +112,8 @@ TRIPLES = (
 SELECTED = ("CONTROL_UNCHANGED", "CASUAL_NATDEX", "IRONMON_NATDEX")
 MAXIMUM = ("MAX_SAFE_DATA", "MAX_SAFE_WORLD", "MAX_SAFE_COMBINED")
 ALLOWED_FILES = frozenset({
-    "02_external/upr-fvx",  # #686 authorized delta; exact pin checks below still apply.
-    "07_scripts/randomizer/run_upr_generation_matrix.sh",
+    "08_tests/randomizer/fvx_feature_test_status_matrix.tsv",
+    "08_tests/randomizer/195_fvx_feature_test_status_matrix.md",
     "07_scripts/randomizer/upr_generation_matrix.py",
     "07_scripts/randomizer/tests/test_upr_generation_matrix.py",
 })
@@ -119,27 +137,57 @@ def git(root, *args):
 
 
 def verify_pins(root):
+    """Inspect only Workspace Git objects/index, never component worktrees."""
     if git(root, "rev-parse", WORKSPACE + "^{tree}") != TREE:
         raise MatrixError("Workspace basis tree mismatch; CONTROL rebaseline required.")
-    # The runner's own PR/merge necessarily follows the exact basis. Permit
-    # only this bounded source delta; any other basis change needs rebaseline.
     git(root, "merge-base", "--is-ancestor", WORKSPACE, "HEAD")
     changed = set(git(root, "diff", "--name-only", WORKSPACE, "HEAD").splitlines())
-    if not changed <= ALLOWED_FILES or git(root, "status", "--porcelain", "--untracked-files=no"):
+    # Ignoring component worktrees is intentional: source comes from immutable
+    # public blobs, and existing dirty/untracked user artifacts are not inspected.
+    tracked = git(root, "status", "--porcelain", "--untracked-files=no", "--ignore-submodules=all")
+    staged = git(root, "diff", "--cached", "--name-only", "--ignore-submodules=none")
+    if not changed <= ALLOWED_FILES or tracked or staged:
         raise MatrixError("Workspace has unexpected changes; CONTROL rebaseline required.")
-    for name, (relative, pin) in PINS.items():
+    for name, (relative, pin) in BASELINE_GITLINKS.items():
         entry = git(root, "ls-tree", "HEAD", relative).split()
-        if len(entry) < 3 or entry[:3] != ["160000", "commit", pin]:
+        if entry != ["160000", "commit", pin, relative]:
             raise MatrixError(name + " Gitlink mismatch.")
-        component = root / relative
-        if git(component, "rev-parse", "HEAD") != pin:
-            raise MatrixError(name + " checkout pin mismatch.")
-        if git(component, "status", "--porcelain", "--untracked-files=no"):
-            raise MatrixError(name + " source checkout is dirty.")
-    target = git(root / PINS["UPR-FVX"][0], "ls-remote", "origin",
-                 "refs/heads/compat/firered-cfru-dpe").split()
-    if not target or target[0] != PINS["UPR-FVX"][1]:
-        raise MatrixError("UPR target branch mismatch; CONTROL rebaseline required.")
+
+
+def public_blob_id(data):
+    return hashlib.sha1(b"blob " + str(len(data)).encode("ascii") + bytes((0,)) + data).hexdigest()
+
+
+def external_input_path(value, root, forbidden):
+    # Reject lexical component/protected paths before even resolving symlinks.
+    path = Path(os.path.abspath(value))
+    if any(path.is_relative_to(root / p) for p in forbidden):
+        raise MatrixError("Supplied source/JAR is inside a component or protected location; STOP.")
+    resolved = path.resolve()
+    if any(resolved.is_relative_to(root / p) for p in forbidden):
+        raise MatrixError("Supplied source/JAR resolves into a component or protected location; STOP.")
+    return resolved
+
+
+def read_public_source(path=SOURCE, local_file=None):
+    """Exact public-commit text only; no Git fetch/checkout/submodule reads."""
+    if path not in PUBLIC_BLOBS:
+        raise MatrixError("Unapproved public source path.")
+    try:
+        if local_file is None:
+            with urlopen(PUBLIC_SOURCE_URL + path, timeout=30) as response:
+                if response.geturl() != PUBLIC_SOURCE_URL + path:
+                    raise MatrixError("Public source redirect was not approved.")
+                data = response.read(200001)
+        else:
+            supplied = external_input_path(local_file, ROOT,
+                                           ("02_external", "04_private_roms", "05_builds", "03_tools/releases"))
+            data = supplied.read_bytes()
+        if len(data) > 200000 or public_blob_id(data) != PUBLIC_BLOBS[path]:
+            raise MatrixError("Exact candidate public source mismatch; STOP.")
+        return data.decode("utf-8")
+    except (OSError, UnicodeError, ValueError):
+        raise MatrixError("Exact public source could not be verified; details discarded.") from None
 
 
 def source_model(source):
@@ -152,7 +200,7 @@ def source_model(source):
         profiles[name] = tuple(re.findall(r'"([A-Z0-9_-]+)"', body))
     counts = inventory_counts(overlays, unsupported)
     if counts != {"SOURCE_OVERLAY_IDS": 159, "GENERATOR_UNSUPPORTED": 4,
-                  "TARGET_EXCLUDED": 13, "REQUIRED_OVERLAY_CASES": 142}:
+                  "TARGET_EXCLUDED": 9, "REQUIRED_OVERLAY_CASES": 146}:
         raise MatrixError("Pinned settings inventory counts changed.")
     if not EXCLUDED <= overlays.keys() or unsupported & EXCLUDED:
         raise MatrixError("Pinned settings inventory could not be derived.")
@@ -320,15 +368,33 @@ def effective(intent, overlays):
                 raise MatrixError("Mutually exclusive modes in case " + intent.id)
             else:
                 s[key] = value
+    guard_pilot_state(s)  # Reject requested incompatibilities before any override.
     # Explicit Layer-C variants have no competing overlay for their owner.
     s.update(intent.extra)
-    return closure(s)
+    state = closure(s)
+    guard_pilot_state(state)
+    return state
+
+
+def guard_pilot_state(state):
+    if state.get("MakeEvolutionsEasier") == "true":
+        raise MatrixError("Make Evolutions Easier requires independently validated OWNERSHIP_WITNESS_V1; not enabled by this runner.")
+    if (state.get("PokemonPalettesFollowTypes") == "true"
+            and state.get("PokemonPalettesShinyFromNormal") == "true"):
+        raise MatrixError("CFRU/DPE Follow Types + Shiny From Normal is excluded; STOP.")
+    if (state.get("EvolutionsMod") == mode("EvolutionsMod", "RANDOM_EVERY_LEVEL")
+            or any(state.get(k) == "true" for k in ("AllowMegaForms", "AllowGigantamaxForms",
+                "IncludeMegaItems", "IncludeZCrystalItems", "IncludeDynamaxGmaxItems"))
+            or "MiscTweak.REUSABLE_TMS" in state.get("MiscTweak", "")):
+        raise MatrixError("Pilot exclusion activated; STOP.")
 
 
 def build_matrix(overlays, unsupported, profiles):
     cases = [Intent(name, "ACCEPTANCE", classification="ACCEPTANCE", replay=True,
                     secondary=name != "CONTROL_UNCHANGED") for name in SELECTED]
-    cases += [Intent(name, "STRESS", (name,)) for name in overlays if name not in unsupported | EXCLUDED]
+    cases += [Intent(name, "STRESS", (name,), replay=name in RISK_SINGLES,
+                     secondary=name in RISK_SINGLES)
+              for name in overlays if name not in unsupported | EXCLUDED]
     # Layer C aliases all existing meaningful MODE/enum-owner overlay paths.
     mode_ids = [name for name in overlays if name.startswith("MODE-") and name not in EXCLUDED]
     mode_ids += [f"FVX-SST-{n:03}" for n in range(2, 13)]
@@ -376,9 +442,20 @@ def build_matrix(overlays, unsupported, profiles):
     # Explicit G acceptance aliases preserve coverage without repeating primary runs.
     cases += [Intent("G_" + name, "MAX", classification="ACCEPTANCE", replay=True, secondary=True)
               for name in SELECTED[1:]]
+    # Exactly two new compositions; keep risk leaves out of safe family bundles.
+    cases += [
+        Intent(RISK_EVOLUTION, "RISK",
+               ("FVX-GEN-001", "MODE-GEN-LIMIT-1-9", "FVX-TRAIT-016",
+                "FVX-TRAIT-024", "FVX-TRAIT-026", "FVX-TRAIT-027"),
+               extra={"MakeEvolutionsEasier": "false"}, replay=True, secondary=True),
+        Intent(RISK_PICKUP, "RISK", ("FVX-ITEM-010", "FVX-ITEM-006"),
+               replay=True, secondary=True),
+    ]
     cases.append(Intent("04_FOE_HELD_ITEMS_SENSIBLE_EXPECTED_FAIL", "DIAGNOSTIC",
                         profiles["04_FOE_HELD_ITEMS_SENSIBLE_EXPECTED_FAIL"], classification="DIAGNOSTIC"))
     for case in cases:
+        if case.layer in {"FULL", "PAIR", "TRIPLE", "MAX"} and set(case.overlays) & set(RISK_SINGLES):
+            raise MatrixError("Candidate risk leaf entered a safe family bundle; STOP.")
         if case.classification != "DIAGNOSTIC" and (set(case.overlays) & (unsupported | EXCLUDED)):
             raise MatrixError("Excluded overlay in required case.")
         effective(case, overlays)
@@ -423,9 +500,72 @@ def java_setters(state):
     return "\n".join(lines)
 
 
+
+# Temporary categorical observations from the real Settings getters; never print
+# settings strings or reconstruct settings bytes to enable an option.
+OBSERVE_JAVA = r'''
+  static String observe(Settings s) {
+    return String.join("\n",
+      "LimitPokemon=" + s.isLimitPokemon(),
+      "CurrentRestrictions=" + (s.getCurrentRestrictions() == null ? -1 : s.getCurrentRestrictions().toInt()),
+      "EvolutionsMod=" + s.getEvolutionsMod(),
+      "ChangeImpossibleEvolutions=" + s.isChangeImpossibleEvolutions(),
+      "MakeEvolutionsEasier=" + s.isMakeEvolutionsEasier(),
+      "EstimateLevelForEvolutionImprovements=" + s.useEstimatedLevelsForEvolutionImprovements(),
+      "RemoveTimeBasedEvolutions=" + s.isRemoveTimeBasedEvolutions(),
+      "PickupItemsMod=" + s.getPickupItemsMod(),
+      "BanBadRandomPickupItems=" + s.isBanBadRandomPickupItems(),
+      "ShopItemsMod=" + s.getShopItemsMod(),
+      "PokemonPalettesMod=" + s.getPokemonPalettesMod(),
+      "PokemonPalettesFollowTypes=" + s.isPokemonPalettesFollowTypes(),
+      "PokemonPalettesFollowEvolutions=" + s.isPokemonPalettesFollowEvolutions(),
+      "PokemonPalettesShinyFromNormal=" + s.isPokemonPalettesShinyFromNormal(),
+      "UseTimeBasedEncounters=" + s.isUseTimeBasedEncounters());
+  }
+'''
+OBSERVATION_KEYS = tuple(re.findall(r'"(\w+)="', OBSERVE_JAVA))
+
+
+def parse_observation(text):
+    pairs = [line.split("=", 1) for line in text.splitlines()]
+    if (len(pairs) != len(OBSERVATION_KEYS)
+            or any(len(pair) != 2 for pair in pairs)
+            or tuple(pair[0] for pair in pairs) != OBSERVATION_KEYS
+            or any(not re.fullmatch(r"true|false|-?[0-9]{1,10}|[A-Z_]+", pair[1]) for pair in pairs)):
+        raise MatrixError("Settings observation schema mismatch; details discarded.")
+    return dict(pairs)
+
+
+def verify_risk_states(cases, overlays, observations, stage):
+    expected_indices = {i for i, c in enumerate(cases) if c.id in RISK_IDS}
+    if set(observations) != expected_indices:
+        raise MatrixError("Incomplete candidate Settings observations; STOP.")
+    for i in expected_indices:
+        case, actual = cases[i], observations[i]
+        expected = effective(case, overlays)
+        expected["MakeEvolutionsEasier"] = "false"
+        if case.id in ("FVX-GFX-002", "FVX-GFX-004"):
+            expected.setdefault("PokemonPalettesFollowTypes", "false")
+            expected.setdefault("PokemonPalettesShinyFromNormal", "false")
+        for key, value in expected.items():
+            if key not in OBSERVATION_KEYS:
+                continue
+            if key == "CurrentRestrictions":
+                value = str(int(re.fullmatch(r"new GenRestrictions\((0x[0-9A-Fa-f]+)\)", value)[1], 16))
+            elif value.startswith("Settings."):
+                value = value.rsplit(".", 1)[1]
+            if actual.get(key) != value:
+                if key in ("LimitPokemon", "CurrentRestrictions"):
+                    raise MatrixError("Candidate Gen1-9/relatives state was serialized or normalized away; requested coverage NOT_RUN.")
+                raise MatrixError("Candidate option state differs after " + stage + "; STOP.")
+        guard_pilot_state(actual)
+
+
 def bridge_source(cases, overlays):
     """A temporary no-ROM Java adapter; all serialization stays in pinned UPR."""
     blocks = []
+    approved_pickup = [str(i) for i, c in enumerate(cases) if c.id in PICKUP_APPROVED_IDS]
+    pickup_gate = "Set.of(" + ",".join(map(json.dumps, approved_pickup)) + ").contains(id)"
     for i, case in enumerate(cases):
         name = selected_name(case)
         if name == "IRONMON_NATDEX":
@@ -451,6 +591,7 @@ import java.nio.file.*;
 import java.lang.reflect.*;
 import java.util.*;
 class MatrixSettings {
+''' + OBSERVE_JAVA + '''
   static Settings baseline() {
     Settings s = new Settings();
     // Reset every public boolean option, including unsafe implicit defaults.
@@ -466,7 +607,11 @@ class MatrixSettings {
     return s;
   }
   static void write(Settings s, String id) throws Exception {
-    if (s.getPickupItemsMod() != Settings.PickupItemsMod.UNCHANGED
+    if ((s.getPickupItemsMod() != Settings.PickupItemsMod.UNCHANGED
+          && (!(''' + pickup_gate + ''') || s.getPickupItemsMod() != Settings.PickupItemsMod.RANDOM))
+        || s.isMakeEvolutionsEasier()
+        || (s.getCurrentMiscTweaks() & MiscTweak.REUSABLE_TMS.getValue()) != 0
+        || (s.isPokemonPalettesFollowTypes() && s.isPokemonPalettesShinyFromNormal())
         || s.getEvolutionsMod() == Settings.EvolutionsMod.RANDOM_EVERY_LEVEL
         || s.isAllowMegaForms() || s.isAllowGigantamaxForms()
         || s.isIncludeMegaItems() || s.isIncludeZCrystalItems() || s.isIncludeDynamaxGmaxItems()) {
@@ -475,8 +620,12 @@ class MatrixSettings {
     try (FileOutputStream out = new FileOutputStream(id + ".rnqs")) { s.writeToFileFormat(out); }
     try (FileInputStream in = new FileInputStream(id + ".rnqs")) {
       Settings restored = Settings.readFromFileFormat(in);
+      if (!observe(s).equals(observe(restored))) {
+        throw new IllegalStateException("Settings round-trip option drift");
+      }
       // Canonicalize the effective serialized round-trip state, never intents.
       Files.writeString(Path.of(id + ".settings"), restored.toString());
+      Files.writeString(Path.of(id + ".state"), observe(restored));
     }
   }
 ''' + "\n".join(blocks) + '''
@@ -486,20 +635,37 @@ class MatrixSettings {
 ''' + "\n".join(f"case{i}();" for i in range(len(cases))) + "\n  }\n}\n"
 
 
-def prepare_tool(root, temp):
-    result = command(["java", "-version"], temp)
-    version = re.search(r'version "(\d+)', result.stderr + result.stdout)
-    if result.returncode or not version or int(version[1]) < 25:
-        raise MatrixError("Java 25 or newer is required by the pinned UPR source.")
-    upr = root / PINS["UPR-FVX"][0]
-    # Rebuild even an existing jar: a filename alone cannot prove build provenance.
-    # This explicit pre-ROM step writes only Gradle's normal build/cache artifacts.
-    print("Prerequisites: rebuilding exact pinned UPR source before ROM use.", flush=True)
-    result = command([str(upr / "gradlew"), "--no-daemon", "--rerun-tasks", ":random:jar"], upr, 1800)
-    jar = upr / "random/build/libs/UPR-FVX.jar"
-    if result.returncode or not jar.is_file():
-        raise MatrixError("Pinned UPR Gradle build failed; no ROM was used.")
-    verify_pins(root)
+def prepare_tool(root, temp, jar=None, jar_source_commit=None, source=None):
+    """USER execution only: attested external JAR, no build/copy/archive access."""
+    if jar is None or jar_source_commit != CANDIDATES["UPR-FVX"]:
+        raise MatrixError("A supplied prebuilt candidate JAR and exact user-attested source commit are required; no build performed.")
+    if source is None or public_blob_id(source.encode("utf-8")) != PUBLIC_BLOBS[SOURCE]:
+        raise MatrixError("Exact candidate source missing or stale; no JAR accessed.")
+    jar = external_input_path(jar, root,
+                              ("02_external", "04_private_roms", "05_builds", "03_tools/releases"))
+    if not jar.is_file():
+        raise MatrixError("Supplied candidate JAR is unavailable; no build performed.")
+    response = command(["java", "-version"], temp)
+    version = re.search(r'version "(\d+)', response.stderr + response.stdout)
+    if response.returncode or not version or int(version[1]) < 25:
+        raise MatrixError("Java 25 or newer is required by the candidate UPR source.")
+    overlays, unsupported, _ = source_model(source)
+    feature_response = command(["java", "--class-path", str(jar),
+                                "com.uprfvx.random.cli.SettingsProfileGenerator", "--list-features"], temp)
+    profile_response = command(["java", "--class-path", str(jar),
+                                "com.uprfvx.random.cli.SettingsProfileGenerator", "--list-profiles"], temp)
+    expected_features = [(name, "unsupported" if name in unsupported else "supported") for name in overlays]
+    actual_features = [tuple(line.split("\t")[:2]) for line in feature_response.stdout.splitlines()]
+    raw_profiles = []
+    for name, body in re.findall(r'profiles\.put\("([^"]+)",\s*(.*?)\);', source, re.S):
+        raw_profiles.append(name + "\t" + ",".join(re.findall(r'"([A-Z0-9_-]+)"', body)))
+    if (feature_response.returncode or profile_response.returncode
+            or ERROR_MARKERS.search(feature_response.stdout + feature_response.stderr)
+            or ERROR_MARKERS.search(profile_response.stdout + profile_response.stderr)
+            or actual_features != expected_features
+            or profile_response.stdout.splitlines() != raw_profiles):
+        raise MatrixError("Candidate source/JAR CLI catalogue mismatch; details discarded.")
+    print("SOURCE_CHECK=PASS; JAR_PROVENANCE=USER_ATTESTED; CLI_CATALOGUE=PASS", flush=True)
     return jar
 
 
@@ -511,6 +677,9 @@ def generate_settings(cases, overlays, jar, temp):
         raise MatrixError("Pinned Settings API/profile generation failed before ROM use.")
     payloads = [(temp / f"{i}.settings").read_text() for i in range(len(cases))]
     verify_selected_payloads(cases, payloads)
+    observations = {i: parse_observation((temp / f"{i}.state").read_text())
+                    for i, case in enumerate(cases) if case.id in RISK_IDS}
+    verify_risk_states(cases, overlays, observations, "Settings round-trip")
     return payloads
 
 
@@ -524,6 +693,7 @@ import com.uprfvx.romio.romhandlers.Gen3RomHandler;
 import java.io.*;
 import java.nio.file.*;
 class MatrixNormalize {
+''' + OBSERVE_JAVA + '''
   public static void main(String[] args) throws Exception {
     RootPath.path = new File(Settings.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getParent() + File.separator;
     RomOpener.Results loaded = new RomOpener().openRomFile(new File(args[0]));
@@ -555,14 +725,21 @@ class MatrixNormalize {
       }
       Files.writeString(Path.of(i + ".normalization"), adaptation);
       try (FileOutputStream out = new FileOutputStream(i + ".rnqs")) { s.writeToFileFormat(out); }
-      Files.writeString(Path.of(i + ".settings"), s.toString());
+      try (FileInputStream in = new FileInputStream(i + ".rnqs")) {
+        Settings restored = Settings.readFromFileFormat(in);
+        if (!observe(s).equals(observe(restored))) {
+          throw new IllegalStateException("Normalized Settings round-trip drift");
+        }
+        Files.writeString(Path.of(i + ".settings"), restored.toString());
+        Files.writeString(Path.of(i + ".post-state"), observe(restored));
+      }
     }
   }
 }
 '''
 
 
-def normalize_settings(cases, jar, rom, temp, before_payloads):
+def normalize_settings(cases, jar, rom, temp, before_payloads, overlays=None):
     """User runtime only: normalize with UPR's loader before exact deduplication."""
     adapter = temp / "MatrixNormalize.java"
     adapter.write_text(NORMALIZER)
@@ -576,6 +753,11 @@ def normalize_settings(cases, jar, rom, temp, before_payloads):
         if witness != "NONE":
             adaptations[i] = parse_normalization_witness(witness)
     verify_selected_normalized_payloads(cases, before_payloads, payloads, adaptations)
+    observations = {i: parse_observation((temp / f"{i}.post-state").read_text())
+                    for i, case in enumerate(cases) if case.id in RISK_IDS}
+    if observations and overlays is None:
+        raise MatrixError("Candidate source model missing for normalization; STOP.")
+    verify_risk_states(cases, overlays, observations, "target normalization")
     return payloads, adaptations
 
 
@@ -708,10 +890,24 @@ class Outcome:
     message: str = "none"
     reproduced: str = "NOT_APPLICABLE"
     retry: str = "NOT_RUN"
+    input_unchanged: str = "NOT_RUN"
 
     @property
     def passed(self):
-        return self.generate == self.reopen == "PASS" and self.replay in ("PASS", "NOT_APPLICABLE")
+        return (self.generate == self.reopen == self.input_unchanged == "PASS"
+                and self.replay in ("PASS", "NOT_APPLICABLE"))
+
+
+def input_digest(path):
+    """USER-local transient comparison only; never retain or print this value."""
+    digest = hashlib.sha256()
+    try:
+        with Path(path).open("rb") as source:
+            for block in iter(lambda: source.read(1024 * 1024), b""):
+                digest.update(block)
+        return digest.digest()
+    except OSError:
+        raise MatrixError("Input unchanged check unavailable; details discarded.") from None
 
 
 def same_bytes(a, b):
@@ -751,13 +947,20 @@ class MatrixReopen {
 
 def attempt(group, seed, rom, jar, temp, replay):
     out = Outcome()
+    original_input = input_digest(rom)
     with tempfile.TemporaryDirectory(prefix="case-", dir=temp) as case_dir:
         directory = Path(case_dir)
 
         def run_one(filename):
             output = directory / filename
-            result = command(["java", "-jar", str(jar), "cli", "-i", rom, "-o", str(output),
-                              "-s", str(group.settings), "-z", str(seed)], directory)
+            if input_digest(rom) != original_input:
+                raise MatrixError("Input unchanged check failed before generation; STOP.")
+            try:
+                result = command(["java", "-jar", str(jar), "cli", "-i", rom, "-o", str(output),
+                                  "-s", str(group.settings), "-z", str(seed)], directory)
+            finally:
+                if input_digest(rom) != original_input:
+                    raise MatrixError("Input unchanged check failed during generation; no replay permitted.")
             text = result.stdout + result.stderr
             if result.returncode or "Randomized successfully!" not in text or ERROR_MARKERS.search(text) or not output.is_file() or output.stat().st_size == 0:
                 out.error_class, out.message = safe_error(text, "GenerationFailure")
@@ -791,6 +994,13 @@ def attempt(group, seed, rom, jar, temp, replay):
             raise
         except (OSError, subprocess.SubprocessError):
             out.error_class, out.message = "ProcessFailure", "Local subprocess or file operation failed; details discarded."
+        finally:
+            try:
+                out.input_unchanged = "PASS" if input_digest(rom) == original_input else "FAIL"
+            except MatrixError:
+                out.input_unchanged = "FAIL"
+            if out.input_unchanged == "FAIL":
+                out.error_class, out.message = "InputChanged", "Input unchanged check failed; STOP."
         # TemporaryDirectory removes outputs, raw sidecars and manifests even
         # after exceptions. Each independent retry creates a fresh directory.
     return out
@@ -799,8 +1009,12 @@ def attempt(group, seed, rom, jar, temp, replay):
 def run_case(group, seed, rom, jar, temp):
     replay = any(c.replay for c in group.aliases)
     first = attempt(group, seed, rom, jar, temp, replay)
+    if first.input_unchanged == "FAIL":
+        raise MatrixError("Input unchanged check failed; no retry or further generation permitted.")
     if not first.passed:
         second = attempt(group, seed, rom, jar, temp, replay)
+        if second.input_unchanged == "FAIL":
+            raise MatrixError("Input unchanged check failed during retry; STOP.")
         same_failure = (first.generate, first.reopen, first.replay, first.error_class) == (second.generate, second.reopen, second.replay, second.error_class)
         first.reproduced = "FAIL" if second.passed else "PASS" if same_failure else "DIFFERENT_FAILURE"
         first.retry = "PASS" if second.passed else "FAIL"
@@ -830,8 +1044,11 @@ def print_report(cases, groups, records, counts, result, normalized=(), adaptati
     failed = [record for record in required if not record[2].passed]
     diagnostics = [record for record in records if record not in required]
     print("\nMatrix basis:\nWorkspace: " + WORKSPACE)
-    for name, (_, pin) in PINS.items():
+    print("Candidate source revisions (separate from baseline Gitlinks):")
+    for name, pin in CANDIDATES.items():
         print(name + ": " + pin)
+    print("LOG_CONTENT=NOT_RUN; MANIFEST_SEMANTICS=NOT_RUN; GAMEPLAY=NOT_RUN")
+    print("Reopen scope: supported profile load and manifest export, not runtime acceptance.")
     print_inventory(counts)
     print(f"\nCASE_INTENTS: {len(cases)}\nUNIQUE_EFFECTIVE_CASES: {len(groups)}")
     print(f"UPR_NORMALIZED_CASE_INTENTS: {len(normalized)}")
@@ -859,12 +1076,12 @@ def print_report(cases, groups, records, counts, result, normalized=(), adaptati
         print("Profiles/overlays: " + ", ".join(c.id for c in group.aliases))
         if overlay_ids:
             print("Overlay IDs: " + ", ".join(overlay_ids))
-        print(f"Seed: {seed}\nGenerate: {out.generate}\nReopen: {out.reopen}\nReplay: {out.replay}\nReproduced: {out.reproduced}")
+        print(f"Generate: {out.generate}\nReopen: {out.reopen}\nReplay: {out.replay}\nInput unchanged: {out.input_unchanged}\nReproduced: {out.reproduced}")
         print("Error class: " + out.error_class + "\nSanitized message: " + out.message)
     else:
         print("none")
     print("\nSelected profile results:")
-    for name in SELECTED + MAXIMUM:
+    for name in SELECTED + MAXIMUM + tuple(RISK_SINGLES) + (RISK_EVOLUTION, RISK_PICKUP):
         outcomes = [out for group, _, out in records if any(selected_name(c) == name for c in group.aliases)]
         status = "NOT_RUN" if not outcomes else "PASS" if all(o.passed for o in outcomes) else "FAIL"
         print(name + ": " + status)
@@ -883,20 +1100,23 @@ class SafeParser(argparse.ArgumentParser):
 
 
 def main(argv=None):
-    parser = SafeParser(description="User-owned #681 UPR generation matrix")
+    parser = SafeParser(description="User-owned #727 candidate UPR generation matrix")
     parser.add_argument("--rom", metavar="PATH")
+    parser.add_argument("--jar", metavar="PATH", help="User-supplied external prebuilt #217 JAR; never auto-build")
+    parser.add_argument("--jar-source-commit", metavar="COMMIT", help="Independent user attestation of the supplied JAR source commit")
+    parser.add_argument("--public-source-file", metavar="PUBLIC_JAVA", help="Optional exact public-commit SettingsProfileGenerator.java; default is immutable GitHub GET")
     parser.add_argument("--dry-run", action="store_true", help="Public source plan only; no Java/JAR/ROM use")
     parser.add_argument("--stop-on-fail", action="store_true")
     args = parser.parse_args(argv)
     records = []
     try:
         verify_pins(ROOT)
-        source = (ROOT / PINS["UPR-FVX"][0] / SOURCE).read_text()
+        source = read_public_source(local_file=args.public_source_file)
         overlays, unsupported, profiles = source_model(source)
         cases = build_matrix(overlays, unsupported, profiles)
         if args.dry_run:
             print("Matrix basis:\nWorkspace: " + WORKSPACE + "\nTree: " + TREE)
-            for name, (_, pin) in PINS.items():
+            for name, pin in CANDIDATES.items():
                 print(name + ": " + pin)
             print(f"CASE_INTENTS: {len(cases)}\nUNIQUE_EFFECTIVE_CASES: runtime Settings API canonicalization required")
             print_inventory(inventory_counts(overlays, unsupported))
@@ -906,51 +1126,56 @@ def main(argv=None):
             return 0
         with tempfile.TemporaryDirectory(prefix="upr-generation-matrix-") as workspace:
             temp = Path(workspace)
-            jar = prepare_tool(ROOT, temp)
+            jar = prepare_tool(ROOT, temp, args.jar, args.jar_source_commit, source)
             payloads = generate_settings(cases, overlays, jar, temp)
             # Pre-ROM Settings failures, including accepted identity drift, stop
             # before prompting or stat/open of even a supplied --rom argument.
             rom = args.rom if args.rom is not None else input("Private ROM: ")
             if not rom:
                 raise MatrixError("Private input was not supplied.")
-            effective_payloads, adaptations = normalize_settings(cases, jar, rom, temp, payloads)
-            normalized = [case.id for case, before, after in zip(cases, payloads, effective_payloads)
-                          if before != after]
-            groups = deduplicate(cases, effective_payloads, temp)
-            print(f"CASE_INTENTS: {len(cases)}\nUNIQUE_EFFECTIVE_CASES: {len(groups)}", flush=True)
-            primary_ok = True
-            for i, group in enumerate(groups, 1):
-                case = group.aliases[0]
-                print(f"[{i:03}/{len(groups):03}] {case.layer} {case.id} ... ", end="", flush=True)
-                out = run_case(group, PRIMARY, rom, jar, temp)
-                records.append((group, PRIMARY, out))
-                progress_outcome(group, out)
-                if not out.passed and any(c.classification != "DIAGNOSTIC" for c in group.aliases):
-                    primary_ok = False
-                    if args.stop_on_fail:
-                        break
-            if primary_ok:
-                sweep = [g for g in groups if any(c.secondary for c in g.aliases)]
-                for group in sweep:
-                    for seed in SECONDARY:
-                        # PRIMARY is already covered with replay; retain seed
-                        # coverage by reference instead of repeating execution.
-                        if seed == PRIMARY:
-                            continue
-                        print(f"SECONDARY {group.aliases[0].id} seed={seed} ... ", end="", flush=True)
-                        out = run_case(group, seed, rom, jar, temp)
-                        records.append((group, seed, out))
-                        progress_outcome(group, out)
-                        if args.stop_on_fail and not out.passed:
+            original_input = input_digest(rom)
+            try:
+                effective_payloads, adaptations = normalize_settings(cases, jar, rom, temp, payloads, overlays)
+                normalized = [case.id for case, before, after in zip(cases, payloads, effective_payloads)
+                              if before != after]
+                groups = deduplicate(cases, effective_payloads, temp)
+                print(f"CASE_INTENTS: {len(cases)}\nUNIQUE_EFFECTIVE_CASES: {len(groups)}", flush=True)
+                primary_ok = True
+                for i, group in enumerate(groups, 1):
+                    case = group.aliases[0]
+                    print(f"[{i:03}/{len(groups):03}] {case.layer} {case.id} ... ", end="", flush=True)
+                    out = run_case(group, PRIMARY, rom, jar, temp)
+                    records.append((group, PRIMARY, out))
+                    progress_outcome(group, out)
+                    if not out.passed and any(c.classification != "DIAGNOSTIC" for c in group.aliases):
+                        primary_ok = False
+                        if args.stop_on_fail:
                             break
-                    if args.stop_on_fail and not records[-1][2].passed:
-                        break
-            required_ok = all(out.passed for group, _, out in records
-                              if any(c.classification != "DIAGNOSTIC" for c in group.aliases))
-            # Optional heuristic diagnostics never establish or block required PASS.
-            result = "R2_RANDOMIZER_GENERATION_MATRIX_PASS" if required_ok else "R2_RANDOMIZER_GENERATION_MATRIX_FAIL"
-            print_report(cases, groups, records, inventory_counts(overlays, unsupported), result, normalized, adaptations)
-            return 0 if required_ok else 1
+                if primary_ok:
+                    sweep = [g for g in groups if any(c.secondary for c in g.aliases)]
+                    for group in sweep:
+                        for seed in SECONDARY:
+                            # PRIMARY is already covered with replay; retain seed
+                            # coverage by reference instead of repeating execution.
+                            if seed == PRIMARY:
+                                continue
+                            print(f"FIXED_SEED_SWEEP {group.aliases[0].id} ... ", end="", flush=True)
+                            out = run_case(group, seed, rom, jar, temp)
+                            records.append((group, seed, out))
+                            progress_outcome(group, out)
+                            if args.stop_on_fail and not out.passed:
+                                break
+                        if args.stop_on_fail and not records[-1][2].passed:
+                            break
+                required_ok = all(out.passed for group, _, out in records
+                                  if any(c.classification != "DIAGNOSTIC" for c in group.aliases))
+                # Optional heuristic diagnostics never establish or block required PASS.
+                result = "R2_RANDOMIZER_GENERATION_MATRIX_PASS" if required_ok else "R2_RANDOMIZER_GENERATION_MATRIX_FAIL"
+                print_report(cases, groups, records, inventory_counts(overlays, unsupported), result, normalized, adaptations)
+                return 0 if required_ok else 1
+            finally:
+                if input_digest(rom) != original_input:
+                    raise MatrixError("Input unchanged check failed; STOP.")
     except MatrixError as exc:
         print("Result: STOP\nSanitized message: " + str(exc))
     except (KeyboardInterrupt, InterruptedError):
