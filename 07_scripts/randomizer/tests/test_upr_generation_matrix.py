@@ -326,7 +326,7 @@ class IdentityAndDedupTest(unittest.TestCase):
 
             with patch.object(m, "command", side_effect=execute) as command:
                 self.assertEqual(payloads, m.generate_settings(cases, OVERLAYS, Path("synthetic.jar"), temp))
-                self.assertEqual((payloads, {}), m.normalize_settings(cases, Path("synthetic.jar"), "/fictional/input.gba", temp, payloads))
+                self.assertEqual((payloads, {}, {}), m.normalize_settings(cases, Path("synthetic.jar"), "/fictional/input.gba", temp, payloads, OVERLAYS))
                 self.assertEqual(2, command.call_count)
             self.assertTrue((temp / "MatrixSettings.java").is_file())
             self.assertIn("s.tweakForRom", (temp / "MatrixNormalize.java").read_text())
@@ -340,12 +340,12 @@ class IdentityAndDedupTest(unittest.TestCase):
                 with self.assertRaises(m.MatrixError):
                     m.generate_settings(cases, OVERLAYS, Path("synthetic.jar"), temp)
                 with self.assertRaises(m.MatrixError):
-                    m.normalize_settings(cases, Path("synthetic.jar"), "/fictional/input.gba", temp, [m.IRONMON])
+                    m.normalize_settings(cases, Path("synthetic.jar"), "/fictional/input.gba", temp, [m.IRONMON], OVERLAYS)
             (temp / "0.settings").write_text(synthetic_payload(bytes(67)))
             (temp / "0.normalization").write_text("NONE")
             with patch.object(m, "command", return_value=result()):
                 with self.assertRaises(m.MatrixError):
-                    m.normalize_settings(cases, Path("synthetic.jar"), "/fictional/input.gba", temp, [m.IRONMON])
+                    m.normalize_settings(cases, Path("synthetic.jar"), "/fictional/input.gba", temp, [m.IRONMON], OVERLAYS)
 
     def test_exact_casual_all_serialized_boolean_and_enum_fields(self):
         fields = decoded_fields(m.CASUAL_BYTES)
@@ -595,12 +595,12 @@ class NormalizationAccountingTest(unittest.TestCase):
                     return result(text="/fictional/private/Secret.gba DD88761C")
                 with patch.object(m, "command", side_effect=execute):
                     if witness == self.witness():
-                        after, events = m.normalize_settings(cases, Path("synthetic.jar"), "/fictional/Private.gba", directory, before)
+                        after, events, blocked = m.normalize_settings(cases, Path("synthetic.jar"), "/fictional/Private.gba", directory, before, OVERLAYS)
                         self.assertEqual({0: 1022}, events)
                         self.assertEqual([self.adapted(before[0])], after)
                     else:
                         with self.assertRaises(m.MatrixError) as caught:
-                            m.normalize_settings(cases, Path("synthetic.jar"), "/fictional/Private.gba", directory, before)
+                            m.normalize_settings(cases, Path("synthetic.jar"), "/fictional/Private.gba", directory, before, OVERLAYS)
                         self.assertNotIn("Secret.gba", str(caught.exception))
                         self.assertNotIn("DD88761C", str(caught.exception))
             self.assertFalse(directory.exists())  # adapter, witness, settings all removed
@@ -938,7 +938,7 @@ class EntryPointTest(unittest.TestCase):
             calls.append((group.aliases[0].id, seed, rom, Path(temp)))
             return m.Outcome("FAIL") if fail else m.Outcome("PASS", "PASS", input_unchanged="PASS")
 
-        with patch.object(m, "verify_pins"), patch.object(m, "build_matrix", return_value=cases), patch.object(m, "prepare_tool", return_value=Path("synthetic.jar")), patch.object(m, "generate_settings", return_value=payloads), patch.object(m, "normalize_settings", return_value=(payloads, {})), patch.object(m, "run_case", side_effect=run), patch("builtins.input", return_value="/fictional/private.gba") as prompt, contextlib.redirect_stdout(io.StringIO()) as output:
+        with patch.object(m, "verify_pins"), patch.object(m, "build_matrix", return_value=cases), patch.object(m, "prepare_tool", return_value=Path("synthetic.jar")), patch.object(m, "generate_settings", return_value=payloads), patch.object(m, "normalize_settings", return_value=(payloads, {}, {})), patch.object(m, "run_case", side_effect=run), patch("builtins.input", return_value="/fictional/private.gba") as prompt, contextlib.redirect_stdout(io.StringIO()) as output:
             code = m.main(argv)
         return code, calls, prompt, output.getvalue()
 
@@ -948,7 +948,7 @@ class EntryPointTest(unittest.TestCase):
         for diagnostic in (m.Outcome("PASS", "PASS", input_unchanged="PASS"),
                            m.Outcome("FAIL", error_class="RomIOException"),
                            m.Outcome("PASS", "FAIL", error_class="ProcessFailure")):
-            with patch.object(m, "verify_pins"), patch.object(m, "build_matrix", return_value=cases), patch.object(m, "prepare_tool", return_value=Path("synthetic.jar")), patch.object(m, "generate_settings", return_value=["control", "diagnostic"]), patch.object(m, "normalize_settings", return_value=(["control", "diagnostic"], {})), patch.object(m, "run_case", side_effect=[m.Outcome("PASS", "PASS", input_unchanged="PASS"), diagnostic]), contextlib.redirect_stdout(io.StringIO()) as output:
+            with patch.object(m, "verify_pins"), patch.object(m, "build_matrix", return_value=cases), patch.object(m, "prepare_tool", return_value=Path("synthetic.jar")), patch.object(m, "generate_settings", return_value=["control", "diagnostic"]), patch.object(m, "normalize_settings", return_value=(["control", "diagnostic"], {}, {})), patch.object(m, "run_case", side_effect=[m.Outcome("PASS", "PASS", input_unchanged="PASS"), diagnostic]), contextlib.redirect_stdout(io.StringIO()) as output:
                 self.assertEqual(0, m.main(["--rom", "/fictional/input.gba", "--stop-on-fail"]))
             text = output.getvalue()
             self.assertIn("PASS: 1\nFAIL: 0", text)
@@ -959,7 +959,7 @@ class EntryPointTest(unittest.TestCase):
     def test_diagnostic_never_masks_required_failure(self):
         cases = [m.Intent("CASUAL_NATDEX", "ACCEPTANCE", classification="ACCEPTANCE"),
                  m.Intent("OPTIONAL_DIAGNOSTIC", "DIAGNOSTIC", classification="DIAGNOSTIC")]
-        with patch.object(m, "verify_pins"), patch.object(m, "build_matrix", return_value=cases), patch.object(m, "prepare_tool", return_value=Path("synthetic.jar")), patch.object(m, "generate_settings", return_value=["casual", "diagnostic"]), patch.object(m, "normalize_settings", return_value=(["casual", "diagnostic"], {})), patch.object(m, "run_case", side_effect=[m.Outcome("FAIL"), m.Outcome("FAIL", error_class="RomIOException")]), contextlib.redirect_stdout(io.StringIO()) as output:
+        with patch.object(m, "verify_pins"), patch.object(m, "build_matrix", return_value=cases), patch.object(m, "prepare_tool", return_value=Path("synthetic.jar")), patch.object(m, "generate_settings", return_value=["casual", "diagnostic"]), patch.object(m, "normalize_settings", return_value=(["casual", "diagnostic"], {}, {})), patch.object(m, "run_case", side_effect=[m.Outcome("FAIL"), m.Outcome("FAIL", error_class="RomIOException")]), contextlib.redirect_stdout(io.StringIO()) as output:
             self.assertEqual(1, m.main(["--rom", "/fictional/input.gba"]))
         self.assertIn("CASUAL_NATDEX: FAIL", output.getvalue())
         self.assertIn("PASS: 0\nFAIL: 1", output.getvalue())
@@ -1250,7 +1250,8 @@ class CandidateRiskTest(unittest.TestCase):
         self.cases = m.build_matrix(OVERLAYS, UNSUPPORTED, PROFILES)
         self.by_id = {c.id: c for c in self.cases}
 
-    def observed(self, **changes):
+    @staticmethod
+    def observed(**changes):
         # Independent synthetic Settings-getter response, not a serializer.
         fields = {
             "LimitPokemon": "false", "CurrentRestrictions": "1022",
@@ -1348,20 +1349,26 @@ class CandidateRiskTest(unittest.TestCase):
         cases = [self.by_id[m.RISK_EVOLUTION]]
         actual = self.evo_observed()
         for stage in ("Settings round-trip", "target normalization"):
-            m.verify_risk_states(cases, OVERLAYS, {0: actual}, stage)
+            m.verify_requested_states(cases, OVERLAYS, {0: actual}, stage)
             for key in ("LimitPokemon", "CurrentRestrictions", "EvolutionsMod", "ChangeImpossibleEvolutions",
                         "EstimateLevelForEvolutionImprovements", "RemoveTimeBasedEvolutions", "MakeEvolutionsEasier"):
                 changed = dict(actual, **{key: "false" if actual[key] == "true" else "true"})
-                with self.subTest(stage=stage, key=key), self.assertRaises(m.MatrixError):
-                    m.verify_risk_states(cases, OVERLAYS, {0: changed}, stage)
+                with self.subTest(stage=stage, key=key):
+                    if stage == "Settings round-trip" or key == "MakeEvolutionsEasier":
+                        with self.assertRaises(m.MatrixError):
+                            m.verify_requested_states(cases, OVERLAYS, {0: changed}, stage)
+                    else:
+                        self.assertIn(0, m.verify_requested_states(cases, OVERLAYS, {0: changed}, stage))
         with self.assertRaises(m.MatrixError):
-            m.verify_risk_states(cases, OVERLAYS, {}, "round-trip")
+            m.verify_requested_states(cases, OVERLAYS, {}, "round-trip")
 
     def test_normalized_away_user_gen_limit_not_counted_or_substituted(self):
         cases = [self.by_id[m.RISK_EVOLUTION]]
         normalized = dict(self.evo_observed(), LimitPokemon="false", CurrentRestrictions="-1")
-        with self.assertRaisesRegex(m.MatrixError, "coverage NOT_RUN"):
-            m.verify_risk_states(cases, OVERLAYS, {0: normalized}, "target normalization")
+        blocked = m.verify_requested_states(cases, OVERLAYS, {0: normalized}, "target normalization")
+        self.assertEqual({0: ("GEN_LIMIT_OR_RELATIVES_NOT_EFFECTIVE",)}, blocked)
+        self.assertEqual("R2_RANDOMIZER_GENERATION_MATRIX_PARTIAL_NOT_RUN",
+                         m.matrix_result(cases, [], [], blocked))
         self.assertIn(m.RISK_EVOLUTION, self.by_id)  # no silently dropped intent
         self.assertEqual("new GenRestrictions(0x3FF)", m.effective(cases[0], OVERLAYS)["CurrentRestrictions"])
 
@@ -1398,10 +1405,11 @@ class CandidateRiskTest(unittest.TestCase):
                 return result()
             with patch.object(m, "command", side_effect=execute):
                 self.assertEqual(payloads, m.generate_settings(cases, OVERLAYS, Path("synthetic.jar"), temp))
-                self.assertEqual((payloads, {}), m.normalize_settings(cases, Path("synthetic.jar"), "/fictional/input", temp, payloads, OVERLAYS))
+                self.assertEqual((payloads, {}, {}), m.normalize_settings(cases, Path("synthetic.jar"), "/fictional/input", temp, payloads, OVERLAYS))
             (temp / "0.post-state").write_text(text.replace("CurrentRestrictions=1023", "CurrentRestrictions=-1"))
-            with patch.object(m, "command", return_value=result()), self.assertRaises(m.MatrixError):
-                m.normalize_settings(cases, Path("synthetic.jar"), "/fictional/input", temp, payloads, OVERLAYS)
+            with patch.object(m, "command", return_value=result()):
+                after, events, blocked = m.normalize_settings(cases, Path("synthetic.jar"), "/fictional/input", temp, payloads, OVERLAYS)
+            self.assertEqual({0: ("GEN_LIMIT_OR_RELATIVES_NOT_EFFECTIVE",)}, blocked)
 
     def test_two_current_overlays_accounted_without_acceptance(self):
         self.assertIn("FVX-SPECIAL-WILD-001", self.by_id)
@@ -1409,6 +1417,304 @@ class CandidateRiskTest(unittest.TestCase):
         diagnostic = self.by_id["04_FOE_HELD_ITEMS_SENSIBLE_EXPECTED_FAIL"]
         self.assertEqual("DIAGNOSTIC", diagnostic.classification)
         self.assertIn("FVX-FOE-SENSIBLE-HELD-ITEMS", diagnostic.overlays)
+
+
+class NormalizedCoverageTest(unittest.TestCase):
+    """Unavailable options never run as substitutes or inherit a positive alias."""
+
+    def setUp(self):
+        self.cases = m.build_matrix(OVERLAYS, UNSUPPORTED, PROFILES)
+        self.by_id = {c.id: c for c in self.cases}
+
+    def observations(self, cases):
+        observations = {}
+        for i in m.observed_indices(cases, OVERLAYS):
+            state = CandidateRiskTest.observed()
+            for key, value in m.effective(cases[i], OVERLAYS).items():
+                if key not in state:
+                    continue
+                if key == "CurrentRestrictions":
+                    value = str(int(re.search(r"0x[0-9A-Fa-f]+", value)[0], 16))
+                elif value.startswith("Settings."):
+                    value = value.rsplit(".", 1)[1]
+                state[key] = value
+            observations[i] = state
+        return observations
+
+    def test_exact_public_time_encounter_source_normalization(self):
+        abstract = public_fixture("romio/src/main/java/com/uprfvx/romio/romhandlers/AbstractRomHandler.java",
+                                  "43e068b4d10cf2af9f92193738830913881dee81")
+        gen3 = public_fixture("romio/src/main/java/com/uprfvx/romio/romhandlers/Gen3RomHandler.java",
+                              "7206af0126ccf61aea4a2ebe22772928f63ad4c5")
+        self.assertRegex(abstract, r"boolean hasTimeBasedEncounters\(\)\s*\{\s*// DEFAULT: no\s*return false;")
+        self.assertNotRegex(gen3, r"boolean hasTimeBasedEncounters\(")
+        self.assertRegex(SETTINGS_SOURCE, r"if \(!rh.hasTimeBasedEncounters\(\)\) \{\s*this.setUseTimeBasedEncounters\(false\);")
+        self.assertEqual("true", m.assignments(OVERLAYS[m.SPECIAL_WILD])["UseTimeBasedEncounters"])
+
+    def test_exact_public_gen_limit_validity_source_gate(self):
+        abstract = public_fixture("romio/src/main/java/com/uprfvx/romio/romhandlers/AbstractGBRomHandler.java",
+                                  "8e4138d8f72bf29d1c203f435df5d8feb51310f2")
+        self.assertIn("return getRomEntry().getExpectedCRC32() == actualCRC32;", abstract)
+        self.assertRegex(SETTINGS_SOURCE, r"rh instanceof Gen3RomHandler && !rh.isRomValid\(null\)")
+        self.assertIn("this.currentRestrictions = null;", SETTINGS_SOURCE)
+        self.assertIn("this.setLimitPokemon(false);", SETTINGS_SOURCE)
+
+    def test_special_wild_on_roundtrip_and_effective_on_are_checked(self):
+        cases = [self.by_id[m.SPECIAL_WILD]]
+        on = self.observations(cases)
+        for stage in ("Settings round-trip", "target normalization"):
+            self.assertEqual({}, m.verify_requested_states(cases, OVERLAYS, on, stage))
+        off = {0: dict(on[0], UseTimeBasedEncounters="false")}
+        with self.assertRaises(m.MatrixError):
+            m.verify_requested_states(cases, OVERLAYS, off, "Settings round-trip")
+
+    def test_special_wild_off_blocks_single_full_pairs_and_max(self):
+        observed = self.observations(self.cases)
+        expected = {i for i, c in enumerate(self.cases)
+                    if m.SPECIAL_WILD in c.overlays}
+        self.assertTrue(expected)
+        for i in expected:
+            self.assertIn(i, observed)
+            observed[i]["UseTimeBasedEncounters"] = "false"
+        blocked = m.verify_requested_states(self.cases, OVERLAYS, observed, "target normalization")
+        self.assertEqual(expected, set(blocked))
+        self.assertTrue(all(v == ("TIME_BASED_ENCOUNTERS_NORMALIZED_OFF",) for v in blocked.values()))
+        for name in (m.SPECIAL_WILD, "11_SPECIAL_WILD", "MAX_SAFE_COMBINED"):
+            self.assertIn(name, {self.cases[i].id for i in blocked})
+        self.assertTrue(any(self.cases[i].layer == "PAIR" for i in blocked))
+
+    def test_gen_limit_normalization_isolates_ordinary_and_evolution_requests(self):
+        cases = [self.by_id["FVX-ITEM-002"], self.by_id["MODE-GEN-LIMIT-1-9"],
+                 self.by_id[m.RISK_EVOLUTION]]
+        observed = self.observations(cases)
+        for fields in observed.values():
+            fields.update(LimitPokemon="false", CurrentRestrictions="-1")
+        blocked = m.verify_requested_states(cases, OVERLAYS, observed, "target normalization")
+        self.assertEqual({1, 2}, set(blocked))
+        self.assertTrue(all(v == ("GEN_LIMIT_OR_RELATIVES_NOT_EFFECTIVE",) for v in blocked.values()))
+        self.assertEqual("new GenRestrictions(0x3FF)", m.effective(cases[2], OVERLAYS)["CurrentRestrictions"])
+
+    def test_lost_relatives_alone_still_blocks_risk(self):
+        cases = [self.by_id[m.RISK_EVOLUTION]]
+        observed = self.observations(cases)
+        observed[0]["CurrentRestrictions"] = "1022"
+        self.assertEqual({0: ("GEN_LIMIT_OR_RELATIVES_NOT_EFFECTIVE",)},
+                         m.verify_requested_states(cases, OVERLAYS, observed, "target normalization"))
+
+    def test_special_and_gen_limit_reasons_accumulate(self):
+        cases = [self.by_id["MAX_SAFE_COMBINED"]]
+        observed = self.observations(cases)
+        observed[0].update(LimitPokemon="false", CurrentRestrictions="-1", UseTimeBasedEncounters="false")
+        self.assertEqual({0: ("TIME_BASED_ENCOUNTERS_NORMALIZED_OFF", "GEN_LIMIT_OR_RELATIVES_NOT_EFFECTIVE")},
+                         m.verify_requested_states(cases, OVERLAYS, observed, "target normalization"))
+
+    def test_source_and_schema_failures_are_not_relaxed_to_partial(self):
+        cases = [self.by_id[m.SPECIAL_WILD], self.by_id[m.RISK_EVOLUTION]]
+        observed = self.observations(cases)
+        with self.assertRaises(m.MatrixError):
+            m.verify_requested_states(cases, OVERLAYS, {0: observed[0]}, "target normalization")
+        observed[0]["UseTimeBasedEncounters"] = "false"
+        with self.assertRaises(m.MatrixError):
+            m.verify_requested_states(cases, OVERLAYS, observed, "Settings round-trip")
+        observed[1]["MakeEvolutionsEasier"] = "true"
+        with self.assertRaisesRegex(m.MatrixError, "OWNERSHIP_WITNESS_V1"):
+            m.verify_requested_states(cases, OVERLAYS, observed, "target normalization")
+
+    def test_normalized_alias_cannot_inherit_pass_or_wrong_settings_file(self):
+        cases = [self.by_id[m.SPECIAL_WILD], self.by_id["FVX-ITEM-002"]]
+        blocked = {0: ("TIME_BASED_ENCOUNTERS_NORMALIZED_OFF",)}
+        groups = m.deduplicate(cases, ["same", "same"], Path("/synthetic"), blocked)
+        self.assertEqual([cases[1]], groups[0].aliases)
+        self.assertEqual(Path("/synthetic/1.rnqs"), groups[0].settings)
+        records = [(groups[0], m.PRIMARY, m.Outcome("PASS", "PASS", input_unchanged="PASS"))]
+        self.assertEqual("PASS", m.intent_status(cases[1], groups, records))
+        self.assertEqual("NOT_RUN", m.intent_status(cases[0], groups, records, {m.SPECIAL_WILD}))
+        self.assertEqual("R2_RANDOMIZER_GENERATION_MATRIX_PARTIAL_NOT_RUN",
+                         m.matrix_result(cases, groups, records, blocked))
+
+    def test_all_planned_seeds_and_replays_required_for_matrix_pass(self):
+        case = self.by_id[m.RISK_PICKUP]
+        groups = m.deduplicate([case], ["synthetic"], Path("/synthetic"))
+        for seeds, replay in (((m.PRIMARY,), "PASS"), (m.SECONDARY, "NOT_APPLICABLE")):
+            records = [(groups[0], seed, m.Outcome("PASS", "PASS", replay, input_unchanged="PASS"))
+                       for seed in seeds]
+            self.assertEqual("R2_RANDOMIZER_GENERATION_MATRIX_PARTIAL_NOT_RUN",
+                             m.matrix_result([case], groups, records))
+        records = [(groups[0], seed, m.Outcome("PASS", "PASS", "PASS", input_unchanged="PASS"))
+                   for seed in m.SECONDARY]
+        self.assertEqual("R2_RANDOMIZER_GENERATION_MATRIX_PASS", m.matrix_result([case], groups, records))
+        self.assertEqual("R2_RANDOMIZER_GENERATION_MATRIX_PARTIAL_NOT_RUN", m.matrix_result([case], [], []))
+
+    def test_report_full_max_and_risk_not_run_with_partial_result(self):
+        cases = [self.by_id[n] for n in (m.SPECIAL_WILD, "11_SPECIAL_WILD", "MAX_SAFE_COMBINED", m.RISK_EVOLUTION)]
+        blocked = {i: ("GEN_LIMIT_OR_RELATIVES_NOT_EFFECTIVE",) if c.id == m.RISK_EVOLUTION
+                   else ("TIME_BASED_ENCOUNTERS_NORMALIZED_OFF",) for i, c in enumerate(cases)}
+        output = io.StringIO()
+        with contextlib.redirect_stdout(output):
+            m.print_report(cases, [], [], m.inventory_counts(OVERLAYS, UNSUPPORTED),
+                           m.matrix_result(cases, [], [], blocked), blocked=blocked)
+        text = output.getvalue()
+        for name in (m.SPECIAL_WILD, "11_SPECIAL_WILD", "MAX_SAFE_COMBINED"):
+            self.assertIn(name + ": NOT_RUN", text)
+            self.assertNotIn(name + ": PASS", text)
+        self.assertIn(m.RISK_EVOLUTION + ": STOP/NOT_RUN", text)
+        self.assertIn("GENERATE=NOT_RUN; REOPEN=NOT_RUN; REPLAY=NOT_RUN", text)
+        self.assertIn("NORMALIZATION_BLOCKED_INTENTS: 4", text)
+        self.assertNotIn("R2_RANDOMIZER_GENERATION_MATRIX_PASS", text)
+
+    def test_mocked_normalizer_reads_special_state_and_removes_no_flags_itself(self):
+        cases = [self.by_id[m.SPECIAL_WILD]]
+        observed = self.observations(cases)[0]
+        payloads = [synthetic_payload(bytes(67))]
+        with tempfile.TemporaryDirectory() as name:
+            temp = Path(name)
+            def execute(args, cwd, timeout=600):
+                observed["UseTimeBasedEncounters"] = "false"
+                (cwd / "0.settings").write_text(payloads[0])
+                (cwd / "0.normalization").write_text("NONE")
+                (cwd / "0.post-state").write_text("\n".join(k + "=" + v for k, v in observed.items()))
+                return result()
+            with patch.object(m, "command", side_effect=execute):
+                after, events, blocked = m.normalize_settings(cases, Path("synthetic.jar"),
+                                                               "/fictional/input", temp, payloads, OVERLAYS)
+            self.assertEqual(payloads, after)
+            self.assertEqual({}, events)
+            self.assertEqual({0: ("TIME_BASED_ENCOUNTERS_NORMALIZED_OFF",)}, blocked)
+            self.assertIn("s.tweakForRom(handler)", m.NORMALIZER)
+            self.assertNotIn("s.setUseTimeBasedEncounters(true)", m.NORMALIZER)
+            self.assertNotIn("s.setLimitPokemon(true)", m.NORMALIZER)
+
+    def test_mocked_roundtrip_special_off_stops_before_rom(self):
+        cases = [self.by_id[m.SPECIAL_WILD]]
+        observed = CandidateRiskTest.observed()
+        with tempfile.TemporaryDirectory() as name:
+            temp = Path(name)
+            def execute(args, cwd, timeout=600):
+                (cwd / "0.settings").write_text(synthetic_payload(bytes(67)))
+                (cwd / "0.state").write_text("\n".join(k + "=" + v for k, v in observed.items()))
+                return result()
+            with patch.object(m, "command", side_effect=execute), self.assertRaises(m.MatrixError):
+                m.generate_settings(cases, OVERLAYS, Path("synthetic.jar"), temp)
+
+    def test_main_continues_independent_and_eligible_risks_after_gen_limit_stop(self):
+        cases = [self.by_id[n] for n in (m.RISK_EVOLUTION, m.SPECIAL_WILD, "FVX-ITEM-002", m.RISK_PICKUP)]
+        # Two unavailable requests normalize to exactly the same strings as
+        # eligible cases. Neither may enter a generation call or PASS alias.
+        before = ["evolution-on", "time-on", "core", "pickup"]
+        after = ["core", "core", "core", "pickup"]
+        blocked = {0: ("GEN_LIMIT_OR_RELATIVES_NOT_EFFECTIVE",),
+                   1: ("TIME_BASED_ENCOUNTERS_NORMALIZED_OFF",)}
+        calls, temps = [], []
+        def execute(group, seed, rom, jar, temp):
+            calls.append((tuple(c.id for c in group.aliases), seed))
+            temps.append(temp)
+            return m.Outcome("PASS", "PASS", "PASS", input_unchanged="PASS")
+        with patch.object(m, "read_public_source", return_value=GENERATOR_SOURCE), patch.object(m, "verify_pins"), patch.object(m, "build_matrix", return_value=cases), patch.object(m, "prepare_tool", return_value=Path("synthetic.jar")), patch.object(m, "generate_settings", return_value=before), patch.object(m, "normalize_settings", return_value=(after, {0: 1023}, blocked)), patch.object(m, "input_digest", return_value=b"synthetic input"), patch.object(m, "run_case", side_effect=execute), contextlib.redirect_stdout(io.StringIO()) as output:
+            self.assertEqual(1, m.main(["--rom", "/fictional/input", "--stop-on-fail"]))
+        self.assertEqual([(("FVX-ITEM-002",), m.PRIMARY)] +
+                         [((m.RISK_PICKUP,), seed) for seed in (m.PRIMARY, 0, 1, 677)], calls)
+        self.assertTrue(temps and all(not p.exists() for p in temps))
+        text = output.getvalue()
+        self.assertIn("EXECUTION_STAGE: INDEPENDENT", text)
+        self.assertIn("EXECUTION_STAGE: RISK", text)
+        self.assertIn(m.RISK_EVOLUTION + ": STOP/NOT_RUN", text)
+        self.assertIn(m.RISK_PICKUP + ": PASS", text)
+        self.assertIn("R2_RANDOMIZER_GENERATION_MATRIX_PARTIAL_NOT_RUN", text)
+        self.assertNotIn("R2_RANDOMIZER_GENERATION_MATRIX_PASS", text)
+        self.assertNotIn("/fictional", text)
+
+    def test_expected_gen_normalization_uses_real_preflight_and_runs_core(self):
+        cases = [self.by_id[m.RISK_EVOLUTION], self.by_id["FVX-ITEM-002"]]
+        original = bytearray(67)
+        original[30:34] = (0x3FF).to_bytes(4, "little")
+        original[65] |= 8
+        before = [synthetic_payload(original), synthetic_payload(bytes(67))]
+        after = [NormalizationAccountingTest().adapted(before[0]), before[1]]
+        observed = self.observations(cases)[0]
+        observed.update(LimitPokemon="false", CurrentRestrictions="-1")
+        dirs = []
+        def normalize_java(args, cwd, timeout=600):
+            dirs.append(cwd)
+            for i, payload in enumerate(after):
+                (cwd / f"{i}.settings").write_text(payload)
+                (cwd / f"{i}.normalization").write_text(
+                    "\t".join((m.GEN_NORMALIZATION, "true", "true", "false", "true", "1023", "false", "-1"))
+                    if i == 0 else "NONE")
+            (cwd / "0.post-state").write_text("\n".join(k + "=" + v for k, v in observed.items()))
+            return result()
+        with patch.object(m, "read_public_source", return_value=GENERATOR_SOURCE), patch.object(m, "verify_pins"), patch.object(m, "build_matrix", return_value=cases), patch.object(m, "prepare_tool", return_value=Path("synthetic.jar")), patch.object(m, "generate_settings", return_value=before), patch.object(m, "command", side_effect=normalize_java), patch.object(m, "input_digest", return_value=b"synthetic input"), patch.object(m, "run_case", return_value=m.Outcome("PASS", "PASS", input_unchanged="PASS")) as run, contextlib.redirect_stdout(io.StringIO()) as output:
+            self.assertEqual(1, m.main(["--rom", "/fictional/input"]))
+        self.assertEqual(1, run.call_count)
+        self.assertEqual(["FVX-ITEM-002"], [c.id for c in run.call_args.args[0].aliases])
+        self.assertTrue(dirs and all(not p.exists() for p in dirs))
+        self.assertIn("R2_RANDOMIZER_GENERATION_MATRIX_PARTIAL_NOT_RUN", output.getvalue())
+        self.assertNotIn("R2_RANDOMIZER_GENERATION_MATRIX_PASS", output.getvalue())
+
+    def test_current_target_normalization_leaves_independent_cases_eligible(self):
+        observed = self.observations(self.cases)
+        expected = set()
+        for i, state in observed.items():
+            if state["LimitPokemon"] == "true":
+                state.update(LimitPokemon="false", CurrentRestrictions="-1")
+                expected.add(i)
+            if state["UseTimeBasedEncounters"] == "true":
+                state["UseTimeBasedEncounters"] = "false"
+                expected.add(i)
+        blocked = m.verify_requested_states(self.cases, OVERLAYS, observed, "target normalization")
+        self.assertEqual(expected, set(blocked))
+        eligible = {c.id for i, c in enumerate(self.cases) if i not in blocked}
+        for name in ("CONTROL_UNCHANGED", "CASUAL_NATDEX", "IRONMON_NATDEX", "FVX-ITEM-002",
+                     "FVX-TRAIT-027", "FVX-GFX-002", "FVX-GFX-004", m.RISK_PICKUP):
+            self.assertIn(name, eligible)
+        for name in (m.SPECIAL_WILD, m.RISK_EVOLUTION, "MODE-GEN-LIMIT-1-9", "11_SPECIAL_WILD", "MAX_SAFE_COMBINED"):
+            self.assertNotIn(name, eligible)
+
+    def test_other_normalized_risk_loss_is_blocked_before_execution(self):
+        cases = [self.by_id["FVX-ITEM-002"], self.by_id[m.RISK_PICKUP]]
+        observed = self.observations(cases)
+        observed[1]["PickupItemsMod"] = "UNCHANGED"
+        blocked = m.verify_requested_states(cases, OVERLAYS, observed, "target normalization")
+        self.assertEqual({1: ("RISK_OPTIONS_NOT_EFFECTIVE",)}, blocked)
+        groups = m.deduplicate(cases, ["core", "pickup-off"], Path("/synthetic"), blocked)
+        self.assertEqual([cases[0]], groups[0].aliases)
+
+    def test_missing_evolution_normalization_witness_stops_before_core(self):
+        cases = [self.by_id[m.RISK_EVOLUTION], self.by_id["FVX-ITEM-002"]]
+        data = bytearray(67)
+        data[30:34] = (0x3FF).to_bytes(4, "little")
+        data[65] |= 8
+        before = [synthetic_payload(data), synthetic_payload(bytes(67))]
+        after = [NormalizationAccountingTest().adapted(before[0]), before[1]]
+        with tempfile.TemporaryDirectory() as name:
+            temp = Path(name)
+            def execute(args, cwd, timeout=600):
+                for i, payload in enumerate(after):
+                    (cwd / f"{i}.settings").write_text(payload)
+                    (cwd / f"{i}.normalization").write_text("NONE")
+                return result()
+            with patch.object(m, "command", side_effect=execute), self.assertRaisesRegex(m.MatrixError, "Unconfirmed target normalization"):
+                m.normalize_settings(cases, Path("synthetic.jar"), "/fictional/input", temp, before, OVERLAYS)
+
+    def test_blocked_case_is_not_pass_even_with_fabricated_success_record(self):
+        case = self.by_id[m.RISK_EVOLUTION]
+        group = m.Group("synthetic", Path("/synthetic"), [case])
+        records = [(group, seed, m.Outcome("PASS", "PASS", "PASS", input_unchanged="PASS"))
+                   for seed in m.SECONDARY]
+        blocked = {0: ("GEN_LIMIT_OR_RELATIVES_NOT_EFFECTIVE",)}
+        self.assertEqual("R2_RANDOMIZER_GENERATION_MATRIX_PARTIAL_NOT_RUN",
+                         m.matrix_result([case], [group], records, blocked))
+
+    def test_execution_failure_takes_precedence_over_partial(self):
+        cases = [self.by_id[m.SPECIAL_WILD], self.by_id["FVX-ITEM-002"]]
+        blocked = {0: ("TIME_BASED_ENCOUNTERS_NORMALIZED_OFF",)}
+        groups = m.deduplicate(cases, ["same", "same"], Path("/synthetic"), blocked)
+        records = [(groups[0], m.PRIMARY, m.Outcome("FAIL"))]
+        self.assertEqual("R2_RANDOMIZER_GENERATION_MATRIX_FAIL", m.matrix_result(cases, groups, records, blocked))
+
+    def test_dedup_incomplete_accounting_fails_closed(self):
+        for payloads, blocked in (([], {}), (["x"], {1: ("invalid",)})):
+            with self.assertRaises(m.MatrixError):
+                m.deduplicate([self.by_id[m.SPECIAL_WILD]], payloads, Path("/synthetic"), blocked)
 
 
 class InputAtomicityTest(unittest.TestCase):

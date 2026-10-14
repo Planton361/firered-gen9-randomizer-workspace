@@ -66,6 +66,7 @@ RISK_SINGLES = ("FVX-TRAIT-027", "FVX-ITEM-010", "FVX-GFX-002", "FVX-GFX-004")
 RISK_EVOLUTION = "CANDIDATE_EVOLUTION_TARGET_LINKED"
 RISK_PICKUP = "CANDIDATE_PICKUP_SHOP"
 RISK_IDS = frozenset(RISK_SINGLES + (RISK_EVOLUTION, RISK_PICKUP))
+SPECIAL_WILD = "FVX-SPECIAL-WILD-001"
 PICKUP_APPROVED_IDS = frozenset(("FVX-ITEM-010", RISK_PICKUP))
 ITEMS_SAFE = tuple(f"FVX-ITEM-{n:03}" for n in (2, 4, 6, 7, 8, 9))
 TRAITS_SAFE = tuple(f"FVX-TRAIT-{n:03}" for n in (1, 6, 8, 13, 14, 15, 16, 22))
@@ -536,17 +537,31 @@ def parse_observation(text):
     return dict(pairs)
 
 
-def verify_risk_states(cases, overlays, observations, stage):
-    expected_indices = {i for i, c in enumerate(cases) if c.id in RISK_IDS}
+def observed_indices(cases, overlays):
+    """Bounded option preflight: risk leaves, time encounters and Gen limits."""
+    return {i for i, case in enumerate(cases)
+            if case.id in RISK_IDS or any(effective(case, overlays).get(key) == "true"
+                                         for key in ("UseTimeBasedEncounters", "LimitPokemon"))}
+
+
+def verify_requested_states(cases, overlays, observations, stage):
+    expected_indices = observed_indices(cases, overlays)
     if set(observations) != expected_indices:
         raise MatrixError("Incomplete candidate Settings observations; STOP.")
-    for i in expected_indices:
+    blocked = {}
+    for i in sorted(expected_indices):
         case, actual = cases[i], observations[i]
-        expected = effective(case, overlays)
-        expected["MakeEvolutionsEasier"] = "false"
-        if case.id in ("FVX-GFX-002", "FVX-GFX-004"):
-            expected.setdefault("PokemonPalettesFollowTypes", "false")
-            expected.setdefault("PokemonPalettesShinyFromNormal", "false")
+        requested = effective(case, overlays)
+        if case.id in RISK_IDS:
+            expected = dict(requested, MakeEvolutionsEasier="false")
+            if case.id in ("FVX-GFX-002", "FVX-GFX-004"):
+                expected.setdefault("PokemonPalettesFollowTypes", "false")
+                expected.setdefault("PokemonPalettesShinyFromNormal", "false")
+        else:
+            expected = {key: value for key, value in requested.items()
+                        if key in ("LimitPokemon", "CurrentRestrictions", "UseTimeBasedEncounters")}
+        guard_pilot_state(actual)
+        mismatches = set()
         for key, value in expected.items():
             if key not in OBSERVATION_KEYS:
                 continue
@@ -555,10 +570,28 @@ def verify_risk_states(cases, overlays, observations, stage):
             elif value.startswith("Settings."):
                 value = value.rsplit(".", 1)[1]
             if actual.get(key) != value:
-                if key in ("LimitPokemon", "CurrentRestrictions"):
-                    raise MatrixError("Candidate Gen1-9/relatives state was serialized or normalized away; requested coverage NOT_RUN.")
-                raise MatrixError("Candidate option state differs after " + stage + "; STOP.")
-        guard_pilot_state(actual)
+                mismatches.add(key)
+        if not mismatches:
+            continue
+        if stage != "target normalization":
+            raise MatrixError("Requested option state differs after Settings round-trip; STOP.")
+        reasons = []
+        if (requested.get("UseTimeBasedEncounters") == "true"
+                and actual.get("UseTimeBasedEncounters") == "false"):
+            reasons.append("TIME_BASED_ENCOUNTERS_NORMALIZED_OFF")
+            mismatches.discard("UseTimeBasedEncounters")
+        if mismatches & {"LimitPokemon", "CurrentRestrictions"}:
+            reasons.append("GEN_LIMIT_OR_RELATIVES_NOT_EFFECTIVE")
+            mismatches -= {"LimitPokemon", "CurrentRestrictions"}
+        if mismatches:
+            if case.id not in RISK_IDS:
+                raise MatrixError("Unexpected target option normalization; STOP.")
+            reasons.append("RISK_OPTIONS_NOT_EFFECTIVE")
+        # Never execute a normalized substitute or let it inherit an alias PASS.
+        # Source/API/schema/safety errors still abort; unavailable requested
+        # coverage is isolated so independent eligible cases can run.
+        blocked[i] = tuple(reasons)
+    return blocked
 
 
 def bridge_source(cases, overlays):
@@ -678,8 +711,8 @@ def generate_settings(cases, overlays, jar, temp):
     payloads = [(temp / f"{i}.settings").read_text() for i in range(len(cases))]
     verify_selected_payloads(cases, payloads)
     observations = {i: parse_observation((temp / f"{i}.state").read_text())
-                    for i, case in enumerate(cases) if case.id in RISK_IDS}
-    verify_risk_states(cases, overlays, observations, "Settings round-trip")
+                    for i in observed_indices(cases, overlays)}
+    verify_requested_states(cases, overlays, observations, "Settings round-trip")
     return payloads
 
 
@@ -753,12 +786,12 @@ def normalize_settings(cases, jar, rom, temp, before_payloads, overlays=None):
         if witness != "NONE":
             adaptations[i] = parse_normalization_witness(witness)
     verify_selected_normalized_payloads(cases, before_payloads, payloads, adaptations)
-    observations = {i: parse_observation((temp / f"{i}.post-state").read_text())
-                    for i, case in enumerate(cases) if case.id in RISK_IDS}
-    if observations and overlays is None:
+    if overlays is None:
         raise MatrixError("Candidate source model missing for normalization; STOP.")
-    verify_risk_states(cases, overlays, observations, "target normalization")
-    return payloads, adaptations
+    observations = {i: parse_observation((temp / f"{i}.post-state").read_text())
+                    for i in observed_indices(cases, overlays)}
+    blocked = verify_requested_states(cases, overlays, observations, "target normalization")
+    return payloads, adaptations, blocked
 
 
 def parse_normalization_witness(witness):
@@ -853,9 +886,13 @@ class Group:
     aliases: list
 
 
-def deduplicate(cases, payloads, temp):
+def deduplicate(cases, payloads, temp, blocked=()):
+    if len(cases) != len(payloads) or not set(blocked) <= set(range(len(cases))):
+        raise MatrixError("Incomplete effective-case accounting; STOP.")
     groups = {}
     for i, (case, payload) in enumerate(zip(cases, payloads)):
+        if i in blocked:
+            continue
         # Exact equality of full UPR canonical strings. Distinct settings can
         # never be collapsed by a hash collision or by ignoring inactive fields.
         groups.setdefault(payload, Group(payload, temp / f"{i}.rnqs", [])).aliases.append(case)
@@ -1038,7 +1075,38 @@ def progress_outcome(group, out):
         print("          " + out.error_class + ": " + out.message, flush=True)
 
 
-def print_report(cases, groups, records, counts, result, normalized=(), adaptations=()):
+def intent_status(case, groups, records, blocked_ids=()):
+    """PASS requires every planned seed/replay, never just one surviving alias."""
+    if case.id in blocked_ids:
+        return "NOT_RUN"
+    matches = [g for g in groups if any(c.id == case.id for c in g.aliases)]
+    if len(matches) != 1:
+        return "NOT_RUN"
+    group = matches[0]
+    outcomes = [(seed, out) for g, seed, out in records if g is group]
+    if any(not out.passed for _, out in outcomes):
+        return "FAIL"
+    seeds = SECONDARY if case.secondary else (PRIMARY,)
+    for seed in seeds:
+        found = [out for actual_seed, out in outcomes if actual_seed == seed]
+        if (len(found) != 1 or not found[0].passed
+                or (case.replay and found[0].replay != "PASS")):
+            return "NOT_RUN"
+    return "PASS"
+
+
+def matrix_result(cases, groups, records, blocked=()):
+    blocked_ids = {cases[i].id for i in blocked}
+    statuses = [intent_status(c, groups, records, blocked_ids) for c in cases
+                if c.classification != "DIAGNOSTIC"]
+    if "FAIL" in statuses:
+        return "R2_RANDOMIZER_GENERATION_MATRIX_FAIL"
+    if not statuses or "NOT_RUN" in statuses:
+        return "R2_RANDOMIZER_GENERATION_MATRIX_PARTIAL_NOT_RUN"
+    return "R2_RANDOMIZER_GENERATION_MATRIX_PASS"
+
+
+def print_report(cases, groups, records, counts, result, normalized=(), adaptations=(), blocked=()):
     required = [(g, seed, out) for g, seed, out in records
                 if any(c.classification != "DIAGNOSTIC" for c in g.aliases)]
     failed = [record for record in required if not record[2].passed]
@@ -1058,6 +1126,19 @@ def print_report(cases, groups, records, counts, result, normalized=(), adaptati
         print("UPR target-normalized adaptations: " + GEN_NORMALIZATION)
         print(f"Gen-limit intents normalized by target: {len(adaptations)}")
         print("Gen-limit coverage: intent aliases retained; effective Gen-limit execution not claimed.")
+    blocked_ids = {cases[i].id for i in blocked}
+    statuses = {c.id: intent_status(c, groups, records, blocked_ids) for c in cases
+                if c.classification != "DIAGNOSTIC"}
+    print(f"NORMALIZATION_BLOCKED_INTENTS: {len(blocked)}")
+    for i in sorted(blocked):
+        case = cases[i]
+        status = "STOP/NOT_RUN" if case.id in RISK_IDS else "NOT_RUN"
+        print(case.id + ": " + status + "; " + ", ".join(blocked[i])
+              + "; GENERATE=NOT_RUN; REOPEN=NOT_RUN; REPLAY=NOT_RUN")
+    print(f"REQUIRED_INTENTS_PASS: {sum(v == 'PASS' for v in statuses.values())}"
+          f"; FAIL: {sum(v == 'FAIL' for v in statuses.values())}"
+          f"; NOT_RUN: {sum(v == 'NOT_RUN' for v in statuses.values())}")
+    print("FULL/MAX coverage: blocked or incomplete intents cannot inherit effective-case PASS.")
     print(f"Cases run: {len(records)}\nPASS: {len(required) - len(failed)}\nFAIL: {len(failed)}")
     print(f"EXPECTED_FAIL / diagnostic: {sum(diagnostic_status(r[2]) == 'EXPECTED_FAIL' for r in diagnostics)} / {len(diagnostics)}")
     for group, _, out in diagnostics:
@@ -1081,9 +1162,10 @@ def print_report(cases, groups, records, counts, result, normalized=(), adaptati
     else:
         print("none")
     print("\nSelected profile results:")
-    for name in SELECTED + MAXIMUM + tuple(RISK_SINGLES) + (RISK_EVOLUTION, RISK_PICKUP):
-        outcomes = [out for group, _, out in records if any(selected_name(c) == name for c in group.aliases)]
-        status = "NOT_RUN" if not outcomes else "PASS" if all(o.passed for o in outcomes) else "FAIL"
+    for name in SELECTED + FULL + MAXIMUM + tuple(RISK_SINGLES) + (RISK_EVOLUTION, RISK_PICKUP, SPECIAL_WILD):
+        outcomes = [statuses.get(c.id, "NOT_RUN") for c in cases if selected_name(c) == name]
+        status = ("FAIL" if "FAIL" in outcomes else
+                  "PASS" if outcomes and all(o == "PASS" for o in outcomes) else "NOT_RUN")
         print(name + ": " + status)
     # Coverage aliases are public and retained through reporting, not lost on
     # compaction. No settings payload, paths, logs or binary hashes are printed.
@@ -1135,13 +1217,23 @@ def main(argv=None):
                 raise MatrixError("Private input was not supplied.")
             original_input = input_digest(rom)
             try:
-                effective_payloads, adaptations = normalize_settings(cases, jar, rom, temp, payloads, overlays)
+                effective_payloads, adaptations, blocked = normalize_settings(cases, jar, rom, temp, payloads, overlays)
                 normalized = [case.id for case, before, after in zip(cases, payloads, effective_payloads)
                               if before != after]
-                groups = deduplicate(cases, effective_payloads, temp)
+                groups = deduplicate(cases, effective_payloads, temp, blocked)
+                # Normalization preflight isolates unavailable requested coverage.
+                # Preserve original settings-file indices and run independent
+                # eligible cases before eligible risks; never force flags back on.
+                groups.sort(key=lambda g: any(c.id in RISK_IDS for c in g.aliases))
                 print(f"CASE_INTENTS: {len(cases)}\nUNIQUE_EFFECTIVE_CASES: {len(groups)}", flush=True)
+                print(f"NORMALIZATION_BLOCKED_INTENTS: {len(blocked)}; excluded from execution and PASS aliases")
                 primary_ok = True
+                phase = None
                 for i, group in enumerate(groups, 1):
+                    next_phase = "RISK" if any(c.id in RISK_IDS for c in group.aliases) else "INDEPENDENT"
+                    if phase != next_phase:
+                        phase = next_phase
+                        print("EXECUTION_STAGE: " + phase, flush=True)
                     case = group.aliases[0]
                     print(f"[{i:03}/{len(groups):03}] {case.layer} {case.id} ... ", end="", flush=True)
                     out = run_case(group, PRIMARY, rom, jar, temp)
@@ -1167,12 +1259,12 @@ def main(argv=None):
                                 break
                         if args.stop_on_fail and not records[-1][2].passed:
                             break
-                required_ok = all(out.passed for group, _, out in records
-                                  if any(c.classification != "DIAGNOSTIC" for c in group.aliases))
-                # Optional heuristic diagnostics never establish or block required PASS.
-                result = "R2_RANDOMIZER_GENERATION_MATRIX_PASS" if required_ok else "R2_RANDOMIZER_GENERATION_MATRIX_FAIL"
-                print_report(cases, groups, records, inventory_counts(overlays, unsupported), result, normalized, adaptations)
-                return 0 if required_ok else 1
+                # Optional heuristic diagnostics do not block positive evidence.
+                # Missing/blocked intents and seed/replay gaps always block FULL PASS.
+                result = matrix_result(cases, groups, records, blocked)
+                print_report(cases, groups, records, inventory_counts(overlays, unsupported),
+                             result, normalized, adaptations, blocked)
+                return 0 if result == "R2_RANDOMIZER_GENERATION_MATRIX_PASS" else 1
             finally:
                 if input_digest(rom) != original_input:
                     raise MatrixError("Input unchanged check failed; STOP.")
