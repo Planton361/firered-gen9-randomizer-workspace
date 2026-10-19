@@ -592,7 +592,8 @@ class NormalizationAccountingTest(unittest.TestCase):
                     (cwd / "0.settings").write_text(self.adapted(before[0]))
                     (cwd / "0.rnqs").write_text("synthetic")
                     (cwd / "0.normalization").write_text(witness)
-                    return result(text="/fictional/private/Secret.gba DD88761C")
+                    # The instrumented adapter suppresses library output on success.
+                    return result()
                 with patch.object(m, "command", side_effect=execute):
                     if witness == self.witness():
                         after, events, blocked = m.normalize_settings(cases, Path("synthetic.jar"), "/fictional/Private.gba", directory, before, OVERLAYS)
@@ -1767,6 +1768,140 @@ class InputAtomicityTest(unittest.TestCase):
             self.assertNotIn(private, text)
         for status in ("LOG_CONTENT=NOT_RUN", "MANIFEST_SEMANTICS=NOT_RUN", "GAMEPLAY=NOT_RUN"):
             self.assertIn(status, text)
+
+
+class NormalizerDiagnosticTest(unittest.TestCase):
+    # Independent expected contract, not derived from the production mapping.
+    CODES = {
+        20: "ADAPTER_COMPILE_OR_LAUNCH", 21: "INPUT_OPEN_REJECTED",
+        22: "TARGET_PROFILE_UNRECOGNIZED", 23: "SETTINGS_READ_FAILED",
+        24: "SETTINGS_TWEAK_FAILED", 25: "SETTINGS_ROUNDTRIP_FAILED",
+        26: "UNKNOWN_ADAPTER_FAILURE",
+    }
+    PRIVATE = "/fictional/PRIVATE.gba checksum=PRIVATE_HASH seed=PRIVATE_SEED\njava.lang.PrivateException: PRIVATE_SETTINGS\n at private.Stack(trace:1)"
+
+    def wire(self, code):
+        return "MATRIX_NORMALIZER_V1\t" + code + "\n"
+
+    def stop(self, response=None, exception=None):
+        with tempfile.TemporaryDirectory() as directory:
+            temp = Path(directory)
+            with patch.object(m, "command", return_value=response, side_effect=exception), patch.object(Path, "read_text", side_effect=AssertionError("No outputs consumed after STOP")), self.assertRaises(m.MatrixError) as caught:
+                m.normalize_settings([], Path("/fictional/PRIVATE.jar"),
+                                     "/fictional/PRIVATE.gba", temp, [], OVERLAYS)
+        return str(caught.exception)
+
+    def test_every_exact_stage_exit_pair_stops_before_output_consumption(self):
+        for number, code in self.CODES.items():
+            with self.subTest(code=code):
+                self.assertEqual("NORMALIZER_STAGE=" + code + "; details discarded.",
+                                 self.stop(result(number, self.wire(code))))
+
+    def test_wrong_exit_and_stage_pairs_are_unknown(self):
+        for number in (0, 1, -9, 19, 20, 21, 22, 23, 24, 25, 26, 27):
+            for expected_number, code in self.CODES.items():
+                if number == expected_number:
+                    continue
+                with self.subTest(exit=number, code=code):
+                    self.assertEqual("UNKNOWN_ADAPTER_FAILURE",
+                                     m.normalizer_failure(result(number, self.wire(code))))
+
+    def test_malformed_duplicate_injected_or_spoofed_records_are_unknown(self):
+        wire = self.wire("INPUT_OPEN_REJECTED")
+        for text in ("", "INPUT_OPEN_REJECTED", wire.rstrip(), wire + "\n",
+                     " " + wire, wire + wire, wire.lower(),
+                     wire.replace("\t", " "), wire.replace("V1", "V2"),
+                     wire.replace("\n", "\x00\n"),
+                     self.PRIVATE + wire, wire + self.PRIVATE,
+                     "MATRIX_NORMALIZER_V1\tPRIVATE_SETTINGS\n"):
+            with self.subTest(text=text):
+                self.assertEqual("NORMALIZER_STAGE=UNKNOWN_ADAPTER_FAILURE; details discarded.",
+                                 self.stop(result(21, text)))
+
+    def test_stderr_is_never_accepted_as_a_status_channel(self):
+        for number, code in self.CODES.items():
+            for out, err in (("", self.wire(code)), (self.wire(code), self.PRIVATE),
+                             (self.wire(code), self.wire(code))):
+                with self.subTest(code=code, out=out):
+                    self.assertEqual("UNKNOWN_ADAPTER_FAILURE",
+                                     m.normalizer_failure(result(number, out, err)))
+
+    def test_compile_error_and_crash_before_stage_are_unknown(self):
+        for number in (1, 2, 137, -9):
+            for out, err in (("", ""), ("", self.PRIVATE), (self.PRIVATE, "")):
+                with self.subTest(exit=number):
+                    self.assertEqual("NORMALIZER_STAGE=UNKNOWN_ADAPTER_FAILURE; details discarded.",
+                                     self.stop(result(number, out, err)))
+
+    def test_process_launch_oserror_is_classified_without_raw_message(self):
+        for exc in (FileNotFoundError(self.PRIVATE), PermissionError(self.PRIVATE)):
+            with self.subTest(exception=type(exc).__name__):
+                self.assertEqual("NORMALIZER_STAGE=ADAPTER_COMPILE_OR_LAUNCH; details discarded.",
+                                 self.stop(exception=exc))
+
+    def test_timeout_and_subprocess_failure_are_unknown_without_raw_output(self):
+        for exc in (subprocess.TimeoutExpired([self.PRIVATE], 1, output=self.PRIVATE,
+                                            stderr=self.PRIVATE),
+                    subprocess.SubprocessError(self.PRIVATE)):
+            with self.subTest(exception=type(exc).__name__):
+                self.assertEqual("NORMALIZER_STAGE=UNKNOWN_ADAPTER_FAILURE; details discarded.",
+                                 self.stop(exception=exc))
+
+    def test_only_silent_exit_zero_is_success(self):
+        self.assertIsNone(m.normalizer_failure(result()))
+        for out, err in ((self.PRIVATE, ""), ("", self.PRIVATE),
+                         (self.wire("SETTINGS_READ_FAILED"), "")):
+            self.assertEqual("UNKNOWN_ADAPTER_FAILURE", m.normalizer_failure(result(0, out, err)))
+
+    def test_error_factory_cannot_echo_untrusted_status(self):
+        self.assertEqual("NORMALIZER_STAGE=UNKNOWN_ADAPTER_FAILURE; details discarded.",
+                         str(m.normalizer_stop(self.PRIVATE)))
+
+    def test_java_template_suppresses_diagnostics_and_emits_only_contract_literals(self):
+        java = m.NORMALIZER
+        self.assertLess(java.index("System.setOut("), java.index("RootPath.path ="))
+        self.assertLess(java.index("System.setErr("), java.index("RootPath.path ="))
+        self.assertEqual(2, java.count("OutputStream.nullOutputStream()"))
+        records = re.findall(r'case (\d+): status.println\("MATRIX_NORMALIZER_V1\\t([A-Z_]+)"\); break;', java)
+        self.assertEqual(self.CODES, {int(n): code for n, code in records})
+        self.assertEqual(len(self.CODES), java.count("status.println("))
+        self.assertIn("catch (Throwable ignored)", java)
+        self.assertIn("System.exit(stage)", java)
+        for forbidden in ("getMessage(", "printStackTrace(", "getClass(", "System.out.print", "System.err.print"):
+            self.assertNotIn(forbidden, java)
+
+    def test_java_stage_boundaries_keep_loader_profile_and_settings_gates(self):
+        java = m.NORMALIZER
+        boundaries = (("int stage = 20;", "RootPath.path ="),
+                      ("stage = 21;", "new RomOpener().openRomFile"),
+                      ("stage = 22;", "instanceof Gen3RomHandler"),
+                      ("stage = 26;", "handler.isRomValid(null)"),
+                      ("stage = 23;", "Settings.readFromFileFormat(in)"),
+                      ("stage = 24;", "s.tweakForRom(handler)"),
+                      ("stage = 25;", "s.writeToFileFormat(out)"))
+        for marker, operation in boundaries:
+            with self.subTest(stage=marker):
+                self.assertLess(java.index(marker), java.index(operation))
+        self.assertIn("!loaded.wasOpeningSuccessful()", java)
+        self.assertIn("!((Gen3RomHandler) loaded.getRomHandler()).usesCfruDpeRandomPoolPolicy()", java)
+        self.assertIn("!observe(s).equals(observe(restored))", java)
+
+    def test_each_category_main_returns_nonzero_no_generation_and_cleans(self):
+        responses = [result(n, self.wire(code)) for n, code in self.CODES.items()]
+        responses += [result(1, self.PRIVATE, self.PRIVATE)]
+        for response in responses:
+            created = []
+            def execute(args, cwd, timeout=600):
+                created.append(cwd)
+                return response
+            with self.subTest(exit=response.returncode), patch.object(m, "verify_pins"), patch.object(m, "read_public_source", return_value=GENERATOR_SOURCE), patch.object(m, "prepare_tool", return_value=Path("/fictional/PRIVATE.jar")), patch.object(m, "generate_settings", return_value=[]), patch.object(m, "command", side_effect=execute), patch.object(m, "input_digest", return_value=b"synthetic input") as digest, patch.object(m, "run_case") as run, contextlib.redirect_stdout(io.StringIO()) as output:
+                self.assertEqual(1, m.main(["--rom", "/fictional/PRIVATE.gba"]))
+            run.assert_not_called()
+            self.assertEqual(2, digest.call_count)  # Existing input-unchanged finally gate.
+            self.assertTrue(created and all(not p.exists() for p in created))
+            code = self.CODES.get(response.returncode, "UNKNOWN_ADAPTER_FAILURE")
+            self.assertEqual("Result: STOP\nSanitized message: NORMALIZER_STAGE=" + code
+                             + "; details discarded.\n", output.getvalue())
 
 
 class LedgerTest(unittest.TestCase):

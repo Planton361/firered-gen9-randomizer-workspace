@@ -719,6 +719,39 @@ def generate_settings(cases, overlays, jar, temp):
 GEN_NORMALIZATION = "CFRU_DPE_GEN_RESTRICTIONS_NORMALIZED_BY_GEN3_VALIDITY"
 
 
+# Exact (exit status, complete stdout) pairs only. stderr is never interpreted.
+# A source-launch compile error and a pre-main JVM crash cannot safely be
+# distinguished by Java's generic exit 1; both remain UNKNOWN_ADAPTER_FAILURE.
+NORMALIZER_CODES = {
+    20: "ADAPTER_COMPILE_OR_LAUNCH",
+    21: "INPUT_OPEN_REJECTED",
+    22: "TARGET_PROFILE_UNRECOGNIZED",
+    23: "SETTINGS_READ_FAILED",
+    24: "SETTINGS_TWEAK_FAILED",
+    25: "SETTINGS_ROUNDTRIP_FAILED",
+    26: "UNKNOWN_ADAPTER_FAILURE",
+}
+NORMALIZER_PROTOCOL = "MATRIX_NORMALIZER_V1\t"
+
+
+def normalizer_failure(result):
+    """Return only a fixed public category; never parse exception/loader text."""
+    if result.returncode == 0 and result.stdout == "" and result.stderr == "":
+        return None
+    code = NORMALIZER_CODES.get(result.returncode)
+    if (code is not None and result.stderr == ""
+            and result.stdout == NORMALIZER_PROTOCOL + code + "\n"):
+        return code
+    return "UNKNOWN_ADAPTER_FAILURE"
+
+
+def normalizer_stop(code):
+    # Even callers cannot accidentally echo an untrusted code into MatrixError.
+    if code not in NORMALIZER_CODES.values():
+        code = "UNKNOWN_ADAPTER_FAILURE"
+    return MatrixError("NORMALIZER_STAGE=" + code + "; details discarded.")
+
+
 NORMALIZER = '''import com.uprfvx.random.Settings;
 import com.uprfvx.romio.RootPath;
 import com.uprfvx.romio.romio.RomOpener;
@@ -727,45 +760,73 @@ import java.io.*;
 import java.nio.file.*;
 class MatrixNormalize {
 ''' + OBSERVE_JAVA + '''
-  public static void main(String[] args) throws Exception {
-    RootPath.path = new File(Settings.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getParent() + File.separator;
-    RomOpener.Results loaded = new RomOpener().openRomFile(new File(args[0]));
-    if (!loaded.wasOpeningSuccessful() || !(loaded.getRomHandler() instanceof Gen3RomHandler)
-        || !((Gen3RomHandler) loaded.getRomHandler()).usesCfruDpeRandomPoolPolicy()) {
-      throw new IllegalStateException("Input is not a supported CFRU/DPE profile");
-    }
-    Gen3RomHandler handler = (Gen3RomHandler) loaded.getRomHandler();
-    boolean policy = handler.usesCfruDpeRandomPoolPolicy();
-    boolean valid = handler.isRomValid(null); // No CRC or diagnostic output.
-    for (int i = 0; i < Integer.parseInt(args[1]); i++) {
-      Settings s;
-      try (FileInputStream in = new FileInputStream(i + ".rnqs")) { s = Settings.readFromFileFormat(in); }
-      // Same public normalization as CliRandomizer.displaySettingsWarnings.
-      // This may disable unavailable generic options, e.g. Gen5 MAINPLAYTHROUGH.
-      boolean beforeLimit = s.isLimitPokemon();
-      int beforeRestrictions = s.getCurrentRestrictions() == null ? -1 : s.getCurrentRestrictions().toInt();
-      s.tweakForRom(handler);
-      boolean afterLimit = s.isLimitPokemon();
-      int afterRestrictions = s.getCurrentRestrictions() == null ? -1 : s.getCurrentRestrictions().toInt();
-      // Record the actual pinned API transition per intent, never infer it from bytes.
-      // Other generation masks are accounting only, not accepted C/I semantics.
-      String adaptation = "NONE";
-      if (policy && !valid && beforeLimit && beforeRestrictions >= 0
-          && !afterLimit && s.getCurrentRestrictions() == null && afterRestrictions == -1) {
-        adaptation = "CFRU_DPE_GEN_RESTRICTIONS_NORMALIZED_BY_GEN3_VALIDITY"
-            + "\\ttrue\\t" + policy + "\\t" + valid + "\\t" + beforeLimit
-            + "\\t" + beforeRestrictions + "\\t" + afterLimit + "\\t" + afterRestrictions;
+  public static void main(String[] args) {
+    // Silence all loader/library diagnostics before any UPR operation. Only
+    // our saved stream may emit a constant terminal failure record.
+    PrintStream status = System.out;
+    System.setOut(new PrintStream(OutputStream.nullOutputStream()));
+    System.setErr(new PrintStream(OutputStream.nullOutputStream()));
+    int stage = 20;
+    try {
+      RootPath.path = new File(Settings.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getParent() + File.separator;
+      stage = 21;
+      RomOpener.Results loaded = new RomOpener().openRomFile(new File(args[0]));
+      if (loaded == null || !loaded.wasOpeningSuccessful()) {
+        throw new IllegalStateException();
       }
-      Files.writeString(Path.of(i + ".normalization"), adaptation);
-      try (FileOutputStream out = new FileOutputStream(i + ".rnqs")) { s.writeToFileFormat(out); }
-      try (FileInputStream in = new FileInputStream(i + ".rnqs")) {
-        Settings restored = Settings.readFromFileFormat(in);
-        if (!observe(s).equals(observe(restored))) {
-          throw new IllegalStateException("Normalized Settings round-trip drift");
+      stage = 22;
+      if (!(loaded.getRomHandler() instanceof Gen3RomHandler)
+          || !((Gen3RomHandler) loaded.getRomHandler()).usesCfruDpeRandomPoolPolicy()) {
+        throw new IllegalStateException("Input is not a supported CFRU/DPE profile");
+      }
+      Gen3RomHandler handler = (Gen3RomHandler) loaded.getRomHandler();
+      boolean policy = handler.usesCfruDpeRandomPoolPolicy();
+      stage = 26; // Validity/setup exceptions do not prove profile rejection.
+      boolean valid = handler.isRomValid(null); // No CRC or diagnostic output.
+      for (int i = 0; i < Integer.parseInt(args[1]); i++) {
+        stage = 23;
+        Settings s;
+        try (FileInputStream in = new FileInputStream(i + ".rnqs")) { s = Settings.readFromFileFormat(in); }
+        // Same public normalization as CliRandomizer.displaySettingsWarnings.
+        // This may disable unavailable generic options, e.g. Gen5 MAINPLAYTHROUGH.
+        stage = 24;
+        boolean beforeLimit = s.isLimitPokemon();
+        int beforeRestrictions = s.getCurrentRestrictions() == null ? -1 : s.getCurrentRestrictions().toInt();
+        s.tweakForRom(handler);
+        boolean afterLimit = s.isLimitPokemon();
+        int afterRestrictions = s.getCurrentRestrictions() == null ? -1 : s.getCurrentRestrictions().toInt();
+        // Record the actual pinned API transition per intent, never infer it from bytes.
+        // Other generation masks are accounting only, not accepted C/I semantics.
+        String adaptation = "NONE";
+        if (policy && !valid && beforeLimit && beforeRestrictions >= 0
+            && !afterLimit && s.getCurrentRestrictions() == null && afterRestrictions == -1) {
+          adaptation = "CFRU_DPE_GEN_RESTRICTIONS_NORMALIZED_BY_GEN3_VALIDITY"
+              + "\\ttrue\\t" + policy + "\\t" + valid + "\\t" + beforeLimit
+              + "\\t" + beforeRestrictions + "\\t" + afterLimit + "\\t" + afterRestrictions;
         }
-        Files.writeString(Path.of(i + ".settings"), restored.toString());
-        Files.writeString(Path.of(i + ".post-state"), observe(restored));
+        stage = 25;
+        Files.writeString(Path.of(i + ".normalization"), adaptation);
+        try (FileOutputStream out = new FileOutputStream(i + ".rnqs")) { s.writeToFileFormat(out); }
+        try (FileInputStream in = new FileInputStream(i + ".rnqs")) {
+          Settings restored = Settings.readFromFileFormat(in);
+          if (!observe(s).equals(observe(restored))) {
+            throw new IllegalStateException("Normalized Settings round-trip drift");
+          }
+          Files.writeString(Path.of(i + ".settings"), restored.toString());
+          Files.writeString(Path.of(i + ".post-state"), observe(restored));
+        }
       }
+    } catch (Throwable ignored) {
+      switch (stage) {
+        case 20: status.println("MATRIX_NORMALIZER_V1\\tADAPTER_COMPILE_OR_LAUNCH"); break;
+        case 21: status.println("MATRIX_NORMALIZER_V1\\tINPUT_OPEN_REJECTED"); break;
+        case 22: status.println("MATRIX_NORMALIZER_V1\\tTARGET_PROFILE_UNRECOGNIZED"); break;
+        case 23: status.println("MATRIX_NORMALIZER_V1\\tSETTINGS_READ_FAILED"); break;
+        case 24: status.println("MATRIX_NORMALIZER_V1\\tSETTINGS_TWEAK_FAILED"); break;
+        case 25: status.println("MATRIX_NORMALIZER_V1\\tSETTINGS_ROUNDTRIP_FAILED"); break;
+        case 26: status.println("MATRIX_NORMALIZER_V1\\tUNKNOWN_ADAPTER_FAILURE"); break;
+      }
+      System.exit(stage);
     }
   }
 }
@@ -775,10 +836,16 @@ class MatrixNormalize {
 def normalize_settings(cases, jar, rom, temp, before_payloads, overlays=None):
     """User runtime only: normalize with UPR's loader before exact deduplication."""
     adapter = temp / "MatrixNormalize.java"
-    adapter.write_text(NORMALIZER)
-    result = command(["java", "--class-path", str(jar), str(adapter), rom, str(len(cases))], temp)
-    if result.returncode:
-        raise MatrixError("UPR input recognition/Settings normalization failed; details discarded.")
+    try:
+        adapter.write_text(NORMALIZER)
+        result = command(["java", "--class-path", str(jar), str(adapter), rom, str(len(cases))], temp)
+    except OSError:
+        raise normalizer_stop("ADAPTER_COMPILE_OR_LAUNCH") from None
+    except subprocess.SubprocessError:
+        raise normalizer_stop("UNKNOWN_ADAPTER_FAILURE") from None
+    failure = normalizer_failure(result)
+    if failure is not None:
+        raise normalizer_stop(failure)
     payloads = [(temp / f"{i}.settings").read_text() for i in range(len(cases))]
     adaptations = {}
     for i in range(len(cases)):

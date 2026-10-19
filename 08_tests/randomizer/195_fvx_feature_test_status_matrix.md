@@ -233,3 +233,41 @@ gameplay remain NOT_RUN**; this patch adds no logger/source-owner repairs or
 runtime feature PASS. Existing user-supplied broad generation/log evidence
 under #727 remains separately scoped. Codex does not execute the private ROM
 matrix, access the candidate JAR, merge PRs or update component Gitlinks.
+
+
+## #727 normalizer diagnostic gate — source/synthetic only
+
+Under [CONTROL's same-branch diagnostic repair](https://github.com/Planton361/firered-gen9-randomizer-workspace/issues/727#issuecomment-6277409950),
+the runner reports only `NORMALIZER_STAGE=<CODE>` on a normalizer STOP:
+
+| Code | Safe meaning |
+|---|---|
+| `ADAPTER_COMPILE_OR_LAUNCH` | Adapter preparation/process launch failed, or Java adapter initialization failed before input opening |
+| `INPUT_OPEN_REJECTED` | UPR input opening failed or was rejected |
+| `TARGET_PROFILE_UNRECOGNIZED` | Opened input did not pass the mandatory Gen3 CFRU/DPE policy gate, or that gate failed |
+| `SETTINGS_READ_FAILED` | Settings input loading failed |
+| `SETTINGS_TWEAK_FAILED` | Target Settings normalization failed |
+| `SETTINGS_ROUNDTRIP_FAILED` | Normalized Settings serialization, reload, observation comparison or result recording failed |
+| `UNKNOWN_ADAPTER_FAILURE` | Failure cannot safely be classified, including timeout, crash or malformed/unexpected output |
+
+The temporary Java adapter suppresses library stdout/stderr and emits only a
+constant terminal status record with its matching exit code. Python accepts only
+the exact allowlisted pair with empty stderr; every other output is discarded.
+A source-launch compilation error and a JVM crash before `main` may share Java's
+exit code 1. They remain UNKNOWN rather than inferring a cause from raw errors.
+All diagnostic failures retain nonzero STOP; detection, validity, normalization,
+roundtrip, input-unchanged and coverage gates are preserved.
+
+**CONFIRMED USER-REPORTED:** SOURCE_CHECK and CLI_CATALOGUE passed on the user's
+new #217 build; JAR provenance remains USER_ATTESTED. **UNKNOWN:** the earlier
+normalizer failure stage and the selected combined input's exact identity and
+recognition. Codex reports **152 public/synthetic/mock Python tests PASS** (0 failures,
+0 errors, 0 skips), including 12 diagnostic regression methods. Checks cover
+public source and synthetic/mock negatives only;
+no Java/JAR execution, builds, real input, generation, reopen or replay was run.
+
+STOP for CONTROL review of the updated exact HEAD. Thereafter the user runs one
+local attempt against the previously selected combined target and returns only
+`NORMALIZER_STAGE`, `SOURCE_CHECK`, `CLI_CATALOGUE` and a categorical result.
+No private paths, hashes, seeds, settings, raw output or stack traces are evidence.
+`GENERATION=NOT_RUN; REOPEN=NOT_RUN; REPLAY=NOT_RUN; FULL_MATRIX=NOT_RUN`.
