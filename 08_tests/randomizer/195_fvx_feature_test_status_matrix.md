@@ -2,7 +2,7 @@
 
 ## Purpose
 
-`fvx_feature_test_status_matrix.tsv` is the machine-readable working list for every FVX feature ID currently listed in the dashboard's `## Vollstaendige Feature-Liste`.
+`fvx_feature_test_status_matrix.tsv` is the existing feature execution ledger: the 130 historical dashboard IDs plus two current public-source overlay IDs, for **132 rows**. It is supporting evidence under Workspace Issue #727, not an operational queue.
 
 The dashboard remains the human overview. The TSV is the per-feature execution ledger that can later be joined to the CLI profile matrix and updated one feature at a time.
 
@@ -54,9 +54,17 @@ Current profile IDs:
 - `09_graphics_palettes`
 - `10_misc_tweaks`
 
-`11_special_wild` remains out-of-scope in the current feature list because the dashboard tracks Standard/Fallback Wild features, not CFRU Day/Night/Special-Wild systems as supported FVX feature IDs.
+`11_special_wild` now maps to `FVX-SPECIAL-WILD-001` (Use Time-Based Encounters). The source overlay and existing runner case establish a test intent, not support for CFRU Day/Night/Swarms. Target-normalized-away flags do not count as tested. `04_foe_held_items_sensible_expected_fail` maps to the new `FVX-FOE-SENSIBLE-HELD-ITEMS` row; it remains an unresolved diagnostic, not a positive PASS or an accepted unsupported product choice.
 
-## Current Caveats Captured
+## Historical Caveats Captured — Legacy Revisions Only
+
+The following statements and the original 130 TSV rows retain their historical
+revision-scoped evidence: 99 `PASS_LOG`, 26 `PASS_LOG_WITH_CAVEAT`, four
+`OUT_OF_SCOPE`, one `NOT_STARTED`. None is promoted to acceptance of CFRU #77
+`e27e2113e4d59dc76cf5da8d4c43b067addae348`, DPE
+`d887185de1f6ae6a78e85c4311bbadde17041d00` or UPR-FVX #217
+`f979c3c6ec4d32a92ecf632a3d9d38151d5cb19c`. The two new rows have
+`NOT_STARTED` for log and gameplay; source inventory is not execution evidence.
 
 - Generated `.rnqs` CLI profile matrix passed log smoke for all 14 profiles with 0 bad markers and 0 warnings.
 - Pokemon Traits tab is marked log-passed, including Evolutions and subsettings.
@@ -102,7 +110,213 @@ Do not put these into the TSV:
 
 Expected invariants:
 
-- 130 feature rows after the header.
+- 132 feature rows after the header; all 130 historical rows preserved byte-for-byte.
 - No duplicate `feature_id` values.
 - Every `Feature-ID` in `fvx-progress-dashboard.md` appears in the TSV.
 - The dashboard's full feature list must not be shortened or replaced by this TSV.
+
+## #727 Candidate Runner Handoff — Source Only
+
+The runner pins Workspace basis `9411c39f472d1d08555be988d2f7ab9482902580`
+separately from the three candidate sources above. Workspace Gitlinks stay
+unchanged. It inspects root Git objects/index only, ignores existing component
+worktrees and untracked local diagnostics, and never fetches/checks out/cleans
+them. Overlay text is loaded from the exact public GitHub commit and checked
+against its public Git blob ID. An optional `--public-source-file` must be
+identical public `SettingsProfileGenerator.java`, outside component/protected
+paths; dirty checkout source is never the fallback.
+
+The source plan has 159 catalogue IDs, four generator-unsupported IDs, nine
+target exclusions and 146 single-overlay intents subject to effective-option
+preflight. A requested option is not positive coverage unless it survives
+Settings round-trip and target normalization. Six new positive
+intents comprise the four separate `FVX-TRAIT-027`, `FVX-ITEM-010`,
+`FVX-GFX-002`, `FVX-GFX-004` singles and the two named compositions:
+
+- `CANDIDATE_EVOLUTION_TARGET_LINKED`: Limit all Gen1–9 with evolutionary
+  relatives **ON**, RANDOM evolutions, Change Impossible + Estimated Levels +
+  Remove Time-Based, Make Easier **OFF** (`016+024+026+027`).
+- `CANDIDATE_PICKUP_SHOP`: `FVX-ITEM-010 + FVX-ITEM-006`.
+
+These leaves are not added to safe FULL/family/MAX bundles. Existing selected
+Control/Casual/IronMON identities, no-relatives routes, 66 family pairs, 12
+triples, canonical Settings deduplication and fixed-seed/JVM replay remain.
+The resulting plan contains 303 intents before actual Settings deduplication.
+All six risk intents use the established fixed seed set and same-seed replay.
+
+`GFX-002+GFX-004` is rejected before overrides, serialization or runtime;
+`TRAIT-025` remains excluded pending independent `OWNERSHIP_WITNESS_V1`.
+This runner does not accept or synthesize that witness. RANDOM_EVERY_LEVEL,
+disallowed Mega/GMax/mechanic-item modes and duplicate UPR Reusable TMs remain
+outside mandatory positive cases.
+
+Public/mock checks (no Java, Gradle, JAR or ROM execution):
+
+```sh
+python3 -B -m unittest discover -s 07_scripts/randomizer/tests -p test_upr_generation_matrix.py
+```
+
+Tests load immutable public source fixtures in memory, then mock subprocesses
+and use synthetic temporary bytes. The source plan alone is available with
+`python3 07_scripts/randomizer/upr_generation_matrix.py --dry-run`.
+
+**Later USER-only execution, only after explicit CONTROL re-review authorization**,
+with independently attested existing PR-#217
+JAR; no automatic JAR build, binary inspection or copy:
+
+```sh
+python3 07_scripts/randomizer/upr_generation_matrix.py \
+  --jar "$PR217_JAR" \
+  --jar-source-commit f979c3c6ec4d32a92ecf632a3d9d38151d5cb19c \
+  --stop-on-fail
+```
+
+The path stays user-local. A filename/version cannot prove provenance:
+attestation is required, and the supplied JAR's feature/profile CLI catalogue
+must match exact public source before input is requested. Source check,
+Settings round-trip, actual normalized risk-option state, generation,
+supported-profile reopen, deterministic replay and input-unchanged checks
+remain distinct. Lost Gen1–9/relative flags stop the requested high-risk case
+with `STOP/NOT_RUN`; they are never substituted by no-relatives semantics.
+
+### CONTROL repair: effective coverage and partial execution
+
+The temporary adapter observes actual Settings getters after serialization
+and after `tweakForRom`. The bounded preflight checks all six risk intents,
+every requested Gen-limit case and every `UseTimeBasedEncounters=ON` intent,
+including the Special-Wild single, FULL, family pairs and MAX composition.
+Source/round-trip, malformed observation/witness, selected-profile identity
+and safety failures still STOP the run.
+
+Exact #217 `AbstractRomHandler.hasTimeBasedEncounters()` defaults to false;
+Gen3 does not override it, so `Settings.tweakForRom` disables time encounters.
+An observed ON→OFF transition is
+`TIME_BASED_ENCOUNTERS_NORMALIZED_OFF / NOT_RUN`. All affected compositions
+remain visible in the plan and report but cannot receive FULL/MAX PASS.
+This is no activation or support claim for CFRU Day/Night/Swarms. The ledger
+row stays `NOT_STARTED`.
+
+Gen3's original-ROM validity check can remove generation restrictions on the
+patched target. After validated normalization accounting, unavailable requested
+Gen-limit/relative coverage is isolated as
+`GEN_LIMIT_OR_RELATIVES_NOT_EFFECTIVE / NOT_RUN`; the named evolution risk
+additionally reports `STOP/NOT_RUN`. Other observed risk-option losses also
+block that risk before execution. No flag is forced back ON, no CRC rule is
+bypassed and no source-owned normalization behavior is changed. The established
+exact C/I disposition for the witnessed no-relatives Gen-limit delta remains;
+that limited disposition does not accept any other normalized Gen-limit case.
+
+Blocked intents are removed **before** canonical Settings deduplication.
+They cannot inherit PASS from an identical effective core payload. Original
+temporary settings-file indices are preserved. Independent eligible groups
+run first, followed by eligible risks; both retain existing primary/replay and
+fixed-seed rules. Blocked risks do not suppress independent generation,
+technical reopen or replay evidence, including with `--stop-on-fail`.
+
+A full result requires every mandatory intent and its planned seeds/replays.
+Any blocked, unexecuted or incomplete mandatory intent yields
+`R2_RANDOMIZER_GENERATION_MATRIX_PARTIAL_NOT_RUN` and exit code 1, even when
+all executed cases pass. An executed mandatory failure yields MATRIX_FAIL.
+Only complete positive coverage can yield MATRIX_PASS. Reports distinguish
+executed effective-case counts from requested-intent PASS/FAIL/NOT_RUN and list
+each blocked intent with reason and generation/reopen/replay NOT_RUN.
+Partial evidence never establishes a full matrix or runtime PASS.
+
+Only USER execution opens input/output or invokes the JAR. Temporary outputs,
+adapters and manifests are deleted after success, failure or interruption;
+private input comparison values remain transient and unreported. Reports
+suppress paths, settings strings, raw stack traces, seeds and binary hashes.
+
+Reopen currently proves supported loader identity and successful manifest
+export. **Log-content quality, manifest semantic consistency and manual
+gameplay remain NOT_RUN**; this patch adds no logger/source-owner repairs or
+runtime feature PASS. Existing user-supplied broad generation/log evidence
+under #727 remains separately scoped. Codex does not execute the private ROM
+matrix, access the candidate JAR, merge PRs or update component Gitlinks.
+
+
+## #727 normalizer diagnostic gate — source/synthetic only
+
+Under [CONTROL's same-branch diagnostic repair](https://github.com/Planton361/firered-gen9-randomizer-workspace/issues/727#issuecomment-6277409950),
+the runner reports only `NORMALIZER_STAGE=<CODE>` on a normalizer STOP:
+
+| Code | Safe meaning |
+|---|---|
+| `ADAPTER_COMPILE_OR_LAUNCH` | Adapter preparation/process launch failed, or Java adapter initialization failed before input opening |
+| `INPUT_OPEN_REJECTED` | UPR input opening failed or was rejected |
+| `TARGET_PROFILE_UNRECOGNIZED` | Opened input did not pass the mandatory Gen3 CFRU/DPE policy gate, or that gate failed |
+| `SETTINGS_READ_FAILED` | Settings input loading failed |
+| `SETTINGS_TWEAK_FAILED` | Target Settings normalization failed |
+| `SETTINGS_ROUNDTRIP_FAILED` | Normalized Settings serialization, reload, observation comparison or result recording failed |
+| `UNKNOWN_ADAPTER_FAILURE` | Failure cannot safely be classified, including timeout, crash or malformed/unexpected output |
+
+The temporary Java adapter suppresses library stdout/stderr and emits only a
+constant terminal status record with its matching exit code. Python accepts only
+the exact allowlisted pair with empty stderr; every other output is discarded.
+A source-launch compilation error and a JVM crash before `main` may share Java's
+exit code 1. They remain UNKNOWN rather than inferring a cause from raw errors.
+All diagnostic failures retain nonzero STOP; detection, validity, normalization,
+roundtrip, input-unchanged and coverage gates are preserved.
+
+At the diagnostic repair HEAD `8ce50a70411932360afe20a0d3c1ff549e7c74c6`,
+Codex reported 152 public/synthetic/mock Python tests PASS with no Java execution.
+The subsequent user-only attempt reported SOURCE_CHECK=PASS, CLI_CATALOGUE=PASS
+and SETTINGS_ROUNDTRIP_FAILED. That report establishes advancement to stage 25;
+it does not identify the exact failed field or establish input provenance.
+The sentinel repair below supersedes that diagnostic handoff.
+
+## #727 exact null-restriction sentinel repair — public/synthetic only
+
+[CONTROL contract](https://github.com/Planton361/firered-gen9-randomizer-workspace/issues/727#issuecomment-6277712577).
+**CONFIRMED PUBLIC-SOURCE / SYNTHETIC REPRODUCTION:** the pinned #217
+[Settings serializer/parser](https://github.com/Planton361/universal-pokemon-randomizer-fvx/blob/f979c3c6ec4d32a92ecf632a3d9d38151d5cb19c/random/src/main/java/com/uprfvx/random/Settings.java#L588)
+writes a null restriction as signed -1 and restores it with `new GenRestrictions(-1)`.
+The public [restriction bit model](https://github.com/Planton361/universal-pokemon-randomizer-fvx/blob/f979c3c6ec4d32a92ecf632a3d9d38151d5cb19c/romio/src/main/java/com/uprfvx/romio/gamedata/GenRestrictions.java#L51)
+then yields 1023, enabling all nine generation bits and relatives in the object.
+This representation mismatch is deterministic; whether it caused the user's
+specific stage-25 failure remains a hypothesis without an observed field diff.
+
+The runner accepts only this exact representation mismatch under its existing
+Gen3 CFRU/DPE policy and invalid-original-CRC target predicate. Both Settings
+objects and their encoded limit bits must have LimitPokemon=false. The normalized
+object must have null restrictions and encoded -1; the restored object must have
+non-null restrictions and encoded 0x3FF. Every other observation and serialized
+byte must agree, except the derived, independently validated Settings CRC32.
+The Settings version, on-disk .rnqs header/length and complete encoded payload
+must match the normalized Settings serialization. No Settings bytes are patched.
+
+For this exception only, the adapter repeats the public CLI's load + tweakForRom
+semantics on the restored object. It must return to null restrictions, disabled
+LimitPokemon and the exact normalized observations/serialization. Any additional
+drift, reenabled limit, missing evidence, wrong sentinel/mask, invalid Settings
+CRC32, IO or serialization exception still causes stage-25 STOP. The .settings
+comparison payload retains the verified source -1 encoding already in .rnqs;
+it never substitutes the restored 0x3FF serialization. Post-state accounting uses
+that verified normalized state. Unaffected roundtrips remain strict.
+
+Existing C/I source identity, witnessed restriction normalization and full-byte
+checks are unchanged. Evolution-risk 016+024+026+027 remains blocked with
+GEN_LIMIT_OR_RELATIVES_NOT_EFFECTIVE when normalized OFF. Special Wild remains
+TIME_BASED_ENCOUNTERS_NORMALIZED_OFF. Blocked cases cannot inherit an eligible
+alias PASS; independent eligible cases continue, and blocked mandatory coverage
+still forces PARTIAL_NOT_RUN, exit 1. No options are restored or forced ON.
+
+Codex reports **158 tests PASS** (0 failures, 0 errors, 0 skips), including six
+new sentinel regression methods and all 152 prior tests. A source-only Java
+harness runs the actual adapter comparison helper with synthetic Settings/handler
+API stand-ins and exact extracted public serializer/parser/normalization and
+restriction-bit fragments. It reproduces -1 to 1023, tests the sole allowed field
+difference, unchanged roundtrip, every other observed field and serialized byte,
+wrong target/limit/mask, Settings checksum/file corruption and CLI replay drift.
+Python mocks verify retained -1 accounting for C/I, evolution/Special-Wild blocks,
+no alias inheritance, exact .rnqs CLI selection and partial-result gating. Earlier
+protocol/privacy and input-unchanged/cleanup regressions remain in the full suite.
+
+This is source/synthetic evidence, not execution of the complete candidate
+Settings API, UPR/JAR, component build or actual ROM loader. The source-launch
+harness compiles only its synthetic fixture in memory and leaves no class/build
+artifact. No ROM, JAR, build, private file or component worktree was accessed;
+no candidate generation/reopen/replay or runtime acceptance is claimed.
+
+STOP for CONTROL exact-HEAD review. No user-local rerun is authorized now.
+`GENERATION=NOT_RUN; REOPEN=NOT_RUN; REPLAY=NOT_RUN; FULL_MATRIX=NOT_RUN`.
