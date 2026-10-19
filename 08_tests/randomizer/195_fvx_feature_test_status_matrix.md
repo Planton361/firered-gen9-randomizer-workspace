@@ -258,16 +258,65 @@ exit code 1. They remain UNKNOWN rather than inferring a cause from raw errors.
 All diagnostic failures retain nonzero STOP; detection, validity, normalization,
 roundtrip, input-unchanged and coverage gates are preserved.
 
-**CONFIRMED USER-REPORTED:** SOURCE_CHECK and CLI_CATALOGUE passed on the user's
-new #217 build; JAR provenance remains USER_ATTESTED. **UNKNOWN:** the earlier
-normalizer failure stage and the selected combined input's exact identity and
-recognition. Codex reports **152 public/synthetic/mock Python tests PASS** (0 failures,
-0 errors, 0 skips), including 12 diagnostic regression methods. Checks cover
-public source and synthetic/mock negatives only;
-no Java/JAR execution, builds, real input, generation, reopen or replay was run.
+At the diagnostic repair HEAD `8ce50a70411932360afe20a0d3c1ff549e7c74c6`,
+Codex reported 152 public/synthetic/mock Python tests PASS with no Java execution.
+The subsequent user-only attempt reported SOURCE_CHECK=PASS, CLI_CATALOGUE=PASS
+and SETTINGS_ROUNDTRIP_FAILED. That report establishes advancement to stage 25;
+it does not identify the exact failed field or establish input provenance.
+The sentinel repair below supersedes that diagnostic handoff.
 
-STOP for CONTROL review of the updated exact HEAD. Thereafter the user runs one
-local attempt against the previously selected combined target and returns only
-`NORMALIZER_STAGE`, `SOURCE_CHECK`, `CLI_CATALOGUE` and a categorical result.
-No private paths, hashes, seeds, settings, raw output or stack traces are evidence.
+## #727 exact null-restriction sentinel repair — public/synthetic only
+
+[CONTROL contract](https://github.com/Planton361/firered-gen9-randomizer-workspace/issues/727#issuecomment-6277712577).
+**CONFIRMED PUBLIC-SOURCE / SYNTHETIC REPRODUCTION:** the pinned #217
+[Settings serializer/parser](https://github.com/Planton361/universal-pokemon-randomizer-fvx/blob/f979c3c6ec4d32a92ecf632a3d9d38151d5cb19c/random/src/main/java/com/uprfvx/random/Settings.java#L588)
+writes a null restriction as signed -1 and restores it with `new GenRestrictions(-1)`.
+The public [restriction bit model](https://github.com/Planton361/universal-pokemon-randomizer-fvx/blob/f979c3c6ec4d32a92ecf632a3d9d38151d5cb19c/romio/src/main/java/com/uprfvx/romio/gamedata/GenRestrictions.java#L51)
+then yields 1023, enabling all nine generation bits and relatives in the object.
+This representation mismatch is deterministic; whether it caused the user's
+specific stage-25 failure remains a hypothesis without an observed field diff.
+
+The runner accepts only this exact representation mismatch under its existing
+Gen3 CFRU/DPE policy and invalid-original-CRC target predicate. Both Settings
+objects and their encoded limit bits must have LimitPokemon=false. The normalized
+object must have null restrictions and encoded -1; the restored object must have
+non-null restrictions and encoded 0x3FF. Every other observation and serialized
+byte must agree, except the derived, independently validated Settings CRC32.
+The Settings version, on-disk .rnqs header/length and complete encoded payload
+must match the normalized Settings serialization. No Settings bytes are patched.
+
+For this exception only, the adapter repeats the public CLI's load + tweakForRom
+semantics on the restored object. It must return to null restrictions, disabled
+LimitPokemon and the exact normalized observations/serialization. Any additional
+drift, reenabled limit, missing evidence, wrong sentinel/mask, invalid Settings
+CRC32, IO or serialization exception still causes stage-25 STOP. The .settings
+comparison payload retains the verified source -1 encoding already in .rnqs;
+it never substitutes the restored 0x3FF serialization. Post-state accounting uses
+that verified normalized state. Unaffected roundtrips remain strict.
+
+Existing C/I source identity, witnessed restriction normalization and full-byte
+checks are unchanged. Evolution-risk 016+024+026+027 remains blocked with
+GEN_LIMIT_OR_RELATIVES_NOT_EFFECTIVE when normalized OFF. Special Wild remains
+TIME_BASED_ENCOUNTERS_NORMALIZED_OFF. Blocked cases cannot inherit an eligible
+alias PASS; independent eligible cases continue, and blocked mandatory coverage
+still forces PARTIAL_NOT_RUN, exit 1. No options are restored or forced ON.
+
+Codex reports **158 tests PASS** (0 failures, 0 errors, 0 skips), including six
+new sentinel regression methods and all 152 prior tests. A source-only Java
+harness runs the actual adapter comparison helper with synthetic Settings/handler
+API stand-ins and exact extracted public serializer/parser/normalization and
+restriction-bit fragments. It reproduces -1 to 1023, tests the sole allowed field
+difference, unchanged roundtrip, every other observed field and serialized byte,
+wrong target/limit/mask, Settings checksum/file corruption and CLI replay drift.
+Python mocks verify retained -1 accounting for C/I, evolution/Special-Wild blocks,
+no alias inheritance, exact .rnqs CLI selection and partial-result gating. Earlier
+protocol/privacy and input-unchanged/cleanup regressions remain in the full suite.
+
+This is source/synthetic evidence, not execution of the complete candidate
+Settings API, UPR/JAR, component build or actual ROM loader. The source-launch
+harness compiles only its synthetic fixture in memory and leaves no class/build
+artifact. No ROM, JAR, build, private file or component worktree was accessed;
+no candidate generation/reopen/replay or runtime acceptance is claimed.
+
+STOP for CONTROL exact-HEAD review. No user-local rerun is authorized now.
 `GENERATION=NOT_RUN; REOPEN=NOT_RUN; REPLAY=NOT_RUN; FULL_MATRIX=NOT_RUN`.

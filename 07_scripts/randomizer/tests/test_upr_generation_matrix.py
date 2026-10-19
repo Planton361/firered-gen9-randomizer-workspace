@@ -1,6 +1,7 @@
 """#727 tests: exact public source + synthetic temp artifacts + mocked subprocesses.
 
-Never launches Java/Gradle/UPR or opens a real ROM, jar, build, save or state.
+A source-only Java harness executes public fragments with synthetic API stand-ins.
+Never launches Gradle/UPR or opens a real ROM, jar, build, save or state.
 """
 import base64
 import contextlib
@@ -1902,6 +1903,341 @@ class NormalizerDiagnosticTest(unittest.TestCase):
             code = self.CODES.get(response.returncode, "UNKNOWN_ADAPTER_FAILURE")
             self.assertEqual("Result: STOP\nSanitized message: NORMALIZER_STAGE=" + code
                              + "; details discarded.\n", output.getvalue())
+
+
+
+class NullRestrictionSentinelTest(unittest.TestCase):
+    """Pinned public fragments + synthetic Settings API; never a candidate build."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.restrictions = public_fixture(
+            "romio/src/main/java/com/uprfvx/romio/gamedata/GenRestrictions.java",
+            "bc2fb9358151f65c0736362588edc674c47fc1f7")
+        cls.cli = public_fixture("random/src/main/java/com/uprfvx/random/cli/CliRandomizer.java",
+                                 "0848e80cf7025efc15b246b28bde498b1466b950")
+
+    def test_pinned_null_serializer_parser_and_restriction_mask_contract(self):
+        self.assertRegex(SETTINGS_SOURCE, r"if \(currentRestrictions == null\) \{\s*writeFullInt\(out, -1\);\s*\} else \{\s*writeFullInt\(out, currentRestrictions.toInt\(\)\);")
+        self.assertRegex(SETTINGS_SOURCE, r"int genLimit = IOFunctions.readFullInt\(data, 30\);\s*GenRestrictions restrictions = new GenRestrictions\(genLimit\);\s*settings.setCurrentRestrictions\(restrictions\);")
+        self.assertIn("public static final int MAX_GENERATION = 9;", self.restrictions)
+        self.assertIn("allowEvolutionaryRelatives = (state & 1) > 0;", self.restrictions)
+        self.assertIn("setGenAllowed(gen, (state & (1 << gen)) > 0);", self.restrictions)
+        self.assertIn("switches[0] = allowEvolutionaryRelatives;", self.restrictions)
+        self.assertIn("switches[gen] = isGenAllowed(gen);", self.restrictions)
+        self.assertIn("initial |= b ? state : 0;", self.restrictions)
+        serialized = (-1).to_bytes(4, "little", signed=True)
+        parsed = int.from_bytes(serialized, "little", signed=True)
+        restored_mask = sum(1 << bit for bit in range(10) if parsed & (1 << bit))
+        self.assertEqual(-1, parsed)
+        self.assertEqual(1023, restored_mask)
+        self.assertNotEqual(parsed, restored_mask)
+
+    def test_pinned_cli_file_loading_and_normalization_before_randomization(self):
+        self.assertIn("settings = Settings.readFromFileFormat(fis);", self.cli)
+        self.assertIn("Settings.TweakForROMFeedback feedback = settings.tweakForRom(romHandler);", self.cli)
+        self.assertLess(self.cli.index("CliRandomizer.displaySettingsWarnings(settings, romHandler);"),
+                        self.cli.index("new GameRandomizer(settings,"))
+        self.assertRegex(SETTINGS_SOURCE, r"rh instanceof Gen3RomHandler && !rh.isRomValid\(null\)\)\) \{\s*this.currentRestrictions = null;\s*this.setLimitPokemon\(false\);")
+        self.assertIn("settings.setLimitPokemon(restoreState(data[65], 3));", SETTINGS_SOURCE)
+        self.assertIn("byte[] settings = toStringWithoutVersion().getBytes(StandardCharsets.UTF_8);", SETTINGS_SOURCE)
+        self.assertIn("buf.putInt(VERSION);", SETTINGS_SOURCE)
+        self.assertIn("buf.putInt(settings.length);", SETTINGS_SOURCE)
+        self.assertIn("return fromStringAndVersion(settings, version);", SETTINGS_SOURCE)
+        self.assertIn("checkChecksum(data);", SETTINGS_SOURCE)
+
+    def test_adapter_keeps_source_encoding_and_checks_cli_replay_in_stage25(self):
+        java = m.NORMALIZER
+        self.assertIn('Settings verified = verifiedRoundtrip(s, restored, handler, policy, valid, Path.of(i + ".rnqs"));', java)
+        self.assertIn('Files.writeString(Path.of(i + ".settings"), verified.toString());', java)
+        self.assertIn('Files.writeString(Path.of(i + ".post-state"), observe(verified));', java)
+        self.assertLess(java.index("stage = 25;"), java.index("Settings verified ="))
+        self.assertIn("restored.tweakForRom(handler);", m.NORMALIZER_ROUNDTRIP_JAVA)
+        self.assertIn("return s; // Preserve the verified on-disk -1 encoding", m.NORMALIZER_ROUNDTRIP_JAVA)
+        self.assertNotIn("setCurrentRestrictions(", m.NORMALIZER_ROUNDTRIP_JAVA)
+        self.assertNotIn("setLimitPokemon(", m.NORMALIZER_ROUNDTRIP_JAVA)
+
+    def test_synthetic_java_executes_public_fragments_and_actual_comparison_helper(self):
+        # Java source-launch compiles this synthetic fixture in memory only.
+        # No UPR/JAR/Gradle/component build, classpath, ROM or binary output.
+        serializer = re.search(r"if \(currentRestrictions == null\) \{\s*writeFullInt\(out, -1\);\s*\} else \{\s*writeFullInt\(out, currentRestrictions.toInt\(\)\);\s*\}", SETTINGS_SOURCE)[0]
+        parser = re.search(r"int genLimit = IOFunctions.readFullInt\(data, 30\);\s*GenRestrictions restrictions = new GenRestrictions\(genLimit\);\s*settings.setCurrentRestrictions\(restrictions\);", SETTINGS_SOURCE)[0]
+        tweak = re.search(r"if \(rh instanceof Gen1RomHandler \|\| \(rh instanceof Gen3RomHandler && !rh.isRomValid\(null\)\)\) \{.*?this.currentRestrictions.limitToGen\(rh.highestPokemonGeneration\(\)\);\s*\}", SETTINGS_SOURCE, re.S)[0]
+        # Unmodified standalone public restriction fields/constructors/bit methods;
+        # omit package/imports and later unrelated mega/type-dependent methods.
+        restrictions = self.restrictions.split("public class GenRestrictions {", 1)[1].split("    // TODO: this should *not* be here", 1)[0]
+        options = CandidateRiskTest.observed()
+        getters = []
+        for key, default in options.items():
+            if key in ("LimitPokemon", "CurrentRestrictions"):
+                continue
+            method = ("useEstimatedLevelsForEvolutionImprovements" if key == "EstimateLevelForEvolutionImprovements"
+                      else ("is" if default in ("true", "false") else "get") + key)
+            kind = "boolean" if default in ("true", "false") else "String"
+            value = 'options.getOrDefault("' + key + '", "' + default + '")'
+            if kind == "boolean":
+                value = "Boolean.parseBoolean(" + value + ")"
+            getters.append(kind + " " + method + "() { return " + value + "; }")
+        java = r'''
+import java.io.*;
+import java.nio.*;
+import java.nio.file.*;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
+import java.util.zip.CRC32;
+class SentinelHarness {
+''' + m.OBSERVE_JAVA + m.NORMALIZER_ROUNDTRIP_JAVA + r'''
+  interface Checked { void run() throws Exception; }
+  static void require(boolean ok) { if (!ok) throw new AssertionError(); }
+  static void stop(Checked action) throws Exception {
+    try { action.run(); } catch (Exception expected) { return; }
+    throw new AssertionError();
+  }
+  static Path file;
+  static Gen3RomHandler handler = new Gen3RomHandler();
+  static Settings normalized() { Settings s = new Settings(); s.currentRestrictions = null; return s; }
+  static Settings reload(Settings s) throws Exception { s.write(file); return Settings.read(file); }
+  static void reject(Settings s, Settings r, boolean policy, boolean valid) throws Exception {
+    require(!exactNullRestrictionRoundtrip(s, r, policy, valid));
+    stop(() -> verifiedRoundtrip(s, r, handler, policy, valid, file));
+  }
+  public static void main(String[] args) throws Exception {
+    file = Path.of(args[0]);
+    Settings s = normalized();
+    Settings restored = reload(s);
+    require(s.currentRestrictions == null && restored.currentRestrictions.toInt() == 1023);
+    require(!s.isLimitPokemon() && !restored.isLimitPokemon());
+    require(ByteBuffer.wrap(checkedSettingsData(s.toString())).order(ByteOrder.LITTLE_ENDIAN).getInt(30) == -1);
+    require(!observe(s).equals(observe(restored)) && !s.toString().equals(restored.toString()));
+    require(exactNullRestrictionRoundtrip(s, restored, true, false));
+    byte[] disk = Files.readAllBytes(file);
+    Settings verified = verifiedRoundtrip(s, restored, handler, true, false, file);
+    require(verified == s && Arrays.equals(disk, Files.readAllBytes(file)));
+    String encoded = new String(disk, 8, disk.length - 8, StandardCharsets.UTF_8);
+    require(verified.toString().substring(3).equals(encoded));
+    require(verified.currentRestrictions == null && !verified.isLimitPokemon());
+    // The CLI reloads that same -1 file, then uses the exact public target gate.
+    Settings cli = Settings.read(file);
+    require(cli.currentRestrictions.toInt() == 1023 && !cli.isLimitPokemon());
+    cli.tweakForRom(handler);
+    require(cli.currentRestrictions == null && !cli.isLimitPokemon());
+    require(verified.toString().equals(cli.toString()) && observe(verified).equals(observe(cli)));
+    // Unaffected strict roundtrip remains accepted, with no exception predicate.
+    Settings stable = new Settings(); stable.currentRestrictions = new GenRestrictions(1022); stable.limit = true;
+    Settings stableRead = reload(stable);
+    require(verifiedRoundtrip(stable, stableRead, handler, false, true, file) == stableRead);
+    for (boolean policy : new boolean[]{false, true}) {
+      for (boolean valid : new boolean[]{false, true}) {
+        if (policy && !valid) continue;
+        s = normalized(); restored = reload(s); reject(s, restored, policy, valid);
+      }
+    }
+    for (int mask : new int[]{0, 1, 511, 1022, 1024}) {
+      s = normalized(); restored = reload(s); restored.currentRestrictions = new GenRestrictions(mask);
+      reject(s, restored, true, false);
+    }
+    for (boolean left : new boolean[]{false, true}) {
+      for (boolean right : new boolean[]{false, true}) {
+        if (!left && !right) continue;
+        s = normalized(); s.limit = left; restored = reload(s); restored.limit = right;
+        reject(s, restored, true, false);
+      }
+    }
+    s = new Settings(); restored = reload(s); restored.currentRestrictions = new GenRestrictions(1023);
+    reject(s, restored, true, false); // non-null source restrictions are never the exception
+    for (String key : OBSERVABLES) {
+      if (key.equals("LimitPokemon") || key.equals("CurrentRestrictions")) continue;
+      s = normalized(); restored = reload(s);
+      String original = observe(s).lines().filter(line -> line.startsWith(key + "=")).findFirst().get().split("=", 2)[1];
+      restored.options.put(key, original.equals("false") ? "true" : "RANDOM");
+      reject(s, restored, true, false);
+    }
+    // Exercise every other serialized byte, including metadata/custom checksum.
+    for (int i = 0; i < 76; i++) {
+      if ((i >= 30 && i < 34) || (i >= 68 && i < 72)) continue;
+      s = normalized(); restored = reload(s); restored.data[i] ^= 1;
+      reject(s, restored, true, false);
+    }
+    for (int mask : new int[]{-2, 0, 1023}) {
+      s = normalized(); s.forcedMask = mask; restored = reload(s);
+      reject(s, restored, true, false);
+    }
+    s = normalized(); restored = reload(s); restored.forcedMask = -1;
+    reject(s, restored, true, false); // getter/serialized restored mask disagree
+    for (boolean corruptSource : new boolean[]{false, true}) {
+      Settings a = normalized(); Settings b = reload(a);
+      if (corruptSource) a.corruptCRC = true; else b.corruptCRC = true;
+      stop(() -> verifiedRoundtrip(a, b, handler, true, false, file));
+    }
+    for (int offset : new int[]{0, 4, 8}) {
+      Settings a = normalized(); Settings b = reload(a); byte[] changed = Files.readAllBytes(file);
+      changed[offset] ^= 1; Files.write(file, changed);
+      stop(() -> verifiedRoundtrip(a, b, handler, true, false, file));
+    }
+    Settings a = normalized(); Settings b = reload(a); Files.write(file, new byte[0]);
+    stop(() -> verifiedRoundtrip(a, b, handler, true, false, file));
+    a.write(file); Files.delete(file);
+    stop(() -> verifiedRoundtrip(a, b, handler, true, false, file));
+    for (int mode = 1; mode <= 4; mode++) {
+      Settings x = normalized(); Settings y = reload(x); Gen3RomHandler target = new Gen3RomHandler(); target.mode = mode;
+      stop(() -> verifiedRoundtrip(x, y, target, true, false, file));
+    }
+    System.out.println("SENTINEL_SYNTHETIC_HARNESS=PASS");
+  }
+  static final String[] OBSERVABLES = OBSERVABLE_LIST;
+}
+interface RomHandler { boolean isRomValid(Object unused); int highestPokemonGeneration(); }
+class Gen1RomHandler implements RomHandler {
+  public boolean isRomValid(Object unused) { return true; }
+  public int highestPokemonGeneration() { return 1; }
+}
+class Gen3RomHandler implements RomHandler {
+  int mode;
+  public boolean isRomValid(Object unused) { return false; }
+  public int highestPokemonGeneration() { return 9; }
+}
+class IOFunctions {
+  static int readFullInt(byte[] data, int index) { return ByteBuffer.wrap(data).order(ByteOrder.LITTLE_ENDIAN).getInt(index); }
+}
+class Settings {
+  byte[] data = new byte[76];
+  boolean limit, corruptCRC;
+  Integer forcedMask;
+  GenRestrictions currentRestrictions = new GenRestrictions(1022);
+  Map<String, String> options = new HashMap<>();
+  boolean isLimitPokemon() { return limit; }
+  void setLimitPokemon(boolean value) { limit = value; }
+  GenRestrictions getCurrentRestrictions() { return currentRestrictions; }
+  void setCurrentRestrictions(GenRestrictions value) { currentRestrictions = value; }
+  GETTERS
+  static void writeFullInt(ByteArrayOutputStream out, int value) {
+    out.writeBytes(ByteBuffer.allocate(4).order(ByteOrder.LITTLE_ENDIAN).putInt(value).array());
+  }
+  public String toString() {
+    ByteArrayOutputStream out = new ByteArrayOutputStream();
+    out.writeBytes(Arrays.copyOfRange(data, 0, 30));
+    SERIALIZER
+    out.writeBytes(Arrays.copyOfRange(data, 34, data.length));
+    byte[] encoded = out.toByteArray();
+    if (forcedMask != null) ByteBuffer.wrap(encoded).order(ByteOrder.LITTLE_ENDIAN).putInt(30, forcedMask);
+    encoded[65] = (byte) ((encoded[65] & ~8) | (limit ? 8 : 0));
+    CRC32 crc = new CRC32(); crc.update(encoded, 0, encoded.length - 8);
+    ByteBuffer.wrap(encoded).putInt(encoded.length - 8, (int)crc.getValue());
+    if (corruptCRC) encoded[encoded.length - 8] ^= 1;
+    return "422" + Base64.getEncoder().encodeToString(encoded);
+  }
+  void write(Path file) throws Exception {
+    byte[] encoded = toString().substring(3).getBytes(StandardCharsets.UTF_8);
+    Files.write(file, ByteBuffer.allocate(encoded.length + 8).putInt(422).putInt(encoded.length).put(encoded).array());
+  }
+  static Settings read(Path file) throws Exception {
+    byte[] encoded = Files.readAllBytes(file);
+    String payload = "422" + new String(encoded, 8, encoded.length - 8, StandardCharsets.UTF_8);
+    byte[] data = SentinelHarness.checkedSettingsData(payload);
+    Settings settings = new Settings(); settings.data = data;
+    PARSER
+    settings.setLimitPokemon((data[65] & 8) != 0);
+    return settings;
+  }
+  void tweakForRom(RomHandler rh) {
+    if (rh instanceof Gen3RomHandler && ((Gen3RomHandler)rh).mode == 2) return;
+    TWEAK
+    int mode = ((Gen3RomHandler)rh).mode;
+    if (mode == 1) limit = true;
+    if (mode == 3) data[1] ^= 1;
+    if (mode == 4) options.put("UseTimeBasedEncounters", "true");
+  }
+}
+class GenRestrictions { RESTRICTIONS }
+'''
+        java = (java.replace("OBSERVABLE_LIST", "new String[]{" + ",".join('"' + k + '"' for k in options) + "}")
+                .replace("GETTERS", "\n".join(getters)).replace("SERIALIZER", serializer)
+                .replace("PARSER", parser).replace("TWEAK", tweak).replace("RESTRICTIONS", restrictions))
+        with tempfile.TemporaryDirectory(prefix="sentinel-synthetic-") as directory:
+            source = Path(directory) / "SentinelHarness.java"
+            source.write_text(java)
+            response = subprocess.run(["java", str(source), str(Path(directory) / "synthetic.rnqs")],
+                                      cwd=directory, capture_output=True, text=True, timeout=60, check=False)
+            # Do not publish compiler/exception output, even from this synthetic fixture.
+            self.assertEqual(0, response.returncode, "Synthetic Java harness failed; details discarded.")
+            self.assertTrue(response.stdout == "SENTINEL_SYNTHETIC_HARNESS=PASS\n", "Unexpected synthetic harness output; discarded.")
+            self.assertTrue(response.stderr == "", "Unexpected synthetic harness diagnostics; discarded.")
+            self.assertFalse(list(Path(directory).glob("*.class")))
+
+    def test_preserved_sentinel_cannot_be_replaced_by_restored_mask_for_selected_profiles(self):
+        fixture = NormalizationAccountingTest()
+        for name in ("CASUAL_NATDEX", "IRONMON_NATDEX"):
+            cases, before = fixture.selected(name)
+            after = fixture.adapted(before[0])
+            m.verify_selected_normalized_payloads(cases, before, [after], {0: 1022})
+            changed = bytearray(m.settings_data(after))
+            changed[30:34] = (1023).to_bytes(4, "little", signed=True)
+            changed[-8:-4] = zlib.crc32(changed[:-8]).to_bytes(4, "big")
+            with self.subTest(profile=name), self.assertRaises(m.MatrixError):
+                m.verify_selected_normalized_payloads(cases, before,
+                    ["422" + base64.b64encode(changed).decode()], {0: 1022})
+
+
+    def test_sentinel_payload_accounting_retains_blocked_intents_and_cli_file_identity(self):
+        coverage = NormalizedCoverageTest()
+        coverage.setUp()
+        cases = [coverage.by_id[name] for name in (m.RISK_EVOLUTION, m.SPECIAL_WILD,
+                 "FVX-ITEM-002", "CASUAL_NATDEX", "IRONMON_NATDEX")]
+        baseline = bytearray(67)
+        baseline[30:34] = (1022).to_bytes(4, "little")
+        risk = bytearray(baseline)
+        risk[30:34] = (1023).to_bytes(4, "little")
+        risk[65] |= 8
+        before = [synthetic_payload(risk), synthetic_payload(baseline),
+                  synthetic_payload(baseline), synthetic_payload(m.CASUAL_BYTES), m.IRONMON]
+        fixture = NormalizationAccountingTest()
+        after = [fixture.adapted(payload) for payload in before]
+        self.assertEqual(after[0], after[1])
+        self.assertEqual(after[1], after[2])
+        observed = coverage.observations(cases)
+        for fields in observed.values():
+            fields.update(LimitPokemon="false", CurrentRestrictions="-1")
+            if fields["UseTimeBasedEncounters"] == "true":
+                fields["UseTimeBasedEncounters"] = "false"
+        with tempfile.TemporaryDirectory() as directory:
+            temp = Path(directory)
+            def execute(args, cwd, timeout=600):
+                for i, payload in enumerate(after):
+                    encoded = payload[3:].encode()
+                    (cwd / f"{i}.rnqs").write_bytes((422).to_bytes(4, "big")
+                        + len(encoded).to_bytes(4, "big") + encoded)
+                    (cwd / f"{i}.settings").write_text(payload)
+                    (cwd / f"{i}.normalization").write_text(
+                        fixture.witness(**{"5": "1023" if i == 0 else "1022"})
+                        if i in (0, 3, 4) else "NONE")
+                for i, fields in observed.items():
+                    (cwd / f"{i}.post-state").write_text("\n".join(k + "=" + v for k, v in fields.items()))
+                return result()
+            with patch.object(m, "command", side_effect=execute):
+                payloads, events, blocked = m.normalize_settings(cases, Path("synthetic.jar"),
+                    "/fictional/input", temp, before, OVERLAYS)
+            self.assertEqual(after, payloads)
+            self.assertEqual({0: 1023, 3: 1022, 4: 1022}, events)
+            self.assertEqual({0, 1}, set(blocked))
+            self.assertEqual(("GEN_LIMIT_OR_RELATIVES_NOT_EFFECTIVE",), blocked[0])
+            self.assertEqual(("TIME_BASED_ENCOUNTERS_NORMALIZED_OFF",), blocked[1])
+            groups = m.deduplicate(cases, payloads, temp, blocked)
+            self.assertEqual(3, len(groups))
+            self.assertEqual({cases[2].id, cases[3].id, cases[4].id},
+                             {case.id for group in groups for case in group.aliases})
+            self.assertEqual([cases[2]], groups[0].aliases)
+            self.assertEqual(temp / "2.rnqs", groups[0].settings)
+            disk = groups[0].settings.read_bytes()
+            self.assertEqual(after[2][3:].encode(), disk[8:])
+            self.assertEqual(-1, int.from_bytes(m.settings_data(after[2])[30:34], "little", signed=True))
+            with patch.object(m, "input_digest", return_value=b"synthetic"), patch.object(m, "command", return_value=result(1)) as cli:
+                m.attempt(groups[0], m.PRIMARY, "/fictional/input", Path("synthetic.jar"), temp, False)
+            args = cli.call_args.args[0]
+            self.assertEqual(str(groups[0].settings), args[args.index("-s") + 1])
+            self.assertEqual(disk, groups[0].settings.read_bytes())
+            records = [(groups[0], m.PRIMARY, m.Outcome("PASS", "PASS", "PASS", input_unchanged="PASS"))]
+            self.assertEqual("R2_RANDOMIZER_GENERATION_MATRIX_PARTIAL_NOT_RUN",
+                             m.matrix_result(cases, groups, records, blocked))
 
 
 class LedgerTest(unittest.TestCase):

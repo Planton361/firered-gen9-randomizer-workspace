@@ -752,14 +752,78 @@ def normalizer_stop(code):
     return MatrixError("NORMALIZER_STAGE=" + code + "; details discarded.")
 
 
+# Comparison only: never rewrite the .rnqs payload or restore disabled options.
+# Offsets/version are the exact pinned public Settings serializer contract.
+NORMALIZER_ROUNDTRIP_JAVA = r'''
+  static byte[] checkedSettingsData(String payload) {
+    if (!payload.startsWith("422")) throw new IllegalStateException();
+    byte[] data = Base64.getDecoder().decode(payload.substring(3));
+    if (data.length < 76) throw new IllegalStateException();
+    CRC32 crc = new CRC32();
+    crc.update(data, 0, data.length - 8);
+    if ((int) crc.getValue() != ByteBuffer.wrap(data).getInt(data.length - 8)) {
+      throw new IllegalStateException();
+    }
+    return data;
+  }
+  static boolean exactNullRestrictionRoundtrip(Settings s, Settings restored,
+                                               boolean policy, boolean valid) {
+    if (!policy || valid || s.isLimitPokemon() || restored.isLimitPokemon()
+        || s.getCurrentRestrictions() != null || restored.getCurrentRestrictions() == null
+        || restored.getCurrentRestrictions().toInt() != 0x3FF) return false;
+    if (!observe(s).replace("\nCurrentRestrictions=-1\n", "\nCurrentRestrictions=1023\n")
+        .equals(observe(restored))) return false;
+    byte[] original = checkedSettingsData(s.toString());
+    byte[] reloaded = checkedSettingsData(restored.toString());
+    if (original.length != reloaded.length
+        || ByteBuffer.wrap(original).order(ByteOrder.LITTLE_ENDIAN).getInt(30) != -1
+        || ByteBuffer.wrap(reloaded).order(ByteOrder.LITTLE_ENDIAN).getInt(30) != 0x3FF
+        || (original[65] & 8) != 0 || (reloaded[65] & 8) != 0) return false;
+    // Every other serialized byte, including metadata and custom-name checksum,
+    // must match. Only the restriction word and its validated CRC32 may differ.
+    for (int i = 0; i < original.length; i++) {
+      if ((i >= 30 && i < 34) || (i >= original.length - 8 && i < original.length - 4)) continue;
+      if (original[i] != reloaded[i]) return false;
+    }
+    return true;
+  }
+  static Settings verifiedRoundtrip(Settings s, Settings restored, Gen3RomHandler handler,
+                                    boolean policy, boolean valid, Path settingsFile) throws Exception {
+    String normalized = s.toString();
+    checkedSettingsData(normalized);
+    byte[] encoded = normalized.substring(3).getBytes(java.nio.charset.StandardCharsets.UTF_8);
+    byte[] onDisk = Files.readAllBytes(settingsFile);
+    if (onDisk.length != encoded.length + 8 || ByteBuffer.wrap(onDisk).getInt() != 422
+        || ByteBuffer.wrap(onDisk).getInt(4) != encoded.length
+        || !Arrays.equals(Arrays.copyOfRange(onDisk, 8, onDisk.length), encoded)) {
+      throw new IllegalStateException();
+    }
+    if (observe(s).equals(observe(restored)) && normalized.equals(restored.toString())) return restored;
+    if (!exactNullRestrictionRoundtrip(s, restored, policy, valid)) throw new IllegalStateException();
+    // Replay the CLI's public readFromFileFormat + tweakForRom semantics.
+    // Reapplying the real target normalization must yield the exact source state,
+    // never a reenabled limit or any other new Settings mutation.
+    restored.tweakForRom(handler);
+    if (restored.isLimitPokemon() || restored.getCurrentRestrictions() != null
+        || !observe(s).equals(observe(restored)) || !normalized.equals(restored.toString())) {
+      throw new IllegalStateException();
+    }
+    return s; // Preserve the verified on-disk -1 encoding, not restored mask 1023.
+  }
+'''
+
+
 NORMALIZER = '''import com.uprfvx.random.Settings;
 import com.uprfvx.romio.RootPath;
 import com.uprfvx.romio.romio.RomOpener;
 import com.uprfvx.romio.romhandlers.Gen3RomHandler;
 import java.io.*;
 import java.nio.file.*;
+import java.nio.*;
+import java.util.*;
+import java.util.zip.CRC32;
 class MatrixNormalize {
-''' + OBSERVE_JAVA + '''
+''' + OBSERVE_JAVA + NORMALIZER_ROUNDTRIP_JAVA + '''
   public static void main(String[] args) {
     // Silence all loader/library diagnostics before any UPR operation. Only
     // our saved stream may emit a constant terminal failure record.
@@ -809,11 +873,9 @@ class MatrixNormalize {
         try (FileOutputStream out = new FileOutputStream(i + ".rnqs")) { s.writeToFileFormat(out); }
         try (FileInputStream in = new FileInputStream(i + ".rnqs")) {
           Settings restored = Settings.readFromFileFormat(in);
-          if (!observe(s).equals(observe(restored))) {
-            throw new IllegalStateException("Normalized Settings round-trip drift");
-          }
-          Files.writeString(Path.of(i + ".settings"), restored.toString());
-          Files.writeString(Path.of(i + ".post-state"), observe(restored));
+          Settings verified = verifiedRoundtrip(s, restored, handler, policy, valid, Path.of(i + ".rnqs"));
+          Files.writeString(Path.of(i + ".settings"), verified.toString());
+          Files.writeString(Path.of(i + ".post-state"), observe(verified));
         }
       }
     } catch (Throwable ignored) {
