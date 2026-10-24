@@ -6,6 +6,12 @@ Only the validator, its synthetic test file and this contract are changed.
 Branch: `audit/727-d1-owner-validator`; parent Workspace revision:
 `3cbb0c9ec86aa5c99d2d0370884df47481e7405e`.
 
+Same-contract repair starts at `337a642002dbfa2e39687021c33134fb8dbba890`
+on that same branch, following
+[CONTROL review 6384265741](https://github.com/Planton361/firered-gen9-randomizer-workspace/issues/727#issuecomment-6384265741).
+It adds declaration-level modeling of narrowly reviewed DPE → CFRU overrides;
+it approves no actual shared patch address or private insertion.
+
 **CONFIRMED CURRENT STATE:** This is an offline, fail-closed **receipt
 consistency validator**, with no ROM reader, build runner, patch implementation
 or native observer. It can reject a supplied inconsistent write-set before
@@ -223,15 +229,54 @@ Missing required roles produce UNKNOWN. False size/alignment, overlap,
 unauthorized write or pointer target produces FAIL.
 
 An override has `earlier`, `later` (write IDs), exact intersection `start`,
-`end`, `basis` (`reviewed_source_order`). Every overlapping nonmaterialization
-write requires this explicit ordered edge. Earlier and later writes must have
-the same physical owner/component; identical data never grants permission.
+`end`, `basis`. Every overlapping nonmaterialization write requires this
+explicit ordered edge and the **same physical owner ID**. For writes within
+one component, `basis` remains `reviewed_source_order`; this basis never grants
+cross-component permission. Identical data never grants permission.
 Unused, duplicate, reversed and incorrectly sized edges fail. Exact repeated
 ranges also require earlier `after` == later `before`. Partial-overlap byte
 provenance cannot be independently recomputed without the observer and remains
 UNKNOWN at the original-observation gate. Expansion materializes the image;
 payload materializes its owned allocation before later writes to its leaves.
 These containment relationships are not arbitrary overwrite permissions.
+
+The only cross-component exception is an earlier DPE write followed by a CFRU
+write to an existing **base patch leaf**. Its stable owner retains component
+`dpe`, has null allocation and exactly `roles: ["reviewed_shared_patch"]`.
+All other roles/role combinations are protected against this exception by
+default, including explicit `protected`/`immutable`, native assets/tables,
+ABI/consumer owners and leaves in payload/dynamic/overlay allocations. A second
+owner ID at the same address is an alias violation, not an ownership transfer.
+
+Each such edge must use `basis: "reviewed_dpe_to_cfru_patch"` and additionally
+carry exactly one `review` object with these fields:
+
+- `reference`: nonempty token naming the concrete scoped review decision.
+- `decision_sha256`: digest of that decision's exact reviewed content.
+- `owner`: the same physical owner ID used by both writes.
+- `sources`: exactly the selected `dpe` and `cfru` public revisions above.
+- `config`: exactly the root configuration digest.
+- `earlier_write`, `later_write`: exact operation bindings. Each is SHA-256
+  of ASCII JSON `{"component": component, "write": entire_write_object}`
+  serialized with Python `json.dumps(sort_keys=True, separators=(",", ":"),
+  ensure_ascii=True)`. This binds IDs, sequence, phase, kind, intervals,
+  allocation/owner, targets and range/whole-state provenance together.
+
+Every overlapping DPE operation needs its own checked edge. The union of
+approved exact intersections must cover **every byte of the CFRU write**;
+one approved intersection cannot authorize an adjacent unknown write. This
+supports partial intersections and multiple disjoint DPE predecessors without
+broadening an edge's interval. Reverse direction/order, stale bindings,
+foreign/missing owner IDs, aliases and missing predecessor coverage fail.
+Missing review fields stay UNKNOWN; malformed or contradictory fields fail.
+
+The review fields are **declarations**, not signatures verified by this helper.
+They model a concrete authorization obligation for later independent review;
+neither an arbitrary reference/digest nor a self-declared patch role establishes
+actual source compatibility. The source/config decision, true physical map,
+operation bytes and full provenance still require independent substantiation.
+The synthetic positive test uses invented addresses and a synthetic decision;
+it grants no approval to the shared public addresses cited in CONTROL's review.
 
 ## Remaining minimum follow-up before CFRU insertion
 
@@ -254,6 +299,10 @@ all generated objects/caches, resolved symbols, native link records and final
 output; capture skipped/error paths; and reconcile each intermediate operation
 and unchanged adjacent bytes. No new insertion is authorized by this document.
 Only independently accepted D1 evidence can route a later insertion decision.
+Adding a receipt producer alone cannot unlock these hardcoded UNKNOWN gates:
+an independently review-controlled validation/acceptance path must be scoped
+and authorized separately. It must never promote native gates from JSON
+self-attestation. This repair deliberately leaves that path unimplemented.
 
 Native checks still needed include the installed Oak descriptor's version,
 profile, identity and only mutable selector u16 at +92 (default 29), 1440-slot
@@ -278,7 +327,11 @@ critical semantic aliases, cache freshness, input/output/payload binding,
 partial/failed runs, wrong sequence/count/scan origin, ordered overrides,
 hook alignment/targets, missing owners, malformed JSON/types and output
 sanitization. Native/observation hard gates cannot be set to PASS by a receipt.
+Repair coverage includes a reviewed DPE → CFRU override with different bytes,
+full intersection-union coverage, and rejection of absent/generic approvals,
+protected owners, foreign aliases, stale review bindings and reversed order.
 
-Implementation verification: **50/50 synthetic unittest methods PASS**, zero
+Implementation verification before repair: **50/50 synthetic methods PASS**.
+Repair verification: **63/63 synthetic unittest methods PASS**, zero
 failures/errors/skips. No protected or native tests were run. The empty-input
 CLI check printed only fixed UNKNOWN statuses and returned exit 2 as designed.

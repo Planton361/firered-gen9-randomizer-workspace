@@ -4,6 +4,7 @@
 Only USER may supply private receipts. No subprocess, inserter, artifact, ROM,
 map or tool is opened. A consistent receipt is not an independent observation.
 """
+import hashlib
 import json
 import re
 import sys
@@ -342,6 +343,13 @@ def owners(doc):
     return rows
 
 
+def write_binding(write, component):
+    """Bind a declared review to one exact operation, never to a wildcard."""
+    data = json.dumps({"component": component, "write": write},
+                      sort_keys=True, separators=(",", ":"), ensure_ascii=True)
+    return hashlib.sha256(data.encode("ascii")).hexdigest()
+
+
 def write_sets(doc):
     if len(doc["stages"]) < 2:
         raise Missing()
@@ -351,9 +359,23 @@ def write_sets(doc):
     prior = []
     overrides = {}
     for entry in records(doc["overrides"]):
-        fields(entry, ("earlier", "later", "start", "end", "basis"))
+        cross = entry["basis"] == "reviewed_dpe_to_cfru_patch"
+        fields(entry, ("earlier", "later", "start", "end", "basis") +
+               (("review",) if cross else ()))
         span(entry)
-        require(entry["basis"] == "reviewed_source_order")
+        if cross:
+            review = fields(entry["review"], ("reference", "decision_sha256", "owner",
+                                             "sources", "config", "earlier_write", "later_write"))
+            token(review["reference"])
+            digest(review["decision_sha256"])
+            token(review["owner"])
+            fields(review["sources"], ("dpe", "cfru"))
+            require(review["sources"] == {c: SOURCES[c] for c in ("dpe", "cfru")})
+            require(review["config"] == doc["config"])
+            digest(review["earlier_write"])
+            digest(review["later_write"])
+        else:
+            require(entry["basis"] == "reviewed_source_order")
         key = (token(entry["earlier"]), token(entry["later"]))
         require(key not in overrides)
         overrides[key] = entry
@@ -366,6 +388,7 @@ def write_sets(doc):
             name = token(w["id"])
             require(name not in all_writes)
             phase = w["phase"]
+            foreign_writer = False
             if phase in ("payload", "expand"):
                 require(w["owner"] is None and w["target"] is None)
                 if phase == "payload":
@@ -375,8 +398,15 @@ def write_sets(doc):
             else:
                 require(w["owner"] in own)
                 o = own[w["owner"]]
-                require(o["component"] == s["component"] and contains(o, w))
+                require(contains(o, w))
                 require(w["allocation"] == o["allocation"])
+                foreign_writer = o["component"] != s["component"]
+                if foreign_writer:
+                    # Existing base patch leaves alone may be shared. Native
+                    # payload/assets/ABI and other semantic owners stay closed.
+                    require(o["component"] == "dpe" and s["component"] == "cfru")
+                    require(o["roles"] == ["reviewed_shared_patch"])
+                    require(o["allocation"] is None)
                 if phase == "free_bytepatch" or (phase == "overlays" and w["kind"] == "data"):
                     used_allocs.add(w["allocation"])
                     if phase == "overlays":
@@ -402,6 +432,7 @@ def write_sets(doc):
             # Copy/expand materializes the base image, payload materializes its
             # reservation. Those writes may contain leaves of that allocation;
             # partial aliases and cross-component destruction remain failures.
+            cross_ranges = []
             for earlier, component in prior:
                 if not overlaps(earlier, w):
                     continue
@@ -418,10 +449,28 @@ def write_sets(doc):
                 entry = overrides[key]
                 require(entry["start"] == max(earlier["start"], w["start"]))
                 require(entry["end"] == min(earlier["end"], w["end"]))
-                require(earlier["owner"] == w["owner"] and component == s["component"])
+                require(earlier["owner"] == w["owner"])
+                if component == s["component"]:
+                    require(entry["basis"] == "reviewed_source_order")
+                else:
+                    require(foreign_writer and component == "dpe" and s["component"] == "cfru")
+                    require(entry["basis"] == "reviewed_dpe_to_cfru_patch")
+                    review = entry["review"]
+                    require(review["owner"] == w["owner"])
+                    require(review["earlier_write"] == write_binding(earlier, component))
+                    require(review["later_write"] == write_binding(w, s["component"]))
+                    cross_ranges.append((entry["start"], entry["end"]))
                 used.add(key)
                 if earlier["start"] == w["start"] and earlier["end"] == w["end"]:
                     require(earlier["after"] == w["before"])
+            if foreign_writer:
+                # Every byte in this foreign write needs a checked predecessor;
+                # one approved intersection must not authorize adjacent bytes.
+                cursor = w["start"]
+                for start, end in sorted(cross_ranges):
+                    require(start <= cursor)
+                    cursor = max(cursor, end)
+                require(cursor == w["end"])
             prior.append((w, s["component"]))
             all_writes[name] = w
     require(used == set(overrides))

@@ -528,6 +528,153 @@ class ValidatorTests(unittest.TestCase):
         self.check_gate("D1_RECEIPT_SCHEMA")
 
 
+class CrossComponentOverrideTests(unittest.TestCase):
+    def setUp(self):
+        self.doc = fixture()
+        self.owner = base_owner(self.doc, "shared_patch")
+        self.owner.update(component="dpe", roles=["reviewed_shared_patch"])
+        self.a = add_write(self.doc, "dpe", "bytepatch", 0x1000, 0x1004, self.owner["id"])
+        self.b = add_write(self.doc, "cfru", "bytepatch", 0x1000, 0x1004, self.owner["id"])
+        self.a["after"] = self.b["before"] = h("synthetic DPE replacement")
+        self.b["after"] = h("different synthetic CFRU replacement")
+        normalize(self.doc)
+        self.edge = self.review(self.a, self.b)
+
+    def review(self, earlier, later):
+        edge = {"earlier": earlier["id"], "later": later["id"],
+                "start": max(earlier["start"], later["start"]),
+                "end": min(earlier["end"], later["end"]),
+                "basis": "reviewed_dpe_to_cfru_patch",
+                "review": {"reference": "SYNTHETIC_REVIEW_ONLY",
+                           "decision_sha256": h("synthetic scoped source decision"),
+                           "owner": self.owner["id"],
+                           "sources": {c: v.SOURCES[c] for c in ("dpe", "cfru")},
+                           "config": self.doc["config"],
+                           "earlier_write": v.write_binding(earlier, "dpe"),
+                           "later_write": v.write_binding(later, "cfru")}}
+        self.doc["overrides"].append(edge)
+        return edge
+
+    def check(self, expected="FAIL"):
+        result = v.validate(self.doc)
+        self.assertEqual(expected, result["D1_WRITE_SETS"])
+        self.assertNotEqual("PASS", result["D1_ALL"])
+        for gate in v.GATES[6:-1]:
+            self.assertEqual("UNKNOWN", result[gate], gate)
+        return result
+
+    def test_explicit_reviewed_dpe_to_cfru_patch_with_different_bytes(self):
+        result = self.check("PASS")
+        for gate in v.GATES[:6]:
+            self.assertEqual("PASS", result[gate], gate)
+        self.assertEqual("UNKNOWN", result["D1_ALL"])
+        self.assertNotEqual(self.a["after"], self.b["after"])
+
+    def test_unreviewed_or_generic_source_order_cannot_authorize_transfer(self):
+        self.doc["overrides"] = []
+        self.check()
+        self.edge["basis"] = "reviewed_source_order"
+        del self.edge["review"]
+        self.doc["overrides"] = [self.edge]
+        self.check()
+
+    def test_identical_bytes_do_not_authorize_unreviewed_cross_write(self):
+        self.b["after"] = self.a["after"]
+        self.b["output_state"] = self.b["input_state"]
+        self.doc["stages"][1]["output"] = self.b["output_state"]
+        self.doc["overrides"] = []
+        self.check()
+
+    def test_missing_review_evidence_is_unknown(self):
+        for key in tuple(self.edge["review"]):
+            with self.subTest(field=key):
+                value = self.edge["review"].pop(key)
+                self.check("UNKNOWN")
+                self.edge["review"][key] = value
+
+    def test_review_identity_config_sources_and_write_bindings(self):
+        for key, value in (("reference", ""), ("decision_sha256", "not-reviewed"),
+                           ("owner", "foreign_owner"), ("config", h("stale config")),
+                           ("sources", {"dpe": "0" * 40, "cfru": v.SOURCES["cfru"]}),
+                           ("sources", {"dpe": v.SOURCES["dpe"], "cfru": "0" * 40}),
+                           ("earlier_write", h("unrelated earlier write")),
+                           ("later_write", h("unrelated later write"))):
+            with self.subTest(field=key, value=value):
+                saved = self.edge["review"][key]
+                self.edge["review"][key] = value
+                self.check()
+                self.edge["review"][key] = saved
+
+    def test_rebound_write_or_wrong_intersection_is_rejected(self):
+        self.b["after"] = h("not the reviewed replacement")
+        self.check()
+        self.b["after"] = h("different synthetic CFRU replacement")
+        for key, change in (("start", -1), ("start", 1), ("end", -1), ("end", 1)):
+            with self.subTest(field=key, change=change):
+                self.edge[key] += change
+                self.check()
+                self.edge[key] -= change
+
+    def test_protected_or_untagged_owner_never_transfers(self):
+        for roles in (["protected"], ["immutable"], ["patch"],
+                      ["reviewed_shared_patch", "protected"],
+                      ["reviewed_shared_patch", "native_palette_assets"]):
+            with self.subTest(roles=roles):
+                self.owner["roles"] = roles
+                self.check()
+
+    def test_missing_foreign_or_duplicate_physical_owner_is_rejected(self):
+        self.edge["review"]["owner"] = "absent"
+        self.check()
+        self.edge["review"]["owner"] = self.owner["id"]
+        self.b["owner"] = "absent"
+        self.check()
+        self.b["owner"] = self.owner["id"]
+        alias = dict(self.owner, id="foreign_alias")
+        self.doc["owners"].append(alias)
+        result = self.check()
+        self.assertEqual("FAIL", result["D1_DECLARED_OWNERS"])
+        self.b["owner"] = alias["id"]
+        self.check()
+
+    def test_reversed_edge_stages_and_stale_sequence_are_rejected(self):
+        self.edge["earlier"], self.edge["later"] = self.edge["later"], self.edge["earlier"]
+        self.check()
+        self.edge["earlier"], self.edge["later"] = self.edge["later"], self.edge["earlier"]
+        self.b["seq"] += 1
+        self.assertEqual("FAIL", self.check()["D1_WRITE_ORDER"])
+        normalize(self.doc)
+        self.doc["stages"].reverse()
+        self.assertEqual("FAIL", self.check()["D1_WRITE_ORDER"])
+
+    def test_reverse_component_direction_is_rejected(self):
+        self.owner["component"] = "cfru"
+        self.check()
+
+    def test_unknown_cross_write_has_no_approved_predecessor(self):
+        self.doc["stages"][0]["writes"].remove(self.a)
+        normalize(self.doc)
+        self.check()
+
+    def test_partial_override_cannot_grant_uncovered_adjacent_bytes(self):
+        self.b["end"] += 1
+        normalize(self.doc)
+        self.doc["overrides"] = []
+        self.review(self.a, self.b)
+        self.check()
+
+    def test_exact_partial_intersection_and_full_union_coverage(self):
+        self.a["end"] -= 2
+        other = add_write(self.doc, "dpe", "bytepatch", 0x1002, 0x1004, self.owner["id"])
+        normalize(self.doc)
+        self.doc["overrides"] = []
+        self.review(self.a, self.b)
+        self.review(other, self.b)
+        self.check("PASS")
+        self.doc["overrides"].pop()
+        self.check()
+
+
 class CliTests(unittest.TestCase):
     def run_main(self, args, raw=None, error=None):
         out, err = io.StringIO(), io.StringIO()
