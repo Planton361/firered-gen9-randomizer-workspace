@@ -741,5 +741,112 @@ class CliTests(unittest.TestCase):
         opened.assert_called_once()
 
 
+
+
+def synthetic_arm_elf():
+    """Invented link fixture, never a game artifact or emitted ARM build."""
+    import struct
+    base = 0x09000000
+    text = bytearray(1024)
+    names = ('gOakIntroContract', 'gOakIntroEligibility', 'CreateOakIntroPokemonSprite',
+             'OakIntroSpriteConsumer', 'Task_OakSpeech_IsInhabitedFarAndWide', 'OakIntroCryConsumer')
+    values = (base, base + 0x100, base + 0x201, base + 0x301, base + 0x241, base + 0x321)
+    sizes = (96, 180, 28, 4, 28, 4)
+    bitmap = bytes([0x5A]) * 180
+    text[0x100:0x100 + 180] = bitmap
+    text[:8] = b'CFROAK01'
+    struct.pack_into('<IHHIHHHHIHH', text, 8, base, 1, 96, 1, 1440, 29, 92, 2, values[1], 180, 1)
+    struct.pack_into('<IIIIIIHHHHHH', text, 36, *values[2:], 0x08000128, 0x08000130, 8, 8, 28, 20, 24, 4)
+    struct.pack_into('<H', text, 92, 29)
+    prefix = bytes.fromhex('10b50449044b00f003f810bc01bc00471847c046')
+    for offset, consumer in ((0x200, values[3]), (0x240, values[5])):
+        text[offset:offset + 28] = prefix + struct.pack('<II', base, consumer)
+    string_table = bytearray(b'\0')
+    symbols = bytearray(16)
+    for i, name in enumerate(names):
+        at = len(string_table)
+        string_table.extend(name.encode() + b'\0')
+        symbols.extend(struct.pack('<IIIBBH', at, values[i], sizes[i], 0x11 if i < 2 else 0x12, 0, 1))
+    section_names = b'\0.text\0.symtab\0.strtab\0.shstrtab\0'
+    blob = bytearray(64) + text
+    symoff = len(blob); blob.extend(symbols)
+    stroff = len(blob); blob.extend(string_table)
+    namesoff = len(blob); blob.extend(section_names)
+    blob.extend(bytes((-len(blob)) % 4))
+    shoff = len(blob)
+    rows = [(0,) * 10, (1, 1, 6, base, 64, len(text), 0, 0, 4, 0),
+            (7, 2, 0, 0, symoff, len(symbols), 3, 1, 4, 16),
+            (15, 3, 0, 0, stroff, len(string_table), 0, 0, 1, 0),
+            (23, 3, 0, 0, namesoff, len(section_names), 0, 0, 1, 0)]
+    for row in rows:
+        blob.extend(struct.pack('<IIIIIIIIII', *row))
+    blob[:16] = b'\x7fELF\x01\x01\x01' + bytes(9)
+    struct.pack_into('<HHIIIIIHHHHHH', blob, 16, 2, 40, 1, base, 0, shoff, 0, 52, 0, 0, 40, 5, 4)
+    installed = bytes(v.CFRU_START) + text
+    return bytes(blob), bytes(installed), bitmap
+
+
+class IndependentLinkTests(unittest.TestCase):
+    def test_actual_byte_extraction_and_oak_link_shape_keep_semantics_unknown(self):
+        raw, installed, bitmap = synthetic_arm_elf()
+        elf = v.ArmElf(raw)
+        self.assertEqual(0x09000000, elf.payload(installed[v.CFRU_START:]))
+        self.assertEqual('UNKNOWN', v.verify_oak_link(elf, installed, bitmap))
+        self.assertEqual('UNKNOWN', v.validate(fixture())['D1_ALL'])
+
+    def test_native_signature_bitmap_descriptor_and_bridge_mismatch(self):
+        raw, installed, bitmap = synthetic_arm_elf()
+        for offset in (0, 8, 12, 14, 22, 28, 92, 94, 0x100, 0x200, 0x200 + 20, 0x240 + 24):
+            with self.subTest(offset=offset):
+                altered = bytearray(raw)
+                altered[64 + offset] ^= 1
+                output = bytearray(installed)
+                output[v.CFRU_START + offset] ^= 1
+                with self.assertRaises(v.Invalid):
+                    v.verify_oak_link(v.ArmElf(altered), output, bitmap)
+
+    def test_output_payload_and_installed_bytes_must_match_independently(self):
+        raw, installed, bitmap = synthetic_arm_elf()
+        elf = v.ArmElf(raw)
+        with self.assertRaises(v.Invalid): elf.payload(b'stale cached payload')
+        output = bytearray(installed)
+        output[v.CFRU_START] ^= 1
+        with self.assertRaises(v.Invalid): v.verify_oak_link(elf, output, bitmap)
+
+    def test_missing_symbols_alias_thumb_and_literal_relocation_mismatch(self):
+        raw, installed, bitmap = synthetic_arm_elf()
+        elf = v.ArmElf(raw)
+        del elf.symbols['OakIntroCryConsumer']
+        with self.assertRaises(v.Missing): v.verify_oak_link(elf, installed, bitmap)
+        elf = v.ArmElf(raw)
+        elf.symbols['OakIntroCryConsumer'] = elf.symbols['OakIntroSpriteConsumer']
+        with self.assertRaises(v.Invalid): v.verify_oak_link(elf, installed, bitmap)
+        elf = v.ArmElf(raw)
+        value, size, kind, section = elf.symbols['OakIntroCryConsumer']
+        elf.symbols['OakIntroCryConsumer'] = (value & ~1, size, kind, section)
+        with self.assertRaises(v.Invalid): v.verify_oak_link(elf, installed, bitmap)
+
+    def test_declared_critical_owner_must_equal_actual_symbol_interval(self):
+        raw, installed, bitmap = synthetic_arm_elf()
+        elf = v.ArmElf(raw)
+        owners = {'record': {'roles': ['oak_record'], 'start': v.CFRU_START,
+                             'end': v.CFRU_START + 96}}
+        bindings = {'oak_record': ('gOakIntroContract', False)}
+        v.verify_linked_reservations(elf, owners, bindings)
+        owners['record']['start'] += 4
+        with self.assertRaises(v.Invalid): v.verify_linked_reservations(elf, owners, bindings)
+
+    def test_wrong_machine_class_sections_and_truncation_fail_closed(self):
+        raw, installed, bitmap = synthetic_arm_elf()
+        for offset in (0, 4, 5, 18, 40):
+            data = bytearray(raw); data[offset] ^= 1
+            with self.assertRaises(v.Invalid): v.ArmElf(data)
+        with self.assertRaises(v.Invalid): v.ArmElf(raw[:51])
+        elf = v.ArmElf(raw)
+        extra = list(elf.text); extra[3] += 0x1000
+        elf.sections.append(tuple(extra))
+        with self.assertRaises(v.Missing): elf.payload(installed[v.CFRU_START:])
+
+
 if __name__ == "__main__":
     unittest.main()

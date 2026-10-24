@@ -1,5 +1,10 @@
 # D1 owner/write-set receipt validator — #727
 
+The separate [original-observer contract](d1-original-observer-contract.md)
+now defines the USER-only live RAM replay and independent byte/ELF checks.
+The receipt CLI below retains all its independent native UNKNOWN gates;
+no receipt acceptance is promoted by the new observation helper.
+
 **CONFIRMED USER DECISION:** Implementation authority is
 [#727 comment 6382839930](https://github.com/Planton361/firered-gen9-randomizer-workspace/issues/727#issuecomment-6382839930).
 Only the validator, its synthetic test file and this contract are changed.
@@ -278,19 +283,19 @@ operation bytes and full provenance still require independent substantiation.
 The synthetic positive test uses invented addresses and a synthetic decision;
 it grants no approval to the shared public addresses cited in CONTROL's review.
 
-## Remaining minimum follow-up before CFRU insertion
+## Receipt-only limitations at `99842eb` and independent acceptance boundary
 
-**UNKNOWN:** No trusted receipt producer is supplied. The original inserters
+**HISTORICAL RECEIPT-ONLY STATE:** At `99842eb`, no observer was supplied. The original inserters
 perform unrestricted file/subprocess operations, reuse generated caches and
 can continue after missing symbols or caught allocation failures. Running
 or monkeypatching them without an independently reviewed complete I/O and
-failure observer would not safely establish full ownership. This three-file
-implementation therefore does not execute or instrument private native runs.
+failure observer would not safely establish full ownership. The receipt-only
+CLI does not execute or instrument private native runs.
 The tests' receipt builder is synthetic data only and must never be used to
 manufacture private acceptance.
 
-The next single bounded decision is to approve a revision-bound **original
-inserter observer/receipt producer**, with explicit allowed files and USER-only
+The subsequent scope approved a revision-bound **original
+inserter observer/receipt producer** (see the separate contract), with explicit allowed files and USER-only
 execution, capturing original operations rather than replacing patch logic.
 It must first support nonmutating validation of the selected original input
 and full link/input-owner reservations, including the real CFRU overlay tail.
@@ -335,3 +340,7 @@ Implementation verification before repair: **50/50 synthetic methods PASS**.
 Repair verification: **63/63 synthetic unittest methods PASS**, zero
 failures/errors/skips. No protected or native tests were run. The empty-input
 CLI check printed only fixed UNKNOWN statuses and returned exit 2 as designed.
+
+Observer-scope regression: **90/90 synthetic methods PASS** (63 existing
+receipt tests, 6 independent link tests, 21 observer tests). Native execution
+remains USER-only and was not run by Codex.

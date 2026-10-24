@@ -534,5 +534,216 @@ def main(argv=None):
     return 1 if result["D1_ALL"] == "FAIL" else 2
 
 
+
+
+# Independent live-observation checks. These never change validate(receipt)'s
+# native UNKNOWN gates. The observer supplies actual bytes, not claimed hashes.
+def observation_binding(key, start, data):
+    import struct
+    name = key.encode('utf-8')
+    return struct.pack('<I', len(name)) + name + struct.pack('<QQ', start, len(data)) + data
+
+
+class JournalVerifier:
+    """Second byte-store implementation: recompute every recorded I/O effect."""
+    def __init__(self, snapshots, limit=512 * 1024 * 1024, write_check=None):
+        if sum(map(len, snapshots.values())) > limit:
+            raise Missing()
+        self.files = {k: bytearray(data) for k, data in snapshots.items()}
+        self.handles = {}
+        self.limit = limit
+        self.count = 0
+        self.writes = hashlib.sha256()
+        self.write_check = write_check
+        self.allocations = []
+
+    def consume(self, e):
+        op = e['op']
+        if op == 'copy':
+            require(e['src'] in self.files)
+            self.files[e['dst']] = bytearray(self.files[e['src']])
+        elif op == 'open':
+            require(e['handle'] not in self.handles)
+            key, mode = e['key'], e['mode']
+            require(mode in ('rb', 'rb+', 'r', 'r+', 'w', 'a', 'wb', 'wb+'))
+            if 'w' in mode:
+                self.files[key] = bytearray()
+            elif key not in self.files:
+                require('a' in mode)
+                self.files[key] = bytearray()
+            self.handles[e['handle']] = [key, len(self.files[key]) if 'a' in mode else 0, mode]
+        elif op in ('read', 'seek', 'write', 'truncate', 'close'):
+            require(e['handle'] in self.handles)
+            state = self.handles[e['handle']]
+            key, pos, mode = state
+            buf = self.files[key]
+            if op == 'close':
+                del self.handles[e['handle']]
+                return
+            if op == 'seek':
+                require(type(e['offset']) is int and e['whence'] in (0, 1, 2))
+                new = e['offset'] + (0 if e['whence'] == 0 else pos if e['whence'] == 1 else len(buf))
+                require(0 <= new <= self.limit and new == e['position'])
+                state[1] = new
+            elif op == 'read':
+                require(type(e['size']) is int and e['size'] >= -1)
+                data = bytes(buf[pos:] if e['size'] == -1 else buf[pos:pos + e['size']])
+                require(len(data) == e['length'] and hashlib.sha256(data).hexdigest() == e['sha256'])
+                state[1] += len(data)
+            elif op == 'write':
+                require('+' in mode or 'w' in mode or 'a' in mode)
+                data = bytes.fromhex(e['data'])
+                if 'a' in mode:
+                    pos = len(buf)
+                require(e['key'] == key and pos == e['start'] and len(data) == e['length'])
+                require(pos + len(data) <= self.limit)
+                before = bytes(buf[pos:pos + len(data)])
+                require(hashlib.sha256(before).hexdigest() == e['before'])
+                if pos + len(data) > len(buf):
+                    buf.extend(bytes(pos + len(data) - len(buf)))
+                buf[pos:pos + len(data)] = data
+                state[1] = pos + len(data)
+                self.writes.update(observation_binding(key, pos, data))
+                self.count += 1
+                if key == 'test.gba':
+                    if self.write_check is not None:
+                        self.write_check(e)
+            else:
+                require('+' in mode or 'w' in mode or 'a' in mode)
+                size = e['size']
+                require(type(size) is int and 0 <= size <= self.limit)
+                require(key != 'test.gba')  # Neither selected original truncates ROM.
+                if size > len(buf):
+                    buf.extend(bytes(size - len(buf)))
+                else:
+                    del buf[size:]
+        elif op == 'allocate':
+            require(type(e['start']) is int and type(e['length']) is int)
+            require(e['start'] >= 0 and e['length'] > 0)
+            self.allocations.append(e)
+        elif op == 'subprocess':
+            require(e['returncode'] == 0)
+        else:
+            raise Invalid()
+
+    def finish(self, actual, count, binding):
+        require(self.count == count and self.writes.hexdigest() == binding)
+        require('test.gba' in self.files and bytes(self.files['test.gba']) == actual)
+        return bytes(self.files['test.gba'])
+
+
+class ArmElf:
+    """Bounded ELF32/LE ARM final-link reader; no tool invocation or map trust."""
+    def __init__(self, data):
+        import struct
+        self.data = data
+        require(len(data) >= 52 and data[:7] == b'\x7fELF\x01\x01\x01')
+        header = struct.unpack_from('<HHIIIIIHHHHHH', data, 16)
+        require(header[0] == 2 and header[1] == 40 and header[7] == 52)
+        shoff, entsize, count, names = header[5], header[10], header[11], header[12]
+        require(entsize == 40 and 0 < count < 65536 and names < count)
+        require(shoff + count * 40 <= len(data))
+        self.sections = [struct.unpack_from('<IIIIIIIIII', data, shoff + i * 40) for i in range(count)]
+        def section_bytes(s):
+            require(s[4] + s[5] <= len(data))
+            return data[s[4]:s[4] + s[5]]
+        self.section_bytes = section_bytes
+        strings = section_bytes(self.sections[names])
+        def name(table, at):
+            require(at < len(table) and b'\0' in table[at:])
+            return table[at:table.index(b'\0', at)].decode('ascii')
+        text = [s for s in self.sections if name(strings, s[0]) == '.text']
+        require(len(text) == 1)
+        self.text = text[0]
+        require(self.text[1] == 1 and self.text[2] & 6 == 6)
+        self.symbols = {}
+        for s in self.sections:
+            if s[1] != 2:
+                continue
+            require(s[9] == 16 and s[5] % 16 == 0 and s[6] < count)
+            table = section_bytes(self.sections[s[6]])
+            raw = section_bytes(s)
+            for offset in range(0, len(raw), 16):
+                n, value, size, info, other, index = struct.unpack_from('<IIIBBH', raw, offset)
+                if not n or not index:
+                    continue
+                label = name(table, n)
+                if info >> 4 in (1, 2):
+                    require(label not in self.symbols)
+                    self.symbols[label] = (value, size, info & 15, index)
+        self.relocations = any(s[1] in (4, 9) and s[5] for s in self.sections)
+
+    def payload(self, actual):
+        # Multi-section/gapped layouts need an LMA-aware verifier, never guesses.
+        loaded = [s for s in self.sections if s[1] == 1 and s[2] & 2 and s[5]]
+        if loaded != [self.text]:
+            raise Missing()
+        require(self.section_bytes(self.text) == actual)
+        return self.text[3]
+
+    def symbol(self, name, size=None, thumb=False):
+        if name not in self.symbols:
+            raise Missing()
+        value, length, kind, index = self.symbols[name]
+        if size is not None:
+            require(length == size)
+        require(length > 0 and index < len(self.sections))
+        if thumb:
+            require(kind == 2 and value & 1)
+        else:
+            require(kind == 1)
+        address = value & ~1 if thumb else value
+        require(self.text[3] <= address < address + length <= self.text[3] + self.text[5])
+        offset = self.text[4] + address - self.text[3]
+        return value, self.data[offset:offset + length]
+
+
+def verify_oak_link(elf, installed, bitmap):
+    """Check actual linked literals/signatures and installed bytes, not markers."""
+    import struct
+    record, raw = elf.symbol('gOakIntroContract', 96)
+    policy, bits = elf.symbol('gOakIntroEligibility', 180)
+    require(record % 4 == 0 and policy % 4 == 0 and bits == bitmap and len(bitmap) == 180)
+    names = ('CreateOakIntroPokemonSprite', 'OakIntroSpriteConsumer',
+             'Task_OakSpeech_IsInhabitedFarAndWide', 'OakIntroCryConsumer')
+    resolved = [elf.symbol(n, 28 if i % 2 == 0 else None, True) for i, n in enumerate(names)]
+    intervals = [(record, record + 96), (policy, policy + 180)]
+    for address, data in resolved:
+        start = address & ~1
+        intervals.append((start, start + len(data)))
+    for i, (start, end) in enumerate(intervals):
+        for a, b in intervals[i + 1:]:
+            require(end <= a or b <= start)
+        offset = start - 0x08000000
+        require(0 <= offset < offset + end - start <= len(installed))
+        linked = elf.data[elf.text[4] + start - elf.text[3]:elf.text[4] + end - elf.text[3]]
+        require(installed[offset:offset + end - start] == linked)
+    expected = bytearray(96)
+    expected[:8] = b'CFROAK01'
+    struct.pack_into('<IHHIHHHHIHH', expected, 8, record, 1, 96, 1, 1440, 29, 92, 2, policy, 180, 1)
+    struct.pack_into('<IIIIIIHHHHHH', expected, 36, *(x[0] for x in resolved),
+                     0x08000128, 0x08000130, 8, 8, 28, 20, 24, 4)
+    struct.pack_into('<H', expected, 92, 29)
+    require(raw == expected)
+    prefix = bytes.fromhex('10b50449044b00f003f810bc01bc00471847c046')
+    for i in (0, 2):
+        bridge = resolved[i][1]
+        require(bridge[:20] == prefix)
+        require(struct.unpack_from('<II', bridge, 20) == (record, resolved[i + 1][0]))
+    # Stripped final relocations do not prove relocation history or C semantics.
+    return 'UNKNOWN'
+
+
+def verify_linked_reservations(elf, owners, bindings):
+    """Recompute critical physical owner locations from actual linked symbols."""
+    for role, (symbol, thumb) in bindings.items():
+        matches = [o for o in owners.values() if role in o['roles']]
+        if len(matches) != 1:
+            raise Missing()
+        value, data = elf.symbol(symbol, REQUIRED_ROLES[role], thumb)
+        start = (value & ~1 if thumb else value) - 0x08000000
+        require(matches[0]['start'] == start and matches[0]['end'] == start + len(data))
+
+
 if __name__ == "__main__":
     sys.exit(main())
