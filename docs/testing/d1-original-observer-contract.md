@@ -50,12 +50,28 @@ Live preflight found #727 the sole Doing/P0, Component Delivery; #726 and
 **CONFIRMED CURRENT STATE — implementation decision:** Complete ownership is
 not required for an isolated observation. The original RAM worker and separate
 `JournalVerifier` already reconstruct writes without granting ownership.
-`--discover` therefore bypasses only `OwnerChecks`, while retaining source and
-script identities, selected input chain, read-only bubblewrap, nonce, resource
-limits, snapshot freshness, backend count/binding, selected-output reproduction
-and link/Oak structural checks. A failed or unsupported observation stops;
+`--discover` omits plan-dependent `OwnerChecks` and the CFRU production-output
+comparison, while retaining source and script identities, selected input chain,
+read-only bubblewrap, nonce, resource
+limits, snapshot freshness, backend count/binding, DPE selected-output
+reproduction and link/Oak structural checks on the reconstructed images.
+A failed or unsupported observation stops;
 partial journals never become a completed candidate plan. No native build is
 repeated. Native compatibility of this new path remains USER-ONLY / NOT_RUN.
+
+**CONFIRMED USER DECISION — same-contract repair:** Following
+[CONTROL 6403661086](https://github.com/Planton361/firered-gen9-randomizer-workspace/issues/727#issuecomment-6403661086),
+the repair starts at `36e5154057415241b87f68c7d8b64c0cf5ddf177` on the same
+branch and three-file scope. Pre-insert discovery must not require a product
+output that has not yet been authorized or produced. DPE's existing output is
+still compared with both its RAM replay and CFRU's selected input. For CFRU
+discovery, the separate `JournalVerifier` reconstructs the image and compares
+it with the worker RAM output; those verified bytes feed all subsequent ELF,
+candidate and Oak checks. Existing CFRU `test.gba` is never read, required,
+created or replaced by discovery, including when it is absent or stale.
+`D1_OUTPUT_REPRODUCTION` stays UNKNOWN in discovery: RAM agreement does not
+prove final productive CFRU output provenance. `--plan` retains both existing
+selected-output comparisons and all previous strict owner/override checks.
 
 ### USER-ONLY Fish/Linux sequence
 
@@ -67,7 +83,8 @@ repeated. Native compatibility of this new path remains USER-ONLY / NOT_RUN.
    python3 -B 07_scripts/d1/observe_original_inserters.py --discover "$D1_SCRATCH"
    ```
 
-   Existing source/compiled inputs and selected outputs are still required.
+   Existing source/compiled inputs, selected DPE output and CFRU input are still
+   required; a selected CFRU production output is not a discovery prerequisite.
    Missing originals, tools or isolation yield UNKNOWN; mismatches yield FAIL.
    The command creates only a unique private `d1-*` evidence directory under
    that scratch. It never chooses or creates another scratch workspace.
@@ -85,7 +102,8 @@ repeated. Native compatibility of this new path remains USER-ONLY / NOT_RUN.
    appears only after both stages' independent recomputation and comparisons.
 
    The candidate contains only linked payload extents and public named roles
-   resolved from actual sized ELF symbols and compared with installed bytes:
+   resolved from actual sized ELF symbols and compared with verified image bytes
+   (the independently reconstructed RAM image for CFRU discovery):
    the existing eleven Oak/Pickup/Evolution bindings, plus DPE
    `gMonFrontPicTable`, `gMonPaletteTable` (1440 × 8 B each) and
    `gEvolutionTable` (1440 × 16 × 8 B). Missing symbols remain missing. No owner
@@ -106,19 +124,33 @@ repeated. Native compatibility of this new path remains USER-ONLY / NOT_RUN.
    range, source/config binding and independent decision defined below. Never
    mechanically replace `null` fields or turn census rows into permissions.
 
-   USER locally sets `D1_OBSERVER_PLAN` to that independently reviewed plan and
-   runs the existing independent checking path:
+   **POST-INSERT only:** After a separately authorized productive insertion has
+   supplied a selected CFRU output, USER locally sets `D1_OBSERVER_PLAN` to
+   that independently reviewed plan and runs the existing checking path:
 
    ```fish
    python3 -B 07_scripts/d1/observe_original_inserters.py --plan "$D1_OBSERVER_PLAN"
    ```
 
-   This performs a fresh RAM observation, no build, and rechecks the complete
-   write set, actual link reservations and exact override bindings. A candidate
+   This requires both selected outputs, performs a fresh RAM observation, no
+   build, and rechecks the complete write set, actual link reservations, exact
+   override bindings and equality of both RAM images with selected outputs.
+   An absent CFRU output stops UNKNOWN; a stale/mismatching one fails. A candidate
    or edited receipt alone cannot authenticate the independent review or
    satisfy the native gates. Missing proof stays UNKNOWN. No private artifact
    or its path, map, hash or log may be returned to Codex/CONTROL; share only
    the fixed status lines.
+
+The **PRE-INSERT** evidence is the isolated discovery, DPE output/input-chain
+comparison, independent CFRU RAM reconstruction, ELF/Oak structural checks and
+independent owner/reservation/override review. It does not certify a productive
+CFRU output. `--plan` is a **POST-INSERT** output comparison, not a circular
+prerequisite for creating that output. The minimal remaining user-decision
+gate before productive insertion is explicit acceptance of the exact pre-insert
+evidence after the native/ABI/provenance/#741 prerequisites are independently
+resolved, followed by separate insertion authorization. Discovery never grants
+that authorization or waives unresolved proof; this helper cannot close the
+full pre-insert gate.
 
 Concrete missing-proof categories and public source starting points:
 
@@ -132,7 +164,8 @@ Concrete missing-proof categories and public source starting points:
 These category keys do not certify evidence authentication. The first three
 stay UNKNOWN in this bounded helper, as do all four pre-existing hard native
 gates. `--discover` also leaves `D1_CAPACITY`, `D1_DECLARED_OWNER_CHECKS` and
-`D1_REVIEWED_OVERRIDES` UNKNOWN. Only completed observation and candidate-file
+`D1_REVIEWED_OVERRIDES`, plus `D1_OUTPUT_REPRODUCTION`, UNKNOWN.
+Only completed observation and candidate-file
 creation can set `D1_DISCOVERY=PASS` / `D1_CANDIDATE_PLAN=PASS`; those statuses
 never mean the candidate is an accepted ownership plan. An unsupported class,
 budget exhaustion or missing prerequisite prevents those PASS values.
@@ -153,7 +186,7 @@ Git and the original inserters' native preflight tools are required. The helper
 neither installs nor substitutes tools. Missing isolation, unavailable tool,
 unsupported operation/layout, exhausted resource budget or absent proof yields
 UNKNOWN/STOP. Existing selected DPE output must equal the existing CFRU input;
-existing selected outputs are required for the reproduction comparison. The
+in this `--plan` path both selected outputs are required for reproduction. The
 command never creates or replaces those selected originals. A stale/mismatching
 existing output is FAIL, not permission to overwrite it.
 
@@ -327,8 +360,10 @@ selected stack covering all missing gates: source/config/tool → fresh generate
 objects/cache → link identity, complete source-derived native owner inventory
 (including front/palette/learnset/Pickup/Evolution owners), resolved relocation
 and consumer ABI semantics, and #741 reproducibility disposition. The observed
-RAM write-set/selected-output checks and every scoped override must then be
-accepted for that exact identity. A separately scoped independent acceptance
+RAM write-set, DPE selected-output/input-chain checks and every scoped override
+must then be accepted for that exact identity. Final productive CFRU output
+provenance is a separate post-insertion check, not a pre-insert discovery
+prerequisite. A separately scoped independent acceptance
 path is still required for these missing gates; neither this command nor a
 receipt can certify them. Until then: `D1_ALL=UNKNOWN`, no production insertion,
 no UPR gameplay-test promotion and no merge/pin authorization.
@@ -344,3 +379,10 @@ source/ignore/input/output/nonce/journal/worker/isolation failures, actual
 synthetic scanner tracing and CLI sanitization.
 No native/USER-only test was run by Codex. D1 native, ABI, provenance and #741
 reproducibility gates remain UNKNOWN; `CFRU_INSERTION_READY=NO`.
+
+Same-contract output-dependency repair: **107/107 synthetic methods PASS**,
+including the previous 100 and seven new regressions: discovery with absent or
+stale CFRU output (zero reads/overwrites), DPE replay/output mismatch, CFRU ELF,
+journal and Oak failures, and unchanged `--plan` behavior for missing, stale
+and matching CFRU output. Discovery's production-output status remains UNKNOWN
+even when all narrow replay checks pass. No native/private run was performed.

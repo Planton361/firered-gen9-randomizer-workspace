@@ -784,7 +784,11 @@ def observe_stages(root, evidence, bwrap, result, checks, census, existing_cache
                 for alloc in verifier.allocations:
                     checks.allocation(alloc)
             active_gate = 'D1_OUTPUT_REPRODUCTION'
-            actual = bounded_read(root / COMPONENTS[c] / 'test.gba')
+            # Pre-insert discovery has no selected CFRU production output yet.
+            # Use the verifier's independently reconstructed bytes for all
+            # subsequent link/Oak checks; DPE and --plan retain comparison.
+            actual = (bytes(verifier.files['test.gba']) if census is not None and c == 'cfru'
+                      else bounded_read(root / COMPONENTS[c] / 'test.gba'))
             v.require(actual == ram and len(ram) == v.ROM_LIMIT)
             active_gate = 'D1_LINK_IMAGE'
             elf = v.ArmElf(bounded_read(root / COMPONENTS[c] / 'build/linked.o'))
@@ -813,10 +817,11 @@ def observe_stages(root, evidence, bwrap, result, checks, census, existing_cache
         if not existing_caches:
             result['D1_CACHE_FRESHNESS'] = 'PASS'
         for gate in ('D1_ORIGINAL_EXECUTION', 'D1_IO_RECOMPUTATION', 'D1_LINK_IMAGE',
-                     'D1_OAK_LINK_SHAPE', 'D1_OUTPUT_REPRODUCTION'):
+                     'D1_OAK_LINK_SHAPE'):
             result[gate] = 'PASS'
         if checks is not None:
-            for gate in ('D1_CAPACITY', 'D1_DECLARED_OWNER_CHECKS', 'D1_REVIEWED_OVERRIDES'):
+            for gate in ('D1_CAPACITY', 'D1_DECLARED_OWNER_CHECKS', 'D1_REVIEWED_OVERRIDES',
+                         'D1_OUTPUT_REPRODUCTION'):
                 result[gate] = 'PASS'
     except (v.Invalid, ValueError, TypeError, IndexError):
         result[active_gate] = 'FAIL'

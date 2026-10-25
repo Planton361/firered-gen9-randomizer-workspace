@@ -462,7 +462,36 @@ main()
                       'unsupported', 'isolation'):
             with self.subTest(fault=fault): self.exercise(fault)
 
-    def exercise(self, fault=None):
+    def test_discovery_finishes_without_selected_cfru_output(self):
+        self.exercise(cfru_output='missing')
+
+    def test_discovery_ignores_stale_selected_cfru_output(self):
+        self.exercise(cfru_output='stale')
+
+    def test_discovery_dpe_output_mismatch_still_fails(self):
+        result = self.exercise('output', cfru_output='missing')
+        self.assertEqual('PASS', result['D1_INPUT_CHAIN'])
+        self.assertEqual('FAIL', result['D1_OUTPUT_REPRODUCTION'])
+
+    def test_discovery_cfru_elf_mismatch_still_fails(self):
+        result = self.exercise('elf', cfru_output='missing')
+        self.assertEqual('FAIL', result['D1_LINK_IMAGE'])
+
+    def test_discovery_cfru_journal_mismatch_still_fails(self):
+        result = self.exercise('cfru_binding', cfru_output='missing')
+        self.assertEqual('FAIL', result['D1_IO_RECOMPUTATION'])
+
+    def test_discovery_cfru_oak_mismatch_still_fails(self):
+        result = self.exercise('oak', cfru_output='missing')
+        self.assertEqual('FAIL', result['D1_OAK_LINK_SHAPE'])
+
+    def test_plan_retains_missing_stale_and_matching_cfru_output_requirements(self):
+        for state, expected in (('missing', 'UNKNOWN'), ('stale', 'FAIL'), ('matching', 'PASS')):
+            with self.subTest(state=state):
+                result = self.exercise(cfru_output=state, plan_mode=True)
+                self.assertEqual(expected, result['D1_OUTPUT_REPRODUCTION'])
+
+    def exercise(self, fault=None, cfru_output='matching', plan_mode=False):
         """Original Workspace driver with synthetic RAM I/O, no native/artifact files."""
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
@@ -470,11 +499,14 @@ main()
             initial = b'A' * 128
             dpe_output = bytearray(initial + b'\xff' * (1024 - len(initial)))
             dpe_output[512:516] = b'DPE!'
-            cfru_output = bytearray(dpe_output)
-            cfru_output[256:260] = b'CFRU'
-            cfru_output[260:264] = b'MAPS'
-            outputs = {'dpe': bytes(dpe_output), 'cfru': bytes(cfru_output)}
+            cfru_ram = bytearray(dpe_output)
+            cfru_ram[256:260] = b'CFRU'
+            cfru_ram[260:264] = b'MAPS'
+            outputs = {'dpe': bytes(dpe_output), 'cfru': bytes(cfru_ram)}
+            selected_cfru = (None if cfru_output == 'missing' else
+                             b'stale synthetic output' if cfru_output == 'stale' else outputs['cfru'])
             inputs = {'dpe': initial, 'cfru': outputs['dpe']}
+            selected_reads = []
             def component(path):
                 return next(c for c, relative in o.COMPONENTS.items() if str(path).startswith(str(root / relative)))
             def fake_git(path, *args):
@@ -488,7 +520,14 @@ main()
                 c = component(path)
                 if path.name == 'insert.py': return b'synthetic source'
                 if path.name == 'BPRE0.gba': return b'wrong' if fault == 'input' and c == 'cfru' else inputs[c]
-                if path.name == 'test.gba': return b'wrong' if fault == 'output' and c == 'cfru' else outputs[c]
+                if path.name == 'test.gba':
+                    selected_reads.append(c)
+                    if c == 'cfru':
+                        if selected_cfru is None: raise FileNotFoundError('synthetic output absent')
+                        return selected_cfru
+                    # Keep the initial DPE -> CFRU input-chain check valid so
+                    # this fault exercises the DPE replay/output comparison.
+                    return b'wrong' if fault == 'output' and selected_reads.count('dpe') > 1 else outputs[c]
                 if path.name == 'ram-output.bin': return outputs[c]  # Handled below via real scratch read.
                 if path.name == 'linked.o': return c.encode()
                 if path.name == 'output.bin': return b'synthetic payload'
@@ -518,14 +557,22 @@ main()
                 report = {'nonce': 'stale' if fault == 'nonce' else cfg['nonce'],
                           'completed': True, 'snapshots': store.snapshots,
                           'write_count': store.write_count, 'event_count': store.journal.count,
-                          'write_binding': 'stale' if fault == 'binding' else store.binding.hexdigest()}
+                          'write_binding': 'stale' if fault == 'binding' or (fault == 'cfru_binding' and c == 'cfru') else store.binding.hexdigest()}
                 (directory / 'report.json').write_text(json.dumps(report))
                 return o.subprocess.CompletedProcess(command, 2 if fault == 'worker' else 0)
             def elf(raw):
                 mock = unittest.mock.Mock()
                 mock.payload.return_value = 0x08000000 + (512 if raw == b'dpe' else 256)
+                if fault == 'elf' and raw == b'cfru': mock.payload.return_value += 4
                 mock.symbol.side_effect = v.Missing()
                 return mock
+            def oak(elf, actual, bitmap):
+                self.assertEqual(outputs['cfru'], actual)
+                if fault == 'oak': raise v.Invalid()
+                return 'UNKNOWN'
+            # Isolate the strict output prerequisite; real policy checks have
+            # their own unchanged tests. No policy is accepted in discovery.
+            checked_policy = unittest.mock.Mock(owners={}, seen_overrides=set(), overrides={})
             with patch.object(o, 'git', side_effect=fake_git), \
                  patch.object(o, 'bounded_read', side_effect=all_reads), \
                  patch.object(o, 'SOURCE_HASHES', dict.fromkeys(('dpe', 'cfru'), o.sha(b'synthetic source'))), \
@@ -533,11 +580,21 @@ main()
                  patch.object(o.subprocess, 'run', side_effect=launch) as process, \
                  patch.object(v, 'ROM_LIMIT', 1024), patch.object(v, 'DPE_START', 512), \
                  patch.object(v, 'CFRU_START', 256), patch.object(v, 'ArmElf', side_effect=elf), \
-                 patch.object(v, 'verify_oak_link', return_value='UNKNOWN'), \
-                 patch.object(o, 'OwnerChecks', side_effect=AssertionError('Discovery must not require a policy')):
-                result = o.run_user({'schema': 2, 'scratch': '.local'}, root, discovery=True)
+                 patch.object(v, 'verify_oak_link', side_effect=oak), \
+                 patch.object(v, 'verify_linked_reservations'), \
+                 patch.object(o, 'OwnerChecks', side_effect=None if plan_mode else AssertionError('Discovery must not require a policy'),
+                              return_value=checked_policy):
+                plan = {'schema': 2, 'scratch': '.local'}
+                if plan_mode: plan['ownership'] = {}
+                result = o.run_user(plan, root, discovery=not plan_mode)
             candidates = list(scratch.glob('d1-*/candidate-plan.json'))
-            if fault:
+            if plan_mode:
+                self.assertIn('cfru', selected_reads)
+                self.assertEqual([], candidates)
+                if cfru_output == 'matching': self.assertEqual('PASS', result['D1_IO_RECOMPUTATION'])
+                elif cfru_output == 'stale': self.assertEqual('FAIL', result['D1_ALL'])
+                else: self.assertEqual('UNKNOWN', result['D1_ALL'])
+            elif fault:
                 self.assertEqual([], candidates)
                 self.assertNotEqual('PASS', result['D1_DISCOVERY'])
                 if fault in ('source', 'input', 'ignore', 'isolation'): process.assert_not_called()
@@ -549,12 +606,19 @@ main()
                 candidate = json.loads(candidates[0].read_text())
                 self.assertEqual([], candidate['ownership']['overrides'])
                 with self.assertRaises(v.Missing): o.OwnerChecks(candidate['ownership'])
-            for gate in ('D1_CAPACITY', 'D1_DECLARED_OWNER_CHECKS', 'D1_REVIEWED_OVERRIDES',
-                         'D1_FULL_NATIVE_OWNERSHIP', 'D1_ABI_RELOCATION_SEMANTICS',
+            if not plan_mode:
+                self.assertNotIn('cfru', selected_reads)
+                if fault != 'output': self.assertEqual('UNKNOWN', result['D1_OUTPUT_REPRODUCTION'])
+                for gate in ('D1_CAPACITY', 'D1_DECLARED_OWNER_CHECKS', 'D1_REVIEWED_OVERRIDES'):
+                    self.assertEqual('UNKNOWN', result[gate])
+            for c in ('dpe', 'cfru'):
+                self.assertFalse((root / o.COMPONENTS[c] / 'test.gba').exists())
+            for gate in ('D1_FULL_NATIVE_OWNERSHIP', 'D1_ABI_RELOCATION_SEMANTICS',
                          'D1_SOURCE_CONFIG_BUILD_PROVENANCE', 'D1_DPE_REPRODUCIBILITY',
                          'D1_RESERVATION_REVIEW', 'D1_ASSET_OWNER_CENSUS', 'D1_LEARNSET_OWNER_CENSUS'):
                 self.assertEqual('UNKNOWN', result[gate])
             self.assertNotEqual('PASS', result['D1_ALL'])
+            return result
 
     def test_discovery_rejects_policy_injection_and_nonlocal_scratch(self):
         def fake_git(root, *args):
