@@ -24,7 +24,7 @@ PASS here. This limitation is deliberate, not a claim that matching output or
 self-declared metadata constitutes complete D1. CFRU production insertion and
 UPR Stage B remain unauthorized.
 
-## Exact six-file allowlist
+## Original observer's six-file scope (historical implementation authority)
 
 1. `07_scripts/d1/observe_original_inserters.py`
 2. `07_scripts/d1/tests/test_observe_original_inserters.py`
@@ -37,10 +37,111 @@ The existing receipt validator retains its previous semantics, including all
 63 regression tests and native UNKNOWN gates. Its new pure-byte/ELF helpers
 are called by the live observer; its receipt CLI gains no trust switch.
 
+## Minimal discovery bootstrap — #727
+
+**CONFIRMED USER DECISION:** The bounded follow-up implements the route in
+[CONTROL 6403396358](https://github.com/Planton361/firered-gen9-randomizer-workspace/issues/727#issuecomment-6403396358),
+on `audit/727-d1-owner-plan` from exact
+`2bc8e468ec315575e3540f5f3190abb61cb9a52f`. Only this contract, the existing
+observer and its tests change. No separate generator or validator is needed.
+Live preflight found #727 the sole Doing/P0, Component Delivery; #726 and
+#741 Ready. The documented CFRU/UPR checkout differences are preserved.
+
+**CONFIRMED CURRENT STATE — implementation decision:** Complete ownership is
+not required for an isolated observation. The original RAM worker and separate
+`JournalVerifier` already reconstruct writes without granting ownership.
+`--discover` therefore bypasses only `OwnerChecks`, while retaining source and
+script identities, selected input chain, read-only bubblewrap, nonce, resource
+limits, snapshot freshness, backend count/binding, selected-output reproduction
+and link/Oak structural checks. A failed or unsupported observation stops;
+partial journals never become a completed candidate plan. No native build is
+repeated. Native compatibility of this new path remains USER-ONLY / NOT_RUN.
+
+### USER-ONLY Fish/Linux sequence
+
+1. USER locally sets `D1_SCRATCH` to the **already existing**, ignored scratch
+   directory relative to the original Workspace, inside `.local/`. No plan is
+   required. From the Workspace root, run:
+
+   ```fish
+   python3 -B 07_scripts/d1/observe_original_inserters.py --discover "$D1_SCRATCH"
+   ```
+
+   Existing source/compiled inputs and selected outputs are still required.
+   Missing originals, tools or isolation yield UNKNOWN; mismatches yield FAIL.
+   The command creates only a unique private `d1-*` evidence directory under
+   that scratch. It never chooses or creates another scratch workspace.
+
+2. USER privately reviews the new directory's `candidate-plan.json` and
+   `candidate-census.jsonl` against its two stage journals/reports and independent
+   public source + local link/input evidence. The census preserves ordered
+   `dpe_N`/`cfru_N` writes, including unchanged and zero-length writes, source
+   lines/functions, exact operation bindings, dynamic free-space requests and
+   every intersecting write pair. Bulk expansion/payload intersections are
+   marked as materialization, without granting an override. Full read/seek/
+   copy/truncate/cache operations and actual bytes remain in the original
+   `operations.jsonl`; dynamic repoints and map-overlay writes are observed,
+   not guessed from final differences. The final `census_complete` record
+   appears only after both stages' independent recomputation and comparisons.
+
+   The candidate contains only linked payload extents and public named roles
+   resolved from actual sized ELF symbols and compared with installed bytes:
+   the existing eleven Oak/Pickup/Evolution bindings, plus DPE
+   `gMonFrontPicTable`, `gMonPaletteTable` (1440 × 8 B each) and
+   `gEvolutionTable` (1440 × 16 × 8 B). Missing symbols remain missing. No owner
+   for an asset, patch, dynamic allocation or map overlay is invented.
+   `ownership.config` and **all** candidate `basis` fields are `null`;
+   `overrides` is empty, even for identical writes. Observed placement supplies
+   no reservation or permission. Passing this candidate unchanged to `--plan`
+   stops UNKNOWN before any worker executes.
+
+3. An independent USER-local source/link/input review must produce a separate
+   reviewed schema-2 plan in the **same ignored scratch**. Review all physical
+   leaves, capacity and protected ranges, not only candidate symbols; add the
+   missing reservations/owners only when independently supported. Supply the
+   actual scoped configuration binding and the contract's independent bases
+   only after that review. For each nonmaterialization intersection, review
+   exact original source behavior and both complete operation bindings; a
+   DPE→CFRU edge additionally requires the narrow shared-patch owner, exact
+   range, source/config binding and independent decision defined below. Never
+   mechanically replace `null` fields or turn census rows into permissions.
+
+   USER locally sets `D1_OBSERVER_PLAN` to that independently reviewed plan and
+   runs the existing independent checking path:
+
+   ```fish
+   python3 -B 07_scripts/d1/observe_original_inserters.py --plan "$D1_OBSERVER_PLAN"
+   ```
+
+   This performs a fresh RAM observation, no build, and rechecks the complete
+   write set, actual link reservations and exact override bindings. A candidate
+   or edited receipt alone cannot authenticate the independent review or
+   satisfy the native gates. Missing proof stays UNKNOWN. No private artifact
+   or its path, map, hash or log may be returned to Codex/CONTROL; share only
+   the fixed status lines.
+
+Concrete missing-proof categories and public source starting points:
+
+| Status (UNKNOWN until independent proof) | Required USER-local evidence |
+| --- | --- |
+| `D1_RESERVATION_REVIEW` | Both selected `scripts/insert.py`, patch lists, CFRU `mapobjectoverlays` and actual input map structure; independent bounds/exclusivity for payloads, each free-space request, appended overlay and protected patch leaf. FF/00 search results are insufficient. |
+| `D1_ASSET_OWNER_CENSUS` | DPE `src/Front_Pic_Table.c`, `src/Palette_Table.c`, actual selected pointers and complete asset extents/aliases; UPR `romio/src/main/java/com/uprfvx/romio/romhandlers/Gen3RomHandler.java` palette source/snapshot/repoint reservations. A table symbol is not its pointed-to asset inventory. |
+| `D1_LEARNSET_OWNER_CENSUS` | DPE `src/Learnsets.c`, CFRU `src/learn_move.c`, and the selected UPR handler's learnset writer/allocator/rollback paths with physical input/output reservations. |
+| `D1_REVIEWED_OVERRIDES` | Exact pending intersections, original source lines, same physical owner, scoped independent source/config decision and complete operation bindings; no generic source-order or identical-byte waiver. |
+
+These category keys do not certify evidence authentication. The first three
+stay UNKNOWN in this bounded helper, as do all four pre-existing hard native
+gates. `--discover` also leaves `D1_CAPACITY`, `D1_DECLARED_OWNER_CHECKS` and
+`D1_REVIEWED_OVERRIDES` UNKNOWN. Only completed observation and candidate-file
+creation can set `D1_DISCOVERY=PASS` / `D1_CANDIDATE_PLAN=PASS`; those statuses
+never mean the candidate is an accepted ownership plan. An unsupported class,
+budget exhaustion or missing prerequisite prevents those PASS values.
+
 ## USER-ONLY invocation
 
-USER independently prepares a private local plan and an **existing ignored
-scratch directory inside the original Workspace**. Set `D1_OBSERVER_PLAN`
+For the ownership-checking path, USER independently prepares a private local
+plan and an **existing ignored scratch directory inside the original Workspace**.
+Set `D1_OBSERVER_PLAN`
 locally to that plan filename, then run from this Workspace:
 
 ```sh
@@ -56,7 +157,7 @@ existing selected outputs are required for the reproduction comparison. The
 command never creates or replaces those selected originals. A stale/mismatching
 existing output is FAIL, not permission to overwrite it.
 
-No plan is needed to inspect the fixed status schema: running without arguments
+No argument is needed to inspect the fixed status schema: running without arguments
 prints UNKNOWN statuses and opens no private artifact. Do not pass private
 artifacts to Codex or upload plans, traces, paths, hashes, maps, symbols, native
 outputs, tool logs, presets or images. Only fixed status lines may be returned.
@@ -181,6 +282,8 @@ D1_REVIEWED_OVERRIDES D1_LINK_IMAGE D1_OAK_LINK_SHAPE
 D1_INPUT_CHAIN D1_OUTPUT_REPRODUCTION D1_CACHE_FRESHNESS
 D1_SOURCE_CONFIG_BUILD_PROVENANCE D1_FULL_NATIVE_OWNERSHIP
 D1_ABI_RELOCATION_SEMANTICS D1_DPE_REPRODUCIBILITY D1_ALL
+D1_DISCOVERY D1_CANDIDATE_PLAN D1_RESERVATION_REVIEW
+D1_ASSET_OWNER_CENSUS D1_LEARNSET_OWNER_CENSUS
 ```
 
 Exit 1 is FAIL; exit 2 is UNKNOWN/STOP; exit 0 is unavailable. Detected
@@ -232,4 +335,12 @@ no UPR gameplay-test promotion and no merge/pin authorization.
 
 Verification result: **90/90 synthetic test methods PASS**, zero failures,
 errors or skips (63 receipt regressions, 6 independent link checks, 21 observer
-checks). No native/USER-only test was run by Codex.
+checks), before this bootstrap. Bootstrap verification: **100/100 PASS**, including
+all previous 90 and ten discovery methods (with parameterized failure cases).
+Coverage adds the shared live driver with synthetic RAM inputs, no-op/zero-write
+identity, dynamic reservation nonauthorization, exact pending conflicts,
+overlay/phase boundaries, missing symbols, resource limits, candidate rejection,
+source/ignore/input/output/nonce/journal/worker/isolation failures, actual
+synthetic scanner tracing and CLI sanitization.
+No native/USER-only test was run by Codex. D1 native, ABI, provenance and #741
+reproducibility gates remain UNKNOWN; `CFRU_INSERTION_READY=NO`.

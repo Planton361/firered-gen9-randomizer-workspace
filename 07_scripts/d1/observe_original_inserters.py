@@ -45,6 +45,9 @@ GATES = ('D1_SANDBOX', 'D1_PUBLIC_SOURCE_IDENTITY', 'D1_ORIGINAL_EXECUTION',
          'D1_INPUT_CHAIN', 'D1_OUTPUT_REPRODUCTION', 'D1_CACHE_FRESHNESS',
          'D1_SOURCE_CONFIG_BUILD_PROVENANCE', 'D1_FULL_NATIVE_OWNERSHIP',
          'D1_ABI_RELOCATION_SEMANTICS', 'D1_DPE_REPRODUCIBILITY', 'D1_ALL')
+DISCOVERY_GATES = ('D1_DISCOVERY', 'D1_CANDIDATE_PLAN', 'D1_RESERVATION_REVIEW',
+                   'D1_ASSET_OWNER_CENSUS', 'D1_LEARNSET_OWNER_CENSUS')
+GATES += DISCOVERY_GATES
 MEMORY_LIMIT = 512 * 1024 * 1024
 MAX_EVENTS = 100_000_000
 MAX_JOURNAL = 8 * 1024 * 1024 * 1024
@@ -432,7 +435,7 @@ def sandbox_command(bwrap, root, scratch, cfg):
             sys.executable, '-B', str(Path(__file__).resolve()), '--internal-worker', str(cfg)]
 
 
-def verify_live_stage(root, scratch, report, nonce, write_check):
+def verify_live_stage(root, scratch, report, nonce, write_check, event_check=None):
     v.require(report['nonce'] == nonce and report['completed'] is True)
     snapshots = {}
     for name, expected in report['snapshots'].items():
@@ -446,6 +449,8 @@ def verify_live_stage(root, scratch, report, nonce, write_check):
     with (scratch / 'operations.jsonl').open('rb') as f:
         for event in journal_rows(f):
             verifier.consume(event)
+            if event_check is not None:
+                event_check(event)
             count += 1
     v.require(count == report['event_count'])
     ram = bounded_read(scratch / 'ram-output.bin')
@@ -457,6 +462,10 @@ class OwnerChecks:
     """Stream real writes against declared intervals; never certify map truth."""
     def __init__(self, policy):
         v.fields(policy, ('config', 'allocations', 'owners', 'overrides'))
+        # A discovery candidate contains facts to review, never permissions.
+        if policy['config'] is None or any(row.get('basis') is None
+                                          for key in ('allocations', 'owners') for row in policy[key]):
+            raise v.Missing()
         v.digest(policy['config'])
         self.policy = policy
         self.owners = v.owners(policy)
@@ -576,12 +585,121 @@ class OwnerChecks:
                 v.require(owner['allocation'] == matches[0]['id'])
 
 
-def run_user(plan, workspace):
+class Discovery:
+    """Private census from independently replayed events, without owner grants."""
+    def __init__(self, stream, scratch):
+        self.journal = Journal(stream)
+        self.plan = {'schema': 2, 'scratch': scratch, 'ownership': {
+            'config': None, 'allocations': [], 'owners': [], 'overrides': []}}
+        self.indices = {'dpe': 0, 'cfru': 0}
+        self.ranks = {'dpe': -1, 'cfru': -1}
+        self.history, self.pages = [], {}
+        self.history_bytes = 0
+        self.payloads = {}
+        self.started_cfru = False
+        self.journal.emit('review_required', sources=v.SOURCES, script_hashes=SOURCE_HASHES,
+                          missing_roles=sorted(v.REQUIRED_ROLES))
+
+    def consume(self, component, event):
+        if event['op'] == 'allocate':
+            start, length = event['start'], event['length']
+            v.integer(start); v.integer(length, 1)
+            v.require(start % 4 == 0 and start >= 0x900000 and start + length <= v.DPE_START)
+            self.journal.emit('allocation_request', component=component, start=start,
+                              end=start + length, basis=None)
+        elif event['op'] == 'write' and event['key'] == 'test.gba':
+            self.write(component, event)
+
+    def write(self, component, event):
+        start, length, phase = event['start'], event['length'], event['phase']
+        v.integer(start); v.integer(length)
+        end = start + length
+        v.require(end <= v.ROM_LIMIT and phase in v.PHASES[component]
+                  and phase not in v.NO_ROM_WRITES)
+        v.require(event['kind'] in ('bulk', 'expand', 'data', 'pointer', 'hook', 'wrapper'))
+        v.require(not (self.started_cfru and component == 'dpe'))
+        self.started_cfru |= component == 'cfru'
+        rank = v.PHASES[component].index(phase)
+        v.require(rank >= self.ranks[component])
+        self.ranks[component] = rank
+        if component == 'cfru' and start >= v.CFRU_START:
+            v.require(end <= v.DPE_START)
+        if phase == 'payload':
+            v.require(component not in self.payloads and length > 0 and start ==
+                      (v.DPE_START if component == 'dpe' else v.CFRU_START))
+            self.payloads[component] = (start, end)
+        write_id = component + '_' + str(self.indices[component])
+        self.indices[component] += 1
+        row = {'id': write_id, 'component': component, 'phase': phase, 'kind': event['kind'],
+               'start': start, 'end': end, 'binding': v.write_binding(event, component),
+               'source_line': event['source_line'], 'source_function': event['source_function'],
+               'unchanged': event['before'] == sha(bytes.fromhex(event['data']))}
+        self.journal.emit('write_candidate', **row)
+        # Keep every operation (including no-ops and bulk materialization) and
+        # every intersection. An intersection is a review obligation, no edge.
+        candidates = {i for page in range(start // 4096, (end + 4095) // 4096) if length
+                      for i in self.pages.get(page, ())}
+        for i in sorted(candidates):
+            earlier = self.history[i]
+            lo, hi = max(start, earlier['start']), min(end, earlier['end'])
+            if lo < hi:
+                self.journal.emit('intersection_candidate', earlier=earlier['id'], later=write_id,
+                                  start=lo, end=hi, earlier_write=earlier['binding'],
+                                  later_write=row['binding'], basis=None,
+                                  materialization=any(r['phase'] in ('expand', 'payload')
+                                                      for r in (earlier, row)))
+        self.history_bytes += len(json.dumps(row)) + 1024
+        if len(self.history) >= 1_000_000 or self.history_bytes > 128 * 1024 * 1024:
+            raise v.Missing()
+        index = len(self.history)
+        self.history.append(row)
+        if length:
+            for page in range(start // 4096, (end - 1) // 4096 + 1):
+                self.pages.setdefault(page, []).append(index)
+
+    def linked_candidates(self, component, elf, installed):
+        """Only public named roles with actual sized ELF symbols; no free-byte owners."""
+        start, end = self.payloads[component]
+        alloc_id = component + '_payload'
+        policy = self.plan['ownership']
+        policy['allocations'].append({'id': alloc_id, 'component': component, 'kind': 'payload',
+                                      'start': start, 'end': end, 'basis': None})
+        bindings = LINKED_ROLES if component == 'cfru' else {
+            'native_front_table': ('gMonFrontPicTable', False),
+            'native_palette_table': ('gMonPaletteTable', False),
+            'evolution_rows': ('gEvolutionTable', False)}
+        for role, (symbol, thumb) in bindings.items():
+            try:
+                size = (1440 * 8 if role in ('native_front_table', 'native_palette_table')
+                        else v.REQUIRED_ROLES[role])
+                value, data = elf.symbol(symbol, size, thumb)
+            except v.Missing:
+                self.journal.emit('missing_symbol', role=role)
+                continue
+            at = (value & ~1 if thumb else value) - 0x08000000
+            v.require(start <= at < at + len(data) <= end and installed[at:at + len(data)] == data)
+            policy['owners'].append({'id': role, 'component': component, 'roles': [role],
+                                     'start': at, 'end': at + len(data), 'allocation': alloc_id,
+                                     'basis': None})
+            self.journal.emit('linked_candidate', role=role, symbol=symbol, source=v.SOURCES[component],
+                              start=at, end=at + len(data), basis=None)
+
+    def finish(self, path):
+        v.require(set(self.payloads) == {'dpe', 'cfru'})
+        present = {r for owner in self.plan['ownership']['owners'] for r in owner['roles']}
+        self.journal.emit('census_complete', write_counts=self.indices,
+                          missing_roles=sorted(set(v.REQUIRED_ROLES) - present),
+                          permissions_reviewed=False)
+        with path.open('x') as f:
+            json.dump(self.plan, f)
+
+
+def run_user(plan, workspace, discovery=False):
     result = dict.fromkeys(GATES, 'UNKNOWN')
     root = workspace.resolve()
     active_gate = 'D1_ALL'
     try:
-        v.fields(plan, ('schema', 'scratch', 'ownership'))
+        v.fields(plan, ('schema', 'scratch') if discovery else ('schema', 'scratch', 'ownership'))
         v.require(plan['schema'] == 2 and type(plan['schema']) is int)
         active_gate = 'D1_PUBLIC_SOURCE_IDENTITY'
         for c, relative in COMPONENTS.items():
@@ -592,6 +710,12 @@ def run_user(plan, workspace):
             v.require(sha(bounded_read(root / COMPONENTS[c] / 'scripts/insert.py')) == SOURCE_HASHES[c])
         result['D1_PUBLIC_SOURCE_IDENTITY'] = 'PASS'
         scratch_root = checked_path(root, plan['scratch'])
+        if discovery:
+            # Only the existing ignored local scratch area, never an ignored
+            # build/ROM directory or a component checkout.
+            v.require(scratch_root.relative_to(root).parts[:1] == ('.local',)
+                      and scratch_root.resolve().is_relative_to(root / '.local')
+                      and not (root / '.local').is_symlink())
         # Verify ignore coverage with a future file too; no bare top-level workspace.
         git(root, 'check-ignore', '--quiet', str(scratch_root / 'd1-private-evidence'))
         if not scratch_root.is_dir():
@@ -600,7 +724,7 @@ def run_user(plan, workspace):
         if bwrap is None or not sys.platform.startswith('linux'):
             raise v.Missing()
         active_gate = 'D1_DECLARED_OWNER_CHECKS'
-        checks = OwnerChecks(plan['ownership'])
+        checks = None if discovery else OwnerChecks(plan['ownership'])
         dpe, cfru = root / COMPONENTS['dpe'], root / COMPONENTS['cfru']
         active_gate = 'D1_INPUT_CHAIN'
         previous_output, selected_input = bounded_read(dpe / 'test.gba'), bounded_read(cfru / 'BPRE0.gba')
@@ -610,58 +734,90 @@ def run_user(plan, workspace):
         existing_caches = any((root / COMPONENTS[c] / 'generatedrepoints').exists() for c in ('dpe', 'cfru'))
         with contextlib.nullcontext(tempfile.mkdtemp(prefix='d1-', dir=scratch_root)) as tmp:
             evidence = Path(tmp)
-            # Private evidence stays in this unique ignored directory for USER review.
-            for c in ('dpe', 'cfru'):
-                directory = evidence / c
-                directory.mkdir(mode=0o700)
-                nonce = secrets.token_hex(32)
-                cfg = directory / 'worker.json'
-                cfg.write_text(json.dumps({'root': str(root / COMPONENTS[c]), 'scratch': str(directory),
-                                           'component': c, 'nonce': nonce}))
-                env = {'PATH': os.environ.get('PATH', '/usr/bin:/bin'), 'HOME': str(directory),
-                       'TMPDIR': str(directory), 'PYTHONDONTWRITEBYTECODE': '1', 'LC_ALL': 'C',
-                       'D1_OBSERVER_SANDBOX_NONCE': nonce}
-                active_gate = 'D1_ORIGINAL_EXECUTION'
-                run = subprocess.run(sandbox_command(bwrap, root / COMPONENTS[c], directory, cfg),
-                                     env=env, stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
-                                     stderr=subprocess.DEVNULL, timeout=7200)
-                report = json.loads(bounded_read(directory / 'report.json', 16 * 1024 * 1024))
-                if run.returncode:
-                    if report.get('outcome') == 'FAIL':
-                        raise v.Invalid()
-                    raise v.Missing()
-                result['D1_SANDBOX'] = 'PASS'
-                active_gate = 'D1_IO_RECOMPUTATION'
-                verifier, ram = verify_live_stage(root / COMPONENTS[c], directory, report, nonce,
-                                                 lambda e, c=c: checks.check(c, e))
-                active_gate = 'D1_CAPACITY'
+            census_stream = (evidence / 'candidate-census.jsonl').open('xb') if discovery else None
+            # The context closes even after an unsupported/failed native stage.
+            with contextlib.ExitStack() as streams:
+                if census_stream is not None:
+                    streams.enter_context(census_stream)
+                census = Discovery(census_stream, plan['scratch']) if discovery else None
+                return observe_stages(root, evidence, bwrap, result, checks, census, existing_caches)
+    except (v.Invalid, ValueError, TypeError, IndexError):
+        result[active_gate] = 'FAIL'
+        result['D1_ALL'] = 'FAIL'
+    except (Exception, Stop, KeyboardInterrupt):
+        pass
+    return result
+
+
+def observe_stages(root, evidence, bwrap, result, checks, census, existing_caches):
+    """Shared sandbox path: discovery removes no isolation or integrity checks."""
+    active_gate = 'D1_ORIGINAL_EXECUTION'
+    cfru = root / COMPONENTS['cfru']
+    try:
+        # Private evidence stays in this unique ignored directory for USER review.
+        for c in ('dpe', 'cfru'):
+            directory = evidence / c
+            directory.mkdir(mode=0o700)
+            nonce = secrets.token_hex(32)
+            cfg = directory / 'worker.json'
+            cfg.write_text(json.dumps({'root': str(root / COMPONENTS[c]), 'scratch': str(directory),
+                                       'component': c, 'nonce': nonce}))
+            env = {'PATH': os.environ.get('PATH', '/usr/bin:/bin'), 'HOME': str(directory),
+                   'TMPDIR': str(directory), 'PYTHONDONTWRITEBYTECODE': '1', 'LC_ALL': 'C',
+                   'D1_OBSERVER_SANDBOX_NONCE': nonce}
+            active_gate = 'D1_ORIGINAL_EXECUTION'
+            run = subprocess.run(sandbox_command(bwrap, root / COMPONENTS[c], directory, cfg),
+                                 env=env, stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
+                                 stderr=subprocess.DEVNULL, timeout=7200)
+            report = json.loads(bounded_read(directory / 'report.json', 16 * 1024 * 1024))
+            if run.returncode:
+                if report.get('outcome') == 'FAIL':
+                    raise v.Invalid()
+                raise v.Missing()
+            result['D1_SANDBOX'] = 'PASS'
+            active_gate = 'D1_IO_RECOMPUTATION'
+            verifier, ram = verify_live_stage(root / COMPONENTS[c], directory, report, nonce,
+                                             None if census else lambda e, c=c: checks.check(c, e),
+                                             (lambda e, c=c: census.consume(c, e)) if census else None)
+            active_gate = 'D1_CAPACITY'
+            if checks is not None:
                 for alloc in verifier.allocations:
                     checks.allocation(alloc)
-                active_gate = 'D1_OUTPUT_REPRODUCTION'
-                actual = bounded_read(root / COMPONENTS[c] / 'test.gba')
-                v.require(actual == ram and len(ram) == v.ROM_LIMIT)
-                active_gate = 'D1_LINK_IMAGE'
-                elf = v.ArmElf(bounded_read(root / COMPONENTS[c] / 'build/linked.o'))
-                origin = elf.payload(bounded_read(root / COMPONENTS[c] / 'build/output.bin'))
-                v.require(origin == 0x08000000 + (v.CFRU_START if c == 'cfru' else v.DPE_START))
-                if c == 'cfru':
-                    active_gate = 'D1_DECLARED_OWNER_CHECKS'
+            active_gate = 'D1_OUTPUT_REPRODUCTION'
+            actual = bounded_read(root / COMPONENTS[c] / 'test.gba')
+            v.require(actual == ram and len(ram) == v.ROM_LIMIT)
+            active_gate = 'D1_LINK_IMAGE'
+            elf = v.ArmElf(bounded_read(root / COMPONENTS[c] / 'build/linked.o'))
+            origin = elf.payload(bounded_read(root / COMPONENTS[c] / 'build/output.bin'))
+            v.require(origin == 0x08000000 + (v.CFRU_START if c == 'cfru' else v.DPE_START))
+            if census is not None:
+                census.linked_candidates(c, elf, actual)
+            if c == 'cfru':
+                active_gate = 'D1_DECLARED_OWNER_CHECKS'
+                if checks is not None:
                     v.verify_linked_reservations(elf, checks.owners, LINKED_ROLES)
-                    asm = bounded_read(cfru / 'assembly/data/oak_intro_contract.s').decode()
-                    block = asm.split('gOakIntroEligibility:', 1)[1].split('.Loak_eligibility_end:', 1)[0]
-                    import re
-                    bitmap = bytes(int(x, 16) for line in block.splitlines() if '.byte ' in line
-                                   for x in re.findall(r'0x[0-9a-fA-F]+', line.split('@')[0]))
-                    active_gate = 'D1_OAK_LINK_SHAPE'
-                    v.verify_oak_link(elf, actual, bitmap)
+                asm = bounded_read(cfru / 'assembly/data/oak_intro_contract.s').decode()
+                block = asm.split('gOakIntroEligibility:', 1)[1].split('.Loak_eligibility_end:', 1)[0]
+                import re
+                bitmap = bytes(int(x, 16) for line in block.splitlines() if '.byte ' in line
+                               for x in re.findall(r'0x[0-9a-fA-F]+', line.split('@')[0]))
+                active_gate = 'D1_OAK_LINK_SHAPE'
+                v.verify_oak_link(elf, actual, bitmap)
         active_gate = 'D1_REVIEWED_OVERRIDES'
-        v.require(checks.seen_overrides == set(checks.overrides))
+        if checks is not None:
+            v.require(checks.seen_overrides == set(checks.overrides))
+        else:
+            active_gate = 'D1_CANDIDATE_PLAN'
+            census.finish(evidence / 'candidate-plan.json')
+            result['D1_CANDIDATE_PLAN'] = result['D1_DISCOVERY'] = 'PASS'
         if not existing_caches:
             result['D1_CACHE_FRESHNESS'] = 'PASS'
-        for gate in ('D1_ORIGINAL_EXECUTION', 'D1_IO_RECOMPUTATION', 'D1_CAPACITY',
-                     'D1_DECLARED_OWNER_CHECKS', 'D1_REVIEWED_OVERRIDES', 'D1_LINK_IMAGE',
+        for gate in ('D1_ORIGINAL_EXECUTION', 'D1_IO_RECOMPUTATION', 'D1_LINK_IMAGE',
                      'D1_OAK_LINK_SHAPE', 'D1_OUTPUT_REPRODUCTION'):
             result[gate] = 'PASS'
+        if checks is not None:
+            for gate in ('D1_CAPACITY', 'D1_DECLARED_OWNER_CHECKS', 'D1_REVIEWED_OVERRIDES'):
+                result[gate] = 'PASS'
     except (v.Invalid, ValueError, TypeError, IndexError):
         result[active_gate] = 'FAIL'
         result['D1_ALL'] = 'FAIL'
@@ -698,11 +854,15 @@ def main(argv=None):
             return 2
     result = dict.fromkeys(GATES, 'UNKNOWN')
     try:
-        if len(argv) != 2 or argv[0] != '--plan':
+        if len(argv) != 2 or argv[0] not in ('--plan', '--discover'):
             raise v.Missing()
-        raw = bounded_read(Path(argv[1]), 16 * 1024 * 1024)
-        plan = json.loads(raw, object_pairs_hook=v.unique_object)
-        result = run_user(plan, Path(__file__).resolve().parents[2])
+        discovery = argv[0] == '--discover'
+        if discovery:
+            plan = {'schema': 2, 'scratch': argv[1]}
+        else:
+            raw = bounded_read(Path(argv[1]), 16 * 1024 * 1024)
+            plan = json.loads(raw, object_pairs_hook=v.unique_object)
+        result = run_user(plan, Path(__file__).resolve().parents[2], discovery=discovery)
     except (v.Invalid, ValueError, TypeError):
         result['D1_ALL'] = 'FAIL'
     except (Exception, Stop, KeyboardInterrupt):
