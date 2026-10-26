@@ -64,6 +64,86 @@ def write(start, data=b'ABCD', phase='bytepatch', kind='data'):
 
 
 class IoTests(unittest.TestCase):
+    def test_path_open_write_target_and_copy_denials_keep_fixed_reasons(self):
+        cases = (
+            ('PATH_POLICY', lambda s: s.key(7)),
+            ('PATH_POLICY', lambda s: s.open('../PRIVATE', 'r')),
+            ('PATH_POLICY', lambda s: s.open('/PRIVATE', 'r')),
+            ('PATH_POLICY', lambda s: s.copy('BPRE0.gba', '../PRIVATE')),
+            ('OPEN_MODE', lambda s: s.open('PRIVATE', 'invalid')),
+            ('OPEN_MODE', lambda s: s.open('PRIVATE', opener='PRIVATE')),
+            ('WRITE_TARGET', lambda s: s.open('PRIVATE', 'w')),
+            ('COPY_CONTRACT', lambda s: s.copy('PRIVATE', 'test.gba')),
+            ('COPY_CONTRACT', lambda s: s.copy('BPRE0.gba', 'PRIVATE')),
+            ('COPY_CONTRACT', lambda s: s.copy('BPRE0.gba', 'test.gba', follow_symlinks=False)),
+        )
+        for reason, operation in cases:
+            with self.subTest(reason=reason):
+                store, stream, _ = make_store()
+                with self.assertRaises(o.Stop) as stopped:
+                    operation(store)
+                self.assertTrue(store.denied)
+                self.assertEqual('UNSUPPORTED_IO', stopped.exception.category)
+                self.assertEqual('UNSUPPORTED_IO', store.journal.stop_category)
+                self.assertEqual(reason, store.journal.io_stop_reason)
+                self.assertEqual(b'', stream.getvalue())
+                self.assertEqual((), stopped.exception.args)
+        store, _, _ = make_store()
+        with patch.object(Path, 'is_symlink', return_value=True), self.assertRaises(o.Stop):
+            store.key('PRIVATE')
+        self.assertEqual('PATH_POLICY', store.journal.io_stop_reason)
+
+    def test_ram_file_denials_keep_method_specific_reasons(self):
+        cases = (
+            ('seek', (-1,), False, 'SEEK_RULE'),
+            ('seek', ('PRIVATE',), False, 'SEEK_RULE'),
+            ('seek', (0, 3), False, 'SEEK_RULE'),
+            ('seek', (0,), True, 'SEEK_RULE'),
+            ('read', (-2,), False, 'READ_RULE'),
+            ('read', ('PRIVATE',), False, 'READ_RULE'),
+            ('read', (), True, 'READ_RULE'),
+            ('write', (b'PRIVATE',), False, 'WRITE_RULE'),
+            ('write', (b'PRIVATE',), True, 'WRITE_RULE'),
+            ('truncate', (0,), False, 'TRUNCATE_RULE'),
+            ('truncate', (0,), True, 'TRUNCATE_RULE'),
+            ('fileno', (), False, 'FILENO_RULE'),
+        )
+        for method, args, closed, reason in cases:
+            with self.subTest(method=method, closed=closed, args=args):
+                store, _, _ = make_store()
+                with store.open('BPRE0.gba', 'rb') as file:
+                    if closed:
+                        file.close()
+                    with self.assertRaises(o.Stop):
+                        getattr(file, method)(*args)
+                self.assertTrue(store.denied)
+                self.assertEqual('UNSUPPORTED_IO', store.journal.stop_category)
+                self.assertEqual(reason, store.journal.io_stop_reason)
+        for size in (-1, 'PRIVATE'):
+            store, _, _ = make_store()
+            with store.open('generatedrepoints', 'wb') as file:
+                with self.assertRaises(o.Stop):
+                    file.truncate(size)
+            self.assertEqual('TRUNCATE_RULE', store.journal.io_stop_reason)
+        store, _, _ = make_store()
+        store.copy('BPRE0.gba', 'test.gba')
+        with store.open('test.gba', 'rb+') as file:
+            with self.assertRaises(o.Stop): file.truncate(0)
+        self.assertEqual('TRUNCATE_RULE', store.journal.io_stop_reason)
+
+    def test_first_stop_category_and_io_reason_are_latched_together(self):
+        for first_category, first_reason, expected in (
+                ('UNSUPPORTED_IO', 'PATH_POLICY', 'PATH_POLICY'),
+                ('UNSUPPORTED_IO', 'UNKNOWN', 'UNKNOWN'),
+                ('RESOURCE_LIMIT', 'PATH_POLICY', 'UNKNOWN')):
+            with self.subTest(category=first_category, reason=first_reason):
+                store, _, _ = make_store()
+                for category, reason in ((first_category, first_reason),
+                                         ('UNSUPPORTED_IO', 'OPEN_MODE'), ('MEMORY_ERROR', 'UNKNOWN')):
+                    with self.assertRaises(o.Stop): store.deny(category, reason)
+                self.assertEqual(first_category, store.journal.stop_category)
+                self.assertEqual(expected, store.journal.io_stop_reason)
+
     def test_original_fixture_writes_are_captured_in_actual_order(self):
         store, stream, files = make_store()
         # Execute a synthetic original, rather than simulate its resulting diff.
@@ -309,7 +389,41 @@ except BaseException:
     open('config.h', 'w')
 except BaseException:
     pass
-""", 'UNKNOWN', 'UNSUPPORTED_IO')
+""", 'UNKNOWN', 'UNSUPPORTED_IO', io_reason='WRITE_TARGET')
+
+    def test_worker_reports_each_io_reason_without_private_arguments(self):
+        operations = {
+            'PATH_POLICY': "open('../PRIVATE', 'r')",
+            'OPEN_MODE': "open('PRIVATE', 'invalid')",
+            'WRITE_TARGET': "open('PRIVATE', 'w')",
+            'COPY_CONTRACT': "import shutil\nshutil.copyfile('PRIVATE', 'PRIVATE')",
+            'SEEK_RULE': "with open('generatedrepoints', 'wb') as f:\n    f.seek(-1)",
+            'READ_RULE': "with open('generatedrepoints', 'wb') as f:\n    f.read(-2)",
+            'WRITE_RULE': "f = open('generatedrepoints', 'wb')\nf.close()\nf.write(b'PRIVATE')",
+            'TRUNCATE_RULE': "with open('generatedrepoints', 'wb') as f:\n    f.truncate(-1)",
+            'FILENO_RULE': "with open('generatedrepoints', 'wb') as f:\n    f.fileno()",
+        }
+        for reason, source in operations.items():
+            with self.subTest(reason=reason):
+                self.exercise(source + '\n', 'UNKNOWN', 'UNSUPPORTED_IO', io_reason=reason)
+
+    def test_worker_probes_use_path_policy_without_calling_foreign_fallback(self):
+        for probe in ('isfile', 'exists', 'getsize'):
+            with self.subTest(probe=probe):
+                self.exercise("import os\nos.path." + probe + "('../PRIVATE')\n",
+                              'UNKNOWN', 'UNSUPPORTED_IO', io_reason='PATH_POLICY')
+
+    def test_caught_io_denial_keeps_first_reason_after_later_denials(self):
+        self.exercise("""try:
+    open('../PRIVATE', 'r')
+except BaseException:
+    pass
+try:
+    open('PRIVATE', 'invalid')
+except BaseException:
+    pass
+raise RuntimeError('PRIVATE')
+""", 'UNKNOWN', 'UNSUPPORTED_IO', io_reason='PATH_POLICY')
 
     def test_subprocess_options_are_rejected_before_launch(self):
         self.exercise("import subprocess\nsubprocess.run(['git', 'diff'], shell=True)\n",
@@ -360,7 +474,7 @@ try:
 except BaseException:
     pass
 raise MemoryError('PRIVATE')
-""", 'UNKNOWN', 'UNSUPPORTED_IO')
+""", 'UNKNOWN', 'UNSUPPORTED_IO', io_reason='WRITE_TARGET')
         # A failing subprocess precedes a journal-budget failure recording it.
         with patch.object(o, 'MAX_LINE', 1):
             self.exercise("import subprocess\nsubprocess.run(['git', 'diff'])\n",
@@ -377,7 +491,8 @@ raise MemoryError('PRIVATE')
         self.assertEqual((), o.Stop('PRIVATE').args)
         self.assertEqual('UNKNOWN', o.Stop('PRIVATE').category)
 
-    def exercise(self, source, outcome, category='UNKNOWN', returncode=None, process_error=None):
+    def exercise(self, source, outcome, category='UNKNOWN', returncode=None, process_error=None,
+                 io_reason='UNKNOWN'):
         real_open = open
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
@@ -404,6 +519,7 @@ raise MemoryError('PRIVATE')
             report = json.loads((scratch / 'report.json').read_text())
             self.assertEqual(outcome, report['outcome'])
             self.assertEqual(category, report['stop_category'])
+            self.assertEqual(io_reason, report['io_stop_reason'])
             self.assertEqual(outcome == 'PASS', report['completed'])
             self.assertNotIn('PRIVATE', json.dumps(report))
             self.assertEqual(0 if outcome == 'PASS' else 2, code)
@@ -595,6 +711,34 @@ main()
         self.assertEqual('RESOURCE_LIMIT', result['D1_DPE_STOP_CATEGORY'])
         self.assertEqual('UNKNOWN', result['D1_ALL'])
 
+    def test_worker_io_reasons_return_per_stage_without_promoting_gates(self):
+        for reason in o.IO_STOP_REASONS:
+            with self.subTest(reason=reason):
+                result = self.exercise('worker', worker_category='UNSUPPORTED_IO', worker_io_reason=reason)
+                self.assertEqual(reason, result['D1_DPE_IO_STOP_REASON'])
+                self.assertEqual('UNSUPPORTED_IO', result['D1_DPE_STOP_CATEGORY'])
+                self.assertEqual('UNKNOWN', result['D1_CFRU_IO_STOP_REASON'])
+                self.assertEqual('UNKNOWN', result['D1_ALL'])
+        result = self.exercise('cfru_worker', worker_category='UNSUPPORTED_IO', worker_io_reason='READ_RULE')
+        self.assertEqual('UNKNOWN', result['D1_DPE_IO_STOP_REASON'])
+        self.assertEqual('READ_RULE', result['D1_CFRU_IO_STOP_REASON'])
+
+    def test_io_reason_is_unknown_for_invalid_unbound_or_non_io_reports(self):
+        for reason in ('PRIVATE\nPATH=OFFSET', None, [], {}, 1):
+            with self.subTest(reason=reason):
+                result = self.exercise('worker', worker_category='UNSUPPORTED_IO', worker_io_reason=reason)
+                self.assertEqual('UNKNOWN', result['D1_DPE_IO_STOP_REASON'])
+        for fault in ('worker_missing', 'worker_bad_nonce', 'worker_bad_component', 'worker_legacy'):
+            with self.subTest(fault=fault):
+                result = self.exercise(fault, worker_category='UNSUPPORTED_IO', worker_io_reason='PATH_POLICY')
+                self.assertEqual('UNKNOWN', result['D1_DPE_IO_STOP_REASON'])
+        for category in o.STOP_CATEGORIES:
+            if category != 'UNSUPPORTED_IO':
+                result = self.exercise('worker', worker_category=category, worker_io_reason='PATH_POLICY')
+                self.assertEqual('UNKNOWN', result['D1_DPE_IO_STOP_REASON'])
+        result = self.exercise(worker_category='UNSUPPORTED_IO', worker_io_reason='PATH_POLICY')
+        self.assertEqual('UNKNOWN', result['D1_DPE_IO_STOP_REASON'])
+
     def test_discovery_finishes_without_selected_cfru_output(self):
         self.exercise(cfru_output='missing')
 
@@ -625,7 +769,7 @@ main()
                 self.assertEqual(expected, result['D1_OUTPUT_REPRODUCTION'])
 
     def exercise(self, fault=None, cfru_output='matching', plan_mode=False,
-                 worker_category='UNKNOWN', report_outcome='UNKNOWN'):
+                 worker_category='UNKNOWN', report_outcome='UNKNOWN', worker_io_reason='UNKNOWN'):
         """Original Workspace driver with synthetic RAM I/O, no native/artifact files."""
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
@@ -695,9 +839,11 @@ main()
                 report = {'nonce': 'stale' if fault in ('nonce', 'worker_bad_nonce') else cfg['nonce'],
                           'component': 'wrong' if fault == 'worker_bad_component' else c,
                           'outcome': report_outcome, 'stop_category': worker_category,
+                          'io_stop_reason': worker_io_reason,
                           'completed': True, 'snapshots': store.snapshots,
                           'write_count': store.write_count, 'event_count': store.journal.count,
                           'write_binding': 'stale' if fault == 'binding' or (fault == 'cfru_binding' and c == 'cfru') else store.binding.hexdigest()}
+                if fault == 'worker_legacy': report.pop('io_stop_reason')
                 (directory / 'report.json').write_text(json.dumps(report))
                 stopped = (fault and fault.startswith('worker')) or (fault == 'cfru_worker' and c == 'cfru')
                 return o.subprocess.CompletedProcess(command, 2 if stopped else 0)
@@ -785,7 +931,7 @@ main()
             self.assertEqual(2, o.main(['--discover', '.local/SECRET_PATH']))
         reader.assert_not_called()
         self.assertNotIn('SECRET', out.getvalue())
-        self.assertEqual(set(o.GATES + o.STOP_STATUSES),
+        self.assertEqual(set(o.GATES + o.STOP_STATUSES + o.IO_STOP_STATUSES),
                          {line.split('=')[0] for line in out.getvalue().splitlines()})
 
 
@@ -801,10 +947,28 @@ class SanitizerTests(unittest.TestCase):
                     with patch.object(o, 'run_user', return_value=result), patch('sys.stdout', out):
                         self.assertEqual(code, o.main(['--discover', '.local/synthetic']))
                     lines = out.getvalue().splitlines()
-                    self.assertEqual(len(o.GATES + o.STOP_STATUSES), len(lines))
-                    self.assertEqual('D1_DPE_STOP_CATEGORY=' + o.stop_category(category), lines[-2])
-                    self.assertEqual('D1_CFRU_STOP_CATEGORY=UNKNOWN', lines[-1])
+                    self.assertEqual(len(o.GATES + o.STOP_STATUSES + o.IO_STOP_STATUSES), len(lines))
+                    self.assertEqual('D1_DPE_STOP_CATEGORY=' + o.stop_category(category), lines[-4])
+                    self.assertEqual('D1_CFRU_STOP_CATEGORY=UNKNOWN', lines[-3])
                     self.assertNotIn('PRIVATE', out.getvalue())
+
+    def test_io_reason_cli_and_report_latch_sanitize_all_untrusted_values(self):
+        for reason in (*o.IO_STOP_REASONS, 'PRIVATE\nPATH=OFFSET', None, [], {}, 1):
+            with self.subTest(reason=reason):
+                journal = o.Journal(io.BytesIO())
+                journal.note_stop('UNSUPPORTED_IO', reason)
+                self.assertEqual(o.io_stop_reason(reason), journal.io_stop_reason)
+                result = dict.fromkeys(o.GATES + o.STOP_STATUSES, 'UNKNOWN')
+                result.update(D1_DPE_STOP_CATEGORY='UNSUPPORTED_IO', D1_DPE_IO_STOP_REASON=reason,
+                              D1_CFRU_IO_STOP_REASON='PATH_POLICY')
+                out = io.StringIO()
+                with patch.object(o, 'run_user', return_value=result), patch('sys.stdout', out):
+                    self.assertEqual(2, o.main(['--discover', '.local/synthetic']))
+                lines = out.getvalue().splitlines()
+                self.assertEqual(len(o.GATES + o.STOP_STATUSES + o.IO_STOP_STATUSES), len(lines))
+                self.assertEqual('D1_DPE_IO_STOP_REASON=' + o.io_stop_reason(reason), lines[-2])
+                self.assertEqual('D1_CFRU_IO_STOP_REASON=UNKNOWN', lines[-1])
+                self.assertNotIn('PRIVATE', out.getvalue())
 
     def test_no_arguments_unknown_and_private_errors_never_leak(self):
         for args, error in (([], None), (['--plan', 'SECRET'], PermissionError('SECRET_PATH HASH')),

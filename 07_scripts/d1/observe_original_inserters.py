@@ -52,6 +52,9 @@ GATES += DISCOVERY_GATES
 STOP_STATUSES = ('D1_DPE_STOP_CATEGORY', 'D1_CFRU_STOP_CATEGORY')
 STOP_CATEGORIES = ('UNSUPPORTED_IO', 'UNSUPPORTED_SUBPROCESS', 'SUBPROCESS_FAILURE',
                    'RESOURCE_LIMIT', 'MEMORY_ERROR', 'UNEXPECTED_EXCEPTION', 'UNKNOWN')
+IO_STOP_STATUSES = ('D1_DPE_IO_STOP_REASON', 'D1_CFRU_IO_STOP_REASON')
+IO_STOP_REASONS = ('PATH_POLICY', 'OPEN_MODE', 'WRITE_TARGET', 'COPY_CONTRACT',
+                   'SEEK_RULE', 'READ_RULE', 'WRITE_RULE', 'TRUNCATE_RULE', 'FILENO_RULE', 'UNKNOWN')
 MEMORY_LIMIT = 512 * 1024 * 1024
 MAX_EVENTS = 100_000_000
 MAX_JOURNAL = 8 * 1024 * 1024 * 1024
@@ -80,6 +83,10 @@ def stop_category(value):
     return value if type(value) is str and value in STOP_CATEGORIES else 'UNKNOWN'
 
 
+def io_stop_reason(value):
+    return value if type(value) is str and value in IO_STOP_REASONS else 'UNKNOWN'
+
+
 class Stop(BaseException):
     """Persistent fail-closed latch; cannot be cleared by an inserter catch."""
     def __init__(self, category='UNKNOWN'):
@@ -93,11 +100,14 @@ class Journal:
         self.count = self.size = 0
         self.stopped = False
         self.stop_category = 'UNKNOWN'
+        self.io_stop_reason = 'UNKNOWN'
 
-    def note_stop(self, category):
+    def note_stop(self, category, io_reason='UNKNOWN'):
         # Later cleanup/errors must not replace the first concrete cause.
         if self.stop_category == 'UNKNOWN':
             self.stop_category = stop_category(category)
+            if self.stop_category == 'UNSUPPORTED_IO':
+                self.io_stop_reason = io_stop_reason(io_reason)
 
     def emit(self, op, **fields):
         raw = json.dumps(dict(op=op, **fields), separators=(',', ':')).encode() + b'\n'
@@ -143,19 +153,19 @@ class RamFile(io.RawIOBase):
 
     def seek(self, offset, whence=0):
         if self.closed or type(offset) is not int or whence not in (0, 1, 2):
-            self.store.deny()
+            self.store.deny(io_reason='SEEK_RULE')
         new = offset + (0 if whence == 0 else self.pos if whence == 1 else len(self.store.data[self.key]))
         if new > MEMORY_LIMIT:
             self.store.deny('RESOURCE_LIMIT')
         if new < 0:
-            self.store.deny()
+            self.store.deny(io_reason='SEEK_RULE')
         self.pos = new
         self.store.journal.emit('seek', handle=self.handle, offset=offset, whence=whence, position=new)
         return new
 
     def read(self, size=-1):
         if self.closed or type(size) is not int or size < -1:
-            self.store.deny()
+            self.store.deny(io_reason='READ_RULE')
         buf = self.store.data[self.key]
         data = bytes(buf[self.pos:] if size == -1 else buf[self.pos:self.pos + size])
         self.pos += len(data)
@@ -169,7 +179,7 @@ class RamFile(io.RawIOBase):
 
     def write(self, data):
         if self.closed or not self.writable():
-            self.store.deny()
+            self.store.deny(io_reason='WRITE_RULE')
         data = bytes(data)
         if 'a' in self.mode:
             self.pos = len(self.store.data[self.key])
@@ -191,10 +201,10 @@ class RamFile(io.RawIOBase):
 
     def truncate(self, size=None):
         if self.closed or not self.writable():
-            self.store.deny()
+            self.store.deny(io_reason='TRUNCATE_RULE')
         size = self.pos if size is None else size
         if type(size) is not int or size < 0 or self.key == 'test.gba':
-            self.store.deny()
+            self.store.deny(io_reason='TRUNCATE_RULE')
         if size > MEMORY_LIMIT:
             self.store.deny('RESOURCE_LIMIT')
         buf = self.store.data[self.key]
@@ -211,7 +221,7 @@ class RamFile(io.RawIOBase):
         super().close()
 
     def fileno(self):
-        self.store.deny()
+        self.store.deny(io_reason='FILENO_RULE')
 
 
 class RamStore:
@@ -224,22 +234,22 @@ class RamStore:
         self.handles = self.write_count = 0
         self.binding = hashlib.sha256()
 
-    def deny(self, category='UNSUPPORTED_IO'):
+    def deny(self, category='UNSUPPORTED_IO', io_reason='UNKNOWN'):
         self.denied = True
-        self.journal.note_stop(category)
+        self.journal.note_stop(category, io_reason)
         raise Stop(category)
 
     def key(self, path):
         if not isinstance(path, (str, os.PathLike)):
-            self.deny()
+            self.deny(io_reason='PATH_POLICY')
         path = Path(path)
         full = path if path.is_absolute() else self.root / path
         # Reject symlink/path aliases; never resolve a write into production.
         if full.is_symlink() or '..' in full.parts:
-            self.deny()
+            self.deny(io_reason='PATH_POLICY')
         resolved = full.resolve()
         if not resolved.is_relative_to(self.root):
-            self.deny()
+            self.deny(io_reason='PATH_POLICY')
         return resolved.relative_to(self.root).as_posix()
 
     def load(self, key):
@@ -264,10 +274,10 @@ class RamStore:
 
     def open(self, path, mode='r', buffering=-1, encoding=None, errors=None, newline=None, **kwargs):
         if kwargs or mode not in ('rb', 'rb+', 'r', 'r+', 'w', 'a', 'wb', 'wb+'):
-            self.deny()
+            self.deny(io_reason='OPEN_MODE')
         key = self.key(path)
         if ('+' in mode or 'w' in mode or 'a' in mode) and key not in MUTABLE:
-            self.deny()
+            self.deny(io_reason='WRITE_TARGET')
         if 'w' in mode:
             self.data[key] = bytearray()
         else:
@@ -286,7 +296,7 @@ class RamStore:
 
     def copy(self, src, dst, **kwargs):
         if kwargs or self.key(src) != 'BPRE0.gba' or self.key(dst) != 'test.gba':
-            self.deny()
+            self.deny(io_reason='COPY_CONTRACT')
         data = self.load('BPRE0.gba')
         self.data['test.gba'] = bytearray(data)
         self.journal.emit('copy', src='BPRE0.gba', dst='test.gba')
@@ -429,6 +439,7 @@ def worker(config_path):
             f.write(store.data['test.gba'])
     report = {'nonce': cfg['nonce'], 'component': component, 'completed': completed, 'outcome': outcome,
               'stop_category': store.journal.stop_category,
+              'io_stop_reason': store.journal.io_stop_reason,
               'snapshots': store.snapshots, 'write_count': store.write_count,
               'write_binding': store.binding.hexdigest(), 'event_count': store.journal.count}
     with original_open(scratch / 'report.json', 'w') as f:
@@ -732,7 +743,7 @@ class Discovery:
 
 
 def run_user(plan, workspace, discovery=False):
-    result = dict.fromkeys(GATES + STOP_STATUSES, 'UNKNOWN')
+    result = dict.fromkeys(GATES + STOP_STATUSES + IO_STOP_STATUSES, 'UNKNOWN')
     root = workspace.resolve()
     active_gate = 'D1_ALL'
     try:
@@ -815,6 +826,8 @@ def observe_stages(root, evidence, bwrap, result, checks, census, existing_cache
             if run.returncode:
                 if report.get('nonce') == nonce and report.get('component') == c:
                     result[stop_status] = stop_category(report.get('stop_category'))
+                    if result[stop_status] == 'UNSUPPORTED_IO':
+                        result['D1_' + c.upper() + '_IO_STOP_REASON'] = io_stop_reason(report.get('io_stop_reason'))
                 if report.get('outcome') == 'FAIL':
                     raise v.Invalid()
                 raise v.Missing()
@@ -901,7 +914,7 @@ def main(argv=None):
             return worker(argv[1])
         except BaseException:
             return 2
-    result = dict.fromkeys(GATES + STOP_STATUSES, 'UNKNOWN')
+    result = dict.fromkeys(GATES + STOP_STATUSES + IO_STOP_STATUSES, 'UNKNOWN')
     try:
         if len(argv) != 2 or argv[0] not in ('--plan', '--discover'):
             raise v.Missing()
@@ -920,6 +933,9 @@ def main(argv=None):
         print(name + '=' + result[name])
     for name in STOP_STATUSES:
         print(name + '=' + stop_category(result.get(name)))
+    for name, category in zip(IO_STOP_STATUSES, STOP_STATUSES):
+        reason = io_stop_reason(result.get(name)) if result.get(category) == 'UNSUPPORTED_IO' else 'UNKNOWN'
+        print(name + '=' + reason)
     return 1 if result['D1_ALL'] == 'FAIL' else 2
 
 
