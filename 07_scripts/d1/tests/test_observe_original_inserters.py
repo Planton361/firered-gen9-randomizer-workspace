@@ -180,12 +180,27 @@ class IoTests(unittest.TestCase):
         j.emit('copy', src='a', dst='b')
         with self.assertRaises(o.Stop): j.emit('copy', src='a', dst='b')
         self.assertTrue(j.stopped)
+        self.assertEqual('RESOURCE_LIMIT', j.stop_category)
         j = o.Journal(io.BytesIO(), max_bytes=1)
         with self.assertRaises(o.Stop): j.emit('copy', src='a', dst='b')
+        self.assertEqual('RESOURCE_LIMIT', j.stop_category)
         with self.assertRaises(v.Missing): v.JournalVerifier({'large': b'123'}, limit=2)
         store, _, _ = make_store()
         with patch.object(o, 'MEMORY_LIMIT', 1):
             with self.assertRaises(o.Stop): store.open('BPRE0.gba', 'rb')
+        self.assertEqual('RESOURCE_LIMIT', store.journal.stop_category)
+
+    def test_ram_seek_write_and_truncate_budgets_are_resource_stops(self):
+        for operation in ('seek', 'write', 'truncate'):
+            with self.subTest(operation=operation):
+                store, _, _ = make_store()
+                with store.open('generatedrepoints', 'wb') as cache:
+                    with patch.object(o, 'MEMORY_LIMIT', 4), self.assertRaises(o.Stop):
+                        if operation == 'seek': cache.seek(5)
+                        elif operation == 'truncate': cache.truncate(5)
+                        else: cache.write(b'12345')
+                self.assertTrue(store.denied)
+                self.assertEqual('RESOURCE_LIMIT', store.journal.stop_category)
 
     def test_unrecognized_effect_and_failed_subprocess_are_rejected(self):
         verifier = v.JournalVerifier({})
@@ -287,9 +302,82 @@ try:
     subprocess.run(['sh', '-c', 'NEVER_EXECUTED'])
 except BaseException:
     pass
-""", 'UNKNOWN')
+""", 'UNKNOWN', 'UNSUPPORTED_SUBPROCESS')
 
-    def exercise(self, source, outcome):
+    def test_unsupported_io_is_reported_even_when_caught(self):
+        self.exercise("""try:
+    open('config.h', 'w')
+except BaseException:
+    pass
+""", 'UNKNOWN', 'UNSUPPORTED_IO')
+
+    def test_subprocess_options_are_rejected_before_launch(self):
+        self.exercise("import subprocess\nsubprocess.run(['git', 'diff'], shell=True)\n",
+                      'UNKNOWN', 'UNSUPPORTED_SUBPROCESS')
+
+    def test_subprocess_nonzero_launch_failure_and_timeout_are_distinguished(self):
+        for returncode, error, category in (
+                (1, None, 'SUBPROCESS_FAILURE'),
+                (None, FileNotFoundError('PRIVATE_PATH'), 'SUBPROCESS_FAILURE'),
+                (None, o.subprocess.CalledProcessError(1, ['PRIVATE']), 'SUBPROCESS_FAILURE'),
+                (None, o.subprocess.TimeoutExpired(['PRIVATE'], 1), 'RESOURCE_LIMIT'),
+                (None, MemoryError('PRIVATE'), 'MEMORY_ERROR'),
+                (None, RuntimeError('PRIVATE'), 'UNEXPECTED_EXCEPTION')):
+            with self.subTest(category=category, error=type(error)):
+                self.exercise("""import subprocess
+try:
+    subprocess.check_output(['git', 'diff'])
+except BaseException:
+    pass
+""", 'UNKNOWN', category, returncode=returncode, process_error=error)
+
+    def test_memory_error_and_unexpected_exception_keep_original_outcomes(self):
+        self.exercise("raise MemoryError('PRIVATE_PATH HASH OFFSET')\n", 'UNKNOWN', 'MEMORY_ERROR')
+        self.exercise("raise RuntimeError('PRIVATE_PATH HASH OFFSET')\n", 'FAIL', 'UNEXPECTED_EXCEPTION')
+        self.exercise("from observe_original_inserters import Stop\nraise Stop()\n", 'UNKNOWN')
+
+    def test_journal_limit_remains_latched_when_caught(self):
+        with patch.object(o, 'MAX_LINE', 1):
+            self.exercise("""try:
+    open('generatedrepoints', 'w')
+except BaseException:
+    pass
+""", 'UNKNOWN', 'RESOURCE_LIMIT')
+
+    def test_ram_budget_is_reported_without_real_memory_exhaustion(self):
+        with patch.object(o, 'MEMORY_LIMIT', 1024):
+            self.exercise("with open('generatedrepoints', 'w') as f:\n    f.write('x' * 1025)\n",
+                          'UNKNOWN', 'RESOURCE_LIMIT')
+
+    def test_first_concrete_cause_survives_cleanup_and_later_exception(self):
+        self.exercise("""import subprocess
+try:
+    open('config.h', 'w')
+except BaseException:
+    pass
+try:
+    subprocess.run(['sh', '-c', 'NEVER_EXECUTED'])
+except BaseException:
+    pass
+raise MemoryError('PRIVATE')
+""", 'UNKNOWN', 'UNSUPPORTED_IO')
+        # A failing subprocess precedes a journal-budget failure recording it.
+        with patch.object(o, 'MAX_LINE', 1):
+            self.exercise("import subprocess\nsubprocess.run(['git', 'diff'])\n",
+                          'UNKNOWN', 'SUBPROCESS_FAILURE', returncode=1)
+
+    def test_unknown_cause_can_be_replaced_only_by_first_concrete_category(self):
+        journal = o.Journal(io.BytesIO())
+        for value in ('PRIVATE\nPATH', None, [], 'UNKNOWN'):
+            journal.note_stop(value)
+            self.assertEqual('UNKNOWN', journal.stop_category)
+        journal.note_stop('RESOURCE_LIMIT')
+        journal.note_stop('UNSUPPORTED_IO')
+        self.assertEqual('RESOURCE_LIMIT', journal.stop_category)
+        self.assertEqual((), o.Stop('PRIVATE').args)
+        self.assertEqual('UNKNOWN', o.Stop('PRIVATE').category)
+
+    def exercise(self, source, outcome, category='UNKNOWN', returncode=None, process_error=None):
         real_open = open
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
@@ -306,11 +394,18 @@ except BaseException:
             with patch('builtins.open', side_effect=synthetic_open), \
                  patch.object(o, 'SOURCE_HASHES', {'dpe': o.sha(source.encode())}), \
                  patch.object(sys, 'path', list(sys.path)), patch.object(sys, 'argv', []), \
-                 patch.object(o.subprocess, 'run') as process:
+                 patch.object(o.subprocess, 'run', side_effect=process_error,
+                              return_value=o.subprocess.CompletedProcess(['synthetic'], returncode, stdout=b'')) as process:
                 code = o.worker(str(cfg))
-            process.assert_not_called()
+            if returncode is None and process_error is None:
+                process.assert_not_called()
+            else:
+                process.assert_called_once()
             report = json.loads((scratch / 'report.json').read_text())
             self.assertEqual(outcome, report['outcome'])
+            self.assertEqual(category, report['stop_category'])
+            self.assertEqual(outcome == 'PASS', report['completed'])
+            self.assertNotIn('PRIVATE', json.dumps(report))
             self.assertEqual(0 if outcome == 'PASS' else 2, code)
             self.assertFalse((root / 'test.gba').exists())
             self.assertFalse((root / 'BPRE0.gba').exists())
@@ -462,6 +557,44 @@ main()
                       'unsupported', 'isolation'):
             with self.subTest(fault=fault): self.exercise(fault)
 
+    def test_worker_stop_categories_return_without_changing_unknown_acceptance(self):
+        for category in o.STOP_CATEGORIES:
+            with self.subTest(category=category):
+                result = self.exercise('worker', worker_category=category)
+                self.assertEqual(category, result['D1_DPE_STOP_CATEGORY'])
+                self.assertEqual('UNKNOWN', result['D1_CFRU_STOP_CATEGORY'])
+                self.assertEqual('UNKNOWN', result['D1_ALL'])
+                self.assertEqual('UNKNOWN', result['D1_ORIGINAL_EXECUTION'])
+
+    def test_worker_fail_outcome_is_preserved_with_stop_diagnostic(self):
+        result = self.exercise('worker', worker_category='UNEXPECTED_EXCEPTION', report_outcome='FAIL')
+        self.assertEqual('UNEXPECTED_EXCEPTION', result['D1_DPE_STOP_CATEGORY'])
+        self.assertEqual('FAIL', result['D1_ALL'])
+        self.assertEqual('FAIL', result['D1_ORIGINAL_EXECUTION'])
+
+    def test_cfru_stop_diagnostic_is_separate_from_completed_dpe_stage(self):
+        result = self.exercise('cfru_worker', worker_category='UNSUPPORTED_IO')
+        self.assertEqual('UNKNOWN', result['D1_DPE_STOP_CATEGORY'])
+        self.assertEqual('UNSUPPORTED_IO', result['D1_CFRU_STOP_CATEGORY'])
+        self.assertEqual('UNKNOWN', result['D1_ALL'])
+
+    def test_untrusted_missing_and_invalid_report_categories_remain_unknown(self):
+        for category in ('PRIVATE\nPATH=HASH', None, [], {}, 1):
+            with self.subTest(category=category):
+                result = self.exercise('worker', worker_category=category)
+                self.assertEqual('UNKNOWN', result['D1_DPE_STOP_CATEGORY'])
+                self.assertEqual('UNKNOWN', result['D1_ALL'])
+        for fault in ('worker_missing', 'worker_bad_nonce', 'worker_bad_component'):
+            with self.subTest(fault=fault):
+                result = self.exercise(fault, worker_category='UNSUPPORTED_IO')
+                self.assertEqual('UNKNOWN', result['D1_DPE_STOP_CATEGORY'])
+                self.assertEqual('UNKNOWN', result['D1_ALL'])
+
+    def test_worker_stage_timeout_is_resource_limit_and_still_unknown(self):
+        result = self.exercise('worker_timeout')
+        self.assertEqual('RESOURCE_LIMIT', result['D1_DPE_STOP_CATEGORY'])
+        self.assertEqual('UNKNOWN', result['D1_ALL'])
+
     def test_discovery_finishes_without_selected_cfru_output(self):
         self.exercise(cfru_output='missing')
 
@@ -491,7 +624,8 @@ main()
                 result = self.exercise(cfru_output=state, plan_mode=True)
                 self.assertEqual(expected, result['D1_OUTPUT_REPRODUCTION'])
 
-    def exercise(self, fault=None, cfru_output='matching', plan_mode=False):
+    def exercise(self, fault=None, cfru_output='matching', plan_mode=False,
+                 worker_category='UNKNOWN', report_outcome='UNKNOWN'):
         """Original Workspace driver with synthetic RAM I/O, no native/artifact files."""
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
@@ -541,6 +675,10 @@ main()
                 self.assertEqual(o.subprocess.DEVNULL, kwargs['stdout'])
                 cfg = json.loads(Path(command[-1]).read_text())
                 c, directory = cfg['component'], Path(cfg['scratch'])
+                if fault == 'worker_timeout':
+                    raise o.subprocess.TimeoutExpired(['PRIVATE'], 7200)
+                if fault == 'worker_missing':
+                    return o.subprocess.CompletedProcess(command, 2)
                 with (directory / 'operations.jsonl').open('wb') as stream:
                     store = o.RamStore(Path(cfg['root']), lambda path: inputs[c], o.Journal(stream))
                     store.copy('BPRE0.gba', 'test.gba')
@@ -554,12 +692,15 @@ main()
                             rom.write(b'MAPS'); rom.seek(260); rom.write(b'MAPS')
                     if fault == 'unsupported': store.journal.emit('unobserved_write_class')
                 (directory / 'ram-output.bin').write_bytes(store.data['test.gba'])
-                report = {'nonce': 'stale' if fault == 'nonce' else cfg['nonce'],
+                report = {'nonce': 'stale' if fault in ('nonce', 'worker_bad_nonce') else cfg['nonce'],
+                          'component': 'wrong' if fault == 'worker_bad_component' else c,
+                          'outcome': report_outcome, 'stop_category': worker_category,
                           'completed': True, 'snapshots': store.snapshots,
                           'write_count': store.write_count, 'event_count': store.journal.count,
                           'write_binding': 'stale' if fault == 'binding' or (fault == 'cfru_binding' and c == 'cfru') else store.binding.hexdigest()}
                 (directory / 'report.json').write_text(json.dumps(report))
-                return o.subprocess.CompletedProcess(command, 2 if fault == 'worker' else 0)
+                stopped = (fault and fault.startswith('worker')) or (fault == 'cfru_worker' and c == 'cfru')
+                return o.subprocess.CompletedProcess(command, 2 if stopped else 0)
             def elf(raw):
                 mock = unittest.mock.Mock()
                 mock.payload.return_value = 0x08000000 + (512 if raw == b'dpe' else 256)
@@ -644,10 +785,27 @@ main()
             self.assertEqual(2, o.main(['--discover', '.local/SECRET_PATH']))
         reader.assert_not_called()
         self.assertNotIn('SECRET', out.getvalue())
-        self.assertEqual(set(o.GATES), {line.split('=')[0] for line in out.getvalue().splitlines()})
+        self.assertEqual(set(o.GATES + o.STOP_STATUSES),
+                         {line.split('=')[0] for line in out.getvalue().splitlines()})
 
 
 class SanitizerTests(unittest.TestCase):
+    def test_cli_prints_only_allowlisted_stop_categories_and_keeps_exit_code(self):
+        for category in (*o.STOP_CATEGORIES, 'PRIVATE\nPATH=HASH', None, []):
+            for outcome, code in (('UNKNOWN', 2), ('FAIL', 1)):
+                with self.subTest(category=category, outcome=outcome):
+                    result = dict.fromkeys(o.GATES, 'UNKNOWN')
+                    result.update(D1_ALL=outcome, D1_DPE_STOP_CATEGORY=category,
+                                  D1_CFRU_STOP_CATEGORY='PRIVATE\nOFFSET')
+                    out = io.StringIO()
+                    with patch.object(o, 'run_user', return_value=result), patch('sys.stdout', out):
+                        self.assertEqual(code, o.main(['--discover', '.local/synthetic']))
+                    lines = out.getvalue().splitlines()
+                    self.assertEqual(len(o.GATES + o.STOP_STATUSES), len(lines))
+                    self.assertEqual('D1_DPE_STOP_CATEGORY=' + o.stop_category(category), lines[-2])
+                    self.assertEqual('D1_CFRU_STOP_CATEGORY=UNKNOWN', lines[-1])
+                    self.assertNotIn('PRIVATE', out.getvalue())
+
     def test_no_arguments_unknown_and_private_errors_never_leak(self):
         for args, error in (([], None), (['--plan', 'SECRET'], PermissionError('SECRET_PATH HASH')),
                             (['--plan', 'SECRET'], ValueError('PRIVATE_SYMBOL'))):

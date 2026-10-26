@@ -48,6 +48,10 @@ GATES = ('D1_SANDBOX', 'D1_PUBLIC_SOURCE_IDENTITY', 'D1_ORIGINAL_EXECUTION',
 DISCOVERY_GATES = ('D1_DISCOVERY', 'D1_CANDIDATE_PLAN', 'D1_RESERVATION_REVIEW',
                    'D1_ASSET_OWNER_CENSUS', 'D1_LEARNSET_OWNER_CENSUS')
 GATES += DISCOVERY_GATES
+# Diagnostics are separate from acceptance gates; UNKNOWN also covers no stop report.
+STOP_STATUSES = ('D1_DPE_STOP_CATEGORY', 'D1_CFRU_STOP_CATEGORY')
+STOP_CATEGORIES = ('UNSUPPORTED_IO', 'UNSUPPORTED_SUBPROCESS', 'SUBPROCESS_FAILURE',
+                   'RESOURCE_LIMIT', 'MEMORY_ERROR', 'UNEXPECTED_EXCEPTION', 'UNKNOWN')
 MEMORY_LIMIT = 512 * 1024 * 1024
 MAX_EVENTS = 100_000_000
 MAX_JOURNAL = 8 * 1024 * 1024 * 1024
@@ -72,8 +76,15 @@ def sha(data):
     return hashlib.sha256(data).hexdigest()
 
 
+def stop_category(value):
+    return value if type(value) is str and value in STOP_CATEGORIES else 'UNKNOWN'
+
+
 class Stop(BaseException):
     """Persistent fail-closed latch; cannot be cleared by an inserter catch."""
+    def __init__(self, category='UNKNOWN'):
+        super().__init__()
+        self.category = stop_category(category)
 
 
 class Journal:
@@ -81,12 +92,19 @@ class Journal:
         self.stream, self.max_events, self.max_bytes = stream, max_events, max_bytes
         self.count = self.size = 0
         self.stopped = False
+        self.stop_category = 'UNKNOWN'
+
+    def note_stop(self, category):
+        # Later cleanup/errors must not replace the first concrete cause.
+        if self.stop_category == 'UNKNOWN':
+            self.stop_category = stop_category(category)
 
     def emit(self, op, **fields):
         raw = json.dumps(dict(op=op, **fields), separators=(',', ':')).encode() + b'\n'
         if self.count >= self.max_events or self.size + len(raw) > self.max_bytes or len(raw) > MAX_LINE:
             self.stopped = True
-            raise Stop()
+            self.note_stop('RESOURCE_LIMIT')
+            raise Stop('RESOURCE_LIMIT')
         self.stream.write(raw)
         self.count += 1
         self.size += len(raw)
@@ -127,7 +145,9 @@ class RamFile(io.RawIOBase):
         if self.closed or type(offset) is not int or whence not in (0, 1, 2):
             self.store.deny()
         new = offset + (0 if whence == 0 else self.pos if whence == 1 else len(self.store.data[self.key]))
-        if not 0 <= new <= MEMORY_LIMIT:
+        if new > MEMORY_LIMIT:
+            self.store.deny('RESOURCE_LIMIT')
+        if new < 0:
             self.store.deny()
         self.pos = new
         self.store.journal.emit('seek', handle=self.handle, offset=offset, whence=whence, position=new)
@@ -173,8 +193,10 @@ class RamFile(io.RawIOBase):
         if self.closed or not self.writable():
             self.store.deny()
         size = self.pos if size is None else size
-        if type(size) is not int or not 0 <= size <= MEMORY_LIMIT or self.key == 'test.gba':
+        if type(size) is not int or size < 0 or self.key == 'test.gba':
             self.store.deny()
+        if size > MEMORY_LIMIT:
+            self.store.deny('RESOURCE_LIMIT')
         buf = self.store.data[self.key]
         if size > len(buf):
             buf.extend(bytes(size - len(buf)))
@@ -202,9 +224,10 @@ class RamStore:
         self.handles = self.write_count = 0
         self.binding = hashlib.sha256()
 
-    def deny(self):
+    def deny(self, category='UNSUPPORTED_IO'):
         self.denied = True
-        raise Stop()
+        self.journal.note_stop(category)
+        raise Stop(category)
 
     def key(self, path):
         if not isinstance(path, (str, os.PathLike)):
@@ -223,7 +246,7 @@ class RamStore:
         if key not in self.data:
             data = self.reader(self.root / key)
             if sum(map(len, self.data.values())) + len(data) > MEMORY_LIMIT:
-                self.deny()
+                self.deny('RESOURCE_LIMIT')
             self.data[key] = bytearray(data)
             self.snapshots[key] = sha(data)
         return self.data[key]
@@ -232,7 +255,7 @@ class RamStore:
         buf = self.data[key]
         end = start + len(data)
         if end > MEMORY_LIMIT or sum(map(len, self.data.values())) + max(0, end - len(buf)) > MEMORY_LIMIT:
-            self.deny()
+            self.deny('RESOURCE_LIMIT')
         if end > len(buf):
             buf.extend(bytes(end - len(buf)))
         buf[start:end] = data
@@ -285,7 +308,7 @@ class OutputSink:
 
 def command_kind(command, root):
     if not isinstance(command, (list, tuple)) or not command or any(type(x) is not str for x in command):
-        raise Stop()
+        raise Stop('UNSUPPORTED_SUBPROCESS')
     name = Path(command[0]).name
     if name in ('arm-none-eabi-nm', 'arm-none-eabi-objdump'):
         if list(command[1:]) in (['build/linked.o'], ['-t', 'build/linked.o']):
@@ -302,7 +325,7 @@ def command_kind(command, root):
             'scripts/tests/audit_ai_writable_state.py', '--linked-object',
             'build/linked.o', '--output-bin', 'build/output.bin']:
         return 'preflight'
-    raise Stop()
+    raise Stop('UNSUPPORTED_SUBPROCESS')
 
 
 def worker(config_path):
@@ -317,7 +340,7 @@ def worker(config_path):
         with original_open(path, 'rb') as f:
             raw = f.read(MEMORY_LIMIT + 1)
         if len(raw) > MEMORY_LIMIT:
-            raise Stop()
+            raise Stop('RESOURCE_LIMIT')
         return raw
     script = root / 'scripts/insert.py'
     if sha(reader(script)) != SOURCE_HASHES[component]:
@@ -333,18 +356,26 @@ def worker(config_path):
         try:
             command_kind(command, root)
             if set(kwargs) - {'check', 'text', 'stdout', 'stderr'}:
-                store.deny()
+                store.deny('UNSUPPORTED_SUBPROCESS')
             # Private child output is captured, never inherited by the terminal.
             result = real_run(command, check=False, text=kwargs.get('text', False),
                               stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                               stdin=subprocess.DEVNULL, timeout=3600)
+            if result.returncode:
+                store.journal.note_stop('SUBPROCESS_FAILURE')
             store.journal.emit('subprocess', returncode=result.returncode)
             if result.returncode:
                 store.denied = True
-                raise Stop()
+                raise Stop('SUBPROCESS_FAILURE')
             return result
-        except BaseException:
+        except BaseException as error:
             store.denied = True
+            category = (error.category if isinstance(error, Stop) else
+                        'MEMORY_ERROR' if isinstance(error, MemoryError) else
+                        'RESOURCE_LIMIT' if isinstance(error, subprocess.TimeoutExpired) else
+                        'SUBPROCESS_FAILURE' if isinstance(error, (subprocess.SubprocessError, OSError)) else
+                        'UNEXPECTED_EXCEPTION')
+            store.journal.note_stop(category)
             raise
     def check_output(command, **kwargs):
         return run(command, **kwargs).stdout
@@ -377,9 +408,14 @@ def worker(config_path):
             runpy.run_path(str(script), run_name='__main__')
         completed = not store.denied and not store.journal.stopped and not sink.failed
         outcome = "PASS" if completed else "FAIL" if sink.failed else "UNKNOWN"
-    except (Stop, MemoryError):
+    except Stop as error:
+        store.journal.note_stop(error.category)
+        completed = False
+    except MemoryError:
+        store.journal.note_stop('MEMORY_ERROR')
         completed = False
     except BaseException:
+        store.journal.note_stop('UNEXPECTED_EXCEPTION')
         completed = False
         outcome = "UNKNOWN" if store.denied or store.journal.stopped else "FAIL"
     finally:
@@ -392,6 +428,7 @@ def worker(config_path):
         with original_open(scratch / 'ram-output.bin', 'wb') as f:
             f.write(store.data['test.gba'])
     report = {'nonce': cfg['nonce'], 'component': component, 'completed': completed, 'outcome': outcome,
+              'stop_category': store.journal.stop_category,
               'snapshots': store.snapshots, 'write_count': store.write_count,
               'write_binding': store.binding.hexdigest(), 'event_count': store.journal.count}
     with original_open(scratch / 'report.json', 'w') as f:
@@ -695,7 +732,7 @@ class Discovery:
 
 
 def run_user(plan, workspace, discovery=False):
-    result = dict.fromkeys(GATES, 'UNKNOWN')
+    result = dict.fromkeys(GATES + STOP_STATUSES, 'UNKNOWN')
     root = workspace.resolve()
     active_gate = 'D1_ALL'
     try:
@@ -766,11 +803,18 @@ def observe_stages(root, evidence, bwrap, result, checks, census, existing_cache
                    'TMPDIR': str(directory), 'PYTHONDONTWRITEBYTECODE': '1', 'LC_ALL': 'C',
                    'D1_OBSERVER_SANDBOX_NONCE': nonce}
             active_gate = 'D1_ORIGINAL_EXECUTION'
-            run = subprocess.run(sandbox_command(bwrap, root / COMPONENTS[c], directory, cfg),
-                                 env=env, stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
-                                 stderr=subprocess.DEVNULL, timeout=7200)
+            stop_status = 'D1_' + c.upper() + '_STOP_CATEGORY'
+            try:
+                run = subprocess.run(sandbox_command(bwrap, root / COMPONENTS[c], directory, cfg),
+                                     env=env, stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
+                                     stderr=subprocess.DEVNULL, timeout=7200)
+            except subprocess.TimeoutExpired:
+                result[stop_status] = 'RESOURCE_LIMIT'
+                raise
             report = json.loads(bounded_read(directory / 'report.json', 16 * 1024 * 1024))
             if run.returncode:
+                if report.get('nonce') == nonce and report.get('component') == c:
+                    result[stop_status] = stop_category(report.get('stop_category'))
                 if report.get('outcome') == 'FAIL':
                     raise v.Invalid()
                 raise v.Missing()
@@ -857,7 +901,7 @@ def main(argv=None):
             return worker(argv[1])
         except BaseException:
             return 2
-    result = dict.fromkeys(GATES, 'UNKNOWN')
+    result = dict.fromkeys(GATES + STOP_STATUSES, 'UNKNOWN')
     try:
         if len(argv) != 2 or argv[0] not in ('--plan', '--discover'):
             raise v.Missing()
@@ -874,6 +918,8 @@ def main(argv=None):
         pass
     for name in GATES:
         print(name + '=' + result[name])
+    for name in STOP_STATUSES:
+        print(name + '=' + stop_category(result.get(name)))
     return 1 if result['D1_ALL'] == 'FAIL' else 2
 
 
