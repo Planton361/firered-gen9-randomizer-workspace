@@ -16,7 +16,9 @@
   Repair of the same contract/branch may resume. Keep one writing agent per
   branch; an independent reviewer is for substantial risk, not ritual.
 - Start by confirming Issue/scope, branch, `git status --short`, submodule
-  status, and protected paths. Stop on unexpected changes.
+  status, and protected paths. Stop on unexpected changes. In FAST mode, known
+  and recorded Gitlink/submodule deviations of the local candidate are not
+  unexpected.
 - `docs/ROADMAP.md` records the stable finish line and dependencies. Daily
   order/status belongs to the Project/Issues. Historical session state,
   NEXT_STEPS and handoff documents are supporting evidence only.
@@ -69,6 +71,29 @@ candidates in [M-010](milestones/M-010.md#m-011--superseded-hospitality-train)
 must not be integrated or pinned. [M-012](milestones/M-012.md) closes as an
 analysis-only audit; its closure authorizes no implementation or component pin
 change. Future implementation candidates require a separate bounded work package.
+
+## Development modes
+
+**CONFIRMED USER DECISION:** Process strictness depends on the mode. Technical
+safety checks — pointer/repoint, ROM-layout, offset, data-integrity,
+writable-state and dangerous-write guards in the component builds and in
+UPR-FVX — apply unchanged in every mode.
+
+| Mode | When | Required |
+|---|---|---|
+| **FAST** | Daily feature work | Existing Workspace and component checkouts as they are; the needed build ([`dev_build.sh`](../07_scripts/build/dev_build.sh), `./gradlew :random:jar`); a few targeted smoke checks ([`cli_log_smoke_pipeline.sh`](../07_scripts/randomizer/cli_log_smoke_pipeline.sh), mGBA). No fixed candidate SHAs; actual commits, Gitlink deviations and local changes are recorded, not a stop condition. |
+| **EXTENDED** | Randomizer behavior changed | FAST plus selected representative settings combinations and targeted regression checks for the changed area. |
+| **RELEASE** | Explicit release/acceptance preparation only | Workspace-pinned clean sources (`dev_build.sh --release`), exact revision identity, reproducibility and the complete required evidence per [Reproducibility](REPRODUCIBILITY.md). |
+
+Within an existing approved feature branch, FAST allows any number of local
+edit/build/test iterations and commits/pushes to that branch without a new
+Issue, CONTROL routing or PR per iteration. A new Issue/PR is needed only for
+materially new scope. Protected `main`, review and the user's final merge
+remain unchanged.
+
+FAST and EXTENDED results are development evidence for the recorded local
+state, not release or support evidence. Revision-bound acceptance gates and
+milestone evidence rules apply only to RELEASE.
 
 ## Verification and completion
 
