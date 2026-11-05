@@ -157,15 +157,58 @@ python3 -B -m unittest discover -s 07_scripts/randomizer/tests -p test_upr_gener
 ```
 
 Tests load immutable public source fixtures in memory, then mock subprocesses
-and use synthetic temporary bytes. The source plan alone is available with
-`python3 07_scripts/randomizer/upr_generation_matrix.py --dry-run`.
+and use synthetic temporary bytes. The full source plan alone is available with
+`python3 07_scripts/randomizer/upr_generation_matrix.py --release --dry-run`.
+
+### Development modes
+
+| Mode | Tool | Scope |
+|---|---|---|
+| FAST | `07_scripts/randomizer/cli_log_smoke_pipeline.sh` | One randomization + log scan of a local build |
+| EXTENDED | `upr_generation_matrix.py --only CASE_ID …` | Selected existing matrix case IDs only |
+| RELEASE | `upr_generation_matrix.py --release …` | Full revision-bound matrix below |
+
+EXTENDED is the default mode and runs from the existing Workspace; no worktree,
+fetch, checkout, submodule update or Gradle build is performed. It reads the
+local UPR-FVX checkout's `SettingsProfileGenerator.java` as it is and uses the
+existing local JAR (default `02_external/upr-fvx/random/build/libs/UPR-FVX.jar`,
+or `--jar`). Build it yourself first with `./gradlew :random:jar` when needed.
+The report records the actual Workspace and component commits, Gitlink
+deviations, local tracked-change counts, `JAR_PROVENANCE=LOCAL_UNATTESTED` and
+whether the JAR is older than local source. It is development evidence only
+and reports `EXTENDED_SELECTED_CASES_*`, never the R2 matrix result.
+
+```sh
+# List all case IDs (no Java, JAR, Git or ROM use)
+07_scripts/randomizer/run_upr_generation_matrix.sh --dry-run
+# Plan two cases
+07_scripts/randomizer/run_upr_generation_matrix.sh --dry-run --only 05_WILD_FULL --only 04_FOE_BASE
+# Run them against a local build (ROM path stays local; prompted if omitted)
+07_scripts/randomizer/run_upr_generation_matrix.sh --only 05_WILD_FULL --only 04_FOE_BASE \
+  --rom 05_builds/dev-<timestamp>/cfru-<sha>-dpe-<sha>.gba --stop-on-fail
+```
+
+Without `--only`, EXTENDED stops before any Java/JAR/ROM use; unknown IDs stop
+as well. Excluded/unsupported overlays are not case IDs and cannot be selected.
+Every selected case keeps its exclusion guards, Settings round-trip and target
+normalization checks, supported CFRU/DPE reopen identity, replay, fixed seed
+sweep, input-unchanged check and temporary cleanup. The settings inventory
+check (159/146 IDs) also applies: a changed local catalogue stops until its
+exclusions are reviewed.
+
+**RELEASE** keeps every pin unchanged (Workspace basis, tree, `ALLOWED_FILES`,
+baseline Gitlinks, candidate UPR commit and public blob IDs). It is executable
+only where those pins hold; a Workspace containing other changes than the four
+allowed files (for example after later `main` merges) stops with
+`CONTROL rebaseline required` until an explicit RELEASE re-pin. No RELEASE
+PASS follows from EXTENDED evidence.
 
 **Later USER-only execution, only after explicit CONTROL re-review authorization**,
 with independently attested existing PR-#217
 JAR; no automatic JAR build, binary inspection or copy:
 
 ```sh
-python3 07_scripts/randomizer/upr_generation_matrix.py \
+python3 07_scripts/randomizer/upr_generation_matrix.py --release \
   --jar "$PR217_JAR" \
   --jar-source-commit f979c3c6ec4d32a92ecf632a3d9d38151d5cb19c \
   --stop-on-fail

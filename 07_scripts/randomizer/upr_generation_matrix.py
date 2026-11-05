@@ -9,6 +9,13 @@ directly. No serializer or randomizer is reimplemented here.
 CONTROL-approved safe bundles are derived in Workspace orchestration only.
 Replaced Traits/Graphics/Misc and original Items FULL profiles remain source
 evidence, never required PASS cases.
+
+Modes: EXTENDED (default) runs only the case IDs given with --only, from the
+local UPR-FVX checkout source and an existing local JAR (never built here), and
+records actual revisions; it is development evidence only. --release runs the
+full revision-bound matrix with exact pins, public source and an attested JAR.
+Exclusions, Settings round-trip/normalization, identity, replay and seed rules
+are identical for every executed case in both modes.
 """
 
 import argparse
@@ -118,6 +125,9 @@ ALLOWED_FILES = frozenset({
     "07_scripts/randomizer/upr_generation_matrix.py",
     "07_scripts/randomizer/tests/test_upr_generation_matrix.py",
 })
+LOCAL_UPR = "02_external/upr-fvx"
+LOCAL_JAR = LOCAL_UPR + "/random/build/libs/UPR-FVX.jar"
+CASE_ID = re.compile(r"[A-Za-z0-9_+-]{1,160}")
 
 
 class MatrixError(Exception):
@@ -189,6 +199,73 @@ def read_public_source(path=SOURCE, local_file=None):
         return data.decode("utf-8")
     except (OSError, UnicodeError, ValueError):
         raise MatrixError("Exact public source could not be verified; details discarded.") from None
+
+
+def read_local_source(root):
+    """EXTENDED only: the existing local UPR-FVX checkout text, as it is."""
+    try:
+        data = (root / LOCAL_UPR / SOURCE).read_bytes()
+        if len(data) > 200000:
+            raise ValueError
+        return data.decode("utf-8")
+    except (OSError, UnicodeError, ValueError):
+        raise MatrixError("Local UPR-FVX SettingsProfileGenerator source is missing or unreadable; details discarded.") from None
+
+
+def select_cases(cases, only):
+    """EXTENDED only: existing case IDs, matrix order; never widen implicitly."""
+    if not only:
+        raise MatrixError("EXTENDED requires at least one --only CASE_ID; nothing was run. "
+                          "Use --dry-run to list case IDs or --release for the full matrix.")
+    wanted = set(only)
+    if not all(CASE_ID.fullmatch(name) for name in wanted):
+        raise MatrixError("Invalid case ID format; values suppressed.")
+    unknown = wanted - {case.id for case in cases}
+    if unknown:
+        raise MatrixError(f"Unknown case IDs: {len(unknown)}; use --dry-run to list case IDs.")
+    return [case for case in cases if case.id in wanted]
+
+
+def local_jar_path(root, jar):
+    """EXTENDED only: an existing local JAR; a filename never proves provenance."""
+    path = external_input_path(jar, root, ("04_private_roms",)) if jar else root / LOCAL_JAR
+    if not path.is_file():
+        raise MatrixError("Local UPR-FVX JAR not found; build it once with ./gradlew :random:jar "
+                          "(never run automatically).")
+    return path
+
+
+def jar_freshness(root, jar):
+    """Compare mtimes only: JAR vs. UPR HEAD commit time and locally modified files."""
+    upr = root / LOCAL_UPR
+    try:
+        newest = int(git(upr, "log", "-1", "--format=%ct", "HEAD"))
+        for name in git(upr, "diff", "--name-only", "HEAD").splitlines():
+            if (upr / name).is_file():
+                newest = max(newest, (upr / name).stat().st_mtime)
+        if jar.stat().st_mtime >= newest:
+            return "NOT_OLDER_THAN_LOCAL_SOURCE"
+        return "OLDER_THAN_LOCAL_SOURCE; rebuild recommended"
+    except (MatrixError, OSError, ValueError):
+        return "UNKNOWN"
+
+
+def local_basis(root, jar):
+    """EXTENDED only: actual revisions and change counts; no paths or branch names."""
+    def changes(path):
+        return len(git(path, "status", "--porcelain", "--untracked-files=no").splitlines())
+
+    lines = ["Mode: EXTENDED (development evidence only; not release evidence)",
+             f"Workspace: {git(root, 'rev-parse', 'HEAD')}; tracked changes: {changes(root)}"]
+    for name, (relative, _) in BASELINE_GITLINKS.items():
+        entry = git(root, "ls-tree", "HEAD", relative).split()
+        gitlink = entry[2] if len(entry) >= 3 and entry[0] == "160000" else "none"
+        checkout = git(root / relative, "rev-parse", "HEAD")
+        state = "matches Workspace Gitlink" if checkout == gitlink else "DEVIATES from Workspace Gitlink " + gitlink
+        lines.append(f"{name}: {checkout}; {state}; local tracked changes: {changes(root / relative)}")
+    lines.append("UPR source: local checkout; JAR_PROVENANCE=LOCAL_UNATTESTED (not a reproducible release build)")
+    lines.append("JAR_FRESHNESS: " + jar_freshness(root, jar))
+    return lines
 
 
 def source_model(source):
@@ -678,6 +755,20 @@ def prepare_tool(root, temp, jar=None, jar_source_commit=None, source=None):
                               ("02_external", "04_private_roms", "05_builds", "03_tools/releases"))
     if not jar.is_file():
         raise MatrixError("Supplied candidate JAR is unavailable; no build performed.")
+    check_java_and_catalogue(jar, temp, source)
+    print("SOURCE_CHECK=PASS; JAR_PROVENANCE=USER_ATTESTED; CLI_CATALOGUE=PASS", flush=True)
+    return jar
+
+
+def prepare_local_tool(temp, jar, source):
+    """EXTENDED only: existing local JAR checked against local source; no build."""
+    check_java_and_catalogue(jar, temp, source)
+    print("SOURCE=LOCAL_CHECKOUT; JAR_PROVENANCE=LOCAL_UNATTESTED; CLI_CATALOGUE=PASS", flush=True)
+    return jar
+
+
+def check_java_and_catalogue(jar, temp, source):
+    """Java 25+ and the JAR's feature/profile CLI catalogue must match the source."""
     response = command(["java", "-version"], temp)
     version = re.search(r'version "(\d+)', response.stderr + response.stdout)
     if response.returncode or not version or int(version[1]) < 25:
@@ -698,8 +789,6 @@ def prepare_tool(root, temp, jar=None, jar_source_commit=None, source=None):
             or actual_features != expected_features
             or profile_response.stdout.splitlines() != raw_profiles):
         raise MatrixError("Candidate source/JAR CLI catalogue mismatch; details discarded.")
-    print("SOURCE_CHECK=PASS; JAR_PROVENANCE=USER_ATTESTED; CLI_CATALOGUE=PASS", flush=True)
-    return jar
 
 
 def generate_settings(cases, overlays, jar, temp):
@@ -1235,15 +1324,24 @@ def matrix_result(cases, groups, records, blocked=()):
     return "R2_RANDOMIZER_GENERATION_MATRIX_PASS"
 
 
-def print_report(cases, groups, records, counts, result, normalized=(), adaptations=(), blocked=()):
+def extended_result(result):
+    """A selected subset can never be reported as the full R2 matrix result."""
+    return result.replace("R2_RANDOMIZER_GENERATION_MATRIX_", "EXTENDED_SELECTED_CASES_")
+
+
+def print_report(cases, groups, records, counts, result, normalized=(), adaptations=(), blocked=(), basis=None):
+    """basis=None: RELEASE pins; otherwise the recorded EXTENDED local basis."""
     required = [(g, seed, out) for g, seed, out in records
                 if any(c.classification != "DIAGNOSTIC" for c in g.aliases)]
     failed = [record for record in required if not record[2].passed]
     diagnostics = [record for record in records if record not in required]
-    print("\nMatrix basis:\nWorkspace: " + WORKSPACE)
-    print("Candidate source revisions (separate from baseline Gitlinks):")
-    for name, pin in CANDIDATES.items():
-        print(name + ": " + pin)
+    if basis is None:
+        print("\nMatrix basis:\nWorkspace: " + WORKSPACE)
+        print("Candidate source revisions (separate from baseline Gitlinks):")
+        for name, pin in CANDIDATES.items():
+            print(name + ": " + pin)
+    else:
+        print("\nMatrix basis:\n" + "\n".join(basis))
     print("LOG_CONTENT=NOT_RUN; MANIFEST_SEMANTICS=NOT_RUN; GAMEPLAY=NOT_RUN")
     print("Reopen scope: supported profile load and manifest export, not runtime acceptance.")
     print_inventory(counts)
@@ -1292,6 +1390,8 @@ def print_report(cases, groups, records, counts, result, normalized=(), adaptati
         print("none")
     print("\nSelected profile results:")
     for name in SELECTED + FULL + MAXIMUM + tuple(RISK_SINGLES) + (RISK_EVOLUTION, RISK_PICKUP, SPECIAL_WILD):
+        if basis is not None and not any(selected_name(c) == name for c in cases):
+            continue  # EXTENDED: report only what was selected.
         outcomes = [statuses.get(c.id, "NOT_RUN") for c in cases if selected_name(c) == name]
         status = ("FAIL" if "FAIL" in outcomes else
                   "PASS" if outcomes and all(o == "PASS" for o in outcomes) else "NOT_RUN")
@@ -1311,33 +1411,62 @@ class SafeParser(argparse.ArgumentParser):
 
 
 def main(argv=None):
-    parser = SafeParser(description="User-owned #727 candidate UPR generation matrix")
+    parser = SafeParser(description="User-owned #727 UPR generation matrix: EXTENDED selected cases (default) or the full --release matrix")
+    parser.add_argument("--release", action="store_true", help="Full revision-bound matrix: exact pins, public source, attested JAR, all cases")
+    parser.add_argument("--only", action="append", metavar="CASE_ID", help="EXTENDED: run this existing case ID (repeatable); see --dry-run")
     parser.add_argument("--rom", metavar="PATH")
-    parser.add_argument("--jar", metavar="PATH", help="User-supplied external prebuilt #217 JAR; never auto-build")
-    parser.add_argument("--jar-source-commit", metavar="COMMIT", help="Independent user attestation of the supplied JAR source commit")
-    parser.add_argument("--public-source-file", metavar="PUBLIC_JAVA", help="Optional exact public-commit SettingsProfileGenerator.java; default is immutable GitHub GET")
-    parser.add_argument("--dry-run", action="store_true", help="Public source plan only; no Java/JAR/ROM use")
+    parser.add_argument("--jar", metavar="PATH", help="RELEASE: user-supplied external prebuilt #217 JAR. EXTENDED: existing local JAR, default " + LOCAL_JAR + ". Never auto-build")
+    parser.add_argument("--jar-source-commit", metavar="COMMIT", help="RELEASE only: independent user attestation of the supplied JAR source commit")
+    parser.add_argument("--public-source-file", metavar="PUBLIC_JAVA", help="RELEASE only: optional exact public-commit SettingsProfileGenerator.java; default is immutable GitHub GET")
+    parser.add_argument("--dry-run", action="store_true", help="Case plan only; no Java/JAR/ROM use")
     parser.add_argument("--stop-on-fail", action="store_true")
     args = parser.parse_args(argv)
     records = []
     try:
-        verify_pins(ROOT)
-        source = read_public_source(local_file=args.public_source_file)
+        if args.release:
+            if args.only:
+                raise MatrixError("--only is not available with --release; RELEASE always runs the full matrix.")
+            verify_pins(ROOT)
+            source = read_public_source(local_file=args.public_source_file)
+        else:
+            if args.jar_source_commit is not None or args.public_source_file is not None:
+                raise MatrixError("--jar-source-commit and --public-source-file are RELEASE-only options.")
+            source = read_local_source(ROOT)
         overlays, unsupported, profiles = source_model(source)
         cases = build_matrix(overlays, unsupported, profiles)
+        if not args.release:
+            if args.dry_run and not args.only:
+                print("Mode: EXTENDED\nSELECTED_CASES: 0\nAvailable case IDs (select with --only CASE_ID):")
+                for case in cases:
+                    print(case.layer + " " + case.id)
+                print("PRIVATE_ROM_MATRIX = NOT_RUN")
+                return 0
+            cases = select_cases(cases, args.only)
         if args.dry_run:
-            print("Matrix basis:\nWorkspace: " + WORKSPACE + "\nTree: " + TREE)
-            for name, pin in CANDIDATES.items():
-                print(name + ": " + pin)
-            print(f"CASE_INTENTS: {len(cases)}\nUNIQUE_EFFECTIVE_CASES: runtime Settings API canonicalization required")
+            if args.release:
+                print("Matrix basis:\nWorkspace: " + WORKSPACE + "\nTree: " + TREE)
+                for name, pin in CANDIDATES.items():
+                    print(name + ": " + pin)
+                print(f"CASE_INTENTS: {len(cases)}\nUNIQUE_EFFECTIVE_CASES: runtime Settings API canonicalization required")
+            else:
+                print("Mode: EXTENDED (development evidence only; revisions are recorded at run time)")
+                print(f"SELECTED_CASES: {len(cases)}\nUNIQUE_EFFECTIVE_CASES: runtime Settings API canonicalization required")
             print_inventory(inventory_counts(overlays, unsupported))
             for case in cases:
                 print(case.layer + " " + case.id)
             print("PRIVATE_ROM_MATRIX = NOT_RUN")
             return 0
+        basis = None
+        if not args.release:
+            local_jar = local_jar_path(ROOT, args.jar)
+            basis = local_basis(ROOT, local_jar)
+            print("Matrix basis:\n" + "\n".join(basis), flush=True)
         with tempfile.TemporaryDirectory(prefix="upr-generation-matrix-") as workspace:
             temp = Path(workspace)
-            jar = prepare_tool(ROOT, temp, args.jar, args.jar_source_commit, source)
+            if args.release:
+                jar = prepare_tool(ROOT, temp, args.jar, args.jar_source_commit, source)
+            else:
+                jar = prepare_local_tool(temp, local_jar, source)
             payloads = generate_settings(cases, overlays, jar, temp)
             # Pre-ROM Settings failures, including accepted identity drift, stop
             # before prompting or stat/open of even a supplied --rom argument.
@@ -1391,9 +1520,11 @@ def main(argv=None):
                 # Optional heuristic diagnostics do not block positive evidence.
                 # Missing/blocked intents and seed/replay gaps always block FULL PASS.
                 result = matrix_result(cases, groups, records, blocked)
+                if basis is not None:
+                    result = extended_result(result)
                 print_report(cases, groups, records, inventory_counts(overlays, unsupported),
-                             result, normalized, adaptations, blocked)
-                return 0 if result == "R2_RANDOMIZER_GENERATION_MATRIX_PASS" else 1
+                             result, normalized, adaptations, blocked, basis)
+                return 0 if result in ("R2_RANDOMIZER_GENERATION_MATRIX_PASS", "EXTENDED_SELECTED_CASES_PASS") else 1
             finally:
                 if input_digest(rom) != original_input:
                     raise MatrixError("Input unchanged check failed; STOP.")
