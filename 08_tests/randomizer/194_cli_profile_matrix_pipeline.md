@@ -33,7 +33,6 @@ The earlier saved-profile mode remains valid:
 ## Files
 
 - `07_scripts/randomizer/cli_log_smoke_pipeline.sh`
-- `07_scripts/randomizer/generate_cli_smoke_profiles.sh`
 - `07_scripts/randomizer/generate_settings_profiles_from_matrix.sh`
 - `07_scripts/randomizer/run_cli_profile_matrix.sh`
 - `08_tests/randomizer/cli_profile_matrix.example.tsv`
@@ -72,11 +71,14 @@ The example manifest covers:
 ## Scaffold a Local Manifest
 
 ```sh
-07_scripts/randomizer/generate_cli_smoke_profiles.sh \
-  --output 05_builds/randomizer-smoke/cli-profile-matrix/profiles.tsv
+mkdir -p 05_builds/randomizer-smoke/cli-profile-matrix
+cp 08_tests/randomizer/cli_profile_matrix.example.tsv \
+  05_builds/randomizer-smoke/cli-profile-matrix/profiles.tsv
 ```
 
-This only writes a manifest scaffold. It does not create or modify `.rnqs` settings files.
+This only copies a manifest scaffold. It does not create or modify `.rnqs` settings files.
+The former `generate_cli_smoke_profiles.sh` wrote a byte-identical copy of this
+example manifest and was removed as redundant.
 
 ## Generate Profile Settings
 
