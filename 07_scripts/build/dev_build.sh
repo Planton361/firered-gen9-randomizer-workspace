@@ -32,8 +32,8 @@ die() { echo "STOP: $*" >&2; exit 1; }
 # On any failure or Ctrl-C, point to the preserved previous artifacts.
 trap 'rc=$?; if [ $rc -ne 0 ] && [ -d "$ARCH" ]; then echo "NOTE: previous in-place artifacts are preserved in $ARCH" >&2; fi' EXIT
 trap 'exit 130' INT TERM
-# Real directory of a path (symlinks resolved).
-realdir() { (cd "$(dirname "$1")" && pwd -P); }
+# Canonical path with every symlink resolved, including the last element.
+canon() { python3 -c 'import os, sys; print(os.path.realpath(sys.argv[1]))' "$1"; }
 # Fingerprint of tracked/untracked state, used to detect build-time source edits.
 tree_state() { { git -C "$1" status --porcelain; git -C "$1" diff HEAD; } | shasum | cut -c1-40; }
 gitlink() { git -C "$WS" ls-tree HEAD "$1" | awk '{print $3}'; }
@@ -41,11 +41,16 @@ dirty_count() { git -C "$1" status --porcelain | wc -l | tr -d ' '; }
 
 # --- Preconditions -----------------------------------------------------------
 [ -f "$BASE_ROM" ] || die "base ROM not found"
-case "$(realdir "$BASE_ROM")/" in
-    "$(cd "$DPE" && pwd -P)"/*|"$(cd "$CFRU" && pwd -P)"/*|"$(cd "$WS/05_builds" && pwd -P)"/*)
-        die "base ROM must not live inside DPE, CFRU or 05_builds" ;;
+# 05_builds must be a real directory inside the Workspace, not a symlink.
+if [ -L "$WS/05_builds" ] || [ ! -d "$WS/05_builds" ] || [ "$(canon "$WS/05_builds")" != "$WS/05_builds" ]; then
+    die "05_builds must be an existing real directory inside the Workspace (no symlink)"
+fi
+ROM_REAL=$(canon "$BASE_ROM")
+case "$ROM_REAL" in
+    "$(canon "$DPE")"/*|"$(canon "$CFRU")"/*|"$WS/05_builds"/*)
+        die "base ROM (after resolving symlinks) must not live inside DPE, CFRU or 05_builds" ;;
 esac
-[ ! -e "$OUT" ] || die "$OUT already exists"
+{ [ ! -e "$OUT" ] && [ ! -L "$OUT" ]; } || die "$OUT already exists"
 git -C "$WS" check-ignore -q "05_builds/$NAME" || die "05_builds is not git-ignored"
 for t in arm-none-eabi-gcc grit wav2agb mid2agb python3; do
     command -v "$t" >/dev/null || die "$t not in PATH (open a login shell / source ~/.zprofile)"
@@ -71,6 +76,7 @@ fi
 
 # --- Archive previous in-place artifacts (move, never delete) ----------------
 mkdir -p "$ARCH/dpe" "$ARCH/cfru"
+[ "$(canon "$ARCH")" = "$ARCH" ] || die "output path resolves outside $WS/05_builds"
 for f in BPRE0.gba test.gba offsets.ini build; do
     # -L also catches dangling symlinks, which cp would otherwise follow.
     if [ -e "$DPE/$f" ] || [ -L "$DPE/$f" ]; then mv "$DPE/$f" "$ARCH/dpe/"; fi

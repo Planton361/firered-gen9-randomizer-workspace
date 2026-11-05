@@ -85,6 +85,12 @@ UPR-FVX — apply unchanged in every mode.
 | **EXTENDED** | Randomizer behavior changed | FAST plus selected representative settings combinations and targeted regression checks for the changed area. |
 | **RELEASE** | Explicit release/acceptance preparation only | Workspace-pinned clean sources (`dev_build.sh --release`), exact revision identity, reproducibility and the complete required evidence per [Reproducibility](REPRODUCIBILITY.md). |
 
+Within an existing approved feature branch, FAST allows any number of local
+edit/build/test iterations and commits/pushes to that branch without a new
+Issue, CONTROL routing or PR per iteration. A new Issue/PR is needed only for
+materially new scope. Protected `main`, review and the user's final merge
+remain unchanged.
+
 FAST and EXTENDED results are development evidence for the recorded local
 state, not release or support evidence. Revision-bound acceptance gates and
 milestone evidence rules apply only to RELEASE.
