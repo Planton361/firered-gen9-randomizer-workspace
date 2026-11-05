@@ -15,7 +15,8 @@ normative workflow baseline. Read relevant evidence when a task requires it.
 ## Operating boundaries
 
 - **CONFIRMED CURRENT STATE:** GitHub and this repository are the persistent
-  source of truth; Linux/POSIX is the default environment; `main` is stable
+  source of truth; macOS and Linux are regular POSIX development environments;
+  `main` is stable
   and protected.
 - Read-only inspection is allowed on `main`. Any repository write requires a
   bounded, approved non-`main` branch. Never commit, push, or merge on

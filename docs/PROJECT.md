@@ -175,7 +175,7 @@ operational order/status and Workspace Issues for active program contracts.
 Treat PRs as revision/evidence, not a second queue. Treat 01_docs/, 08_tests/,
 00_project-control/, SESSION_STATE/NEXT_STEPS, and old handoffs as
 historical/supporting evidence only unless a current Issue explicitly needs
-them. Use Linux/POSIX commands by default. Read-only inspection is allowed on
+them. Use POSIX commands (macOS or Linux) by default. Read-only inspection is allowed on
 main; all writes require a bounded approved non-main branch. A new
 Issue/material scope/branch starts a fresh Codex session; repair of the same
 contract/branch may resume. Keep one writer per branch and never merge a PR.

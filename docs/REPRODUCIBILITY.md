@@ -4,7 +4,10 @@
 
 **CONFIRMED CURRENT STATE:** Evidence applies only to the documented workspace
 commit, submodule Gitlinks, configuration, and declared test scope. A later
-upstream revision or local artifact is not covered automatically.
+upstream revision or local artifact is not covered automatically. These
+revision-binding requirements govern the RELEASE
+[development mode](ENGINEERING_RULES.md#development-modes); FAST and EXTENDED
+results are development evidence for their recorded local state only.
 
 Current baseline Gitlinks are repository evidence, including CFRU
 `8bc8c38210ddba0b05c933dbda06cb4539254c7a`, DPE
