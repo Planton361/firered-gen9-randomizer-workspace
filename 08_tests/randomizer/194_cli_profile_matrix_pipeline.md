@@ -71,12 +71,20 @@ The example manifest covers:
 ## Scaffold a Local Manifest
 
 ```sh
-mkdir -p 05_builds/randomizer-smoke/cli-profile-matrix
-cp 08_tests/randomizer/cli_profile_matrix.example.tsv \
-  05_builds/randomizer-smoke/cli-profile-matrix/profiles.tsv
+manifest=05_builds/randomizer-smoke/cli-profile-matrix/profiles.tsv
+mkdir -p "$(dirname "$manifest")"
+if [ -e "$manifest" ] || [ -L "$manifest" ]; then
+  echo "ERROR: $manifest already exists; not overwriting." >&2
+else
+  cp 08_tests/randomizer/cli_profile_matrix.example.tsv "$manifest"
+fi
 ```
 
-This only copies a manifest scaffold. It does not create or modify `.rnqs` settings files.
+This only copies a manifest scaffold and never overwrites an existing file or
+symlink (including a dangling one) at the target path. It does not create or
+modify `.rnqs` settings files. The template's `settings_file` paths point to
+`05_builds/randomizer-smoke/cli-profile-matrix/settings/`; if you use a
+different settings directory, edit those paths in the copied TSV.
 The former `generate_cli_smoke_profiles.sh` wrote a byte-identical copy of this
 example manifest and was removed as redundant.
 
