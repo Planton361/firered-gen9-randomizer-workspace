@@ -8,6 +8,7 @@ import contextlib
 import importlib.util
 import io
 import itertools
+import os
 from pathlib import Path
 import re
 import subprocess
@@ -530,7 +531,7 @@ class NormalizationAccountingTest(unittest.TestCase):
             return result(text="Private.gba /fictional/private DD88761C")
         output = io.StringIO()
         with patch.object(m, "verify_pins"), patch.object(m, "build_matrix", return_value=cases), patch.object(m, "prepare_tool", return_value=Path("synthetic.jar")), patch.object(m, "generate_settings", return_value=before), patch.object(m, "command", side_effect=execute), patch.object(m, "run_case") as run, patch("builtins.input", return_value="/fictional/private/Private.gba"), contextlib.redirect_stdout(output):
-            self.assertEqual(1, m.main([]))
+            self.assertEqual(1, m.main(["--release"]))
         run.assert_not_called()
         self.assertTrue(directories)
         self.assertTrue(all(not d.exists() for d in directories))
@@ -914,7 +915,7 @@ class EntryPointTest(unittest.TestCase):
 
     def test_dry_run_no_rom_java_build_or_output_access(self):
         with patch.object(m, "verify_pins"), patch.object(m, "prepare_tool") as tool, patch.object(m, "attempt") as attempt, patch("builtins.input") as prompt, contextlib.redirect_stdout(io.StringIO()) as output:
-            self.assertEqual(0, m.main(["--dry-run", "--rom", "/fictional/never-read.gba"]))
+            self.assertEqual(0, m.main(["--release", "--dry-run", "--rom", "/fictional/never-read.gba"]))
         tool.assert_not_called()
         attempt.assert_not_called()
         prompt.assert_not_called()
@@ -941,7 +942,7 @@ class EntryPointTest(unittest.TestCase):
             return m.Outcome("FAIL") if fail else m.Outcome("PASS", "PASS", input_unchanged="PASS")
 
         with patch.object(m, "verify_pins"), patch.object(m, "build_matrix", return_value=cases), patch.object(m, "prepare_tool", return_value=Path("synthetic.jar")), patch.object(m, "generate_settings", return_value=payloads), patch.object(m, "normalize_settings", return_value=(payloads, {}, {})), patch.object(m, "run_case", side_effect=run), patch("builtins.input", return_value="/fictional/private.gba") as prompt, contextlib.redirect_stdout(io.StringIO()) as output:
-            code = m.main(argv)
+            code = m.main(["--release", *argv])
         return code, calls, prompt, output.getvalue()
 
     def test_diagnostics_nonblocking_success_and_failure(self):
@@ -951,7 +952,7 @@ class EntryPointTest(unittest.TestCase):
                            m.Outcome("FAIL", error_class="RomIOException"),
                            m.Outcome("PASS", "FAIL", error_class="ProcessFailure")):
             with patch.object(m, "verify_pins"), patch.object(m, "build_matrix", return_value=cases), patch.object(m, "prepare_tool", return_value=Path("synthetic.jar")), patch.object(m, "generate_settings", return_value=["control", "diagnostic"]), patch.object(m, "normalize_settings", return_value=(["control", "diagnostic"], {}, {})), patch.object(m, "run_case", side_effect=[m.Outcome("PASS", "PASS", input_unchanged="PASS"), diagnostic]), contextlib.redirect_stdout(io.StringIO()) as output:
-                self.assertEqual(0, m.main(["--rom", "/fictional/input.gba", "--stop-on-fail"]))
+                self.assertEqual(0, m.main(["--release", "--rom", "/fictional/input.gba", "--stop-on-fail"]))
             text = output.getvalue()
             self.assertIn("PASS: 1\nFAIL: 0", text)
             self.assertIn("Diagnostic OPTIONAL_DIAGNOSTIC: " + m.diagnostic_status(diagnostic), text)
@@ -962,13 +963,13 @@ class EntryPointTest(unittest.TestCase):
         cases = [m.Intent("CASUAL_NATDEX", "ACCEPTANCE", classification="ACCEPTANCE"),
                  m.Intent("OPTIONAL_DIAGNOSTIC", "DIAGNOSTIC", classification="DIAGNOSTIC")]
         with patch.object(m, "verify_pins"), patch.object(m, "build_matrix", return_value=cases), patch.object(m, "prepare_tool", return_value=Path("synthetic.jar")), patch.object(m, "generate_settings", return_value=["casual", "diagnostic"]), patch.object(m, "normalize_settings", return_value=(["casual", "diagnostic"], {}, {})), patch.object(m, "run_case", side_effect=[m.Outcome("FAIL"), m.Outcome("FAIL", error_class="RomIOException")]), contextlib.redirect_stdout(io.StringIO()) as output:
-            self.assertEqual(1, m.main(["--rom", "/fictional/input.gba"]))
+            self.assertEqual(1, m.main(["--release", "--rom", "/fictional/input.gba"]))
         self.assertIn("CASUAL_NATDEX: FAIL", output.getvalue())
         self.assertIn("PASS: 0\nFAIL: 1", output.getvalue())
 
     def test_inventory_report_and_dry_run_exclusions(self):
         with patch.object(m, "verify_pins"), contextlib.redirect_stdout(io.StringIO()) as output:
-            self.assertEqual(0, m.main(["--dry-run"]))
+            self.assertEqual(0, m.main(["--release", "--dry-run"]))
         text = output.getvalue()
         for line in ("SOURCE_OVERLAY_IDS: 159", "GENERATOR_UNSUPPORTED: 4",
                      "TARGET_EXCLUDED: 9", "REQUIRED_OVERLAY_CASES: 146", "CASE_INTENTS: 303"):
@@ -1011,7 +1012,7 @@ class EntryPointTest(unittest.TestCase):
             raise m.MatrixError("Recognition failed")
 
         with patch.object(m, "verify_pins"), patch.object(m, "build_matrix", return_value=cases), patch.object(m, "prepare_tool", return_value=Path("synthetic.jar")), patch.object(m, "generate_settings", return_value=["synthetic"]), patch.object(m, "normalize_settings", side_effect=normalize), patch.object(m, "run_case") as run, patch("builtins.input", side_effect=prompt), contextlib.redirect_stdout(io.StringIO()):
-            self.assertEqual(1, m.main([]))
+            self.assertEqual(1, m.main(["--release"]))
         self.assertEqual(["prompt", "normalize"], order)
         run.assert_not_called()
 
@@ -1023,8 +1024,8 @@ class EntryPointTest(unittest.TestCase):
     def test_fail_fast_before_prompt_or_rom_use(self):
         for step in ("verify_pins", "prepare_tool", "generate_settings"):
             with patch.object(m, "verify_pins"), patch.object(m, "prepare_tool", return_value=Path("synthetic.jar")), patch.object(m, "generate_settings", return_value=[]), patch.object(m, step, side_effect=m.MatrixError("Prerequisite failed")), patch.object(m, "attempt") as attempt, patch("builtins.input") as prompt, contextlib.redirect_stdout(io.StringIO()):
-                self.assertEqual(1, m.main(["--rom", "/fictional/never-read.gba"]))
-                self.assertEqual(1, m.main([]))
+                self.assertEqual(1, m.main(["--release", "--rom", "/fictional/never-read.gba"]))
+                self.assertEqual(1, m.main(["--release"]))
             attempt.assert_not_called()
             prompt.assert_not_called()
 
@@ -1612,7 +1613,7 @@ class NormalizedCoverageTest(unittest.TestCase):
             temps.append(temp)
             return m.Outcome("PASS", "PASS", "PASS", input_unchanged="PASS")
         with patch.object(m, "read_public_source", return_value=GENERATOR_SOURCE), patch.object(m, "verify_pins"), patch.object(m, "build_matrix", return_value=cases), patch.object(m, "prepare_tool", return_value=Path("synthetic.jar")), patch.object(m, "generate_settings", return_value=before), patch.object(m, "normalize_settings", return_value=(after, {0: 1023}, blocked)), patch.object(m, "input_digest", return_value=b"synthetic input"), patch.object(m, "run_case", side_effect=execute), contextlib.redirect_stdout(io.StringIO()) as output:
-            self.assertEqual(1, m.main(["--rom", "/fictional/input", "--stop-on-fail"]))
+            self.assertEqual(1, m.main(["--release", "--rom", "/fictional/input", "--stop-on-fail"]))
         self.assertEqual([(("FVX-ITEM-002",), m.PRIMARY)] +
                          [((m.RISK_PICKUP,), seed) for seed in (m.PRIMARY, 0, 1, 677)], calls)
         self.assertTrue(temps and all(not p.exists() for p in temps))
@@ -1645,7 +1646,7 @@ class NormalizedCoverageTest(unittest.TestCase):
             (cwd / "0.post-state").write_text("\n".join(k + "=" + v for k, v in observed.items()))
             return result()
         with patch.object(m, "read_public_source", return_value=GENERATOR_SOURCE), patch.object(m, "verify_pins"), patch.object(m, "build_matrix", return_value=cases), patch.object(m, "prepare_tool", return_value=Path("synthetic.jar")), patch.object(m, "generate_settings", return_value=before), patch.object(m, "command", side_effect=normalize_java), patch.object(m, "input_digest", return_value=b"synthetic input"), patch.object(m, "run_case", return_value=m.Outcome("PASS", "PASS", input_unchanged="PASS")) as run, contextlib.redirect_stdout(io.StringIO()) as output:
-            self.assertEqual(1, m.main(["--rom", "/fictional/input"]))
+            self.assertEqual(1, m.main(["--release", "--rom", "/fictional/input"]))
         self.assertEqual(1, run.call_count)
         self.assertEqual(["FVX-ITEM-002"], [c.id for c in run.call_args.args[0].aliases])
         self.assertTrue(dirs and all(not p.exists() for p in dirs))
@@ -1752,7 +1753,7 @@ class InputAtomicityTest(unittest.TestCase):
             created.append(temp)
             raise m.MatrixError("Synthetic normalization failure")
         with patch.object(m, "verify_pins"), patch.object(m, "read_public_source", return_value=GENERATOR_SOURCE), patch.object(m, "prepare_tool", return_value=Path("/fictional/jar")), patch.object(m, "generate_settings", return_value=[]), patch.object(m, "normalize_settings", side_effect=normalize), patch.object(m, "input_digest", side_effect=[b"before", b"after"]), patch.object(m, "run_case") as run, contextlib.redirect_stdout(io.StringIO()) as output:
-            self.assertEqual(1, m.main(["--rom", "/fictional/private"]))
+            self.assertEqual(1, m.main(["--release", "--rom", "/fictional/private"]))
         run.assert_not_called()
         self.assertTrue(created and all(not d.exists() for d in created))
         self.assertIn("Input unchanged check failed", output.getvalue())
@@ -1896,7 +1897,7 @@ class NormalizerDiagnosticTest(unittest.TestCase):
                 created.append(cwd)
                 return response
             with self.subTest(exit=response.returncode), patch.object(m, "verify_pins"), patch.object(m, "read_public_source", return_value=GENERATOR_SOURCE), patch.object(m, "prepare_tool", return_value=Path("/fictional/PRIVATE.jar")), patch.object(m, "generate_settings", return_value=[]), patch.object(m, "command", side_effect=execute), patch.object(m, "input_digest", return_value=b"synthetic input") as digest, patch.object(m, "run_case") as run, contextlib.redirect_stdout(io.StringIO()) as output:
-                self.assertEqual(1, m.main(["--rom", "/fictional/PRIVATE.gba"]))
+                self.assertEqual(1, m.main(["--release", "--rom", "/fictional/PRIVATE.gba"]))
             run.assert_not_called()
             self.assertEqual(2, digest.call_count)  # Existing input-unchanged finally gate.
             self.assertTrue(created and all(not p.exists() for p in created))
@@ -2261,6 +2262,283 @@ class LedgerTest(unittest.TestCase):
         for marker in ("132", "Legacy Revisions Only", "NOT_RUN", "USER-only", m.RISK_EVOLUTION,
                        m.RISK_PICKUP, "OWNERSHIP_WITNESS_V1", "GFX-002+GFX-004"):
             self.assertIn(marker, text)
+
+
+class ExtendedModeTest(unittest.TestCase):
+    """EXTENDED: selected existing case IDs, local source/JAR, recorded basis.
+
+    Synthetic data and mocks only; never reads component worktrees, a JAR or a ROM.
+    """
+    REAL_READ_LOCAL_SOURCE = staticmethod(m.read_local_source)
+    BASIS = ["Mode: EXTENDED (development evidence only; not release evidence)",
+             "UPR-FVX: " + "a" * 40 + "; DEVIATES from Workspace Gitlink " + "b" * 40 + "; local tracked changes: 2"]
+
+    def setUp(self):
+        self.cases = m.build_matrix(OVERLAYS, UNSUPPORTED, PROFILES)
+        for name, value in (("read_local_source", GENERATOR_SOURCE), ("input_digest", b"synthetic input")):
+            mock = patch.object(m, name, return_value=value)
+            mock.start()
+            self.addCleanup(mock.stop)
+
+    def extended_run(self, argv, outcome=None):
+        seen = {}
+
+        def generate(cases, overlays, jar, temp):
+            seen["cases"] = [c.id for c in cases]
+            return [f"payload-{i}" for i in range(len(cases))]
+
+        def normalize(cases, jar, rom, temp, payloads, overlays=None):
+            return payloads, {}, {}
+
+        calls = []
+
+        def run(group, seed, rom, jar, temp):
+            calls.append((group.aliases[0].id, seed))
+            return outcome or m.Outcome("PASS", "PASS", "PASS", input_unchanged="PASS")
+
+        with patch.object(m, "verify_pins", side_effect=AssertionError("RELEASE pins in EXTENDED")) as pins, \
+                patch.object(m, "read_public_source", side_effect=AssertionError("No public GET in EXTENDED")), \
+                patch.object(m, "prepare_tool", side_effect=AssertionError("No attested JAR in EXTENDED")), \
+                patch.object(m, "local_jar_path", return_value=Path("/fictional/local/UPR-FVX.jar")), \
+                patch.object(m, "local_basis", return_value=self.BASIS), \
+                patch.object(m, "prepare_local_tool", return_value=Path("/fictional/local/UPR-FVX.jar")) as tool, \
+                patch.object(m, "generate_settings", side_effect=generate), \
+                patch.object(m, "normalize_settings", side_effect=normalize), \
+                patch.object(m, "run_case", side_effect=run), \
+                patch("builtins.input", return_value="/fictional/Private Name.gba") as prompt, \
+                contextlib.redirect_stdout(io.StringIO()) as output:
+            code = m.main(argv)
+        pins.assert_not_called()
+        return code, seen.get("cases"), calls, tool, prompt, output.getvalue()
+
+    def test_single_case_selection_runs_only_that_case(self):
+        code, selected, calls, _, _, text = self.extended_run(["--only", "05_WILD_FULL", "--rom", "/fictional/in.gba"])
+        self.assertEqual(0, code)
+        self.assertEqual(["05_WILD_FULL"], selected)
+        self.assertEqual([("05_WILD_FULL", m.PRIMARY)], calls)
+        self.assertIn("Result: EXTENDED_SELECTED_CASES_PASS", text)
+        self.assertNotIn("R2_RANDOMIZER_GENERATION_MATRIX", text)
+        self.assertIn("05_WILD_FULL: PASS", text)
+        self.assertNotIn("CASUAL_NATDEX: NOT_RUN", text)  # unselected rows are not reported
+
+    def test_multiple_ids_keep_matrix_order_and_collapse_duplicates(self):
+        code, selected, _, _, _, _ = self.extended_run(
+            ["--only", "05_WILD_FULL", "--only", "04_FOE_BASE", "--only", "05_WILD_FULL", "--rom", "/fictional/in.gba"])
+        self.assertEqual(0, code)
+        self.assertEqual(["04_FOE_BASE", "05_WILD_FULL"], selected)
+
+    def test_selected_cases_keep_replay_and_seed_sweep_semantics(self):
+        code, _, calls, _, _, _ = self.extended_run(["--only", m.RISK_PICKUP, "--rom", "/fictional/in.gba"])
+        self.assertEqual(0, code)
+        self.assertEqual([m.PRIMARY, 0, 1, 677], [seed for _, seed in calls])
+        case = next(c for c in m.select_cases(self.cases, [m.RISK_PICKUP]))
+        self.assertTrue(case.replay and case.secondary)
+
+    def test_unknown_or_invalid_ids_stop_without_echo_or_execution(self):
+        for argv in (["--only", "NOT_A_REAL_CASE_SECRET"], ["--only", "05_WILD_FULL", "--only", "/fictional/Secret.gba"],
+                     ["--only", "FVX-TRAIT-025"], ["--only", "MODE-INCLUDE-MEGAS"]):
+            with self.subTest(argv=argv):
+                code, selected, calls, tool, prompt, text = self.extended_run(argv + ["--rom", "/fictional/in.gba"])
+                self.assertEqual(1, code)
+                self.assertIsNone(selected)
+                self.assertEqual([], calls)
+                tool.assert_not_called()
+                prompt.assert_not_called()
+                self.assertIn("Result: STOP", text)
+                self.assertNotIn("SECRET", text)
+                self.assertNotIn("Secret", text)
+                self.assertNotIn("/fictional", text)
+
+    def test_excluded_and_unsupported_overlays_are_never_selectable(self):
+        ids = {c.id for c in self.cases}
+        for overlay in m.EXCLUDED | UNSUPPORTED:
+            with self.subTest(overlay=overlay):
+                self.assertNotIn(overlay, ids)
+                with self.assertRaises(m.MatrixError):
+                    m.select_cases(self.cases, [overlay])
+
+    def test_no_selection_never_starts_the_full_matrix(self):
+        for argv in ([], ["--rom", "/fictional/in.gba"], ["--stop-on-fail"]):
+            with self.subTest(argv=argv):
+                code, selected, calls, tool, prompt, text = self.extended_run(argv)
+                self.assertEqual(1, code)
+                self.assertIsNone(selected)
+                self.assertEqual([], calls)
+                tool.assert_not_called()
+                prompt.assert_not_called()
+                self.assertIn("EXTENDED requires at least one --only CASE_ID; nothing was run.", text)
+
+    def test_dry_run_selected_without_java_git_rom_or_private_files(self):
+        with patch.object(m, "command", side_effect=AssertionError("No external process")), \
+                patch.object(m, "verify_pins", side_effect=AssertionError("No pins")), \
+                patch.object(m, "local_jar_path", side_effect=AssertionError("No JAR")), \
+                patch.object(m, "input_digest", side_effect=AssertionError("No ROM")), \
+                patch("builtins.input", side_effect=AssertionError("No prompt")), \
+                contextlib.redirect_stdout(io.StringIO()) as output:
+            self.assertEqual(0, m.main(["--dry-run", "--only", "05_WILD_FULL", "--only", "04_FOE_BASE",
+                                        "--rom", "/fictional/never-read.gba"]))
+        text = output.getvalue()
+        self.assertIn("Mode: EXTENDED", text)
+        self.assertIn("SELECTED_CASES: 2", text)
+        self.assertIn("FULL 04_FOE_BASE\nFULL 05_WILD_FULL\nPRIVATE_ROM_MATRIX = NOT_RUN", text)
+        self.assertNotIn("/fictional", text)
+        self.assertNotIn(m.WORKSPACE, text)
+
+    def test_dry_run_without_selection_only_lists_ids(self):
+        with patch.object(m, "command", side_effect=AssertionError("No external process")), \
+                contextlib.redirect_stdout(io.StringIO()) as output:
+            self.assertEqual(0, m.main(["--dry-run"]))
+        text = output.getvalue()
+        self.assertIn("SELECTED_CASES: 0", text)
+        self.assertEqual(len(self.cases), sum(line.split(" ")[-1] in {c.id for c in self.cases}
+                                              for line in text.splitlines() if " " in line))
+
+    def test_release_keeps_strict_pins_full_scope_and_release_only_options(self):
+        with patch.object(m, "verify_pins", side_effect=m.MatrixError("Workspace basis tree mismatch; CONTROL rebaseline required.")), \
+                patch.object(m, "read_public_source") as public, contextlib.redirect_stdout(io.StringIO()) as output:
+            self.assertEqual(1, m.main(["--release", "--dry-run"]))
+        public.assert_not_called()
+        self.assertIn("CONTROL rebaseline required", output.getvalue())
+        for argv in (["--release", "--only", "05_WILD_FULL"],
+                     ["--only", "05_WILD_FULL", "--jar-source-commit", m.CANDIDATES["UPR-FVX"]],
+                     ["--only", "05_WILD_FULL", "--public-source-file", "/fictional/Settings.java"]):
+            with self.subTest(argv=argv):
+                code, selected, calls, tool, _, text = self.extended_run(argv)
+                self.assertEqual(1, code)
+                self.assertEqual([], calls)
+                self.assertNotIn("/fictional", text)
+        with patch.object(m, "verify_pins"), patch.object(m, "read_public_source", return_value=GENERATOR_SOURCE), \
+                contextlib.redirect_stdout(io.StringIO()) as output:
+            self.assertEqual(0, m.main(["--release", "--dry-run"]))
+        self.assertIn(f"CASE_INTENTS: {len(self.cases)}", output.getvalue())
+        self.assertIn("Workspace: " + m.WORKSPACE, output.getvalue())
+
+    def test_extended_result_never_claims_full_matrix(self):
+        for full, sub in (("R2_RANDOMIZER_GENERATION_MATRIX_PASS", "EXTENDED_SELECTED_CASES_PASS"),
+                          ("R2_RANDOMIZER_GENERATION_MATRIX_FAIL", "EXTENDED_SELECTED_CASES_FAIL"),
+                          ("R2_RANDOMIZER_GENERATION_MATRIX_PARTIAL_NOT_RUN", "EXTENDED_SELECTED_CASES_PARTIAL_NOT_RUN")):
+            self.assertEqual(sub, m.extended_result(full))
+        code, _, _, _, _, text = self.extended_run(["--only", "05_WILD_FULL", "--rom", "/fictional/in.gba"],
+                                                   outcome=m.Outcome("FAIL", error_class="RomIOException"))
+        self.assertEqual(1, code)
+        self.assertIn("Result: EXTENDED_SELECTED_CASES_FAIL", text)
+
+    def test_report_is_sanitized_and_records_basis(self):
+        _, _, _, _, _, text = self.extended_run(["--only", "05_WILD_FULL"])
+        self.assertIn("DEVIATES from Workspace Gitlink", text)
+        self.assertEqual(2, text.count("Mode: EXTENDED (development evidence only; not release evidence)"))
+        for private in ("/fictional", "Private Name", "payload-"):
+            self.assertNotIn(private, text)
+
+    def git_stub(self, checkout, gitlink):
+        def git(root, *args):
+            self.assertNotIn(args[0], ("fetch", "checkout", "reset", "clean", "ls-remote", "submodule", "pull"))
+            if args == ("rev-parse", "HEAD"):
+                return "c" * 40 if root == m.ROOT else checkout
+            if args[0] == "ls-tree":
+                return "160000 commit " + gitlink + "\t" + args[-1]
+            if args[0] == "status":
+                self.assertIn("--untracked-files=no", args)
+                return " M one.java\n M two.java"
+            if args[:2] == ("log", "-1"):
+                return "100"
+            if args[:2] == ("diff", "--name-only"):
+                return ""
+            self.fail(args)
+        return git
+
+    def test_local_basis_records_gitlink_deviation_without_stopping(self):
+        with tempfile.TemporaryDirectory() as directory:
+            jar = Path(directory) / "UPR-FVX.jar"
+            jar.write_bytes(b"synthetic")
+            with patch.object(m, "git", side_effect=self.git_stub("a" * 40, "b" * 40)):
+                deviating = m.local_basis(m.ROOT, jar)
+            with patch.object(m, "git", side_effect=self.git_stub("b" * 40, "b" * 40)):
+                matching = m.local_basis(m.ROOT, jar)
+        self.assertIn("Workspace: " + "c" * 40 + "; tracked changes: 2", deviating)
+        for name in m.BASELINE_GITLINKS:
+            self.assertIn(f"{name}: {'a' * 40}; DEVIATES from Workspace Gitlink {'b' * 40}; local tracked changes: 2", deviating)
+            self.assertIn(f"{name}: {'b' * 40}; matches Workspace Gitlink; local tracked changes: 2", matching)
+        self.assertIn("JAR_PROVENANCE=LOCAL_UNATTESTED (not a reproducible release build)", " ".join(deviating))
+        self.assertFalse(any(directory in line for line in deviating))
+
+    def test_jar_freshness_compares_head_and_modified_files(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            changed = root / m.LOCAL_UPR / "romio/Changed.java"
+            changed.parent.mkdir(parents=True)
+            changed.write_text("synthetic")
+            jar = root / "UPR-FVX.jar"
+            jar.write_bytes(b"synthetic")
+            os.utime(changed, (2000, 2000))
+
+            def git(path, *args):
+                return "1000" if args[0] == "log" else "romio/Changed.java"
+            with patch.object(m, "git", side_effect=git):
+                os.utime(jar, (3000, 3000))
+                self.assertEqual("NOT_OLDER_THAN_LOCAL_SOURCE", m.jar_freshness(root, jar))
+                os.utime(jar, (1500, 1500))
+                self.assertEqual("OLDER_THAN_LOCAL_SOURCE; rebuild recommended", m.jar_freshness(root, jar))
+            with patch.object(m, "git", side_effect=m.MatrixError("x")):
+                self.assertEqual("UNKNOWN", m.jar_freshness(root, jar))
+
+    def test_existing_local_jar_used_without_gradle(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            with self.assertRaises(m.MatrixError) as caught:
+                m.local_jar_path(root, None)
+            self.assertIn("never run automatically", str(caught.exception))
+            self.assertNotIn(directory, str(caught.exception))
+            default = root / m.LOCAL_JAR
+            default.parent.mkdir(parents=True)
+            default.write_bytes(b"synthetic")
+            self.assertEqual(default, m.local_jar_path(root, None))
+            with self.assertRaises(m.MatrixError):
+                m.local_jar_path(root, str(root / "04_private_roms/UPR-FVX.jar"))
+        features, profiles = CandidateJarTest.catalogue(self)
+        with patch.object(m, "command", side_effect=[result(err='openjdk version "25"'), result(text=features),
+                                                     result(text=profiles)]) as command, \
+                contextlib.redirect_stdout(io.StringIO()) as output:
+            self.assertEqual(Path("/synthetic/UPR-FVX.jar"),
+                             m.prepare_local_tool(Path("/synthetic/temp"), Path("/synthetic/UPR-FVX.jar"), GENERATOR_SOURCE))
+        self.assertEqual(3, command.call_count)
+        self.assertTrue(all(c.args[0][0] == "java" for c in command.call_args_list))
+        self.assertFalse(any("gradle" in str(c) for c in command.call_args_list))
+        self.assertIn("JAR_PROVENANCE=LOCAL_UNATTESTED", output.getvalue())
+
+    def test_local_jar_catalogue_mismatch_still_stops(self):
+        features, profiles = CandidateJarTest.catalogue(self)
+        with patch.object(m, "command", side_effect=[result(err='openjdk version "25"'),
+                                                     result(text=features + "\nUNREVIEWED\tsupported"),
+                                                     result(text=profiles)]), \
+                self.assertRaises(m.MatrixError) as caught:
+            m.prepare_local_tool(Path("/synthetic/temp"), Path("/fictional/UPR-FVX.jar"), GENERATOR_SOURCE)
+        self.assertNotIn("/fictional", str(caught.exception))
+
+    def test_read_local_source_uses_checkout_and_sanitizes_failures(self):
+        read = self.REAL_READ_LOCAL_SOURCE  # setUp mocks the module attribute.
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            with self.assertRaises(m.MatrixError) as caught:
+                read(root)
+            self.assertNotIn(directory, str(caught.exception))
+            source = root / m.LOCAL_UPR / m.SOURCE
+            source.parent.mkdir(parents=True)
+            source.write_text(GENERATOR_SOURCE + "// local, uncommitted edits are allowed in EXTENDED")
+            self.assertTrue(read(root).startswith(GENERATOR_SOURCE))
+            source.write_bytes(b"\xff\xfe")
+            with self.assertRaises(m.MatrixError):
+                read(root)
+
+    def test_local_inventory_drift_still_stops_before_any_case(self):
+        drifted = GENERATOR_SOURCE.replace('overlays.put("FVX-TRAIT-025"', 'overlays.put("FVX-TRAIT-025-RENAMED"', 1)
+        self.assertNotEqual(GENERATOR_SOURCE, drifted)
+        with patch.object(m, "read_local_source", return_value=drifted):
+            code, selected, calls, tool, _, text = self.extended_run(["--only", "05_WILD_FULL"])
+        self.assertEqual(1, code)
+        self.assertIsNone(selected)
+        tool.assert_not_called()
+        self.assertIn("Result: STOP", text)
 
 
 
