@@ -242,7 +242,7 @@
 - `194_cli_profile_matrix_pipeline.md` documents the second CLI smoke stage: a profile matrix runner for multiple saved FVX settings profiles.
 - `cli_profile_matrix.example.tsv` lists the current roadmap profile IDs from `00_baseline` through `11_special_wild`.
 - `run_cli_profile_matrix.sh` executes enabled manifest rows through `cli_log_smoke_pipeline.sh` and writes a sanitized aggregate table with `profile_id | result | bad markers | warnings | next action`.
-- `generate_cli_smoke_profiles.sh` creates only a manifest scaffold. It does not byte-patch or generate `.rnqs` settings because FVX settings are versioned Base64 plus CRC/checksum state.
+- `generate_cli_smoke_profiles.sh` created only a manifest scaffold. It did not byte-patch or generate `.rnqs` settings because FVX settings were versioned Base64 plus CRC/checksum state. It was later removed as redundant because it wrote a byte-identical copy of `cli_profile_matrix.example.tsv`.
 - Real matrix runs remain local-only with private ROM/settings paths under ignored output directories. Codex may only use dry-run or artificial fixtures.
 - No P1 promotion is made.
 

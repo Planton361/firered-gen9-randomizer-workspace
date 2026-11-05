@@ -59,6 +59,19 @@ stay in the git-ignored `05_builds/`; ROMs, saves and logs never enter Git.
 open -a mGBA 05_builds/dev-<timestamp>/randomized.gba   # Linux: mgba-qt <rom>
 ```
 
+Optional helpers for step 3 (see `--help`; both accept `--dry-run`):
+
+- `07_scripts/randomizer/generate_settings_profiles_from_matrix.sh` writes
+  persistent `.rnqs` files from your own base settings plus TSV
+  `--profile`/`--enable` overlays (No-ROM, `settings-profile` only).
+- `07_scripts/randomizer/run_cli_profile_matrix.sh` runs a TSV of saved
+  `.rnqs` files through `cli_log_smoke_pipeline.sh` on your build and
+  classifies `PASS_LOG`/`PASS_WITH_WARNINGS`/`EXPECTED_FAIL`/`UNEXPECTED_PASS`.
+  Template: `08_tests/randomizer/cli_profile_matrix.example.tsv`.
+
+EXTENDED instead uses `run_upr_generation_matrix.sh --only <CASE_ID>`, which
+covers only its fixed case IDs with internally generated, disposable settings.
+
 `dev_build.sh` moves previous in-place DPE/CFRU artifacts into
 `05_builds/<build>/pre-build-archive/` instead of deleting them. It records the
 actual component commits, Gitlink deviations and local changes in
