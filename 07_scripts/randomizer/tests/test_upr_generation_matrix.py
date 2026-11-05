@@ -1,6 +1,7 @@
-"""#681 tests: public source + synthetic temp artifacts + mocked subprocesses only.
+"""#727 tests: exact public source + synthetic temp artifacts + mocked subprocesses.
 
-Never launches Java/Gradle/UPR or opens a real ROM, jar, build, save or state.
+A source-only Java harness executes public fragments with synthetic API stand-ins.
+Never launches Gradle/UPR or opens a real ROM, jar, build, save or state.
 """
 import base64
 import contextlib
@@ -15,6 +16,7 @@ import tempfile
 import unittest
 import zlib
 from unittest.mock import patch
+from urllib.request import urlopen
 
 
 SCRIPT = Path(__file__).resolve().parents[1] / "upr_generation_matrix.py"
@@ -22,9 +24,19 @@ SPEC = importlib.util.spec_from_file_location("upr_generation_matrix", SCRIPT)
 m = importlib.util.module_from_spec(SPEC)
 sys.modules[SPEC.name] = m
 SPEC.loader.exec_module(m)
-PUBLIC = m.ROOT / m.PINS["UPR-FVX"][0]
-SETTINGS_SOURCE = (PUBLIC / "random/src/main/java/com/uprfvx/random/Settings.java").read_text()
-OVERLAYS, UNSUPPORTED, PROFILES = m.source_model((PUBLIC / m.SOURCE).read_text())
+# Immutable public GitHub text, verified against the exact commit's blob IDs.
+# Never inspect the user's local component worktrees or binary artifacts.
+SETTINGS_SOURCE = m.read_public_source(m.SETTINGS_SOURCE)
+GENERATOR_SOURCE = m.read_public_source()
+OVERLAYS, UNSUPPORTED, PROFILES = m.source_model(GENERATOR_SOURCE)
+
+
+def public_fixture(path, blob):
+    with urlopen(m.PUBLIC_SOURCE_URL + path, timeout=30) as response:
+        data = response.read()
+    if m.public_blob_id(data) != blob:
+        raise AssertionError("Exact public fixture mismatch")
+    return data.decode("utf-8")
 
 
 def result(code=0, text="", err=""):
@@ -69,14 +81,14 @@ class MatrixStructureTest(unittest.TestCase):
     def test_inventory_at_exact_pin(self):
         self.assertEqual(159, len(OVERLAYS))
         self.assertEqual({"FVX-SST-001", "FVX-MOVE-006", "FVX-GFX-005", "FVX-GFX-006"}, UNSUPPORTED)
-        self.assertEqual(13, len(m.EXCLUDED))
+        self.assertEqual(9, len(m.EXCLUDED))
         required = set(OVERLAYS) - UNSUPPORTED - m.EXCLUDED
-        self.assertEqual(142, len(required))
+        self.assertEqual(146, len(required))
         self.assertEqual(required, {c.id for c in self.cases if c.layer == "STRESS"})
 
     def test_deterministic_order_and_identity(self):
         self.assertEqual(self.cases, m.build_matrix(OVERLAYS, UNSUPPORTED, PROFILES))
-        self.assertEqual(297, len(self.cases))
+        self.assertEqual(303, len(self.cases))
         self.assertEqual(len(self.cases), len({c.id for c in self.cases}))
         self.assertEqual(list(m.SELECTED), [c.id for c in self.cases[:3]])
         self.assertEqual(56, sum(c.layer == "MODE" for c in self.cases))
@@ -92,7 +104,7 @@ class MatrixStructureTest(unittest.TestCase):
         self.assertEqual(12, len(m.TRIPLES))
         self.assertTrue(set(m.MAXIMUM) <= {c.id for c in self.cases})
         secondary = {m.selected_name(c) for c in self.cases if c.secondary}
-        self.assertEqual(set(m.MAXIMUM + m.SELECTED[1:]), secondary)
+        self.assertEqual(set(m.MAXIMUM + m.SELECTED[1:]) | m.RISK_IDS, secondary)
         self.assertEqual((0, 1, 677, 20261005658), m.SECONDARY)
         self.assertEqual(20261005658, m.PRIMARY)
 
@@ -105,24 +117,23 @@ class MatrixStructureTest(unittest.TestCase):
                 self.assertNotEqual("07_ITEMS_FULL", case.id)
                 self.assertFalse(set(case.overlays) & m.EXCLUDED)
                 state = m.effective(case, OVERLAYS)
-                self.assertNotIn("PickupItemsMod", state)  # baseline UNCHANGED
+                if case.id not in m.PICKUP_APPROVED_IDS:
+                    self.assertNotIn("PickupItemsMod", state)  # safe families stay unchanged
                 if "ITEMS_SHOPS" in case.families:
                     self.assertTrue(set(m.ITEMS_SAFE) <= set(case.overlays))
         source = m.bridge_source(self.cases, OVERLAYS)
         self.assertIn("s.getPickupItemsMod() != Settings.PickupItemsMod.UNCHANGED", source)
         self.assertNotIn('"07_ITEMS_FULL"', source)
-        self.assertNotIn('"FVX-ITEM-010"', source)
+        self.assertIn("s.setPickupItemsMod(Settings.PickupItemsMod.RANDOM)", source)
+        self.assertIn(".contains(id)", source)
 
     def test_exact_target_exclusion_reasons(self):
         self.assertEqual({
-            "FVX-TRAIT-025": "UNSAFE_CFRU_DPE_EVOLUTION_IMPROVEMENT_RAW_ROW",
-            "FVX-TRAIT-027": "UNSAFE_CFRU_DPE_EVOLUTION_IMPROVEMENT_RAW_ROW",
-            "FVX-GFX-002": "UNSAFE_CFRU_DPE_OPTIONAL_PALETTE_SUBOPTION",
-            "FVX-GFX-004": "UNSAFE_CFRU_DPE_OPTIONAL_PALETTE_SUBOPTION",
+            "FVX-TRAIT-025": "OWNERSHIP_WITNESS_V1_REQUIRED",
             "FVX-MISC-011": "REDUNDANT_CFRU_NATIVE_REUSABLE_TMS",
         }, m.TARGET_EXCLUSIONS)
         self.assertEqual({"SOURCE_OVERLAY_IDS": 159, "GENERATOR_UNSUPPORTED": 4,
-                          "TARGET_EXCLUDED": 13, "REQUIRED_OVERLAY_CASES": 142},
+                          "TARGET_EXCLUDED": 9, "REQUIRED_OVERLAY_CASES": 146},
                          m.inventory_counts(OVERLAYS, UNSUPPORTED))
 
     def test_safe_bundles_exact_source_semantics(self):
@@ -202,17 +213,17 @@ class MatrixStructureTest(unittest.TestCase):
 
     def test_derived_structure_counts(self):
         counts = {layer: sum(c.layer == layer for c in self.cases)
-                  for layer in ("ACCEPTANCE", "STRESS", "MODE", "FULL", "PAIR", "TRIPLE", "MAX", "DIAGNOSTIC")}
-        self.assertEqual(dict(zip(counts, (3, 142, 56, 12, 66, 12, 5, 1))), counts)
+                  for layer in ("ACCEPTANCE", "STRESS", "MODE", "FULL", "PAIR", "TRIPLE", "MAX", "RISK", "DIAGNOSTIC")}
+        self.assertEqual(dict(zip(counts, (3, 146, 56, 12, 66, 12, 5, 2, 1))), counts)
         self.assertEqual(sum(counts.values()), len(self.cases))
 
     def test_source_drift_fails_closed(self):
-        source = (PUBLIC / m.SOURCE).read_text()
+        source = GENERATOR_SOURCE
         with self.assertRaises(m.MatrixError):
             m.source_model(source.replace('"FVX-ITEM-008", "FVX-ITEM-009", "FVX-ITEM-010"', '"FVX-ITEM-009", "FVX-ITEM-010"'))
 
     def test_source_inventory_cardinality_drift_fails_closed(self):
-        source = (PUBLIC / m.SOURCE).read_text()
+        source = GENERATOR_SOURCE
         for altered in (source.replace('"FVX-GEN-003"', '"FVX-GEN-002"'),
                         source.replace('return Collections.unmodifiableMap(overlays);',
                                        'overlays.put("NEW-UNREVIEWED", s -> s.setRaceMode(true));\n'
@@ -292,9 +303,9 @@ class ClosureTest(unittest.TestCase):
             self.assertEqual(s, m.closure(s))
 
     def test_misc_bits_union_not_last_writer(self):
-        case = m.Intent("MISC", "FULL", PROFILES["10_MISC_TWEAKS"])
+        case = m.Intent("MISC", "FULL", tuple(n for n in PROFILES["10_MISC_TWEAKS"] if n not in m.EXCLUDED))
         bits = m.effective(case, OVERLAYS)["MiscTweak"].split(" | ")
-        self.assertEqual(12, len(bits))
+        self.assertEqual(11, len(bits))
         self.assertIn("MiscTweak.FASTEST_TEXT", bits)
 
 
@@ -316,7 +327,7 @@ class IdentityAndDedupTest(unittest.TestCase):
 
             with patch.object(m, "command", side_effect=execute) as command:
                 self.assertEqual(payloads, m.generate_settings(cases, OVERLAYS, Path("synthetic.jar"), temp))
-                self.assertEqual((payloads, {}), m.normalize_settings(cases, Path("synthetic.jar"), "/fictional/input.gba", temp, payloads))
+                self.assertEqual((payloads, {}, {}), m.normalize_settings(cases, Path("synthetic.jar"), "/fictional/input.gba", temp, payloads, OVERLAYS))
                 self.assertEqual(2, command.call_count)
             self.assertTrue((temp / "MatrixSettings.java").is_file())
             self.assertIn("s.tweakForRom", (temp / "MatrixNormalize.java").read_text())
@@ -330,12 +341,12 @@ class IdentityAndDedupTest(unittest.TestCase):
                 with self.assertRaises(m.MatrixError):
                     m.generate_settings(cases, OVERLAYS, Path("synthetic.jar"), temp)
                 with self.assertRaises(m.MatrixError):
-                    m.normalize_settings(cases, Path("synthetic.jar"), "/fictional/input.gba", temp, [m.IRONMON])
+                    m.normalize_settings(cases, Path("synthetic.jar"), "/fictional/input.gba", temp, [m.IRONMON], OVERLAYS)
             (temp / "0.settings").write_text(synthetic_payload(bytes(67)))
             (temp / "0.normalization").write_text("NONE")
             with patch.object(m, "command", return_value=result()):
                 with self.assertRaises(m.MatrixError):
-                    m.normalize_settings(cases, Path("synthetic.jar"), "/fictional/input.gba", temp, [m.IRONMON])
+                    m.normalize_settings(cases, Path("synthetic.jar"), "/fictional/input.gba", temp, [m.IRONMON], OVERLAYS)
 
     def test_exact_casual_all_serialized_boolean_and_enum_fields(self):
         fields = decoded_fields(m.CASUAL_BYTES)
@@ -394,6 +405,11 @@ class IdentityAndDedupTest(unittest.TestCase):
 
 class NormalizationAccountingTest(unittest.TestCase):
     """CONTROL-disposed C/I delta; only synthetic API witness/payload fixtures."""
+
+    def setUp(self):
+        mock = patch.object(m, "input_digest", return_value=b"synthetic input")
+        mock.start()
+        self.addCleanup(mock.stop)
 
     def selected(self, name):
         before = m.IRONMON if name == "IRONMON_NATDEX" else synthetic_payload(m.CASUAL_BYTES)
@@ -577,15 +593,16 @@ class NormalizationAccountingTest(unittest.TestCase):
                     (cwd / "0.settings").write_text(self.adapted(before[0]))
                     (cwd / "0.rnqs").write_text("synthetic")
                     (cwd / "0.normalization").write_text(witness)
-                    return result(text="/fictional/private/Secret.gba DD88761C")
+                    # The instrumented adapter suppresses library output on success.
+                    return result()
                 with patch.object(m, "command", side_effect=execute):
                     if witness == self.witness():
-                        after, events = m.normalize_settings(cases, Path("synthetic.jar"), "/fictional/Private.gba", directory, before)
+                        after, events, blocked = m.normalize_settings(cases, Path("synthetic.jar"), "/fictional/Private.gba", directory, before, OVERLAYS)
                         self.assertEqual({0: 1022}, events)
                         self.assertEqual([self.adapted(before[0])], after)
                     else:
                         with self.assertRaises(m.MatrixError) as caught:
-                            m.normalize_settings(cases, Path("synthetic.jar"), "/fictional/Private.gba", directory, before)
+                            m.normalize_settings(cases, Path("synthetic.jar"), "/fictional/Private.gba", directory, before, OVERLAYS)
                         self.assertNotIn("Secret.gba", str(caught.exception))
                         self.assertNotIn("DD88761C", str(caught.exception))
             self.assertFalse(directory.exists())  # adapter, witness, settings all removed
@@ -593,6 +610,9 @@ class NormalizationAccountingTest(unittest.TestCase):
 
 class ExecutionTest(unittest.TestCase):
     def setUp(self):
+        self.digest_mock = patch.object(m, "input_digest", return_value=b"synthetic input")
+        self.digest_mock.start()
+        self.addCleanup(self.digest_mock.stop)
         self.temp = tempfile.TemporaryDirectory()
         self.directory = Path(self.temp.name)
         self.addCleanup(self.temp.cleanup)
@@ -774,12 +794,22 @@ class ExecutionTest(unittest.TestCase):
         self.assertIn("catch (Exception ignored)", source)
         self.assertNotIn("printStackTrace", source)
         self.assertNotIn("System.err", source)
-        gen3 = (PUBLIC / "romio/src/main/java/com/uprfvx/romio/romhandlers/Gen3RomHandler.java").read_text()
-        opener = (PUBLIC / "romio/src/main/java/com/uprfvx/romio/romio/RomOpener.java").read_text()
+        gen3 = public_fixture("romio/src/main/java/com/uprfvx/romio/romhandlers/Gen3RomHandler.java",
+                              "7206af0126ccf61aea4a2ebe22772928f63ad4c5")
+        opener = public_fixture("romio/src/main/java/com/uprfvx/romio/romio/RomOpener.java",
+                                "ce0003feef079c764db6f3c3d3904e5a38e9274b")
         self.assertIn("public boolean usesCfruDpeRandomPoolPolicy()", gen3)
         self.assertIn("public Results openRomFile(File", opener)
         self.assertIn("public boolean wasOpeningSuccessful()", opener)
         self.assertIn("public RomHandler getRomHandler()", opener)
+
+    def test_input_mutation_after_cli_stops_before_reopen_or_replay(self):
+        calls, execute = self.executor()
+        with patch.object(m, "input_digest", side_effect=[b"original", b"original", b"modified", b"modified"]), patch.object(m, "command", side_effect=execute), self.assertRaises(m.MatrixError):
+            m.attempt(self.group, m.PRIMARY, self.rom, self.jar, self.directory, True)
+        self.assertEqual(1, len(calls))
+        self.assertEqual("cli", calls[0][0][3])
+        self.assert_clean()
 
     def test_replay_mismatch(self):
         _, execute = self.executor(mismatch=True)
@@ -792,7 +822,7 @@ class ExecutionTest(unittest.TestCase):
     def test_retry_once_identical_settings_and_seed(self):
         for second_pass in (False, True):
             first = m.Outcome("FAIL", error_class="GenerationFailure")
-            second = m.Outcome("PASS", "PASS") if second_pass else m.Outcome("FAIL", error_class="GenerationFailure")
+            second = m.Outcome("PASS", "PASS", input_unchanged="PASS") if second_pass else m.Outcome("FAIL", error_class="GenerationFailure")
             with patch.object(m, "attempt", side_effect=[first, second]) as attempt, contextlib.redirect_stdout(io.StringIO()):
                 out = m.run_case(self.group, m.PRIMARY, self.rom, self.jar, self.directory)
             self.assertEqual(2, attempt.call_count)
@@ -801,7 +831,7 @@ class ExecutionTest(unittest.TestCase):
             self.assertFalse(out.passed)
 
     def test_no_retry_on_pass(self):
-        with patch.object(m, "attempt", return_value=m.Outcome("PASS", "PASS", "PASS")) as attempt:
+        with patch.object(m, "attempt", return_value=m.Outcome("PASS", "PASS", "PASS", input_unchanged="PASS")) as attempt:
             self.assertTrue(m.run_case(self.group, 1, self.rom, self.jar, self.directory).passed)
         self.assertEqual(1, attempt.call_count)
 
@@ -832,7 +862,7 @@ class ExecutionTest(unittest.TestCase):
     def test_diagnostic_expectation_does_not_mask_infrastructure_failure(self):
         self.assertEqual("EXPECTED_FAIL", m.diagnostic_status(m.Outcome("FAIL", error_class="RomIOException")))
         self.assertEqual("DIAGNOSTIC_FAIL", m.diagnostic_status(m.Outcome("FAIL", error_class="ProcessFailure")))
-        self.assertEqual("GENERATION_PASS_WITH_KNOWN_SEMANTIC_LIMITATION", m.diagnostic_status(m.Outcome("PASS", "PASS")))
+        self.assertEqual("GENERATION_PASS_WITH_KNOWN_SEMANTIC_LIMITATION", m.diagnostic_status(m.Outcome("PASS", "PASS", input_unchanged="PASS")))
 
     def test_exception_timeout_and_interrupt_cleanup(self):
         for error in (OSError(self.rom), subprocess.TimeoutExpired(self.rom, 1), KeyboardInterrupt(), InterruptedError()):
@@ -876,6 +906,12 @@ class ExecutionTest(unittest.TestCase):
 
 
 class EntryPointTest(unittest.TestCase):
+    def setUp(self):
+        for name, value in (("read_public_source", GENERATOR_SOURCE), ("input_digest", b"synthetic input")):
+            mock = patch.object(m, name, return_value=value)
+            mock.start()
+            self.addCleanup(mock.stop)
+
     def test_dry_run_no_rom_java_build_or_output_access(self):
         with patch.object(m, "verify_pins"), patch.object(m, "prepare_tool") as tool, patch.object(m, "attempt") as attempt, patch("builtins.input") as prompt, contextlib.redirect_stdout(io.StringIO()) as output:
             self.assertEqual(0, m.main(["--dry-run", "--rom", "/fictional/never-read.gba"]))
@@ -884,12 +920,12 @@ class EntryPointTest(unittest.TestCase):
         prompt.assert_not_called()
         self.assertIn("PRIVATE_ROM_MATRIX = NOT_RUN", output.getvalue())
         for line in (
-            "Workspace: 4e7bffa45d2d68919e48d5329ad8bcb55dc8408e",
-            "Tree: 6186d011e5daf958142e6fd0c9a98099f96fa85f",
-            "UPR-FVX: 4670a5413104ec02bc08c09ff584470a8a6cb7bd",
-            "CASE_INTENTS: 297", "SOURCE_OVERLAY_IDS: 159",
-            "GENERATOR_UNSUPPORTED: 4", "TARGET_EXCLUDED: 13",
-            "REQUIRED_OVERLAY_CASES: 142",
+            "Workspace: 9411c39f472d1d08555be988d2f7ab9482902580",
+            "Tree: e56df52bb79f3239fa4e9534cd252525d6229685",
+            "UPR-FVX: f979c3c6ec4d32a92ecf632a3d9d38151d5cb19c",
+            "CASE_INTENTS: 303", "SOURCE_OVERLAY_IDS: 159",
+            "GENERATOR_UNSUPPORTED: 4", "TARGET_EXCLUDED: 9",
+            "REQUIRED_OVERLAY_CASES: 146",
         ):
             self.assertIn(line, output.getvalue())
 
@@ -902,19 +938,19 @@ class EntryPointTest(unittest.TestCase):
         def run(group, seed, rom, jar, temp):
             self.assertTrue(Path(temp).is_dir())
             calls.append((group.aliases[0].id, seed, rom, Path(temp)))
-            return m.Outcome("FAIL") if fail else m.Outcome("PASS", "PASS")
+            return m.Outcome("FAIL") if fail else m.Outcome("PASS", "PASS", input_unchanged="PASS")
 
-        with patch.object(m, "verify_pins"), patch.object(m, "build_matrix", return_value=cases), patch.object(m, "prepare_tool", return_value=Path("synthetic.jar")), patch.object(m, "generate_settings", return_value=payloads), patch.object(m, "normalize_settings", return_value=(payloads, {})), patch.object(m, "run_case", side_effect=run), patch("builtins.input", return_value="/fictional/private.gba") as prompt, contextlib.redirect_stdout(io.StringIO()) as output:
+        with patch.object(m, "verify_pins"), patch.object(m, "build_matrix", return_value=cases), patch.object(m, "prepare_tool", return_value=Path("synthetic.jar")), patch.object(m, "generate_settings", return_value=payloads), patch.object(m, "normalize_settings", return_value=(payloads, {}, {})), patch.object(m, "run_case", side_effect=run), patch("builtins.input", return_value="/fictional/private.gba") as prompt, contextlib.redirect_stdout(io.StringIO()) as output:
             code = m.main(argv)
         return code, calls, prompt, output.getvalue()
 
     def test_diagnostics_nonblocking_success_and_failure(self):
         cases = [m.Intent("CONTROL_UNCHANGED", "ACCEPTANCE", classification="ACCEPTANCE"),
                  m.Intent("OPTIONAL_DIAGNOSTIC", "DIAGNOSTIC", classification="DIAGNOSTIC")]
-        for diagnostic in (m.Outcome("PASS", "PASS"),
+        for diagnostic in (m.Outcome("PASS", "PASS", input_unchanged="PASS"),
                            m.Outcome("FAIL", error_class="RomIOException"),
                            m.Outcome("PASS", "FAIL", error_class="ProcessFailure")):
-            with patch.object(m, "verify_pins"), patch.object(m, "build_matrix", return_value=cases), patch.object(m, "prepare_tool", return_value=Path("synthetic.jar")), patch.object(m, "generate_settings", return_value=["control", "diagnostic"]), patch.object(m, "normalize_settings", return_value=(["control", "diagnostic"], {})), patch.object(m, "run_case", side_effect=[m.Outcome("PASS", "PASS"), diagnostic]), contextlib.redirect_stdout(io.StringIO()) as output:
+            with patch.object(m, "verify_pins"), patch.object(m, "build_matrix", return_value=cases), patch.object(m, "prepare_tool", return_value=Path("synthetic.jar")), patch.object(m, "generate_settings", return_value=["control", "diagnostic"]), patch.object(m, "normalize_settings", return_value=(["control", "diagnostic"], {}, {})), patch.object(m, "run_case", side_effect=[m.Outcome("PASS", "PASS", input_unchanged="PASS"), diagnostic]), contextlib.redirect_stdout(io.StringIO()) as output:
                 self.assertEqual(0, m.main(["--rom", "/fictional/input.gba", "--stop-on-fail"]))
             text = output.getvalue()
             self.assertIn("PASS: 1\nFAIL: 0", text)
@@ -925,7 +961,7 @@ class EntryPointTest(unittest.TestCase):
     def test_diagnostic_never_masks_required_failure(self):
         cases = [m.Intent("CASUAL_NATDEX", "ACCEPTANCE", classification="ACCEPTANCE"),
                  m.Intent("OPTIONAL_DIAGNOSTIC", "DIAGNOSTIC", classification="DIAGNOSTIC")]
-        with patch.object(m, "verify_pins"), patch.object(m, "build_matrix", return_value=cases), patch.object(m, "prepare_tool", return_value=Path("synthetic.jar")), patch.object(m, "generate_settings", return_value=["casual", "diagnostic"]), patch.object(m, "normalize_settings", return_value=(["casual", "diagnostic"], {})), patch.object(m, "run_case", side_effect=[m.Outcome("FAIL"), m.Outcome("FAIL", error_class="RomIOException")]), contextlib.redirect_stdout(io.StringIO()) as output:
+        with patch.object(m, "verify_pins"), patch.object(m, "build_matrix", return_value=cases), patch.object(m, "prepare_tool", return_value=Path("synthetic.jar")), patch.object(m, "generate_settings", return_value=["casual", "diagnostic"]), patch.object(m, "normalize_settings", return_value=(["casual", "diagnostic"], {}, {})), patch.object(m, "run_case", side_effect=[m.Outcome("FAIL"), m.Outcome("FAIL", error_class="RomIOException")]), contextlib.redirect_stdout(io.StringIO()) as output:
             self.assertEqual(1, m.main(["--rom", "/fictional/input.gba"]))
         self.assertIn("CASUAL_NATDEX: FAIL", output.getvalue())
         self.assertIn("PASS: 0\nFAIL: 1", output.getvalue())
@@ -935,7 +971,7 @@ class EntryPointTest(unittest.TestCase):
             self.assertEqual(0, m.main(["--dry-run"]))
         text = output.getvalue()
         for line in ("SOURCE_OVERLAY_IDS: 159", "GENERATOR_UNSUPPORTED: 4",
-                     "TARGET_EXCLUDED: 13", "REQUIRED_OVERLAY_CASES: 142", "CASE_INTENTS: 297"):
+                     "TARGET_EXCLUDED: 9", "REQUIRED_OVERLAY_CASES: 146", "CASE_INTENTS: 303"):
             self.assertIn(line, text)
         for overlay, reason in m.TARGET_EXCLUSIONS.items():
             self.assertIn(overlay + ": " + reason, text)
@@ -960,7 +996,7 @@ class EntryPointTest(unittest.TestCase):
         self.assertEqual(1, code)
         self.assertEqual(1, len(calls))
         self.assertIn("CASUAL_NATDEX: NOT_RUN", text)
-        self.assertIn("SKIP / excluded: 4 / 17", text)
+        self.assertIn("SKIP / excluded: 4 / 13", text)
 
     def test_normalization_after_single_prompt_and_before_any_case(self):
         order = []
@@ -994,24 +1030,11 @@ class EntryPointTest(unittest.TestCase):
 
     def test_java_missing_or_wrong_version(self):
         for response in (result(1), result(err='openjdk version "21"')):
-            with patch.object(m, "command", return_value=response) as command:
+            with patch.object(m, "command", return_value=response) as command, patch.object(Path, "is_file", return_value=True):
                 with self.assertRaises(m.MatrixError):
-                    m.prepare_tool(m.ROOT, Path("/synthetic/temp"))
+                    m.prepare_tool(m.ROOT, Path("/synthetic/temp"), Path("/synthetic/candidate.jar"),
+                                   m.CANDIDATES["UPR-FVX"], GENERATOR_SOURCE)
             self.assertEqual(1, command.call_count)
-
-    def test_build_failure_or_missing_jar_before_rom_use(self):
-        for build, jar_exists in ((result(1), False), (result(), False)):
-            with patch.object(m, "command", side_effect=[result(err='openjdk version "25"'), build]), patch.object(Path, "is_file", return_value=jar_exists), contextlib.redirect_stdout(io.StringIO()):
-                with self.assertRaises(m.MatrixError):
-                    m.prepare_tool(m.ROOT, Path("/synthetic/temp"))
-
-    def test_build_exact_pin_then_reverify(self):
-        with patch.object(m, "command", side_effect=[result(err='openjdk version "25"'), result()]) as command, patch.object(Path, "is_file", return_value=True), patch.object(m, "verify_pins") as verify, contextlib.redirect_stdout(io.StringIO()):
-            jar = m.prepare_tool(m.ROOT, Path("/synthetic/temp"))
-        self.assertEqual(PUBLIC / "random/build/libs/UPR-FVX.jar", jar)
-        self.assertIn("--rerun-tasks", command.call_args_list[1].args[0])
-        self.assertIn(":random:jar", command.call_args_list[1].args[0])
-        verify.assert_called_once_with(m.ROOT)
 
     def test_invalid_cli_argument_does_not_echo_private_value(self):
         with contextlib.redirect_stderr(io.StringIO()) as output:
@@ -1028,117 +1051,1217 @@ class EntryPointTest(unittest.TestCase):
 
 class PinTest(unittest.TestCase):
     def public_git(self, root, *args):
-        if args[0] == "merge-base":
+        self.assertEqual(m.ROOT, root)  # No submodule cwd is ever accessed.
+        self.assertNotIn(args[0], ("fetch", "checkout", "reset", "clean", "ls-remote"))
+        if args[0] in ("merge-base", "diff", "status"):
+            if args[0] == "status":
+                self.assertIn("--ignore-submodules=all", args)
+                self.assertIn("--untracked-files=no", args)
             return ""
-        if args[0] == "diff" or args[0] == "status":
-            return ""
-        if args[0] == "ls-remote":
-            return m.PINS["UPR-FVX"][1] + "\trefs/heads/compat/firered-cfru-dpe"
         if args[0] == "ls-tree":
-            pin = next(pin for relative, pin in m.PINS.values() if relative == args[-1])
+            pin = next(pin for relative, pin in m.BASELINE_GITLINKS.values() if relative == args[-1])
             return "160000 commit " + pin + "\t" + args[-1]
-        if args[0] == "rev-parse":
-            if args[-1].endswith("^{tree}"):
-                return m.TREE
-            return next(pin for relative, pin in m.PINS.values() if Path(root) == m.ROOT / relative)
+        if args == ("rev-parse", m.WORKSPACE + "^{tree}"):
+            return m.TREE
         self.fail(args)
 
-    def test_pins_allow_only_runner_descendant(self):
-        with patch.object(m, "git", side_effect=self.public_git):
-            m.verify_pins(m.ROOT)
-
-    def test_686_exact_integration_basis(self):
-        self.assertEqual("4e7bffa45d2d68919e48d5329ad8bcb55dc8408e", m.WORKSPACE)
-        self.assertEqual("6186d011e5daf958142e6fd0c9a98099f96fa85f", m.TREE)
-        self.assertEqual(("02_external/upr-fvx", "4670a5413104ec02bc08c09ff584470a8a6cb7bd"), m.PINS["UPR-FVX"])
+    def test_baseline_and_candidates_are_separate(self):
+        self.assertEqual("9411c39f472d1d08555be988d2f7ab9482902580", m.WORKSPACE)
+        self.assertEqual("e56df52bb79f3239fa4e9534cd252525d6229685", m.TREE)
+        self.assertEqual("4670a5413104ec02bc08c09ff584470a8a6cb7bd", m.BASELINE_GITLINKS["UPR-FVX"][1])
+        self.assertEqual("f979c3c6ec4d32a92ecf632a3d9d38151d5cb19c", m.CANDIDATES["UPR-FVX"])
+        self.assertEqual("e27e2113e4d59dc76cf5da8d4c43b067addae348", m.CANDIDATES["CFRU"])
+        self.assertEqual("d887185de1f6ae6a78e85c4311bbadde17041d00", m.CANDIDATES["DPE"])
         self.assertEqual({
-            "02_external/upr-fvx",
-            "07_scripts/randomizer/run_upr_generation_matrix.sh",
             "07_scripts/randomizer/upr_generation_matrix.py",
             "07_scripts/randomizer/tests/test_upr_generation_matrix.py",
+            "08_tests/randomizer/fvx_feature_test_status_matrix.tsv",
+            "08_tests/randomizer/195_fvx_feature_test_status_matrix.md",
         }, m.ALLOWED_FILES)
 
-    def integration_git(self, root, *args):
-        if args[0] == "diff":
-            return "\n".join(sorted(m.ALLOWED_FILES))
-        return self.public_git(root, *args)
+    def test_dirty_component_worktrees_are_never_inspected(self):
+        with patch.object(m, "git", side_effect=self.public_git) as git:
+            m.verify_pins(m.ROOT)
+        self.assertTrue(all(call.args[0] == m.ROOT for call in git.call_args_list))
 
-    def test_authorized_gitlink_delta_with_exact_pins_passes(self):
-        with patch.object(m, "git", side_effect=self.integration_git):
+    def test_allowed_four_file_descendant(self):
+        def git(root, *args):
+            if args == ("diff", "--name-only", m.WORKSPACE, "HEAD"):
+                return "\n".join(sorted(m.ALLOWED_FILES))
+            return self.public_git(root, *args)
+        with patch.object(m, "git", side_effect=git):
             m.verify_pins(m.ROOT)
 
-    def test_allowed_upr_path_does_not_allow_wrong_gitlink(self):
-        relative, pin = m.PINS["UPR-FVX"]
-        for entry in (
-            "160000 commit 213ed055e301263c4577ac329b81a6cb9ff587a9\t" + relative,
-            "160000 commit " + "f" * 40 + "\t" + relative,
-            "100644 blob " + pin + "\t" + relative,
-            "",
-        ):
-            def git(root, *args):
-                if args == ("ls-tree", "HEAD", relative):
-                    return entry
-                return self.integration_git(root, *args)
-            with self.subTest(entry=entry), patch.object(m, "git", side_effect=git):
-                with self.assertRaisesRegex(m.MatrixError, "UPR-FVX Gitlink mismatch"):
+    def test_candidate_gitlink_or_mode_mismatch_stops(self):
+        for name, (relative, pin) in m.BASELINE_GITLINKS.items():
+            for entry in ("", "100644 blob " + pin + "\t" + relative,
+                          "160000 commit " + m.CANDIDATES[name] + "\t" + relative,
+                          "160000 commit " + "f" * 40 + "\t" + relative):
+                if entry == "160000 commit " + pin + "\t" + relative:
+                    continue
+                def git(root, *args):
+                    return entry if args == ("ls-tree", "HEAD", relative) else self.public_git(root, *args)
+                with self.subTest(component=name, entry=entry), patch.object(m, "git", side_effect=git), self.assertRaises(m.MatrixError):
                     m.verify_pins(m.ROOT)
 
-    def test_integrated_upr_checkout_and_remote_still_require_exact_pin(self):
-        for boundary in ("checkout", "target", "dirty"):
+    def test_tree_tracked_staged_and_scope_fail_closed(self):
+        for broken in ("tree", "tracked", "staged", "scope", "ancestry"):
             def git(root, *args):
-                if Path(root) == m.ROOT / m.PINS["UPR-FVX"][0]:
-                    if boundary == "checkout" and args == ("rev-parse", "HEAD"):
-                        return "213ed055e301263c4577ac329b81a6cb9ff587a9"
-                    if boundary == "target" and args[0] == "ls-remote":
-                        return "f" * 40 + "\trefs/heads/compat/firered-cfru-dpe"
-                    if boundary == "dirty" and args[0] == "status":
-                        return " M synthetic-source.java"
-                return self.integration_git(root, *args)
-            with self.subTest(boundary=boundary), patch.object(m, "git", side_effect=git):
-                with self.assertRaises(m.MatrixError):
-                    m.verify_pins(m.ROOT)
-
-    def test_other_component_or_source_delta_still_stops(self):
-        for relative in (m.PINS["CFRU"][0], m.PINS["DPE"][0],
-                         "02_external/unexpected-component", "docs/outside_scope.md"):
-            def git(root, *args):
-                if args[0] == "diff":
-                    return self.integration_git(root, *args) + "\n" + relative
-                return self.integration_git(root, *args)
-            with self.subTest(path=relative), patch.object(m, "git", side_effect=git):
-                with self.assertRaisesRegex(m.MatrixError, "Workspace has unexpected changes"):
-                    m.verify_pins(m.ROOT)
-
-    def test_integrated_cfru_and_dpe_pins_cannot_drift(self):
-        for name in ("CFRU", "DPE"):
-            relative = m.PINS[name][0]
-            def git(root, *args):
-                if args == ("ls-tree", "HEAD", relative):
-                    return "160000 commit " + "f" * 40 + "\t" + relative
-                return self.integration_git(root, *args)
-            with self.subTest(component=name), patch.object(m, "git", side_effect=git):
-                with self.assertRaisesRegex(m.MatrixError, name + " Gitlink mismatch"):
-                    m.verify_pins(m.ROOT)
-
-    def test_every_pin_and_dirty_boundary_fail_closed(self):
-        for broken in ("tree", "checkout", "gitlink", "target", "dirty", "scope"):
-            def git(root, *args):
-                if broken == "tree" and args[0] == "rev-parse" and args[-1].endswith("^{tree}"):
-                    return "wrong"
-                if broken == "checkout" and args == ("rev-parse", "HEAD"):
-                    return "wrong"
-                if broken == "gitlink" and args[0] == "ls-tree":
-                    return "160000 commit wrong"
-                if broken == "target" and args[0] == "ls-remote":
-                    return "wrong"
-                if broken == "dirty" and args[0] == "status":
-                    return "modified synthetic source"
-                if broken == "scope" and args[0] == "diff":
+                if broken == "tree" and args[0] == "rev-parse":
+                    return "f" * 40
+                if broken == "tracked" and args[0] == "status":
+                    return " M synthetic.py"
+                if broken == "staged" and args[:2] == ("diff", "--cached"):
+                    return "02_external/upr-fvx"
+                if broken == "scope" and args == ("diff", "--name-only", m.WORKSPACE, "HEAD"):
                     return "docs/outside_scope.md"
+                if broken == "ancestry" and args[0] == "merge-base":
+                    raise m.MatrixError("Public Git prerequisite could not be verified.")
                 return self.public_git(root, *args)
-            with self.subTest(broken=broken), patch.object(m, "git", side_effect=git):
-                with self.assertRaises(m.MatrixError):
-                    m.verify_pins(m.ROOT)
+            with self.subTest(broken=broken), patch.object(m, "git", side_effect=git), self.assertRaises(m.MatrixError):
+                m.verify_pins(m.ROOT)
+
+
+
+class CandidateSourceTest(unittest.TestCase):
+    def response(self, body, url=None):
+        response = io.BytesIO(body)
+        response.geturl = lambda: url or m.PUBLIC_SOURCE_URL + m.SOURCE
+        return response
+
+    def test_exact_public_blob_and_commit_url(self):
+        with patch.object(m, "urlopen", return_value=self.response(GENERATOR_SOURCE.encode())) as get, patch.object(Path, "read_bytes", side_effect=AssertionError("No checkout source")), patch.object(m, "git", side_effect=AssertionError("No component Git")):
+            self.assertEqual(GENERATOR_SOURCE, m.read_public_source())
+        get.assert_called_once_with(m.PUBLIC_SOURCE_URL + m.SOURCE, timeout=30)
+        self.assertIn(m.CANDIDATES["UPR-FVX"], get.call_args.args[0])
+        self.assertEqual("b679e3e6bea9d908fef804af21456275974484c5",
+                         m.public_blob_id(GENERATOR_SOURCE.encode()))
+
+    def test_reject_component_source_before_path_resolution(self):
+        with patch.object(Path, "resolve", side_effect=AssertionError("No component metadata")), patch.object(Path, "read_bytes") as read, self.assertRaises(m.MatrixError):
+            m.read_public_source(local_file=m.ROOT / "02_external/upr-fvx/SettingsProfileGenerator.java")
+        read.assert_not_called()
+
+    def test_stale_missing_redirect_and_unapproved_source_fail_closed(self):
+        for body in (b"", GENERATOR_SOURCE.replace("setRemoveTimeBasedEvolutions(true)", "setRemoveTimeBasedEvolutions(false)").encode()):
+            with patch.object(m, "urlopen", return_value=self.response(body)), self.assertRaises(m.MatrixError):
+                m.read_public_source()
+        with patch.object(m, "urlopen", return_value=self.response(b"", "https://example.invalid/private")), self.assertRaises(m.MatrixError):
+            m.read_public_source()
+        with patch.object(m, "urlopen") as get, self.assertRaises(m.MatrixError):
+            m.read_public_source("unapproved.java")
+        get.assert_not_called()
+
+    def test_public_source_failure_never_echoes_network_details(self):
+        with patch.object(m, "urlopen", side_effect=OSError("/fictional/Secret token")), self.assertRaises(m.MatrixError) as caught:
+            m.read_public_source()
+        self.assertNotIn("Secret", str(caught.exception))
+        self.assertNotIn("token", str(caught.exception))
+
+    def test_local_public_snapshot_has_exact_content(self):
+        with tempfile.TemporaryDirectory() as directory:
+            file = Path(directory) / "SettingsProfileGenerator.java"
+            file.write_text(GENERATOR_SOURCE)
+            with patch.object(m, "urlopen") as get:
+                self.assertEqual(GENERATOR_SOURCE, m.read_public_source(local_file=file))
+            get.assert_not_called()
+            file.write_text(GENERATOR_SOURCE + "// source drift")
+            with self.assertRaises(m.MatrixError):
+                m.read_public_source(local_file=file)
+
+    def test_component_or_protected_source_not_opened(self):
+        for relative in ("02_external/upr-fvx", "02_external/CFRU-expansion",
+                         "04_private_roms", "05_builds", "03_tools/releases"):
+            with patch.object(Path, "read_bytes") as read, patch.object(m, "urlopen") as get, self.assertRaises(m.MatrixError):
+                m.read_public_source(local_file=m.ROOT / relative / "SettingsProfileGenerator.java")
+            read.assert_not_called()
+            get.assert_not_called()
+
+
+class CandidateJarTest(unittest.TestCase):
+    def catalogue(self):
+        features = "\n".join(name + "\t" + ("unsupported\tpublic reason" if name in UNSUPPORTED else "supported") for name in OVERLAYS)
+        profiles = []
+        for name, body in re.findall(r'profiles\.put\("([^"]+)",\s*(.*?)\);', GENERATOR_SOURCE, re.S):
+            profiles.append(name + "\t" + ",".join(re.findall(r'"([A-Z0-9_-]+)"', body)))
+        return features, "\n".join(profiles)
+
+    def prepare(self, feature=None, profile=None):
+        features, profiles = self.catalogue()
+        with patch.object(Path, "is_file", return_value=True), patch.object(Path, "read_bytes", side_effect=AssertionError("Never inspect a JAR")), patch.object(m, "command", side_effect=[
+            result(err='openjdk version "25"'),
+            feature or result(text=features),
+            profile or result(text=profiles),
+        ]) as command, contextlib.redirect_stdout(io.StringIO()):
+            jar = m.prepare_tool(m.ROOT, Path("/synthetic/temp"), Path("/synthetic/prebuilt.jar"),
+                                 m.CANDIDATES["UPR-FVX"], GENERATOR_SOURCE)
+        return jar, command.call_args_list
+
+    def test_supplied_candidate_attestation_and_cli_no_auto_build(self):
+        jar, calls = self.prepare()
+        self.assertEqual(Path("/synthetic/prebuilt.jar"), jar)
+        self.assertEqual(3, len(calls))
+        self.assertTrue(all(c.args[0][0] == "java" for c in calls))
+        self.assertEqual("--list-features", calls[1].args[0][-1])
+        self.assertEqual("--list-profiles", calls[2].args[0][-1])
+        self.assertFalse(any("gradlew" in str(c) or "fetch" in str(c) for c in calls))
+
+    def test_filename_version_or_wrong_commit_never_proves_provenance(self):
+        for commit in (None, m.BASELINE_GITLINKS["UPR-FVX"][1], "f" * 40):
+            with patch.object(Path, "is_file") as exists, patch.object(m, "command") as command, self.assertRaises(m.MatrixError):
+                m.prepare_tool(m.ROOT, Path("/synthetic/temp"), Path("/synthetic/PR217-UPR-FVX-v1.5.1.jar"),
+                               commit, GENERATOR_SOURCE)
+            command.assert_not_called()
+            exists.assert_not_called()
+
+    def test_stale_source_rejected_before_jar_access(self):
+        for source in (None, GENERATOR_SOURCE + "// not the public blob"):
+            with patch.object(Path, "is_file") as exists, patch.object(m, "command") as command, self.assertRaises(m.MatrixError):
+                m.prepare_tool(m.ROOT, Path("/synthetic/temp"), Path("/synthetic/candidate.jar"),
+                               m.CANDIDATES["UPR-FVX"], source)
+            exists.assert_not_called()
+            command.assert_not_called()
+
+    def test_old_worktree_jar_and_missing_jar_are_not_built(self):
+        with patch.object(Path, "is_file") as exists, patch.object(m, "command") as command, self.assertRaises(m.MatrixError):
+            m.prepare_tool(m.ROOT, Path("/synthetic/temp"), m.ROOT / "02_external/upr-fvx/random/build/libs/UPR-FVX.jar",
+                           m.CANDIDATES["UPR-FVX"], GENERATOR_SOURCE)
+        exists.assert_not_called()
+        command.assert_not_called()
+        with patch.object(Path, "is_file", return_value=False), patch.object(m, "command") as command, self.assertRaises(m.MatrixError):
+            m.prepare_tool(m.ROOT, Path("/synthetic/temp"), Path("/synthetic/unavailable.jar"),
+                           m.CANDIDATES["UPR-FVX"], GENERATOR_SOURCE)
+        command.assert_not_called()
+
+    def test_source_cli_inventory_profile_and_capability_mismatch(self):
+        features, profiles = self.catalogue()
+        for feature, profile in (
+            (result(1, "/fictional/private.jar Exception"), None),
+            (result(text=features.replace("FVX-ITEM-010\tsupported", "FVX-ITEM-010\tunsupported")), None),
+            (result(text=features + "\nFVX-ITEM-010\tsupported"), None),
+            (None, result(text=profiles + "\nUNREVIEWED\tFVX-ITEM-010")),
+            (None, result(1, "/fictional/private details")),
+        ):
+            with self.subTest(feature=bool(feature), profile=bool(profile)), self.assertRaises(m.MatrixError) as caught:
+                self.prepare(feature, profile)
+            self.assertNotIn("/fictional", str(caught.exception))
+
+
+class CandidateRiskTest(unittest.TestCase):
+    def setUp(self):
+        self.cases = m.build_matrix(OVERLAYS, UNSUPPORTED, PROFILES)
+        self.by_id = {c.id: c for c in self.cases}
+
+    @staticmethod
+    def observed(**changes):
+        # Independent synthetic Settings-getter response, not a serializer.
+        fields = {
+            "LimitPokemon": "false", "CurrentRestrictions": "1022",
+            "EvolutionsMod": "UNCHANGED", "ChangeImpossibleEvolutions": "false",
+            "MakeEvolutionsEasier": "false", "EstimateLevelForEvolutionImprovements": "false",
+            "RemoveTimeBasedEvolutions": "false", "PickupItemsMod": "UNCHANGED",
+            "BanBadRandomPickupItems": "false", "ShopItemsMod": "UNCHANGED",
+            "PokemonPalettesMod": "UNCHANGED", "PokemonPalettesFollowTypes": "false",
+            "PokemonPalettesFollowEvolutions": "false", "PokemonPalettesShinyFromNormal": "false",
+            "UseTimeBasedEncounters": "false",
+        }
+        fields.update(changes)
+        return fields
+
+    def evo_observed(self):
+        return self.observed(LimitPokemon="true", CurrentRestrictions="1023", EvolutionsMod="RANDOM",
+                             ChangeImpossibleEvolutions="true", EstimateLevelForEvolutionImprovements="true",
+                             RemoveTimeBasedEvolutions="true")
+
+    def test_exact_six_new_positive_intents_all_seed_replay(self):
+        self.assertEqual(set(m.RISK_SINGLES), {c.id for c in self.cases if c.layer == "STRESS" and c.id in m.RISK_IDS})
+        self.assertEqual({m.RISK_EVOLUTION, m.RISK_PICKUP}, {c.id for c in self.cases if c.layer == "RISK"})
+        for name in m.RISK_IDS:
+            self.assertTrue(self.by_id[name].replay)
+            self.assertTrue(self.by_id[name].secondary)
+        for case in self.cases:
+            if case.layer in ("FULL", "PAIR", "TRIPLE", "MAX"):
+                self.assertFalse(set(case.overlays) & set(m.RISK_SINGLES))
+
+    def test_evolution_user_case_relatives_on_and_no_relatives_preserved(self):
+        state = m.effective(self.by_id[m.RISK_EVOLUTION], OVERLAYS)
+        self.assertEqual("new GenRestrictions(0x3FF)", state["CurrentRestrictions"])
+        for flag in ("LimitPokemon", "ChangeImpossibleEvolutions", "EstimateLevelForEvolutionImprovements", "RemoveTimeBasedEvolutions"):
+            self.assertEqual("true", state[flag])
+        self.assertEqual("Settings.EvolutionsMod.RANDOM", state["EvolutionsMod"])
+        self.assertEqual("false", state["MakeEvolutionsEasier"])
+        self.assertEqual("new GenRestrictions(0x3FE)",
+                         m.effective(self.by_id["MODE-GEN-LIMIT-1-9-NO-RELATIVES"], OVERLAYS)["CurrentRestrictions"])
+
+    def test_pickup_and_shop_exact_supported_owner(self):
+        for name in ("FVX-ITEM-010", m.RISK_PICKUP):
+            state = m.effective(self.by_id[name], OVERLAYS)
+            self.assertEqual("Settings.PickupItemsMod.RANDOM", state["PickupItemsMod"])
+            self.assertEqual("true", state["BanBadRandomPickupItems"])
+        self.assertEqual("Settings.ShopItemsMod.RANDOM",
+                         m.effective(self.by_id[m.RISK_PICKUP], OVERLAYS)["ShopItemsMod"])
+        self.assertNotIn("FVX-ITEM-010", PROFILES["07_ITEMS_SAFE"])
+
+    def test_palette_singles_do_not_enable_the_pair(self):
+        for name, own, other in (("FVX-GFX-002", "PokemonPalettesFollowTypes", "PokemonPalettesShinyFromNormal"),
+                                 ("FVX-GFX-004", "PokemonPalettesShinyFromNormal", "PokemonPalettesFollowTypes")):
+            state = m.effective(self.by_id[name], OVERLAYS)
+            self.assertEqual("Settings.PokemonPalettesMod.RANDOM", state["PokemonPalettesMod"])
+            self.assertEqual("true", state[own])
+            self.assertNotEqual("true", state.get(other))
+
+    def test_incompatible_palette_request_rejected_before_override(self):
+        for extra in ({}, {"PokemonPalettesShinyFromNormal": "false"}, {"PokemonPalettesMod": "Settings.PokemonPalettesMod.UNCHANGED"}):
+            with self.assertRaises(m.MatrixError):
+                m.effective(m.Intent("NEGATIVE", "DIAGNOSTIC", ("FVX-GFX-002", "FVX-GFX-004"), extra=extra), OVERLAYS)
+
+    def test_make_easier_is_not_ungated_with_time_or_fake_off_override(self):
+        for leaves in (("FVX-TRAIT-025",), ("FVX-TRAIT-025", "FVX-TRAIT-027"),
+                       ("FVX-TRAIT-024", "FVX-TRAIT-025", "FVX-TRAIT-027")):
+            for extra in ({}, {"MakeEvolutionsEasier": "false"}):
+                with self.assertRaisesRegex(m.MatrixError, "OWNERSHIP_WITNESS_V1"):
+                    m.effective(m.Intent("NEGATIVE", "STRESS", leaves, extra=extra), OVERLAYS)
+
+    def test_risk_leaf_in_any_safe_family_fails_closed(self):
+        for family in m.FULL:
+            for leaf in m.RISK_SINGLES:
+                altered = dict(PROFILES, **{family: PROFILES[family] + (leaf,)})
+                with self.subTest(family=family, leaf=leaf), self.assertRaises(m.MatrixError):
+                    m.build_matrix(OVERLAYS, UNSUPPORTED, altered)
+
+    def test_pickup_writer_allowlist_and_negative_guards(self):
+        source = m.bridge_source(self.cases, OVERLAYS)
+        expected = [str(i) for i, c in enumerate(self.cases) if c.id in ("FVX-ITEM-010", m.RISK_PICKUP)]
+        match = re.search(r'Set\.of\(([^)]*)\)\.contains\(id\)', source)
+        self.assertEqual(expected, re.findall(r'"([0-9]+)"', match[1]))
+        self.assertIn("s.isMakeEvolutionsEasier()", source)
+        self.assertIn("s.isPokemonPalettesFollowTypes() && s.isPokemonPalettesShinyFromNormal()", source)
+        self.assertIn("MiscTweak.REUSABLE_TMS.getValue()", source)
+        self.assertIn("Settings.PickupItemsMod.RANDOM", source)
+        self.assertIn("RANDOM_EVERY_LEVEL", source)
+
+    def test_observer_getters_exist_in_exact_public_settings(self):
+        getters = set(re.findall(r's\.(\w+)\(', m.OBSERVE_JAVA))
+        for method in getters:
+            self.assertRegex(SETTINGS_SOURCE, r'public [\w<>]+ ' + method + r'\(')
+        self.assertIn("!observe(s).equals(observe(restored))", m.bridge_source(self.cases, OVERLAYS))
+        self.assertIn("!observe(s).equals(observe(restored))", m.NORMALIZER)
+
+    def test_risk_source_and_normalized_state_are_observed(self):
+        cases = [self.by_id[m.RISK_EVOLUTION]]
+        actual = self.evo_observed()
+        for stage in ("Settings round-trip", "target normalization"):
+            m.verify_requested_states(cases, OVERLAYS, {0: actual}, stage)
+            for key in ("LimitPokemon", "CurrentRestrictions", "EvolutionsMod", "ChangeImpossibleEvolutions",
+                        "EstimateLevelForEvolutionImprovements", "RemoveTimeBasedEvolutions", "MakeEvolutionsEasier"):
+                changed = dict(actual, **{key: "false" if actual[key] == "true" else "true"})
+                with self.subTest(stage=stage, key=key):
+                    if stage == "Settings round-trip" or key == "MakeEvolutionsEasier":
+                        with self.assertRaises(m.MatrixError):
+                            m.verify_requested_states(cases, OVERLAYS, {0: changed}, stage)
+                    else:
+                        self.assertIn(0, m.verify_requested_states(cases, OVERLAYS, {0: changed}, stage))
+        with self.assertRaises(m.MatrixError):
+            m.verify_requested_states(cases, OVERLAYS, {}, "round-trip")
+
+    def test_normalized_away_user_gen_limit_not_counted_or_substituted(self):
+        cases = [self.by_id[m.RISK_EVOLUTION]]
+        normalized = dict(self.evo_observed(), LimitPokemon="false", CurrentRestrictions="-1")
+        blocked = m.verify_requested_states(cases, OVERLAYS, {0: normalized}, "target normalization")
+        self.assertEqual({0: ("GEN_LIMIT_OR_RELATIVES_NOT_EFFECTIVE",)}, blocked)
+        self.assertEqual("R2_RANDOMIZER_GENERATION_MATRIX_PARTIAL_NOT_RUN",
+                         m.matrix_result(cases, [], [], blocked))
+        self.assertIn(m.RISK_EVOLUTION, self.by_id)  # no silently dropped intent
+        self.assertEqual("new GenRestrictions(0x3FF)", m.effective(cases[0], OVERLAYS)["CurrentRestrictions"])
+
+    def test_observation_schema_discards_private_content(self):
+        text = "\n".join(k + "=" + v for k, v in self.evo_observed().items())
+        self.assertEqual(self.evo_observed(), m.parse_observation(text))
+        for changed in (text + "\nSecret=/fictional/private.gba", text.replace("RANDOM", "/fictional/private"),
+                        text.replace("LimitPokemon=true", "LimitPokemon=true\nLimitPokemon=true")):
+            with self.assertRaises(m.MatrixError) as caught:
+                m.parse_observation(changed)
+            self.assertNotIn("/fictional", str(caught.exception))
+
+    def test_selected_hidden_flags_preserve_guarded_owner_state(self):
+        for data in (m.settings_data(m.IRONMON), m.CASUAL_BYTES + bytes(33)):
+            fields = decoded_fields(data)
+            self.assertFalse(fields["MakeEvolutionsEasier"])
+            self.assertFalse(fields["PokemonPalettesFollowTypes"] and fields["PokemonPalettesShinyFromNormal"])
+            self.assertEqual("UNCHANGED", fields["PickupItemsMod"])
+            for flag in ("AllowMegaForms", "AllowGigantamaxForms", "IncludeMegaItems", "IncludeZCrystalItems", "IncludeDynamaxGmaxItems"):
+                self.assertFalse(fields[flag])
+
+    def test_mocked_settings_and_normalizer_gate_observations(self):
+        cases = [self.by_id[m.RISK_EVOLUTION]]
+        payloads = [synthetic_payload(bytes(67))]
+        text = "\n".join(k + "=" + v for k, v in self.evo_observed().items())
+        with tempfile.TemporaryDirectory() as directory:
+            temp = Path(directory)
+            def execute(args, cwd, timeout=600):
+                (cwd / "0.settings").write_text(payloads[0])
+                (cwd / "0.rnqs").write_text("synthetic")
+                (cwd / "0.normalization").write_text("NONE")
+                (cwd / "0.state").write_text(text)
+                (cwd / "0.post-state").write_text(text)
+                return result()
+            with patch.object(m, "command", side_effect=execute):
+                self.assertEqual(payloads, m.generate_settings(cases, OVERLAYS, Path("synthetic.jar"), temp))
+                self.assertEqual((payloads, {}, {}), m.normalize_settings(cases, Path("synthetic.jar"), "/fictional/input", temp, payloads, OVERLAYS))
+            (temp / "0.post-state").write_text(text.replace("CurrentRestrictions=1023", "CurrentRestrictions=-1"))
+            with patch.object(m, "command", return_value=result()):
+                after, events, blocked = m.normalize_settings(cases, Path("synthetic.jar"), "/fictional/input", temp, payloads, OVERLAYS)
+            self.assertEqual({0: ("GEN_LIMIT_OR_RELATIVES_NOT_EFFECTIVE",)}, blocked)
+
+    def test_two_current_overlays_accounted_without_acceptance(self):
+        self.assertIn("FVX-SPECIAL-WILD-001", self.by_id)
+        self.assertIn("FVX-FOE-SENSIBLE-HELD-ITEMS", m.EXCLUDED)
+        diagnostic = self.by_id["04_FOE_HELD_ITEMS_SENSIBLE_EXPECTED_FAIL"]
+        self.assertEqual("DIAGNOSTIC", diagnostic.classification)
+        self.assertIn("FVX-FOE-SENSIBLE-HELD-ITEMS", diagnostic.overlays)
+
+
+class NormalizedCoverageTest(unittest.TestCase):
+    """Unavailable options never run as substitutes or inherit a positive alias."""
+
+    def setUp(self):
+        self.cases = m.build_matrix(OVERLAYS, UNSUPPORTED, PROFILES)
+        self.by_id = {c.id: c for c in self.cases}
+
+    def observations(self, cases):
+        observations = {}
+        for i in m.observed_indices(cases, OVERLAYS):
+            state = CandidateRiskTest.observed()
+            for key, value in m.effective(cases[i], OVERLAYS).items():
+                if key not in state:
+                    continue
+                if key == "CurrentRestrictions":
+                    value = str(int(re.search(r"0x[0-9A-Fa-f]+", value)[0], 16))
+                elif value.startswith("Settings."):
+                    value = value.rsplit(".", 1)[1]
+                state[key] = value
+            observations[i] = state
+        return observations
+
+    def test_exact_public_time_encounter_source_normalization(self):
+        abstract = public_fixture("romio/src/main/java/com/uprfvx/romio/romhandlers/AbstractRomHandler.java",
+                                  "43e068b4d10cf2af9f92193738830913881dee81")
+        gen3 = public_fixture("romio/src/main/java/com/uprfvx/romio/romhandlers/Gen3RomHandler.java",
+                              "7206af0126ccf61aea4a2ebe22772928f63ad4c5")
+        self.assertRegex(abstract, r"boolean hasTimeBasedEncounters\(\)\s*\{\s*// DEFAULT: no\s*return false;")
+        self.assertNotRegex(gen3, r"boolean hasTimeBasedEncounters\(")
+        self.assertRegex(SETTINGS_SOURCE, r"if \(!rh.hasTimeBasedEncounters\(\)\) \{\s*this.setUseTimeBasedEncounters\(false\);")
+        self.assertEqual("true", m.assignments(OVERLAYS[m.SPECIAL_WILD])["UseTimeBasedEncounters"])
+
+    def test_exact_public_gen_limit_validity_source_gate(self):
+        abstract = public_fixture("romio/src/main/java/com/uprfvx/romio/romhandlers/AbstractGBRomHandler.java",
+                                  "8e4138d8f72bf29d1c203f435df5d8feb51310f2")
+        self.assertIn("return getRomEntry().getExpectedCRC32() == actualCRC32;", abstract)
+        self.assertRegex(SETTINGS_SOURCE, r"rh instanceof Gen3RomHandler && !rh.isRomValid\(null\)")
+        self.assertIn("this.currentRestrictions = null;", SETTINGS_SOURCE)
+        self.assertIn("this.setLimitPokemon(false);", SETTINGS_SOURCE)
+
+    def test_special_wild_on_roundtrip_and_effective_on_are_checked(self):
+        cases = [self.by_id[m.SPECIAL_WILD]]
+        on = self.observations(cases)
+        for stage in ("Settings round-trip", "target normalization"):
+            self.assertEqual({}, m.verify_requested_states(cases, OVERLAYS, on, stage))
+        off = {0: dict(on[0], UseTimeBasedEncounters="false")}
+        with self.assertRaises(m.MatrixError):
+            m.verify_requested_states(cases, OVERLAYS, off, "Settings round-trip")
+
+    def test_special_wild_off_blocks_single_full_pairs_and_max(self):
+        observed = self.observations(self.cases)
+        expected = {i for i, c in enumerate(self.cases)
+                    if m.SPECIAL_WILD in c.overlays}
+        self.assertTrue(expected)
+        for i in expected:
+            self.assertIn(i, observed)
+            observed[i]["UseTimeBasedEncounters"] = "false"
+        blocked = m.verify_requested_states(self.cases, OVERLAYS, observed, "target normalization")
+        self.assertEqual(expected, set(blocked))
+        self.assertTrue(all(v == ("TIME_BASED_ENCOUNTERS_NORMALIZED_OFF",) for v in blocked.values()))
+        for name in (m.SPECIAL_WILD, "11_SPECIAL_WILD", "MAX_SAFE_COMBINED"):
+            self.assertIn(name, {self.cases[i].id for i in blocked})
+        self.assertTrue(any(self.cases[i].layer == "PAIR" for i in blocked))
+
+    def test_gen_limit_normalization_isolates_ordinary_and_evolution_requests(self):
+        cases = [self.by_id["FVX-ITEM-002"], self.by_id["MODE-GEN-LIMIT-1-9"],
+                 self.by_id[m.RISK_EVOLUTION]]
+        observed = self.observations(cases)
+        for fields in observed.values():
+            fields.update(LimitPokemon="false", CurrentRestrictions="-1")
+        blocked = m.verify_requested_states(cases, OVERLAYS, observed, "target normalization")
+        self.assertEqual({1, 2}, set(blocked))
+        self.assertTrue(all(v == ("GEN_LIMIT_OR_RELATIVES_NOT_EFFECTIVE",) for v in blocked.values()))
+        self.assertEqual("new GenRestrictions(0x3FF)", m.effective(cases[2], OVERLAYS)["CurrentRestrictions"])
+
+    def test_lost_relatives_alone_still_blocks_risk(self):
+        cases = [self.by_id[m.RISK_EVOLUTION]]
+        observed = self.observations(cases)
+        observed[0]["CurrentRestrictions"] = "1022"
+        self.assertEqual({0: ("GEN_LIMIT_OR_RELATIVES_NOT_EFFECTIVE",)},
+                         m.verify_requested_states(cases, OVERLAYS, observed, "target normalization"))
+
+    def test_special_and_gen_limit_reasons_accumulate(self):
+        cases = [self.by_id["MAX_SAFE_COMBINED"]]
+        observed = self.observations(cases)
+        observed[0].update(LimitPokemon="false", CurrentRestrictions="-1", UseTimeBasedEncounters="false")
+        self.assertEqual({0: ("TIME_BASED_ENCOUNTERS_NORMALIZED_OFF", "GEN_LIMIT_OR_RELATIVES_NOT_EFFECTIVE")},
+                         m.verify_requested_states(cases, OVERLAYS, observed, "target normalization"))
+
+    def test_source_and_schema_failures_are_not_relaxed_to_partial(self):
+        cases = [self.by_id[m.SPECIAL_WILD], self.by_id[m.RISK_EVOLUTION]]
+        observed = self.observations(cases)
+        with self.assertRaises(m.MatrixError):
+            m.verify_requested_states(cases, OVERLAYS, {0: observed[0]}, "target normalization")
+        observed[0]["UseTimeBasedEncounters"] = "false"
+        with self.assertRaises(m.MatrixError):
+            m.verify_requested_states(cases, OVERLAYS, observed, "Settings round-trip")
+        observed[1]["MakeEvolutionsEasier"] = "true"
+        with self.assertRaisesRegex(m.MatrixError, "OWNERSHIP_WITNESS_V1"):
+            m.verify_requested_states(cases, OVERLAYS, observed, "target normalization")
+
+    def test_normalized_alias_cannot_inherit_pass_or_wrong_settings_file(self):
+        cases = [self.by_id[m.SPECIAL_WILD], self.by_id["FVX-ITEM-002"]]
+        blocked = {0: ("TIME_BASED_ENCOUNTERS_NORMALIZED_OFF",)}
+        groups = m.deduplicate(cases, ["same", "same"], Path("/synthetic"), blocked)
+        self.assertEqual([cases[1]], groups[0].aliases)
+        self.assertEqual(Path("/synthetic/1.rnqs"), groups[0].settings)
+        records = [(groups[0], m.PRIMARY, m.Outcome("PASS", "PASS", input_unchanged="PASS"))]
+        self.assertEqual("PASS", m.intent_status(cases[1], groups, records))
+        self.assertEqual("NOT_RUN", m.intent_status(cases[0], groups, records, {m.SPECIAL_WILD}))
+        self.assertEqual("R2_RANDOMIZER_GENERATION_MATRIX_PARTIAL_NOT_RUN",
+                         m.matrix_result(cases, groups, records, blocked))
+
+    def test_all_planned_seeds_and_replays_required_for_matrix_pass(self):
+        case = self.by_id[m.RISK_PICKUP]
+        groups = m.deduplicate([case], ["synthetic"], Path("/synthetic"))
+        for seeds, replay in (((m.PRIMARY,), "PASS"), (m.SECONDARY, "NOT_APPLICABLE")):
+            records = [(groups[0], seed, m.Outcome("PASS", "PASS", replay, input_unchanged="PASS"))
+                       for seed in seeds]
+            self.assertEqual("R2_RANDOMIZER_GENERATION_MATRIX_PARTIAL_NOT_RUN",
+                             m.matrix_result([case], groups, records))
+        records = [(groups[0], seed, m.Outcome("PASS", "PASS", "PASS", input_unchanged="PASS"))
+                   for seed in m.SECONDARY]
+        self.assertEqual("R2_RANDOMIZER_GENERATION_MATRIX_PASS", m.matrix_result([case], groups, records))
+        self.assertEqual("R2_RANDOMIZER_GENERATION_MATRIX_PARTIAL_NOT_RUN", m.matrix_result([case], [], []))
+
+    def test_report_full_max_and_risk_not_run_with_partial_result(self):
+        cases = [self.by_id[n] for n in (m.SPECIAL_WILD, "11_SPECIAL_WILD", "MAX_SAFE_COMBINED", m.RISK_EVOLUTION)]
+        blocked = {i: ("GEN_LIMIT_OR_RELATIVES_NOT_EFFECTIVE",) if c.id == m.RISK_EVOLUTION
+                   else ("TIME_BASED_ENCOUNTERS_NORMALIZED_OFF",) for i, c in enumerate(cases)}
+        output = io.StringIO()
+        with contextlib.redirect_stdout(output):
+            m.print_report(cases, [], [], m.inventory_counts(OVERLAYS, UNSUPPORTED),
+                           m.matrix_result(cases, [], [], blocked), blocked=blocked)
+        text = output.getvalue()
+        for name in (m.SPECIAL_WILD, "11_SPECIAL_WILD", "MAX_SAFE_COMBINED"):
+            self.assertIn(name + ": NOT_RUN", text)
+            self.assertNotIn(name + ": PASS", text)
+        self.assertIn(m.RISK_EVOLUTION + ": STOP/NOT_RUN", text)
+        self.assertIn("GENERATE=NOT_RUN; REOPEN=NOT_RUN; REPLAY=NOT_RUN", text)
+        self.assertIn("NORMALIZATION_BLOCKED_INTENTS: 4", text)
+        self.assertNotIn("R2_RANDOMIZER_GENERATION_MATRIX_PASS", text)
+
+    def test_mocked_normalizer_reads_special_state_and_removes_no_flags_itself(self):
+        cases = [self.by_id[m.SPECIAL_WILD]]
+        observed = self.observations(cases)[0]
+        payloads = [synthetic_payload(bytes(67))]
+        with tempfile.TemporaryDirectory() as name:
+            temp = Path(name)
+            def execute(args, cwd, timeout=600):
+                observed["UseTimeBasedEncounters"] = "false"
+                (cwd / "0.settings").write_text(payloads[0])
+                (cwd / "0.normalization").write_text("NONE")
+                (cwd / "0.post-state").write_text("\n".join(k + "=" + v for k, v in observed.items()))
+                return result()
+            with patch.object(m, "command", side_effect=execute):
+                after, events, blocked = m.normalize_settings(cases, Path("synthetic.jar"),
+                                                               "/fictional/input", temp, payloads, OVERLAYS)
+            self.assertEqual(payloads, after)
+            self.assertEqual({}, events)
+            self.assertEqual({0: ("TIME_BASED_ENCOUNTERS_NORMALIZED_OFF",)}, blocked)
+            self.assertIn("s.tweakForRom(handler)", m.NORMALIZER)
+            self.assertNotIn("s.setUseTimeBasedEncounters(true)", m.NORMALIZER)
+            self.assertNotIn("s.setLimitPokemon(true)", m.NORMALIZER)
+
+    def test_mocked_roundtrip_special_off_stops_before_rom(self):
+        cases = [self.by_id[m.SPECIAL_WILD]]
+        observed = CandidateRiskTest.observed()
+        with tempfile.TemporaryDirectory() as name:
+            temp = Path(name)
+            def execute(args, cwd, timeout=600):
+                (cwd / "0.settings").write_text(synthetic_payload(bytes(67)))
+                (cwd / "0.state").write_text("\n".join(k + "=" + v for k, v in observed.items()))
+                return result()
+            with patch.object(m, "command", side_effect=execute), self.assertRaises(m.MatrixError):
+                m.generate_settings(cases, OVERLAYS, Path("synthetic.jar"), temp)
+
+    def test_main_continues_independent_and_eligible_risks_after_gen_limit_stop(self):
+        cases = [self.by_id[n] for n in (m.RISK_EVOLUTION, m.SPECIAL_WILD, "FVX-ITEM-002", m.RISK_PICKUP)]
+        # Two unavailable requests normalize to exactly the same strings as
+        # eligible cases. Neither may enter a generation call or PASS alias.
+        before = ["evolution-on", "time-on", "core", "pickup"]
+        after = ["core", "core", "core", "pickup"]
+        blocked = {0: ("GEN_LIMIT_OR_RELATIVES_NOT_EFFECTIVE",),
+                   1: ("TIME_BASED_ENCOUNTERS_NORMALIZED_OFF",)}
+        calls, temps = [], []
+        def execute(group, seed, rom, jar, temp):
+            calls.append((tuple(c.id for c in group.aliases), seed))
+            temps.append(temp)
+            return m.Outcome("PASS", "PASS", "PASS", input_unchanged="PASS")
+        with patch.object(m, "read_public_source", return_value=GENERATOR_SOURCE), patch.object(m, "verify_pins"), patch.object(m, "build_matrix", return_value=cases), patch.object(m, "prepare_tool", return_value=Path("synthetic.jar")), patch.object(m, "generate_settings", return_value=before), patch.object(m, "normalize_settings", return_value=(after, {0: 1023}, blocked)), patch.object(m, "input_digest", return_value=b"synthetic input"), patch.object(m, "run_case", side_effect=execute), contextlib.redirect_stdout(io.StringIO()) as output:
+            self.assertEqual(1, m.main(["--rom", "/fictional/input", "--stop-on-fail"]))
+        self.assertEqual([(("FVX-ITEM-002",), m.PRIMARY)] +
+                         [((m.RISK_PICKUP,), seed) for seed in (m.PRIMARY, 0, 1, 677)], calls)
+        self.assertTrue(temps and all(not p.exists() for p in temps))
+        text = output.getvalue()
+        self.assertIn("EXECUTION_STAGE: INDEPENDENT", text)
+        self.assertIn("EXECUTION_STAGE: RISK", text)
+        self.assertIn(m.RISK_EVOLUTION + ": STOP/NOT_RUN", text)
+        self.assertIn(m.RISK_PICKUP + ": PASS", text)
+        self.assertIn("R2_RANDOMIZER_GENERATION_MATRIX_PARTIAL_NOT_RUN", text)
+        self.assertNotIn("R2_RANDOMIZER_GENERATION_MATRIX_PASS", text)
+        self.assertNotIn("/fictional", text)
+
+    def test_expected_gen_normalization_uses_real_preflight_and_runs_core(self):
+        cases = [self.by_id[m.RISK_EVOLUTION], self.by_id["FVX-ITEM-002"]]
+        original = bytearray(67)
+        original[30:34] = (0x3FF).to_bytes(4, "little")
+        original[65] |= 8
+        before = [synthetic_payload(original), synthetic_payload(bytes(67))]
+        after = [NormalizationAccountingTest().adapted(before[0]), before[1]]
+        observed = self.observations(cases)[0]
+        observed.update(LimitPokemon="false", CurrentRestrictions="-1")
+        dirs = []
+        def normalize_java(args, cwd, timeout=600):
+            dirs.append(cwd)
+            for i, payload in enumerate(after):
+                (cwd / f"{i}.settings").write_text(payload)
+                (cwd / f"{i}.normalization").write_text(
+                    "\t".join((m.GEN_NORMALIZATION, "true", "true", "false", "true", "1023", "false", "-1"))
+                    if i == 0 else "NONE")
+            (cwd / "0.post-state").write_text("\n".join(k + "=" + v for k, v in observed.items()))
+            return result()
+        with patch.object(m, "read_public_source", return_value=GENERATOR_SOURCE), patch.object(m, "verify_pins"), patch.object(m, "build_matrix", return_value=cases), patch.object(m, "prepare_tool", return_value=Path("synthetic.jar")), patch.object(m, "generate_settings", return_value=before), patch.object(m, "command", side_effect=normalize_java), patch.object(m, "input_digest", return_value=b"synthetic input"), patch.object(m, "run_case", return_value=m.Outcome("PASS", "PASS", input_unchanged="PASS")) as run, contextlib.redirect_stdout(io.StringIO()) as output:
+            self.assertEqual(1, m.main(["--rom", "/fictional/input"]))
+        self.assertEqual(1, run.call_count)
+        self.assertEqual(["FVX-ITEM-002"], [c.id for c in run.call_args.args[0].aliases])
+        self.assertTrue(dirs and all(not p.exists() for p in dirs))
+        self.assertIn("R2_RANDOMIZER_GENERATION_MATRIX_PARTIAL_NOT_RUN", output.getvalue())
+        self.assertNotIn("R2_RANDOMIZER_GENERATION_MATRIX_PASS", output.getvalue())
+
+    def test_current_target_normalization_leaves_independent_cases_eligible(self):
+        observed = self.observations(self.cases)
+        expected = set()
+        for i, state in observed.items():
+            if state["LimitPokemon"] == "true":
+                state.update(LimitPokemon="false", CurrentRestrictions="-1")
+                expected.add(i)
+            if state["UseTimeBasedEncounters"] == "true":
+                state["UseTimeBasedEncounters"] = "false"
+                expected.add(i)
+        blocked = m.verify_requested_states(self.cases, OVERLAYS, observed, "target normalization")
+        self.assertEqual(expected, set(blocked))
+        eligible = {c.id for i, c in enumerate(self.cases) if i not in blocked}
+        for name in ("CONTROL_UNCHANGED", "CASUAL_NATDEX", "IRONMON_NATDEX", "FVX-ITEM-002",
+                     "FVX-TRAIT-027", "FVX-GFX-002", "FVX-GFX-004", m.RISK_PICKUP):
+            self.assertIn(name, eligible)
+        for name in (m.SPECIAL_WILD, m.RISK_EVOLUTION, "MODE-GEN-LIMIT-1-9", "11_SPECIAL_WILD", "MAX_SAFE_COMBINED"):
+            self.assertNotIn(name, eligible)
+
+    def test_other_normalized_risk_loss_is_blocked_before_execution(self):
+        cases = [self.by_id["FVX-ITEM-002"], self.by_id[m.RISK_PICKUP]]
+        observed = self.observations(cases)
+        observed[1]["PickupItemsMod"] = "UNCHANGED"
+        blocked = m.verify_requested_states(cases, OVERLAYS, observed, "target normalization")
+        self.assertEqual({1: ("RISK_OPTIONS_NOT_EFFECTIVE",)}, blocked)
+        groups = m.deduplicate(cases, ["core", "pickup-off"], Path("/synthetic"), blocked)
+        self.assertEqual([cases[0]], groups[0].aliases)
+
+    def test_missing_evolution_normalization_witness_stops_before_core(self):
+        cases = [self.by_id[m.RISK_EVOLUTION], self.by_id["FVX-ITEM-002"]]
+        data = bytearray(67)
+        data[30:34] = (0x3FF).to_bytes(4, "little")
+        data[65] |= 8
+        before = [synthetic_payload(data), synthetic_payload(bytes(67))]
+        after = [NormalizationAccountingTest().adapted(before[0]), before[1]]
+        with tempfile.TemporaryDirectory() as name:
+            temp = Path(name)
+            def execute(args, cwd, timeout=600):
+                for i, payload in enumerate(after):
+                    (cwd / f"{i}.settings").write_text(payload)
+                    (cwd / f"{i}.normalization").write_text("NONE")
+                return result()
+            with patch.object(m, "command", side_effect=execute), self.assertRaisesRegex(m.MatrixError, "Unconfirmed target normalization"):
+                m.normalize_settings(cases, Path("synthetic.jar"), "/fictional/input", temp, before, OVERLAYS)
+
+    def test_blocked_case_is_not_pass_even_with_fabricated_success_record(self):
+        case = self.by_id[m.RISK_EVOLUTION]
+        group = m.Group("synthetic", Path("/synthetic"), [case])
+        records = [(group, seed, m.Outcome("PASS", "PASS", "PASS", input_unchanged="PASS"))
+                   for seed in m.SECONDARY]
+        blocked = {0: ("GEN_LIMIT_OR_RELATIVES_NOT_EFFECTIVE",)}
+        self.assertEqual("R2_RANDOMIZER_GENERATION_MATRIX_PARTIAL_NOT_RUN",
+                         m.matrix_result([case], [group], records, blocked))
+
+    def test_execution_failure_takes_precedence_over_partial(self):
+        cases = [self.by_id[m.SPECIAL_WILD], self.by_id["FVX-ITEM-002"]]
+        blocked = {0: ("TIME_BASED_ENCOUNTERS_NORMALIZED_OFF",)}
+        groups = m.deduplicate(cases, ["same", "same"], Path("/synthetic"), blocked)
+        records = [(groups[0], m.PRIMARY, m.Outcome("FAIL"))]
+        self.assertEqual("R2_RANDOMIZER_GENERATION_MATRIX_FAIL", m.matrix_result(cases, groups, records, blocked))
+
+    def test_dedup_incomplete_accounting_fails_closed(self):
+        for payloads, blocked in (([], {}), (["x"], {1: ("invalid",)})):
+            with self.assertRaises(m.MatrixError):
+                m.deduplicate([self.by_id[m.SPECIAL_WILD]], payloads, Path("/synthetic"), blocked)
+
+
+class InputAtomicityTest(unittest.TestCase):
+    def test_private_input_comparison_only_uses_synthetic_bytes_here(self):
+        with tempfile.TemporaryDirectory() as directory:
+            file = Path(directory) / "synthetic.data"
+            file.write_bytes(b"public synthetic bytes")
+            before = m.input_digest(file)
+            self.assertEqual(before, m.input_digest(file))
+            file.write_bytes(b"altered synthetic bytes")
+            self.assertNotEqual(before, m.input_digest(file))
+
+    def test_failed_input_read_is_sanitized(self):
+        with patch.object(Path, "open", side_effect=OSError("/fictional/Private.gba")), self.assertRaises(m.MatrixError) as caught:
+            m.input_digest("/fictional/Private.gba")
+        self.assertNotIn("Private.gba", str(caught.exception))
+
+    def test_input_change_stops_before_retry(self):
+        altered = m.Outcome("FAIL", input_unchanged="FAIL")
+        with patch.object(m, "attempt", return_value=altered) as attempt, self.assertRaises(m.MatrixError):
+            m.run_case(m.Group("synthetic", Path("synthetic"), []), 1, "/fictional/input", Path("/fictional/jar"), Path("/synthetic"))
+        self.assertEqual(1, attempt.call_count)
+
+    def test_input_change_after_retry_stops(self):
+        with patch.object(m, "attempt", side_effect=[m.Outcome("FAIL", input_unchanged="PASS"),
+                                                    m.Outcome("FAIL", input_unchanged="FAIL")]) as attempt, self.assertRaises(m.MatrixError):
+            m.run_case(m.Group("synthetic", Path("synthetic"), []), 1, "/fictional/input", Path("/fictional/jar"), Path("/synthetic"))
+        self.assertEqual(2, attempt.call_count)
+
+    def test_normalization_failure_still_checks_input_and_cleans(self):
+        created = []
+        def normalize(cases, jar, rom, temp, payloads, overlays=None):
+            created.append(temp)
+            raise m.MatrixError("Synthetic normalization failure")
+        with patch.object(m, "verify_pins"), patch.object(m, "read_public_source", return_value=GENERATOR_SOURCE), patch.object(m, "prepare_tool", return_value=Path("/fictional/jar")), patch.object(m, "generate_settings", return_value=[]), patch.object(m, "normalize_settings", side_effect=normalize), patch.object(m, "input_digest", side_effect=[b"before", b"after"]), patch.object(m, "run_case") as run, contextlib.redirect_stdout(io.StringIO()) as output:
+            self.assertEqual(1, m.main(["--rom", "/fictional/private"]))
+        run.assert_not_called()
+        self.assertTrue(created and all(not d.exists() for d in created))
+        self.assertIn("Input unchanged check failed", output.getvalue())
+        self.assertNotIn("/fictional", output.getvalue())
+
+    def test_seed_hash_log_settings_or_gameplay_not_reported_as_evidence(self):
+        report = io.StringIO()
+        group = m.Group("secret settings", Path("/fictional/private"), [m.Intent("CASE", "STRESS")])
+        with contextlib.redirect_stdout(report):
+            m.print_report([], [group], [(group, m.PRIMARY, m.Outcome("FAIL"))],
+                           m.inventory_counts(OVERLAYS, UNSUPPORTED), "FAIL")
+        text = report.getvalue()
+        for private in (str(m.PRIMARY), "/fictional/private", "secret settings"):
+            self.assertNotIn(private, text)
+        for status in ("LOG_CONTENT=NOT_RUN", "MANIFEST_SEMANTICS=NOT_RUN", "GAMEPLAY=NOT_RUN"):
+            self.assertIn(status, text)
+
+
+class NormalizerDiagnosticTest(unittest.TestCase):
+    # Independent expected contract, not derived from the production mapping.
+    CODES = {
+        20: "ADAPTER_COMPILE_OR_LAUNCH", 21: "INPUT_OPEN_REJECTED",
+        22: "TARGET_PROFILE_UNRECOGNIZED", 23: "SETTINGS_READ_FAILED",
+        24: "SETTINGS_TWEAK_FAILED", 25: "SETTINGS_ROUNDTRIP_FAILED",
+        26: "UNKNOWN_ADAPTER_FAILURE",
+    }
+    PRIVATE = "/fictional/PRIVATE.gba checksum=PRIVATE_HASH seed=PRIVATE_SEED\njava.lang.PrivateException: PRIVATE_SETTINGS\n at private.Stack(trace:1)"
+
+    def wire(self, code):
+        return "MATRIX_NORMALIZER_V1\t" + code + "\n"
+
+    def stop(self, response=None, exception=None):
+        with tempfile.TemporaryDirectory() as directory:
+            temp = Path(directory)
+            with patch.object(m, "command", return_value=response, side_effect=exception), patch.object(Path, "read_text", side_effect=AssertionError("No outputs consumed after STOP")), self.assertRaises(m.MatrixError) as caught:
+                m.normalize_settings([], Path("/fictional/PRIVATE.jar"),
+                                     "/fictional/PRIVATE.gba", temp, [], OVERLAYS)
+        return str(caught.exception)
+
+    def test_every_exact_stage_exit_pair_stops_before_output_consumption(self):
+        for number, code in self.CODES.items():
+            with self.subTest(code=code):
+                self.assertEqual("NORMALIZER_STAGE=" + code + "; details discarded.",
+                                 self.stop(result(number, self.wire(code))))
+
+    def test_wrong_exit_and_stage_pairs_are_unknown(self):
+        for number in (0, 1, -9, 19, 20, 21, 22, 23, 24, 25, 26, 27):
+            for expected_number, code in self.CODES.items():
+                if number == expected_number:
+                    continue
+                with self.subTest(exit=number, code=code):
+                    self.assertEqual("UNKNOWN_ADAPTER_FAILURE",
+                                     m.normalizer_failure(result(number, self.wire(code))))
+
+    def test_malformed_duplicate_injected_or_spoofed_records_are_unknown(self):
+        wire = self.wire("INPUT_OPEN_REJECTED")
+        for text in ("", "INPUT_OPEN_REJECTED", wire.rstrip(), wire + "\n",
+                     " " + wire, wire + wire, wire.lower(),
+                     wire.replace("\t", " "), wire.replace("V1", "V2"),
+                     wire.replace("\n", "\x00\n"),
+                     self.PRIVATE + wire, wire + self.PRIVATE,
+                     "MATRIX_NORMALIZER_V1\tPRIVATE_SETTINGS\n"):
+            with self.subTest(text=text):
+                self.assertEqual("NORMALIZER_STAGE=UNKNOWN_ADAPTER_FAILURE; details discarded.",
+                                 self.stop(result(21, text)))
+
+    def test_stderr_is_never_accepted_as_a_status_channel(self):
+        for number, code in self.CODES.items():
+            for out, err in (("", self.wire(code)), (self.wire(code), self.PRIVATE),
+                             (self.wire(code), self.wire(code))):
+                with self.subTest(code=code, out=out):
+                    self.assertEqual("UNKNOWN_ADAPTER_FAILURE",
+                                     m.normalizer_failure(result(number, out, err)))
+
+    def test_compile_error_and_crash_before_stage_are_unknown(self):
+        for number in (1, 2, 137, -9):
+            for out, err in (("", ""), ("", self.PRIVATE), (self.PRIVATE, "")):
+                with self.subTest(exit=number):
+                    self.assertEqual("NORMALIZER_STAGE=UNKNOWN_ADAPTER_FAILURE; details discarded.",
+                                     self.stop(result(number, out, err)))
+
+    def test_process_launch_oserror_is_classified_without_raw_message(self):
+        for exc in (FileNotFoundError(self.PRIVATE), PermissionError(self.PRIVATE)):
+            with self.subTest(exception=type(exc).__name__):
+                self.assertEqual("NORMALIZER_STAGE=ADAPTER_COMPILE_OR_LAUNCH; details discarded.",
+                                 self.stop(exception=exc))
+
+    def test_timeout_and_subprocess_failure_are_unknown_without_raw_output(self):
+        for exc in (subprocess.TimeoutExpired([self.PRIVATE], 1, output=self.PRIVATE,
+                                            stderr=self.PRIVATE),
+                    subprocess.SubprocessError(self.PRIVATE)):
+            with self.subTest(exception=type(exc).__name__):
+                self.assertEqual("NORMALIZER_STAGE=UNKNOWN_ADAPTER_FAILURE; details discarded.",
+                                 self.stop(exception=exc))
+
+    def test_only_silent_exit_zero_is_success(self):
+        self.assertIsNone(m.normalizer_failure(result()))
+        for out, err in ((self.PRIVATE, ""), ("", self.PRIVATE),
+                         (self.wire("SETTINGS_READ_FAILED"), "")):
+            self.assertEqual("UNKNOWN_ADAPTER_FAILURE", m.normalizer_failure(result(0, out, err)))
+
+    def test_error_factory_cannot_echo_untrusted_status(self):
+        self.assertEqual("NORMALIZER_STAGE=UNKNOWN_ADAPTER_FAILURE; details discarded.",
+                         str(m.normalizer_stop(self.PRIVATE)))
+
+    def test_java_template_suppresses_diagnostics_and_emits_only_contract_literals(self):
+        java = m.NORMALIZER
+        self.assertLess(java.index("System.setOut("), java.index("RootPath.path ="))
+        self.assertLess(java.index("System.setErr("), java.index("RootPath.path ="))
+        self.assertEqual(2, java.count("OutputStream.nullOutputStream()"))
+        records = re.findall(r'case (\d+): status.println\("MATRIX_NORMALIZER_V1\\t([A-Z_]+)"\); break;', java)
+        self.assertEqual(self.CODES, {int(n): code for n, code in records})
+        self.assertEqual(len(self.CODES), java.count("status.println("))
+        self.assertIn("catch (Throwable ignored)", java)
+        self.assertIn("System.exit(stage)", java)
+        for forbidden in ("getMessage(", "printStackTrace(", "getClass(", "System.out.print", "System.err.print"):
+            self.assertNotIn(forbidden, java)
+
+    def test_java_stage_boundaries_keep_loader_profile_and_settings_gates(self):
+        java = m.NORMALIZER
+        boundaries = (("int stage = 20;", "RootPath.path ="),
+                      ("stage = 21;", "new RomOpener().openRomFile"),
+                      ("stage = 22;", "instanceof Gen3RomHandler"),
+                      ("stage = 26;", "handler.isRomValid(null)"),
+                      ("stage = 23;", "Settings.readFromFileFormat(in)"),
+                      ("stage = 24;", "s.tweakForRom(handler)"),
+                      ("stage = 25;", "s.writeToFileFormat(out)"))
+        for marker, operation in boundaries:
+            with self.subTest(stage=marker):
+                self.assertLess(java.index(marker), java.index(operation))
+        self.assertIn("!loaded.wasOpeningSuccessful()", java)
+        self.assertIn("!((Gen3RomHandler) loaded.getRomHandler()).usesCfruDpeRandomPoolPolicy()", java)
+        self.assertIn("!observe(s).equals(observe(restored))", java)
+
+    def test_each_category_main_returns_nonzero_no_generation_and_cleans(self):
+        responses = [result(n, self.wire(code)) for n, code in self.CODES.items()]
+        responses += [result(1, self.PRIVATE, self.PRIVATE)]
+        for response in responses:
+            created = []
+            def execute(args, cwd, timeout=600):
+                created.append(cwd)
+                return response
+            with self.subTest(exit=response.returncode), patch.object(m, "verify_pins"), patch.object(m, "read_public_source", return_value=GENERATOR_SOURCE), patch.object(m, "prepare_tool", return_value=Path("/fictional/PRIVATE.jar")), patch.object(m, "generate_settings", return_value=[]), patch.object(m, "command", side_effect=execute), patch.object(m, "input_digest", return_value=b"synthetic input") as digest, patch.object(m, "run_case") as run, contextlib.redirect_stdout(io.StringIO()) as output:
+                self.assertEqual(1, m.main(["--rom", "/fictional/PRIVATE.gba"]))
+            run.assert_not_called()
+            self.assertEqual(2, digest.call_count)  # Existing input-unchanged finally gate.
+            self.assertTrue(created and all(not p.exists() for p in created))
+            code = self.CODES.get(response.returncode, "UNKNOWN_ADAPTER_FAILURE")
+            self.assertEqual("Result: STOP\nSanitized message: NORMALIZER_STAGE=" + code
+                             + "; details discarded.\n", output.getvalue())
+
+
+
+class NullRestrictionSentinelTest(unittest.TestCase):
+    """Pinned public fragments + synthetic Settings API; never a candidate build."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.restrictions = public_fixture(
+            "romio/src/main/java/com/uprfvx/romio/gamedata/GenRestrictions.java",
+            "bc2fb9358151f65c0736362588edc674c47fc1f7")
+        cls.cli = public_fixture("random/src/main/java/com/uprfvx/random/cli/CliRandomizer.java",
+                                 "0848e80cf7025efc15b246b28bde498b1466b950")
+
+    def test_pinned_null_serializer_parser_and_restriction_mask_contract(self):
+        self.assertRegex(SETTINGS_SOURCE, r"if \(currentRestrictions == null\) \{\s*writeFullInt\(out, -1\);\s*\} else \{\s*writeFullInt\(out, currentRestrictions.toInt\(\)\);")
+        self.assertRegex(SETTINGS_SOURCE, r"int genLimit = IOFunctions.readFullInt\(data, 30\);\s*GenRestrictions restrictions = new GenRestrictions\(genLimit\);\s*settings.setCurrentRestrictions\(restrictions\);")
+        self.assertIn("public static final int MAX_GENERATION = 9;", self.restrictions)
+        self.assertIn("allowEvolutionaryRelatives = (state & 1) > 0;", self.restrictions)
+        self.assertIn("setGenAllowed(gen, (state & (1 << gen)) > 0);", self.restrictions)
+        self.assertIn("switches[0] = allowEvolutionaryRelatives;", self.restrictions)
+        self.assertIn("switches[gen] = isGenAllowed(gen);", self.restrictions)
+        self.assertIn("initial |= b ? state : 0;", self.restrictions)
+        serialized = (-1).to_bytes(4, "little", signed=True)
+        parsed = int.from_bytes(serialized, "little", signed=True)
+        restored_mask = sum(1 << bit for bit in range(10) if parsed & (1 << bit))
+        self.assertEqual(-1, parsed)
+        self.assertEqual(1023, restored_mask)
+        self.assertNotEqual(parsed, restored_mask)
+
+    def test_pinned_cli_file_loading_and_normalization_before_randomization(self):
+        self.assertIn("settings = Settings.readFromFileFormat(fis);", self.cli)
+        self.assertIn("Settings.TweakForROMFeedback feedback = settings.tweakForRom(romHandler);", self.cli)
+        self.assertLess(self.cli.index("CliRandomizer.displaySettingsWarnings(settings, romHandler);"),
+                        self.cli.index("new GameRandomizer(settings,"))
+        self.assertRegex(SETTINGS_SOURCE, r"rh instanceof Gen3RomHandler && !rh.isRomValid\(null\)\)\) \{\s*this.currentRestrictions = null;\s*this.setLimitPokemon\(false\);")
+        self.assertIn("settings.setLimitPokemon(restoreState(data[65], 3));", SETTINGS_SOURCE)
+        self.assertIn("byte[] settings = toStringWithoutVersion().getBytes(StandardCharsets.UTF_8);", SETTINGS_SOURCE)
+        self.assertIn("buf.putInt(VERSION);", SETTINGS_SOURCE)
+        self.assertIn("buf.putInt(settings.length);", SETTINGS_SOURCE)
+        self.assertIn("return fromStringAndVersion(settings, version);", SETTINGS_SOURCE)
+        self.assertIn("checkChecksum(data);", SETTINGS_SOURCE)
+
+    def test_adapter_keeps_source_encoding_and_checks_cli_replay_in_stage25(self):
+        java = m.NORMALIZER
+        self.assertIn('Settings verified = verifiedRoundtrip(s, restored, handler, policy, valid, Path.of(i + ".rnqs"));', java)
+        self.assertIn('Files.writeString(Path.of(i + ".settings"), verified.toString());', java)
+        self.assertIn('Files.writeString(Path.of(i + ".post-state"), observe(verified));', java)
+        self.assertLess(java.index("stage = 25;"), java.index("Settings verified ="))
+        self.assertIn("restored.tweakForRom(handler);", m.NORMALIZER_ROUNDTRIP_JAVA)
+        self.assertIn("return s; // Preserve the verified on-disk -1 encoding", m.NORMALIZER_ROUNDTRIP_JAVA)
+        self.assertNotIn("setCurrentRestrictions(", m.NORMALIZER_ROUNDTRIP_JAVA)
+        self.assertNotIn("setLimitPokemon(", m.NORMALIZER_ROUNDTRIP_JAVA)
+
+    def test_synthetic_java_executes_public_fragments_and_actual_comparison_helper(self):
+        # Java source-launch compiles this synthetic fixture in memory only.
+        # No UPR/JAR/Gradle/component build, classpath, ROM or binary output.
+        serializer = re.search(r"if \(currentRestrictions == null\) \{\s*writeFullInt\(out, -1\);\s*\} else \{\s*writeFullInt\(out, currentRestrictions.toInt\(\)\);\s*\}", SETTINGS_SOURCE)[0]
+        parser = re.search(r"int genLimit = IOFunctions.readFullInt\(data, 30\);\s*GenRestrictions restrictions = new GenRestrictions\(genLimit\);\s*settings.setCurrentRestrictions\(restrictions\);", SETTINGS_SOURCE)[0]
+        tweak = re.search(r"if \(rh instanceof Gen1RomHandler \|\| \(rh instanceof Gen3RomHandler && !rh.isRomValid\(null\)\)\) \{.*?this.currentRestrictions.limitToGen\(rh.highestPokemonGeneration\(\)\);\s*\}", SETTINGS_SOURCE, re.S)[0]
+        # Unmodified standalone public restriction fields/constructors/bit methods;
+        # omit package/imports and later unrelated mega/type-dependent methods.
+        restrictions = self.restrictions.split("public class GenRestrictions {", 1)[1].split("    // TODO: this should *not* be here", 1)[0]
+        options = CandidateRiskTest.observed()
+        getters = []
+        for key, default in options.items():
+            if key in ("LimitPokemon", "CurrentRestrictions"):
+                continue
+            method = ("useEstimatedLevelsForEvolutionImprovements" if key == "EstimateLevelForEvolutionImprovements"
+                      else ("is" if default in ("true", "false") else "get") + key)
+            kind = "boolean" if default in ("true", "false") else "String"
+            value = 'options.getOrDefault("' + key + '", "' + default + '")'
+            if kind == "boolean":
+                value = "Boolean.parseBoolean(" + value + ")"
+            getters.append(kind + " " + method + "() { return " + value + "; }")
+        java = r'''
+import java.io.*;
+import java.nio.*;
+import java.nio.file.*;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
+import java.util.zip.CRC32;
+class SentinelHarness {
+''' + m.OBSERVE_JAVA + m.NORMALIZER_ROUNDTRIP_JAVA + r'''
+  interface Checked { void run() throws Exception; }
+  static void require(boolean ok) { if (!ok) throw new AssertionError(); }
+  static void stop(Checked action) throws Exception {
+    try { action.run(); } catch (Exception expected) { return; }
+    throw new AssertionError();
+  }
+  static Path file;
+  static Gen3RomHandler handler = new Gen3RomHandler();
+  static Settings normalized() { Settings s = new Settings(); s.currentRestrictions = null; return s; }
+  static Settings reload(Settings s) throws Exception { s.write(file); return Settings.read(file); }
+  static void reject(Settings s, Settings r, boolean policy, boolean valid) throws Exception {
+    require(!exactNullRestrictionRoundtrip(s, r, policy, valid));
+    stop(() -> verifiedRoundtrip(s, r, handler, policy, valid, file));
+  }
+  public static void main(String[] args) throws Exception {
+    file = Path.of(args[0]);
+    Settings s = normalized();
+    Settings restored = reload(s);
+    require(s.currentRestrictions == null && restored.currentRestrictions.toInt() == 1023);
+    require(!s.isLimitPokemon() && !restored.isLimitPokemon());
+    require(ByteBuffer.wrap(checkedSettingsData(s.toString())).order(ByteOrder.LITTLE_ENDIAN).getInt(30) == -1);
+    require(!observe(s).equals(observe(restored)) && !s.toString().equals(restored.toString()));
+    require(exactNullRestrictionRoundtrip(s, restored, true, false));
+    byte[] disk = Files.readAllBytes(file);
+    Settings verified = verifiedRoundtrip(s, restored, handler, true, false, file);
+    require(verified == s && Arrays.equals(disk, Files.readAllBytes(file)));
+    String encoded = new String(disk, 8, disk.length - 8, StandardCharsets.UTF_8);
+    require(verified.toString().substring(3).equals(encoded));
+    require(verified.currentRestrictions == null && !verified.isLimitPokemon());
+    // The CLI reloads that same -1 file, then uses the exact public target gate.
+    Settings cli = Settings.read(file);
+    require(cli.currentRestrictions.toInt() == 1023 && !cli.isLimitPokemon());
+    cli.tweakForRom(handler);
+    require(cli.currentRestrictions == null && !cli.isLimitPokemon());
+    require(verified.toString().equals(cli.toString()) && observe(verified).equals(observe(cli)));
+    // Unaffected strict roundtrip remains accepted, with no exception predicate.
+    Settings stable = new Settings(); stable.currentRestrictions = new GenRestrictions(1022); stable.limit = true;
+    Settings stableRead = reload(stable);
+    require(verifiedRoundtrip(stable, stableRead, handler, false, true, file) == stableRead);
+    for (boolean policy : new boolean[]{false, true}) {
+      for (boolean valid : new boolean[]{false, true}) {
+        if (policy && !valid) continue;
+        s = normalized(); restored = reload(s); reject(s, restored, policy, valid);
+      }
+    }
+    for (int mask : new int[]{0, 1, 511, 1022, 1024}) {
+      s = normalized(); restored = reload(s); restored.currentRestrictions = new GenRestrictions(mask);
+      reject(s, restored, true, false);
+    }
+    for (boolean left : new boolean[]{false, true}) {
+      for (boolean right : new boolean[]{false, true}) {
+        if (!left && !right) continue;
+        s = normalized(); s.limit = left; restored = reload(s); restored.limit = right;
+        reject(s, restored, true, false);
+      }
+    }
+    s = new Settings(); restored = reload(s); restored.currentRestrictions = new GenRestrictions(1023);
+    reject(s, restored, true, false); // non-null source restrictions are never the exception
+    for (String key : OBSERVABLES) {
+      if (key.equals("LimitPokemon") || key.equals("CurrentRestrictions")) continue;
+      s = normalized(); restored = reload(s);
+      String original = observe(s).lines().filter(line -> line.startsWith(key + "=")).findFirst().get().split("=", 2)[1];
+      restored.options.put(key, original.equals("false") ? "true" : "RANDOM");
+      reject(s, restored, true, false);
+    }
+    // Exercise every other serialized byte, including metadata/custom checksum.
+    for (int i = 0; i < 76; i++) {
+      if ((i >= 30 && i < 34) || (i >= 68 && i < 72)) continue;
+      s = normalized(); restored = reload(s); restored.data[i] ^= 1;
+      reject(s, restored, true, false);
+    }
+    for (int mask : new int[]{-2, 0, 1023}) {
+      s = normalized(); s.forcedMask = mask; restored = reload(s);
+      reject(s, restored, true, false);
+    }
+    s = normalized(); restored = reload(s); restored.forcedMask = -1;
+    reject(s, restored, true, false); // getter/serialized restored mask disagree
+    for (boolean corruptSource : new boolean[]{false, true}) {
+      Settings a = normalized(); Settings b = reload(a);
+      if (corruptSource) a.corruptCRC = true; else b.corruptCRC = true;
+      stop(() -> verifiedRoundtrip(a, b, handler, true, false, file));
+    }
+    for (int offset : new int[]{0, 4, 8}) {
+      Settings a = normalized(); Settings b = reload(a); byte[] changed = Files.readAllBytes(file);
+      changed[offset] ^= 1; Files.write(file, changed);
+      stop(() -> verifiedRoundtrip(a, b, handler, true, false, file));
+    }
+    Settings a = normalized(); Settings b = reload(a); Files.write(file, new byte[0]);
+    stop(() -> verifiedRoundtrip(a, b, handler, true, false, file));
+    a.write(file); Files.delete(file);
+    stop(() -> verifiedRoundtrip(a, b, handler, true, false, file));
+    for (int mode = 1; mode <= 4; mode++) {
+      Settings x = normalized(); Settings y = reload(x); Gen3RomHandler target = new Gen3RomHandler(); target.mode = mode;
+      stop(() -> verifiedRoundtrip(x, y, target, true, false, file));
+    }
+    System.out.println("SENTINEL_SYNTHETIC_HARNESS=PASS");
+  }
+  static final String[] OBSERVABLES = OBSERVABLE_LIST;
+}
+interface RomHandler { boolean isRomValid(Object unused); int highestPokemonGeneration(); }
+class Gen1RomHandler implements RomHandler {
+  public boolean isRomValid(Object unused) { return true; }
+  public int highestPokemonGeneration() { return 1; }
+}
+class Gen3RomHandler implements RomHandler {
+  int mode;
+  public boolean isRomValid(Object unused) { return false; }
+  public int highestPokemonGeneration() { return 9; }
+}
+class IOFunctions {
+  static int readFullInt(byte[] data, int index) { return ByteBuffer.wrap(data).order(ByteOrder.LITTLE_ENDIAN).getInt(index); }
+}
+class Settings {
+  byte[] data = new byte[76];
+  boolean limit, corruptCRC;
+  Integer forcedMask;
+  GenRestrictions currentRestrictions = new GenRestrictions(1022);
+  Map<String, String> options = new HashMap<>();
+  boolean isLimitPokemon() { return limit; }
+  void setLimitPokemon(boolean value) { limit = value; }
+  GenRestrictions getCurrentRestrictions() { return currentRestrictions; }
+  void setCurrentRestrictions(GenRestrictions value) { currentRestrictions = value; }
+  GETTERS
+  static void writeFullInt(ByteArrayOutputStream out, int value) {
+    out.writeBytes(ByteBuffer.allocate(4).order(ByteOrder.LITTLE_ENDIAN).putInt(value).array());
+  }
+  public String toString() {
+    ByteArrayOutputStream out = new ByteArrayOutputStream();
+    out.writeBytes(Arrays.copyOfRange(data, 0, 30));
+    SERIALIZER
+    out.writeBytes(Arrays.copyOfRange(data, 34, data.length));
+    byte[] encoded = out.toByteArray();
+    if (forcedMask != null) ByteBuffer.wrap(encoded).order(ByteOrder.LITTLE_ENDIAN).putInt(30, forcedMask);
+    encoded[65] = (byte) ((encoded[65] & ~8) | (limit ? 8 : 0));
+    CRC32 crc = new CRC32(); crc.update(encoded, 0, encoded.length - 8);
+    ByteBuffer.wrap(encoded).putInt(encoded.length - 8, (int)crc.getValue());
+    if (corruptCRC) encoded[encoded.length - 8] ^= 1;
+    return "422" + Base64.getEncoder().encodeToString(encoded);
+  }
+  void write(Path file) throws Exception {
+    byte[] encoded = toString().substring(3).getBytes(StandardCharsets.UTF_8);
+    Files.write(file, ByteBuffer.allocate(encoded.length + 8).putInt(422).putInt(encoded.length).put(encoded).array());
+  }
+  static Settings read(Path file) throws Exception {
+    byte[] encoded = Files.readAllBytes(file);
+    String payload = "422" + new String(encoded, 8, encoded.length - 8, StandardCharsets.UTF_8);
+    byte[] data = SentinelHarness.checkedSettingsData(payload);
+    Settings settings = new Settings(); settings.data = data;
+    PARSER
+    settings.setLimitPokemon((data[65] & 8) != 0);
+    return settings;
+  }
+  void tweakForRom(RomHandler rh) {
+    if (rh instanceof Gen3RomHandler && ((Gen3RomHandler)rh).mode == 2) return;
+    TWEAK
+    int mode = ((Gen3RomHandler)rh).mode;
+    if (mode == 1) limit = true;
+    if (mode == 3) data[1] ^= 1;
+    if (mode == 4) options.put("UseTimeBasedEncounters", "true");
+  }
+}
+class GenRestrictions { RESTRICTIONS }
+'''
+        java = (java.replace("OBSERVABLE_LIST", "new String[]{" + ",".join('"' + k + '"' for k in options) + "}")
+                .replace("GETTERS", "\n".join(getters)).replace("SERIALIZER", serializer)
+                .replace("PARSER", parser).replace("TWEAK", tweak).replace("RESTRICTIONS", restrictions))
+        with tempfile.TemporaryDirectory(prefix="sentinel-synthetic-") as directory:
+            source = Path(directory) / "SentinelHarness.java"
+            source.write_text(java)
+            response = subprocess.run(["java", str(source), str(Path(directory) / "synthetic.rnqs")],
+                                      cwd=directory, capture_output=True, text=True, timeout=60, check=False)
+            # Do not publish compiler/exception output, even from this synthetic fixture.
+            self.assertEqual(0, response.returncode, "Synthetic Java harness failed; details discarded.")
+            self.assertTrue(response.stdout == "SENTINEL_SYNTHETIC_HARNESS=PASS\n", "Unexpected synthetic harness output; discarded.")
+            self.assertTrue(response.stderr == "", "Unexpected synthetic harness diagnostics; discarded.")
+            self.assertFalse(list(Path(directory).glob("*.class")))
+
+    def test_preserved_sentinel_cannot_be_replaced_by_restored_mask_for_selected_profiles(self):
+        fixture = NormalizationAccountingTest()
+        for name in ("CASUAL_NATDEX", "IRONMON_NATDEX"):
+            cases, before = fixture.selected(name)
+            after = fixture.adapted(before[0])
+            m.verify_selected_normalized_payloads(cases, before, [after], {0: 1022})
+            changed = bytearray(m.settings_data(after))
+            changed[30:34] = (1023).to_bytes(4, "little", signed=True)
+            changed[-8:-4] = zlib.crc32(changed[:-8]).to_bytes(4, "big")
+            with self.subTest(profile=name), self.assertRaises(m.MatrixError):
+                m.verify_selected_normalized_payloads(cases, before,
+                    ["422" + base64.b64encode(changed).decode()], {0: 1022})
+
+
+    def test_sentinel_payload_accounting_retains_blocked_intents_and_cli_file_identity(self):
+        coverage = NormalizedCoverageTest()
+        coverage.setUp()
+        cases = [coverage.by_id[name] for name in (m.RISK_EVOLUTION, m.SPECIAL_WILD,
+                 "FVX-ITEM-002", "CASUAL_NATDEX", "IRONMON_NATDEX")]
+        baseline = bytearray(67)
+        baseline[30:34] = (1022).to_bytes(4, "little")
+        risk = bytearray(baseline)
+        risk[30:34] = (1023).to_bytes(4, "little")
+        risk[65] |= 8
+        before = [synthetic_payload(risk), synthetic_payload(baseline),
+                  synthetic_payload(baseline), synthetic_payload(m.CASUAL_BYTES), m.IRONMON]
+        fixture = NormalizationAccountingTest()
+        after = [fixture.adapted(payload) for payload in before]
+        self.assertEqual(after[0], after[1])
+        self.assertEqual(after[1], after[2])
+        observed = coverage.observations(cases)
+        for fields in observed.values():
+            fields.update(LimitPokemon="false", CurrentRestrictions="-1")
+            if fields["UseTimeBasedEncounters"] == "true":
+                fields["UseTimeBasedEncounters"] = "false"
+        with tempfile.TemporaryDirectory() as directory:
+            temp = Path(directory)
+            def execute(args, cwd, timeout=600):
+                for i, payload in enumerate(after):
+                    encoded = payload[3:].encode()
+                    (cwd / f"{i}.rnqs").write_bytes((422).to_bytes(4, "big")
+                        + len(encoded).to_bytes(4, "big") + encoded)
+                    (cwd / f"{i}.settings").write_text(payload)
+                    (cwd / f"{i}.normalization").write_text(
+                        fixture.witness(**{"5": "1023" if i == 0 else "1022"})
+                        if i in (0, 3, 4) else "NONE")
+                for i, fields in observed.items():
+                    (cwd / f"{i}.post-state").write_text("\n".join(k + "=" + v for k, v in fields.items()))
+                return result()
+            with patch.object(m, "command", side_effect=execute):
+                payloads, events, blocked = m.normalize_settings(cases, Path("synthetic.jar"),
+                    "/fictional/input", temp, before, OVERLAYS)
+            self.assertEqual(after, payloads)
+            self.assertEqual({0: 1023, 3: 1022, 4: 1022}, events)
+            self.assertEqual({0, 1}, set(blocked))
+            self.assertEqual(("GEN_LIMIT_OR_RELATIVES_NOT_EFFECTIVE",), blocked[0])
+            self.assertEqual(("TIME_BASED_ENCOUNTERS_NORMALIZED_OFF",), blocked[1])
+            groups = m.deduplicate(cases, payloads, temp, blocked)
+            self.assertEqual(3, len(groups))
+            self.assertEqual({cases[2].id, cases[3].id, cases[4].id},
+                             {case.id for group in groups for case in group.aliases})
+            self.assertEqual([cases[2]], groups[0].aliases)
+            self.assertEqual(temp / "2.rnqs", groups[0].settings)
+            disk = groups[0].settings.read_bytes()
+            self.assertEqual(after[2][3:].encode(), disk[8:])
+            self.assertEqual(-1, int.from_bytes(m.settings_data(after[2])[30:34], "little", signed=True))
+            with patch.object(m, "input_digest", return_value=b"synthetic"), patch.object(m, "command", return_value=result(1)) as cli:
+                m.attempt(groups[0], m.PRIMARY, "/fictional/input", Path("synthetic.jar"), temp, False)
+            args = cli.call_args.args[0]
+            self.assertEqual(str(groups[0].settings), args[args.index("-s") + 1])
+            self.assertEqual(disk, groups[0].settings.read_bytes())
+            records = [(groups[0], m.PRIMARY, m.Outcome("PASS", "PASS", "PASS", input_unchanged="PASS"))]
+            self.assertEqual("R2_RANDOMIZER_GENERATION_MATRIX_PARTIAL_NOT_RUN",
+                             m.matrix_result(cases, groups, records, blocked))
+
+
+class LedgerTest(unittest.TestCase):
+    def test_only_two_rows_added_and_130_original_rows_unchanged(self):
+        body = (m.ROOT / "08_tests/randomizer/fvx_feature_test_status_matrix.tsv").read_bytes()
+        lines = body.splitlines(keepends=True)
+        additions = {b"FVX-SPECIAL-WILD-001", b"FVX-FOE-SENSIBLE-HELD-ITEMS"}
+        original = b"".join(l for l in lines if l.split(b"\t", 1)[0] not in additions)
+        self.assertEqual("7919b6f73f1ed64b84ec8174028e4eabeb0ad9e9", m.public_blob_id(original))
+        rows = [line.decode().rstrip("\n").split("\t") for line in lines[1:]]
+        self.assertEqual(132, len(rows))
+        self.assertEqual(132, len({r[0] for r in rows}))
+        self.assertTrue(all(len(r) == 11 for r in rows))
+        self.assertEqual({r[0] for r in rows}, {n for n in OVERLAYS if n.startswith("FVX-")})
+        for row in rows:
+            if row[0].encode() in additions:
+                self.assertEqual(["NOT_STARTED", "NOT_STARTED"], row[5:7])
+
+    def test_existing_matrix_doc_revision_and_method_distinctions(self):
+        text = (m.ROOT / "08_tests/randomizer/195_fvx_feature_test_status_matrix.md").read_text()
+        for marker in ("132", "Legacy Revisions Only", "NOT_RUN", "USER-only", m.RISK_EVOLUTION,
+                       m.RISK_PICKUP, "OWNERSHIP_WITNESS_V1", "GFX-002+GFX-004"):
+            self.assertIn(marker, text)
+
 
 
 if __name__ == "__main__":
