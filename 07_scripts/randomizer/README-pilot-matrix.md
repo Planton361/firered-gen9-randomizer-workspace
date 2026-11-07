@@ -36,3 +36,29 @@ M07. Do not paste local logs, paths or manifests into GitHub.
 
 A `MATRIX=PASS` covers generation, reopen and replay only. It says nothing
 about boot, gameplay or learnset preservation.
+
+## #748 single options
+
+`--single --select ID[,ID]` (or `all`) runs the single options S01-S05 listed by
+`--plan`, with the same prerequisites and `--confirm USER_LOCAL_RUN`. `--matrix`
+is unchanged and never runs them.
+
+```fish
+python3 07_scripts/randomizer/firered_pilot_matrix.py --single --confirm USER_LOCAL_RUN \
+    --select FVX-TRAIT-001,FVX-TM-001,FVX-ITEM-002,FVX-TYPE-001 \
+    --rom 04_private_roms/SOURCE.gba --baseline 04_private_roms/NEUTRAL.rnqs \
+    --out 05_builds/single-(date +%Y%m%d-%H%M%S)
+```
+
+Before any ROM is generated, every case's settings must equal the baseline plus
+its declared change, and must still do so after UPR's `tweakForRom` for the
+source ROM. A case `tweakForRom` changes is `NEEDS_REVIEW` and is not generated.
+Each remaining case is generated, reopened, exported and replayed byte for
+byte. The best result is `GENERATION/REOPEN PASS`. The feature itself is not
+verified.
+
+`--plan` also prints a disposition for every current `settings-profile` ID
+and every ID in the historical 132-feature ledger: `EXECUTABLE`, `GUARDED`,
+`UNSUPPORTED`, `NEEDS_REVIEW` or `NOT_RUN`. Historical ledger results are not
+current acceptance. To add an option, add a `SINGLE_OPTIONS` entry whose
+`source` is the exact overlay lambda; the source-backing test checks it.
