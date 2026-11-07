@@ -57,8 +57,39 @@ Each remaining case is generated, reopened, exported and replayed byte for
 byte. The best result is `GENERATION/REOPEN PASS`. The feature itself is not
 verified.
 
-`--plan` also prints a disposition for every current `settings-profile` ID
-and every ID in the historical 132-feature ledger: `EXECUTABLE`, `GUARDED`,
-`UNSUPPORTED`, `NEEDS_REVIEW` or `NOT_RUN`. Historical ledger results are not
-current acceptance. To add an option, add a `SINGLE_OPTIONS` entry whose
-`source` is the exact overlay lambda; the source-backing test checks it.
+To add an option, add a `SINGLE_OPTIONS` entry whose `source` is the exact
+overlay lambda; the source-backing test checks it.
+
+## #750 comprehensive matrix
+
+`--plan` lists every current `settings-profile` ID and every ID in the
+historical 132-feature ledger as `RUNNABLE`, `GUARDED`, `UNSUPPORTED`,
+`NEEDS_REVIEW` or `NOT_RUN`, each with its reason. Historical ledger results are
+not current acceptance. The expected Settings change of each overlay is read
+from the UPR-FVX source at the pinned revision; if that source changes,
+everything becomes `NEEDS_REVIEW` and `--suite` stops. Sub-options run together
+with their parent toggles.
+
+It then plans single, pair (66 family pairs), triple (the 12 #681 triples) and
+profile cases from `upr_generation_matrix.py`'s definitions. Cases that are
+guarded, unsupported, unclear or contradictory are excluded with a reason.
+Cases with identical effective settings run once (`DUPLICATE`).
+
+`--suite` runs one bounded batch (at most 25 cases), chosen with `--kind`
+(`SINGLE,PAIR,TRIPLE,PROFILE`), `--family` (e.g. `TRAIT,TM`), `--risk`
+(`high`/`normal`) and/or `--case`. A larger selection needs `--chunk N`.
+There is no implicit full run.
+
+```fish
+python3 07_scripts/randomizer/firered_pilot_matrix.py --suite --confirm USER_LOCAL_RUN \
+    --kind SINGLE --risk normal --chunk 1 \
+    --rom 04_private_roms/SOURCE.gba --baseline 04_private_roms/NEUTRAL.rnqs \
+    --out 05_builds/suite-(date +%Y%m%d-%H%M%S)
+```
+
+Before any ROM is generated, each case's settings must equal baseline + its
+source-derived change. The case's own change must not already be in the
+baseline (otherwise `NEEDS_REVIEW`). Both must still hold after `tweakForRom`.
+Results are `PASS_GENERATION_REOPEN_REPLAY`, `EXPECTED_REJECTION` (exact guard
+text, no output), `FAIL` (stops the batch), `NEEDS_REVIEW` or `NOT_RUN`. No
+result claims that a feature works in the game.

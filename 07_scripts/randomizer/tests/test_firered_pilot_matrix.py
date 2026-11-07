@@ -1,9 +1,10 @@
-"""#743/#748 tests: synthetic settings/ROM files and a mocked UPR process only.
+"""#743/#748/#750 tests: synthetic settings/ROM files and a mocked UPR process only.
 
 Never launches UPR, Gradle or a real JAR and never opens a real ROM or .rnqs.
 The Java adapter test compiles against synthetic Settings stand-ins.
 """
 import contextlib
+import hashlib
 import io
 import json
 from pathlib import Path
@@ -42,6 +43,7 @@ class FakeUPR:
 
     def __init__(self):
         self.calls = []
+        self.effects = m.OVERLAY_EFFECT  # overlay -> Settings change settings-profile applies
         self.extra_effect = {}       # overlay -> hidden extra Settings change
         self.cli_fail = set()        # case seeds whose generation fails
         self.cli_override = {}       # seed -> callable(args, output) -> CompletedProcess
@@ -103,7 +105,7 @@ class FakeUPR:
             if a == "--profile" and args[i + 1] != "00_BASELINE":
                 return done(args, 1, "", "Unknown settings profile")
             if a in ("--enable", "--profile"):
-                state.update(m.OVERLAY_EFFECT.get(args[i + 1], {}))
+                state = m.apply(state, self.effects.get(args[i + 1], {}))
                 state.update(self.extra_effect.get(args[i + 1], {}))
         Path(args[args.index("--output-settings") + 1]).write_text(json.dumps(state))
         return done(args, 0, "Settings profile written successfully.\n")
@@ -161,6 +163,9 @@ class Fixture:
 
     def single(self, options=m.SINGLE_OPTIONS):
         return m.run_single(self.rom, self.baseline, self.jar, self.out, self.temp, options)
+
+    def suite(self, plan):
+        return m.run_suite(self.rom, self.baseline, self.jar, self.out, self.temp, plan)
 
 
 def statuses(results):
@@ -657,24 +662,48 @@ class SingleOptionTests(unittest.TestCase):
 
 
 SYNTHETIC_CATALOG = '''    private static Map<String, Consumer<Settings>> buildFeatureOverlays() {
-        overlays.put("FVX-A-001", s -> s.setPlain(true));
-        overlays.put("FVX-A-002", s -> {
-            s.setTouched(true);
-            s.setPlain(false);
-        });
-        overlays.put("FVX-A-003", s -> helper(s, X.Y));
-        overlays.put("FVX-A-004", unsupported("FVX-A-004", "No."));
-        overlays.put("FVX-A-005", Gen::enable);
+        overlays.put("MODE-WILD-GAME", s -> setWildZoneMode(s, Settings.WildPokemonZoneMod.GAME));
+        overlays.put("MODE-TYPE-INVERSE", s -> s.setTypeEffectivenessMod(Settings.TypeEffectivenessMod.INVERSE));
+        overlays.put("FVX-GEN-003", s -> s.setRandomizeIntroMon(false));
         overlays.put("FVX-TRAIT-001", s -> s.setBaseStatisticsMod(Settings.BaseStatisticsMod.RANDOM));
+        overlays.put("FVX-TRAIT-002", s -> s.setBaseStatsFollowEvolutions(true));
+        overlays.put("FVX-TRAIT-007", s -> s.setDualTypeOnly(true));
+        overlays.put("FVX-TRAIT-017", s -> s.setEvolutionsMod(Settings.EvolutionsMod.RANDOM_EVERY_LEVEL));
+        overlays.put("FVX-TRAIT-025", s -> s.setMakeEvolutionsEasier(true));
+        overlays.put("FVX-TRAIT-026", s -> s.setEstimateLevelForEvolutionImprovements(true));
+        overlays.put("FVX-SST-001", unsupported("FVX-SST-001", "Custom starters need IDs."));
         overlays.put("FVX-MOVE-007", s -> s.setMovesetsMod(Settings.MovesetsMod.COMPLETELY_RANDOM));
+        overlays.put("FVX-MOVE-008", s -> s.setStartWithGuaranteedMoves(true));
+        overlays.put("FVX-FOE-011", s -> s.setBattleStyle(new BattleStyle(BattleStyle.Modification.RANDOM, BattleStyle.Style.SINGLE_BATTLE)));
         overlays.put("FVX-WILD-001", s -> s.setRandomizeWildPokemon(true));
+        overlays.put("FVX-WILD-002", s -> s.setWildPokemonZoneMod(Settings.WildPokemonZoneMod.GAME));
+        overlays.put("FVX-TM-001", s -> s.setTmsMod(Settings.TMsMod.RANDOM));
+        overlays.put("FVX-TYPE-001", s -> s.setTypeEffectivenessMod(Settings.TypeEffectivenessMod.RANDOM_BALANCED));
+        overlays.put("FVX-TYPE-002", s -> s.setInverseTypesRandomImmunities(true));
+        overlays.put("FVX-GFX-001", SettingsProfileGenerator::enablePokemonPaletteRandomization);
+        overlays.put("FVX-MISC-001", s -> enableMiscTweak(s, MiscTweak.FASTEST_TEXT));
+        overlays.put("FVX-MISC-003", s -> enableMiscTweak(s, MiscTweak.RANDOMIZE_PC_POTION));
+        overlays.put("FVX-X-HELPER", s -> helper(s, X.Y));
+        overlays.put("FVX-X-CONFLICT", s -> {
+            s.setTmsMod(Settings.TMsMod.RANDOM);
+            s.setTmsMod(Settings.TMsMod.UNCHANGED);
+        });
         return Collections.unmodifiableMap(overlays);
     }
 '''
-SYNTHETIC_SETTINGS = '''    public TweakForROMFeedback tweakForRom(RomHandler rh) {
+SYNTHETIC_SETTINGS = "\n".join("    public %s %s() { return null; }" % pair for pair in (
+    ("WildPokemonZoneMod", "getWildPokemonZoneMod"), ("boolean", "isRandomizeWildPokemon"),
+    ("TypeEffectivenessMod", "getTypeEffectivenessMod"), ("boolean", "isRandomizeIntroMon"),
+    ("BaseStatisticsMod", "getBaseStatisticsMod"), ("boolean", "isBaseStatsFollowEvolutions"),
+    ("boolean", "isDualTypeOnly"), ("EvolutionsMod", "getEvolutionsMod"), ("boolean", "isMakeEvolutionsEasier"),
+    ("boolean", "useEstimatedLevelsForEvolutionImprovements"), ("MovesetsMod", "getMovesetsMod"),
+    ("boolean", "isStartWithGuaranteedMoves"), ("BattleStyle", "getBattleStyle"), ("TMsMod", "getTmsMod"),
+    ("boolean", "isInverseTypesRandomImmunities"), ("PokemonPalettesMod", "getPokemonPalettesMod"),
+    ("int", "getCurrentMiscTweaks"))) + '''
+    public TweakForROMFeedback tweakForRom(RomHandler rh) {
         TweakForROMFeedback feedback = new TweakForROMFeedback();
         if (x) {
-            this.setTouched(false);
+            this.setTmsMod(TMsMod.UNCHANGED);
             trainersMod = TrainersMod.RANDOM;
         }
         return feedback;
@@ -682,54 +711,350 @@ SYNTHETIC_SETTINGS = '''    public TweakForROMFeedback tweakForRom(RomHandler rh
 
     // getters and setters
 '''
+SYNTHETIC_MISC = '''    public static final MiscTweak FASTEST_TEXT = new MiscTweak(1 << 3, "fastestText", 0);
+    public static final MiscTweak RANDOMIZE_PC_POTION = new MiscTweak(1 << 5, "pcPotion", 0);
+'''
+SYNTHETIC_BUNDLES = {family: () for family in m.gm.FAMILIES + ("EVOLUTIONS",)}
+SYNTHETIC_BUNDLES.update({"TRAITS": ("FVX-TRAIT-001", "FVX-TRAIT-002", "FVX-TRAIT-025"),
+                          "WILD": ("FVX-WILD-001", "FVX-WILD-002"), "TM_TUTOR": ("FVX-TM-001",),
+                          "TYPE_EFFECTIVENESS": ("FVX-TYPE-001", "FVX-TYPE-002"),
+                          "MISC": ("FVX-MISC-001", "FVX-MISC-003"), "MOVES_MOVESETS": ("FVX-MOVE-007",)})
+SYNTHETIC_PROFILES = {name: () for name in m.gm.FULL}
+SYNTHETIC_PROFILES["01_TRAITS_SAFE"] = ("FVX-TRAIT-001", "FVX-TRAIT-002")
 
 
-class DispositionTests(unittest.TestCase):
-    def setUp(self):
+class SyntheticSource:
+    """A temporary Workspace with synthetic, correctly pinned UPR-FVX source text."""
+
+    def __init__(self, testcase, catalog=SYNTHETIC_CATALOG):
         self.root = Path(tempfile.mkdtemp(prefix="pilot-catalog-"))
-        self.addCleanup(shutil.rmtree, self.root, True)
+        testcase.addCleanup(shutil.rmtree, self.root, True)
         ledger = self.root / m.LEDGER
         ledger.parent.mkdir(parents=True)
-        ledger.write_text("feature_id\tfeature_name\nFVX-A-001\tx\nFVX-OLD-001\told\n")
-
-    def write_upr(self):
-        for rel, text in ((m.CATALOG_SOURCE, SYNTHETIC_CATALOG), (m.SETTINGS_SOURCE, SYNTHETIC_SETTINGS)):
+        ledger.write_text("feature_id\tfeature_name\nFVX-TRAIT-001\tx\nFVX-OLD-001\told\n")
+        texts = {m.CATALOG_SOURCE: catalog, m.SETTINGS_SOURCE: SYNTHETIC_SETTINGS, m.MISC_SOURCE: SYNTHETIC_MISC}
+        for rel, text in texts.items():
             path = self.root / m.UPR_SOURCE / rel
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text(text)
+        pins = {rel: hashlib.sha256(text.encode()).hexdigest() for rel, text in texts.items()}
+        for patcher in (patch.object(m, "SOURCE_PINS", pins),
+                        patch.object(m, "family_bundles", return_value=(SYNTHETIC_BUNDLES, SYNTHETIC_PROFILES))):
+            patcher.start()
+            testcase.addCleanup(patcher.stop)
 
-    def test_every_catalog_and_ledger_id_gets_a_visible_disposition(self):
-        self.write_upr()
-        rows, note = m.disposition(self.root)
-        self.assertEqual(note, "")
-        self.assertEqual({k: v[0] for k, v in rows.items()}, {
-            "FVX-A-001": "NOT_RUN", "FVX-A-002": "NEEDS_REVIEW", "FVX-A-003": "NEEDS_REVIEW",
-            "FVX-A-004": "UNSUPPORTED", "FVX-A-005": "NEEDS_REVIEW", "FVX-TRAIT-001": "EXECUTABLE",
-            "FVX-MOVE-007": "GUARDED", "FVX-WILD-001": "EXECUTABLE", "FVX-OLD-001": "NEEDS_REVIEW"})
-        self.assertIn("setTouched", rows["FVX-A-002"][1])
-        self.assertIn("without current overlay", rows["FVX-OLD-001"][1])
-        self.assertIn("--single S01", rows["FVX-TRAIT-001"][1])
+    def inventory(self):
+        return m.inventory(self.root)
 
-    def test_missing_upr_source_is_never_executable(self):
-        rows, note = m.disposition(self.root)
-        self.assertIn("unavailable", note)
-        self.assertEqual({v[0] for v in rows.values()}, {"NEEDS_REVIEW"})
-        self.assertEqual(list(rows), ["FVX-A-001", "FVX-OLD-001"])
+    def plan(self):
+        return m.plan_cases(self.inventory())
+
+
+def by_id(plan):
+    return {c.id: c for c in plan}
+
+
+class InventoryTests(unittest.TestCase):
+    def test_every_catalog_and_ledger_id_has_one_visible_disposition(self):
+        inv = SyntheticSource(self).inventory()
+        self.assertEqual(inv.notes, [])
+        self.assertEqual((inv.catalog_ids, inv.ledger_ids, inv.ledger_only), (23, 2, 1))
+        states = {k: f.state for k, f in inv.features.items()}
+        self.assertEqual(states, {
+            "MODE-WILD-GAME": "RUNNABLE", "MODE-TYPE-INVERSE": "RUNNABLE", "FVX-GEN-003": "NOT_RUN",
+            "FVX-TRAIT-001": "RUNNABLE", "FVX-TRAIT-002": "RUNNABLE", "FVX-TRAIT-007": "NEEDS_REVIEW",
+            "FVX-TRAIT-017": "GUARDED", "FVX-TRAIT-025": "NEEDS_REVIEW", "FVX-TRAIT-026": "NEEDS_REVIEW",
+            "FVX-SST-001": "UNSUPPORTED", "FVX-MOVE-007": "GUARDED", "FVX-MOVE-008": "GUARDED",
+            "FVX-FOE-011": "NEEDS_REVIEW", "FVX-WILD-001": "RUNNABLE", "FVX-WILD-002": "RUNNABLE",
+            "FVX-TM-001": "RUNNABLE", "FVX-TYPE-001": "RUNNABLE", "FVX-TYPE-002": "RUNNABLE",
+            "FVX-GFX-001": "RUNNABLE", "FVX-MISC-001": "RUNNABLE", "FVX-MISC-003": "RUNNABLE",
+            "FVX-X-HELPER": "NEEDS_REVIEW", "FVX-X-CONFLICT": "NEEDS_REVIEW", "FVX-OLD-001": "NEEDS_REVIEW"})
+        reasons = {k: f.reason for k, f in inv.features.items()}
+        self.assertIn("parent FVX-TRAIT-006 has no current overlay", reasons["FVX-TRAIT-007"])
+        self.assertIn("parent FVX-MOVE-007 is GUARDED", reasons["FVX-MOVE-008"])
+        self.assertIn("parent FVX-FOE-001 has no current overlay", reasons["FVX-FOE-011"])
+        self.assertIn("OWNERSHIP_WITNESS_V1", reasons["FVX-TRAIT-025"])
+        self.assertIn("not readable", reasons["FVX-TRAIT-026"])     # setter/getter names differ
+        self.assertIn("Custom starters need IDs.", reasons["FVX-SST-001"])
+        self.assertIn("OFF value", reasons["FVX-GEN-003"])
+        self.assertIn("without current overlay", reasons["FVX-OLD-001"])
+        self.assertIn("tweakForRom may normalize setTmsMod", reasons["FVX-TM-001"])
+        self.assertIn("with FVX-TRAIT-001", reasons["FVX-TRAIT-002"])
+
+    def test_source_derived_deltas(self):
+        f = SyntheticSource(self).inventory().features
+        self.assertEqual(f["MODE-WILD-GAME"].delta, {"isRandomizeWildPokemon": "true", "getWildPokemonZoneMod": "GAME"})
+        self.assertEqual(f["FVX-GFX-001"].delta, {"getPokemonPalettesMod": "RANDOM"})
+        self.assertEqual(f["FVX-MISC-003"].delta, {"getCurrentMiscTweaks": "32"})
+        self.assertEqual(m.merge([f["FVX-MISC-001"].delta, f["FVX-MISC-003"].delta]), ({"getCurrentMiscTweaks": "40"}, ""))
+        self.assertEqual(m.merge([{"a": "1"}, {"a": "2"}]), (None, "a"))
+        self.assertIsNone(m.overlay_delta("s -> s.setTmsMod(someVariable)", {"getTmsMod"}, {}))
+        self.assertIsNone(m.overlay_delta("s -> s.setTmsMod(Settings.TMsMod.RANDOM)", set(), {}))
+        self.assertEqual(m.overlay_delta("s -> s.setBattleStyle(new BattleStyle(BattleStyle.Modification.RANDOM, "
+                                         "BattleStyle.Style.SINGLE_BATTLE))", {"getBattleStyle"}, {}),
+                         {"getBattleStyle": "RANDOM"})
+
+    def test_missing_or_changed_source_fails_closed(self):
+        src = SyntheticSource(self)
+        (src.root / m.UPR_SOURCE / m.CATALOG_SOURCE).write_text(SYNTHETIC_CATALOG + "// changed\n")
+        inv = src.inventory()
+        self.assertIn("differs from the pinned revision", inv.notes[0])
+        self.assertEqual({f.state for f in inv.features.values()}, {"NEEDS_REVIEW"})
+        self.assertFalse([c for c in m.plan_cases(inv) if c.status in m.RUNNABLE_CASES and c.overlays])
+        shutil.rmtree(src.root / m.UPR_SOURCE)
+        inv = src.inventory()
+        self.assertIn("unavailable", inv.notes[0])
+        self.assertEqual(list(inv.features), ["FVX-TRAIT-001", "FVX-OLD-001"])
 
     def test_tweak_setters_include_direct_field_writes(self):
-        self.assertEqual(m.tweak_setters(SYNTHETIC_SETTINGS), {"setTouched", "setTrainersMod"})
+        self.assertEqual(m.tweak_setters(SYNTHETIC_SETTINGS), {"setTmsMod", "setTrainersMod"})
 
-    def test_plan_prints_disposition_without_rom_jar_or_process(self):
-        self.write_upr()
-        with patch.object(m, "ROOT", self.root), patch.object(m, "command", side_effect=AssertionError("no")), \
+
+class CasePlanTests(unittest.TestCase):
+    def test_singles_cover_every_feature_once_with_parents_and_reasons(self):
+        plan = SyntheticSource(self).plan()
+        singles = [c for c in plan if c.kind == "SINGLE"]
+        self.assertEqual(len(singles), 24)
+        cases = by_id(plan)
+        self.assertEqual(cases["SGL-FVX-TRAIT-002"].overlays, ("FVX-TRAIT-001", "FVX-TRAIT-002"))
+        self.assertEqual(cases["SGL-FVX-TRAIT-002"].own, (("isBaseStatsFollowEvolutions", "true"),))
+        self.assertEqual(cases["SGL-FVX-TYPE-002"].overlays, ("MODE-TYPE-INVERSE", "FVX-TYPE-002"))
+        self.assertEqual(cases["SGL-FVX-MOVE-007"].status, "EXPECTED_REJECTION")
+        self.assertEqual(cases["SGL-FVX-MOVE-007"].guard, m.LEARNSET_GUARD)
+        self.assertIn("RANDOM_EVERY_LEVEL", cases["SGL-FVX-TRAIT-017"].guard)
+        self.assertEqual(cases["SGL-FVX-MOVE-008"].status, "GUARDED")
+        self.assertEqual(cases["SGL-FVX-SST-001"].status, "UNSUPPORTED")
+        self.assertEqual(cases["SGL-FVX-GEN-003"].status, "NOT_RUN")
+        self.assertEqual((cases["SGL-FVX-WILD-002"].status, cases["SGL-FVX-WILD-002"].reason),
+                         ("DUPLICATE", "same effective settings as SGL-MODE-WILD-GAME"))
+        self.assertEqual(cases["SGL-FVX-TM-001"].risk, "high")
+        self.assertEqual(cases["SGL-FVX-TRAIT-001"].risk, "normal")
+        for c in plan:
+            if c.status not in m.RUNNABLE_CASES:
+                self.assertTrue(c.reason, c.id)
+                self.assertEqual(c.overlays, (), c.id)
+
+    def test_pairs_triples_and_profiles_reuse_legacy_definitions_with_filters(self):
+        plan = SyntheticSource(self).plan()
+        kinds = [c.kind for c in plan]
+        self.assertEqual(kinds.count("PAIR"), 66)
+        self.assertEqual(kinds.count("TRIPLE"), 12)
+        self.assertEqual(kinds.count("PROFILE"), 1 + len(m.gm.FULL) + len(m.gm.MAXIMUM) + 2)
+        cases = by_id(plan)
+        pair = cases["PAIR-TRAITS+WILD"]
+        self.assertEqual(pair.status, "RUNNABLE")
+        self.assertEqual(pair.overlays, ("FVX-TRAIT-001", "FVX-TRAIT-002", "FVX-WILD-001", "FVX-WILD-002"))
+        self.assertEqual(set(pair.families), {"TRAIT", "WILD"})
+        types = cases["PAIR-TM_TUTOR+TYPE_EFFECTIVENESS"]
+        self.assertEqual(types.overlays, ("FVX-TM-001", "FVX-TYPE-001"))
+        self.assertIn("left out (contradicts earlier members): FVX-TYPE-002", types.reason)
+        self.assertEqual(dict(cases["PAIR-TM_TUTOR+MISC"].delta)["getCurrentMiscTweaks"], "40")
+        self.assertEqual(cases["PAIR-GEN_SAFE+TRAITS"].reason, "no runnable overlay in GEN_SAFE")
+        self.assertEqual(cases["PAIR-TRAITS+MOVES_MOVESETS"].status, "NEEDS_REVIEW")   # guarded only
+        self.assertEqual(cases["FAM-01_TRAITS_SAFE"].status, "DUPLICATE")
+        self.assertEqual(cases["PRO-CONTROL"].status, "RUNNABLE")
+        self.assertEqual(cases["PRO-CASUAL_NATDEX"].status, "NEEDS_REVIEW")
+        for c in plan:
+            if c.kind != "SINGLE" and c.status in m.RUNNABLE_CASES:
+                self.assertFalse(set(c.overlays) & set(m.gm.RISK_SINGLES), c.id)
+
+    def test_runnable_cases_have_unique_effective_settings_and_stable_seeds(self):
+        plan = SyntheticSource(self).plan()
+        runnable = [c for c in plan if c.status in m.RUNNABLE_CASES]
+        self.assertEqual(len({(c.delta, c.status) for c in runnable}), len(runnable))
+        self.assertEqual(len({c.seed for c in plan}), len(plan))
+        self.assertEqual([c.seed for c in plan], [c.seed for c in SyntheticSource(self).plan()])
+        self.assertTrue(all(re.fullmatch(r"[A-Za-z0-9_+-]{1,80}", c.id) for c in plan))
+
+    def test_plan_prints_inventory_and_case_counts_without_rom_jar_or_process(self):
+        src = SyntheticSource(self)
+        with patch.object(m, "ROOT", src.root), patch.object(m, "command", side_effect=AssertionError("no")), \
                 patch.object(m.gm, "input_digest", side_effect=AssertionError("no ROM")):
             out = io.StringIO()
             with contextlib.redirect_stdout(out):
                 self.assertEqual(m.main(["--plan"]), 0)
         text = out.getvalue()
+        lines = text.splitlines()
+        self.assertEqual(sum(line[:1] == "M" for line in lines), 11)
+        self.assertEqual(sum(line.startswith("S0") for line in lines), len(m.SINGLE_OPTIONS))
+        self.assertIn("Features: 24 IDs (23 current overlays, 2 ledger IDs, 1 ledger-only); RUNNABLE=12, "
+                      "GUARDED=3, UNSUPPORTED=1, NEEDS_REVIEW=7, NOT_RUN=1", text)
+        self.assertIn("Revision: CFRU 196058edbc2b DPE d887185de1f6 UPR-FVX 1a9b59db3f49", text)
+        self.assertRegex(text, r"PAIR\s+66\s+")
+        self.assertRegex(text, r"TRIPLE\s+12\s+")
         self.assertIn("  FVX-OLD-001", text)
-        self.assertIn("Disposition: 9 IDs; EXECUTABLE=2, GUARDED=1, UNSUPPORTED=1, NEEDS_REVIEW=4, NOT_RUN=1", text)
-        self.assertEqual(sum(line.startswith("S0") for line in text.splitlines()), len(m.SINGLE_OPTIONS))
+
+
+class SelectionTests(unittest.TestCase):
+    def setUp(self):
+        self.plan = SyntheticSource(self).plan()
+
+    def test_no_implicit_full_run_and_unknown_values_stop(self):
+        with self.assertRaisesRegex(m.MatrixError, "no implicit full run"):
+            m.select_cases(self.plan)
+        for kwargs, message in (({"kinds": ("QUAD",)}, "QUAD"), ({"families": ("NOPE",)}, "NOPE"),
+                                ({"risk": "medium"}, "medium"), ({"ids": ("/private/x",)}, "<invalid>"),
+                                ({"ids": ("SGL-FVX-SST-001",)}, "UNSUPPORTED: settings-profile refuses"),
+                                ({"ids": ("SGL-FVX-WILD-002",)}, "DUPLICATE")):
+            with self.assertRaisesRegex(m.MatrixError, message, msg=kwargs):
+                m.select_cases(self.plan, **kwargs)
+
+    def test_filters_select_only_runnable_cases(self):
+        chosen = m.select_cases(self.plan, kinds=("SINGLE",), families=("TRAIT",))
+        self.assertEqual([c.id for c in chosen], ["SGL-FVX-TRAIT-001", "SGL-FVX-TRAIT-002", "SGL-FVX-TRAIT-017"])
+        self.assertTrue(all(c.risk == "high" for c in m.select_cases(self.plan, risk="high")))
+        self.assertEqual([c.id for c in m.select_cases(self.plan, ids=("PRO-CONTROL",))], ["PRO-CONTROL"])
+
+    def test_large_selection_needs_an_explicit_chunk(self):
+        with patch.object(m, "MAX_BATCH", 4):
+            with self.assertRaisesRegex(m.MatrixError, r"pass --chunk 1\.\.\d"):
+                m.select_cases(self.plan, kinds=("PAIR",))
+            first = m.select_cases(self.plan, kinds=("PAIR",), chunk=1)
+            second = m.select_cases(self.plan, kinds=("PAIR",), chunk=2)
+            self.assertEqual((len(first), len(set(first) & set(second))), (4, 0))
+            with self.assertRaisesRegex(m.MatrixError, "--chunk must be"):
+                m.select_cases(self.plan, kinds=("PAIR",), chunk=99)
+
+
+class SuiteRunTests(unittest.TestCase):
+    """--suite reuses settings-profile, both observations, generate, reopen and replay."""
+
+    def setUp(self):
+        self.src = SyntheticSource(self)
+        self.inv = self.src.inventory()
+        self.plan = m.plan_cases(self.inv)
+
+    def fixture(self, baseline=None):
+        f = Fixture(self, baseline)
+        f.upr.effects = {k: v.delta for k, v in self.inv.features.items() if v.delta}
+        return f
+
+    def batch(self, *ids):
+        return m.select_cases(self.plan, ids=ids)
+
+    def test_batch_passes_with_exact_rejections_and_replay(self):
+        f = self.fixture()
+        before = f.rom.read_bytes()
+        batch = self.batch("PRO-CONTROL", "SGL-FVX-TRAIT-002", "SGL-FVX-MOVE-007", "PAIR-TM_TUTOR+MISC")
+        results = f.suite(batch)
+        self.assertEqual([(r.settings, r.target, r.status) for r in results.values()], [
+            ("PASS", "PASS", "PASS"), ("PASS", "PASS", "PASS"), ("PASS", "PASS", "EXPECTED_REJECTION"),
+            ("PASS", "PASS", "PASS")])
+        self.assertEqual([r.replay for r in results.values()], ["PASS", "PASS", "-", "PASS"])
+        lines, overall = m.suite_report_lines(results, batch)
+        self.assertEqual(overall, "PASS")
+        text = "\n".join(lines)
+        self.assertIn("PASS_GENERATION_REOPEN_REPLAY=3, EXPECTED_REJECTION=1", text)
+        self.assertNotIn("FEATURE_VERIFIED", text.replace("no FEATURE_VERIFIED claim", ""))
+        self.assertEqual(f.rom.read_bytes(), before)
+        self.assertEqual(sorted(p.name for p in f.out.iterdir()), sorted(
+            ["settings", "PRO-CONTROL", "PRO-CONTROL-replay", "SGL-FVX-TRAIT-002", "SGL-FVX-TRAIT-002-replay",
+             "SGL-FVX-MOVE-007", "PAIR-TM_TUTOR+MISC", "PAIR-TM_TUTOR+MISC-replay"]))
+        profiles = [a for k, a in f.upr.calls if k == "profile"]
+        self.assertEqual(profiles[0][-2:], ["--profile", "00_BASELINE"])
+        self.assertEqual([a for a in profiles[1] if a.startswith("FVX-")], ["FVX-TRAIT-001", "FVX-TRAIT-002"])
+        kinds = [k for k, _ in f.upr.calls]
+        self.assertEqual(kinds[:7], ["observe"] + ["profile"] * 4 + ["observe", "observe"])
+
+    def test_exact_non_learnset_guard_is_expected_rejection(self):
+        f = self.fixture()
+        case, = self.batch("SGL-FVX-TRAIT-017")
+        f.upr.cli_override[case.seed] = lambda args, output: done(args, 1, "", "Randomization failed: x." + case.guard)
+        self.assertEqual(f.suite([case])[case.id].detail, "exact guard, no output")
+
+    def test_wrong_rejection_fails_and_later_cases_are_not_run(self):
+        f = self.fixture()
+        batch = self.batch("SGL-FVX-TRAIT-017", "SGL-FVX-TYPE-001")
+        self.assertEqual(batch[0].id, "SGL-FVX-TRAIT-017")
+        f.upr.cli_override[batch[0].seed] = lambda args, output: done(args, 1, "", "java.lang.NullPointerException")
+        results = f.suite(batch)
+        self.assertEqual([r.status for r in results.values()], ["FAIL", "NOT_RUN"])
+        self.assertEqual(results["SGL-FVX-TRAIT-017"].detail, "different failure (see local cli.log)")
+
+    def test_settings_drift_or_noop_is_needs_review_and_never_generated(self):
+        state = neutral()
+        state["isBaseStatsFollowEvolutions"] = "true"      # baseline already holds TRAIT-002's change
+        f = self.fixture(state)
+        f.upr.extra_effect["FVX-TM-001"] = {"isRaceMode": "true"}
+        batch = self.batch("SGL-FVX-TRAIT-002", "SGL-FVX-TM-001", "SGL-FVX-TRAIT-001")
+        results = f.suite(batch)
+        self.assertEqual({k: (r.settings, r.status) for k, r in results.items()}, {
+            "SGL-FVX-TRAIT-002": ("NO-OP", "NEEDS_REVIEW"), "SGL-FVX-TM-001": ("DRIFT", "NEEDS_REVIEW"),
+            "SGL-FVX-TRAIT-001": ("PASS", "PASS")})
+        self.assertIn("isRaceMode", results["SGL-FVX-TM-001"].detail)
+        self.assertFalse((f.out / "SGL-FVX-TRAIT-002").exists())
+        self.assertEqual(m.suite_report_lines(results, batch)[1], "INCOMPLETE")
+
+    def test_target_normalization_is_needs_review(self):
+        f = self.fixture()
+        f.upr.tweak = {"getTmsMod": "UNCHANGED"}
+        results = f.suite(self.batch("SGL-FVX-TM-001", "SGL-FVX-GFX-001"))
+        self.assertEqual([(r.target, r.status) for r in results.values()],
+                         [("NEEDS_REVIEW", "NEEDS_REVIEW"), ("PASS", "PASS")])
+
+    def test_generation_reopen_and_replay_failures_fail_fast(self):
+        for failure in ("cli", "reopen", "replay"):
+            f = self.fixture()
+            batch = self.batch("SGL-FVX-TRAIT-001", "SGL-FVX-GFX-001")
+            seed = batch[0].seed
+            if failure == "cli":
+                f.upr.cli_fail.add(seed)
+            elif failure == "reopen":
+                f.upr.reopen_fail.add(seed)
+            else:
+                f.upr.nondeterministic = True
+            results = f.suite(batch)
+            self.assertEqual([r.status for r in results.values()], ["FAIL", "NOT_RUN"], failure)
+
+    def test_source_rom_change_stops(self):
+        f = self.fixture()
+        real = f.upr.cli
+
+        def tamper(args):
+            f.rom.write_text("changed")
+            return real(args)
+        f.upr.cli = tamper
+        with self.assertRaisesRegex(m.MatrixError, "Source ROM changed"):
+            f.suite(self.batch("SGL-FVX-TRAIT-001"))
+
+    def test_main_suite_is_explicit_bounded_and_sanitized(self):
+        f = self.fixture()
+        seed = by_id(self.plan)["SGL-FVX-GFX-001"].seed
+        f.upr.cli_fail.add(seed)
+        out_dir = f.dir / "05_builds" / "run"
+        out_dir.parent.mkdir()
+        common = ["--confirm", m.CONFIRM_TOKEN, "--rom", str(f.rom), "--baseline", str(f.baseline),
+                  "--out", str(out_dir), "--jar", str(f.jar)]
+        with patch.object(m, "ROOT", self.src.root), \
+                patch.object(m, "revision_lines", return_value=["UPR-FVX: 1a9b59db3f49 MATCH"]):
+            for extra, message in (([], "no implicit full run"), (["--case", "SGL-FVX-SST-001"], "UNSUPPORTED")):
+                err = io.StringIO()
+                with contextlib.redirect_stderr(err):
+                    self.assertEqual(m.main(["--suite"] + common + extra), 2)
+                self.assertIn(message, err.getvalue())
+            self.assertEqual(f.upr.calls, [])
+            self.assertFalse(out_dir.exists())
+            stdout, stderr = io.StringIO(), io.StringIO()
+            with contextlib.redirect_stdout(stdout), contextlib.redirect_stderr(stderr):
+                rc = m.main(["--suite", "--kind", "SINGLE", "--family", "TRAIT,GFX"] + common)
+        text = stdout.getvalue() + stderr.getvalue()
+        self.assertEqual(rc, 1)
+        self.assertIn("#750 comprehensive matrix batch (4 cases)", text)
+        self.assertIn("Revision: CFRU 196058edbc2b", text)
+        self.assertIn("SUITE=FAIL", text)
+        for leak in (str(f.dir), "/private/secret", "IllegalStateException", "boom", ".gba", ".rnqs"):
+            self.assertNotIn(leak, text)
+
+    def test_changed_source_stops_suite(self):
+        f = self.fixture()
+        (self.src.root / m.UPR_SOURCE / m.MISC_SOURCE).write_text("changed")
+        err = io.StringIO()
+        with patch.object(m, "ROOT", self.src.root), contextlib.redirect_stderr(err):
+            rc = m.main(["--suite", "--kind", "SINGLE", "--confirm", m.CONFIRM_TOKEN, "--rom", str(f.rom),
+                         "--baseline", str(f.baseline), "--out", str(f.dir / "05_builds" / "x"), "--jar", str(f.jar)])
+        self.assertEqual(rc, 2)
+        self.assertIn("differs from the pinned revision", err.getvalue())
+        self.assertEqual(f.upr.calls, [])
 
 
 UPR = m.ROOT / m.UPR_SOURCE
@@ -737,7 +1062,7 @@ UPR = m.ROOT / m.UPR_SOURCE
 
 @unittest.skipUnless((UPR / m.CATALOG_SOURCE).is_file(), "UPR-FVX source not checked out")
 class SourceBackingTests(unittest.TestCase):
-    """The declarative cases match the checked-out UPR-FVX source (read as text only)."""
+    """The declarative cases and pins match the checked-out UPR-FVX source (read as text only)."""
 
     def test_single_options_match_current_overlays_and_are_not_normalized(self):
         catalog = m.overlay_catalog((UPR / m.CATALOG_SOURCE).read_text())
@@ -750,16 +1075,36 @@ class SourceBackingTests(unittest.TestCase):
             self.assertTrue(o.source.endswith("." + o.effect[getter] + ")"), o.feature)
             self.assertNotIn(setter, touched, o.feature)
 
-    def test_guards_are_source_cited_and_ledger_is_fully_covered(self):
+    def test_pins_guards_and_full_inventory(self):
+        for rel, pin in m.SOURCE_PINS.items():
+            self.assertEqual(hashlib.sha256((UPR / rel).read_text().encode()).hexdigest(), pin, rel)
         for rel, text in m.GUARD_SOURCES.items():
             self.assertIn(text, (UPR / rel).read_text())
-        rows, note = m.disposition(m.ROOT)
-        self.assertEqual(note, "")
+        joined = re.sub(r'"\s*\+\s*"', "", (UPR / "random/src/main/java/com/uprfvx/random/randomizers/"
+                                             "EvolutionRandomizer.java").read_text())
+        self.assertIn(m.EXPECTED_GUARDS["FVX-TRAIT-017"].removeprefix("RandomizationException: "), joined)
+        inv = m.inventory(m.ROOT)
+        self.assertEqual(inv.notes, [])
         ledger = [line.split("\t", 1)[0] for line in (m.ROOT / m.LEDGER).read_text().splitlines()[1:] if line]
-        self.assertEqual(len(ledger), 132)
-        self.assertTrue(set(ledger) <= set(rows))
-        executable = {k for k, v in rows.items() if v[0] == "EXECUTABLE"}
-        self.assertEqual(executable, {o.feature for o in m.SINGLE_OPTIONS} | {m.STARTER, m.WILD, m.TRAINER})
+        self.assertEqual((inv.catalog_ids, inv.ledger_ids, len(ledger)), (159, 132, 132))
+        self.assertTrue(set(ledger) <= set(inv.features))
+        self.assertEqual(len(inv.features), 159 + inv.ledger_only)
+        for o in m.SINGLE_OPTIONS:
+            self.assertEqual((inv.features[o.feature].state, inv.features[o.feature].delta), ("RUNNABLE", o.effect))
+        self.assertTrue(set(m.PARENTS) | {p for ps in m.PARENTS.values() for p in ps} <= set(inv.features))
+
+    def test_real_plan_is_filtered_and_complete(self):
+        inv = m.inventory(m.ROOT)
+        plan = m.plan_cases(inv)
+        kinds = [c.kind for c in plan]
+        self.assertEqual((kinds.count("SINGLE"), kinds.count("PAIR"), kinds.count("TRIPLE")), (159, 66, 12))
+        ok = {k for k, f in inv.features.items() if f.state == "RUNNABLE"}
+        for c in plan:
+            if c.status == "RUNNABLE":
+                self.assertTrue(set(c.overlays) <= ok, c.id)
+            if c.status == "EXPECTED_REJECTION":
+                self.assertIn(c.overlays[-1], m.EXPECTED_GUARDS)
+        self.assertGreater(sum(c.status in m.RUNNABLE_CASES for c in plan), 200)
 
 
 @unittest.skipUnless(shutil.which("javac") and shutil.which("java"), "JDK not available")

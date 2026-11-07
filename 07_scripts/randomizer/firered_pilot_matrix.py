@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""#743/#748: USER-ONLY CFRU/DPE Gen 9 pilot settings matrix and single options.
+"""#743/#748/#750: USER-ONLY CFRU/DPE Gen 9 pilot, single-option and comprehensive matrix.
 
 Composes UPR-FVX's existing settings-profile, cli and loaded-manifest commands
 for the eleven pilot cases. The user supplies one neutral .rnqs saved once from
@@ -7,14 +7,17 @@ the GUI; its effective state is read through the public Settings API (a
 temporary read-only Java adapter, because UPR has no settings-dump command)
 before any overlay is applied. No settings bytes are written or patched here.
 
-Modes: --plan (prints cases and the feature disposition; reads no ROM, JAR or
-.rnqs), --self-test (synthetic mocks only), --matrix (the eleven pilot cases) and
---single --select IDS (#748 single options). Both real modes require --confirm
-USER_LOCAL_RUN. Output stays on the user's machine; the printed table contains
+Modes: --plan (prints cases, the feature inventory and the #750 case plan;
+reads no ROM, JAR or .rnqs), --self-test (synthetic mocks only), --matrix (the
+eleven pilot cases), --single --select IDS (#748 single options) and --suite
+(#750 comprehensive matrix, one bounded batch selected by --kind/--family/
+--risk/--case). Every real mode requires --confirm USER_LOCAL_RUN. Output stays on the user's machine; the printed table contains
 categories only.
 """
 
 import argparse
+import hashlib
+import itertools
 import os
 from dataclasses import dataclass
 from pathlib import Path
@@ -101,7 +104,7 @@ UPR_SOURCE = "02_external/upr-fvx"
 CATALOG_SOURCE = "random/src/main/java/com/uprfvx/random/cli/SettingsProfileGenerator.java"
 SETTINGS_SOURCE = "random/src/main/java/com/uprfvx/random/Settings.java"
 LEDGER = "08_tests/randomizer/fvx_feature_test_status_matrix.tsv"
-DISPOSITIONS = ("EXECUTABLE", "GUARDED", "UNSUPPORTED", "NEEDS_REVIEW", "NOT_RUN")
+DISPOSITIONS = ("RUNNABLE", "GUARDED", "UNSUPPORTED", "NEEDS_REVIEW", "NOT_RUN")
 LEARNSET_GUARD = ("RandomizationException: CFRU/DPE level-up learnset changes are unavailable: "
                   "select Unchanged, disable Reorder Damaging Moves, and do not use Metronome Only.")
 
@@ -114,6 +117,7 @@ class Case:
     seed: int
     expect: str = "PASS"          # PASS or EXPECTED_REJECTION
     replay_of: str = ""
+    guard: str = ""               # exact rejection text; default: the learnset guard
 
 
 CASES = (
@@ -304,15 +308,25 @@ def plan_lines():
         lines.append(f"{o.id:<4} {o.feature:<14} {o.family:<9} {o.title:<27} {o.seed:<7} {change}")
     lines += ["Each case: settings + target normalization checked first, then generate, reopen,",
               "loaded-manifest and a byte replay. Best result: GENERATION/REOPEN PASS, never FEATURE_VERIFIED."]
-    lines += ["", "Feature disposition at this revision (UPR-FVX checkout source + historical 132-feature ledger;",
-              "historical ledger results are not current acceptance)", ""]
-    rows, note = disposition(ROOT)
-    if note:
-        lines.append(note)
-    for fid, (state, reason) in rows.items():
-        lines.append(f"  {fid:<34} {state:<13} {reason}")
-    counts = [f"{k}={sum(v[0] == k for v in rows.values())}" for k in DISPOSITIONS]
-    lines += ["", f"Disposition: {len(rows)} IDs; " + ", ".join(counts)]
+    inv = inventory(ROOT)
+    plan = plan_cases(inv)
+    lines += ["", "#750 comprehensive matrix (--suite; select with --kind/--family/--risk/--case, "
+              f"at most {MAX_BATCH} cases per run)", "Revision: " + revision_label(), ""]
+    lines += [note for note in inv.notes]
+    lines.append("Feature inventory (UPR-FVX source at the pin + historical 132-feature ledger; historical ledger")
+    lines.append("results are not current acceptance)")
+    lines.append(f"  {'Feature ID':<34} {'Family':<6} {'Disposition':<13} Reason")
+    for fid, f in inv.features.items():
+        lines.append(f"  {fid:<34} {f.family:<6} {f.state:<13} {f.reason}")
+    counts = ", ".join(f"{k}={sum(f.state == k for f in inv.features.values())}" for k in DISPOSITIONS)
+    lines += ["", f"Features: {len(inv.features)} IDs ({inv.catalog_ids} current overlays, {inv.ledger_ids} ledger IDs, "
+              f"{inv.ledger_only} ledger-only); {counts}", ""]
+    lines.append(f"  {'Case':<50} {'Kind':<7} {'Risk':<6} {'Status':<18} Overlays / reason")
+    for c in plan:
+        detail = ",".join(c.overlays) or "00_BASELINE" if c.status in RUNNABLE_CASES else c.reason
+        detail += "; " + c.reason if c.status in RUNNABLE_CASES and c.reason else ""
+        lines.append(f"  {c.id:<50} {c.kind:<7} {c.risk:<6} {c.status:<18} {detail}")
+    lines += [""] + case_summary(plan)
     return lines
 
 
@@ -337,45 +351,424 @@ def tweak_setters(text):
     return names
 
 
-def disposition(root):
-    """ID -> (disposition, reason) for every current overlay and historical ledger ID."""
-    ledger = []
-    with open(root / LEDGER, newline="") as f:
-        for row in list(f)[1:]:
-            if row.strip():
-                ledger.append(row.split("\t", 1)[0])
-    note = ""
-    try:
-        upr = root / UPR_SOURCE
-        catalog = overlay_catalog((upr / CATALOG_SOURCE).read_text())
-        touched = tweak_setters((upr / SETTINGS_SOURCE).read_text())
-    except (OSError, ValueError):
-        catalog, touched = {}, set()
-        note = "UPR-FVX source unavailable: every ID is NEEDS_REVIEW."
-    single = {o.feature: o.id for o in SINGLE_OPTIONS}
-    pilot = {STARTER: "M01", WILD: "M02", TRAINER: "M03"}
-    rows = {}
-    for fid in list(catalog) + [i for i in ledger if i not in catalog]:
-        body = catalog.get(fid)
-        setters = set(re.findall(r"\bs\.(set\w+)\(", body or ""))
-        if fid in GUARDED:
-            rows[fid] = ("GUARDED", GUARDED[fid])
-        elif body is None:
-            rows[fid] = ("NEEDS_REVIEW", "historical ledger ID without current overlay")
-        elif body.startswith("unsupported("):
-            rows[fid] = ("UNSUPPORTED", "settings-profile refuses this overlay")
-        elif fid in single:
-            rows[fid] = ("EXECUTABLE", "--single " + single[fid])
-        elif fid in pilot:
-            rows[fid] = ("EXECUTABLE", "--matrix " + pilot[fid]
-                         + ("; tweakForRom touches " + ",".join(sorted(setters & touched)) if setters & touched else ""))
-        elif not setters or "::" in body or re.search(r"(?<![.\w])[a-z]\w*\(s\b", body):
-            rows[fid] = ("NEEDS_REVIEW", "overlay uses a helper; target normalization not source-checked")
-        elif setters & touched:
-            rows[fid] = ("NEEDS_REVIEW", "tweakForRom may normalize " + ",".join(sorted(setters & touched)))
+# ---------------------------------------------------------------------------
+# #750 comprehensive matrix: inventory, case plan and batch selection.
+# Everything is derived from the pinned UPR-FVX source text; a changed source
+# fails closed (every ID NEEDS_REVIEW, no runnable case).
+MISC_SOURCE = "romio/src/main/java/com/uprfvx/romio/MiscTweak.java"
+SOURCE_PINS = {
+    CATALOG_SOURCE: "af84c3e03f030503741da495207699c24cbd701b360510b95383b498eefecd25",
+    SETTINGS_SOURCE: "9fcd9b40bd8b509010ee8c8c5c17570ab5428262f84fe8a7c51c5eb8e8024dcb",
+    MISC_SOURCE: "b3ef9a02e3777dcbe69430e59350a5ac076d66d31ee346b2b189673e664fa002",
+}
+MISC_KEY = "getCurrentMiscTweaks"   # bit set; overlays OR their bit in
+EXPECTED_GUARDS = {
+    MOVESETS: LEARNSET_GUARD,
+    REORDER: LEARNSET_GUARD,
+    "FVX-TRAIT-017": ("RandomizationException: CFRU/DPE RANDOM_EVERY_LEVEL is unsupported: creating relations "
+                      "would repack raw evolution slots. Use ordinary RANDOM target randomization."),
+}
+# upr_generation_matrix's target exclusions; kept visible, never silently run.
+LEGACY_REASONS = {
+    "FVX-TRAIT-025": "OWNERSHIP_WITNESS_V1 required (Make Evolutions Easier)",
+    "FVX-MISC-011": "redundant with CFRU native reusable TMs",
+    "FVX-FOE-SENSIBLE-HELD-ITEMS": "legacy 04_FOE_HELD_ITEMS_SENSIBLE_EXPECTED_FAIL diagnostic",
+}
+# Owner toggles a sub-option needs to have any effect; follows
+# upr_generation_matrix.closure. A sub-option's case runs with its parents.
+PARENTS = {
+    "FVX-TRAIT-002": ("FVX-TRAIT-001",), "FVX-TRAIT-003": ("FVX-TRAIT-001", "FVX-TRAIT-002"),
+    "FVX-TRAIT-007": ("FVX-TRAIT-006",), "FVX-TRAIT-026": ("FVX-TRAIT-024",),
+    "FVX-TRAIT-028": ("FVX-TRAIT-005",),
+    **{f"FVX-TRAIT-{n:03}": ("FVX-TRAIT-008",) for n in range(9, 16)},
+    **{f"FVX-TRAIT-{n:03}": ("FVX-TRAIT-016",) for n in range(18, 24)},
+    **{f"FVX-SST-{n:03}": (STARTER,) for n in (5, 6, 7, 9)},
+    "FVX-SST-008": (STARTER, "FVX-SST-007"), "FVX-SST-013": ("FVX-SST-011",), "FVX-SST-015": ("FVX-SST-014",),
+    **{f"FVX-MOVE-{n:03}": (MOVESETS,) for n in (8, 10, 11)},
+    **{f"FVX-FOE-{n:03}": (TRAINER,) for n in (2, 3, 4, 5, 6, 7, 8, 10, 11, 14)},
+    "FVX-FOE-009": ("MODE-FOE-TYPE-THEMED",), "FVX-FOE-012": (TRAINER, STARTER),
+    "FVX-FOE-SENSIBLE-HELD-ITEMS": (TRAINER, "FVX-FOE-008"), "MODE-TRAINER-CLASS-SPRITE-SYNC": ("FVX-FOE-013",),
+    "FVX-GEN-002": (TRAINER,), "MODE-ALLOW-REGIONAL-FORMS": ("FVX-GEN-001",),
+    **{f"FVX-WILD-{n:03}": (WILD,) for n in range(2, 13) if n != 9},
+    "FVX-WILD-009": (WILD, "FVX-WILD-008"), "FVX-SPECIAL-WILD-001": (WILD,),
+    **{f"FVX-TM-{n:03}": ("FVX-TM-001",) for n in (2, 3, 4)},
+    "FVX-TM-006": ("FVX-TM-001", "FVX-TM-005"), "FVX-TM-007": ("FVX-TM-001", "FVX-TM-005"),
+    "FVX-TM-008": ("FVX-TM-005",),
+    **{f"FVX-TM-{n:03}": ("FVX-TM-009",) for n in (10, 11, 12)},
+    "FVX-TM-014": ("FVX-TM-009", "FVX-TM-013"), "FVX-TM-015": ("FVX-TM-009", "FVX-TM-013"),
+    "FVX-ITEM-004": ("FVX-ITEM-002",),
+    **{f"FVX-ITEM-{n:03}": ("FVX-ITEM-006",) for n in (7, 8, 9)},
+    "FVX-TYPE-002": ("MODE-TYPE-INVERSE",),
+}
+# Legacy #681 family names -> the family token used for selection.
+FAMILY_TOKEN = {
+    "GEN_SAFE": "GEN", "TRAITS": "TRAIT", "STARTERS_STATICS_TRADES": "SST", "MOVES_MOVESETS": "MOVE",
+    "FOE": "FOE", "WILD": "WILD", "TM_TUTOR": "TM", "ITEMS_SHOPS": "ITEM", "TYPE_EFFECTIVENESS": "TYPE",
+    "GRAPHICS_PALETTES": "GFX", "MISC": "MISC", "SPECIAL_WILD": "WILD", "EVOLUTIONS": "TRAIT",
+}
+MODE_FAMILY = {"INCLUDE": "GEN", "ALLOW": "GEN", "INTRO": "GEN", "NO": "GEN", "TRAINER": "FOE", "SPECIAL": "WILD"}
+KINDS = ("SINGLE", "PAIR", "TRIPLE", "PROFILE")
+RUNNABLE_CASES = ("RUNNABLE", "EXPECTED_REJECTION")
+MAX_BATCH = 25
+
+
+@dataclass(frozen=True)
+class Feature:
+    family: str
+    state: str
+    reason: str
+    delta: dict = None    # source-derived Settings getter -> observed value
+
+
+@dataclass
+class Inventory:
+    features: dict
+    notes: list
+    catalog_ids: int = 0
+    ledger_ids: int = 0
+    ledger_only: int = 0
+    bundles: dict = None  # legacy family -> overlays
+    profiles: dict = None
+    touched: frozenset = frozenset()
+
+
+@dataclass(frozen=True)
+class PlanCase:
+    id: str
+    kind: str
+    families: tuple
+    overlays: tuple
+    seed: int
+    status: str            # RUNNABLE, EXPECTED_REJECTION, or the reason it is excluded
+    reason: str = ""
+    delta: tuple = ()      # expected Settings change against the baseline
+    own: tuple = ()        # the part the case is about; must not already hold
+    guard: str = ""
+    risk: str = "normal"
+
+
+def family_of(fid):
+    token = fid.split("-")[1]
+    return MODE_FAMILY.get(token, token) if fid.startswith("MODE-") else MODE_FAMILY.get(token, token)
+
+
+def case_seed(case_id):
+    return 750_000_000 + int(hashlib.sha256(case_id.encode()).hexdigest()[:8], 16) % 100_000_000
+
+
+def literal(value):
+    """Observed text of a setter argument, or None when the source is not a plain constant."""
+    value = value.strip()
+    if value in ("true", "false") or re.fullmatch(r"-?[0-9]+", value):
+        return value
+    match = (re.fullmatch(r"Settings\.\w+\.([A-Z][A-Z0-9_]*)", value)
+             or re.fullmatch(r"new BattleStyle\(BattleStyle\.Modification\.([A-Z_]+), BattleStyle\.Style\.[A-Z_]+\)",
+                             value))
+    return match[1] if match else None
+
+
+def overlay_delta(body, getters, misc):
+    """Settings getter changes of one overlay lambda; None if it cannot be read exactly."""
+    if body == "SettingsProfileGenerator::enablePokemonPaletteRandomization":
+        statements = ["enablePokemonPaletteRandomization(s)"]
+    elif body.startswith("s -> "):
+        inner = body[5:].strip()
+        if inner.startswith("{") and inner.endswith("}"):
+            inner = inner[1:-1]
+        statements = [x.strip() for x in inner.split(";") if x.strip()]
+    else:
+        return None
+    sets = []
+    for statement in statements:
+        if match := re.fullmatch(r"s\.set(\w+)\((.*)\)", statement):
+            sets.append(match.groups())
+        elif match := re.fullmatch(r"setWildZoneMode\(s, (Settings\.WildPokemonZoneMod\.\w+)\)", statement):
+            sets += [("RandomizeWildPokemon", "true"), ("WildPokemonZoneMod", match[1])]
+        elif statement == "enablePokemonPaletteRandomization(s)":
+            sets.append(("PokemonPalettesMod", "Settings.PokemonPalettesMod.RANDOM"))
+        elif (match := re.fullmatch(r"enableMiscTweak\(s, MiscTweak\.(\w+)\)", statement)) and match[1] in misc:
+            sets.append(("CurrentMiscTweaks", str(misc[match[1]])))
         else:
-            rows[fid] = ("NOT_RUN", "overlay exists; no executable case yet")
-    return rows, note
+            return None
+    delta = {}
+    for name, value in sets:
+        text = literal(value)
+        getter = [p + name for p in ("is", "get", "use") if p + name in getters]
+        if text is None or len(getter) != 1 or delta.get(getter[0], text) != text:
+            return None
+        delta[getter[0]] = text
+    return delta or None
+
+
+def merge(deltas):
+    """(combined delta, conflicting getter or "")."""
+    out = {}
+    for delta in deltas:
+        for key, value in delta.items():
+            if key == MISC_KEY and key in out:
+                out[key] = str(int(out[key]) | int(value))
+            elif out.get(key, value) != value:
+                return None, key
+            else:
+                out[key] = value
+    return out, ""
+
+
+def apply(state, delta):
+    state = dict(state)
+    for key, value in delta.items():
+        state[key] = str(int(state.get(key, "0")) | int(value)) if key == MISC_KEY else value
+    return state
+
+
+def setter_of(getter):
+    return "set" + re.sub(r"^(is|get|use)", "", getter)
+
+
+def family_bundles(source):
+    """Legacy #681 family bundles and full profiles, from upr_generation_matrix's source model."""
+    _, _, profiles = gm.source_model(source)
+    full = [profiles[name] for name in gm.FULL]
+    bundles = dict(zip(gm.FAMILIES[1:], (full[i] for i in (0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 11))))
+    bundles["GEN_SAFE"] = ("MODE-GEN-LIMIT-1-9-NO-RELATIVES", "MODE-ALLOW-REGIONAL-FORMS",
+                           "MODE-GEN-LIMIT-1-9-NO-MEGAS", "MODE-GEN-LIMIT-1-9-NO-GMAX")
+    bundles["EVOLUTIONS"] = ("FVX-TRAIT-016", "FVX-TRAIT-022")
+    return bundles, {name: profiles[name] for name in gm.FULL}
+
+
+def inventory(root):
+    """Every current overlay ID and every historical ledger ID, each with one disposition."""
+    with open(root / LEDGER, newline="") as f:
+        ledger = [row.split("\t", 1)[0] for row in list(f)[1:] if row.strip()]
+    notes = []
+    try:
+        texts = {rel: (root / UPR_SOURCE / rel).read_text() for rel in SOURCE_PINS}
+    except OSError:
+        texts = None
+        notes.append("UPR-FVX source unavailable: every ID is NEEDS_REVIEW.")
+    if texts and any(hashlib.sha256(texts[rel].encode()).hexdigest() != pin for rel, pin in SOURCE_PINS.items()):
+        texts = None
+        notes.append("UPR-FVX source differs from the pinned revision: every ID is NEEDS_REVIEW.")
+    catalog = overlay_catalog(texts[CATALOG_SOURCE]) if texts else {}
+    getters = set(re.findall(r"public \S+ ((?:is|get|use)[A-Z]\w*)\(\)", texts[SETTINGS_SOURCE])) if texts else set()
+    misc = {name: eval(value, {}) for name, value in re.findall(  # noqa: S307 - "1 << n" literals only
+        r"MiscTweak (\w+) = new MiscTweak\(([0-9 <]+),", texts[MISC_SOURCE])} if texts else {}
+    touched = frozenset(tweak_setters(texts[SETTINGS_SOURCE])) if texts else frozenset()
+    legacy = (gm.EXCLUDED - EXPECTED_GUARDS.keys())
+    features = {}
+
+    def classify(fid):
+        if fid in features:
+            return features[fid]
+        body, family = catalog.get(fid), family_of(fid)
+        delta = overlay_delta(body, getters, misc) if body else None
+        if body is None:
+            f = Feature(family, "NEEDS_REVIEW", "historical ledger ID without current overlay" if texts
+                        else "source not verified")
+        elif body.startswith("unsupported("):
+            f = Feature(family, "UNSUPPORTED", "settings-profile refuses: "
+                        + (re.findall(r'"([^"]*)"', body) + ["", ""])[1])
+        elif fid in EXPECTED_GUARDS:
+            f = Feature(family, "GUARDED", GUARDED[fid] + "; runs as EXPECTED_REJECTION", delta)
+        elif fid in legacy:
+            f = Feature(family, "NEEDS_REVIEW", "legacy target exclusion, not re-verified: "
+                        + LEGACY_REASONS.get(fid, "Mega/G-Max/Z/Dynamax pool"))
+        elif delta is None:
+            f = Feature(family, "NEEDS_REVIEW", "overlay source not readable as exact Settings changes")
+        else:
+            f = with_parents(fid, family, delta)
+        features[fid] = f
+        return f
+
+    def with_parents(fid, family, delta):
+        parents = PARENTS.get(fid, ())
+        for parent in parents:
+            if parent not in catalog:
+                return Feature(family, "NEEDS_REVIEW", f"parent {parent} has no current overlay", delta)
+            p = classify(parent)
+            if p.state != "RUNNABLE":
+                state = "GUARDED" if p.state == "GUARDED" else "NEEDS_REVIEW"
+                return Feature(family, state, f"parent {parent} is {p.state}", delta)
+        context, _ = merge(features[p].delta for p in parents)
+        combined, conflict = merge([context, delta])
+        if conflict:
+            return Feature(family, "NEEDS_REVIEW", "contradicts its parent on " + conflict, delta)
+        before = apply(NEUTRAL, context)
+        if all(key in before and before[key] == value for key, value in delta.items()):
+            return Feature(family, "NOT_RUN", "no change against the neutral baseline (OFF value; M00 covers it)", delta)
+        reason = ", ".join(f"{k}={v}" for k, v in delta.items())
+        if parents:
+            reason += "; with " + "+".join(parents)
+        normalized = sorted(setter_of(k) for k in delta if setter_of(k) in touched)
+        if normalized:
+            reason += "; tweakForRom may normalize " + ",".join(normalized)
+        return Feature(family, "RUNNABLE", reason, delta)
+
+    for fid in list(catalog) + [i for i in ledger if i not in catalog]:
+        classify(fid)
+    bundles = profiles = None
+    if texts:
+        try:
+            bundles, profiles = family_bundles(texts[CATALOG_SOURCE])
+        except (MatrixError, KeyError, TypeError):
+            notes.append("Legacy family/profile derivation failed: no pair, triple or profile case is runnable.")
+    return Inventory(features, notes, len(catalog), len(ledger), sum(i not in catalog for i in ledger),
+                     bundles, profiles, touched)
+
+
+def plan_cases(inv):
+    """Single, pair, triple and profile cases; each excluded case says why."""
+    plan, seen = [], {}
+    features = inv.features
+
+    def expand(wanted):
+        overlays = []
+        for overlay in wanted:
+            for o in PARENTS.get(overlay, ()) + (overlay,):
+                if o not in overlays:
+                    overlays.append(o)
+        return tuple(overlays)
+
+    def risk(overlays):
+        high = any(o in gm.RISK_SINGLES or any(setter_of(k) in inv.touched for k in (features[o].delta or {}))
+                   for o in overlays)
+        return "high" if high else "normal"
+
+    def add(cid, kind, families, wanted, status="RUNNABLE", reason="", own=None, guard=""):
+        overlays = expand(wanted)
+        delta = context = {}
+        if status in RUNNABLE_CASES:
+            delta, conflict = merge(features[o].delta for o in overlays)
+            if conflict:
+                status, reason, delta = "NEEDS_REVIEW", "contradictory settings on " + conflict, {}
+            elif delta.get("isPokemonPalettesFollowTypes") == delta.get("isPokemonPalettesShinyFromNormal") == "true":
+                status, reason = "NEEDS_REVIEW", "Follow Types + Shiny From Normal palettes (legacy exclusion)"
+            elif own is not None:
+                context, _ = merge(features[o].delta for o in overlays if o not in own)
+        if status in RUNNABLE_CASES:
+            key = (tuple(sorted(delta.items())), status)
+            if key in seen:
+                status, reason = "DUPLICATE", "same effective settings as " + seen[key]
+            else:
+                seen[key] = cid
+        own_delta = {k: v for k, v in delta.items() if k not in context or context[k] != v} if own else delta
+        plan.append(PlanCase(cid, kind, tuple(dict.fromkeys(families)), overlays if status in RUNNABLE_CASES else (),
+                             case_seed(cid), status, reason, tuple(sorted(delta.items())),
+                             tuple(sorted(own_delta.items())), guard, risk(overlays) if status in RUNNABLE_CASES
+                             else "-"))
+
+    add("PRO-CONTROL", "PROFILE", (), ())
+    for fid, f in features.items():
+        if f.state == "RUNNABLE":
+            add("SGL-" + fid, "SINGLE", (f.family,), (fid,), own=(fid,))
+        elif f.state == "GUARDED" and fid in EXPECTED_GUARDS:
+            add("SGL-" + fid, "SINGLE", (f.family,), (fid,), "EXPECTED_REJECTION", own=(fid,),
+                guard=EXPECTED_GUARDS[fid])
+        else:
+            add("SGL-" + fid, "SINGLE", (f.family,), (), f.state, f.reason)
+
+    bundles = {}
+    for family, members in (inv.bundles or {}).items():
+        bundles[family] = tuple(m for m in members if m in features and features[m].state == "RUNNABLE"
+                                and m not in gm.RISK_SINGLES)
+
+    def composite(cid, kind, families):
+        if inv.bundles is None:
+            return add(cid, kind, map(FAMILY_TOKEN.get, families), (), "NEEDS_REVIEW", "family bundles unavailable")
+        empty = [f for f in families if not bundles[f]]
+        if empty:
+            return add(cid, kind, map(FAMILY_TOKEN.get, families), (), "NEEDS_REVIEW",
+                       "no runnable overlay in " + ",".join(empty))
+        add(cid, kind, map(FAMILY_TOKEN.get, families), *compatible(
+            itertools.chain.from_iterable(bundles[f] for f in families)))
+
+    def compatible(members):
+        """Bundle members in order; one that contradicts the ones before is left out, visibly."""
+        kept, skipped, delta = [], [], {}
+        for member in dict.fromkeys(members):
+            combined, conflict = merge([delta] + [features[o].delta for o in expand((member,))])
+            if conflict:
+                skipped.append(member)
+            else:
+                kept.append(member)
+                delta = combined
+        return tuple(kept), "RUNNABLE", ("left out (contradicts earlier members): " + ",".join(skipped)
+                                         if skipped else "")
+
+    for pair in itertools.combinations(gm.FAMILIES, 2):
+        composite("PAIR-" + "+".join(pair), "PAIR", pair)
+    for triple in gm.TRIPLES:
+        composite("TRI-" + "+".join(triple), "TRIPLE", triple)
+    for name, family in zip(gm.FULL, (*gm.FAMILIES[1:4], "FOE", *gm.FAMILIES[4:])):
+        if inv.profiles is None:
+            add("FAM-" + name, "PROFILE", (FAMILY_TOKEN[family],), (), "NEEDS_REVIEW", "profiles unavailable")
+            continue
+        members = tuple(m for m in inv.profiles[name] if features.get(m, Feature("", "", "")).state == "RUNNABLE"
+                        and m not in gm.RISK_SINGLES)
+        if members:
+            add("FAM-" + name, "PROFILE", (FAMILY_TOKEN[family],), *compatible(members))
+        else:
+            add("FAM-" + name, "PROFILE", (FAMILY_TOKEN[family],), (), "NEEDS_REVIEW", "no runnable overlay")
+    data = ("GEN_SAFE", "TRAITS", "MOVES_MOVESETS", "EVOLUTIONS")
+    world = ("STARTERS_STATICS_TRADES", "FOE", "WILD", "TM_TUTOR", "ITEMS_SHOPS")
+    for name, families in zip(gm.MAXIMUM, (data, world, data + world + ("GRAPHICS_PALETTES", "MISC", "SPECIAL_WILD"))):
+        composite("MAX-" + name, "PROFILE", families)
+    for name in gm.SELECTED[1:]:
+        add("PRO-" + name, "PROFILE", (), (), "NEEDS_REVIEW",
+            "needs the legacy Settings bridge/accepted settings string, not settings-profile")
+    return plan
+
+
+def case_summary(plan):
+    lines = [f"{'Cases':<9} {'Planned':>7} {'Runnable':>8} {'Rejection':>9} {'Duplicate':>9} {'Excluded':>8}  Excluded by"]
+    for kind in KINDS:
+        cases = [c for c in plan if c.kind == kind]
+        excluded = [c for c in cases if c.status not in RUNNABLE_CASES + ("DUPLICATE",)]
+        why = ", ".join(f"{s}={sum(c.status == s for c in excluded)}" for s in DISPOSITIONS[1:]
+                        if any(c.status == s for c in excluded))
+        lines.append(f"{kind:<9} {len(cases):>7} {sum(c.status == 'RUNNABLE' for c in cases):>8} "
+                     f"{sum(c.status == 'EXPECTED_REJECTION' for c in cases):>9} "
+                     f"{sum(c.status == 'DUPLICATE' for c in cases):>9} {len(excluded):>8}  {why or '-'}")
+    runnable = sum(c.status in RUNNABLE_CASES for c in plan)
+    lines += [f"Total: {len(plan)} planned, {runnable} runnable (unique effective settings), "
+              f"{len(plan) - runnable} not runnable or duplicate. Runnable is not PASS: only a local --suite run",
+              "can report PASS_GENERATION_REOPEN_REPLAY, and never FEATURE_VERIFIED."]
+    return lines
+
+
+def revision_label():
+    pins = " ".join(f"{name} {rev[:12]}" for name, (_, rev) in PILOT.items())
+    return pins + "; catalog sha256 " + SOURCE_PINS[CATALOG_SOURCE][:12]
+
+
+def select_cases(plan, kinds=(), families=(), risk=None, ids=(), chunk=None):
+    """Explicit, bounded batch; there is no implicit full run."""
+    if not (kinds or families or risk or ids):
+        raise MatrixError("--suite needs --kind, --family, --risk or --case; there is no implicit full run.")
+    known = {f for c in plan for f in c.families}
+    bad = [v for v in kinds if v not in KINDS] + [v for v in families if v not in known]
+    if risk not in (None, "high", "normal"):
+        bad.append(risk)
+    by_id = {c.id: c for c in plan}
+    bad += [i for i in ids if i not in by_id]
+    if bad:
+        raise MatrixError("Unknown selection: " + ", ".join(
+            v if re.fullmatch(r"[A-Za-z0-9_+-]{1,80}", v) else "<invalid>" for v in bad) + "; see --plan.")
+    for i in ids:
+        if by_id[i].status not in RUNNABLE_CASES:
+            raise MatrixError(f"{i} is {by_id[i].status}: {by_id[i].reason}")
+    chosen = [c for c in plan if c.status in RUNNABLE_CASES and (not kinds or c.kind in kinds)
+              and (not families or set(c.families) & set(families)) and (not risk or c.risk == risk)
+              and (not ids or c.id in ids)]
+    if not chosen:
+        raise MatrixError("The selection contains no runnable case.")
+    chunks = [chosen[i:i + MAX_BATCH] for i in range(0, len(chosen), MAX_BATCH)]
+    if chunk is None and len(chunks) > 1:
+        raise MatrixError(f"The selection has {len(chosen)} cases; pass --chunk 1..{len(chunks)} "
+                          f"({MAX_BATCH} per run) or narrow it.")
+    if chunk is not None and not 1 <= chunk <= len(chunks):
+        raise MatrixError(f"--chunk must be 1..{len(chunks)}.")
+    return chunks[(chunk or 1) - 1]
 
 
 def revision_lines(root, jar, allow_drift):
@@ -416,6 +809,7 @@ class Result:
     replay: str = "-"
     detail: str = ""
     target: str = "-"
+    settings: str = "-"
 
 
 def save_log(directory, name, result):
@@ -437,8 +831,10 @@ def generate(case, rom, jar, settings, directory, digest):
     if case.expect == "EXPECTED_REJECTION":
         res.generate = "REJECTED" if run.returncode else "PASS"
         untouched = not produced and [p.name for p in directory.iterdir()] == ["cli.log"]
-        if run.returncode and LEARNSET_GUARD in text and untouched:
-            res.status, res.detail = "EXPECTED_REJECTION", "learnset guard, no output"
+        guard = case.guard or LEARNSET_GUARD
+        if run.returncode and guard in text and untouched:
+            res.status = "EXPECTED_REJECTION"
+            res.detail = ("learnset" if guard == LEARNSET_GUARD else "exact") + " guard, no output"
         else:
             res.status = "FAIL"
             res.detail = ("output written" if not untouched else "accepted" if not run.returncode
@@ -470,6 +866,14 @@ def generate(case, rom, jar, settings, directory, digest):
 
 def write_settings(cases, baseline, jar, out, temp):
     """One settings-profile .rnqs per case; returns (baseline state, paths), all checked."""
+    base_state, paths, states = profile_settings(cases, baseline, jar, out, temp)
+    for case, state in zip(cases, states):
+        check_case_settings(base_state, case, state)
+    return base_state, paths
+
+
+def profile_settings(cases, baseline, jar, out, temp):
+    """One settings-profile .rnqs per case; returns (baseline state, paths, observed states)."""
     settings_dir = out / "settings"
     settings_dir.mkdir()
     base_state, = observe(jar, temp, [baseline])
@@ -488,9 +892,7 @@ def write_settings(cases, baseline, jar, out, temp):
         if run.returncode or "Settings profile written successfully." not in run.stdout or not target.is_file():
             raise MatrixError(case.id + ": settings-profile failed; STOP.")
         paths.append(target)
-    for case, state in zip(cases, observe(jar, temp, paths)):
-        check_case_settings(base_state, case, state)
-    return base_state, paths
+    return base_state, paths, observe(jar, temp, paths)
 
 
 def run_matrix(rom, baseline, jar, out, temp):
@@ -556,23 +958,38 @@ def run_single(rom, baseline, jar, out, temp, options):
     _, paths = write_settings(cases, baseline, jar, out, temp)
     results = {case.id: Result() for case in cases}
     digest = gm.input_digest(rom)
+    check_targets(jar, temp, rom, baseline, cases, paths, results, digest, expected_state)
+    return generate_checked(cases, paths, results, rom, jar, out, digest)
+
+
+def drift_keys(expected, state):
+    return sorted(k for k in expected.keys() | state.keys() if state.get(k) != expected.get(k))
+
+
+def check_targets(jar, temp, rom, baseline, cases, paths, results, digest, expected_of):
+    """Settings after the CLI's tweakForRom must still be baseline + the case's change."""
+    if not cases:
+        return
     target_base, *targets = observe(jar, temp, [baseline, *paths], rom=rom)
     if gm.input_digest(rom) != digest:
         raise MatrixError("Source ROM changed during target normalization; STOP.")
     for case, state in zip(cases, targets):
-        expected = expected_state(target_base, case)
-        drift = sorted(k for k in expected.keys() | state.keys() if state.get(k) != expected.get(k))
+        drift = drift_keys(expected_of(target_base, case), state)
         results[case.id].target = "NEEDS_REVIEW" if drift else "PASS"
         if drift:
             results[case.id].status = "NEEDS_REVIEW"
             results[case.id].detail = "tweakForRom changed " + ",".join(drift)
+
+
+def generate_checked(cases, paths, results, rom, jar, out, digest):
+    """Generate, reopen and replay every case whose target check passed; fail fast."""
     for case, settings in zip(cases, paths):
         if results[case.id].target != "PASS":
             continue    # Never generated: its effect would not reach the ROM as configured.
         directory = out / case.id
         directory.mkdir()
         res, output = generate(case, rom, jar, settings, directory, digest)
-        res.target = "PASS"
+        res.target, res.settings = "PASS", results[case.id].settings
         if res.status == "PASS":
             directory = out / (case.id + "-replay")
             directory.mkdir()
@@ -603,6 +1020,57 @@ def single_report_lines(results, options):
     return lines, overall
 
 
+def run_suite(rom, baseline, jar, out, temp, plan):
+    """#750: one bounded batch; settings, no-op and target checks precede any generation."""
+    cases = [Case(p.id, p.kind, p.overlays, p.seed,
+                  "EXPECTED_REJECTION" if p.status == "EXPECTED_REJECTION" else "PASS", guard=p.guard)
+             for p in plan]
+    deltas = {p.id: dict(p.delta) for p in plan}
+    base_state, paths, states = profile_settings(cases, baseline, jar, out, temp)
+    results = {case.id: Result() for case in cases}
+    for p, state in zip(plan, states):
+        r = results[p.id]
+        drift = drift_keys(apply(base_state, deltas[p.id]), state)
+        context = apply(base_state, {k: v for k, v in p.delta if (k, v) not in p.own})
+        if drift:
+            r.settings, r.status, r.detail = "DRIFT", "NEEDS_REVIEW", "settings differ from source delta: " + ",".join(drift)
+        elif p.own and all(context.get(k) == v for k, v in p.own):
+            r.settings, r.status, r.detail = "NO-OP", "NEEDS_REVIEW", "baseline already holds the case's change"
+        else:
+            r.settings = "PASS"
+    checked = [(c, s) for c, s in zip(cases, paths) if results[c.id].settings == "PASS"]
+    digest = gm.input_digest(rom)
+    check_targets(jar, temp, rom, baseline, [c for c, _ in checked], [s for _, s in checked], results, digest,
+                  lambda base, case: apply(base, deltas[case.id]))
+    return generate_checked(cases, paths, results, rom, jar, out, digest)
+
+
+SUITE_STATUS = {"PASS": "PASS_GENERATION_REOPEN_REPLAY"}
+
+
+def suite_report_lines(results, plan):
+    lines = ["Revision: " + revision_label(),
+             f"{'Case':<50} {'Kind':<7} {'Settings':<8} {'Target':<12} {'Generate':<9} {'Reopen':<7} {'Replay':<6} Result"]
+    for p in plan:
+        r = results[p.id]
+        detail = " (" + r.detail + ")" if r.detail else ""
+        lines.append(f"{p.id:<50} {p.kind:<7} {r.settings:<8} {r.target:<12} {r.generate:<9} {r.reopen:<7} "
+                     f"{r.replay:<6} {SUITE_STATUS.get(r.status, r.status)}{detail}")
+    names = ("PASS_GENERATION_REOPEN_REPLAY", "EXPECTED_REJECTION", "FAIL", "NEEDS_REVIEW", "NOT_RUN")
+    shown = [SUITE_STATUS.get(r.status, r.status) for r in results.values()]
+    counts = {k: shown.count(k) for k in names}
+    done = counts[names[0]] + counts["EXPECTED_REJECTION"]
+    overall = "PASS" if done == len(results) else "FAIL" if counts["FAIL"] else "INCOMPLETE"
+    lines += ["", "Summary: " + ", ".join(f"{k}={v}" for k, v in counts.items()) + "; SUITE=" + overall,
+              "Scope: settings delta, target normalization, generation, reopen and byte replay only;",
+              "feature semantics NOT VERIFIED (no FEATURE_VERIFIED claim); no boot or gameplay claim."]
+    return lines, overall
+
+
+def csv_arg(value):
+    return tuple(v.strip() for v in (value or "").split(",") if v.strip())
+
+
 def self_test():
     import unittest
     tests = Path(__file__).resolve().parent / "tests"
@@ -618,14 +1086,20 @@ class SafeParser(argparse.ArgumentParser):
 
 
 def main(argv=None):
-    parser = SafeParser(description="#743/#748 USER-ONLY pilot settings matrix and single options.")
+    parser = SafeParser(description="#743/#748/#750 USER-ONLY pilot, single-option and comprehensive matrix.")
     action = parser.add_mutually_exclusive_group(required=True)
     action.add_argument("--plan", action="store_true", help="list cases; reads nothing")
     action.add_argument("--self-test", action="store_true", help="synthetic mock tests only")
     action.add_argument("--matrix", action="store_true", help="real local run (needs --confirm)")
     action.add_argument("--single", action="store_true", help="real local single-option run (needs --confirm)")
+    action.add_argument("--suite", action="store_true", help="real local comprehensive-matrix batch (needs --confirm)")
     parser.add_argument("--select", help="--single: comma-separated feature IDs from --plan, or all")
-    parser.add_argument("--confirm", help="must be " + CONFIRM_TOKEN + " for --matrix/--single")
+    parser.add_argument("--kind", help="--suite: " + ",".join(KINDS))
+    parser.add_argument("--family", help="--suite: family tokens from --plan (e.g. TRAIT,TM)")
+    parser.add_argument("--risk", help="--suite: high or normal")
+    parser.add_argument("--case", help="--suite: comma-separated case IDs from --plan")
+    parser.add_argument("--chunk", type=int, help=f"--suite: part of a selection larger than {MAX_BATCH}")
+    parser.add_argument("--confirm", help="must be " + CONFIRM_TOKEN + " for --matrix/--single/--suite")
     parser.add_argument("--rom", help="source CFRU/DPE ROM")
     parser.add_argument("--baseline", help="neutral .rnqs saved once from the UPR GUI")
     parser.add_argument("--out", help="new output folder (must not exist)")
@@ -639,17 +1113,25 @@ def main(argv=None):
     if args.self_test:
         return self_test()
     try:
-        mode = "--single" if args.single else "--matrix"
+        mode = "--single" if args.single else "--suite" if args.suite else "--matrix"
         if args.confirm != CONFIRM_TOKEN:
             raise MatrixError(mode + " runs real ROM generation; pass --confirm " + CONFIRM_TOKEN + ".")
         options = select_options(args.select) if args.single else None
+        batch = None
+        if args.suite:
+            inv = inventory(ROOT)
+            if inv.notes:
+                raise MatrixError(inv.notes[0] + " STOP.")
+            batch = select_cases(plan_cases(inv), csv_arg(args.kind), csv_arg(args.family), args.risk,
+                                 csv_arg(args.case), args.chunk)
         if not (args.rom and args.baseline and args.out):
             raise MatrixError(mode + " requires --rom, --baseline and --out.")
         rom, baseline = Path(args.rom).resolve(), Path(args.baseline).resolve()
         jar = Path(args.jar).resolve() if args.jar else DEFAULT_JAR
         if not rom.is_file() or not baseline.is_file() or not jar.is_file():
             raise MatrixError("ROM, baseline or JAR not found; the JAR is never built here.")
-        title = "#748 single-option matrix" if args.single else "#743 pilot settings matrix"
+        title = {"--single": "#748 single-option matrix", "--suite": f"#750 comprehensive matrix batch "
+                 f"({len(batch or ())} cases)"}.get(mode, "#743 pilot settings matrix")
         header = [title + (" (REVISION DRIFT ALLOWED)" if args.allow_revision_drift else "")]
         header += revision_lines(ROOT, jar, args.allow_revision_drift)
         out = output_root(args.out, ROOT)
@@ -657,9 +1139,16 @@ def main(argv=None):
         with tempfile.TemporaryDirectory(prefix="pilot-matrix-") as temp:
             if args.single:
                 results = run_single(rom, baseline, jar, out, Path(temp), options)
+            elif args.suite:
+                results = run_suite(rom, baseline, jar, out, Path(temp), batch)
             else:
                 results = run_matrix(rom, baseline, jar, out, Path(temp))
-        lines, overall = single_report_lines(results, options) if args.single else report_lines(results)
+        if args.single:
+            lines, overall = single_report_lines(results, options)
+        elif args.suite:
+            lines, overall = suite_report_lines(results, batch)
+        else:
+            lines, overall = report_lines(results)
         print("\n".join(lines))
         return 0 if overall == "PASS" else 1
     except MatrixError as error:
