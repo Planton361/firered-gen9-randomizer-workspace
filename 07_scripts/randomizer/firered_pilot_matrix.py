@@ -323,6 +323,9 @@ def run_matrix(rom, baseline, jar, out, temp):
                 "--output-settings", str(target)]
         for overlay in case.overlays:
             args += ["--enable", overlay]
+        if not case.overlays:
+            # settings-profile rejects a call without overlays; 00_BASELINE is its no-op profile.
+            args += ["--profile", "00_BASELINE"]
         run = command(args, temp)
         if run.returncode or "Settings profile written successfully." not in run.stdout or not target.is_file():
             raise MatrixError(case.id + ": settings-profile failed; STOP.")

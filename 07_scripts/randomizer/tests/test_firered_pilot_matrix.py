@@ -85,10 +85,14 @@ class FakeUPR:
     def profile(self, args):
         if self.profile_rc:
             return done(args, self.profile_rc, "", "Unknown settings feature overlay")
+        if "--enable" not in args and "--profile" not in args:
+            return done(args, 1, "", "No --enable or --profile overlays were provided.")
         state = json.loads(Path(args[args.index("--base-settings") + 1]).read_text())
         for i, a in enumerate(args):
-            if a == "--enable":
-                state.update(m.OVERLAY_EFFECT[args[i + 1]])
+            if a == "--profile" and args[i + 1] != "00_BASELINE":
+                return done(args, 1, "", "Unknown settings profile")
+            if a in ("--enable", "--profile"):
+                state.update(m.OVERLAY_EFFECT.get(args[i + 1], {}))
                 state.update(self.extra_effect.get(args[i + 1], {}))
         Path(args[args.index("--output-settings") + 1]).write_text(json.dumps(state))
         return done(args, 0, "Settings profile written successfully.\n")
@@ -226,6 +230,26 @@ class MatrixTests(unittest.TestCase):
             self.assertEqual(args[args.index("--base-settings") + 1], str(f.baseline))
         self.assertNotIn("writeToFileFormat", m.OBSERVE_JAVA)
         self.assertNotIn("fromString", m.OBSERVE_JAVA)
+
+    def test_case_without_overlays_uses_the_baseline_profile(self):
+        f = Fixture(self)
+        f.run()
+        profiles = [a for k, a in f.upr.calls if k == "profile"]
+        m00 = profiles[0][profiles[0].index("settings-profile") + 1:]
+        self.assertEqual(m00, ["--base-settings", str(f.baseline), "--output-settings",
+                               str(f.out / "settings" / "M00.rnqs"), "--profile", "00_BASELINE"])
+        for args in profiles[1:]:
+            self.assertNotIn("--profile", args)
+        # The former call without --enable/--profile is rejected by settings-profile.
+        rejected = f.upr.profile([a for a in profiles[0] if a not in ("--profile", "00_BASELINE")])
+        self.assertEqual(rejected.returncode, 1)
+
+    def test_baseline_profile_drift_stops_before_generation(self):
+        f = Fixture(self)
+        f.upr.extra_effect["00_BASELINE"] = {"getStartersMod": "RANDOM"}
+        with self.assertRaisesRegex(m.MatrixError, "M00: settings-profile output differs"):
+            f.run()
+        self.assertFalse(any(k == "cli" for k, _ in f.upr.calls))
 
     def test_non_neutral_baseline_stops_before_overlays(self):
         for key, value in (("isRandomizeIntroMon", "true"), ("getMovesetsMod", "COMPLETELY_RANDOM"),
