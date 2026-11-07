@@ -68,12 +68,17 @@ historical 132-feature ledger as `RUNNABLE`, `GUARDED`, `UNSUPPORTED`,
 not current acceptance. The expected Settings change of each overlay is read
 from the UPR-FVX source at the pinned revision; if that source changes,
 everything becomes `NEEDS_REVIEW` and `--suite` stops. Sub-options run together
-with their parent toggles.
+with their parent toggles. High-risk options whose own CFRU/DPE repair contract
+is still open (`PREREQUISITES`) are `NEEDS_REVIEW`, citing the issue, even when
+their source would run. This covers TRAIT-024/027, ITEM-010 and GFX-001 to
+GFX-004.
 
 It then plans single, pair (66 family pairs), triple (the 12 #681 triples) and
 profile cases from `upr_generation_matrix.py`'s definitions. Cases that are
 guarded, unsupported, unclear or contradictory are excluded with a reason.
-Cases with identical effective settings run once (`DUPLICATE`).
+A member that contradicts earlier ones is left out visibly. A pair, triple or
+profile that keeps no effective change for one of its named families is
+`NEEDS_REVIEW`. Cases with identical effective settings run once (`DUPLICATE`).
 
 `--suite` runs one bounded batch (at most 25 cases), chosen with `--kind`
 (`SINGLE,PAIR,TRIPLE,PROFILE`), `--family` (e.g. `TRAIT,TM`), `--risk`
@@ -89,7 +94,12 @@ python3 07_scripts/randomizer/firered_pilot_matrix.py --suite --confirm USER_LOC
 
 Before any ROM is generated, each case's settings must equal baseline + its
 source-derived change. The case's own change must not already be in the
-baseline (otherwise `NEEDS_REVIEW`). Both must still hold after `tweakForRom`.
-Results are `PASS_GENERATION_REOPEN_REPLAY`, `EXPECTED_REJECTION` (exact guard
-text, no output), `FAIL` (stops the batch), `NEEDS_REVIEW` or `NOT_RUN`. No
-result claims that a feature works in the game.
+baseline. In a pair or triple, each family's change must still differ from
+the baseline. Both conditions must still hold after `tweakForRom`; otherwise the
+case is `NEEDS_REVIEW` and is not generated.
+Results are `PASS_GENERATION_REOPEN_REPLAY`, `EXPECTED_REJECTION`,
+ `FAIL` (stops the batch), `NEEDS_REVIEW` or `NOT_RUN`.
+`EXPECTED_REJECTION` requires that the CLI's only failure output is the
+expected guard line plus its closing `ERROR: Randomization failed`, with no
+other error, exception or stack trace and no output file. No result claims
+that a feature works in the game.

@@ -374,6 +374,18 @@ LEGACY_REASONS = {
     "FVX-MISC-011": "redundant with CFRU native reusable TMs",
     "FVX-FOE-SENSIBLE-HELD-ITEMS": "legacy 04_FOE_HELD_ITEMS_SENSIBLE_EXPECTED_FAIL diagnostic",
 }
+# Technically readable, but not released: each option's own CFRU/DPE repair
+# contract is still open at the pilot revision (UPR-FVX 1a9b59db). They stay
+# NEEDS_REVIEW until that contract is accepted; this is not an UNSUPPORTED claim.
+PREREQUISITES = {
+    "FVX-TRAIT-027": "Remove Time-Based Evolutions repair #723 open (UPR-FVX #200 not in this revision)",
+    "FVX-ITEM-010": "Pickup Random needs the CFRU E5 descriptor; #717/#719 in Review (UPR-FVX #198 not in this revision)",
+    "FVX-GFX-002": "Follow Types repair #724 open (UPR-FVX #201 not in this revision); composition #737 in Review",
+    "FVX-GFX-004": "Shiny From Normal repair #725 open (UPR-FVX #202 not in this revision); composition #737 in Review",
+    "FVX-TRAIT-024": "Change Impossible Evolutions native owners #731/#732 in Review",
+    "FVX-GFX-001": "palette ownership of distinct native forms #730 in Review",
+    "FVX-GFX-003": "palette ownership of distinct native forms #730 in Review",
+}
 # Owner toggles a sub-option needs to have any effect; follows
 # upr_generation_matrix.closure. A sub-option's case runs with its parents.
 PARENTS = {
@@ -445,6 +457,7 @@ class PlanCase:
     own: tuple = ()        # the part the case is about; must not already hold
     guard: str = ""
     risk: str = "normal"
+    groups: tuple = ()     # (family, its change) of a pair/triple/profile; each must stay effective
 
 
 def family_of(fid):
@@ -575,6 +588,8 @@ def inventory(root):
                         + LEGACY_REASONS.get(fid, "Mega/G-Max/Z/Dynamax pool"))
         elif delta is None:
             f = Feature(family, "NEEDS_REVIEW", "overlay source not readable as exact Settings changes")
+        elif fid in PREREQUISITES:
+            f = Feature(family, "NEEDS_REVIEW", "high risk, prerequisite not accepted: " + PREREQUISITES[fid], delta)
         else:
             f = with_parents(fid, family, delta)
         features[fid] = f
@@ -634,7 +649,7 @@ def plan_cases(inv):
                    for o in overlays)
         return "high" if high else "normal"
 
-    def add(cid, kind, families, wanted, status="RUNNABLE", reason="", own=None, guard=""):
+    def add(cid, kind, families, wanted, status="RUNNABLE", reason="", own=None, guard="", groups=()):
         overlays = expand(wanted)
         delta = context = {}
         if status in RUNNABLE_CASES:
@@ -655,7 +670,7 @@ def plan_cases(inv):
         plan.append(PlanCase(cid, kind, tuple(dict.fromkeys(families)), overlays if status in RUNNABLE_CASES else (),
                              case_seed(cid), status, reason, tuple(sorted(delta.items())),
                              tuple(sorted(own_delta.items())), guard, risk(overlays) if status in RUNNABLE_CASES
-                             else "-"))
+                             else "-", groups if status in RUNNABLE_CASES else ()))
 
     add("PRO-CONTROL", "PROFILE", (), ())
     for fid, f in features.items():
@@ -679,8 +694,22 @@ def plan_cases(inv):
         if empty:
             return add(cid, kind, map(FAMILY_TOKEN.get, families), (), "NEEDS_REVIEW",
                        "no runnable overlay in " + ",".join(empty))
-        add(cid, kind, map(FAMILY_TOKEN.get, families), *compatible(
-            itertools.chain.from_iterable(bundles[f] for f in families)))
+        kept, status, reason = compatible(itertools.chain.from_iterable(bundles[f] for f in families))
+        groups = represented(families, kept)
+        lost = [f for f, change in groups if not change]
+        if lost:
+            status, reason = "NEEDS_REVIEW", "no effective change left for " + ",".join(lost) + (
+                "; " + reason if reason else "")
+        add(cid, kind, map(FAMILY_TOKEN.get, families), kept, status, reason, groups=groups)
+
+    def represented(families, kept):
+        """Each named family's change from its kept members; empty if it was filtered away or is OFF."""
+        groups = []
+        for family in families:
+            change, _ = merge(features[o].delta for o in expand(m for m in kept if m in bundles[family]))
+            change = {k: v for k, v in change.items() if NEUTRAL.get(k) != v}
+            groups.append((family, tuple(sorted(change.items()))))
+        return tuple(groups)
 
     def compatible(members):
         """Bundle members in order; one that contradicts the ones before is left out, visibly."""
@@ -706,7 +735,8 @@ def plan_cases(inv):
         members = tuple(m for m in inv.profiles[name] if features.get(m, Feature("", "", "")).state == "RUNNABLE"
                         and m not in gm.RISK_SINGLES)
         if members:
-            add("FAM-" + name, "PROFILE", (FAMILY_TOKEN[family],), *compatible(members))
+            kept, status, reason = compatible(members)
+            add("FAM-" + name, "PROFILE", (FAMILY_TOKEN[family],), kept, status, reason)
         else:
             add("FAM-" + name, "PROFILE", (FAMILY_TOKEN[family],), (), "NEEDS_REVIEW", "no runnable overlay")
     data = ("GEN_SAFE", "TRAITS", "MOVES_MOVESETS", "EVOLUTIONS")
@@ -817,6 +847,19 @@ def save_log(directory, name, result):
     (directory / name).write_text(result.stdout + "\n--- stderr ---\n" + result.stderr)
 
 
+# CliRandomizer prints a randomization failure as completeRandomization's
+# "Randomization failed: <exception>" and usageError's "Randomization failed".
+GUARD_LINE = "ERROR: Randomization failed: com.uprfvx.random.exceptions."
+
+
+def exact_rejection(text, guard):
+    """The only failure output is the expected guard, once: no other error, exception or stack trace."""
+    lines = [line.strip() for line in text.splitlines() if line.strip()]
+    failures = [line for line in lines if gm.ERROR_MARKERS.search(line)
+                or line.startswith(("at ", "Caused by", "... "))]
+    return failures == [GUARD_LINE + guard, "ERROR: Randomization failed"]
+
+
 def generate(case, rom, jar, settings, directory, digest):
     """One case in its own fresh folder; returns (Result, output path or None)."""
     res = Result()
@@ -832,13 +875,13 @@ def generate(case, rom, jar, settings, directory, digest):
         res.generate = "REJECTED" if run.returncode else "PASS"
         untouched = not produced and [p.name for p in directory.iterdir()] == ["cli.log"]
         guard = case.guard or LEARNSET_GUARD
-        if run.returncode and guard in text and untouched:
+        if run.returncode and exact_rejection(text, guard) and untouched:
             res.status = "EXPECTED_REJECTION"
             res.detail = ("learnset" if guard == LEARNSET_GUARD else "exact") + " guard, no output"
         else:
             res.status = "FAIL"
             res.detail = ("output written" if not untouched else "accepted" if not run.returncode
-                          else "different failure (see local cli.log)")
+                          else "different or additional failure (see local cli.log)")
         return res, None
     if (run.returncode or "Randomized successfully!" not in text or gm.ERROR_MARKERS.search(text)
             or not produced or output.stat().st_size == 0):
@@ -967,9 +1010,11 @@ def drift_keys(expected, state):
 
 
 def check_targets(jar, temp, rom, baseline, cases, paths, results, digest, expected_of):
-    """Settings after the CLI's tweakForRom must still be baseline + the case's change."""
+    """Settings after the CLI's tweakForRom must still be baseline + the case's change.
+
+    Returns the target-normalized baseline state (None without cases)."""
     if not cases:
-        return
+        return None
     target_base, *targets = observe(jar, temp, [baseline, *paths], rom=rom)
     if gm.input_digest(rom) != digest:
         raise MatrixError("Source ROM changed during target normalization; STOP.")
@@ -979,6 +1024,7 @@ def check_targets(jar, temp, rom, baseline, cases, paths, results, digest, expec
         if drift:
             results[case.id].status = "NEEDS_REVIEW"
             results[case.id].detail = "tweakForRom changed " + ",".join(drift)
+    return target_base
 
 
 def generate_checked(cases, paths, results, rom, jar, out, digest):
@@ -1031,18 +1077,34 @@ def run_suite(rom, baseline, jar, out, temp, plan):
     for p, state in zip(plan, states):
         r = results[p.id]
         drift = drift_keys(apply(base_state, deltas[p.id]), state)
-        context = apply(base_state, {k: v for k, v in p.delta if (k, v) not in p.own})
         if drift:
             r.settings, r.status, r.detail = "DRIFT", "NEEDS_REVIEW", "settings differ from source delta: " + ",".join(drift)
-        elif p.own and all(context.get(k) == v for k, v in p.own):
-            r.settings, r.status, r.detail = "NO-OP", "NEEDS_REVIEW", "baseline already holds the case's change"
+        elif ineffective(base_state, p):
+            r.settings, r.status = "NO-OP", "NEEDS_REVIEW"
+            r.detail = "baseline already holds the change of " + ineffective(base_state, p)
         else:
             r.settings = "PASS"
     checked = [(c, s) for c, s in zip(cases, paths) if results[c.id].settings == "PASS"]
     digest = gm.input_digest(rom)
-    check_targets(jar, temp, rom, baseline, [c for c, _ in checked], [s for _, s in checked], results, digest,
-                  lambda base, case: apply(base, deltas[case.id]))
+    target_base = check_targets(jar, temp, rom, baseline, [c for c, _ in checked], [s for _, s in checked],
+                                results, digest, lambda base, case: apply(base, deltas[case.id]))
+    for p in plan:
+        r = results[p.id]
+        if r.target == "PASS" and ineffective(target_base, p):
+            r.target, r.status = "NEEDS_REVIEW", "NEEDS_REVIEW"
+            r.detail = "after tweakForRom the target already holds the change of " + ineffective(target_base, p)
     return generate_checked(cases, paths, results, rom, jar, out, digest)
+
+
+def ineffective(base, p):
+    """Name of the first part of the case (its own change, or a named family) that changes nothing."""
+    groups = p.groups or ((("case", p.own),) if p.own else ())
+    delta = dict(p.delta)
+    for name, change in groups:
+        others = apply(base, {k: v for k, v in delta.items() if (k, v) not in change})
+        if all(others.get(k) == v for k, v in change):
+            return FAMILY_TOKEN.get(name, name)
+    return ""
 
 
 SUITE_STATUS = {"PASS": "PASS_GENERATION_REOPEN_REPLAY"}
