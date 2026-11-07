@@ -742,20 +742,21 @@ SYNTHETIC_PROFILES["01_TRAITS_SAFE"] = ("FVX-TRAIT-001", "FVX-TRAIT-002")
 class SyntheticSource:
     """A temporary Workspace with synthetic, correctly pinned UPR-FVX source text."""
 
-    def __init__(self, testcase, catalog=SYNTHETIC_CATALOG, bundles=SYNTHETIC_BUNDLES):
+    def __init__(self, testcase, catalog=SYNTHETIC_CATALOG, bundles=SYNTHETIC_BUNDLES, settings=SYNTHETIC_SETTINGS,
+                 profiles=SYNTHETIC_PROFILES):
         self.root = Path(tempfile.mkdtemp(prefix="pilot-catalog-"))
         testcase.addCleanup(shutil.rmtree, self.root, True)
         ledger = self.root / m.LEDGER
         ledger.parent.mkdir(parents=True)
         ledger.write_text("feature_id\tfeature_name\nFVX-TRAIT-001\tx\nFVX-OLD-001\told\n")
-        texts = {m.CATALOG_SOURCE: catalog, m.SETTINGS_SOURCE: SYNTHETIC_SETTINGS, m.MISC_SOURCE: SYNTHETIC_MISC}
+        texts = {m.CATALOG_SOURCE: catalog, m.SETTINGS_SOURCE: settings, m.MISC_SOURCE: SYNTHETIC_MISC}
         for rel, text in texts.items():
             path = self.root / m.UPR_SOURCE / rel
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text(text)
         pins = {rel: hashlib.sha256(text.encode()).hexdigest() for rel, text in texts.items()}
         for patcher in (patch.object(m, "SOURCE_PINS", pins),
-                        patch.object(m, "family_bundles", return_value=(bundles, SYNTHETIC_PROFILES))):
+                        patch.object(m, "family_bundles", return_value=(bundles, profiles))):
             patcher.start()
             testcase.addCleanup(patcher.stop)
 
@@ -1161,6 +1162,56 @@ class RepairTests(unittest.TestCase):
         self.assertEqual((r.target, r.status), ("NEEDS_REVIEW", "NEEDS_REVIEW"))
 
 
+class SerializationDefectTests(unittest.TestCase):
+    """#752: FVX-WILD-007 sets level 45; the .rnqs keeps 3 bits and reads back 5."""
+
+    def source(self):
+        catalog = SYNTHETIC_CATALOG.replace("        return Collections", (
+            '        overlays.put("FVX-WILD-007", s -> {\n            s.setUseMinimumCatchRate(true);\n'
+            '            s.setMinimumCatchRateLevel(45);\n        });\n        return Collections'))
+        settings = SYNTHETIC_SETTINGS.replace("    public TweakForROMFeedback", (
+            "    public boolean isUseMinimumCatchRate() { return false; }\n"
+            "    public int getMinimumCatchRateLevel() { return 1; }\n    public TweakForROMFeedback"))
+        bundles = dict(SYNTHETIC_BUNDLES, WILD=("FVX-WILD-001", "FVX-WILD-007", "FVX-WILD-002"))
+        profiles = dict(SYNTHETIC_PROFILES, **{"05_WILD_FULL": ("FVX-WILD-001", "FVX-WILD-007")})
+        return SyntheticSource(self, catalog, bundles, settings, profiles)
+
+    def test_round_trip_defect_is_needs_review_with_the_source_delta_kept(self):
+        f = self.source().inventory().features["FVX-WILD-007"]
+        self.assertEqual(f.state, "NEEDS_REVIEW")
+        self.assertIn("serialization defect", f.reason)
+        self.assertIn("#752", f.reason)
+        # The declared value stays the source's 45; nothing is rewritten to 5.
+        self.assertEqual(f.delta, {"isUseMinimumCatchRate": "true", "getMinimumCatchRateLevel": "45"})
+
+    def test_never_part_of_a_runnable_single_or_composite(self):
+        plan = self.source().plan()
+        cases = by_id(plan)
+        self.assertEqual(cases["SGL-FVX-WILD-007"].status, "NEEDS_REVIEW")
+        with self.assertRaisesRegex(m.MatrixError, "#752"):
+            m.select_cases(plan, ids=("SGL-FVX-WILD-007",))
+        for c in plan:
+            if c.status in m.RUNNABLE_CASES:
+                self.assertNotIn("FVX-WILD-007", c.overlays, c.id)
+                self.assertNotIn("getMinimumCatchRateLevel", dict(c.delta), c.id)
+        pair = cases["PAIR-WILD+TM_TUTOR"]
+        self.assertEqual((pair.status, pair.overlays), ("RUNNABLE", ("FVX-WILD-001", "FVX-WILD-002", "FVX-TM-001")))
+        self.assertEqual(cases["FAM-05_WILD_FULL"].status, "DUPLICATE")       # only WILD-001 remains
+        self.assertNotIn("FVX-WILD-007", m.select_cases(plan, families=("WILD",))[0].overlays)
+
+    def test_drift_check_still_catches_the_round_trip(self):
+        src = self.source()
+        inv = src.inventory()
+        case, = m.select_cases(m.plan_cases(inv), ids=("SGL-FVX-WILD-001",))
+        f = Fixture(self)
+        f.upr.effects = {k: v.delta for k, v in inv.features.items() if v.delta}
+        f.upr.extra_effect["FVX-WILD-001"] = {"getMinimumCatchRateLevel": "5"}    # what the round trip does
+        r = f.suite([case])[case.id]
+        self.assertEqual((r.settings, r.status), ("DRIFT", "NEEDS_REVIEW"))
+        self.assertIn("getMinimumCatchRateLevel", r.detail)
+        self.assertEqual(f.upr.count("cli"), 0)
+
+
 UPR = m.ROOT / m.UPR_SOURCE
 
 
@@ -1216,6 +1267,21 @@ class SourceBackingTests(unittest.TestCase):
                 self.assertEqual([f for f, change in c.groups if change], c.id.split("-", 1)[1].split("+"), c.id)
         for fid in m.gm.RISK_SINGLES:
             self.assertEqual(inv.features[fid].state, "NEEDS_REVIEW", fid)
+        for c in plan:
+            if c.status in m.RUNNABLE_CASES:
+                self.assertFalse(set(c.overlays) & set(m.SERIALIZATION_DEFECTS), c.id)
+
+    def test_wild_007_round_trip_defect_is_in_the_pinned_source(self):
+        catalog = m.overlay_catalog((UPR / m.CATALOG_SOURCE).read_text())
+        settings = (UPR / m.SETTINGS_SOURCE).read_text()
+        self.assertTrue(set(m.SERIALIZATION_DEFECTS) <= set(catalog))
+        self.assertIn("s.setMinimumCatchRateLevel(45);", catalog["FVX-WILD-007"])
+        self.assertIn("out.write(eliteFourUniquePokemonNumber | ((minimumCatchRateLevel - 1) << 3));", settings)
+        self.assertIn("settings.setMinimumCatchRateLevel(((data[52] & 0x38) >> 3) + 1);", settings)
+        written = (0 | ((45 - 1) << 3)) & 0xFF           # OutputStream.write keeps the low byte
+        self.assertEqual(((written & 0x38) >> 3) + 1, 5)
+        feature = m.inventory(m.ROOT).features["FVX-WILD-007"]
+        self.assertEqual((feature.state, feature.delta["getMinimumCatchRateLevel"]), ("NEEDS_REVIEW", "45"))
 
 
 @unittest.skipUnless(shutil.which("javac") and shutil.which("java"), "JDK not available")

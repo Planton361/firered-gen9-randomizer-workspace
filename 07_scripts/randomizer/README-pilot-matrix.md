@@ -71,7 +71,10 @@ everything becomes `NEEDS_REVIEW` and `--suite` stops. Sub-options run together
 with their parent toggles. High-risk options whose own CFRU/DPE repair contract
 is still open (`PREREQUISITES`) are `NEEDS_REVIEW`, citing the issue, even when
 their source would run. This covers TRAIT-024/027, ITEM-010 and GFX-001 to
-GFX-004.
+GFX-004. Overlays whose value does not survive the `.rnqs` round trip at this
+revision (`SERIALIZATION_DEFECTS`) are `NEEDS_REVIEW` too. FVX-WILD-007 sets
+catch-rate level 45, which reads back as 5; see #752. Neither kind is ever
+part of a runnable single or composite.
 
 It then plans single, pair (66 family pairs), triple (the 12 #681 triples) and
 profile cases from `upr_generation_matrix.py`'s definitions. Cases that are

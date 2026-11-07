@@ -386,6 +386,13 @@ PREREQUISITES = {
     "FVX-GFX-001": "palette ownership of distinct native forms #730 in Review",
     "FVX-GFX-003": "palette ownership of distinct native forms #730 in Review",
 }
+# Overlays whose value does not survive the .rnqs round trip at the pinned
+# revision: settings-profile writes it, Settings.java serializes something else.
+# Revision-bound NEEDS_REVIEW; the component fix belongs to the cited issue.
+SERIALIZATION_DEFECTS = {
+    "FVX-WILD-007": ("settings-profile sets getMinimumCatchRateLevel=45, but Settings.java stores the level in "
+                     "3 bits ((level-1)<<3 in one byte); the .rnqs round trip yields 5 (guaranteed catching); #752"),
+}
 # Owner toggles a sub-option needs to have any effect; follows
 # upr_generation_matrix.closure. A sub-option's case runs with its parents.
 PARENTS = {
@@ -588,6 +595,8 @@ def inventory(root):
                         + LEGACY_REASONS.get(fid, "Mega/G-Max/Z/Dynamax pool"))
         elif delta is None:
             f = Feature(family, "NEEDS_REVIEW", "overlay source not readable as exact Settings changes")
+        elif fid in SERIALIZATION_DEFECTS:
+            f = Feature(family, "NEEDS_REVIEW", "serialization defect: " + SERIALIZATION_DEFECTS[fid], delta)
         elif fid in PREREQUISITES:
             f = Feature(family, "NEEDS_REVIEW", "high risk, prerequisite not accepted: " + PREREQUISITES[fid], delta)
         else:
