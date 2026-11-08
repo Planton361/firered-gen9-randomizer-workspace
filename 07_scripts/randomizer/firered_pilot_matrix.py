@@ -341,6 +341,15 @@ def overlay_catalog(text):
     return catalog
 
 
+def helper_setters(body, text):
+    """Setter names a `s -> helper(s, ...)` overlay calls, read from the helper's source; empty if not found."""
+    match = re.fullmatch(r"s -> (\w+)\(s\b.*\)", body or "")
+    start = text.find(f"private static void {match[1]}(Settings settings") if match else -1
+    if start < 0:
+        return set()
+    return set(re.findall(r"\bsettings\.(set\w+)\(", text[start:text.find("\n    }\n", start)]))
+
+
 def tweak_setters(text):
     """Setter names Settings.tweakForRom may change (calls and direct field writes)."""
     start = text.index("public TweakForROMFeedback tweakForRom(")
@@ -392,6 +401,17 @@ PREREQUISITES = {
 SERIALIZATION_DEFECTS = {
     "FVX-WILD-007": ("settings-profile sets getMinimumCatchRateLevel=45, but Settings.java stores the level in "
                      "3 bits ((level-1)<<3 in one byte); the .rnqs round trip yields 5 (guaranteed catching); #752"),
+}
+# Settings tweakForRom branches that reset a setter for every CFRU/DPE pilot
+# ROM at the pinned revision (Settings.java is pinned; the handler side is
+# checked by the real-source test). An overlay that sets one has no effect on
+# the pilot target: NEEDS_REVIEW until a component release changes that.
+TARGET_NORMALIZED = {
+    "setLimitPokemon": ("tweakForRom sets limitPokemon=false and currentRestrictions=null for "
+                        "Gen3RomHandler && !isRomValid(null); isRomValid is the vanilla CRC32 check, which a "
+                        "CFRU/DPE ROM never passes"),
+    "setUseTimeBasedEncounters": ("tweakForRom sets useTimeBasedEncounters=false for !hasTimeBasedEncounters(); "
+                                  "Gen3RomHandler inherits AbstractRomHandler's false"),
 }
 # Owner toggles a sub-option needs to have any effect; follows
 # upr_generation_matrix.closure. A sub-option's case runs with its parents.
@@ -593,6 +613,12 @@ def inventory(root):
         elif fid in legacy:
             f = Feature(family, "NEEDS_REVIEW", "legacy target exclusion, not re-verified: "
                         + LEGACY_REASONS.get(fid, "Mega/G-Max/Z/Dynamax pool"))
+        elif lost := sorted(x for x in ({setter_of(k) for k in delta} if delta
+                                        else helper_setters(body, texts[CATALOG_SOURCE]))
+                            if x in TARGET_NORMALIZED and x in touched):
+            via = "" if delta else " (via " + body[5:].split("(")[0] + ")"
+            f = Feature(family, "NEEDS_REVIEW", "ineffective on the pilot target" + via + ": "
+                        + "; ".join(f"{x}: {TARGET_NORMALIZED[x]}" for x in lost), delta)
         elif delta is None:
             f = Feature(family, "NEEDS_REVIEW", "overlay source not readable as exact Settings changes")
         elif fid in SERIALIZATION_DEFECTS:

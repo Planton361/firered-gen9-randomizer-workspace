@@ -73,8 +73,15 @@ is still open (`PREREQUISITES`) are `NEEDS_REVIEW`, citing the issue, even when
 their source would run. This covers TRAIT-024/027, ITEM-010 and GFX-001 to
 GFX-004. Overlays whose value does not survive the `.rnqs` round trip at this
 revision (`SERIALIZATION_DEFECTS`) are `NEEDS_REVIEW` too. FVX-WILD-007 sets
-catch-rate level 45, which reads back as 5; see #752. Neither kind is ever
-part of a runnable single or composite.
+catch-rate level 45, which reads back as 5; see #752. Overlays that set a
+value `tweakForRom` resets for every CFRU/DPE pilot ROM (`TARGET_NORMALIZED`)
+are `NEEDS_REVIEW` as ineffective on the pilot target. That covers Limit
+Pokemon (FVX-GEN-001, `setGenLimit` modes, and Allow Regional Forms through its
+parent), because the CFRU/DPE ROM fails the vanilla CRC32 `isRomValid` check.
+It also covers time-based encounters (FVX-SPECIAL-WILD-001), because the Gen 3
+handler has no time-based encounters. None of these kinds is ever part of a
+runnable single or composite. GEN_SAFE and SPECIAL_WILD combinations are
+therefore `NEEDS_REVIEW` until a component release makes them effective.
 
 It then plans single, pair (66 family pairs), triple (the 12 #681 triples) and
 profile cases from `upr_generation_matrix.py`'s definitions. Cases that are

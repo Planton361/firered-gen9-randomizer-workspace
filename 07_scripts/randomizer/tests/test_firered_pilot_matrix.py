@@ -1212,6 +1212,99 @@ class SerializationDefectTests(unittest.TestCase):
         self.assertEqual(f.upr.count("cli"), 0)
 
 
+class TargetNormalizationTests(unittest.TestCase):
+    """tweakForRom resets limitPokemon and useTimeBasedEncounters for every CFRU/DPE pilot ROM."""
+
+    def source(self, branches=True):
+        catalog = SYNTHETIC_CATALOG.replace("        return Collections", (
+            '        overlays.put("FVX-GEN-001", s -> s.setLimitPokemon(true));\n'
+            '        overlays.put("MODE-GEN-LIMIT-1-9", s -> setGenLimit(s, true));\n'
+            '        overlays.put("MODE-ALLOW-REGIONAL-FORMS", s -> s.setAllowRegionalFormsAcrossGenLimit(true));\n'
+            '        overlays.put("FVX-SPECIAL-WILD-001", s -> s.setUseTimeBasedEncounters(true));\n'
+            '        return Collections')) + (
+            "\n    private static void setGenLimit(Settings settings, boolean allowEvolutionaryRelatives) {\n"
+            "        GenRestrictions restrictions = new GenRestrictions();\n"
+            "        restrictions.setAllowEvolutionaryRelatives(allowEvolutionaryRelatives);\n"
+            "        settings.setLimitPokemon(true);\n"
+            "        settings.setCurrentRestrictions(restrictions);\n    }\n")
+        tweaks = ("        if (rh instanceof Gen3RomHandler && !rh.isRomValid(null)) {\n"
+                  "            this.currentRestrictions = null;\n            this.setLimitPokemon(false);\n        }\n"
+                  "        if (!rh.hasTimeBasedEncounters()) {\n"
+                  "            this.setUseTimeBasedEncounters(false);\n        }\n") if branches else ""
+        settings = SYNTHETIC_SETTINGS.replace("    public TweakForROMFeedback", (
+            "    public boolean isLimitPokemon() { return false; }\n"
+            "    public boolean isAllowRegionalFormsAcrossGenLimit() { return false; }\n"
+            "    public boolean isUseTimeBasedEncounters() { return false; }\n"
+            "    public GenRestrictions getCurrentRestrictions() { return null; }\n"
+            "    public TweakForROMFeedback")).replace("        return feedback;", tweaks + "        return feedback;")
+        bundles = dict(SYNTHETIC_BUNDLES, GEN_SAFE=("MODE-GEN-LIMIT-1-9", "MODE-ALLOW-REGIONAL-FORMS"),
+                       SPECIAL_WILD=("FVX-SPECIAL-WILD-001",))
+        profiles = dict(SYNTHETIC_PROFILES, **{"11_SPECIAL_WILD": ("FVX-SPECIAL-WILD-001",)})
+        return SyntheticSource(self, catalog, bundles, settings, profiles)
+
+    def test_both_normalizations_are_needs_review_from_the_source(self):
+        features = self.source().inventory().features
+        gen, limit, regional, timed = (features[i] for i in ("FVX-GEN-001", "MODE-GEN-LIMIT-1-9",
+                                                             "MODE-ALLOW-REGIONAL-FORMS", "FVX-SPECIAL-WILD-001"))
+        self.assertEqual({gen.state, limit.state, regional.state, timed.state}, {"NEEDS_REVIEW"})
+        self.assertIn("ineffective on the pilot target: setLimitPokemon", gen.reason)
+        self.assertIn("Gen3RomHandler && !isRomValid(null)", gen.reason)
+        self.assertEqual(gen.delta, {"isLimitPokemon": "true"})          # declared change kept as is
+        self.assertIn("(via setGenLimit): setLimitPokemon", limit.reason)  # helper resolved from its source
+        self.assertEqual(regional.reason, "parent FVX-GEN-001 is NEEDS_REVIEW")
+        self.assertIn("setUseTimeBasedEncounters", timed.reason)
+        self.assertIn("hasTimeBasedEncounters()", timed.reason)
+
+    def test_only_a_setter_tweakForRom_resets_is_target_ineffective(self):
+        src = self.source(branches=False)
+        features = src.inventory().features
+        self.assertEqual(features["FVX-GEN-001"].state, "RUNNABLE")
+        self.assertEqual(features["MODE-ALLOW-REGIONAL-FORMS"].state, "RUNNABLE")
+        self.assertEqual(features["FVX-SPECIAL-WILD-001"].state, "RUNNABLE")
+        # setGenLimit's restrictions object is no plain constant: still unreadable, never runnable.
+        self.assertEqual(features["MODE-GEN-LIMIT-1-9"].reason, "overlay source not readable as exact Settings changes")
+        catalog = (src.root / m.UPR_SOURCE / m.CATALOG_SOURCE).read_text()
+        self.assertEqual(m.helper_setters("s -> setGenLimit(s, true)", catalog),
+                         {"setLimitPokemon", "setCurrentRestrictions"})
+        self.assertEqual(m.helper_setters("s -> missing(s, true)", "no helper here"), set())
+
+    def test_families_without_an_effective_member_are_not_offered(self):
+        plan = self.source().plan()
+        cases = by_id(plan)
+        for cid in ("SGL-FVX-GEN-001", "SGL-MODE-ALLOW-REGIONAL-FORMS", "SGL-FVX-SPECIAL-WILD-001"):
+            self.assertEqual(cases[cid].status, "NEEDS_REVIEW", cid)
+        self.assertEqual((cases["PAIR-GEN_SAFE+TRAITS"].status, cases["PAIR-GEN_SAFE+TRAITS"].reason),
+                         ("NEEDS_REVIEW", "no runnable overlay in GEN_SAFE"))
+        self.assertEqual(cases["PAIR-TRAITS+SPECIAL_WILD"].reason, "no runnable overlay in SPECIAL_WILD")
+        self.assertEqual(cases["PAIR-GEN_SAFE+SPECIAL_WILD"].reason, "no runnable overlay in GEN_SAFE,SPECIAL_WILD")
+        self.assertEqual(cases["FAM-11_SPECIAL_WILD"].status, "NEEDS_REVIEW")
+        self.assertEqual(cases["PAIR-TRAITS+WILD"].status, "RUNNABLE")       # unaffected families keep running
+        normalized = {"FVX-GEN-001", "MODE-GEN-LIMIT-1-9", "MODE-ALLOW-REGIONAL-FORMS", "FVX-SPECIAL-WILD-001"}
+        for c in plan:
+            if c.status in m.RUNNABLE_CASES:
+                self.assertFalse(set(c.overlays) & normalized, c.id)
+                self.assertFalse({"isLimitPokemon", "isUseTimeBasedEncounters"} & dict(c.delta).keys(), c.id)
+            if "GEN_SAFE" in c.id or "SPECIAL_WILD" in c.id:
+                self.assertNotIn(c.status, m.RUNNABLE_CASES, c.id)
+        with self.assertRaisesRegex(m.MatrixError, "no runnable overlay in GEN_SAFE"):
+            m.select_cases(plan, ids=("PAIR-GEN_SAFE+TRAITS",))
+
+    def test_drift_check_still_catches_both_normalizations(self):
+        with patch.object(m, "TARGET_NORMALIZED", {}):     # without the static classification
+            inv = self.source().inventory()
+        plan = m.plan_cases(inv)
+        cases = m.select_cases(plan, ids=("SGL-FVX-GEN-001", "PAIR-TRAITS+SPECIAL_WILD"))
+        self.assertEqual([c.status for c in cases], ["RUNNABLE", "RUNNABLE"])
+        f = Fixture(self)
+        f.upr.effects = {k: v.delta for k, v in inv.features.items() if v.delta}
+        f.upr.tweak = {"isLimitPokemon": "false", "isUseTimeBasedEncounters": "false"}
+        results = f.suite(cases)
+        self.assertEqual([results[c.id].status for c in cases], ["NEEDS_REVIEW", "NEEDS_REVIEW"])
+        self.assertIn("tweakForRom changed isLimitPokemon", results["SGL-FVX-GEN-001"].detail)
+        self.assertIn("tweakForRom changed isUseTimeBasedEncounters", results["PAIR-TRAITS+SPECIAL_WILD"].detail)
+        self.assertEqual(f.upr.count("cli"), 0)
+
+
 UPR = m.ROOT / m.UPR_SOURCE
 
 
@@ -1259,7 +1352,7 @@ class SourceBackingTests(unittest.TestCase):
                 self.assertTrue(set(c.overlays) <= ok, c.id)
             if c.status == "EXPECTED_REJECTION":
                 self.assertIn(c.overlays[-1], m.EXPECTED_GUARDS)
-        self.assertGreater(sum(c.status in m.RUNNABLE_CASES for c in plan), 190)
+        self.assertGreater(sum(c.status in m.RUNNABLE_CASES for c in plan), 170)
         for c in plan:
             if c.status in m.RUNNABLE_CASES:
                 self.assertFalse(set(c.overlays) & set(m.PREREQUISITES), c.id)
@@ -1270,6 +1363,32 @@ class SourceBackingTests(unittest.TestCase):
         for c in plan:
             if c.status in m.RUNNABLE_CASES:
                 self.assertFalse(set(c.overlays) & set(m.SERIALIZATION_DEFECTS), c.id)
+
+    def test_target_normalizations_are_in_the_pinned_source(self):
+        settings = (UPR / m.SETTINGS_SOURCE).read_text()
+        handlers = UPR / "romio/src/main/java/com/uprfvx/romio/romhandlers"
+        gen3, gb, base = ((handlers / f"{n}.java").read_text()
+                          for n in ("Gen3RomHandler", "AbstractGBRomHandler", "AbstractRomHandler"))
+        self.assertIn("if (rh instanceof Gen1RomHandler || (rh instanceof Gen3RomHandler && !rh.isRomValid(null))) {\n"
+                      "            this.currentRestrictions = null;\n            this.setLimitPokemon(false);", settings)
+        self.assertIn("if (!rh.hasTimeBasedEncounters()) {\n            this.setUseTimeBasedEncounters(false);", settings)
+        self.assertIn("public class Gen3RomHandler extends AbstractGBRomHandler {", gen3)
+        self.assertNotRegex(gen3, r"boolean (isRomValid|hasTimeBasedEncounters)\(")
+        self.assertIn("public abstract class AbstractGBRomHandler extends AbstractRomHandler {", gb)
+        self.assertIn("return getRomEntry().getExpectedCRC32() == actualCRC32;", gb)
+        self.assertNotIn("hasTimeBasedEncounters", gb)
+        self.assertRegex(base, r"public boolean hasTimeBasedEncounters\(\) \{\n\s*// DEFAULT: no\n\s*return false;")
+        inv = m.inventory(m.ROOT)
+        lost = {k for k, f in inv.features.items() if f.reason.startswith("ineffective on the pilot target")}
+        self.assertEqual(lost, {"FVX-GEN-001", "MODE-GEN-LIMIT-1-9", "MODE-GEN-LIMIT-1-9-NO-RELATIVES",
+                                "FVX-SPECIAL-WILD-001"})
+        self.assertEqual(inv.features["MODE-ALLOW-REGIONAL-FORMS"].state, "NEEDS_REVIEW")
+        for c in m.plan_cases(inv):
+            if "GEN_SAFE" in c.id or "SPECIAL_WILD" in c.id:
+                self.assertNotIn(c.status, m.RUNNABLE_CASES, c.id)
+            if c.status in m.RUNNABLE_CASES:
+                self.assertFalse(set(c.overlays) & (lost | {"MODE-ALLOW-REGIONAL-FORMS"}), c.id)
+                self.assertFalse({"isLimitPokemon", "isUseTimeBasedEncounters"} & dict(c.delta).keys(), c.id)
 
     def test_wild_007_round_trip_defect_is_in_the_pinned_source(self):
         catalog = m.overlay_catalog((UPR / m.CATALOG_SOURCE).read_text())
