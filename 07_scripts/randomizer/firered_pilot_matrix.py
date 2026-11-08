@@ -365,10 +365,12 @@ def tweak_setters(text):
 # Everything is derived from the pinned UPR-FVX source text; a changed source
 # fails closed (every ID NEEDS_REVIEW, no runnable case).
 MISC_SOURCE = "romio/src/main/java/com/uprfvx/romio/MiscTweak.java"
+HANDLER_SOURCE = "romio/src/main/java/com/uprfvx/romio/romhandlers/Gen3RomHandler.java"
 SOURCE_PINS = {
     CATALOG_SOURCE: "af84c3e03f030503741da495207699c24cbd701b360510b95383b498eefecd25",
     SETTINGS_SOURCE: "9fcd9b40bd8b509010ee8c8c5c17570ab5428262f84fe8a7c51c5eb8e8024dcb",
     MISC_SOURCE: "b3ef9a02e3777dcbe69430e59350a5ac076d66d31ee346b2b189673e664fa002",
+    HANDLER_SOURCE: "3eb5a4d54d86d4a18c9e3e2a6ceeb40e7cac8a7d2b79baca8c7d1eab2493e88f",
 }
 MISC_KEY = "getCurrentMiscTweaks"   # bit set; overlays OR their bit in
 EXPECTED_GUARDS = {
@@ -421,6 +423,31 @@ TARGET_NORMALIZED_VALUES = {
         "if (trainersMod == TrainersMod.MAINPLAYTHROUGH) {\n                trainersMod = TrainersMod.RANDOM;",
         "tweakForRom sets trainersMod MAINPLAYTHROUGH to RANDOM for generationOfPokemon() != 5; "
         "Gen3RomHandler.generationOfPokemon() returns 3"),
+}
+# tweakForRom masks currentMiscTweaks with rh.miscTweaksAvailable(). MiscTweak
+# name -> (exact Gen3RomHandler condition, reason) for bits the pilot target
+# does not offer; applies only while both source texts still read so.
+MISC_FILTER = "this.currentMiscTweaks &= rh.miscTweaksAvailable();"
+TARGET_MISC_UNAVAILABLE = {
+    "NATIONAL_DEX_AT_START": (
+        'if (!isCfruDpeGen9BpreProfile() && romEntry.getIntValue("NationalDexTweakPossible") != 0) {\n'
+        "            available |= MiscTweak.NATIONAL_DEX_AT_START.getValue();",
+        "profile exclusion: Gen3RomHandler.miscTweaksAvailable() never offers it for the CFRU/DPE Gen 9 BPRE "
+        "profile (!isCfruDpeGen9BpreProfile())"),
+    "RUNNING_SHOES_INDOORS": (
+        "if (usesCfruDpeBpreRunningLogic()\n"
+        "                ? cfruDpeRunningLogicAlreadyAllowsIndoorRunningForDiagnostics(rom)\n"
+        '                : romEntry.getIntValue("RunIndoorsTweakOffset") > 0) {\n'
+        "            available |= MiscTweak.RUNNING_SHOES_INDOORS.getValue();",
+        "ROM-signature dependent: on the CFRU/DPE BPRE profile offered only if "
+        "cfruDpeRunningLogicAlreadyAllowsIndoorRunningForDiagnostics(rom) finds the unique running-logic "
+        "signature; the local pilot ROM run removed the bit (not a claim about every CFRU/DPE ROM)"),
+    "RUN_WITHOUT_RUNNING_SHOES": (
+        "if (!usesCfruDpeBpreRunningLogic() || findCfruDpeRunningFlagBranchOffsetForDiagnostics(rom) >= 0) {\n"
+        "            available |= MiscTweak.RUN_WITHOUT_RUNNING_SHOES.getValue();",
+        "ROM-signature dependent: on the CFRU/DPE BPRE profile offered only if "
+        "findCfruDpeRunningFlagBranchOffsetForDiagnostics(rom) >= 0 (same running-logic signature); the local "
+        "pilot ROM run removed the bit (not a claim about every CFRU/DPE ROM)"),
 }
 # Owner toggles a sub-option needs to have any effect; follows
 # upr_generation_matrix.closure. A sub-option's case runs with its parents.
@@ -632,6 +659,11 @@ def inventory(root):
                       if (delta or {}).get(g) == v and setter_of(g) in touched
                       and condition in texts[SETTINGS_SOURCE]]:
             f = Feature(family, "NEEDS_REVIEW", "value not kept on the pilot target: " + "; ".join(lost), delta)
+        elif lost := [f"MiscTweak.{name} (1 << {misc[name].bit_length() - 1}): {reason}"
+                      for name, (condition, reason) in TARGET_MISC_UNAVAILABLE.items()
+                      if name in misc and int((delta or {}).get(MISC_KEY, "0")) & misc[name]
+                      and MISC_FILTER in texts[SETTINGS_SOURCE] and condition in texts.get(HANDLER_SOURCE, "")]:
+            f = Feature(family, "NEEDS_REVIEW", "misc tweak not kept on the pilot target: " + "; ".join(lost), delta)
         elif delta is None:
             f = Feature(family, "NEEDS_REVIEW", "overlay source not readable as exact Settings changes")
         elif fid in SERIALIZATION_DEFECTS:

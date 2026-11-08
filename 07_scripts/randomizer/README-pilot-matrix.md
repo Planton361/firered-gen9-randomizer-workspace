@@ -82,7 +82,13 @@ It also covers time-based encounters (FVX-SPECIAL-WILD-001), because the Gen 3
 handler has no time-based encounters. A reset that applies to one value only is
 listed in `TARGET_NORMALIZED_VALUES`, together with its exact source condition.
 `MODE-FOE-MAIN-PLAYTHROUGH` is reset to RANDOM outside Gen 5, so it is
-`NEEDS_REVIEW`. The other trainer modes stay runnable. None of these kinds is ever part of a
+`NEEDS_REVIEW`. The other trainer modes stay runnable. Misc tweak bits that
+`Gen3RomHandler.miscTweaksAvailable()` does not offer on the pilot target are
+listed in `TARGET_MISC_UNAVAILABLE`, each with its exact handler condition.
+`Gen3RomHandler.java` is pinned too. FVX-MISC-004 (National Dex) is a profile
+exclusion. FVX-MISC-002 and FVX-MISC-010 (Running Shoes) depend on a CFRU/DPE
+running-logic ROM signature that the local pilot ROM run did not find; this is
+not a claim about every CFRU/DPE ROM. None of these kinds is ever part of a
 runnable single or composite. GEN_SAFE and SPECIAL_WILD combinations are
 therefore `NEEDS_REVIEW` until a component release makes them effective.
 

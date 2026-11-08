@@ -743,13 +743,15 @@ class SyntheticSource:
     """A temporary Workspace with synthetic, correctly pinned UPR-FVX source text."""
 
     def __init__(self, testcase, catalog=SYNTHETIC_CATALOG, bundles=SYNTHETIC_BUNDLES, settings=SYNTHETIC_SETTINGS,
-                 profiles=SYNTHETIC_PROFILES):
+                 profiles=SYNTHETIC_PROFILES, misc=SYNTHETIC_MISC, handler=None):
         self.root = Path(tempfile.mkdtemp(prefix="pilot-catalog-"))
         testcase.addCleanup(shutil.rmtree, self.root, True)
         ledger = self.root / m.LEDGER
         ledger.parent.mkdir(parents=True)
         ledger.write_text("feature_id\tfeature_name\nFVX-TRAIT-001\tx\nFVX-OLD-001\told\n")
-        texts = {m.CATALOG_SOURCE: catalog, m.SETTINGS_SOURCE: settings, m.MISC_SOURCE: SYNTHETIC_MISC}
+        texts = {m.CATALOG_SOURCE: catalog, m.SETTINGS_SOURCE: settings, m.MISC_SOURCE: misc}
+        if handler is not None:
+            texts[m.HANDLER_SOURCE] = handler
         for rel, text in texts.items():
             path = self.root / m.UPR_SOURCE / rel
             path.parent.mkdir(parents=True, exist_ok=True)
@@ -1372,6 +1374,103 @@ class TargetValueNormalizationTests(unittest.TestCase):
         self.assertEqual(f.upr.count("cli"), 0)
 
 
+SYNTHETIC_HANDLER = '''    public int miscTweaksAvailable() {
+        int available = MiscTweak.LOWER_CASE_POKEMON_NAMES.getValue();
+        if (!isCfruDpeGen9BpreProfile() && romEntry.getIntValue("NationalDexTweakPossible") != 0) {
+            available |= MiscTweak.NATIONAL_DEX_AT_START.getValue();
+        }
+        if (usesCfruDpeBpreRunningLogic()
+                ? cfruDpeRunningLogicAlreadyAllowsIndoorRunningForDiagnostics(rom)
+                : romEntry.getIntValue("RunIndoorsTweakOffset") > 0) {
+            available |= MiscTweak.RUNNING_SHOES_INDOORS.getValue();
+        }
+        if (!usesCfruDpeBpreRunningLogic() || findCfruDpeRunningFlagBranchOffsetForDiagnostics(rom) >= 0) {
+            available |= MiscTweak.RUN_WITHOUT_RUNNING_SHOES.getValue();
+        }
+        return available;
+    }
+'''
+
+
+class TargetMiscTweakTests(unittest.TestCase):
+    """tweakForRom masks the misc tweaks with Gen3RomHandler.miscTweaksAvailable()."""
+
+    AFFECTED = {"FVX-MISC-002": "RUNNING_SHOES_INDOORS", "FVX-MISC-004": "NATIONAL_DEX_AT_START",
+                "FVX-MISC-010": "RUN_WITHOUT_RUNNING_SHOES"}
+
+    def source(self, handler=SYNTHETIC_HANDLER, filtered=True):
+        catalog = SYNTHETIC_CATALOG.replace("        return Collections", "".join(
+            f'        overlays.put("{fid}", s -> enableMiscTweak(s, MiscTweak.{name}));\n'
+            for fid, name in self.AFFECTED.items()) + "        return Collections")
+        misc = SYNTHETIC_MISC + (
+            '    public static final MiscTweak RUNNING_SHOES_INDOORS = new MiscTweak(1 << 4, "runningShoes", 0);\n'
+            '    public static final MiscTweak NATIONAL_DEX_AT_START = new MiscTweak(1 << 7, "nationalDex", 0);\n'
+            '    public static final MiscTweak RUN_WITHOUT_RUNNING_SHOES = new MiscTweak(1 << 18, "runWithout", 0);\n')
+        settings = SYNTHETIC_SETTINGS.replace("        return feedback;", (
+            "        int oldMiscTweaks = this.currentMiscTweaks;\n"
+            "        this.currentMiscTweaks &= rh.miscTweaksAvailable();\n" if filtered else "")
+            + "        return feedback;")
+        bundles = dict(SYNTHETIC_BUNDLES, MISC=("FVX-MISC-001", "FVX-MISC-002", "FVX-MISC-004", "FVX-MISC-003",
+                                                "FVX-MISC-010"))
+        profiles = dict(SYNTHETIC_PROFILES, **{"10_MISC_SAFE": ("FVX-MISC-001", "FVX-MISC-010", "FVX-MISC-003")})
+        return SyntheticSource(self, catalog, bundles, settings, profiles, misc=misc, handler=handler)
+
+    def test_each_unavailable_bit_has_its_own_reason_and_keeps_its_delta(self):
+        features = self.source().inventory().features
+        national, indoors, without = (features[i] for i in ("FVX-MISC-004", "FVX-MISC-002", "FVX-MISC-010"))
+        self.assertEqual({national.state, indoors.state, without.state}, {"NEEDS_REVIEW"})
+        self.assertIn("MiscTweak.NATIONAL_DEX_AT_START (1 << 7): profile exclusion", national.reason)
+        self.assertIn("!isCfruDpeGen9BpreProfile()", national.reason)
+        self.assertNotIn("ROM-signature", national.reason)
+        self.assertIn("MiscTweak.RUNNING_SHOES_INDOORS (1 << 4): ROM-signature dependent", indoors.reason)
+        self.assertIn("cfruDpeRunningLogicAlreadyAllowsIndoorRunningForDiagnostics(rom)", indoors.reason)
+        self.assertIn("MiscTweak.RUN_WITHOUT_RUNNING_SHOES (1 << 18): ROM-signature dependent", without.reason)
+        self.assertIn("findCfruDpeRunningFlagBranchOffsetForDiagnostics(rom) >= 0", without.reason)
+        for f in (indoors, without):
+            self.assertIn("not a claim about every CFRU/DPE ROM", f.reason)
+        self.assertEqual([f.delta for f in (indoors, national, without)],
+                         [{m.MISC_KEY: "16"}, {m.MISC_KEY: "128"}, {m.MISC_KEY: "262144"}])
+        self.assertEqual((features["FVX-MISC-001"].state, features["FVX-MISC-003"].state), ("RUNNABLE", "RUNNABLE"))
+
+    def test_needs_the_handler_condition_and_the_settings_filter(self):
+        no_profile_exclusion = SYNTHETIC_HANDLER.replace("!isCfruDpeGen9BpreProfile() && ", "")
+        for kwargs, review in (({"handler": None}, set()), ({"filtered": False}, set()),
+                               ({"handler": no_profile_exclusion}, {"FVX-MISC-002", "FVX-MISC-010"})):
+            features = self.source(**kwargs).inventory().features
+            self.assertEqual({k for k in self.AFFECTED if features[k].state == "NEEDS_REVIEW"}, review, kwargs)
+            self.assertEqual({features[k].state for k in self.AFFECTED if k not in review}, {"RUNNABLE"}, kwargs)
+
+    def test_never_part_of_a_runnable_single_or_composite(self):
+        plan = self.source().plan()
+        cases = by_id(plan)
+        for fid in self.AFFECTED:
+            self.assertEqual(cases["SGL-" + fid].status, "NEEDS_REVIEW", fid)
+            with self.assertRaisesRegex(m.MatrixError, "misc tweak not kept on the pilot target"):
+                m.select_cases(plan, ids=("SGL-" + fid,))
+        for c in plan:
+            if c.status in m.RUNNABLE_CASES:
+                self.assertFalse(set(c.overlays) & set(self.AFFECTED), c.id)
+                self.assertFalse(int(dict(c.delta).get(m.MISC_KEY, "0")) & (16 | 128 | 262144), c.id)
+        self.assertEqual(cases["PAIR-WILD+MISC"].overlays, ("FVX-WILD-001", "FVX-WILD-002", "FVX-MISC-001",
+                                                            "FVX-MISC-003"))
+        self.assertEqual((cases["FAM-10_MISC_SAFE"].status, cases["FAM-10_MISC_SAFE"].overlays),
+                         ("RUNNABLE", ("FVX-MISC-001", "FVX-MISC-003")))
+
+    def test_drift_check_still_catches_all_three_missing_bits(self):
+        with patch.object(m, "TARGET_MISC_UNAVAILABLE", {}):      # without the static classification
+            inv = self.source().inventory()
+        cases = m.select_cases(m.plan_cases(inv), ids=tuple("SGL-" + fid for fid in self.AFFECTED))
+        self.assertEqual([c.status for c in cases], ["RUNNABLE"] * 3)
+        f = Fixture(self)
+        f.upr.effects = {k: v.delta for k, v in inv.features.items() if v.delta}
+        f.upr.tweak = {m.MISC_KEY: "0"}                            # miscTweaksAvailable() drops the bit
+        results = f.suite(cases)
+        for c in cases:
+            self.assertEqual((results[c.id].target, results[c.id].status), ("NEEDS_REVIEW", "NEEDS_REVIEW"), c.id)
+            self.assertIn("tweakForRom changed getCurrentMiscTweaks", results[c.id].detail)
+        self.assertEqual(f.upr.count("cli"), 0)
+
+
 UPR = m.ROOT / m.UPR_SOURCE
 
 
@@ -1473,6 +1572,34 @@ class SourceBackingTests(unittest.TestCase):
         for c in m.plan_cases(m.inventory(m.ROOT)):
             if c.status in m.RUNNABLE_CASES:
                 self.assertNotIn("MODE-FOE-MAIN-PLAYTHROUGH", c.overlays, c.id)
+
+    def test_misc_tweak_availability_is_in_the_pinned_source(self):
+        settings = (UPR / m.SETTINGS_SOURCE).read_text()
+        handler = (UPR / m.HANDLER_SOURCE).read_text()
+        misc = (UPR / m.MISC_SOURCE).read_text()
+        catalog = m.overlay_catalog((UPR / m.CATALOG_SOURCE).read_text())
+        self.assertIn("        // misc tweaks\n        int oldMiscTweaks = this.currentMiscTweaks;\n        " + m.MISC_FILTER,
+                      settings)
+        for fid, name, bit in (("FVX-MISC-002", "RUNNING_SHOES_INDOORS", 4), ("FVX-MISC-004", "NATIONAL_DEX_AT_START", 7),
+                               ("FVX-MISC-010", "RUN_WITHOUT_RUNNING_SHOES", 18)):
+            self.assertEqual(catalog[fid], f"s -> enableMiscTweak(s, MiscTweak.{name})")
+            self.assertIn(f"public static final MiscTweak {name} = new MiscTweak(1 << {bit},", misc)
+            self.assertIn(m.TARGET_MISC_UNAVAILABLE[name][0], handler)
+        self.assertIn("private boolean usesCfruDpeBpreRunningLogic() {\n        return isCfruDpeGen9BpreProfile();", handler)
+        inv = m.inventory(m.ROOT)
+        lost = {k for k, f in inv.features.items() if f.reason.startswith("misc tweak not kept on the pilot target")}
+        self.assertEqual(lost, {"FVX-MISC-002", "FVX-MISC-004", "FVX-MISC-010"})
+        for fid in ("FVX-MISC-001", "FVX-MISC-003", "FVX-MISC-005", "FVX-MISC-006", "FVX-MISC-007", "FVX-MISC-008",
+                    "FVX-MISC-009", "FVX-MISC-012"):
+            self.assertEqual(inv.features[fid].state, "RUNNABLE", fid)
+        cases = by_id(m.plan_cases(inv))
+        self.assertEqual(cases["FAM-10_MISC_SAFE"].overlays, ("FVX-MISC-001", "FVX-MISC-003", "FVX-MISC-005",
+                                                              "FVX-MISC-006", "FVX-MISC-007", "FVX-MISC-008",
+                                                              "FVX-MISC-009"))
+        self.assertEqual(cases["MAX-MAX_SAFE_WORLD"].status, "RUNNABLE")
+        for c in cases.values():
+            if c.status in m.RUNNABLE_CASES:
+                self.assertFalse(set(c.overlays) & lost, c.id)
 
     def test_wild_007_round_trip_defect_is_in_the_pinned_source(self):
         catalog = m.overlay_catalog((UPR / m.CATALOG_SOURCE).read_text())
