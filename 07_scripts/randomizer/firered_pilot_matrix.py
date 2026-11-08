@@ -413,6 +413,15 @@ TARGET_NORMALIZED = {
     "setUseTimeBasedEncounters": ("tweakForRom sets useTimeBasedEncounters=false for !hasTimeBasedEncounters(); "
                                   "Gen3RomHandler inherits AbstractRomHandler's false"),
 }
+# Value-specific tweakForRom resets for the pilot target: (getter, value) ->
+# (condition that must be in the pinned Settings.java, reason). Other values of
+# the same setter stay runnable.
+TARGET_NORMALIZED_VALUES = {
+    ("getTrainersMod", "MAINPLAYTHROUGH"): (
+        "if (trainersMod == TrainersMod.MAINPLAYTHROUGH) {\n                trainersMod = TrainersMod.RANDOM;",
+        "tweakForRom sets trainersMod MAINPLAYTHROUGH to RANDOM for generationOfPokemon() != 5; "
+        "Gen3RomHandler.generationOfPokemon() returns 3"),
+}
 # Owner toggles a sub-option needs to have any effect; follows
 # upr_generation_matrix.closure. A sub-option's case runs with its parents.
 PARENTS = {
@@ -619,6 +628,10 @@ def inventory(root):
             via = "" if delta else " (via " + body[5:].split("(")[0] + ")"
             f = Feature(family, "NEEDS_REVIEW", "ineffective on the pilot target" + via + ": "
                         + "; ".join(f"{x}: {TARGET_NORMALIZED[x]}" for x in lost), delta)
+        elif lost := [f"{g}={v}: {reason}" for (g, v), (condition, reason) in TARGET_NORMALIZED_VALUES.items()
+                      if (delta or {}).get(g) == v and setter_of(g) in touched
+                      and condition in texts[SETTINGS_SOURCE]]:
+            f = Feature(family, "NEEDS_REVIEW", "value not kept on the pilot target: " + "; ".join(lost), delta)
         elif delta is None:
             f = Feature(family, "NEEDS_REVIEW", "overlay source not readable as exact Settings changes")
         elif fid in SERIALIZATION_DEFECTS:

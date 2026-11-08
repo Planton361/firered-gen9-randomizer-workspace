@@ -1305,6 +1305,73 @@ class TargetNormalizationTests(unittest.TestCase):
         self.assertEqual(f.upr.count("cli"), 0)
 
 
+class TargetValueNormalizationTests(unittest.TestCase):
+    """tweakForRom turns TrainersMod MAINPLAYTHROUGH into RANDOM outside Gen 5; other modes stay."""
+
+    MODES = {"MODE-FOE-RANDOM": "RANDOM", "MODE-FOE-EVEN-DISTRIBUTION": "DISTRIBUTED",
+             "MODE-FOE-MAIN-PLAYTHROUGH": "MAINPLAYTHROUGH", "MODE-FOE-TYPE-THEMED": "TYPE_THEMED",
+             "MODE-FOE-KEEP-THEMED": "KEEP_THEMED"}
+
+    def source(self, branch=True):
+        catalog = SYNTHETIC_CATALOG.replace("        return Collections", "".join(
+            f'        overlays.put("{fid}", s -> s.setTrainersMod(Settings.TrainersMod.{value}));\n'
+            for fid, value in self.MODES.items()) + "        return Collections")
+        gen5 = ("        if (rh.generationOfPokemon() != 5) {\n"
+                "            if (trainersMod == TrainersMod.MAINPLAYTHROUGH) {\n"
+                "                trainersMod = TrainersMod.RANDOM;\n            }\n        }\n") if branch else (
+                "        if (rh.generationOfPokemon() != 5) {\n            if (y) {\n"
+                "                trainersMod = TrainersMod.RANDOM;\n            }\n        }\n")
+        settings = SYNTHETIC_SETTINGS.replace("    public TweakForROMFeedback", (
+            "    public TrainersMod getTrainersMod() { return null; }\n    public TweakForROMFeedback")).replace(
+            "        return feedback;", gen5 + "        return feedback;")
+        bundles = dict(SYNTHETIC_BUNDLES, FOE=("MODE-FOE-MAIN-PLAYTHROUGH",),
+                       TM_TUTOR=("MODE-FOE-MAIN-PLAYTHROUGH", "FVX-TM-001"))
+        profiles = dict(SYNTHETIC_PROFILES, **{"04_FOE_BASE": ("MODE-FOE-MAIN-PLAYTHROUGH", "MODE-FOE-RANDOM")})
+        return SyntheticSource(self, catalog, bundles, settings, profiles)
+
+    def test_only_the_reset_value_is_needs_review(self):
+        features = self.source().inventory().features
+        main = features["MODE-FOE-MAIN-PLAYTHROUGH"]
+        self.assertEqual(main.state, "NEEDS_REVIEW")
+        self.assertEqual(main.reason, "value not kept on the pilot target: getTrainersMod=MAINPLAYTHROUGH: "
+                                      + m.TARGET_NORMALIZED_VALUES[("getTrainersMod", "MAINPLAYTHROUGH")][1])
+        self.assertEqual(main.delta, {"getTrainersMod": "MAINPLAYTHROUGH"})   # nothing rewritten to RANDOM
+        for fid, value in self.MODES.items():
+            if value != "MAINPLAYTHROUGH":
+                self.assertEqual((features[fid].state, features[fid].delta), ("RUNNABLE", {"getTrainersMod": value}))
+
+    def test_needs_the_exact_source_condition(self):
+        self.assertEqual(self.source(branch=False).inventory().features["MODE-FOE-MAIN-PLAYTHROUGH"].state,
+                         "RUNNABLE")
+
+    def test_never_part_of_a_runnable_single_or_composite(self):
+        plan = self.source().plan()
+        cases = by_id(plan)
+        self.assertEqual(cases["SGL-MODE-FOE-MAIN-PLAYTHROUGH"].status, "NEEDS_REVIEW")
+        with self.assertRaisesRegex(m.MatrixError, "value not kept on the pilot target"):
+            m.select_cases(plan, ids=("SGL-MODE-FOE-MAIN-PLAYTHROUGH",))
+        for c in plan:
+            if c.status in m.RUNNABLE_CASES:
+                self.assertNotIn("MODE-FOE-MAIN-PLAYTHROUGH", c.overlays, c.id)
+                self.assertNotEqual(dict(c.delta).get("getTrainersMod"), "MAINPLAYTHROUGH", c.id)
+        self.assertEqual(cases["PAIR-TRAITS+FOE"].reason, "no runnable overlay in FOE")
+        self.assertEqual(cases["PAIR-WILD+TM_TUTOR"].overlays, ("FVX-WILD-001", "FVX-WILD-002", "FVX-TM-001"))
+        fam = cases["FAM-04_FOE_BASE"]                               # only MODE-FOE-RANDOM is left
+        self.assertEqual((fam.status, fam.reason), ("DUPLICATE", "same effective settings as SGL-MODE-FOE-RANDOM"))
+
+    def test_drift_check_still_catches_the_reset(self):
+        with patch.object(m, "TARGET_NORMALIZED_VALUES", {}):      # without the static classification
+            inv = self.source().inventory()
+        case, = m.select_cases(m.plan_cases(inv), ids=("SGL-MODE-FOE-MAIN-PLAYTHROUGH",))
+        f = Fixture(self)
+        f.upr.effects = {k: v.delta for k, v in inv.features.items() if v.delta}
+        f.upr.tweak = {"getTrainersMod": "RANDOM"}
+        r = f.suite([case])[case.id]
+        self.assertEqual((r.target, r.status), ("NEEDS_REVIEW", "NEEDS_REVIEW"))
+        self.assertIn("tweakForRom changed getTrainersMod", r.detail)
+        self.assertEqual(f.upr.count("cli"), 0)
+
+
 UPR = m.ROOT / m.UPR_SOURCE
 
 
@@ -1389,6 +1456,23 @@ class SourceBackingTests(unittest.TestCase):
             if c.status in m.RUNNABLE_CASES:
                 self.assertFalse(set(c.overlays) & (lost | {"MODE-ALLOW-REGIONAL-FORMS"}), c.id)
                 self.assertFalse({"isLimitPokemon", "isUseTimeBasedEncounters"} & dict(c.delta).keys(), c.id)
+
+    def test_main_playthrough_reset_is_in_the_pinned_source(self):
+        settings = (UPR / m.SETTINGS_SOURCE).read_text()
+        catalog = m.overlay_catalog((UPR / m.CATALOG_SOURCE).read_text())
+        gen3 = (UPR / "romio/src/main/java/com/uprfvx/romio/romhandlers/Gen3RomHandler.java").read_text()
+        self.assertEqual(catalog["MODE-FOE-MAIN-PLAYTHROUGH"], "s -> s.setTrainersMod(Settings.TrainersMod.MAINPLAYTHROUGH)")
+        self.assertIn("        if (rh.generationOfPokemon() != 5) {\n            "
+                      + m.TARGET_NORMALIZED_VALUES[("getTrainersMod", "MAINPLAYTHROUGH")][0], settings)
+        self.assertIn("    public int generationOfPokemon() {\n        return 3;\n    }", gen3)
+        features = m.inventory(m.ROOT).features
+        self.assertEqual(features["MODE-FOE-MAIN-PLAYTHROUGH"].state, "NEEDS_REVIEW")
+        for fid in ("MODE-FOE-RANDOM", "MODE-FOE-EVEN-DISTRIBUTION", "MODE-FOE-TYPE-THEMED", "MODE-FOE-KEEP-THEMED",
+                    "FVX-FOE-001"):
+            self.assertEqual(features[fid].state, "RUNNABLE", fid)
+        for c in m.plan_cases(m.inventory(m.ROOT)):
+            if c.status in m.RUNNABLE_CASES:
+                self.assertNotIn("MODE-FOE-MAIN-PLAYTHROUGH", c.overlays, c.id)
 
     def test_wild_007_round_trip_defect_is_in_the_pinned_source(self):
         catalog = m.overlay_catalog((UPR / m.CATALOG_SOURCE).read_text())

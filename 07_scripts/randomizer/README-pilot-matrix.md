@@ -79,7 +79,10 @@ are `NEEDS_REVIEW` as ineffective on the pilot target. That covers Limit
 Pokemon (FVX-GEN-001, `setGenLimit` modes, and Allow Regional Forms through its
 parent), because the CFRU/DPE ROM fails the vanilla CRC32 `isRomValid` check.
 It also covers time-based encounters (FVX-SPECIAL-WILD-001), because the Gen 3
-handler has no time-based encounters. None of these kinds is ever part of a
+handler has no time-based encounters. A reset that applies to one value only is
+listed in `TARGET_NORMALIZED_VALUES`, together with its exact source condition.
+`MODE-FOE-MAIN-PLAYTHROUGH` is reset to RANDOM outside Gen 5, so it is
+`NEEDS_REVIEW`. The other trainer modes stay runnable. None of these kinds is ever part of a
 runnable single or composite. GEN_SAFE and SPECIAL_WILD combinations are
 therefore `NEEDS_REVIEW` until a component release makes them effective.
 
